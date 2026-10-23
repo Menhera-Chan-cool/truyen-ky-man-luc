@@ -18,6 +18,8 @@ export default function Soundscape({
     master = useRef<GainNode | null>(null),
     sources = useRef(new Map<Noise, AudioBufferSourceNode>()),
     custom = useRef<HTMLAudioElement | null>(null);
+  const epoch = useRef(0),
+    pending = useRef(new Map<Noise, symbol>());
   const [active, setActive] = useState<Noise[]>([]),
     [volume, setVolume] = useState(0.35),
     [error, setError] = useState(""),
@@ -25,8 +27,15 @@ export default function Soundscape({
   const L = (vi: string, en: string) => tx(locale, vi, en);
   useEffect(
     () => () => {
-      sources.current.forEach((s) => s.stop());
-      context.current?.close();
+      epoch.current++;
+      pending.current.clear();
+      sources.current.forEach((s) => {
+        try {
+          s.stop();
+          s.disconnect();
+        } catch {}
+      });
+      void context.current?.close().catch(() => {});
       if (custom.current) {
         custom.current.pause();
         URL.revokeObjectURL(custom.current.src);
@@ -39,11 +48,19 @@ export default function Soundscape({
     if (custom.current) custom.current.volume = volume;
   }, [volume]);
   async function toggle(kind: Noise) {
+    const generation = epoch.current,
+      token = Symbol(kind);
+    if (pending.current.has(kind)) {
+      pending.current.delete(kind);
+      return;
+    }
     try {
       if (sources.current.has(kind)) {
         sources.current.get(kind)!.stop();
+        sources.current.get(kind)!.disconnect();
         sources.current.delete(kind);
       } else {
+        pending.current.set(kind, token);
         if (!context.current) {
           context.current = new AudioContext();
           master.current = context.current.createGain();
@@ -52,6 +69,8 @@ export default function Soundscape({
         }
         const ctx = context.current;
         await ctx.resume();
+        if (generation !== epoch.current || pending.current.get(kind) !== token)
+          return;
         const buffer = ctx.createBuffer(2, ctx.sampleRate * 6, ctx.sampleRate);
         for (let ch = 0; ch < 2; ch++) {
           const samples = buffer.getChannelData(ch);
@@ -87,23 +106,37 @@ export default function Soundscape({
       setActive([...sources.current.keys()]);
       setError("");
     } catch {
-      setError(
-        L(
-          "Không thể phát âm thanh trên trình duyệt này.",
-          "Audio playback is unavailable in this browser.",
-        ),
-      );
+      if (generation === epoch.current && pending.current.get(kind) === token)
+        setError(
+          L(
+            "Không thể phát âm thanh trên trình duyệt này.",
+            "Audio playback is unavailable in this browser.",
+          ),
+        );
+    } finally {
+      if (pending.current.get(kind) === token) pending.current.delete(kind);
     }
   }
   function stopAll() {
-    sources.current.forEach((s) => s.stop());
+    epoch.current++;
+    pending.current.clear();
+    sources.current.forEach((s) => {
+      try {
+        s.stop();
+        s.disconnect();
+      } catch {}
+    });
     sources.current.clear();
     setActive([]);
     custom.current?.pause();
   }
   async function preset(types: Noise[]) {
     stopAll();
-    for (const type of types) await toggle(type);
+    const generation = epoch.current;
+    for (const type of types) {
+      if (generation !== epoch.current) return;
+      await toggle(type);
+    }
   }
   async function ownFile(file?: File) {
     if (!file) return;
@@ -115,19 +148,24 @@ export default function Soundscape({
       custom.current.pause();
       URL.revokeObjectURL(custom.current.src);
     }
+    const generation = epoch.current;
     custom.current = new Audio(URL.createObjectURL(file));
+    const audio = custom.current;
     custom.current.loop = true;
     custom.current.volume = volume;
     setFileName(file.name);
     try {
       await custom.current.play();
+      if (generation !== epoch.current || custom.current !== audio)
+        audio.pause();
     } catch {
-      setError(
-        L(
-          "Không phát được file âm thanh này.",
-          "This audio file could not be played.",
-        ),
-      );
+      if (generation === epoch.current && custom.current === audio)
+        setError(
+          L(
+            "Không phát được file âm thanh này.",
+            "This audio file could not be played.",
+          ),
+        );
     }
   }
   if (!open) return null;

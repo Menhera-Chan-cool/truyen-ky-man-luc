@@ -95,20 +95,39 @@ export async function requireEditor(request: Request, ownerOnly = false) {
           },
         },
       );
+  const token = authorization?.startsWith("Bearer ")
+    ? authorization.slice(7)
+    : undefined;
+  const unavailable = (error: { status?: number } | null) =>
+    !!error &&
+    (error.status === 0 || error.status === 429 || (error.status ?? 0) >= 500);
+  let verification = await client.auth.getUser(token);
+  if (unavailable(verification.error)) {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    verification = await client.auth.getUser(token);
+  }
+  if (unavailable(verification.error))
+    throw new HttpError(
+      "Unable to verify your session right now. Please retry.",
+      503,
+    );
   const {
     data: { user },
     error,
-  } = await client.auth.getUser(
-    authorization?.startsWith("Bearer ") ? authorization.slice(7) : undefined,
-  );
+  } = verification;
   if (error || !user)
     throw new HttpError("Session expired. Please sign in again.", 401);
-  const { data: member } = await client
+  const { data: member, error: memberError } = await client
     .from("members")
     .select("*")
     .eq("user_id", user.id)
     .eq("active", true)
     .single();
+  if (memberError && !["PGRST116", "42501"].includes(memberError.code))
+    throw new HttpError(
+      "Unable to check editor permissions right now. Please retry.",
+      503,
+    );
   if (!member || (ownerOnly && member.role !== "owner"))
     throw new HttpError("Forbidden", 403);
   return { client, user, member };

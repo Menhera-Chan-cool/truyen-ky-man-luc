@@ -13,6 +13,11 @@ for(const [name,viewport] of [['desktop',{width:1440,height:1000}],['mobile',{wi
  await page.goto(`${base}/vi/read/chapter-1`,{waitUntil:'networkidle'});await page.waitForFunction(()=>document.querySelector('.reader-shell')?.dataset.ready==='true');await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:`${out}/reader-${name}.png`,animations:'disabled'});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
  const toolbarOutside=await page.locator('.reader-toolbar button,.reader-toolbar a').evaluateAll(elements=>elements.filter(el=>{const r=el.getBoundingClientRect();return r.x<0||r.right>innerWidth+1}).length);assert.equal(toolbarOutside,0);
  await page.getByRole('button',{name:'Cài đặt trình đọc',exact:true}).click();await page.screenshot({path:`${out}/settings-${name}.png`,animations:'disabled'});
+ await page.getByText('Dữ liệu đọc trên thiết bị',{exact:true}).click();
+ await page.getByLabel('File bản sao dữ liệu đọc').setInputFiles({name:'reader.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({format:'truyen-ky-man-luc-reader-backup',version:1,bookId:'truyen-ky-man-luc',exportedAt:'2026-10-23T00:00:00.000Z',settings:null,progress:[],annotations:[]}))});
+ await page.getByRole('button',{name:'Khôi phục bản sao',exact:true}).scrollIntoViewIfNeeded();
+ await page.screenshot({path:`${out}/backup-preview-${name}.png`,animations:'disabled'});
+ assert.equal(await page.locator('.reader-panel').evaluate(el=>el.scrollWidth>el.clientWidth+1),false);
  await page.getByRole('button',{name:'Tối',exact:true}).click();await page.getByRole('button',{name:'Đóng',exact:true}).click();await page.screenshot({path:`${out}/reader-dark-${name}.png`,animations:'disabled'});
  if(name==='desktop'){await page.goto(`${base}/admin`);await page.screenshot({path:`${out}/admin-locked-desktop.png`,fullPage:true,animations:'disabled'});}
  assert.deepEqual(errors,[]);results.push({viewport:name,noHorizontalOverflow:true,toolbarVisible:true,pageErrors:errors});await page.close();

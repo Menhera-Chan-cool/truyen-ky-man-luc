@@ -62,6 +62,10 @@ Có Literata, Lora, Merriweather, Georgia, Be Vietnam Pro, Inter, Roboto, OpenDy
 
 Tiến độ, cài đặt, tô màu, đánh dấu và ghi chú lưu trong IndexedDB trên thiết bị. Đổi VI/EN giữ ID chương và vị trí riêng của từng bản. Không tự dịch sách; phần chưa có bản dịch hiển thị thông báo. Nút dịch đoạn chọn chỉ mở Google Translate sau khi người đọc bấm.
 
+Trong Cài đặt trình đọc → **Dữ liệu đọc trên thiết bị**, dùng **Xuất bản sao JSON** để giữ bản sao trước khi đổi máy hoặc xóa dữ liệu trình duyệt. Nhập file (tối đa 10 MB) sẽ hiện số ghi chú/vị trí trước khi bạn bấm Khôi phục. Ghi chú được gộp, giữ riêng các bản khác nội dung; tùy chọn khôi phục cài đặt/tiến độ sẽ thay các giá trị tương ứng. File chỉ được xử lý trên thiết bị, không tải lên server. Đây là thao tác sao lưu thủ công, không phải đồng bộ tài khoản.
+
+Thay phông, cỡ chữ, giãn dòng, chiều rộng hoặc chế độ đọc giữ đoạn đang xem, thay vì giữ số trang cũ. Bấm ghi chú thuộc chương khác mở thẳng đoạn đã đánh dấu nếu đúng phiên bản. PDF nhớ trang/zoom riêng. Khi đổi giọng hoặc tốc độ lúc đang nghe, TTS tiếp tục từ từ đang đọc nếu trình duyệt có boundary; nếu không, đọc lại đoạn ngắn hiện tại.
+
 Trình đọc nạp sẵn nội dung đã xuất bản của ngôn ngữ đang chọn vào bộ nhớ cho quyển sách này. Next/Previous, mục lục và liên kết cuối chương đổi nội dung tại chỗ, cập nhật URL/lịch sử trình duyệt và khôi phục vị trí riêng của chương, không gọi lại server. Làm mới trang hoặc đổi ngôn ngữ sẽ đọc lại bản công khai mới nhất; ảnh/PDF vẫn tải khi cần. Không lưu bản nháp hay HTML cả sách vào IndexedDB.
 
 Giọng đọc dùng Web Speech API, phụ thuộc giọng mà trình duyệt/hệ điều hành cung cấp. Một số giọng “online” của thiết bị có thể dùng dịch vụ hệ điều hành; web không có API TTS riêng. Nhiễu trắng/hồng/nâu và tiếng mưa được tạo tại thiết bị bằng Web Audio. File âm thanh riêng không được tải lên server.

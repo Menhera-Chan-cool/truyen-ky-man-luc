@@ -11,6 +11,8 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { Panel } from "./Ui";
+import DeviceBackup from "./DeviceBackup";
+import type { ReaderBackup } from "../lib/reader-backup";
 import { tx } from "../lib/content";
 import { readerFonts } from "../lib/reader";
 import {
@@ -24,12 +26,19 @@ export default function ReaderSettingsPanel({
   setSettings,
   onClose,
   isPdf,
+  onRestore,
+  onBeforeExport,
 }: {
   locale: Locale;
   settings: ReaderSettings;
   setSettings: (s: ReaderSettings) => void;
   onClose: () => void;
   isPdf: boolean;
+  onRestore: (
+    backup: ReaderBackup,
+    reading: boolean,
+  ) => Promise<{ added: number }>;
+  onBeforeExport: () => Promise<void>;
 }) {
   const L = (vi: string, en: string) => tx(locale, vi, en);
   const update = (key: keyof ReaderSettings, value: string | number) =>
@@ -149,6 +158,7 @@ export default function ReaderSettingsPanel({
             {L("Giãn dòng", "Line height")}
             <output>{settings.lineHeight.toFixed(1)}</output>
             <input
+              aria-label={L("Giãn dòng", "Line height")}
               type="range"
               min="1.2"
               max="2.6"
@@ -161,6 +171,7 @@ export default function ReaderSettingsPanel({
             {L("Chiều rộng nội dung", "Content width")}
             <output>{settings.width}px</output>
             <input
+              aria-label={L("Chiều rộng nội dung", "Content width")}
               type="range"
               min="480"
               max="1200"
@@ -226,6 +237,11 @@ export default function ReaderSettingsPanel({
         <RotateCcw size={16} />
         {L("Đặt lại cài đặt", "Reset settings")}
       </button>
+      <DeviceBackup
+        locale={locale}
+        onRestore={onRestore}
+        onBeforeExport={onBeforeExport}
+      />
     </Panel>
   );
 }

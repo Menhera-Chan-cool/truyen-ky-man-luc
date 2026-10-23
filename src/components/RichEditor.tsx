@@ -70,11 +70,13 @@ export default function RichEditor({
   onChange,
   locale,
   onError,
+  onBusyChange,
 }: {
   html: string;
   onChange: (value: string) => void;
   locale: Locale;
   onError: (error: string) => void;
+  onBusyChange?: (busy: boolean) => void;
 }) {
   const [mode, setMode] = useState("visual"),
     [uploading, setUploading] = useState(false);
@@ -106,6 +108,7 @@ export default function RichEditor({
   async function image(file?: File) {
     if (!file) return;
     setUploading(true);
+    onBusyChange?.(true);
     try {
       const result = await uploadAsset(file, file.name);
       editor
@@ -117,6 +120,7 @@ export default function RichEditor({
       onError(e instanceof Error ? e.message : "Upload failed");
     } finally {
       setUploading(false);
+      onBusyChange?.(false);
     }
   }
   const actions = [

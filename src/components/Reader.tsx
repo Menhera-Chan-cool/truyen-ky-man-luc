@@ -42,6 +42,7 @@ import type {
   Locale,
   Progress,
   ReaderSettings,
+  PdfPosition,
 } from "../lib/types";
 import { defaultSettings } from "../lib/types";
 import {
@@ -58,6 +59,7 @@ import {
   readAnnotations,
   saveAnnotation,
   deleteAnnotation,
+  restoreDeviceBackup,
 } from "../lib/db";
 import {
   annotationColors,
@@ -68,6 +70,7 @@ import {
   selectionAnchor,
   readerPalette,
   readerFonts,
+  visibleTextOffset,
 } from "../lib/reader";
 import { IconButton, LanguageLinks, Panel } from "./Ui";
 import ReaderSettingsPanel from "./ReaderSettings";
@@ -75,6 +78,7 @@ import { createProgressSaver } from "../lib/progress-saver";
 import Soundscape from "./Soundscape";
 import PdfViewer from "./PdfViewer";
 import { useSpeech } from "./useSpeech";
+import type { ReaderBackup } from "../lib/reader-backup";
 
 type Selection = {
   start: number;
@@ -137,6 +141,13 @@ export default function Reader({
     [ratio, setRatio] = useState(0),
     [message, setMessage] = useState(""),
     [pdfText, setPdfText] = useState("");
+  const [pdfPosition, setPdfPosition] = useState<PdfPosition>({
+    page: 1,
+    zoom: 1,
+  });
+  const [pdfRenderedPage, setPdfRenderedPage] = useState(0);
+  const [layoutVersion, setLayoutVersion] = useState(0);
+  const [deviceVersion, setDeviceVersion] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null),
     windowRef = useRef<HTMLDivElement>(null),
     contentRef = useRef<HTMLElement>(null),
@@ -146,11 +157,35 @@ export default function Reader({
     initialProgress = useRef<Progress | undefined>(undefined),
     ratioRef = useRef(0),
     pageRef = useRef(0);
+  const anchorRef = useRef<number | undefined>(undefined),
+    pendingAnchor = useRef<number | undefined>(undefined),
+    lastLayout = useRef(""),
+    lastAnchorTime = useRef(0);
+  const pendingNote = useRef<Annotation | null>(null),
+    restoringBackup = useRef(false);
+  const pdfPositionRef = useRef<PdfPosition>({ page: 1, zoom: 1 });
+  const contextKey = `${locale}:${chapterId}:${revision}`,
+    activeContext = useRef(contextKey);
+  activeContext.current = contextKey;
+  const captureRef = useRef<() => number | undefined>(() => undefined);
+  const revealRef = useRef<(offset: number, center?: boolean) => void>(
+    () => {},
+  );
   const L = (vi: string, en: string) => tx(locale, vi, en);
   const notify = useCallback((text: string) => setMessage(text), []);
   const closePanel = useCallback(() => setPanel(null), []);
   const progressSaver = useMemo(
-    () => createProgressSaver((progress) => writeProgress(locale, progress)),
+    () =>
+      createProgressSaver((progress) => {
+        const anchor =
+          activeContext.current === contextKey
+            ? captureRef.current()
+            : progress.anchor;
+        return writeProgress(locale, {
+          ...progress,
+          ...(anchor === undefined ? {} : { anchor }),
+        });
+      }),
     [locale, chapterId, revision],
   );
   useEffect(() => {
@@ -168,13 +203,47 @@ export default function Reader({
       document.removeEventListener("visibilitychange", visibility);
     };
   }, [progressSaver]);
-  const onPdfText = useCallback((text: string) => setPdfText(text), []);
+  const onPdfText = useCallback((text: string, page?: number) => {
+    setPdfText(text);
+    setPdfRenderedPage(page ?? 0);
+  }, []);
+  const followSpeech = useCallback(
+    (offset: number) => revealRef.current(offset, true),
+    [],
+  );
   const speech = useSpeech(
     contentRef,
     locale,
     settings.rate,
     settings.voice,
     notify,
+    followSpeech,
+  );
+  const onPdfPosition = useCallback(
+    (value: PdfPosition) => {
+      const old = pdfPositionRef.current;
+      if (old.page !== value.page || old.zoom !== value.zoom) {
+        speech.stop();
+        setPdfText("");
+        setPdfRenderedPage(0);
+      }
+      pdfPositionRef.current = value;
+      setPdfPosition((prev) =>
+        prev.page === value.page && prev.zoom === value.zoom ? prev : value,
+      );
+      if (restored.current && !restoringBackup.current) {
+        progressSaver.schedule({
+          chapterId,
+          revision,
+          ratio: ratioRef.current,
+          page: 0,
+          pdfPage: value.page,
+          pdfZoom: value.zoom,
+        });
+        void progressSaver.flush().catch(() => {});
+      }
+    },
+    [chapterId, revision, progressSaver, speech.stop],
   );
   const availableVoices = speech.voices.filter((v) =>
     v.lang.toLowerCase().startsWith(locale),
@@ -183,6 +252,65 @@ export default function Reader({
   const isPdf = edition?.kind === "pdf";
   const paged = settings.mode !== "scroll" && !isPdf;
   const double = settings.mode === "double" && !mobile;
+  function captureAnchor() {
+    if (isPdf || !restored.current) return anchorRef.current;
+    const root = contentRef.current,
+      viewport = paged ? windowRef.current : scrollRef.current;
+    if (root && viewport)
+      anchorRef.current =
+        visibleTextOffset(root, viewport.getBoundingClientRect(), paged) ??
+        anchorRef.current;
+    return anchorRef.current;
+  }
+  captureRef.current = captureAnchor;
+  function revealRect(rect: DOMRect, center = false) {
+    if (paged && windowRef.current && contentRef.current) {
+      const viewport = windowRef.current,
+        width = viewport.clientWidth;
+      const transform = getComputedStyle(contentRef.current).transform;
+      const translate =
+        transform === "none" ? 0 : new DOMMatrixReadOnly(transform).m41;
+      const total = countPages(contentRef.current.scrollWidth, width, 48);
+      const target = Math.max(
+        0,
+        Math.min(
+          total - 1,
+          Math.floor(
+            (rect.left -
+              viewport.getBoundingClientRect().left -
+              translate +
+              1) /
+              (width + 48),
+          ),
+        ),
+      );
+      viewport.scrollLeft = 0;
+      pageRef.current = target;
+      setViewportWidth(width);
+      setPages(total);
+      setPage(target);
+    } else if (scrollRef.current) {
+      const scroll = scrollRef.current;
+      scroll.scrollTop +=
+        rect.top -
+        scroll.getBoundingClientRect().top -
+        (center ? scroll.clientHeight * 0.4 : 8);
+    }
+  }
+  function revealOffset(offset: number, center = false) {
+    const root = contentRef.current;
+    if (!root) return;
+    const at = Math.max(
+      0,
+      Math.min(offset, (root.textContent?.length ?? 1) - 1),
+    );
+    const range = rangeFromOffsets(root, at, at + 1);
+    if (!range) return;
+    if (windowRef.current) windowRef.current.scrollLeft = 0;
+    revealRect(range.getBoundingClientRect(), center);
+    anchorRef.current = at;
+  }
+  revealRef.current = revealOffset;
   const position = book.chapters.findIndex((c) => c.id === chapterId);
   const previous = book.chapters[position - 1],
     next = book.chapters[position + 1];
@@ -206,6 +334,10 @@ export default function Reader({
   useEffect(() => {
     let cancelled = false;
     restored.current = false;
+    initialProgress.current = undefined;
+    anchorRef.current = undefined;
+    pendingAnchor.current = undefined;
+    lastLayout.current = "";
     setReady(false);
     setSelection(null);
     setActiveImage(null);
@@ -221,8 +353,12 @@ export default function Reader({
       .then(([saved, progress, notes]) => {
         if (cancelled) return;
         setSettings(normalizeSettings(saved ?? initialSettings));
-        initialProgress.current =
-          progress?.revision === revision ? progress : undefined;
+        const valid = progress?.revision === revision ? progress : undefined;
+        initialProgress.current = valid;
+        anchorRef.current = valid?.anchor;
+        const pdf = { page: valid?.pdfPage ?? 1, zoom: valid?.pdfZoom ?? 1 };
+        pdfPositionRef.current = pdf;
+        setPdfPosition(pdf);
         setAnnotations(notes);
         setReady(true);
       })
@@ -243,7 +379,7 @@ export default function Reader({
     };
     // Speech must stop on edition changes, not on every toolbar render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chapterId, locale, revision]);
+  }, [chapterId, locale, revision, deviceVersion]);
   useEffect(() => {
     if (ready)
       writeSettings(settings).catch(() =>
@@ -254,12 +390,30 @@ export default function Reader({
     if (!ready) return;
     let raf = 0;
     let cancelled = false;
+    let fontsReady = false;
     const restore = () => {
-      if (cancelled) return;
+      if (cancelled || !fontsReady) return;
       const viewport = windowRef.current;
       const content = contentRef.current;
       if (viewport && content) {
         const width = viewport.clientWidth;
+        const layout = `${width}:${viewport.clientHeight}:${content.scrollWidth}:${content.scrollHeight}`;
+        if (
+          restored.current &&
+          lastLayout.current &&
+          lastLayout.current !== layout &&
+          !isPdf
+        ) {
+          initialProgress.current = {
+            chapterId,
+            revision,
+            ratio: ratioRef.current,
+            page: pageRef.current,
+          };
+          pendingAnchor.current = anchorRef.current;
+          restored.current = false;
+        }
+        lastLayout.current = layout;
         setViewportWidth(width);
         setPages(paged ? countPages(content.scrollWidth, width, 48) : 1);
       }
@@ -268,27 +422,59 @@ export default function Reader({
         const r = progress?.ratio ?? 0;
         ratioRef.current = r;
         setRatio(r);
-        if (paged) setPage(progress?.page ?? 0);
-        else if (scrollRef.current)
+        const anchor = pendingAnchor.current ?? progress?.anchor;
+        if (anchor !== undefined && !isPdf) revealOffset(anchor);
+        else if (paged && viewport && content) {
+          const target = Math.round(
+            r *
+              Math.max(
+                0,
+                countPages(content.scrollWidth, viewport.clientWidth, 48) - 1,
+              ),
+          );
+          pageRef.current = target;
+          setPage(target);
+        } else if (scrollRef.current)
           scrollRef.current.scrollTop =
             r *
             (scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
         restored.current = true;
+        pendingAnchor.current = undefined;
+        if (anchor !== undefined) anchorRef.current = anchor;
+        setLayoutVersion((v) => v + 1);
         if (edition)
           writeProgress(locale, {
             chapterId,
             ratio: r,
             page: progress?.page ?? 0,
             revision,
+            ...(anchorRef.current === undefined
+              ? {}
+              : { anchor: anchorRef.current }),
+            ...(isPdf
+              ? {
+                  pdfPage: pdfPositionRef.current.page,
+                  pdfZoom: pdfPositionRef.current.zoom,
+                }
+              : {}),
           }).catch(() => {});
       }
     };
-    document.fonts.ready.then(() => {
-      if (!cancelled)
-        raf = requestAnimationFrame(() => {
-          raf = requestAnimationFrame(restore);
-        });
-    });
+    const font =
+      contentRef.current && getComputedStyle(contentRef.current).fontFamily;
+    Promise.resolve(
+      font ? document.fonts.load(`${settings.fontSize}px ${font}`) : undefined,
+    )
+      .catch(() => {})
+      .then(() => document.fonts.ready)
+      .then(() => {
+        if (!cancelled) {
+          fontsReady = true;
+          raf = requestAnimationFrame(() => {
+            raf = requestAnimationFrame(restore);
+          });
+        }
+      });
     const observer = new ResizeObserver(restore);
     if (windowRef.current) observer.observe(windowRef.current);
     if (contentRef.current) observer.observe(contentRef.current);
@@ -309,6 +495,7 @@ export default function Reader({
     chapterId,
     locale,
     revision,
+    settings.align,
   ]);
   useEffect(() => {
     pageRef.current = page;
@@ -316,9 +503,18 @@ export default function Reader({
     const r = pages > 1 ? page / (pages - 1) : 0;
     ratioRef.current = r;
     setRatio(r);
-    writeProgress(locale, { chapterId, ratio: r, page, revision }).catch(
-      () => {},
-    );
+    const frame = requestAnimationFrame(() => {
+      if (!restored.current) return;
+      const anchor = captureAnchor();
+      writeProgress(locale, {
+        chapterId,
+        ratio: r,
+        page,
+        revision,
+        ...(anchor === undefined ? {} : { anchor }),
+      }).catch(() => {});
+    });
+    return () => cancelAnimationFrame(frame);
   }, [page, pages, paged, ready, locale, chapterId, revision]);
   useEffect(() => {
     setPage((p) => Math.min(p, Math.max(0, pages - 1)));
@@ -383,6 +579,7 @@ export default function Reader({
             a.locale === locale &&
             a.chapterId === chapterId &&
             !a.image &&
+            (!isPdf || a.pdfPage === pdfRenderedPage) &&
             a.color === color,
         )
         .map((a) => resolveAnchor(a, revision, root.textContent ?? ""))
@@ -393,7 +590,7 @@ export default function Reader({
     });
     return () =>
       annotationColors.forEach((_, i) => highlights.delete(`note-${i}`));
-  }, [annotations, chapterId, locale, revision, edition]);
+  }, [annotations, chapterId, locale, revision, edition, pdfRenderedPage]);
   useEffect(() => {
     if (!auto || speech.playing) return;
     let frame = 0,
@@ -430,6 +627,7 @@ export default function Reader({
   }, [auto, paged, pages, settings.scrollSpeed, speech.playing]);
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
+      if (restoringBackup.current) return;
       if (
         (e.target as HTMLElement).closest(
           "input,textarea,select,[contenteditable=true],dialog",
@@ -456,17 +654,52 @@ export default function Reader({
   }, [paged, pages, closePanel]);
   function onScroll() {
     const node = scrollRef.current;
-    if (!node || paged || !restored.current || !edition) return;
+    if (
+      !node ||
+      paged ||
+      !restored.current ||
+      !edition ||
+      restoringBackup.current
+    )
+      return;
     const r =
       node.scrollTop / Math.max(1, node.scrollHeight - node.clientHeight);
     ratioRef.current = r;
     if (Math.round(ratio * 100) !== Math.round(r * 100)) setRatio(r);
-    progressSaver.schedule({ chapterId, ratio: r, page: 0, revision });
+    if (performance.now() - lastAnchorTime.current > 150) {
+      captureAnchor();
+      lastAnchorTime.current = performance.now();
+    }
+    progressSaver.schedule({
+      chapterId,
+      ratio: r,
+      page: 0,
+      revision,
+      ...(anchorRef.current === undefined ? {} : { anchor: anchorRef.current }),
+      ...(isPdf
+        ? {
+            pdfPage: pdfPositionRef.current.page,
+            pdfZoom: pdfPositionRef.current.zoom,
+          }
+        : {}),
+    });
   }
   function updateSettings(value: ReaderSettings) {
-    if (value.mode !== settings.mode) {
-      setPage(Math.round(ratioRef.current * Math.max(0, pages - 1)));
-      speech.stop();
+    if (
+      ["mode", "font", "fontSize", "lineHeight", "width", "align"].some(
+        (k) =>
+          value[k as keyof ReaderSettings] !==
+          settings[k as keyof ReaderSettings],
+      )
+    ) {
+      initialProgress.current = {
+        chapterId,
+        revision,
+        ratio: ratioRef.current,
+        page: pageRef.current,
+      };
+      pendingAnchor.current = captureAnchor();
+      restored.current = false;
     }
     setSettings(normalizeSettings(value));
   }
@@ -476,7 +709,27 @@ export default function Reader({
     setSelection(null);
   }
   function go(id: string) {
-    if (id === chapterId || !book.chapters.some((c) => c.id === id)) return;
+    if (
+      restoringBackup.current ||
+      id === chapterId ||
+      !book.chapters.some((c) => c.id === id)
+    )
+      return;
+    pendingNote.current = null;
+    const anchor = captureAnchor();
+    progressSaver.schedule({
+      chapterId,
+      revision,
+      ratio: ratioRef.current,
+      page: pageRef.current,
+      ...(anchor === undefined ? {} : { anchor }),
+      ...(isPdf
+        ? {
+            pdfPage: pdfPositionRef.current.page,
+            pdfZoom: pdfPositionRef.current.zoom,
+          }
+        : {}),
+    });
     void progressSaver.flush().catch(() => {});
     speech.stop();
     if (mobile) setSidebar(false);
@@ -501,6 +754,7 @@ export default function Reader({
     colorValue: string,
     image?: { src: string; alt: string },
   ) {
+    if (restoringBackup.current) return;
     const anchor =
       selection ??
       (() => {
@@ -523,6 +777,12 @@ export default function Reader({
       color: colorValue,
       note,
       createdAt: Date.now(),
+      ...(isPdf
+        ? {
+            pdfPage: pdfPositionRef.current.page,
+            pdfZoom: pdfPositionRef.current.zoom,
+          }
+        : {}),
     };
     try {
       await saveAnnotation(annotation);
@@ -547,8 +807,32 @@ export default function Reader({
     }
   }
   function openNote(annotation: Annotation) {
+    if (restoringBackup.current) return;
+    const target = book.chapters.find((c) => c.id === annotation.chapterId);
+    if (!target) {
+      notify(
+        L(
+          "Chương này không còn được công khai. Ghi chú vẫn được giữ.",
+          "This chapter is no longer public. Your note is preserved.",
+        ),
+      );
+      return;
+    }
+    if (
+      annotation.locale !== locale ||
+      annotation.revision !== target[locale]?.revision
+    ) {
+      notify(
+        L(
+          "Ghi chú thuộc phiên bản cũ; vị trí không được tự gắn lại.",
+          "This note belongs to an older edition and has not been reattached.",
+        ),
+      );
+      return;
+    }
     if (annotation.chapterId !== chapterId) {
       go(annotation.chapterId);
+      pendingNote.current = annotation;
       return;
     }
     if (annotation.revision !== revision) {
@@ -562,34 +846,67 @@ export default function Reader({
     }
     const root = contentRef.current;
     if (!root) return;
+    if (!restored.current) {
+      pendingNote.current = annotation;
+      return;
+    }
+    if (isPdf && !annotation.pdfPage) {
+      notify(
+        L(
+          "Ghi chú PDF cũ chưa có vị trí trang; ghi chú vẫn được giữ.",
+          "This older PDF note has no page position; the note is preserved.",
+        ),
+      );
+      return;
+    }
+    if (
+      isPdf &&
+      annotation.pdfPage &&
+      (pdfRenderedPage !== annotation.pdfPage ||
+        (annotation.pdfZoom !== undefined &&
+          annotation.pdfZoom !== pdfPosition.zoom))
+    ) {
+      pendingNote.current = annotation;
+      setPdfPosition({
+        page: annotation.pdfPage,
+        zoom: annotation.pdfZoom ?? pdfPosition.zoom,
+      });
+      return;
+    }
     if (annotation.image) {
       root.querySelectorAll("img").forEach((img) => {
         if (img.getAttribute("src") === annotation.image)
-          img.scrollIntoView({ block: "center" });
+          revealRect(img.getBoundingClientRect(), true);
       });
       return;
     }
     const offsets = resolveAnchor(annotation, revision, root.textContent ?? "");
     if (!offsets) return;
-    const range = rangeFromOffsets(root, ...offsets);
-    if (range) {
-      if (paged) {
-        const rect = range.getBoundingClientRect();
-        const left = windowRef.current?.getBoundingClientRect().left ?? 0;
-        setPage((p) =>
-          Math.max(
-            0,
-            Math.min(
-              pages - 1,
-              p + Math.floor((rect.left - left) / (viewportWidth + 48)),
-            ),
-          ),
-        );
-      } else
-        range.startContainer.parentElement?.scrollIntoView({
-          block: "center",
-          behavior: "smooth",
-        });
+    revealOffset(offsets[0], true);
+  }
+  useEffect(() => {
+    const note = pendingNote.current;
+    if (!note || note.chapterId !== chapterId || !ready || !restored.current)
+      return;
+    pendingNote.current = null;
+    openNote(note);
+  }, [chapterId, ready, layoutVersion, pdfRenderedPage]);
+  async function restoreDeviceData(
+    backup: ReaderBackup,
+    restoreReading: boolean,
+  ) {
+    restoringBackup.current = true;
+    setAuto(false);
+    speech.stop();
+    try {
+      await progressSaver.flush();
+      const result = await restoreDeviceBackup(backup, restoreReading);
+      restored.current = false;
+      setReady(false);
+      setDeviceVersion((v) => v + 1);
+      return result;
+    } finally {
+      restoringBackup.current = false;
     }
   }
   async function copy(text: string) {
@@ -665,8 +982,8 @@ export default function Reader({
     <div
       className={`reader-shell ${sidebar === null ? "sidebar-auto" : sidebar ? "sidebar-open" : ""} ${settings.theme === "eink" ? "eink" : ""}`}
       style={style}
-      data-ready={ready}
-      aria-busy={!ready}
+      data-ready={ready && restored.current}
+      aria-busy={!ready || !restored.current}
     >
       <style>
         {annotationColors
@@ -1040,12 +1357,21 @@ export default function Reader({
                     }}
                   >
                     {isPdf ? (
-                      <PdfViewer
-                        key={chapterId}
-                        src={`/api/assets/${edition.pdfPath}`}
-                        locale={locale}
-                        onText={onPdfText}
-                      />
+                      ready ? (
+                        <PdfViewer
+                          key={`${chapterId}:${revision}`}
+                          src={`/api/assets/${edition.pdfPath}`}
+                          locale={locale}
+                          onText={onPdfText}
+                          initialPage={pdfPosition.page}
+                          initialZoom={pdfPosition.zoom}
+                          onPosition={onPdfPosition}
+                        />
+                      ) : (
+                        <p role="status">
+                          {L("Đang khôi phục vị trí…", "Restoring position…")}
+                        </p>
+                      )
                     ) : (
                       <div dangerouslySetInnerHTML={{ __html: edition.html }} />
                     )}
@@ -1136,6 +1462,8 @@ export default function Reader({
           settings={settings}
           setSettings={updateSettings}
           onClose={closePanel}
+          onRestore={restoreDeviceData}
+          onBeforeExport={() => progressSaver.flush()}
           isPdf={!!isPdf}
         />
       )}
@@ -1236,7 +1564,6 @@ export default function Reader({
                   : ""
               }
               onChange={(e) => {
-                speech.stop();
                 updateSettings({ ...settings, voice: e.target.value });
               }}
             >
@@ -1272,7 +1599,6 @@ export default function Reader({
               step=".1"
               value={settings.rate}
               onChange={(e) => {
-                speech.stop();
                 updateSettings({ ...settings, rate: +e.target.value });
               }}
             />
@@ -1350,7 +1676,9 @@ export default function Reader({
             />
           </div>
           <div className="selection-actions">
-            <button onClick={() => speech.speak(selection.text)}>
+            <button
+              onClick={() => speech.speak(selection.text, selection.start)}
+            >
               <Volume2 size={15} />
               {L("Đọc đoạn chọn", "Read selection")}
             </button>
@@ -1360,6 +1688,7 @@ export default function Reader({
                   (contentRef.current?.textContent ?? "").slice(
                     selection.start,
                   ),
+                  selection.start,
                 )
               }
             >

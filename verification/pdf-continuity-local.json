@@ -1,0 +1,20 @@
+{
+  "fixtureOnly": true,
+  "serverWrites": false,
+  "results": [
+    {
+      "device": "desktop",
+      "restoresPageAndZoom": true,
+      "returnsFromOtherChapter": true,
+      "resizesCanvas": true,
+      "errors": []
+    },
+    {
+      "device": "mobile",
+      "restoresPageAndZoom": true,
+      "returnsFromOtherChapter": true,
+      "resizesCanvas": true,
+      "errors": []
+    }
+  ]
+}

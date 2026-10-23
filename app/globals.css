@@ -422,8 +422,13 @@ svg {
   grid-template-columns: 310px minmax(0, 1fr);
 }
 @media (min-width: 1000px) {
-  .reader-shell.sidebar-auto { grid-template-columns: 310px minmax(0, 1fr); }
-  .sidebar-auto .reader-sidebar { transform: none; visibility: visible; }
+  .reader-shell.sidebar-auto {
+    grid-template-columns: 310px minmax(0, 1fr);
+  }
+  .sidebar-auto .reader-sidebar {
+    transform: none;
+    visibility: visible;
+  }
 }
 .reader-topbar {
   grid-column: 1/-1;
@@ -1892,7 +1897,28 @@ dialog::backdrop {
   font-family: "Literata Variable", serif;
   font-size: 22px;
 }
-.module-loading { min-height: 180px; padding: 24px; }
+.module-loading {
+  min-height: 180px;
+  padding: 24px;
+}
+.device-backup {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+}
+.device-backup summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.device-backup .button-row {
+  flex-wrap: wrap;
+}
+.device-backup button {
+  font-size: 11px;
+}
+.backup-preview {
+  margin-top: 16px;
+}
 .history-preview {
   max-height: 350px;
   overflow: auto;

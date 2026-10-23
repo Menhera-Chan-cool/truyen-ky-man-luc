@@ -1,0 +1,85 @@
+{
+  "checkedAt": "2026-10-23T10:48:08.046Z",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checks": [
+    {
+      "name": "font-change-keeps-reading-anchor",
+      "before": {
+        "counter": "5 / 19",
+        "firstVisibleText": "Sở ca bốn mặt lệ tràn lan, (21)",
+        "scrollLeft": 0
+      },
+      "after": {
+        "counter": "5 / 45",
+        "firstVisibleText": "Hồ vội vàng sửa sang quần áo. Người ấy đưa ông đi về mé tả, đến một nơi cung điện nguy nga, quan hầu",
+        "scrollLeft": 0
+      },
+      "sameVisibleParagraph": false
+    },
+    {
+      "name": "tts-rate-and-voice-restarts-chapter",
+      "before": {
+        "segments": 6,
+        "first": "Quan Thừa chỉ Hồ Tông Thốc (1) là người hay thơ, lại giỏi lối mỉa mai giễu cợt, khoảng cuố",
+        "current": "Nhất bại hữu thiên vong Trạch Tả,"
+      },
+      "stoppedOnChange": true,
+      "uiRate": "1.8",
+      "uiVoice": "Audit B",
+      "restarted": {
+        "text": "Quan Thừa chỉ Hồ Tông Thốc (1) là người hay thơ, lại giỏi lối mỉa mai giễu cợt, khoảng cuố",
+        "rate": 1.8,
+        "voice": "Audit B"
+      },
+      "speechBoundaryMocked": true
+    },
+    {
+      "name": "tts-paged-navigation",
+      "before": {
+        "counter": "1 / 19",
+        "firstVisibleText": "Quan Thừa chỉ Hồ Tông Thốc (1) là người hay thơ, lại giỏi lối mỉa mai giễu cợt, khoảng cuối đời Trần",
+        "scrollLeft": 0
+      },
+      "sampled": {
+        "steps": 11,
+        "scrollLeft": 828,
+        "paragraphVisible": true
+      },
+      "after": {
+        "counter": "1 / 19",
+        "firstVisibleText": "Đem đoàn tử đệ đến Quan Trung",
+        "scrollLeft": 828
+      },
+      "speechBoundaryMocked": true
+    },
+    {
+      "name": "stop-all-during-preset-startup",
+      "boundaryResumeDelayMs": 180,
+      "outputDisconnected": true,
+      "result": {
+        "active": 2,
+        "starts": 2,
+        "stops": 0,
+        "bufferStart": 4445.79999999702,
+        "bufferMs": [
+          7.899999998509884,
+          37.29999999701977
+        ],
+        "resumeDelay": 180,
+        "pressed": [
+          "Nhiễu nâu · Ấm áp",
+          "Mưa"
+        ]
+      }
+    },
+    {
+      "name": "noise-generation-cpu4",
+      "samplesMs": [
+        27.200000002980232,
+        31.30000000447035,
+        32.19999999552965
+      ],
+      "outputDisconnected": true
+    }
+  ]
+}

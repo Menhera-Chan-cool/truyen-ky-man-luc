@@ -105,10 +105,12 @@ export function LanguageLinks({
   locale,
   chapterId,
   admin = false,
+  disabled = false,
 }: {
   locale: string;
   chapterId?: string;
   admin?: boolean;
+  disabled?: boolean;
 }) {
   return (
     <nav
@@ -122,11 +124,17 @@ export function LanguageLinks({
             : `/vi${chapterId ? "/read/" + chapterId : ""}`
         }
         hrefLang="vi"
+        aria-disabled={disabled || undefined}
+        tabIndex={disabled ? -1 : undefined}
         lang="vi"
         aria-current={locale === "vi" ? "page" : undefined}
-        onClick={() =>
-          typeof window !== "undefined" && window.speechSynthesis?.cancel()
-        }
+        onClick={(e) => {
+          if (disabled) {
+            e.preventDefault();
+            return;
+          }
+          if (typeof window !== "undefined") window.speechSynthesis?.cancel();
+        }}
         aria-label="Tiếng Việt"
       >
         VI
@@ -139,11 +147,17 @@ export function LanguageLinks({
             : `/en${chapterId ? "/read/" + chapterId : ""}`
         }
         hrefLang="en"
+        aria-disabled={disabled || undefined}
+        tabIndex={disabled ? -1 : undefined}
         lang="en"
         aria-current={locale === "en" ? "page" : undefined}
-        onClick={() =>
-          typeof window !== "undefined" && window.speechSynthesis?.cancel()
-        }
+        onClick={(e) => {
+          if (disabled) {
+            e.preventDefault();
+            return;
+          }
+          if (typeof window !== "undefined") window.speechSynthesis?.cancel();
+        }}
         aria-label="English"
       >
         EN

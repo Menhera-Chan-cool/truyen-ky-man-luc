@@ -24,13 +24,17 @@ export default function ImportPanel({
   chapters,
   onDone,
   onError,
+  onBusyChange,
+  onDirtyChange,
 }: {
   locale: Locale;
   editionLocale: Locale;
   onEditionChange: (locale: Locale) => void;
   chapters: { id: string; title: string; revision: number }[];
-  onDone: () => void;
+  onDone: () => void | Promise<void>;
   onError: (error: string) => void;
+  onBusyChange?: (busy: boolean) => void;
+  onDirtyChange?: (dirty: boolean) => void;
 }) {
   const language = editionLocale,
     setLanguage = onEditionChange;
@@ -41,13 +45,21 @@ export default function ImportPanel({
   const [previewPdf, setPreviewPdf] = useState<string | null>(null);
   const L = (vi: string, en: string) => tx(locale, vi, en);
   const selected = items.filter((c) => c.selected);
+  useEffect(() => {
+    onDirtyChange?.(items.length > 0);
+  }, [items, onDirtyChange]);
+  useEffect(() => () => onDirtyChange?.(false), [onDirtyChange]);
+  function setWorking(value: boolean) {
+    setBusy(value);
+    onBusyChange?.(value);
+  }
   const update = (key: string, changes: Partial<Candidate>) =>
     setItems((prev) =>
       prev.map((c) => (c.key === key ? { ...c, ...changes } : c)),
     );
   async function load(files: FileList | File[] | null) {
     if (!files?.length) return;
-    setBusy(true);
+    setWorking(true);
     try {
       const result: Candidate[] = [];
       for (const file of Array.from(files)) {
@@ -77,12 +89,12 @@ export default function ImportPanel({
     } catch (e) {
       onError(e instanceof Error ? e.message : "Import failed");
     } finally {
-      setBusy(false);
+      setWorking(false);
     }
   }
   async function save() {
     if (!selected.length) return;
-    setBusy(true);
+    setWorking(true);
     try {
       const sources = new Map<File, string>();
       const prepared = [];
@@ -132,12 +144,13 @@ export default function ImportPanel({
         confirmReplace: replace,
       });
       setItems([]);
+      onDirtyChange?.(false);
       setStatus("");
-      onDone();
+      await onDone();
     } catch (e) {
       onError(e instanceof Error ? e.message : "Import failed");
     } finally {
-      setBusy(false);
+      setWorking(false);
     }
   }
   async function extractForReview(item: Candidate) {
@@ -152,7 +165,7 @@ export default function ImportPanel({
       onError(L("Khoảng trang PDF không hợp lệ.", "Invalid PDF page range."));
       return;
     }
-    setBusy(true);
+    setWorking(true);
     setStatus(L("Đang trích lớp chữ…", "Extracting the text layer…"));
     try {
       const pdfjs = await import("pdfjs-dist");
@@ -194,7 +207,7 @@ export default function ImportPanel({
     } catch (e) {
       onError(e instanceof Error ? e.message : "Extraction failed");
     } finally {
-      setBusy(false);
+      setWorking(false);
       setStatus("");
     }
   }

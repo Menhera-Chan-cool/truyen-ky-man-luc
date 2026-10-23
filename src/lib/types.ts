@@ -48,13 +48,19 @@ export type Annotation = {
   color: string;
   note: string;
   createdAt: number;
+  pdfPage?: number;
+  pdfZoom?: number;
 };
 export type Progress = {
   chapterId: string;
   ratio: number;
   revision: number;
   page: number;
+  anchor?: number;
+  pdfPage?: number;
+  pdfZoom?: number;
 };
+export type PdfPosition = { page: number; zoom: number };
 export type ReaderSettings = {
   theme: string;
   font: string;

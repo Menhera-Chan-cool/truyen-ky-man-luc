@@ -3,27 +3,64 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
 import { IconButton } from "./Ui";
 import { tx } from "../lib/content";
-import type { Locale } from "../lib/types";
+import type { Locale, PdfPosition } from "../lib/types";
 export default function PdfViewer({
   src,
   locale,
   onText,
+  initialPage = 1,
+  initialZoom = 1,
+  onPosition,
 }: {
   src: string;
   locale: Locale;
-  onText: (text: string) => void;
+  onText: (text: string, page?: number) => void;
+  initialPage?: number;
+  initialZoom?: number;
+  onPosition?: (position: PdfPosition) => void;
 }) {
   const [page, setPage] = useState(1),
     [count, setCount] = useState(0),
     [zoom, setZoom] = useState(1),
     [error, setError] = useState("");
   const host = useRef<HTMLDivElement>(null);
+  const requested = useRef({ page: initialPage, zoom: initialZoom });
+  requested.current = { page: initialPage, zoom: initialZoom };
+  const [width, setWidth] = useState(0);
+  const validZoom = (value: number) =>
+    Number.isFinite(value) ? Math.max(0.5, Math.min(3, value)) : 1;
+  useEffect(() => {
+    const parent = host.current?.parentElement;
+    if (!parent) return;
+    const update = () => setWidth(Math.round(parent.clientWidth));
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(parent);
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
+    if (!documentRef.current) return;
+    setPage(
+      Math.max(
+        1,
+        Math.min(documentRef.current.numPages, Math.trunc(initialPage) || 1),
+      ),
+    );
+    setZoom(validZoom(initialZoom));
+  }, [initialPage, initialZoom]);
+  useEffect(() => {
+    if (count && page <= count) onPosition?.({ page, zoom });
+  }, [page, zoom, count, onPosition]);
   const documentRef = useRef<import("pdfjs-dist").PDFDocumentProxy | null>(
     null,
   );
   useEffect(() => {
     let cancelled = false;
     let task: import("pdfjs-dist").PDFDocumentLoadingTask | undefined;
+    documentRef.current = null;
+    setCount(0);
+    setError("");
+    host.current?.replaceChildren();
     import("pdfjs-dist")
       .then(async (pdfjs) => {
         pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
@@ -34,21 +71,28 @@ export default function PdfViewer({
           return;
         }
         documentRef.current = doc;
+        setZoom(validZoom(requested.current.zoom));
         setCount(doc.numPages);
-        setPage(1);
-      })
-      .catch(() =>
-        setError(
-          tx(
-            locale,
-            "Không mở được PDF. Hãy thử tải lại.",
-            "Unable to open this PDF. Please reload.",
+        setPage(
+          Math.max(
+            1,
+            Math.min(doc.numPages, Math.trunc(requested.current.page) || 1),
           ),
-        ),
-      );
+        );
+      })
+      .catch(() => {
+        if (!cancelled)
+          setError(
+            tx(
+              locale,
+              "Không mở được PDF. Hãy thử tải lại.",
+              "Unable to open this PDF. Please reload.",
+            ),
+          );
+      });
     return () => {
       cancelled = true;
-      task?.destroy();
+      void task?.destroy().catch(() => {});
       documentRef.current = null;
     };
   }, [src, locale]);
@@ -58,13 +102,12 @@ export default function PdfViewer({
     let textLayer: import("pdfjs-dist").TextLayer | undefined;
     const render = async () => {
       const doc = documentRef.current;
-      if (!doc || !host.current) return;
+      if (!doc || !host.current || !width || page > doc.numPages) return;
       const pdfjs = await import("pdfjs-dist");
       const pdfPage = await doc.getPage(page);
       if (cancelled || !host.current) return;
       const normal = pdfPage.getViewport({ scale: 1 });
-      const available =
-        Math.min(host.current.parentElement?.clientWidth ?? 780, 1000) - 32;
+      const available = Math.max(100, Math.min(width, 1000) - 32);
       const scale = (available / normal.width) * zoom;
       const viewport = pdfPage.getViewport({ scale });
       const canvas = document.createElement("canvas");
@@ -88,15 +131,19 @@ export default function PdfViewer({
       await rendering.promise;
       if (cancelled) return;
       const content = await pdfPage.getTextContent();
-      onText(
-        content.items.map((item) => ("str" in item ? item.str : "")).join(" "),
-      );
       textLayer = new pdfjs.TextLayer({
         textContentSource: content,
         container: layer,
         viewport,
       });
       await textLayer.render();
+      if (!cancelled)
+        onText(
+          content.items
+            .map((item) => ("str" in item ? item.str : ""))
+            .join(" "),
+          page,
+        );
     };
     render().catch((e) => {
       if (!cancelled && e?.name !== "RenderingCancelledException")
@@ -113,7 +160,7 @@ export default function PdfViewer({
       rendering?.cancel();
       textLayer?.cancel();
     };
-  }, [page, count, zoom, locale, onText]);
+  }, [page, count, zoom, locale, onText, width]);
   const L = (vi: string, en: string) => tx(locale, vi, en);
   return (
     <div className="pdf-viewer">

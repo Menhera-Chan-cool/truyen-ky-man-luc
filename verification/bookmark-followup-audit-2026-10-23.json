@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-23T10:56:42.893Z",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "firstClick": {
+    "chapter": "chapter-1",
+    "ratio": 0,
+    "targetVisible": false
+  },
+  "secondClick": {
+    "chapter": "chapter-1",
+    "ratio": 0.8622132931525197,
+    "targetVisible": true
+  },
+  "messages": [
+    "Đã lưu đánh dấu trên thiết bị."
+  ],
+  "userDataChanged": false,
+  "supabaseWrites": false,
+  "noteCreatedOnlyInIsolatedBrowser": true
+}

@@ -156,7 +156,7 @@ export function rangeFromOffsets(
   let started = false;
   while ((node = walk.nextNode())) {
     const length = node.textContent?.length ?? 0;
-    if (!started && start >= offset && start <= offset + length) {
+    if (!started && start >= offset && start < offset + length) {
       range.setStart(node, start - offset);
       started = true;
     }
@@ -167,6 +167,48 @@ export function rangeFromOffsets(
     offset += length;
   }
   return null;
+}
+export function visibleTextOffset(
+  root: HTMLElement,
+  viewport: DOMRect,
+  paged: boolean,
+): number | undefined {
+  const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let node: Node | null,
+    offset = 0;
+  while ((node = walk.nextNode())) {
+    const text = node.textContent ?? "",
+      length = text.length;
+    if (text.trim()) {
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      const intersects = [...range.getClientRects()].some(
+        (r) =>
+          r.right > viewport.left + 1 &&
+          r.left < viewport.right - 1 &&
+          r.bottom > viewport.top + 1 &&
+          r.top < viewport.bottom,
+      );
+      if (intersects) {
+        let low = 0,
+          high = length - 1;
+        while (low < high) {
+          const mid = Math.floor((low + high) / 2);
+          range.setStart(node, mid);
+          range.setEnd(node, mid + 1);
+          const r = range.getBoundingClientRect();
+          const before = paged
+            ? r.right <= viewport.left + 1 ||
+              (r.left < viewport.right && r.bottom <= viewport.top + 1)
+            : r.bottom <= viewport.top + 1;
+          if (before) low = mid + 1;
+          else high = mid;
+        }
+        return offset + low;
+      }
+    }
+    offset += length;
+  }
 }
 export function selectionAnchor(root: HTMLElement) {
   const selection = window.getSelection();

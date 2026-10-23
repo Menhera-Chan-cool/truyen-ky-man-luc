@@ -81,7 +81,10 @@ export default function Admin({ locale }: { locale: Locale }) {
     [state, setState] = useState<State | null>(null),
     [error, setError] = useState(""),
     [message, setMessage] = useState(""),
-    [busy, setBusy] = useState(false);
+    [operationBusy, setBusy] = useState(false);
+  const [childBusy, setChildBusy] = useState(false),
+    [importDirty, setImportDirty] = useState(false);
+  const busy = operationBusy || childBusy;
   const [tab, setTab] = useState("chapters"),
     [editLocale, setEditLocale] = useState<Locale>(locale),
     [selected, setSelected] = useState(""),
@@ -175,14 +178,14 @@ export default function Admin({ locale }: { locale: Locale }) {
   }, [editorContext, contentAttempt]);
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
-      if (dirty || metaDirty || busy) {
+      if (dirty || metaDirty || importDirty || busy) {
         e.preventDefault();
         e.returnValue = "";
       }
     };
     window.addEventListener("beforeunload", handler);
     return () => window.removeEventListener("beforeunload", handler);
-  }, [dirty, metaDirty, busy]);
+  }, [dirty, metaDirty, importDirty, busy]);
   function report(e: unknown) {
     setError(
       e instanceof Error
@@ -206,7 +209,7 @@ export default function Admin({ locale }: { locale: Locale }) {
   function confirmUnsaved() {
     if (busy) return false;
     return (
-      !(dirty || metaDirty) ||
+      !(dirty || metaDirty || importDirty) ||
       window.confirm(
         L(
           "Bạn có thay đổi chưa lưu. Bỏ các thay đổi này?",
@@ -477,12 +480,13 @@ export default function Admin({ locale }: { locale: Locale }) {
           <BookOpen size={21} /> {L("Biên tập sách", "Book editor")}
         </h1>
         <div className="button-row">
-          <LanguageLinks locale={locale} admin />
+          <LanguageLinks locale={locale} admin disabled={busy} />
           <a href={`/${locale}`} target="_blank" rel="noopener noreferrer">
             {L("Xem sách", "View book")}
           </a>
           <button
             className="secondary-button"
+            disabled={busy}
             onClick={() => {
               if (confirmUnsaved()) browserClient().auth.signOut();
             }}
@@ -510,6 +514,7 @@ export default function Admin({ locale }: { locale: Locale }) {
             return (
               <button
                 key={id as string}
+                disabled={busy}
                 className={tab === id ? "selected" : ""}
                 onClick={() => switchTab(id as string)}
               >
@@ -708,6 +713,7 @@ export default function Admin({ locale }: { locale: Locale }) {
                             onChange={(html) => updateForm({ html })}
                             locale={locale}
                             onError={(e) => setError(e)}
+                            onBusyChange={setChildBusy}
                           />
                         </ModuleBoundary>
                       )}
@@ -950,8 +956,10 @@ export default function Admin({ locale }: { locale: Locale }) {
                       revision: h?.revision ?? 0,
                     };
                   })}
-                  onDone={() => {
-                    load();
+                  onBusyChange={setChildBusy}
+                  onDirtyChange={setImportDirty}
+                  onDone={async () => {
+                    await load();
                     setMessage(
                       L(
                         "Đã nhập bản nháp. Mở Chương & minh họa để kiểm tra và xuất bản.",

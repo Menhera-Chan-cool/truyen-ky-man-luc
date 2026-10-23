@@ -1,0 +1,106 @@
+{
+  "checks": [
+    {
+      "apiStatus": 401,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    },
+    {
+      "apiStatus": 200,
+      "authVerified": true,
+      "authError": null
+    }
+  ],
+  "cleanup": true,
+  "tokenTtlSeconds": 3600
+}

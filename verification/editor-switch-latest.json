@@ -1,46 +1,41 @@
 {
-  "base": "https://truyen-ky-man-luc.vercel.app",
-  "checks": [
-    "vi rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
-    "vi stale chapter request is cancelled; import tool loads on demand",
-    "en rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
-    "en stale chapter request is cancelled; import tool loads on demand"
-  ],
+  "base": "http://localhost:3001",
+  "checks": [],
   "cleanup": [
     {
-      "label": "edition verify-editor-a38d74fa-preface",
+      "label": "edition verify-editor-ac3c414c-preface",
       "ok": true
     },
     {
-      "label": "versions verify-editor-a38d74fa-preface",
+      "label": "versions verify-editor-ac3c414c-preface",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-a38d74fa-preface",
+      "label": "chapter verify-editor-ac3c414c-preface",
       "ok": true
     },
     {
-      "label": "edition verify-editor-a38d74fa-one",
+      "label": "edition verify-editor-ac3c414c-one",
       "ok": true
     },
     {
-      "label": "versions verify-editor-a38d74fa-one",
+      "label": "versions verify-editor-ac3c414c-one",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-a38d74fa-one",
+      "label": "chapter verify-editor-ac3c414c-one",
       "ok": true
     },
     {
-      "label": "edition verify-editor-a38d74fa-two",
+      "label": "edition verify-editor-ac3c414c-two",
       "ok": true
     },
     {
-      "label": "versions verify-editor-a38d74fa-two",
+      "label": "versions verify-editor-ac3c414c-two",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-a38d74fa-two",
+      "label": "chapter verify-editor-ac3c414c-two",
       "ok": true
     },
     {
@@ -52,5 +47,13 @@
       "ok": true
     }
   ],
-  "success": true
+  "failure": {
+    "phase": "open vi",
+    "name": "TimeoutError",
+    "alerts": [
+      ""
+    ],
+    "detail": "locator.waitFor: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.editor-chapter').first() to be visible\u001b[22m\n"
+  },
+  "success": false
 }
