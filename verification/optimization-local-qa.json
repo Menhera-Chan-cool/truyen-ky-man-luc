@@ -1,0 +1,17 @@
+{
+  "base": "http://localhost:3002",
+  "results": [
+    {
+      "viewport": "desktop",
+      "noHorizontalOverflow": true,
+      "toolbarVisible": true,
+      "pageErrors": []
+    },
+    {
+      "viewport": "mobile",
+      "noHorizontalOverflow": true,
+      "toolbarVisible": true,
+      "pageErrors": []
+    }
+  ]
+}

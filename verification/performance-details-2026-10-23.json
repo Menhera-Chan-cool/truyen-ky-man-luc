@@ -1,0 +1,341 @@
+[
+  {
+    "path": "/vi/read/chapter-1",
+    "shifts": [
+      {
+        "value": 0.20092592592592595,
+        "start": 3089.5,
+        "sources": [
+          {
+            "node": "reader-main",
+            "previous": {
+              "x": 0,
+              "y": 60,
+              "width": 1440,
+              "height": 840,
+              "top": 60,
+              "right": 1440,
+              "bottom": 900,
+              "left": 0
+            },
+            "current": {
+              "x": 310,
+              "y": 60,
+              "width": 1130,
+              "height": 840,
+              "top": 60,
+              "right": 1440,
+              "bottom": 900,
+              "left": 310
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.0015551367237734697,
+        "start": 3201.39999999851,
+        "sources": [
+          {
+            "previous": {
+              "x": 480.5,
+              "y": 196.5,
+              "width": 781,
+              "height": 106,
+              "top": 196.5,
+              "right": 1261.5,
+              "bottom": 302.5,
+              "left": 480.5
+            },
+            "current": {
+              "x": 480.5,
+              "y": 192.5,
+              "width": 781,
+              "height": 106,
+              "top": 192.5,
+              "right": 1261.5,
+              "bottom": 298.5,
+              "left": 480.5
+            }
+          },
+          {
+            "previous": {
+              "x": 481.5,
+              "y": 114,
+              "width": 780,
+              "height": 46,
+              "top": 114,
+              "right": 1261.5,
+              "bottom": 160,
+              "left": 481.5
+            },
+            "current": {
+              "x": 481.5,
+              "y": 109,
+              "width": 780,
+              "height": 46,
+              "top": 109,
+              "right": 1261.5,
+              "bottom": 155,
+              "left": 481.5
+            }
+          },
+          {
+            "previous": {
+              "x": 480.5,
+              "y": 524.5,
+              "width": 781,
+              "height": 30,
+              "top": 524.5,
+              "right": 1261.5,
+              "bottom": 554.5,
+              "left": 480.5
+            },
+            "current": {
+              "x": 480.5,
+              "y": 520.5,
+              "width": 781,
+              "height": 30,
+              "top": 520.5,
+              "right": 1261.5,
+              "bottom": 550.5,
+              "left": 480.5
+            }
+          },
+          {
+            "previous": {
+              "x": 480.5,
+              "y": 587.5,
+              "width": 781,
+              "height": 30,
+              "top": 587.5,
+              "right": 1261.5,
+              "bottom": 617.5,
+              "left": 480.5
+            },
+            "current": {
+              "x": 480.5,
+              "y": 583.5,
+              "width": 781,
+              "height": 30,
+              "top": 583.5,
+              "right": 1261.5,
+              "bottom": 613.5,
+              "left": 480.5
+            }
+          },
+          {
+            "previous": {
+              "x": 480.5,
+              "y": 461.5,
+              "width": 781,
+              "height": 30,
+              "top": 461.5,
+              "right": 1261.5,
+              "bottom": 491.5,
+              "left": 480.5
+            },
+            "current": {
+              "x": 480.5,
+              "y": 457.5,
+              "width": 781,
+              "height": 30,
+              "top": 457.5,
+              "right": 1261.5,
+              "bottom": 487.5,
+              "left": 480.5
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00024182480549125515,
+        "start": 3221.7999999970198,
+        "sources": [
+          {
+            "previous": {
+              "x": 481.5,
+              "y": 109,
+              "width": 780,
+              "height": 46,
+              "top": 109,
+              "right": 1261.5,
+              "bottom": 155,
+              "left": 481.5
+            },
+            "current": {
+              "x": 481.5,
+              "y": 109,
+              "width": 780,
+              "height": 46,
+              "top": 109,
+              "right": 1261.5,
+              "bottom": 155,
+              "left": 481.5
+            }
+          }
+        ]
+      }
+    ],
+    "readerDarkThenBook": "book-site "
+  },
+  {
+    "path": "/admin?lang=vi",
+    "shifts": [
+      {
+        "value": 0.0006230468749999999,
+        "start": 1166.8999999985099,
+        "sources": [
+          {
+            "previous": {
+              "x": 0,
+              "y": 50,
+              "width": 1440,
+              "height": 33,
+              "top": 50,
+              "right": 1440,
+              "bottom": 83,
+              "left": 0
+            },
+            "current": {
+              "x": 0,
+              "y": 50,
+              "width": 1440,
+              "height": 33,
+              "top": 50,
+              "right": 1440,
+              "bottom": 83,
+              "left": 0
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.25322916666666667,
+        "start": 1184.5,
+        "sources": [
+          {
+            "node": "",
+            "previous": {
+              "x": 0,
+              "y": 0,
+              "width": 1440,
+              "height": 133,
+              "top": 0,
+              "right": 1440,
+              "bottom": 133,
+              "left": 0
+            },
+            "current": {
+              "x": 0,
+              "y": 70,
+              "width": 1440,
+              "height": 592.6875,
+              "top": 70,
+              "right": 1440,
+              "bottom": 662.6875,
+              "left": 0
+            }
+          }
+        ]
+      },
+      {
+        "value": 0.00008652876237782924,
+        "start": 1262.5999999940395,
+        "sources": [
+          {
+            "node": "primary-button",
+            "previous": {
+              "x": 531,
+              "y": 491,
+              "width": 378,
+              "height": 45,
+              "top": 491,
+              "right": 909,
+              "bottom": 536,
+              "left": 531
+            },
+            "current": {
+              "x": 531,
+              "y": 494,
+              "width": 378,
+              "height": 45,
+              "top": 494,
+              "right": 909,
+              "bottom": 539,
+              "left": 531
+            }
+          },
+          {
+            "node": "",
+            "previous": {
+              "x": 531,
+              "y": 411,
+              "width": 378,
+              "height": 42,
+              "top": 411,
+              "right": 909,
+              "bottom": 453,
+              "left": 531
+            },
+            "current": {
+              "x": 531,
+              "y": 414,
+              "width": 378,
+              "height": 42,
+              "top": 414,
+              "right": 909,
+              "bottom": 456,
+              "left": 531
+            }
+          },
+          {
+            "node": "tiny muted",
+            "previous": {
+              "x": 531,
+              "y": 556,
+              "width": 378,
+              "height": 18.6875,
+              "top": 556,
+              "right": 909,
+              "bottom": 574.6875,
+              "left": 531
+            },
+            "current": {
+              "x": 531,
+              "y": 559,
+              "width": 378,
+              "height": 18.6875,
+              "top": 559,
+              "right": 909,
+              "bottom": 577.6875,
+              "left": 531
+            }
+          },
+          {
+            "node": "guest-link",
+            "previous": {
+              "x": 531,
+              "y": 610.6875,
+              "width": 167,
+              "height": 18.5,
+              "top": 610.6875,
+              "right": 698,
+              "bottom": 629.1875,
+              "left": 531
+            },
+            "current": {
+              "x": 531,
+              "y": 613.6875,
+              "width": 167,
+              "height": 18.5,
+              "top": 613.6875,
+              "right": 698,
+              "bottom": 632.1875,
+              "left": 531
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

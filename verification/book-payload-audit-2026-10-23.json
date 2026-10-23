@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-23T09:53:32.705Z",
+  "environment": "Local Node 24, published anon RPC; not Vercel CPU timing",
+  "results": [
+    {
+      "fetchMs": 1273,
+      "jsonBytes": 865640,
+      "editions": 40,
+      "htmlBytes": 855831,
+      "sanitizeMs": 333
+    },
+    {
+      "fetchMs": 509,
+      "jsonBytes": 865640,
+      "editions": 40,
+      "htmlBytes": 855831,
+      "sanitizeMs": 261
+    },
+    {
+      "fetchMs": 220,
+      "jsonBytes": 865640,
+      "editions": 40,
+      "htmlBytes": 855831,
+      "sanitizeMs": 243
+    }
+  ]
+}

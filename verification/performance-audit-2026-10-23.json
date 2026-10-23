@@ -1,0 +1,266 @@
+{
+  "checkedAt": "2026-10-23T09:51:52.709Z",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "results": [
+    {
+      "path": "/vi",
+      "device": "1440px Chromium",
+      "ttfbMs": 191,
+      "fcpMs": 2484,
+      "responseEndMs": 2351,
+      "lcpMs": 2528,
+      "cls": 0.0012298415279519245,
+      "htmlBytes": 5087,
+      "scriptEncodedBytes": 193019,
+      "scriptDecodedBytes": 574988,
+      "scriptCount": 9,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/2elr9_5b7_1c-.js",
+          "bytes": 73420
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/0ykyzfd0mwwu3.js",
+          "bytes": 8510
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [],
+      "heading": "Truyền kỳ mạn lục",
+      "horizontalOverflow": false,
+      "errors": []
+    },
+    {
+      "path": "/vi/read/chapter-1",
+      "device": "1440px Chromium",
+      "ttfbMs": 220,
+      "fcpMs": 2336,
+      "responseEndMs": 2296,
+      "lcpMs": 2336,
+      "cls": 0.20293750930179133,
+      "htmlBytes": 161954,
+      "scriptEncodedBytes": 212970,
+      "scriptDecodedBytes": 630104,
+      "scriptCount": 10,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/2elr9_5b7_1c-.js",
+          "bytes": 73420
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/15vx9we_bu47f.js",
+          "bytes": 19336
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [],
+      "heading": "Chương 1: Câu Chuyện Ở Đền Hạng Vương",
+      "horizontalOverflow": false,
+      "scroll": {
+        "frames": 120,
+        "elapsedMs": 1986,
+        "progressPuts": 240,
+        "frameP95Ms": 18,
+        "scrollTop": 1440,
+        "longTasks": []
+      },
+      "errors": []
+    },
+    {
+      "path": "/admin?lang=vi",
+      "device": "1440px Chromium",
+      "ttfbMs": 226,
+      "fcpMs": 916,
+      "responseEndMs": 570,
+      "lcpMs": 1384,
+      "cls": 0.2539277295524691,
+      "htmlBytes": 2225,
+      "scriptEncodedBytes": 652477,
+      "scriptDecodedBytes": 1918609,
+      "scriptCount": 13,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/1w1qg0rut-lwr.js",
+          "bytes": 338242
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2elr9_5b7_1c-.js",
+          "bytes": 73420
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2ezpyswqb11kd.js",
+          "bytes": 62453
+        },
+        {
+          "path": "/_next/static/immutable/chunks/0k7qc3q-16x9g.js",
+          "bytes": 52307
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [
+        {
+          "start": 1274.7999999970198,
+          "ms": 71
+        }
+      ],
+      "heading": "Đăng nhập",
+      "horizontalOverflow": false,
+      "errors": []
+    },
+    {
+      "path": "/vi",
+      "device": "390px Chromium, CPU 4x slowdown",
+      "ttfbMs": 409,
+      "fcpMs": 2204,
+      "responseEndMs": 1846,
+      "lcpMs": 2204,
+      "cls": 0,
+      "htmlBytes": 5065,
+      "scriptEncodedBytes": 193019,
+      "scriptDecodedBytes": 574988,
+      "scriptCount": 9,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/2elr9_5b7_1c-.js",
+          "bytes": 73420
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/0ykyzfd0mwwu3.js",
+          "bytes": 8510
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [
+        {
+          "start": 2214.6999999955297,
+          "ms": 145
+        }
+      ],
+      "heading": "Truyền kỳ mạn lục",
+      "horizontalOverflow": false,
+      "errors": []
+    },
+    {
+      "path": "/vi/read/chapter-1",
+      "device": "390px Chromium, CPU 4x slowdown",
+      "ttfbMs": 656,
+      "fcpMs": 2068,
+      "responseEndMs": 2049,
+      "lcpMs": 2068,
+      "cls": 0,
+      "htmlBytes": 161774,
+      "scriptEncodedBytes": 212970,
+      "scriptDecodedBytes": 630104,
+      "scriptCount": 10,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/2elr9_5b7_1c-.js",
+          "bytes": 73420
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/15vx9we_bu47f.js",
+          "bytes": 19336
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [
+        {
+          "start": 2116.60000000149,
+          "ms": 168
+        },
+        {
+          "start": 2357.5,
+          "ms": 123
+        }
+      ],
+      "heading": "Chương 1: Câu Chuyện Ở Đền Hạng Vương",
+      "horizontalOverflow": false,
+      "scroll": {
+        "frames": 120,
+        "elapsedMs": 1987,
+        "progressPuts": 240,
+        "frameP95Ms": 18,
+        "scrollTop": 1440,
+        "longTasks": []
+      },
+      "errors": []
+    },
+    {
+      "path": "/admin?lang=vi",
+      "device": "390px Chromium, CPU 4x slowdown",
+      "ttfbMs": 972,
+      "fcpMs": 1264,
+      "responseEndMs": 1104,
+      "lcpMs": 1264,
+      "cls": 0.027087692411359894,
+      "htmlBytes": 2225,
+      "scriptEncodedBytes": 652477,
+      "scriptDecodedBytes": 1918609,
+      "scriptCount": 13,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/1w1qg0rut-lwr.js",
+          "bytes": 338242
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2elr9_5b7_1c-.js",
+          "bytes": 73420
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2ezpyswqb11kd.js",
+          "bytes": 62453
+        },
+        {
+          "path": "/_next/static/immutable/chunks/0k7qc3q-16x9g.js",
+          "bytes": 52307
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [
+        {
+          "start": 1629.3999999985099,
+          "ms": 151
+        },
+        {
+          "start": 1803.2999999970198,
+          "ms": 391
+        }
+      ],
+      "heading": "Đăng nhập",
+      "horizontalOverflow": false,
+      "errors": []
+    }
+  ]
+}

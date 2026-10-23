@@ -1,0 +1,594 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-22T12:08:36.742Z",
+  "title": "Design System: Truyền kỳ mạn lục",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Ivory Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0156 86.43)",
+          "oklch(26.4% 0.0156 86.43)",
+          "oklch(37.9% 0.0156 86.43)",
+          "oklch(49.3% 0.0156 86.43)",
+          "oklch(60.7% 0.0156 86.43)",
+          "oklch(72.1% 0.0156 86.43)",
+          "oklch(83.6% 0.0156 86.43)",
+          "oklch(95% 0.0156 86.43)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Inset Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0214 85.95)",
+          "oklch(26.4% 0.0214 85.95)",
+          "oklch(37.9% 0.0214 85.95)",
+          "oklch(49.3% 0.0214 85.95)",
+          "oklch(60.7% 0.0214 85.95)",
+          "oklch(72.1% 0.0214 85.95)",
+          "oklch(83.6% 0.0214 85.95)",
+          "oklch(95% 0.0214 85.95)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Brown Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0158 79.57)",
+          "oklch(26.4% 0.0158 79.57)",
+          "oklch(37.9% 0.0158 79.57)",
+          "oklch(49.3% 0.0158 79.57)",
+          "oklch(60.7% 0.0158 79.57)",
+          "oklch(72.1% 0.0158 79.57)",
+          "oklch(83.6% 0.0158 79.57)",
+          "oklch(95% 0.0158 79.57)"
+        ]
+      },
+      "secondary": {
+        "role": "neutral",
+        "displayName": "Secondary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0270 75.58)",
+          "oklch(26.4% 0.0270 75.58)",
+          "oklch(37.9% 0.0270 75.58)",
+          "oklch(49.3% 0.0270 75.58)",
+          "oklch(60.7% 0.0270 75.58)",
+          "oklch(72.1% 0.0270 75.58)",
+          "oklch(83.6% 0.0270 75.58)",
+          "oklch(95% 0.0270 75.58)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Vermilion",
+        "tonalRamp": [
+          "oklch(15% 0.1231 28.66)",
+          "oklch(26.4% 0.1231 28.66)",
+          "oklch(37.9% 0.1231 28.66)",
+          "oklch(49.3% 0.1231 28.66)",
+          "oklch(60.7% 0.1231 28.66)",
+          "oklch(72.1% 0.1231 28.66)",
+          "oklch(83.6% 0.1231 28.66)",
+          "oklch(95% 0.1231 28.66)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Paper Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0275 80.23)",
+          "oklch(26.4% 0.0275 80.23)",
+          "oklch(37.9% 0.0275 80.23)",
+          "oklch(49.3% 0.0275 80.23)",
+          "oklch(60.7% 0.0275 80.23)",
+          "oklch(72.1% 0.0275 80.23)",
+          "oklch(83.6% 0.0275 80.23)",
+          "oklch(95% 0.0275 80.23)"
+        ]
+      },
+      "button-ink": {
+        "role": "neutral",
+        "displayName": "Warm Button Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0142 84.58)",
+          "oklch(26.4% 0.0142 84.58)",
+          "oklch(37.9% 0.0142 84.58)",
+          "oklch(49.3% 0.0142 84.58)",
+          "oklch(60.7% 0.0142 84.58)",
+          "oklch(72.1% 0.0142 84.58)",
+          "oklch(83.6% 0.0142 84.58)",
+          "oklch(95% 0.0142 84.58)"
+        ]
+      },
+      "reader-light-paper": {
+        "role": "neutral",
+        "displayName": "Reader Light Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0069 88.64)",
+          "oklch(26.4% 0.0069 88.64)",
+          "oklch(37.9% 0.0069 88.64)",
+          "oklch(49.3% 0.0069 88.64)",
+          "oklch(60.7% 0.0069 88.64)",
+          "oklch(72.1% 0.0069 88.64)",
+          "oklch(83.6% 0.0069 88.64)",
+          "oklch(95% 0.0069 88.64)"
+        ]
+      },
+      "reader-light-ink": {
+        "role": "neutral",
+        "displayName": "Reader Light Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0117 84.58)",
+          "oklch(26.4% 0.0117 84.58)",
+          "oklch(37.9% 0.0117 84.58)",
+          "oklch(49.3% 0.0117 84.58)",
+          "oklch(60.7% 0.0117 84.58)",
+          "oklch(72.1% 0.0117 84.58)",
+          "oklch(83.6% 0.0117 84.58)",
+          "oklch(95% 0.0117 84.58)"
+        ]
+      },
+      "reader-warm-paper": {
+        "role": "neutral",
+        "displayName": "Reader Warm Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0408 81.71)",
+          "oklch(26.4% 0.0408 81.71)",
+          "oklch(37.9% 0.0408 81.71)",
+          "oklch(49.3% 0.0408 81.71)",
+          "oklch(60.7% 0.0408 81.71)",
+          "oklch(72.1% 0.0408 81.71)",
+          "oklch(83.6% 0.0408 81.71)",
+          "oklch(95% 0.0408 81.71)"
+        ]
+      },
+      "reader-warm-ink": {
+        "role": "neutral",
+        "displayName": "Reader Warm Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0270 66.51)",
+          "oklch(26.4% 0.0270 66.51)",
+          "oklch(37.9% 0.0270 66.51)",
+          "oklch(49.3% 0.0270 66.51)",
+          "oklch(60.7% 0.0270 66.51)",
+          "oklch(72.1% 0.0270 66.51)",
+          "oklch(83.6% 0.0270 66.51)",
+          "oklch(95% 0.0270 66.51)"
+        ]
+      },
+      "reader-warm-accent": {
+        "role": "primary",
+        "displayName": "Reader Warm Accent",
+        "tonalRamp": [
+          "oklch(15% 0.1005 41.10)",
+          "oklch(26.4% 0.1005 41.10)",
+          "oklch(37.9% 0.1005 41.10)",
+          "oklch(49.3% 0.1005 41.10)",
+          "oklch(60.7% 0.1005 41.10)",
+          "oklch(72.1% 0.1005 41.10)",
+          "oklch(83.6% 0.1005 41.10)",
+          "oklch(95% 0.1005 41.10)"
+        ]
+      },
+      "reader-coffee-paper": {
+        "role": "neutral",
+        "displayName": "Reader Coffee Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0169 63.33)",
+          "oklch(26.4% 0.0169 63.33)",
+          "oklch(37.9% 0.0169 63.33)",
+          "oklch(49.3% 0.0169 63.33)",
+          "oklch(60.7% 0.0169 63.33)",
+          "oklch(72.1% 0.0169 63.33)",
+          "oklch(83.6% 0.0169 63.33)",
+          "oklch(95% 0.0169 63.33)"
+        ]
+      },
+      "reader-coffee-ink": {
+        "role": "neutral",
+        "displayName": "Reader Coffee Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0432 76.33)",
+          "oklch(26.4% 0.0432 76.33)",
+          "oklch(37.9% 0.0432 76.33)",
+          "oklch(49.3% 0.0432 76.33)",
+          "oklch(60.7% 0.0432 76.33)",
+          "oklch(72.1% 0.0432 76.33)",
+          "oklch(83.6% 0.0432 76.33)",
+          "oklch(95% 0.0432 76.33)"
+        ]
+      },
+      "reader-coffee-accent": {
+        "role": "primary",
+        "displayName": "Reader Coffee Accent",
+        "tonalRamp": [
+          "oklch(15% 0.0942 72.65)",
+          "oklch(26.4% 0.0942 72.65)",
+          "oklch(37.9% 0.0942 72.65)",
+          "oklch(49.3% 0.0942 72.65)",
+          "oklch(60.7% 0.0942 72.65)",
+          "oklch(72.1% 0.0942 72.65)",
+          "oklch(83.6% 0.0942 72.65)",
+          "oklch(95% 0.0942 72.65)"
+        ]
+      },
+      "reader-dark-paper": {
+        "role": "neutral",
+        "displayName": "Reader Dark Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0199 275.80)",
+          "oklch(26.4% 0.0199 275.80)",
+          "oklch(37.9% 0.0199 275.80)",
+          "oklch(49.3% 0.0199 275.80)",
+          "oklch(60.7% 0.0199 275.80)",
+          "oklch(72.1% 0.0199 275.80)",
+          "oklch(83.6% 0.0199 275.80)",
+          "oklch(95% 0.0199 275.80)"
+        ]
+      },
+      "reader-dark-ink": {
+        "role": "neutral",
+        "displayName": "Reader Dark Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0198 87.52)",
+          "oklch(26.4% 0.0198 87.52)",
+          "oklch(37.9% 0.0198 87.52)",
+          "oklch(49.3% 0.0198 87.52)",
+          "oklch(60.7% 0.0198 87.52)",
+          "oklch(72.1% 0.0198 87.52)",
+          "oklch(83.6% 0.0198 87.52)",
+          "oklch(95% 0.0198 87.52)"
+        ]
+      },
+      "reader-dark-accent": {
+        "role": "primary",
+        "displayName": "Reader Dark Accent",
+        "tonalRamp": [
+          "oklch(15% 0.0824 72.19)",
+          "oklch(26.4% 0.0824 72.19)",
+          "oklch(37.9% 0.0824 72.19)",
+          "oklch(49.3% 0.0824 72.19)",
+          "oklch(60.7% 0.0824 72.19)",
+          "oklch(72.1% 0.0824 72.19)",
+          "oklch(83.6% 0.0824 72.19)",
+          "oklch(95% 0.0824 72.19)"
+        ]
+      },
+      "reader-dim-paper": {
+        "role": "neutral",
+        "displayName": "Reader Dim Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0113 271.00)",
+          "oklch(26.4% 0.0113 271.00)",
+          "oklch(37.9% 0.0113 271.00)",
+          "oklch(49.3% 0.0113 271.00)",
+          "oklch(60.7% 0.0113 271.00)",
+          "oklch(72.1% 0.0113 271.00)",
+          "oklch(83.6% 0.0113 271.00)",
+          "oklch(95% 0.0113 271.00)"
+        ]
+      },
+      "reader-dim-ink": {
+        "role": "neutral",
+        "displayName": "Reader Dim Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0130 86.84)",
+          "oklch(26.4% 0.0130 86.84)",
+          "oklch(37.9% 0.0130 86.84)",
+          "oklch(49.3% 0.0130 86.84)",
+          "oklch(60.7% 0.0130 86.84)",
+          "oklch(72.1% 0.0130 86.84)",
+          "oklch(83.6% 0.0130 86.84)",
+          "oklch(95% 0.0130 86.84)"
+        ]
+      },
+      "reader-dim-accent": {
+        "role": "primary",
+        "displayName": "Reader Dim Accent",
+        "tonalRamp": [
+          "oklch(15% 0.0715 72.14)",
+          "oklch(26.4% 0.0715 72.14)",
+          "oklch(37.9% 0.0715 72.14)",
+          "oklch(49.3% 0.0715 72.14)",
+          "oklch(60.7% 0.0715 72.14)",
+          "oklch(72.1% 0.0715 72.14)",
+          "oklch(83.6% 0.0715 72.14)",
+          "oklch(95% 0.0715 72.14)"
+        ]
+      },
+      "eink-paper": {
+        "role": "neutral",
+        "displayName": "Eink Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26.4% 0.0000 89.88)",
+          "oklch(37.9% 0.0000 89.88)",
+          "oklch(49.3% 0.0000 89.88)",
+          "oklch(60.7% 0.0000 89.88)",
+          "oklch(72.1% 0.0000 89.88)",
+          "oklch(83.6% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "eink-ink": {
+        "role": "neutral",
+        "displayName": "Eink Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0000 0.00)",
+          "oklch(26.4% 0.0000 0.00)",
+          "oklch(37.9% 0.0000 0.00)",
+          "oklch(49.3% 0.0000 0.00)",
+          "oklch(60.7% 0.0000 0.00)",
+          "oklch(72.1% 0.0000 0.00)",
+          "oklch(83.6% 0.0000 0.00)",
+          "oklch(95% 0.0000 0.00)"
+        ]
+      },
+      "book-dark-paper": {
+        "role": "neutral",
+        "displayName": "Book Dark Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0140 272.68)",
+          "oklch(26.4% 0.0140 272.68)",
+          "oklch(37.9% 0.0140 272.68)",
+          "oklch(49.3% 0.0140 272.68)",
+          "oklch(60.7% 0.0140 272.68)",
+          "oklch(72.1% 0.0140 272.68)",
+          "oklch(83.6% 0.0140 272.68)",
+          "oklch(95% 0.0140 272.68)"
+        ]
+      },
+      "book-dark-ink": {
+        "role": "neutral",
+        "displayName": "Book Dark Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0185 86.15)",
+          "oklch(26.4% 0.0185 86.15)",
+          "oklch(37.9% 0.0185 86.15)",
+          "oklch(49.3% 0.0185 86.15)",
+          "oklch(60.7% 0.0185 86.15)",
+          "oklch(72.1% 0.0185 86.15)",
+          "oklch(83.6% 0.0185 86.15)",
+          "oklch(95% 0.0185 86.15)"
+        ]
+      },
+      "book-dark-accent": {
+        "role": "primary",
+        "displayName": "Book Dark Accent",
+        "tonalRamp": [
+          "oklch(15% 0.0860 64.89)",
+          "oklch(26.4% 0.0860 64.89)",
+          "oklch(37.9% 0.0860 64.89)",
+          "oklch(49.3% 0.0860 64.89)",
+          "oklch(60.7% 0.0860 64.89)",
+          "oklch(72.1% 0.0860 64.89)",
+          "oklch(83.6% 0.0860 64.89)",
+          "oklch(95% 0.0860 64.89)"
+        ]
+      },
+      "book-dark-secondary": {
+        "role": "neutral",
+        "displayName": "Book Dark Secondary",
+        "tonalRamp": [
+          "oklch(15% 0.0271 76.75)",
+          "oklch(26.4% 0.0271 76.75)",
+          "oklch(37.9% 0.0271 76.75)",
+          "oklch(49.3% 0.0271 76.75)",
+          "oklch(60.7% 0.0271 76.75)",
+          "oklch(72.1% 0.0271 76.75)",
+          "oklch(83.6% 0.0271 76.75)",
+          "oklch(95% 0.0271 76.75)"
+        ]
+      },
+      "book-dark-rule": {
+        "role": "neutral",
+        "displayName": "Book Dark Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0114 78.18)",
+          "oklch(26.4% 0.0114 78.18)",
+          "oklch(37.9% 0.0114 78.18)",
+          "oklch(49.3% 0.0114 78.18)",
+          "oklch(60.7% 0.0114 78.18)",
+          "oklch(72.1% 0.0114 78.18)",
+          "oklch(83.6% 0.0114 78.18)",
+          "oklch(95% 0.0114 78.18)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Book Title",
+        "purpose": "Book h1; responsive overrides apply."
+      },
+      "headline": {
+        "displayName": "Contents Heading",
+        "purpose": "Ruled contents section."
+      },
+      "chapter-title": {
+        "displayName": "Chapter Title",
+        "purpose": "Centered reading heading with dedicated paged overrides."
+      },
+      "reading-default": {
+        "displayName": "Default Reading Text",
+        "purpose": "User-adjustable reading defaults."
+      },
+      "summary": {
+        "displayName": "Book Summary",
+        "purpose": "Literary introduction."
+      },
+      "body": {
+        "displayName": "Interface Body",
+        "purpose": "Base interface text."
+      },
+      "label": {
+        "displayName": "Control Label",
+        "purpose": "Language and field labels."
+      },
+      "byline": {
+        "displayName": "Author Byline",
+        "purpose": "Immediately below h1 with normal tracking."
+      }
+    },
+    "shadows": [
+      {
+        "name": "book-cover",
+        "value": "9px 13px 28px #40372a30",
+        "purpose": "Physical cover depth."
+      },
+      {
+        "name": "reader-panel",
+        "value": "0 14px 50px #0003",
+        "purpose": "Temporary reader overlay."
+      },
+      {
+        "name": "mobile-drawer",
+        "value": "15px 0 40px #0002",
+        "purpose": "Rail overlay."
+      },
+      {
+        "name": "toast",
+        "value": "0 6px 24px #0003",
+        "purpose": "Transient feedback."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-color-transition",
+        "value": "background 0.15s, color 0.15s",
+        "purpose": "Button transitions; reduced-motion and eink disable motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "large-reader",
+        "value": "1600px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1100px"
+      },
+      {
+        "name": "drawer",
+        "value": "900px"
+      },
+      {
+        "name": "phone",
+        "value": "600px"
+      }
+    ],
+    "readerControls": {
+      "optionalFonts": [
+        "Lora",
+        "Merriweather",
+        "Inter",
+        "Roboto",
+        "OpenDyslexic",
+        "JetBrains Mono"
+      ],
+      "tooltip": "Shared fixed bubble; native titles removed; first hover 160 ms; consecutive targets immediate; 120 ms easing; reduced motion supported",
+      "customColors": "Dark compact panel, 26 px swatch and live uppercase HEX; native color-scheme follows actual background"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main action; reader text color follows computed accent contrast.",
+      "html": "<button class=\"ds-primary ds-focus\">Bắt đầu đọc</button>",
+      "css": ".ds-primary{font-family:\"Be Vietnam Pro\",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:12px 20px;border:0;border-radius:6px;font-weight:500;line-height:1.5;cursor:pointer;transition:background .15s,color .15s;background:var(--reader-accent,#8d342b);color:var(--button-ink,#fffaf0)}.ds-primary:hover:not(:disabled){background:color-mix(in srgb,var(--reader-accent,#8d342b) 85%,#000)}.ds-primary:disabled{opacity:.38;cursor:not-allowed}.ds-focus:focus-visible{outline:2px solid var(--reader-accent,#8d342b);outline-offset:4px}@media(prefers-reduced-motion:reduce){button{transition:none!important}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Transparent action with an inset outline.",
+      "html": "<button class=\"ds-secondary ds-focus\">Xem trước</button>",
+      "css": ".ds-secondary{font-family:\"Be Vietnam Pro\",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:12px 20px;border:0;border-radius:6px;font-weight:500;line-height:1.5;cursor:pointer;transition:background .15s,color .15s;background:transparent;color:var(--reader-fg,#302b23);box-shadow:inset 0 0 0 1px color-mix(in srgb,currentColor 25%,transparent)}.ds-secondary:hover:not(:disabled){background:color-mix(in srgb,currentColor 8%,transparent)}.ds-secondary:disabled{opacity:.38;cursor:not-allowed}.ds-focus:focus-visible{outline:2px solid var(--reader-accent,#8d342b);outline-offset:4px}@media(prefers-reduced-motion:reduce){button{transition:none!important}}"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "Labelled SVG action; 38px base, 40px in covered phone contexts.",
+      "html": "<button class=\"ds-icon ds-focus\" aria-label=\"Đóng\"><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"m18 6-12 12M6 6l12 12\"/></svg></button>",
+      "css": ".ds-icon{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border:0;border-radius:6px;background:transparent;color:var(--reader-fg,#302b23);cursor:pointer;transition:background .15s,color .15s}.ds-icon:hover{background:color-mix(in srgb,currentColor 8%,transparent)}.ds-icon[aria-pressed=\"true\"]{background:color-mix(in srgb,var(--reader-accent,#8d342b) 15%,transparent);color:var(--reader-accent,#8d342b)}@media(max-width:600px){.ds-icon{width:40px;height:40px}}.ds-focus:focus-visible{outline:2px solid var(--reader-accent,#8d342b);outline-offset:4px}@media(prefers-reduced-motion:reduce){button{transition:none!important}}"
+    },
+    {
+      "name": "Panel Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Tinted full-width control with a 42px minimum height.",
+      "html": "<label class=\"ds-field-label\">Phông chữ<select class=\"ds-field ds-focus\"><option>Literata</option><option>Georgia</option><option>Be Vietnam Pro</option></select></label>",
+      "css": ".ds-field-label{font-family:\"Be Vietnam Pro\",sans-serif;display:block;color:var(--reader-fg,#302b23);font-size:12px;font-weight:500}.ds-field{font-family:\"Be Vietnam Pro\",sans-serif;display:block;width:100%;margin-top:10px;min-height:42px;padding:11px 10px;border:1px solid color-mix(in srgb,currentColor 20%,transparent);border-radius:6px;background:color-mix(in srgb,currentColor 6%,transparent);color:inherit;font-weight:400}.ds-field option{background:var(--reader-bg,#f5f0e5);color:var(--reader-fg,#302b23)}.ds-focus:focus-visible{outline:2px solid var(--reader-accent,#8d342b);outline-offset:4px}@media(prefers-reduced-motion:reduce){button{transition:none!important}}"
+    },
+    {
+      "name": "Language Navigation",
+      "kind": "nav",
+      "refersTo": "language-link",
+      "description": "Active edition pair; source links preserve chapter identity.",
+      "html": "<nav class=\"ds-language\" aria-label=\"Ngôn ngữ\"><a class=\"ds-focus\" href=\"/vi\" lang=\"vi\" aria-current=\"page\">VI</a><span aria-hidden=\"true\"></span><a class=\"ds-focus\" href=\"/en\" lang=\"en\">EN</a></nav>",
+      "css": ".ds-language{font-family:\"Be Vietnam Pro\",sans-serif;display:flex;align-items:center;gap:3px;flex-shrink:0;color:var(--reader-fg,#302b23);font-size:12px;font-weight:500}.ds-language a{padding:9px 8px;min-width:34px;text-align:center;border-radius:4px;opacity:.6;color:inherit;text-decoration:none}.ds-language a[aria-current=\"page\"]{background:color-mix(in srgb,var(--reader-accent,#8d342b) 9%,transparent);color:var(--reader-accent,#8d342b);opacity:1}.ds-language>span{height:14px;border-left:1px solid currentColor;opacity:.2}@media(max-width:600px){.ds-language a{display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px}}.ds-focus:focus-visible{outline:2px solid var(--reader-accent,#8d342b);outline-offset:4px}@media(prefers-reduced-motion:reduce){button{transition:none!important}}"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "chip",
+      "refersTo": "segment",
+      "description": "Tinted group with filled selected segment.",
+      "html": "<div class=\"ds-segments\" role=\"group\" aria-label=\"Chế độ đọc\"><button class=\"ds-focus ds-selected\" aria-pressed=\"true\">Cuộn</button><button class=\"ds-focus\" aria-pressed=\"false\">Một trang</button></div>",
+      "css": ".ds-segments{font-family:\"Be Vietnam Pro\",sans-serif;display:flex;gap:3px;padding:3px;background:color-mix(in srgb,currentColor 7%,transparent);border-radius:8px;color:var(--reader-fg,#302b23)}.ds-segments button{font-family:\"Be Vietnam Pro\",sans-serif;display:flex;align-items:center;justify-content:center;flex:1;gap:6px;min-height:34px;border:0;background:transparent;border-radius:5px;font-size:11px;padding:6px 8px;white-space:nowrap;color:inherit;cursor:pointer;transition:background .15s,color .15s}.ds-segments button:hover{background:color-mix(in srgb,currentColor 8%,transparent)}.ds-segments button.ds-selected{background:var(--reader-accent,#8d342b);color:var(--button-ink,#fffaf0)}@media(max-width:600px){.ds-segments button{min-width:40px;min-height:40px}}.ds-focus:focus-visible{outline:2px solid var(--reader-accent,#8d342b);outline-offset:4px}@media(prefers-reduced-motion:reduce){button{transition:none!important}}"
+    },
+    {
+      "name": "Reader Panel",
+      "kind": "card",
+      "refersTo": "reader-panel",
+      "description": "Scrollable tinted overlay; preview stays in flow, while source is fixed below toolbar.",
+      "html": "<section class=\"ds-panel\" aria-label=\"Cài đặt trình đọc\"><header class=\"ds-panel-heading\"><h2>Cài đặt trình đọc</h2><button class=\"ds-close ds-focus\" aria-label=\"Đóng\"><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"m18 6-12 12M6 6l12 12\"/></svg></button></header><p>Màu sắc và kiểu chữ</p></section>",
+      "css": ".ds-panel{font-family:\"Be Vietnam Pro\",sans-serif;width:min(425px,calc(100vw - 24px));max-height:calc(100dvh - 90px);overflow:auto;background:color-mix(in srgb,var(--reader-bg,#f5f0e5) 96%,var(--reader-fg,#302b23));color:var(--reader-fg,#302b23);padding:16px 20px 22px;border-radius:12px;box-shadow:0 14px 50px #0003}.ds-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.ds-panel h2{font-family:\"Be Vietnam Pro\",sans-serif;font-size:13px;font-weight:600;margin:0}.ds-panel p{font-size:12px;line-height:1.8}.ds-close{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border:0;background:transparent;color:inherit;border-radius:6px;cursor:pointer}.ds-close:hover{background:color-mix(in srgb,currentColor 8%,transparent)}@media(max-width:600px){.ds-panel{max-height:calc(100dvh - 110px);padding:16px 18px}.ds-close{width:40px;height:40px}}.ds-focus:focus-visible{outline:2px solid var(--reader-accent,#8d342b);outline-offset:4px}@media(prefers-reduced-motion:reduce){button{transition:none!important}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "An annotated reading edition",
+    "overview": "The visitor comes to read an old Vietnamese work on a modern screen, in daylight or evening lamplight. Warm ivory paper, brown ink, vermilion controls, restrained rules, and generous margins carry the approved antique-book world. The supplied blue book cover remains the central visual artifact; its blue is image content rather than a new interface accent.\n\nLiterata gives the title and text their literary character; Be Vietnam Pro keeps controls compact and legible. Novel-Hub's familiar reading structure informs the collapsible contents rail and control bar. The edition is public, bilingual, and readable without an account; sign-in belongs to editors.",
+    "keyCharacteristics": [
+      "Ivory paper, brown ink, and restrained vermilion.",
+      "Supplied blue cover; no synthetic replacement imagery.",
+      "Literata for reading and display; Be Vietnam Pro for controls.",
+      "Ruled contents, adjustable reading width, and a quiet reading column."
+    ],
+    "rules": [
+      {
+        "name": "The Paper and Ink Rule",
+        "body": "Reader surfaces, text, rules, and controls follow the active reader palette. Preserve the separate book-page dark palette.",
+        "section": "colors"
+      },
+      {
+        "name": "The Title Then Author Rule",
+        "body": "Keep the author immediately below the book title in normal letter spacing. Do not turn it into an eyebrow or tracked kicker.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Surface Rule",
+        "body": "Keep the reading page flat. Reserve shadows for the physical cover and temporary overlays.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve the supplied cover and the approved ivory, brown, and vermilion world.",
+      "Do place the author below the book title with normal letter spacing.",
+      "Do preserve the two-row phone toolbar, grouped VI/EN control, and 40px minimum targets in the covered phone controls.",
+      "Do keep settings scrollable, keyboard focus visible, and reduced-motion handling intact.",
+      "Do let chosen reader typography and colors govern the text; distinguish defaults from preferences.",
+      "Do re-extract values when code changes and check the final applicable media rule."
+    ],
+    "donts": [
+      "Don't introduce synthetic cover art or promote cover blue into a new interface palette.",
+      "Don't add decorative eyebrows, tracked author labels, or extra display faces.",
+      "Don't shrink reading text to fit a viewport or screenshot.",
+      "Don't claim a paper-fade animation that the code does not implement.",
+      "Don't infer hosted authentication, storage, or publishing verification from the locked admin screen."
+    ]
+  }
+}

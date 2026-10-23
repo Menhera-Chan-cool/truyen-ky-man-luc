@@ -1,0 +1,62 @@
+{
+  "startedAt": "2026-10-22T13:40:17.720Z",
+  "checks": [
+    "temporary editor login through hosted Auth",
+    "browser login loads editor and hides owner-only membership tab without page errors",
+    "editor cannot manage members or elevate role through direct API",
+    "direct Storage upload, signature registration, private source and authenticated asset preview",
+    "draft save, revision history, script sanitization, stale write conflict and draft privacy",
+    "replacement confirmation, import rollback, publication rollback and withdraw on unpublished test edition",
+    "revoked editor rejected by server API, direct RPC and Storage despite valid old session"
+  ],
+  "cleanup": [
+    {
+      "name": "remove test asset upload",
+      "ok": true
+    },
+    {
+      "name": "remove test source upload",
+      "ok": true
+    },
+    {
+      "name": "remove test asset registration",
+      "ok": true
+    },
+    {
+      "name": "remove test edition",
+      "ok": true
+    },
+    {
+      "name": "remove test revisions",
+      "ok": true
+    },
+    {
+      "name": "remove test chapter",
+      "ok": true
+    },
+    {
+      "name": "remove temporary membership",
+      "ok": true
+    },
+    {
+      "name": "remove temporary Auth account",
+      "ok": true
+    }
+  ],
+  "finishedAt": "2026-10-22T13:40:50.002Z",
+  "success": true,
+  "owner": {
+    "active": true,
+    "emailConfirmed": true,
+    "signInRecorded": true,
+    "userConfirmedEditorAccess": true
+  },
+  "cleanupVerified": {
+    "temporaryChaptersRemaining": 0,
+    "temporaryMembershipsRemaining": 0
+  },
+  "limits": [
+    "Successful publication, cover/metadata changes and reordering of the real public book were not exercised",
+    "Publication was tested as an intentional atomic rollback; no test content was published"
+  ]
+}

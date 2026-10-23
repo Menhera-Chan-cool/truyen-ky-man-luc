@@ -1,0 +1,146 @@
+{
+  "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
+  "deploymentId": "dpl_A4jYCve1HNRG9uLHJDQ1DSf276HX",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-d9oklxg17-anh-tun.vercel.app",
+  "target": "production",
+  "region": "sin1",
+  "state": "READY",
+  "checkedAt": "2026-10-23T00:01:52.567Z",
+  "runtime": {
+    "node": "24.x",
+    "NODE_OPTIONS": "--experimental-require-module"
+  },
+  "verification": {
+    "unitTests": 41,
+    "typecheck": true,
+    "productionBuild": true,
+    "sourceParagraphs": {
+      "vi": 2896,
+      "en": 1420,
+      "allMatch": true
+    },
+    "livePlaywright": {
+      "lastFull": {
+        "deploymentId": "dpl_3p2h28DosVsq2emtNxeBm5qkUGQT",
+        "passed": 38,
+        "skipped": 2,
+        "failed": 0,
+        "retried": 0
+      },
+      "latestSpeechSubset": {
+        "deploymentId": "dpl_A4jYCve1HNRG9uLHJDQ1DSf276HX",
+        "passed": 6,
+        "failed": 0,
+        "retried": 0
+      },
+      "note": "Phone geometry skipped on desktop; hover tooltip skipped on mobile."
+    },
+    "liveQA": {
+      "desktop": true,
+      "mobile": true,
+      "pageErrors": 0,
+      "horizontalOverflow": false
+    },
+    "http": {
+      "/vi": 200,
+      "/en": 200,
+      "/vi/read/chapter-1": 200,
+      "/en/read/chapter-20": 200,
+      "/admin": 200,
+      "/api/admin/state": 401,
+      "/api/runtime-check": 404
+    },
+    "hostedPublishedEditions": {
+      "vi": 21,
+      "en": 20,
+      "allTitlesAndHtmlMatchSource": true
+    },
+    "clientBuildSecretScan": {
+      "files": 86,
+      "serverKeyAbsent": true
+    },
+    "hostedIntegrationReport": "verification/hosted.json",
+    "navigationReport": "verification/navigation.json",
+    "navigation": {
+      "beforeMs": [
+        1574,
+        1023,
+        1510,
+        1079
+      ],
+      "afterMs": [
+        7,
+        15,
+        11,
+        11
+      ],
+      "chapterRequestsAfter": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "testsPassed": 6
+    },
+    "editorPasteSaveSwitch": {
+      "locales": [
+        "vi",
+        "en"
+      ],
+      "chaptersPerLocale": 3,
+      "richPaste": true,
+      "reloadVerified": true,
+      "allDraftOnly": true,
+      "temporaryDataCleaned": true,
+      "report": "verification/editor-switch-latest.json"
+    },
+    "readerControls": {
+      "additionalFonts": 6,
+      "fontDownloadAndPersistence": true,
+      "sharedTooltip": true,
+      "customColorSwatchAndHex": true,
+      "customNativeColorScheme": true
+    },
+    "storyCount": {
+      "vi": 20,
+      "en": 20,
+      "independentOfMissingTranslation": true
+    },
+    "speech": {
+      "mockedBrowserBoundary": true,
+      "cases": [
+        "no voices",
+        "single voice",
+        "late voices/manual refresh",
+        "voiceschanged",
+        "vi_VN locale",
+        "selected rate 1.4",
+        "language unavailable",
+        "list shrinks to one voice while filtering"
+      ],
+      "realAndroidAudioTested": false
+    }
+  },
+  "supabase": {
+    "configured": true,
+    "adminLocked": false,
+    "ownerCreated": true,
+    "ownerActivationVerified": true,
+    "publicSignupDisabled": true,
+    "emailProviderEnabled": true,
+    "bucketsPrivate": true,
+    "hostedPublicReadsVerified": true,
+    "hostedEditorStorageWritesVerified": true
+  },
+  "limits": [
+    "Successful publication and cover/metadata/reordering changes on the real public book were not exercised",
+    "Publication transaction rollback, private drafts, Storage and editor revocation verified on hosted services",
+    "Vercel logs API denied access (403); live browser and HTTP checks performed",
+    "Speech voice quality depends on user device",
+    "Chapter text snapshot is loaded once per selected locale; reload or change locale for fresh published content. Images/PDF still need network.",
+    "No physical Android audio/voice availability verified. Voice count depends on browser and installed TTS engine; no online TTS provider added."
+  ],
+  "deploymentSourceFiles": 99,
+  "previousDeploymentId": "dpl_Ehm5mpFfZUH8SKEvKvPawT2dZsTJ"
+}

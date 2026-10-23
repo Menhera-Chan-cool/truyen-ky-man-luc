@@ -1,0 +1,180 @@
+{
+  "checkedAt": "2026-10-23T10:13:19.802Z",
+  "base": "http://localhost:3001",
+  "results": [
+    {
+      "path": "/vi/read/chapter-1",
+      "device": "1440px Chromium",
+      "ttfbMs": 2140,
+      "fcpMs": 2248,
+      "responseEndMs": 2167,
+      "lcpMs": 2248,
+      "cls": 0.00427282081886574,
+      "htmlBytes": 162984,
+      "scriptEncodedBytes": 207606,
+      "scriptDecodedBytes": 631488,
+      "scriptCount": 10,
+      "largestScripts": [
+        {
+          "path": "/_next/static/chunks/3joo3wvjmdpyw.js",
+          "bytes": 71968
+        },
+        {
+          "path": "/_next/static/chunks/44q1e5wno8kqs.js",
+          "bytes": 47951
+        },
+        {
+          "path": "/_next/static/chunks/1cz89fvwib-vi.js",
+          "bytes": 44227
+        },
+        {
+          "path": "/_next/static/chunks/3p3c0jaeys20k.js",
+          "bytes": 17403
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [],
+      "heading": "Chương 1: Câu Chuyện Ở Đền Hạng Vương",
+      "horizontalOverflow": false,
+      "scroll": {
+        "frames": 120,
+        "elapsedMs": 1977,
+        "progressPuts": 4,
+        "frameP95Ms": 18,
+        "scrollTop": 1440,
+        "longTasks": []
+      },
+      "errors": []
+    },
+    {
+      "path": "/admin?lang=vi",
+      "device": "1440px Chromium",
+      "ttfbMs": 6,
+      "fcpMs": 96,
+      "responseEndMs": 6,
+      "lcpMs": 128,
+      "cls": 0.0017029110001929011,
+      "htmlBytes": 2485,
+      "scriptEncodedBytes": 275245,
+      "scriptDecodedBytes": 887803,
+      "scriptCount": 12,
+      "largestScripts": [
+        {
+          "path": "/_next/static/chunks/3joo3wvjmdpyw.js",
+          "bytes": 71968
+        },
+        {
+          "path": "/_next/static/chunks/398nmnnm559ao.js",
+          "bytes": 61181
+        },
+        {
+          "path": "/_next/static/chunks/44q1e5wno8kqs.js",
+          "bytes": 47951
+        },
+        {
+          "path": "/_next/static/chunks/1cz89fvwib-vi.js",
+          "bytes": 44227
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [],
+      "heading": "Đăng nhập",
+      "horizontalOverflow": false,
+      "errors": []
+    },
+    {
+      "path": "/vi/read/chapter-1",
+      "device": "390px Chromium, CPU 4x slowdown",
+      "ttfbMs": 1350,
+      "fcpMs": 1444,
+      "responseEndMs": 1367,
+      "lcpMs": 1716,
+      "cls": 0,
+      "htmlBytes": 162984,
+      "scriptEncodedBytes": 207606,
+      "scriptDecodedBytes": 631488,
+      "scriptCount": 10,
+      "largestScripts": [
+        {
+          "path": "/_next/static/chunks/3joo3wvjmdpyw.js",
+          "bytes": 71968
+        },
+        {
+          "path": "/_next/static/chunks/44q1e5wno8kqs.js",
+          "bytes": 47951
+        },
+        {
+          "path": "/_next/static/chunks/1cz89fvwib-vi.js",
+          "bytes": 44227
+        },
+        {
+          "path": "/_next/static/chunks/3p3c0jaeys20k.js",
+          "bytes": 17403
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [
+        {
+          "start": 1721.3999999985099,
+          "ms": 153
+        },
+        {
+          "start": 1897,
+          "ms": 130
+        }
+      ],
+      "heading": "Chương 1: Câu Chuyện Ở Đền Hạng Vương",
+      "horizontalOverflow": false,
+      "scroll": {
+        "frames": 120,
+        "elapsedMs": 1984,
+        "progressPuts": 4,
+        "frameP95Ms": 19,
+        "scrollTop": 1440,
+        "longTasks": []
+      },
+      "errors": []
+    },
+    {
+      "path": "/admin?lang=vi",
+      "device": "390px Chromium, CPU 4x slowdown",
+      "ttfbMs": 9,
+      "fcpMs": 132,
+      "responseEndMs": 11,
+      "lcpMs": 896,
+      "cls": 0.0375071487439808,
+      "htmlBytes": 2485,
+      "scriptEncodedBytes": 275245,
+      "scriptDecodedBytes": 887803,
+      "scriptCount": 12,
+      "largestScripts": [
+        {
+          "path": "/_next/static/chunks/3joo3wvjmdpyw.js",
+          "bytes": 71968
+        },
+        {
+          "path": "/_next/static/chunks/398nmnnm559ao.js",
+          "bytes": 61181
+        },
+        {
+          "path": "/_next/static/chunks/44q1e5wno8kqs.js",
+          "bytes": 47951
+        },
+        {
+          "path": "/_next/static/chunks/1cz89fvwib-vi.js",
+          "bytes": 44227
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [
+        {
+          "start": 152.60000000149012,
+          "ms": 445
+        }
+      ],
+      "heading": "Đăng nhập",
+      "horizontalOverflow": false,
+      "errors": []
+    }
+  ]
+}

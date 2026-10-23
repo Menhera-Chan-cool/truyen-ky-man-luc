@@ -1,0 +1,76 @@
+{
+  "before": {
+    "base": "https://truyen-ky-man-luc.vercel.app",
+    "samples": [
+      {
+        "label": "Chương sau",
+        "target": "Chương 2:",
+        "ms": 1574,
+        "serverRequests": 1
+      },
+      {
+        "label": "Chương trước",
+        "target": "Chương 1:",
+        "ms": 1023,
+        "serverRequests": 1
+      },
+      {
+        "label": "Chương sau",
+        "target": "Chương 2:",
+        "ms": 1510,
+        "serverRequests": 1
+      },
+      {
+        "label": "Chương sau",
+        "target": "Chương 3:",
+        "ms": 1079,
+        "serverRequests": 1
+      }
+    ],
+    "initialNavigation": {
+      "transferBytes": 17681,
+      "decodedBytes": 80732
+    },
+    "checkedAt": "2026-10-22T13:47:49.191Z"
+  },
+  "after": {
+    "base": "https://truyen-ky-man-luc.vercel.app",
+    "samples": [
+      {
+        "label": "Chương sau",
+        "target": "Chương 2:",
+        "ms": 7,
+        "serverRequests": 0
+      },
+      {
+        "label": "Chương trước",
+        "target": "Chương 1:",
+        "ms": 15,
+        "serverRequests": 0
+      },
+      {
+        "label": "Chương sau",
+        "target": "Chương 2:",
+        "ms": 11,
+        "serverRequests": 0
+      },
+      {
+        "label": "Chương sau",
+        "target": "Chương 3:",
+        "ms": 11,
+        "serverRequests": 0
+      }
+    ],
+    "initialNavigation": {
+      "transferBytes": 162125,
+      "decodedBytes": 517989
+    },
+    "checkedAt": "2026-10-22T13:56:07.369Z"
+  },
+  "method": "Desktop Chromium: programmatic chapter button click to changed title rendered at the next animation frame; four transitions per build. First load measured in a fresh browser context.",
+  "scope": "Chapter text already published in the selected locale is loaded once in RAM. Images and PDF assets still load on demand; reload/locale switch fetch fresh published content.",
+  "references": {
+    "NovelHub": "f0e962911154413e8a88e6628ba8f0aea7d3bac4",
+    "EPUBForge": "33120281bfc6faa51d43f5bd45dbbcab882da5d7"
+  }
+}
