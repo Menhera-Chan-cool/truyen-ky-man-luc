@@ -60,9 +60,10 @@ export function parseReaderBackup(text: string): ReaderBackup {
     const raw = object(v.settings);
     const selected: Record<string, unknown> = {};
     for (const [k, d] of Object.entries(defaultSettings)) {
-      if (typeof raw[k] !== typeof d) bad();
-      if (typeof raw[k] === "string") str(raw[k], 512);
-      selected[k] = raw[k];
+      const value = k === "shortPauses" && raw[k] === undefined ? d : raw[k];
+      if (typeof value !== typeof d) bad();
+      if (typeof value === "string") str(value, 512);
+      selected[k] = value;
     }
     settings = normalizeSettings(selected);
     if (Object.entries(settings).some(([k, value]) => value !== selected[k]))

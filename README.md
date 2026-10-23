@@ -70,6 +70,8 @@ Trình đọc nạp sẵn nội dung đã xuất bản của ngôn ngữ đang c
 
 Giọng đọc dùng Web Speech API, phụ thuộc giọng mà trình duyệt/hệ điều hành cung cấp. Một số giọng “online” của thiết bị có thể dùng dịch vụ hệ điều hành; web không có API TTS riêng. Nhiễu trắng/hồng/nâu và tiếng mưa được tạo tại thiết bị bằng Web Audio. File âm thanh riêng không được tải lên server.
 
+Trong **Giọng đọc & tốc độ**, **Ngắt nghỉ ngắn** mặc định bật: gộp các câu ngắn vào cùng lượt đọc và làm nhẹ dấu `. : ; …`/gạch ngang trong bản chữ gửi cho giọng đọc. Nội dung sách, ghi chú và vị trí từ vẫn giữ nguyên; số thập phân, giờ và các viết tắt thông dụng được bảo vệ. Tắt tùy chọn để dùng nhịp gốc. Không đặt được thời lượng nghỉ chính xác bằng Web Speech; mức nghỉ thực tế tùy giọng/thiết bị. Cài đặt lưu trên thiết bị và bản sao JSON cũ vẫn nhập được.
+
 Mục lục đếm tổng câu chuyện, không trừ chương chỉ thiếu bản dịch ở ngôn ngữ đang chọn. Bảng giọng đọc chỉ liệt kê giọng phù hợp VI/EN hiện tại, báo rõ khi danh sách trống hoặc chỉ có một giọng; hỗ trợ Làm mới, voiceschanged, quay lại tab và ba lần kiểm tra muộn có giới hạn. Khi điện thoại chỉ hiện “Tự động”, dùng hướng dẫn Android trong bảng để cài dữ liệu giọng đọc rồi Làm mới. Cài thêm gói không bảo đảm browser sẽ liệt kê thêm giọng. Xem [hướng dẫn Android](https://support.google.com/accessibility/android/answer/6006983?hl=vi).
 
 Ghi chú gắn với ngôn ngữ, revision và vị trí văn bản. Khi nội dung đổi, ghi chú cũ vẫn giữ nguyên trong danh sách và được đánh dấu cũ; không tự gắn vào đoạn khác. PDF nguyên trang có zoom riêng và không áp dụng thay phông/cỡ chữ của nội dung văn bản.

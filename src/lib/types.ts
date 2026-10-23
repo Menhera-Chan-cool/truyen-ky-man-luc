@@ -73,6 +73,7 @@ export type ReaderSettings = {
   foreground: string;
   accent: string;
   rate: number;
+  shortPauses: boolean;
   voice: string;
   scrollSpeed: number;
 };
@@ -88,6 +89,7 @@ export const defaultSettings: ReaderSettings = {
   foreground: "#302b23",
   accent: "#8d342b",
   rate: 1,
+  shortPauses: true,
   voice: "",
   scrollSpeed: 28,
 };

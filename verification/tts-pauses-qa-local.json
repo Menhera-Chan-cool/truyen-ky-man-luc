@@ -1,0 +1,37 @@
+{
+  "base": "http://localhost:3001",
+  "results": [
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "defaultEnabled": true,
+      "noPanelOverflow": true,
+      "pageErrors": [],
+      "retried": false
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "defaultEnabled": true,
+      "noPanelOverflow": true,
+      "pageErrors": [],
+      "retried": false
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "defaultEnabled": true,
+      "noPanelOverflow": true,
+      "pageErrors": [],
+      "retried": false
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "defaultEnabled": true,
+      "noPanelOverflow": true,
+      "pageErrors": [],
+      "retried": false
+    }
+  ]
+}

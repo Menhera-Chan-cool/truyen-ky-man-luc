@@ -76,9 +76,11 @@ export function settingsFromCookie(raw?: string): ReaderSettings {
     return { ...defaultSettings };
   }
 }
-export function speechSegments(text: string): string[] {
+export function speechSegments(text: string, shortPauses = true): string[] {
   const result: string[] = [];
-  for (let sentence of text.split(/(?<=[.!?…])\s+|\n+/u)) {
+  for (let sentence of text.split(
+    shortPauses ? /\n+/u : /(?<=[.!?…])\s+|\n+/u,
+  )) {
     sentence = sentence.trim();
     while (sentence.length > 240) {
       const at = sentence.lastIndexOf(" ", 240);
@@ -90,6 +92,26 @@ export function speechSegments(text: string): string[] {
   }
   return result;
 }
+export function speechText(text: string, shortPauses: boolean) {
+  if (!shortPauses) return text;
+  return text.replace(/[.:;…—–]+/gu, (mark, at: number) => {
+    const before = text[at - 1] ?? "",
+      after = text[at + mark.length] ?? "";
+    if (mark.length === 1 && /\d/.test(before) && /\d/.test(after)) return mark;
+    if (
+      mark === "." &&
+      ((after && !/[\s"'”’)}\]]/u.test(after)) ||
+        /\b(?:Mr|Mrs|Ms|Dr|Prof|St|vs|etc|TS|ThS|PGS)$/iu.test(
+          text.slice(0, at),
+        ) ||
+        /(?:\b[A-Z]\.)+[A-Z]$/u.test(text.slice(0, at)))
+    )
+      return mark;
+    if (mark === ":" && text.slice(at + 1, at + 3) === "//") return mark;
+    // Keep UTF-16 offsets identical so native speech boundaries still match the book.
+    return "," + " ".repeat(mark.length - 1);
+  });
+}
 export function normalizeSettings(
   settings: Partial<ReaderSettings>,
 ): ReaderSettings {
@@ -100,6 +122,8 @@ export function normalizeSettings(
   value.lineHeight = clamp(value.lineHeight, 1.2, 2.6, 1.9);
   value.width = clamp(value.width, 480, 1200, 780);
   value.rate = clamp(value.rate, 0.5, 2, 1);
+  value.shortPauses =
+    typeof value.shortPauses === "boolean" ? value.shortPauses : true;
   value.scrollSpeed = clamp(value.scrollSpeed, 8, 100, 28);
   if (!["scroll", "single", "double"].includes(value.mode))
     value.mode = "scroll";

@@ -6,18 +6,19 @@ import {
   useState,
   type RefObject,
 } from "react";
-import { rangeFromOffsets, speechSegments } from "../lib/reader";
+import { rangeFromOffsets, speechSegments, speechText } from "../lib/reader";
 import type { Locale } from "../lib/types";
 type Segment = { text: string; offset?: number };
 function segments(
   root: HTMLElement | null,
   text?: string,
   start?: number,
+  shortPauses = true,
 ): Segment[] {
   const result: Segment[] = [];
   const append = (value: string, offset?: number) => {
     let at = 0;
-    for (const part of speechSegments(value)) {
+    for (const part of speechSegments(value, shortPauses)) {
       const found = value.indexOf(part, at);
       result.push({
         text: part,
@@ -63,6 +64,7 @@ export function useSpeech(
   voiceName: string,
   onError: (s: string) => void,
   onFollow?: (offset: number) => void,
+  shortPauses = true,
 ) {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]),
     [playing, setPlaying] = useState(false),
@@ -76,8 +78,15 @@ export function useSpeech(
     segment: Segment;
     boundary: number;
   } | null>(null);
-  const config = useRef({ locale, rate, voiceName, onError, onFollow });
-  config.current = { locale, rate, voiceName, onError, onFollow };
+  const config = useRef({
+    locale,
+    rate,
+    voiceName,
+    onError,
+    onFollow,
+    shortPauses,
+  });
+  config.current = { locale, rate, voiceName, onError, onFollow, shortPauses };
   const refreshVoices = useCallback(() => {
     if (!("speechSynthesis" in window)) return [];
     const list = window.speechSynthesis
@@ -112,7 +121,7 @@ export function useSpeech(
       return;
     }
     const c = config.current,
-      u = new SpeechSynthesisUtterance(item.text);
+      u = new SpeechSynthesisUtterance(speechText(item.text, c.shortPauses));
     const available = window.speechSynthesis
       .getVoices()
       .filter((v) => v.lang.toLowerCase().startsWith(c.locale));
@@ -224,7 +233,7 @@ export function useSpeech(
     current.current = null;
     window.speechSynthesis.cancel();
     launch.current(gen);
-  }, [rate, voiceName]);
+  }, [rate, voiceName, shortPauses]);
   useEffect(() => {
     stop();
   }, [locale, stop]);
@@ -239,7 +248,7 @@ export function useSpeech(
       return;
     }
     refreshVoices();
-    queue.current = segments(root.current, text, start);
+    queue.current = segments(root.current, text, start, shortPauses);
     if (!queue.current.length) return;
     index.current = 0;
     running.current = true;

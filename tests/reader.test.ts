@@ -1,6 +1,7 @@
 import { it, expect } from "vitest";
 import {
   speechSegments,
+  speechText,
   normalizeSettings,
   countPages,
   contrastText,
@@ -29,6 +30,29 @@ it("speech segmentation preserves the text without dropping long sentences", () 
   expect(chunks.join(" ").replace(/\s+/g, " ").trim()).toBe(
     text.replace(/\s+/g, " ").trim(),
   );
+});
+it("keeps short sentences together to avoid restarting the voice at every full stop", () => {
+  const text = "Một câu. Câu tiếp: đợi... rồi đi.";
+  expect(speechSegments(text)).toEqual([text]);
+  expect(speechSegments(text, false)).toEqual([
+    "Một câu.",
+    "Câu tiếp: đợi...",
+    "rồi đi.",
+  ]);
+});
+it("softens speech punctuation without moving word boundaries or altering the source", () => {
+  const text = "Xin chào. Nghe này: chờ… một chút; rồi đi—nhé.";
+  expect(speechText(text, true)).toBe(
+    "Xin chào, Nghe này, chờ, một chút, rồi đi,nhé,",
+  );
+  expect(speechText("Đợi... nhé", true)).toBe("Đợi,   nhé");
+  expect(speechText(text, false)).toBe(text);
+  expect(speechText(text, true).length).toBe(text.length);
+});
+it("preserves decimal numbers, times, domains and common abbreviations while shortening pauses", () => {
+  expect(
+    speechText("3.14 lúc 12:30. Mr. Brown ở example.com. U.S.A.", true),
+  ).toBe("3.14 lúc 12:30, Mr. Brown ở example.com, U.S.A.");
 });
 it("restores bounded settings and a supported reading mode", () => {
   expect(

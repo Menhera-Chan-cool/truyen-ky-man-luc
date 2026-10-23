@@ -1,0 +1,117 @@
+{
+  "base": "http://localhost:3001",
+  "unitTests": 62,
+  "typecheck": true,
+  "build": true,
+  "localBuildWorkers": 2,
+  "fullRun": {
+    "startTime": "2026-10-23T14:06:43.318Z",
+    "duration": 83214.85900000001,
+    "expected": 17,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "focusedConfirmation": {
+    "startTime": "2026-10-23T14:09:04.864Z",
+    "duration": 14287.720000000001,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "uniquePassed": 18,
+  "note": "One unchanged backup case encountered the published-book unavailable error page. Its unchanged focused repeat passed. All 14 speech cases passed in the first run; native speech is mocked.",
+  "checks": [
+    {
+      "title": "exports and restores notes, settings and current progress on a fresh device",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "rejects invalid files and atomically rolls back an interrupted restore",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "exports and restores notes, settings and current progress on a fresh device",
+      "project": "mobile",
+      "status": "unexpected"
+    },
+    {
+      "title": "rejects invalid files and atomically rolls back an interrupted restore",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "shortens punctuation pauses without moving the resume offset (vi)",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "shortens punctuation pauses without moving the resume offset (en)",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "continues the current spoken segment when changing rate and voice",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "moves the paged reader through its page state while speech advances",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "shortens punctuation pauses without moving the resume offset (vi)",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "shortens punctuation pauses without moving the resume offset (en)",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "continues the current spoken segment when changing rate and voice",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "moves the paged reader through its page state while speech advances",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "counts all twenty tales even when one locale is missing a translation",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "explains an empty voice list and refreshes late Android voices with the selected rate",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "updates a single English voice when the browser announces more voices",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "counts all twenty tales even when one locale is missing a translation",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "explains an empty voice list and refreshes late Android voices with the selected rate",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "updates a single English voice when the browser announces more voices",
+      "project": "mobile",
+      "status": "expected"
+    }
+  ]
+}

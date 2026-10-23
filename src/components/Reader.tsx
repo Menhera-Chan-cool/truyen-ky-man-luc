@@ -218,6 +218,7 @@ export default function Reader({
     settings.voice,
     notify,
     followSpeech,
+    settings.shortPauses,
   );
   const onPdfPosition = useCallback(
     (value: PdfPosition) => {
@@ -1603,6 +1604,23 @@ export default function Reader({
               }}
             />
           </label>
+          <label className="check-label">
+            <input
+              type="checkbox"
+              checked={settings.shortPauses}
+              aria-describedby="speech-pause-help"
+              onChange={(e) =>
+                updateSettings({ ...settings, shortPauses: e.target.checked })
+              }
+            />
+            {L("Ngắt nghỉ ngắn", "Shorter punctuation pauses")}
+          </label>
+          <p id="speech-pause-help" className="tiny muted">
+            {L(
+              "Đọc liền mạch hơn ở dấu . : ; … và gạch ngang. Tắt để dùng nhịp gốc của giọng đọc. Mức nghỉ tùy thiết bị.",
+              "Lighter pauses at . : ; … and dashes. Turn off for the voice’s original phrasing. Timing varies by device.",
+            )}
+          </p>
           <button
             className="primary-button full-width"
             disabled={!speech.supported || !edition}

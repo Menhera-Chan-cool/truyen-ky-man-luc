@@ -39,6 +39,29 @@ const file = () => ({
   ],
   annotations: [note],
 });
+it("restores older backups with short pauses enabled and preserves an explicit opt out", () => {
+  const legacy = { ...defaultSettings } as Record<string, unknown>;
+  delete legacy.shortPauses;
+  expect(
+    parseReaderBackup(JSON.stringify({ ...file(), settings: legacy })).settings,
+  ).toMatchObject({ shortPauses: true });
+  expect(
+    parseReaderBackup(
+      JSON.stringify({
+        ...file(),
+        settings: { ...defaultSettings, shortPauses: false },
+      }),
+    ).settings,
+  ).toMatchObject({ shortPauses: false });
+  expect(() =>
+    parseReaderBackup(
+      JSON.stringify({
+        ...file(),
+        settings: { ...defaultSettings, shortPauses: "false" },
+      }),
+    ),
+  ).toThrow();
+});
 it("round trips a device backup including exact anchors and PDF position", () => {
   const parsed = parseReaderBackup(JSON.stringify(file()));
   expect(parsed.annotations[0].note).toBe("Personal note");
