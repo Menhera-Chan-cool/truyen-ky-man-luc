@@ -989,6 +989,7 @@ svg {
   z-index: 10000;
   pointer-events: none;
   transform: translateX(-50%);
+  width: max-content;
   max-width: min(280px, calc(100vw - 16px));
   border: 1px solid #454955;
   background: #22242e;

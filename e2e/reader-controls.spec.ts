@@ -23,6 +23,21 @@ test("shows a shared smooth tooltip without the browser title popup", async ({
     timeout: 250,
   });
   await page.keyboard.press("Escape");
+  await page.mouse.move(600, 400);
+  await page
+    .getByRole("button", { name: "Cài đặt trình đọc", exact: true })
+    .hover();
+  const tooltip = page.getByRole("tooltip");
+  await expect(tooltip).toHaveText("Cài đặt trình đọc");
+  const box = await tooltip.boundingBox();
+  expect(box!.width).toBeGreaterThan(100);
+  expect(box!.height).toBeLessThan(40);
+  expect(box!.x).toBeGreaterThanOrEqual(8);
+  await expect.poll(async () => {
+    const settled = await tooltip.boundingBox();
+    return settled!.x + settled!.width;
+  }).toBeLessThanOrEqual(page.viewportSize()!.width - 7);
+  await page.keyboard.press("Escape");
   await expect(page.getByRole("tooltip")).not.toBeVisible();
 });
 
