@@ -1,5 +1,5 @@
 {
-  "base": "http://localhost:3001",
+  "base": "https://truyen-ky-man-luc.vercel.app",
   "checks": [
     "vi rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
     "vi stale chapter request is cancelled; import tool loads on demand",
@@ -8,39 +8,39 @@
   ],
   "cleanup": [
     {
-      "label": "edition verify-editor-c8970c7e-preface",
+      "label": "edition verify-editor-a38d74fa-preface",
       "ok": true
     },
     {
-      "label": "versions verify-editor-c8970c7e-preface",
+      "label": "versions verify-editor-a38d74fa-preface",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-c8970c7e-preface",
+      "label": "chapter verify-editor-a38d74fa-preface",
       "ok": true
     },
     {
-      "label": "edition verify-editor-c8970c7e-one",
+      "label": "edition verify-editor-a38d74fa-one",
       "ok": true
     },
     {
-      "label": "versions verify-editor-c8970c7e-one",
+      "label": "versions verify-editor-a38d74fa-one",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-c8970c7e-one",
+      "label": "chapter verify-editor-a38d74fa-one",
       "ok": true
     },
     {
-      "label": "edition verify-editor-c8970c7e-two",
+      "label": "edition verify-editor-a38d74fa-two",
       "ok": true
     },
     {
-      "label": "versions verify-editor-c8970c7e-two",
+      "label": "versions verify-editor-a38d74fa-two",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-c8970c7e-two",
+      "label": "chapter verify-editor-a38d74fa-two",
       "ok": true
     },
     {

@@ -1,146 +1,114 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_A4jYCve1HNRG9uLHJDQ1DSf276HX",
+  "deploymentId": "dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-d9oklxg17-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-ilqs5m3k3-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-23T00:01:52.567Z",
+  "checkedAt": "2026-10-23T10:41:13.247Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
+  "runtimeSourceCommit": "ad38c75fa3f0a1f12fc67dfd1230b8c9a7c370f3",
+  "github": {
+    "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
+    "visibility": "PRIVATE",
+    "branch": "main"
+  },
   "verification": {
-    "unitTests": 41,
+    "unitTests": 49,
     "typecheck": true,
     "productionBuild": true,
-    "sourceParagraphs": {
-      "vi": 2896,
-      "en": 1420,
-      "allMatch": true
-    },
     "livePlaywright": {
-      "lastFull": {
-        "deploymentId": "dpl_3p2h28DosVsq2emtNxeBm5qkUGQT",
-        "passed": 38,
-        "skipped": 2,
-        "failed": 0,
-        "retried": 0
-      },
-      "latestSpeechSubset": {
-        "deploymentId": "dpl_A4jYCve1HNRG9uLHJDQ1DSf276HX",
-        "passed": 6,
-        "failed": 0,
-        "retried": 0
-      },
-      "note": "Phone geometry skipped on desktop; hover tooltip skipped on mobile."
+      "deploymentId": "dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv",
+      "passed": 47,
+      "skipped": 3,
+      "failed": 0,
+      "retried": 0,
+      "note": "Desktop phone geometry, mobile desktop sidebar geometry, mobile hover tooltip skipped."
+    },
+    "editorSwitch": {
+      "success": true,
+      "deploymentId": "dpl_F2a8efPLvKNaqKJeCBFpAGG1U14W",
+      "finalPatch": "Tooltip CSS width only; editor logic unchanged",
+      "temporaryRecordsCleaned": true
+    },
+    "metadataRpc": {
+      "checkedAt": "2026-10-23T10:28:54.333Z",
+      "metadataRpcReady": true,
+      "fullBytes": 894637,
+      "indexBytes": 5053,
+      "chapters": 21,
+      "editions": 41,
+      "publishedMetadataMatches": true,
+      "htmlExcluded": true
     },
     "liveQA": {
-      "desktop": true,
-      "mobile": true,
-      "pageErrors": 0,
-      "horizontalOverflow": false
+      "base": "https://truyen-ky-man-luc.vercel.app",
+      "results": [
+        {
+          "viewport": "desktop",
+          "noHorizontalOverflow": true,
+          "toolbarVisible": true,
+          "pageErrors": []
+        },
+        {
+          "viewport": "mobile",
+          "noHorizontalOverflow": true,
+          "toolbarVisible": true,
+          "pageErrors": []
+        }
+      ]
     },
-    "http": {
-      "/vi": 200,
-      "/en": 200,
-      "/vi/read/chapter-1": 200,
-      "/en/read/chapter-20": 200,
-      "/admin": 200,
-      "/api/admin/state": 401,
-      "/api/runtime-check": 404
-    },
-    "hostedPublishedEditions": {
-      "vi": 21,
-      "en": 20,
-      "allTitlesAndHtmlMatchSource": true
-    },
-    "clientBuildSecretScan": {
-      "files": 86,
-      "serverKeyAbsent": true
-    },
-    "hostedIntegrationReport": "verification/hosted.json",
-    "navigationReport": "verification/navigation.json",
-    "navigation": {
-      "beforeMs": [
-        1574,
-        1023,
-        1510,
-        1079
+    "performance": {
+      "deploymentId": "dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv",
+      "before": {
+        "adminJavaScriptBytes": 652477,
+        "readerCLS": 0.20293750930179133,
+        "scrollProgressPuts": 240
+      },
+      "after": {
+        "adminJavaScriptBytes": 283079,
+        "readerCLS": 0.004369101040059156,
+        "scrollProgressPuts": 4
+      },
+      "navigation": [
+        {
+          "label": "Chương sau",
+          "target": "Chương 2:",
+          "ms": 17,
+          "serverRequests": 0
+        },
+        {
+          "label": "Chương trước",
+          "target": "Chương 1:",
+          "ms": 15,
+          "serverRequests": 0
+        },
+        {
+          "label": "Chương sau",
+          "target": "Chương 2:",
+          "ms": 5,
+          "serverRequests": 0
+        },
+        {
+          "label": "Chương sau",
+          "target": "Chương 3:",
+          "ms": 4,
+          "serverRequests": 0
+        }
       ],
-      "afterMs": [
-        7,
-        15,
-        11,
-        11
-      ],
-      "chapterRequestsAfter": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "testsPassed": 6
-    },
-    "editorPasteSaveSwitch": {
-      "locales": [
-        "vi",
-        "en"
-      ],
-      "chaptersPerLocale": 3,
-      "richPaste": true,
-      "reloadVerified": true,
-      "allDraftOnly": true,
-      "temporaryDataCleaned": true,
-      "report": "verification/editor-switch-latest.json"
-    },
-    "readerControls": {
-      "additionalFonts": 6,
-      "fontDownloadAndPersistence": true,
-      "sharedTooltip": true,
-      "customColorSwatchAndHex": true,
-      "customNativeColorScheme": true
-    },
-    "storyCount": {
-      "vi": 20,
-      "en": 20,
-      "independentOfMissingTranslation": true
-    },
-    "speech": {
-      "mockedBrowserBoundary": true,
-      "cases": [
-        "no voices",
-        "single voice",
-        "late voices/manual refresh",
-        "voiceschanged",
-        "vi_VN locale",
-        "selected rate 1.4",
-        "language unavailable",
-        "list shrinks to one voice while filtering"
-      ],
-      "realAndroidAudioTested": false
+      "note": "Single synthetic sample per viewport; not real-user field metrics."
     }
   },
-  "supabase": {
-    "configured": true,
-    "adminLocked": false,
-    "ownerCreated": true,
-    "ownerActivationVerified": true,
-    "publicSignupDisabled": true,
-    "emailProviderEnabled": true,
-    "bucketsPrivate": true,
-    "hostedPublicReadsVerified": true,
-    "hostedEditorStorageWritesVerified": true
-  },
   "limits": [
-    "Successful publication and cover/metadata/reordering changes on the real public book were not exercised",
-    "Publication transaction rollback, private drafts, Storage and editor revocation verified on hosted services",
-    "Vercel logs API denied access (403); live browser and HTTP checks performed",
-    "Speech voice quality depends on user device",
-    "Chapter text snapshot is loaded once per selected locale; reload or change locale for fresh published content. Images/PDF still need network.",
-    "No physical Android audio/voice availability verified. Voice count depends on browser and installed TTS engine; no online TTS provider added."
+    "No physical Android/iOS or real voice quality testing. Web Speech voices depend on device/browser.",
+    "Actual public-book publication/cover/reordering changes were not exercised; editor tests use disposable private drafts.",
+    "Reader preloads published text for one locale. Reload or change locale to fetch updated published content; images/PDF still require network."
   ],
-  "deploymentSourceFiles": 99,
-  "previousDeploymentId": "dpl_Ehm5mpFfZUH8SKEvKvPawT2dZsTJ"
+  "deploymentSourceFiles": 118,
+  "previousDeploymentId": "dpl_F2a8efPLvKNaqKJeCBFpAGG1U14W",
+  "optimizationBaselineDeploymentId": "dpl_A4jYCve1HNRG9uLHJDQ1DSf276HX"
 }

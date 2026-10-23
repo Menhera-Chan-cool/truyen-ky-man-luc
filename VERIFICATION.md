@@ -1,6 +1,6 @@
 # Bằng chứng kiểm chứng — cập nhật 23/10/2026
 
-## Đợt tối ưu và GitHub — đang chờ migration production
+## Đợt tối ưu và GitHub — đã triển khai production
 
 - Source đã có: gom ghi tiến độ mỗi giây và chốt khi chuyển chương/rời trang; bố cục sidebar desktop ngay từ HTML/CSS ban đầu; tải editor/import theo nhu cầu; state admin chỉ trả summary, HTML tải theo phiên bản được chọn với AbortController và chốt context; cookie giao diện đã xác thực để server render đúng nền; RPC metadata-only trong migration 003.
 - Vitest: **49 đạt**; typecheck và production build đã qua. Playwright reader/control/navigation cục bộ: **14 đạt, 4 bỏ qua** (budget nén chỉ đo trên host; kiểm tra geometry desktop/hover không áp dụng cho cấu hình còn lại). Có kiểm tra vị trí sau chuyển chương nhanh/Back/reload.
@@ -8,7 +8,12 @@
 - Full Playwright trên chế độ sách mẫu cục bộ độc lập Supabase: **45 đạt, 5 bỏ qua, 0 lỗi** (50 ca; không retry). Bỏ qua hai budget JS nén chỉ đo trên host, geometry sidebar desktop trong cấu hình mobile, tooltip hover mobile và vùng bấm phone trong cấu hình desktop. Có kiểm tra HTML phía server đã mang nền tối, đổi VI/EN và đổi sáng/tối từ trang sách tác động đến reader. Lượt này không kiểm chứng RPC metadata trên Supabase production; migration được kiểm tra bằng PostgreSQL/PGlite.
 - Lượt riêng trên production build cục bộ nối Supabase: các ca gom lưu, giữ vị trí qua đổi chương/reload, chốt `pagehide` và geometry trước JS: **5 đạt, 3 bỏ qua**. Có một lượt trước đó bị mất hydration vì build lại khi server cũ còn chạy; đã dừng server, build và khởi động lại rồi kiểm tra đạt. Không tính lượt lỗi môi trường đó là kết quả của bản đã kiểm chứng.
 - Đo cục bộ bước đầu: bài cuộn 120 khung tạo **4 put thay vì 240**; CLS desktop reader khoảng **0,004 thay vì 0,203**; JavaScript trang đăng nhập khoảng **275 KB nén**. Môi trường local khác Vercel, chưa dùng các số này để khẳng định cải thiện tốc độ mạng production.
-- Tại lần kiểm tra gần nhất, Supabase chưa có `get_public_book_index` (PGRST202). **Chưa triển khai source mới lên production**, tránh làm trang sách đang phục vụ bị lỗi. Cần áp dụng migration 003 rồi chạy full Playwright, QA VI/EN và đo lại trên URL Vercel.
+- Migration 003 đã áp dụng và gọi thành công bằng khóa anon. RPC metadata trả **5.053 byte**, so với **894.637 byte** của RPC đầy đủ trên cùng bản xuất bản (21 phần, 41 bản VI/EN). Sau khi bỏ HTML, metadata hai kết quả khớp hoàn toàn; không có trường HTML trong RPC mới. Xem `verification/metadata-rpc.json`.
+- Sau migration, full Playwright trên production build cục bộ nối Supabase thật: **45 đạt, 5 bỏ qua**. Sau triển khai, full Playwright ngay trên alias production bản cuối `dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv`: **47 đạt, 3 bỏ qua, 0 lỗi, không retry**. Ba ca bỏ qua là vùng bấm phone trong cấu hình desktop, geometry sidebar desktop trong cấu hình mobile và tooltip hover mobile.
+- Editor VI/EN trực tiếp trên bản tối ưu production `dpl_F2a8efPLvKNaqKJeCBFpAGG1U14W`: dán/lưu ba chương, chuyển lại/reload, state không có HTML, hủy yêu cầu trả muộn, mở bộ nhập theo nhu cầu; tất cả đạt và dọn tài khoản/bản nháp QA thành công. Bản cuối chỉ sửa thêm chiều rộng tooltip; logic/API editor không đổi. Bằng chứng: `verification/editor-switch-latest.json`.
+- QA cuối trên Vercel: desktop/mobile, VI/EN, giấy ngà/tối; không tràn ngang, toolbar vừa màn hình, không có lỗi JavaScript. Tooltip mở lần đầu ở nút sát mép phải đã có regression test và hiển thị đủ chiều rộng. Bằng chứng: `verification/optimization-hosted-qa.json`.
+- Các phép đo sau tối ưu trên Vercel nằm trong `verification/performance-after-hosted-2026-10-23.json` và `verification/navigation-after-hosted-2026-10-23.json`. Mỗi cấu hình một mẫu, CPU mobile chậm 4 lần; không coi đây là số liệu người dùng thật. Số bản công khai tăng từ 40 lên 41 giữa các đợt đo nên không dùng thay đổi kích thước HTML toàn trình đọc để đánh giá tối ưu.
+- Source/runtime tại commit `ad38c75fa3f0a1f12fc67dfd1230b8c9a7c370f3`; repository GitHub đã kiểm tra **PRIVATE**. Các commit bằng chứng sau đó không thay đổi runtime. `.env.local`, khóa cấu hình, thư mời và bản sao lưu riêng bị loại khỏi Git và ZIP.
 - Chưa kiểm tra Android/iOS thật. Những bằng chứng của bản production cũ bên dưới được giữ làm lịch sử, không tính là kiểm chứng cho đợt tối ưu mới.
 
 ## Đã kiểm tra

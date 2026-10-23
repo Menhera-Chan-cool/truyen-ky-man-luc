@@ -17,4 +17,8 @@ Checkpoint:
 - Connected Supabase editor test passed VI/EN, including delayed stale requests and lazy import. Temporary test rows/account cleaned.
 - Guest suite with bundled book: 45 pass / 5 intended skips; connected production-build progress subset: 5 pass / 3 intended skips.
 - GitHub private repository created: https://github.com/Menhera-Chan-cool/truyen-ky-man-luc; source scan excludes configured keys and private files.
-- Waiting for user to apply 003_public_book_index.sql (user said they will run it; completion not yet confirmed, anonymous RPC currently PGRST202). Keep existing production deployment active until verified. Then run full connected/local suite, deploy, hosted editor/guest tests and before/after audit; update DEPLOYMENT.json and this checkpoint.
+- 003 applied and verified via anonymous RPC: 5,053 bytes metadata, no HTML; same published metadata as the 894,637-byte full RPC.
+- Connected full local suite: 45 pass / 5 intended skips. Final hosted suite on dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv: 47 pass / 3 intended skips / no retries or failures.
+- Hosted VI/EN editor test passed on first optimized deployment dpl_F2a8efPLvKNaqKJeCBFpAGG1U14W; all temporary records/account cleaned. Final patch only fixes tooltip width at viewport edges, verified by regression test and final full suite.
+- Production alias https://truyen-ky-man-luc.vercel.app points to final READY deployment; runtime commit ad38c75fa3f0a1f12fc67dfd1230b8c9a7c370f3. Desktop/mobile QA and hosted performance evidence saved in verification/.
+- No remaining implementation or deployment work. Physical Android/iOS audio remains untested; voice availability depends on the device.

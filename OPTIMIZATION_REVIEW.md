@@ -2,6 +2,19 @@
 
 Đã kiểm tra trực tiếp https://truyen-ky-man-luc.vercel.app và đối chiếu hai repo. Các số liệu dưới đây là mốc **trước tối ưu**. Sau khảo sát, năm thay đổi đã được triển khai trong source; trạng thái kiểm chứng/triển khai mới được ghi trong `VERIFICATION.md` và `DEPLOYMENT.json`.
 
+## Kết quả sau triển khai
+
+Bản cuối `dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv` đã READY và phục vụ trên URL chính. Full Playwright trên chính bản này: **47 đạt, 3 bỏ qua đúng loại thiết bị, không thất bại/retry**. Unit: 49 đạt; typecheck/build đạt. Editor VI/EN đã qua kiểm thử trên bản tối ưu đầu tiên, được giữ nguyên logic ở bản cuối.
+
+| Phép đo | Trước | Sau |
+|---|---:|---:|
+| Ghi tiến độ trong khoảng 2 giây cuộn | 240 put | 4 put |
+| JavaScript nén trang đăng nhập | 652.477 byte | 283.079 byte |
+| CLS lúc mở reader desktop | 0,203 | 0,0044 |
+| RPC Supabase cho trang giới thiệu trên cùng nội dung hiện tại | 894.637 byte | 5.053 byte |
+
+Chuyển chương: **4–17 ms**, không phát sinh yêu cầu tải chương trong bốn mẫu. Tooltip mở lần đầu sát mép phải cũng đã được sửa và có regression test. Các con số là phép đo mô phỏng, không phải cam kết tốc độ trên thiết bị thật; số bản công khai đã thay đổi giữa các đợt nên kích thước HTML của toàn reader không dùng làm so sánh.
+
 ## Cách đo và giới hạn
 
 - Chromium, cửa sổ 1440×900 và 390×844; lần mở mới với bộ nhớ đệm trình duyệt trống cho từng trang. Mẫu điện thoại dùng CPU chậm 4 lần; không giả lập giới hạn băng thông.
