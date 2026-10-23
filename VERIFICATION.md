@@ -1,5 +1,18 @@
 # Bằng chứng kiểm chứng — cập nhật 23/10/2026
 
+## Rút ngắn ngắt nghỉ TTS — release hiện tại
+
+Production `dpl_Hh1Gez4vmqoSKoiBSczrk1aSPP94`, source runtime `3ce0e049542439545a549b773e3141c2a5c8ab7b`, alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY. Các mục tiếp theo là bằng chứng của release trước, không phải bộ đầy đủ đã chạy lại cho thay đổi nhỏ này.
+
+- Thêm **Giọng đọc & tốc độ → Ngắt nghỉ ngắn**, mặc định bật, lưu theo thiết bị. Gộp các câu ngắn trong cùng đoạn vào lượt đọc tối đa 240 ký tự, giảm khởi động lại giọng ở mỗi dấu chấm.
+- Chỉ làm nhẹ dấu `. : ; …` và gạch ngang trong `SpeechSynthesisUtterance.text`, giữ nguyên HTML sách và độ dài UTF-16 để boundary/tiếp tục/đi theo đoạn không lệch. Giữ số thập phân, giờ, domain và các viết tắt thông dụng đã kiểm tra. Tắt tùy chọn để dùng dấu câu gốc. Bật/tắt lúc đang nghe tiếp tục từ boundary hoặc chunk hiện tại.
+- JSON v1 trước đây chưa có trường mới vẫn nhập được với mặc định bật; lựa chọn false được giữ, giá trị sai kiểu bị từ chối.
+- **62 unit đạt**, typecheck và production build đạt. Lượt build local đầu thiếu bộ nhớ ở 11 worker; chạy lại bằng `CIRCLE_NODE_TOTAL=3` (2 worker) đạt, không đổi cấu hình hệ thống/project. Build Vercel đạt với cấu hình hiện có.
+- Local: 17/18 ca đạt lần đầu, một ca backup gặp trang báo không tải được dữ liệu published; chạy riêng lại nguyên ca đó đạt. Trên URL production: **18/18 ca đạt, 0 skip/fail/retry**, gồm 14 ca TTS và 4 ca backup trên Chromium desktop/mobile, VI/EN. TTS dùng mock ở API native để kiểm tra văn bản phát ra, boundary, rate/voice, pagination và lưu tùy chọn; không đo khoảng nghỉ âm thanh thật. Xem `verification/tts-pauses-local.json`, `verification/tts-pauses-live.json`.
+- Visual QA local và URL thật: 4 tổ hợp VI/EN × desktop/mobile, tùy chọn mặc định bật, không tràn panel hoặc page error. Không cần retry ở các lượt visual QA. Xem `verification/tts-pauses-qa-local.json`, `verification/tts-pauses-qa-live.json`.
+
+Giới hạn: Web Speech không có thuộc tính đặt số mili giây nghỉ ở từng dấu câu ([API](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance)); thay dấu câu trong bản phát là cách điều chỉnh nhịp gần đúng và có thể đổi ngữ điệu. Chưa nghe thử trên Android/iOS vật lý. Không khẳng định mức giảm cố định với mọi giọng; có thể tắt để trở về cách đọc gốc. Không sửa nội dung sách, tài khoản hay dữ liệu Supabase.
+
 ## Giữ vị trí đọc/nghe và sao lưu thiết bị — đã triển khai
 
 Production `dpl_H7d6bNkA8DYPcw4Z59d6ZUA5evm9`, source runtime `6cb64f7f6fbd6d4e1665c76327cb0d9e7a02a0fb`, alias https://truyen-ky-man-luc.vercel.app đã được xác nhận READY. Các phần dưới là lịch sử của những đợt trước; thông tin release hiện tại nằm ở mục này và DEPLOYMENT.json.
