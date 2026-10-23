@@ -1,49 +1,57 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv",
+  "deploymentId": "dpl_H7d6bNkA8DYPcw4Z59d6ZUA5evm9",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-ilqs5m3k3-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-6u29czvvj-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-23T10:41:13.247Z",
+  "checkedAt": "2026-10-23T13:45:06.067Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
-  "runtimeSourceCommit": "ad38c75fa3f0a1f12fc67dfd1230b8c9a7c370f3",
+  "runtimeSourceCommit": "6cb64f7f6fbd6d4e1665c76327cb0d9e7a02a0fb",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
     "branch": "main"
   },
   "verification": {
-    "unitTests": 49,
+    "unitTests": 58,
     "typecheck": true,
     "productionBuild": true,
+    "localPlaywright": {
+      "passed": 59,
+      "skipped": 5,
+      "failed": 0
+    },
     "livePlaywright": {
-      "deploymentId": "dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv",
-      "passed": 47,
+      "uniquePassed": 61,
       "skipped": 3,
-      "failed": 0,
-      "retried": 0,
-      "note": "Desktop phone geometry, mobile desktop sidebar geometry, mobile hover tooltip skipped."
+      "fullRun": {
+        "passed": 60,
+        "failed": 1,
+        "error": "One APIRequestContext GET interrupted by ECONNRESET"
+      },
+      "focusedConfirmation": {
+        "passed": 1,
+        "failed": 0
+      },
+      "note": "The full run passed 60 cases and one transport ECONNRESET interrupted the desktop theme API request. The same unchanged test passed in a focused repeat. No assertions were relaxed."
     },
     "editorSwitch": {
       "success": true,
-      "deploymentId": "dpl_F2a8efPLvKNaqKJeCBFpAGG1U14W",
-      "finalPatch": "Tooltip CSS width only; editor logic unchanged",
-      "temporaryRecordsCleaned": true
+      "localAndLive": true,
+      "temporaryRecordsCleaned": true,
+      "realPasteSaveReload": true,
+      "uploadAndImportFailureBoundariesMocked": true
     },
-    "metadataRpc": {
-      "checkedAt": "2026-10-23T10:28:54.333Z",
-      "metadataRpcReady": true,
-      "fullBytes": 894637,
-      "indexBytes": 5053,
-      "chapters": 21,
-      "editions": 41,
-      "publishedMetadataMatches": true,
-      "htmlExcluded": true
+    "pdfFixture": {
+      "realReaderAndPdfJs": true,
+      "localOnly": true,
+      "desktopAndMobile": true,
+      "pageZoomReloadChapterReturnAndResize": true
     },
     "liveQA": {
       "base": "https://truyen-ky-man-luc.vercel.app",
@@ -63,52 +71,72 @@
       ]
     },
     "performance": {
-      "deploymentId": "dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv",
-      "before": {
-        "adminJavaScriptBytes": 652477,
-        "readerCLS": 0.20293750930179133,
-        "scrollProgressPuts": 240
-      },
-      "after": {
-        "adminJavaScriptBytes": 283079,
-        "readerCLS": 0.004369101040059156,
-        "scrollProgressPuts": 4
-      },
       "navigation": [
         {
           "label": "Chương sau",
           "target": "Chương 2:",
-          "ms": 17,
+          "ms": 7,
           "serverRequests": 0
         },
         {
           "label": "Chương trước",
           "target": "Chương 1:",
-          "ms": 15,
+          "ms": 16,
           "serverRequests": 0
         },
         {
           "label": "Chương sau",
           "target": "Chương 2:",
-          "ms": 5,
+          "ms": 15,
           "serverRequests": 0
         },
         {
           "label": "Chương sau",
           "target": "Chương 3:",
-          "ms": 4,
+          "ms": 15,
           "serverRequests": 0
         }
       ],
-      "note": "Single synthetic sample per viewport; not real-user field metrics."
+      "readers": [
+        {
+          "device": "1440px Chromium",
+          "cls": 0.0051094164938593105,
+          "javascriptBytes": 219312,
+          "scroll": {
+            "frames": 120,
+            "elapsedMs": 1978,
+            "progressPuts": 4,
+            "frameP95Ms": 18,
+            "scrollTop": 1440,
+            "longTasks": []
+          }
+        },
+        {
+          "device": "390px Chromium, CPU 4x slowdown",
+          "cls": 0,
+          "javascriptBytes": 219312,
+          "scroll": {
+            "frames": 120,
+            "elapsedMs": 1971,
+            "progressPuts": 4,
+            "frameP95Ms": 18,
+            "scrollTop": 1440,
+            "longTasks": []
+          }
+        }
+      ],
+      "adminJavaScriptBytes": 283430,
+      "note": "One synthetic sample per viewport; mobile CPU slowed 4x. Not real-user field metrics."
     }
   },
+  "deploymentSourceFiles": 138,
+  "previousDeploymentId": "dpl_CdhxWFAa9xD4J2bXZ64k7Fa9q5jv",
+  "optimizationBaselineDeploymentId": "dpl_A4jYCve1HNRG9uLHJDQ1DSf276HX",
   "limits": [
-    "No physical Android/iOS or real voice quality testing. Web Speech voices depend on device/browser.",
-    "Actual public-book publication/cover/reordering changes were not exercised; editor tests use disposable private drafts.",
-    "Reader preloads published text for one locale. Reload or change locale to fetch updated published content; images/PDF still require network."
-  ],
-  "deploymentSourceFiles": 118,
-  "previousDeploymentId": "dpl_F2a8efPLvKNaqKJeCBFpAGG1U14W",
-  "optimizationBaselineDeploymentId": "dpl_A4jYCve1HNRG9uLHJDQ1DSf276HX"
+    "Physical Android/iOS devices and actual voice quality were not tested. Without boundary events, speech resumes the current short chunk.",
+    "PDF continuity uses a local fixture, not a published PDF chapter.",
+    "Live full run had one transport ECONNRESET; the same unchanged case passed in a focused repeat.",
+    "Real publication, cover and book ordering were not changed. Editor QA uses private disposable drafts.",
+    "Reader keeps a published snapshot for the selected locale until reload or locale change. Initial loads and remote assets still need network."
+  ]
 }

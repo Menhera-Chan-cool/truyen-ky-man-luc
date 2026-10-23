@@ -29,3 +29,5 @@ Limits: Web Speech boundary support/quality varies. With no boundary events, con
 
 Implementation checkpoint: all six modules implemented. Fresh local production build, typecheck and 58 unit tests pass. Complete Chromium desktop/mobile regression suite: 59 passed, 5 intentional skips, no retries. Isolated real-PDF Reader fixture passes reload/chapter-return page and zoom restoration plus canvas resize on both viewports. Batched visual QA includes JSON preview and no horizontal overflow. Release URL verification is recorded separately in DEPLOYMENT.json after deployment.
 
+Release verified on production dpl_H7d6bNkA8DYPcw4Z59d6ZUA5evm9: 61 distinct browser cases verified across the full run (60 pass, 3 skip, 1 transport ECONNRESET) and an unchanged focused repeat (1 pass). Real editor VI/EN and cleanup pass. Auth now distinguishes transient verification outages from expired sessions, retries only the idempotent Auth check once, and keeps role/revocation checks strict. Verification details and limits are in VERIFICATION.md.
+

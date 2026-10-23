@@ -1,0 +1,34 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "samples": [
+    {
+      "label": "Chương sau",
+      "target": "Chương 2:",
+      "ms": 7,
+      "serverRequests": 0
+    },
+    {
+      "label": "Chương trước",
+      "target": "Chương 1:",
+      "ms": 16,
+      "serverRequests": 0
+    },
+    {
+      "label": "Chương sau",
+      "target": "Chương 2:",
+      "ms": 15,
+      "serverRequests": 0
+    },
+    {
+      "label": "Chương sau",
+      "target": "Chương 3:",
+      "ms": 15,
+      "serverRequests": 0
+    }
+  ],
+  "initialNavigation": {
+    "transferBytes": 173750,
+    "decodedBytes": 553932
+  },
+  "checkedAt": "2026-10-23T13:44:19.996Z"
+}

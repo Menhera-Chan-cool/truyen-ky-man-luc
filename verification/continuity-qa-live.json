@@ -1,0 +1,17 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "results": [
+    {
+      "viewport": "desktop",
+      "noHorizontalOverflow": true,
+      "toolbarVisible": true,
+      "pageErrors": []
+    },
+    {
+      "viewport": "mobile",
+      "noHorizontalOverflow": true,
+      "toolbarVisible": true,
+      "pageErrors": []
+    }
+  ]
+}

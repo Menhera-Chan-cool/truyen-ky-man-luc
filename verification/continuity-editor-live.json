@@ -1,0 +1,104 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checks": [
+    "vi import and inline-image parent lock; failed import preserves preview/discard warning; retry waits for parent refresh (mocked storage/import boundaries, no uploaded objects)",
+    "vi rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
+    "vi stale chapter request is cancelled; import tool loads on demand",
+    "en import and inline-image parent lock; failed import preserves preview/discard warning; retry waits for parent refresh (mocked storage/import boundaries, no uploaded objects)",
+    "en rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
+    "en stale chapter request is cancelled; import tool loads on demand"
+  ],
+  "cleanup": [
+    {
+      "label": "edition verify-editor-4d5f6e10-preface",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-4d5f6e10-preface",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-4d5f6e10-preface",
+      "ok": true
+    },
+    {
+      "label": "edition verify-editor-4d5f6e10-one",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-4d5f6e10-one",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-4d5f6e10-one",
+      "ok": true
+    },
+    {
+      "label": "edition verify-editor-4d5f6e10-two",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-4d5f6e10-two",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-4d5f6e10-two",
+      "ok": true
+    },
+    {
+      "label": "membership",
+      "ok": true
+    },
+    {
+      "label": "Auth user",
+      "ok": true
+    }
+  ],
+  "networkErrors": [
+    {
+      "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "status": 409
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "status": 409
+    }
+  ],
+  "success": true
+}

@@ -1,5 +1,24 @@
 # Bằng chứng kiểm chứng — cập nhật 23/10/2026
 
+## Giữ vị trí đọc/nghe và sao lưu thiết bị — đã triển khai
+
+Production `dpl_H7d6bNkA8DYPcw4Z59d6ZUA5evm9`, source runtime `6cb64f7f6fbd6d4e1665c76327cb0d9e7a02a0fb`, alias https://truyen-ky-man-luc.vercel.app đã được xác nhận READY. Các phần dưới là lịch sử của những đợt trước; thông tin release hiện tại nằm ở mục này và DEPLOYMENT.json.
+
+- Đã triển khai toàn bộ phạm vi `tasks/reader-continuity.md`: neo đoạn qua đổi phông/cỡ/giãn dòng/chiều rộng/chế độ/viewport; TTS điều khiển đúng trang và tiếp tục chunk/boundary khi đổi giọng/tốc độ; hủy phát âm thanh đang chờ; mở đánh dấu liên chương một lần; nhớ trang/zoom PDF; khóa parent editor khi nhập/upload; sao lưu JSON có xem trước, kiểm tra dữ liệu và khôi phục atomic.
+- **58 unit đạt**, typecheck và production build đạt. Bộ Chromium desktop/mobile cục bộ: **59 đạt, 5 bỏ qua**. Sau đó chỉ bổ sung xử lý Auth tạm thời phía server, có ba unit mới; đường đọc không thay đổi. Xem `verification/continuity-playwright-local.json`.
+- Trên URL Vercel, bộ đầy đủ: **60 đạt, 3 bỏ qua, 1 lỗi transport `ECONNRESET`** ở yêu cầu API GET kiểm tra theme desktop. Chạy riêng lại nguyên bài kiểm thử đó: **1 đạt**, không đổi assertion hoặc bật test retry. Tổng cộng **61 ca riêng biệt đã được xác minh**. Không gọi lượt đầy đủ đầu tiên là sạch lỗi; cả hai kết quả được giữ trong `verification/continuity-playwright-live.json`.
+- Editor thật, cả local production build và Vercel: dán/lưu ba chương nháp riêng ở VI/EN, chọn lại/reload, đọc database kiểm tra marker và draft pointer; state không chứa HTML; hủy GET chương cũ. Đã kiểm tra khóa parent, giữ preview khi import thất bại, cảnh báo bỏ preview, thử lại và chờ refresh; upload ảnh lỗi mở khóa đúng. Các bước storage/import lỗi được mock ở ranh giới mạng; dán/lưu nháp dùng API/database thật. Tài khoản/membership/edition/version/chapter QA đều đã xóa thành công. Các 409 chủ động và ERR_ABORTED do hủy yêu cầu cũ trong report là hành vi thử nghiệm mong đợi. Xem `verification/continuity-editor-local.json`, `verification/continuity-editor-live.json`.
+- Đã đọc lại database và danh sách Auth sau kiểm thử: **0 chương QA, 0 membership QA, 0 tài khoản Auth QA** còn lại. Xem `verification/continuity-qa-cleanup.json`.
+- JSON: xuất file thật rồi khôi phục vào browser context mới, kiểm tra phông/tiến độ/ghi chú; nhập lặp không nhân đôi; giữ bản khác nội dung khi trùng ID; file sai bị từ chối trước ghi; lỗi quota giữa transaction rollback cả ghi chú. Cookie của thao tác restore chỉ đổi sau commit. File tối đa 10 MB, chỉ xử lý trên thiết bị.
+- PDF.js trong Reader thật với fixture riêng: desktop/mobile đều giữ trang 2, zoom 125% khi đổi chương và reload; resize vẽ lại canvas đúng trang. Không thêm chương PDF QA vào sách công khai; đây là bằng chứng fixture cục bộ, không phải PDF đã xuất bản trên Vercel. Xem `verification/pdf-continuity-local.json`.
+- Hai lượt visual QA có giới hạn, local và URL thật: desktop/mobile, VI/EN, theme tối và preview JSON; không tràn ngang, toolbar nằm trong viewport và không page error. Ảnh nằm trong vùng QA bị loại khỏi Git/deployment.
+
+Auth: probe phát hiện 1/20 yêu cầu API bị trả 401 trong khi cùng token được Supabase xác thực và còn hạn 3.600 giây. Nguyên nhân ở code là gộp mọi lỗi Auth thành “Session expired”. Đã thử lại đúng một lần với lỗi kết nối/429/5xx của bước xác thực, trả 503 nếu dịch vụ vẫn lỗi; không retry mutation. Token sai vẫn 401, editor bị thu hồi hoặc vào chức năng owner vẫn bị chặn. Lỗi đọc membership được phân biệt với quyền bị thu hồi. Xem `verification/auth-connectivity-probe.json`, `tests/editor-auth.test.ts`.
+
+Đo trên URL production sau kiểm thử: chuyển chương **7 / 16 / 15 / 15 ms**, mỗi lần **0 request chuyển chương**. Cuộn 120 frame: **4 lần put tiến độ**, p95 **18 ms**, không long task trong lúc cuộn ở cả desktop và cấu hình mobile CPU chậm 4×. JavaScript trang đăng nhập **283.430 byte nén**, reader **219.312 byte nén**. CLS reader desktop khoảng **0,0051**, mobile **0** trong mẫu này. Đây là phép đo tổng hợp đơn lẻ, không phải số liệu người dùng thực; không cam kết mọi mạng/thiết bị có cùng tốc độ. Xem `verification/continuity-performance-live.json`, `verification/continuity-navigation-live.json`.
+
+Không sửa/xuất bản lại sách thật để thử. Chưa kiểm tra Android/iOS vật lý hoặc nghe chất lượng giọng thật; khi browser không có boundary, TTS tiếp tục từ đầu chunk ngắn hiện tại. Dữ liệu backup là sao lưu thủ công, không đồng bộ tài khoản. Không cần migration mới.
+
 ## Đợt tối ưu và GitHub — đã triển khai production
 
 - Source đã có: gom ghi tiến độ mỗi giây và chốt khi chuyển chương/rời trang; bố cục sidebar desktop ngay từ HTML/CSS ban đầu; tải editor/import theo nhu cầu; state admin chỉ trả summary, HTML tải theo phiên bản được chọn với AbortController và chốt context; cookie giao diện đã xác thực để server render đúng nền; RPC metadata-only trong migration 003.
