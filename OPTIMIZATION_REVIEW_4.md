@@ -2,7 +2,7 @@
 
 Web phục vụ một sách VI/EN, khách đọc công khai và vài owner/editor biên tập. Lượt này kiểm tra bản production `dpl_FJBcGQUKnXxwJRpcRn2KFACTnRvr`, runtime `f7ee05bf28908ec111ae9f2b3b44e9adcb90bcee`; repository hiện ở commit bằng chứng `d4bc4989ff553ba8d58172d71807ca4f480aeea5`.
 
-Đây là báo cáo, chưa sửa hoặc deploy thêm. Không ghi nội dung sách, không tạo tài khoản, không truy cập khu biên tập bằng mật khẩu owner. Phạm vi: reader trên Chromium desktop 1440×900/mobile 390×844, VI/EN; code tooltip, điều hướng, TTS, tìm chương và preview editor. Không phải audit bảo mật toàn hệ thống hoặc chứng nhận WCAG.
+Báo cáo dưới đây là mốc trước sửa. Sau khi người dùng duyệt cả ba lỗi, hai tiện ích và nhớ chỗ nghe dở, các mục đã triển khai tại production `dpl_6VxqBvENmJkCCLKvsYcYZoo7YpxM`; xem đầu VERIFICATION.md và DEPLOYMENT.json cho bằng chứng mới. Phạm vi audit ban đầu: reader Chromium desktop 1440×900/mobile 390×844, VI/EN; code tooltip, điều hướng, TTS, tìm chương và preview editor. Audit ban đầu không ghi sách/tạo tài khoản; kiểm thử triển khai sau đó dùng tài khoản và nháp QA riêng đã dọn, không dùng mật khẩu owner. Đây không phải audit bảo mật toàn hệ thống hoặc chứng nhận WCAG.
 
 ## Kết luận
 

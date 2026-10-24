@@ -1,0 +1,21 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "results": [
+    {
+      "device": "desktop",
+      "pagedCrossChapterSearch": true,
+      "exactHighlightedPhrase": true,
+      "completionClearsResume": true,
+      "chunks": 129,
+      "nativeSpeechMocked": true
+    },
+    {
+      "device": "mobile",
+      "pagedCrossChapterSearch": true,
+      "exactHighlightedPhrase": true,
+      "completionClearsResume": true,
+      "chunks": 129,
+      "nativeSpeechMocked": true
+    }
+  ]
+}

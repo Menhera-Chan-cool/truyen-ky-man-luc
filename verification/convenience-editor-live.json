@@ -1,0 +1,96 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checks": [
+    {
+      "locale": "vi",
+      "chapter": "verify-editor-8f7cf6d0-preface",
+      "previewPhoneWidth": 390,
+      "previewDesktopWidth": 780,
+      "previewPreservedDraft": true
+    },
+    {
+      "locale": "vi",
+      "chapter": "verify-editor-8f7cf6d0-one",
+      "previewPhoneWidth": 390,
+      "previewDesktopWidth": 780,
+      "previewPreservedDraft": true
+    },
+    {
+      "locale": "vi",
+      "chapter": "verify-editor-8f7cf6d0-two",
+      "previewPhoneWidth": 390,
+      "previewDesktopWidth": 780,
+      "previewPreservedDraft": true
+    },
+    "vi rich paste/save/switch/reload keeps three chapter contents separate",
+    {
+      "locale": "en",
+      "chapter": "verify-editor-8f7cf6d0-preface",
+      "previewPhoneWidth": 390,
+      "previewDesktopWidth": 780,
+      "previewPreservedDraft": true
+    },
+    {
+      "locale": "en",
+      "chapter": "verify-editor-8f7cf6d0-one",
+      "previewPhoneWidth": 390,
+      "previewDesktopWidth": 780,
+      "previewPreservedDraft": true
+    },
+    {
+      "locale": "en",
+      "chapter": "verify-editor-8f7cf6d0-two",
+      "previewPhoneWidth": 390,
+      "previewDesktopWidth": 780,
+      "previewPreservedDraft": true
+    },
+    "en rich paste/save/switch/reload keeps three chapter contents separate"
+  ],
+  "cleanup": [
+    {
+      "label": "edition verify-editor-8f7cf6d0-preface",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-8f7cf6d0-preface",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-8f7cf6d0-preface",
+      "ok": true
+    },
+    {
+      "label": "edition verify-editor-8f7cf6d0-one",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-8f7cf6d0-one",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-8f7cf6d0-one",
+      "ok": true
+    },
+    {
+      "label": "edition verify-editor-8f7cf6d0-two",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-8f7cf6d0-two",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-8f7cf6d0-two",
+      "ok": true
+    },
+    {
+      "label": "membership",
+      "ok": true
+    },
+    {
+      "label": "Auth user",
+      "ok": true
+    }
+  ],
+  "success": true
+}

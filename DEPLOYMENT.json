@@ -1,56 +1,56 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_FJBcGQUKnXxwJRpcRn2KFACTnRvr",
+  "deploymentId": "dpl_6VxqBvENmJkCCLKvsYcYZoo7YpxM",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-m1cvdpoei-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-c0633x8wr-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-24T02:19:56.270Z",
+  "checkedAt": "2026-10-24T03:22:12.388Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
-  "runtimeSourceCommit": "f7ee05bf28908ec111ae9f2b3b44e9adcb90bcee",
+  "runtimeSourceCommit": "422d36cd8a1a3a0316bc750ddb8e73383e942989",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
     "branch": "main"
   },
   "verification": {
-    "unitTests": 67,
+    "unitTests": 71,
     "typecheck": true,
     "productionBuild": true,
     "localBuildWorkers": 2,
     "localPlaywright": {
       "fullRun": {
-        "startTime": "2026-10-24T02:00:51.759Z",
-        "duration": 174452.607,
-        "expected": 73,
-        "skipped": 5,
+        "startTime": "2026-10-24T03:06:16.992Z",
+        "duration": 192287.29700000002,
+        "expected": 86,
+        "skipped": 6,
         "unexpected": 0,
         "flaky": 0
       },
-      "afterKeyboardFocusFix": {
-        "startTime": "2026-10-24T02:10:40.801Z",
-        "duration": 9249.737000000001,
-        "expected": 4,
-        "skipped": 0,
+      "finalFocused": {
+        "startTime": "2026-10-24T03:11:35.216Z",
+        "duration": 35796.533,
+        "expected": 17,
+        "skipped": 1,
         "unexpected": 0,
         "flaky": 0
       },
-      "note": "The complete 78-case suite preceded the final paged-link keyboard focus fix. All four affected reader-reliability cases were rerun against the rebuilt final source; the complete final suite will also run on production."
+      "note": "Full local suite preceded final CSS/tooltip/dialog polish; affected cases rerun on final build."
     },
     "livePlaywright": {
-      "scope": "Complete 78-case suite on final deployed source",
-      "startTime": "2026-10-24T02:13:56.222Z",
-      "duration": 275546.983,
-      "expected": 75,
-      "skipped": 3,
+      "scope": "Complete 92-case suite on final deployed source",
+      "startTime": "2026-10-24T03:14:58.836Z",
+      "duration": 340374.826,
+      "expected": 88,
+      "skipped": 4,
       "unexpected": 0,
       "flaky": 0,
       "retries": 0,
-      "proof": "verification/reliability-live.json"
+      "proof": "verification/convenience-live.json"
     },
     "liveQA": {
       "base": "https://truyen-ky-man-luc.vercel.app",
@@ -59,50 +59,54 @@
         {
           "device": "desktop",
           "locale": "vi",
-          "pauseAndResumeVisible": true,
-          "explicitStopVisible": true,
-          "noPanelOverflow": true,
+          "searchControlsFit": true,
+          "resumeDiscoverable": true,
           "pageErrors": []
         },
         {
           "device": "desktop",
           "locale": "en",
-          "pauseAndResumeVisible": true,
-          "explicitStopVisible": true,
-          "noPanelOverflow": true,
+          "searchControlsFit": true,
+          "resumeDiscoverable": true,
           "pageErrors": []
         },
         {
           "device": "mobile",
           "locale": "vi",
-          "pauseAndResumeVisible": true,
-          "explicitStopVisible": true,
-          "noPanelOverflow": true,
+          "searchControlsFit": true,
+          "resumeDiscoverable": true,
           "pageErrors": []
         },
         {
           "device": "mobile",
           "locale": "en",
-          "pauseAndResumeVisible": true,
-          "explicitStopVisible": true,
-          "noPanelOverflow": true,
+          "searchControlsFit": true,
+          "resumeDiscoverable": true,
           "pageErrors": []
         }
       ]
     },
+    "editor": {
+      "local": "verification/convenience-editor-local.json",
+      "live": "verification/convenience-editor-live.json",
+      "success": true,
+      "privateQADraftsDeleted": true
+    },
+    "pdfFixture": "verification/convenience-pdf-local.json",
+    "pagedSearchAndCompletion": "verification/convenience-extra-live.json",
     "navigation": {
       "base": "https://truyen-ky-man-luc.vercel.app",
       "samples": [
         {
           "label": "Chương sau",
           "target": "Chương 2:",
-          "ms": 17,
+          "ms": 18,
           "serverRequests": 0
         },
         {
           "label": "Chương trước",
           "target": "Chương 1:",
-          "ms": 5,
+          "ms": 16,
           "serverRequests": 0
         },
         {
@@ -114,45 +118,26 @@
         {
           "label": "Chương sau",
           "target": "Chương 3:",
-          "ms": 16,
+          "ms": 15,
           "serverRequests": 0
         }
       ],
       "initialNavigation": {
-        "transferBytes": 173746,
-        "decodedBytes": 553931
+        "transferBytes": 173772,
+        "decodedBytes": 554281
       },
-      "checkedAt": "2026-10-24T02:18:55.938Z"
-    },
-    "scroll": [
-      {
-        "device": "1440px Chromium",
-        "frames": 120,
-        "elapsedMs": 1977,
-        "progressPuts": 4,
-        "frameP95Ms": 18,
-        "scrollTop": 1440,
-        "longTasks": []
-      },
-      {
-        "device": "390px Chromium, CPU 4x slowdown",
-        "frames": 120,
-        "elapsedMs": 1998,
-        "progressPuts": 4,
-        "frameP95Ms": 18,
-        "scrollTop": 1440,
-        "longTasks": []
-      }
-    ]
+      "checkedAt": "2026-10-24T03:21:09.558Z"
+    }
   },
   "limitations": [
-    "Native speech events and voices were mocked; acoustic punctuation timing and physical Android/iOS were not tested.",
-    "Footnote coverage uses browser-only fixture HTML, not a new published chapter.",
-    "Current changes do not alter admin/Auth/Storage behavior; earlier hosted editor permission tests remain historical evidence.",
-    "Performance samples are bounded Chromium measurements, not field Core Web Vitals or a guarantee for every device."
+    "Native speech events/voices were mocked; physical Android/iOS and acoustic quality not tested.",
+    "Search indexes published text of the active locale, capped at 100 results; original-page PDFs excluded.",
+    "PDF listening checkpoints apply to page speech, not PDF text selection; device checkpoints do not guarantee OS background playback.",
+    "HTML device preview uses default reader typography; actual reader settings may differ.",
+    "Local visual batch found tab overflow; fixed, covered by final focused tests, and all four final live visual combinations passed."
   ],
   "previousDeployment": {
-    "id": "dpl_Hh1Gez4vmqoSKoiBSczrk1aSPP94",
-    "runtimeSourceCommit": "3ce0e049542439545a549b773e3141c2a5c8ab7b"
+    "id": "dpl_FJBcGQUKnXxwJRpcRn2KFACTnRvr",
+    "runtimeSourceCommit": "f7ee05bf28908ec111ae9f2b3b44e9adcb90bcee"
   }
 }
