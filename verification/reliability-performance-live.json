@@ -1,0 +1,103 @@
+{
+  "checkedAt": "2026-10-24T02:19:07.323Z",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "results": [
+    {
+      "path": "/vi/read/chapter-1",
+      "device": "1440px Chromium",
+      "ttfbMs": 240,
+      "fcpMs": 1488,
+      "responseEndMs": 1549,
+      "lcpMs": 1488,
+      "cls": 0.0032314137399932484,
+      "htmlBytes": 173446,
+      "scriptEncodedBytes": 220844,
+      "scriptDecodedBytes": 652544,
+      "scriptCount": 10,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/2ghugbsup0x8d.js",
+          "bytes": 73424
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2chpyk1xunqby.js",
+          "bytes": 23124
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [],
+      "heading": "Chương 1: Câu Chuyện Ở Đền Hạng Vương",
+      "horizontalOverflow": false,
+      "scroll": {
+        "frames": 120,
+        "elapsedMs": 1977,
+        "progressPuts": 4,
+        "frameP95Ms": 18,
+        "scrollTop": 1440,
+        "longTasks": []
+      },
+      "errors": []
+    },
+    {
+      "path": "/vi/read/chapter-1",
+      "device": "390px Chromium, CPU 4x slowdown",
+      "ttfbMs": 181,
+      "fcpMs": 1808,
+      "responseEndMs": 1526,
+      "lcpMs": 1808,
+      "cls": 0,
+      "htmlBytes": 173492,
+      "scriptEncodedBytes": 220844,
+      "scriptDecodedBytes": 652544,
+      "scriptCount": 10,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/2ghugbsup0x8d.js",
+          "bytes": 73424
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2chpyk1xunqby.js",
+          "bytes": 23124
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [
+        {
+          "start": 1843.5,
+          "ms": 164
+        },
+        {
+          "start": 2099.399999999907,
+          "ms": 96
+        }
+      ],
+      "heading": "Chương 1: Câu Chuyện Ở Đền Hạng Vương",
+      "horizontalOverflow": false,
+      "scroll": {
+        "frames": 120,
+        "elapsedMs": 1998,
+        "progressPuts": 4,
+        "frameP95Ms": 18,
+        "scrollTop": 1440,
+        "longTasks": []
+      },
+      "errors": []
+    }
+  ]
+}

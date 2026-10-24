@@ -11,3 +11,7 @@ The user approved all five findings in OPTIMIZATION_REVIEW_3.md, including testi
 | locale-preparation | Reader requests a locale-specific prepared Book. Sanitize only displayed HTML, return empty other-locale HTML with metadata intact. Default callers still receive both sanitized editions; offline source is never mutated. |
 
 Build order: failing unit/browser regressions → server loader → speech controls → fragment/selection handling → typecheck/unit/build → desktop/mobile integration/visual verification → private GitHub and production URL checks. Preserve all book data, roles, keys, device notes and existing settings. No Supabase migration or dependency needed.
+
+## Verified outcome
+
+All five contracts shipped in production `dpl_FJBcGQUKnXxwJRpcRn2KFACTnRvr`, runtime source `f7ee05bf28908ec111ae9f2b3b44e9adcb90bcee`. Unit 67/67, typecheck and production build passed. Local complete suite: 73 passed / 5 configured skips, followed by 4/4 affected tests after the final keyboard focus fix. The complete final-source production suite passed 75 cases with 3 configured skips, no failures/flaky cases/retries. Four local and four live locale/viewport visual checks passed. Native speech and footnote fixtures do not establish physical-device voice quality; see VERIFICATION.md and verification/reliability-*.json. Repository remains PRIVATE; book content/schema were not changed.

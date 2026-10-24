@@ -1,115 +1,158 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_Hh1Gez4vmqoSKoiBSczrk1aSPP94",
+  "deploymentId": "dpl_FJBcGQUKnXxwJRpcRn2KFACTnRvr",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-2vhgh7qih-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-m1cvdpoei-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-23T14:18:02.933Z",
+  "checkedAt": "2026-10-24T02:19:56.270Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
-  "runtimeSourceCommit": "3ce0e049542439545a549b773e3141c2a5c8ab7b",
+  "runtimeSourceCommit": "f7ee05bf28908ec111ae9f2b3b44e9adcb90bcee",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
     "branch": "main"
   },
   "verification": {
-    "unitTests": 62,
+    "unitTests": 67,
     "typecheck": true,
     "productionBuild": true,
     "localBuildWorkers": 2,
     "localPlaywright": {
-      "uniquePassed": 18,
       "fullRun": {
-        "startTime": "2026-10-23T14:06:43.318Z",
-        "duration": 83214.85900000001,
-        "expected": 17,
-        "skipped": 0,
-        "unexpected": 1,
+        "startTime": "2026-10-24T02:00:51.759Z",
+        "duration": 174452.607,
+        "expected": 73,
+        "skipped": 5,
+        "unexpected": 0,
         "flaky": 0
       },
-      "focusedConfirmation": {
-        "startTime": "2026-10-23T14:09:04.864Z",
-        "duration": 14287.720000000001,
-        "expected": 1,
+      "afterKeyboardFocusFix": {
+        "startTime": "2026-10-24T02:10:40.801Z",
+        "duration": 9249.737000000001,
+        "expected": 4,
         "skipped": 0,
         "unexpected": 0,
         "flaky": 0
       },
-      "note": "One unchanged backup case encountered the published-book unavailable error page. Its unchanged focused repeat passed. All 14 speech cases passed in the first run; native speech is mocked."
+      "note": "The complete 78-case suite preceded the final paged-link keyboard focus fix. All four affected reader-reliability cases were rerun against the rebuilt final source; the complete final suite will also run on production."
     },
     "livePlaywright": {
-      "scope": "TTS, pacing and device-backup affected flows; full app suite belongs to regression baseline",
-      "passed": 18,
-      "skipped": 0,
-      "failed": 0,
-      "retried": 0,
-      "nativeSpeechMocked": true
+      "scope": "Complete 78-case suite on final deployed source",
+      "startTime": "2026-10-24T02:13:56.222Z",
+      "duration": 275546.983,
+      "expected": 75,
+      "skipped": 3,
+      "unexpected": 0,
+      "flaky": 0,
+      "retries": 0,
+      "proof": "verification/reliability-live.json"
     },
     "liveQA": {
       "base": "https://truyen-ky-man-luc.vercel.app",
+      "nativeSpeechMocked": true,
       "results": [
         {
           "device": "desktop",
           "locale": "vi",
-          "defaultEnabled": true,
+          "pauseAndResumeVisible": true,
+          "explicitStopVisible": true,
           "noPanelOverflow": true,
-          "pageErrors": [],
-          "retried": false
+          "pageErrors": []
         },
         {
           "device": "desktop",
           "locale": "en",
-          "defaultEnabled": true,
+          "pauseAndResumeVisible": true,
+          "explicitStopVisible": true,
           "noPanelOverflow": true,
-          "pageErrors": [],
-          "retried": false
+          "pageErrors": []
         },
         {
           "device": "mobile",
           "locale": "vi",
-          "defaultEnabled": true,
+          "pauseAndResumeVisible": true,
+          "explicitStopVisible": true,
           "noPanelOverflow": true,
-          "pageErrors": [],
-          "retried": false
+          "pageErrors": []
         },
         {
           "device": "mobile",
           "locale": "en",
-          "defaultEnabled": true,
+          "pauseAndResumeVisible": true,
+          "explicitStopVisible": true,
           "noPanelOverflow": true,
-          "pageErrors": [],
-          "retried": false
+          "pageErrors": []
         }
       ]
-    }
+    },
+    "navigation": {
+      "base": "https://truyen-ky-man-luc.vercel.app",
+      "samples": [
+        {
+          "label": "Chương sau",
+          "target": "Chương 2:",
+          "ms": 17,
+          "serverRequests": 0
+        },
+        {
+          "label": "Chương trước",
+          "target": "Chương 1:",
+          "ms": 5,
+          "serverRequests": 0
+        },
+        {
+          "label": "Chương sau",
+          "target": "Chương 2:",
+          "ms": 15,
+          "serverRequests": 0
+        },
+        {
+          "label": "Chương sau",
+          "target": "Chương 3:",
+          "ms": 16,
+          "serverRequests": 0
+        }
+      ],
+      "initialNavigation": {
+        "transferBytes": 173746,
+        "decodedBytes": 553931
+      },
+      "checkedAt": "2026-10-24T02:18:55.938Z"
+    },
+    "scroll": [
+      {
+        "device": "1440px Chromium",
+        "frames": 120,
+        "elapsedMs": 1977,
+        "progressPuts": 4,
+        "frameP95Ms": 18,
+        "scrollTop": 1440,
+        "longTasks": []
+      },
+      {
+        "device": "390px Chromium, CPU 4x slowdown",
+        "frames": 120,
+        "elapsedMs": 1998,
+        "progressPuts": 4,
+        "frameP95Ms": 18,
+        "scrollTop": 1440,
+        "longTasks": []
+      }
+    ]
   },
-  "ttsShortPauses": {
-    "defaultEnabled": true,
-    "maxChunkCharacters": 240,
-    "sourceTextUnchanged": true,
-    "boundaryOffsetsPreserved": true,
-    "legacyBackupsSupported": true,
-    "exactPauseMillisecondsControlled": false
-  },
-  "regressionBaseline": {
-    "deploymentId": "dpl_H7d6bNkA8DYPcw4Z59d6ZUA5evm9",
-    "runtimeSourceCommit": "6cb64f7f6fbd6d4e1665c76327cb0d9e7a02a0fb",
-    "verification": "verification/continuity-playwright-live.json",
-    "editor": "verification/continuity-editor-live.json",
-    "performance": "verification/continuity-performance-live.json"
-  },
-  "deploymentSourceFiles": 147,
-  "previousDeploymentId": "dpl_H7d6bNkA8DYPcw4Z59d6ZUA5evm9",
-  "optimizationBaselineDeploymentId": "dpl_A4jYCve1HNRG9uLHJDQ1DSf276HX",
-  "limits": [
-    "Pause timing is controlled by the native voice. Speech-only punctuation changes approximate a shorter pause and may change intonation; the toggle restores original punctuation.",
-    "No acoustic measurements or physical Android/iOS voice tests.",
-    "Affected flows were retested; the complete app suite and editor QA remain evidence from the preceding deployment.",
-    "No published book data or Supabase accounts were modified."
-  ]
+  "limitations": [
+    "Native speech events and voices were mocked; acoustic punctuation timing and physical Android/iOS were not tested.",
+    "Footnote coverage uses browser-only fixture HTML, not a new published chapter.",
+    "Current changes do not alter admin/Auth/Storage behavior; earlier hosted editor permission tests remain historical evidence.",
+    "Performance samples are bounded Chromium measurements, not field Core Web Vitals or a guarantee for every device."
+  ],
+  "previousDeployment": {
+    "id": "dpl_Hh1Gez4vmqoSKoiBSczrk1aSPP94",
+    "runtimeSourceCommit": "3ce0e049542439545a549b773e3141c2a5c8ab7b"
+  }
 }

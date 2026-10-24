@@ -1,6 +1,22 @@
-# Bằng chứng kiểm chứng — cập nhật 23/10/2026
+# Bằng chứng kiểm chứng — cập nhật 24/10/2026
 
-## Rút ngắn ngắt nghỉ TTS — release hiện tại
+## Độ ổn định trình đọc — release hiện tại
+
+Production `dpl_FJBcGQUKnXxwJRpcRn2KFACTnRvr`, source runtime `f7ee05bf28908ec111ae9f2b3b44e9adcb90bcee`, alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY và trỏ đúng deployment. Đã xử lý cả 5 mục được duyệt trong `OPTIMIZATION_REVIEW_3.md`; các phần bên dưới là lịch sử kiểm chứng của các release trước.
+
+- TTS bị native `interrupted`/`canceled` chuyển sang tạm dừng, giữ boundary/chunk để tiếp tục. Nút toolbar chuyển giữa đọc, tạm dừng và tiếp tục; bảng giọng đọc có nút Dừng riêng. Rate/voice mới được áp dụng khi tiếp tục. Callback muộn từ chunk cũ không được dừng hoặc bỏ qua chunk mới; đổi chương xóa phiên đọc cũ.
+- Liên kết chú thích, quay lại đoạn gốc, Back/Forward và Tab/Shift+Tab trong chế độ trang đi qua trạng thái trang chung, giữ tiến độ và focus; container không tự cuộn ngang lệch bộ đếm. Ca chú thích dùng HTML fixture trong browser, không thêm/sửa chú thích của sách thật.
+- Chạm ngoài đóng bảng thao tác chọn chữ; tương tác với ô ghi chú/nút bên trong giữ bảng và ghi chú đang gõ.
+- RPC đọc sách công khai thử lại tối đa một lần sau 200 ms khi lỗi kết nối/429/5xx; lỗi quyền/schema không retry, lỗi kéo dài vẫn báo lỗi. Không retry mutation hoặc khôi phục nội dung cũ từ seed/cache.
+- Reader chỉ làm sạch HTML ngôn ngữ đang đọc, giữ metadata của cả VI/EN; caller đầy đủ vẫn nhận cả hai bản đã làm sạch. Không thay đổi hợp đồng RPC, schema hoặc nội dung published.
+- **67 unit đạt**, typecheck và production build đạt với 2 worker local. Bộ 78 ca local: **73 đạt, 5 bỏ qua**; sau đó thêm sửa focus bàn phím và chạy lại cả 4 ca reader-reliability trên bản dựng cuối, đều đạt. Xem `verification/reliability-local.json`.
+- Bộ đầy đủ trên URL production bản cuối: **75 đạt, 3 bỏ qua theo cấu hình, 0 lỗi/flaky/retry**. Ba ca bỏ qua là vùng bấm phone trong project desktop, geometry sidebar desktop trong project mobile và tooltip hover mobile. Bao gồm cả sửa focus cuối, các luồng đọc cũ, backup, tiến độ, VI/EN, giọng/tốc độ và chặn API ghi cho khách. Xem `verification/reliability-live.json`.
+- Visual QA local và production: 4 tổ hợp desktop/mobile × VI/EN; nút tiếp tục/tạm dừng và Dừng vừa panel, không tràn ngang hoặc page error. Đã xem ảnh phone VI tạm dừng và desktop EN đang đọc. Xem `verification/reliability-qa-local.json`, `verification/reliability-qa-live.json`.
+- Đo lại 4 lần chuyển chương trên production: **5–17 ms, 0 request chuyển chương**. Đây là mẫu Chromium, không phải cam kết trên mọi thiết bị. Xem `verification/reliability-navigation-live.json`; phép đo cuộn riêng nằm trong `verification/reliability-performance-live.json`.
+
+Repository GitHub vẫn PRIVATE. Không cần migration, không ghi nội dung sách hoặc tạo tài khoản QA trong đợt này; kiểm chứng editor/Auth/Storage thật của các đợt trước vẫn được ghi riêng bên dưới. Chưa thử Android/iOS vật lý hoặc nghe chất lượng/nhịp giọng thật; các ca TTS mô phỏng boundary API native, không chứng minh hệ điều hành cho phép phát nền liên tục.
+
+## Rút ngắn ngắt nghỉ TTS — release trước
 
 Production `dpl_Hh1Gez4vmqoSKoiBSczrk1aSPP94`, source runtime `3ce0e049542439545a549b773e3141c2a5c8ab7b`, alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY. Các mục tiếp theo là bằng chứng của release trước, không phải bộ đầy đủ đã chạy lại cho thay đổi nhỏ này.
 
@@ -15,7 +31,7 @@ Giới hạn: Web Speech không có thuộc tính đặt số mili giây nghỉ 
 
 ## Giữ vị trí đọc/nghe và sao lưu thiết bị — đã triển khai
 
-Production `dpl_H7d6bNkA8DYPcw4Z59d6ZUA5evm9`, source runtime `6cb64f7f6fbd6d4e1665c76327cb0d9e7a02a0fb`, alias https://truyen-ky-man-luc.vercel.app đã được xác nhận READY. Các phần dưới là lịch sử của những đợt trước; thông tin release hiện tại nằm ở mục này và DEPLOYMENT.json.
+Đợt trước: production `dpl_H7d6bNkA8DYPcw4Z59d6ZUA5evm9`, source runtime `6cb64f7f6fbd6d4e1665c76327cb0d9e7a02a0fb`, alias https://truyen-ky-man-luc.vercel.app đã được xác nhận READY tại thời điểm kiểm tra. Release hiện tại nằm ở đầu tài liệu và DEPLOYMENT.json.
 
 - Đã triển khai toàn bộ phạm vi `tasks/reader-continuity.md`: neo đoạn qua đổi phông/cỡ/giãn dòng/chiều rộng/chế độ/viewport; TTS điều khiển đúng trang và tiếp tục chunk/boundary khi đổi giọng/tốc độ; hủy phát âm thanh đang chờ; mở đánh dấu liên chương một lần; nhớ trang/zoom PDF; khóa parent editor khi nhập/upload; sao lưu JSON có xem trước, kiểm tra dữ liệu và khôi phục atomic.
 - **58 unit đạt**, typecheck và production build đạt. Bộ Chromium desktop/mobile cục bộ: **59 đạt, 5 bỏ qua**. Sau đó chỉ bổ sung xử lý Auth tạm thời phía server, có ba unit mới; đường đọc không thay đổi. Xem `verification/continuity-playwright-local.json`.

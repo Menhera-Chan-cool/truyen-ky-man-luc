@@ -1,0 +1,38 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "nativeSpeechMocked": true,
+  "results": [
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "pauseAndResumeVisible": true,
+      "explicitStopVisible": true,
+      "noPanelOverflow": true,
+      "pageErrors": []
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "pauseAndResumeVisible": true,
+      "explicitStopVisible": true,
+      "noPanelOverflow": true,
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "pauseAndResumeVisible": true,
+      "explicitStopVisible": true,
+      "noPanelOverflow": true,
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "pauseAndResumeVisible": true,
+      "explicitStopVisible": true,
+      "noPanelOverflow": true,
+      "pageErrors": []
+    }
+  ]
+}

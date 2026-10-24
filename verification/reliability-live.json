@@ -1,0 +1,406 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "deploymentId": "dpl_FJBcGQUKnXxwJRpcRn2KFACTnRvr",
+  "runtimeSourceCommit": "f7ee05bf28908ec111ae9f2b3b44e9adcb90bcee",
+  "stats": {
+    "startTime": "2026-10-24T02:13:56.222Z",
+    "duration": 275546.983,
+    "expected": 75,
+    "skipped": 3,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": [
+    {
+      "title": "stop invalidates pending preset playback and repeated starts",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "stop invalidates pending preset playback and repeated starts",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "keeps the visible text anchor after font and mode reflow",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "opens a bookmark in another chapter at its saved passage on the first click",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "keeps the visible text anchor after font and mode reflow",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "opens a bookmark in another chapter at its saved passage on the first click",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "exports and restores notes, settings and current progress on a fresh device",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "rejects invalid files and atomically rolls back an interrupted restore",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "exports and restores notes, settings and current progress on a fresh device",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "rejects invalid files and atomically rolls back an interrupted restore",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "changes chapters without waiting for the network and preserves browser history",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "uses the same fast navigation for chapter-end links and the table of contents",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "restores each chapter's scroll position during next, previous and browser Back",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "changes chapters without waiting for the network and preserves browser history",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "uses the same fast navigation for chapter-end links and the table of contents",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "restores each chapter's scroll position during next, previous and browser Back",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "keeps the production sign-in bundle below 400 KB compressed",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "coalesces scroll writes and flushes exact progress on navigation",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "flushes pending scroll progress when the page is leaving",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "keeps desktop sidebar geometry before JavaScript runs",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "retains dark appearance across book, locale and reader navigation",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "keeps the production sign-in bundle below 400 KB compressed",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "coalesces scroll writes and flushes exact progress on navigation",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "flushes pending scroll progress when the page is leaving",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "keeps desktop sidebar geometry before JavaScript runs",
+      "project": "mobile",
+      "status": "skipped"
+    },
+    {
+      "title": "retains dark appearance across book, locale and reader navigation",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "shows a shared smooth tooltip without the browser title popup",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "shows compact dark custom colors with live hexadecimal values",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "loads additional fonts and retains the selected font after reload",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "shows a shared smooth tooltip without the browser title popup",
+      "project": "mobile",
+      "status": "skipped"
+    },
+    {
+      "title": "shows compact dark custom colors with live hexadecimal values",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "loads additional fonts and retains the selected font after reload",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "keeps footnote links, return links and browser history in the paged reader state",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "keeps a draft note while interacting inside the popup and dismisses it outside",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "keeps footnote links, return links and browser history in the paged reader state",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "keeps a draft note while interacting inside the popup and dismisses it outside",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "places author attribution below the book title",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "provides at least 40px phone targets for book and reader controls",
+      "project": "desktop",
+      "status": "skipped"
+    },
+    {
+      "title": "returns the correct HTML language before JavaScript runs",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "opens directly on the book and switches the complete edition",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "retains chapter identity when switching languages",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "reports missing English preface without leaking Vietnamese content",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "persists reader settings and progress on the device",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "protects the editor and rejects anonymous API writes",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "saves a selected passage and note through a reload without changing its anchor",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "paginates and adapts double-page reading to the viewport",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "plays ambient noise and starts and stops auto-scroll",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "places author attribution below the book title",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "provides at least 40px phone targets for book and reader controls",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "returns the correct HTML language before JavaScript runs",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "opens directly on the book and switches the complete edition",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "retains chapter identity when switching languages",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "reports missing English preface without leaking Vietnamese content",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "persists reader settings and progress on the device",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "protects the editor and rejects anonymous API writes",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "saves a selected passage and note through a reload without changing its anchor",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "paginates and adapts double-page reading to the viewport",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "plays ambient noise and starts and stops auto-scroll",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "ignores late callbacks from a completed chunk while the next chunk is playing",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "pauses an interrupted session and resumes with current settings (vi)",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "pauses an interrupted session and resumes with current settings (en)",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "shortens punctuation pauses without moving the resume offset (vi)",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "shortens punctuation pauses without moving the resume offset (en)",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "continues the current spoken segment when changing rate and voice",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "moves the paged reader through its page state while speech advances",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "ignores late callbacks from a completed chunk while the next chunk is playing",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "pauses an interrupted session and resumes with current settings (vi)",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "pauses an interrupted session and resumes with current settings (en)",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "shortens punctuation pauses without moving the resume offset (vi)",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "shortens punctuation pauses without moving the resume offset (en)",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "continues the current spoken segment when changing rate and voice",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "moves the paged reader through its page state while speech advances",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "counts all twenty tales even when one locale is missing a translation",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "explains an empty voice list and refreshes late Android voices with the selected rate",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "updates a single English voice when the browser announces more voices",
+      "project": "desktop",
+      "status": "expected"
+    },
+    {
+      "title": "counts all twenty tales even when one locale is missing a translation",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "explains an empty voice list and refreshes late Android voices with the selected rate",
+      "project": "mobile",
+      "status": "expected"
+    },
+    {
+      "title": "updates a single English voice when the browser announces more voices",
+      "project": "mobile",
+      "status": "expected"
+    }
+  ],
+  "note": "Full final-source suite, Chromium desktop and mobile, no test retries. Speech events/voices use native-boundary mocks; footnote content is a browser-only fixture and does not modify published book data."
+}
