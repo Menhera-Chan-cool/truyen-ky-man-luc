@@ -1,0 +1,54 @@
+{
+  "base": "http://localhost:3001",
+  "checks": [
+    "vi rich paste/save/switch/reload keeps three chapter contents separate",
+    "en rich paste/save/switch/reload keeps three chapter contents separate"
+  ],
+  "cleanup": [
+    {
+      "label": "edition verify-editor-a8a9a41b-preface",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-a8a9a41b-preface",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-a8a9a41b-preface",
+      "ok": true
+    },
+    {
+      "label": "edition verify-editor-a8a9a41b-one",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-a8a9a41b-one",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-a8a9a41b-one",
+      "ok": true
+    },
+    {
+      "label": "edition verify-editor-a8a9a41b-two",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-a8a9a41b-two",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-a8a9a41b-two",
+      "ok": true
+    },
+    {
+      "label": "membership",
+      "ok": true
+    },
+    {
+      "label": "Auth user",
+      "ok": true
+    }
+  ],
+  "success": true
+}

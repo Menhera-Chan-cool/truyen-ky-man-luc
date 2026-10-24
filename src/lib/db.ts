@@ -1,5 +1,11 @@
 import { openDB } from "idb";
-import type { Annotation, Progress, ReaderSettings } from "./types";
+import type {
+  Annotation,
+  Progress,
+  ReaderSettings,
+  ListeningProgress,
+  Locale,
+} from "./types";
 import { normalizeSettings } from "./reader";
 import { mergeBackupNotes, type ReaderBackup } from "./reader-backup";
 let database: ReturnType<typeof openDB> | undefined;
@@ -43,6 +49,17 @@ export async function writeProgress(locale: string, progress: Progress) {
 export async function readAnnotations() {
   return (await connection()).getAll("annotations") as Promise<Annotation[]>;
 }
+export async function readListening(locale: Locale) {
+  return (await connection()).get(
+    "preferences",
+    `listening:${locale}`,
+  ) as Promise<ListeningProgress | undefined>;
+}
+export async function writeListening(value: ListeningProgress) {
+  await (
+    await connection()
+  ).put("preferences", value, `listening:${value.locale}`);
+}
 export async function saveAnnotation(annotation: Annotation) {
   await (await connection()).put("annotations", annotation);
 }
@@ -52,11 +69,13 @@ export async function deleteAnnotation(id: string) {
 export async function readDeviceBackup(): Promise<ReaderBackup> {
   const db = await connection(),
     tx = db.transaction(["preferences", "progress", "annotations"], "readonly");
-  const [settings, values, keys, annotations] = await Promise.all([
+  const [settings, values, keys, annotations, vi, en] = await Promise.all([
     tx.objectStore("preferences").get("reader"),
     tx.objectStore("progress").getAll(),
     tx.objectStore("progress").getAllKeys(),
     tx.objectStore("annotations").getAll(),
+    tx.objectStore("preferences").get("listening:vi"),
+    tx.objectStore("preferences").get("listening:en"),
   ]);
   await tx.done;
   return {
@@ -67,6 +86,7 @@ export async function readDeviceBackup(): Promise<ReaderBackup> {
     settings: settings ? normalizeSettings(settings) : null,
     progress: keys.map((key, i) => ({ key: String(key), value: values[i] })),
     annotations,
+    listening: [vi, en].filter(Boolean),
   };
 }
 export async function restoreDeviceBackup(
@@ -86,6 +106,8 @@ export async function restoreDeviceBackup(
     for (const note of notes.slice(existing.length))
       await tx.objectStore("annotations").put(note);
     if (restoreReading) {
+      for (const p of backup.listening ?? [])
+        await tx.objectStore("preferences").put(p, `listening:${p.locale}`);
       for (const p of backup.progress)
         await tx.objectStore("progress").put(p.value, p.key);
       if (backup.settings)

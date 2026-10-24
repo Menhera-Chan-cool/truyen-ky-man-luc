@@ -1,0 +1,34 @@
+{
+  "base": "http://localhost:3001",
+  "nativeSpeechMocked": true,
+  "results": [
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "searchControlsFit": true,
+      "resumeDiscoverable": true,
+      "pageErrors": []
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "searchControlsFit": false,
+      "resumeDiscoverable": true,
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "searchControlsFit": true,
+      "resumeDiscoverable": true,
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "searchControlsFit": true,
+      "resumeDiscoverable": true,
+      "pageErrors": []
+    }
+  ]
+}

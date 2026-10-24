@@ -1,0 +1,144 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-24T02:49:32.621Z",
+  "deploymentId": "dpl_FJBcGQUKnXxwJRpcRn2KFACTnRvr",
+  "speechMocked": true,
+  "checks": [
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "name": "active chapter visible in contents on direct entry",
+      "top": 1394.703125,
+      "bottom": 1440.5,
+      "listTop": 272.1875,
+      "listBottom": 847,
+      "scrollTop": 0,
+      "visible": false
+    },
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "name": "Escape while chapter search focused",
+      "sidebarStillOpen": true
+    },
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "name": "tooltip after speech state changes under pointer",
+      "before": "Đọc giọng nói",
+      "tooltip": "Đọc giọng nói",
+      "buttonLabel": "Tạm dừng đọc"
+    },
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "name": "Escape while selection note focused",
+      "popupStillVisible": true
+    },
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "name": "control: Escape inside settings panel",
+      "panelClosed": true,
+      "errors": []
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "name": "active chapter visible in contents on direct entry",
+      "top": 1572.265625,
+      "bottom": 1637.859375,
+      "listTop": 291.375,
+      "listBottom": 847,
+      "scrollTop": 0,
+      "visible": false
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "name": "Escape while chapter search focused",
+      "sidebarStillOpen": true
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "name": "tooltip after speech state changes under pointer",
+      "before": "Read aloud",
+      "tooltip": "Read aloud",
+      "buttonLabel": "Pause reading"
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "name": "Escape while selection note focused",
+      "popupStillVisible": true
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "name": "control: Escape inside settings panel",
+      "panelClosed": true,
+      "errors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "name": "active chapter visible in contents on direct entry",
+      "top": 1394.125,
+      "bottom": 1439.921875,
+      "listTop": 331,
+      "listBottom": 791,
+      "scrollTop": 0,
+      "visible": false
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "name": "Escape while chapter search focused",
+      "sidebarStillOpen": true
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "name": "Escape while selection note focused",
+      "popupStillVisible": true
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "name": "control: Escape inside settings panel",
+      "panelClosed": true,
+      "errors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "name": "active chapter visible in contents on direct entry",
+      "top": 1532.703125,
+      "bottom": 1578.5,
+      "listTop": 331,
+      "listBottom": 791,
+      "scrollTop": 0,
+      "visible": false
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "name": "Escape while chapter search focused",
+      "sidebarStillOpen": true
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "name": "Escape while selection note focused",
+      "popupStillVisible": true
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "name": "control: Escape inside settings panel",
+      "panelClosed": true,
+      "errors": []
+    }
+  ]
+}

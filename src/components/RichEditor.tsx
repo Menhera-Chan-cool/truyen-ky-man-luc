@@ -80,6 +80,7 @@ export default function RichEditor({
 }) {
   const [mode, setMode] = useState("visual"),
     [uploading, setUploading] = useState(false);
+  const [previewDevice, setPreviewDevice] = useState("mobile");
   const input = useRef<HTMLInputElement>(null);
   const L = (vi: string, en: string) => tx(locale, vi, en);
   const editor = useEditor({
@@ -247,10 +248,41 @@ export default function RichEditor({
           spellCheck={false}
         />
       ) : (
-        <div
-          className="editor-preview"
-          dangerouslySetInnerHTML={{ __html: cleanHtml(html) }}
-        />
+        <div className="editor-device-preview">
+          <div
+            className="segmented"
+            aria-label={L("Khung xem trước", "Preview viewport")}
+          >
+            {[
+              ["mobile", L("Điện thoại", "Phone")],
+              ["desktop", L("Máy tính", "Desktop")],
+            ].map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                aria-pressed={previewDevice === id}
+                className={previewDevice === id ? "selected" : ""}
+                onClick={() => setPreviewDevice(id)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <p className="tiny muted">
+            {L(
+              "Xem trước nội dung; cài đặt đọc thực tế tùy thiết bị người đọc.",
+              "Content preview; actual reading settings depend on the reader’s device.",
+            )}
+          </p>
+          <div className="editor-preview-scroll">
+            <div
+              className="editor-preview prose"
+              data-device={previewDevice}
+              style={{ width: previewDevice === "mobile" ? 390 : 780 }}
+              dangerouslySetInnerHTML={{ __html: cleanHtml(html) }}
+            />
+          </div>
+        </div>
       )}
       {uploading && (
         <p role="status">{L("Đang tải ảnh…", "Uploading image…")}</p>

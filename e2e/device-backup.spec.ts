@@ -79,6 +79,31 @@ test("exports and restores notes, settings and current progress on a fresh devic
   );
   await page.locator(".reading-scroll").evaluate((n) => (n.scrollTop = 1600));
   await page.waitForTimeout(100);
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve, reject) => {
+        const r = indexedDB.open("truyen-ky-man-luc");
+        r.onerror = () => reject(r.error);
+        r.onsuccess = () => {
+          const db = r.result,
+            tx = db.transaction("preferences", "readwrite");
+          tx.objectStore("preferences").put(
+            {
+              locale: "en",
+              chapterId: "chapter-2",
+              revision: 1,
+              offset: 80,
+              completed: false,
+            },
+            "listening:en",
+          );
+          tx.oncomplete = () => {
+            db.close();
+            resolve();
+          };
+        };
+      }),
+  );
   await settings(page);
   const downloading = page.waitForEvent("download");
   await page
@@ -92,6 +117,15 @@ test("exports and restores notes, settings and current progress on a fresh devic
   const saved = JSON.parse(raw.toString());
   expect(saved.annotations).toHaveLength(1);
   expect(saved.settings.font).toBe("Lora");
+  expect(saved.listening).toEqual([
+    {
+      locale: "en",
+      chapterId: "chapter-2",
+      revision: 1,
+      offset: 80,
+      completed: false,
+    },
+  ]);
   expect(
     saved.progress.find((p: { key: string }) => p.key === "en:chapter-1").value
       .ratio,
@@ -120,6 +154,24 @@ test("exports and restores notes, settings and current progress on a fresh devic
       target.getByRole("status").filter({ hasText: "Restored backup" }),
     ).toBeVisible();
     await expect(target.locator(".prose")).toHaveCSS("font-family", /Lora/);
+    const listening = await target.evaluate(
+      () =>
+        new Promise<any>((resolve) => {
+          const r = indexedDB.open("truyen-ky-man-luc");
+          r.onsuccess = () => {
+            const db = r.result,
+              q = db
+                .transaction("preferences")
+                .objectStore("preferences")
+                .get("listening:en");
+            q.onsuccess = () => {
+              resolve(q.result);
+              db.close();
+            };
+          };
+        }),
+    );
+    expect(listening).toEqual(saved.listening[0]);
     await target.getByRole("button", { name: "Close", exact: true }).click();
     await expect
       .poll(() =>

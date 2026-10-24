@@ -8,12 +8,13 @@ import {
 } from "react";
 import { rangeFromOffsets, speechSegments, speechText } from "../lib/reader";
 import type { Locale } from "../lib/types";
-type Segment = { text: string; offset?: number };
+type Segment = { text: string; offset?: number; plain?: boolean };
 function segments(
   root: HTMLElement | null,
   text?: string,
   start?: number,
   shortPauses = true,
+  plain = false,
 ): Segment[] {
   const result: Segment[] = [];
   const append = (value: string, offset?: number) => {
@@ -23,10 +24,15 @@ function segments(
       result.push({
         text: part,
         offset: offset === undefined ? undefined : offset + found,
+        ...(plain ? { plain: true } : {}),
       });
       at = found + part.length;
     }
   };
+  if (plain) {
+    if (text) append(text.slice(start ?? 0), start ?? 0);
+    return result;
+  }
   if (!root || (text !== undefined && start === undefined)) {
     if (text) append(text);
     return result;
@@ -65,6 +71,7 @@ export function useSpeech(
   onError: (s: string) => void,
   onFollow?: (offset: number) => void,
   shortPauses = true,
+  onCheckpoint?: (offset: number, completed: boolean, plain: boolean) => void,
 ) {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]),
     [playing, setPlaying] = useState(false),
@@ -86,8 +93,17 @@ export function useSpeech(
     onError,
     onFollow,
     shortPauses,
+    onCheckpoint,
   });
-  config.current = { locale, rate, voiceName, onError, onFollow, shortPauses };
+  config.current = {
+    locale,
+    rate,
+    voiceName,
+    onError,
+    onFollow,
+    shortPauses,
+    onCheckpoint,
+  };
   const refreshVoices = useCallback(() => {
     if (!("speechSynthesis" in window)) return [];
     const list = window.speechSynthesis
@@ -119,6 +135,7 @@ export function useSpeech(
     if (active) {
       const cut = active.boundary;
       queue.current[index.current] = {
+        ...active.segment,
         text: active.segment.text.slice(cut),
         offset:
           active.segment.offset === undefined
@@ -161,11 +178,18 @@ export function useSpeech(
         gen === generation.current &&
         current.current?.utterance === u &&
         Number.isInteger(e.charIndex)
-      )
+      ) {
         current.current.boundary = Math.max(
           0,
           Math.min(item.text.length - 1, e.charIndex),
         );
+        if (item.offset !== undefined)
+          c.onCheckpoint?.(
+            item.offset + current.current.boundary,
+            false,
+            !!item.plain,
+          );
+      }
     };
     u.onstart = () => {
       if (
@@ -175,7 +199,9 @@ export function useSpeech(
       )
         return;
       clearHighlight();
-      if (item.offset !== undefined && root.current) {
+      if (item.offset !== undefined)
+        c.onCheckpoint?.(item.offset, false, !!item.plain);
+      if (item.offset !== undefined && !item.plain && root.current) {
         const range = rangeFromOffsets(
           root.current,
           item.offset,
@@ -204,6 +230,8 @@ export function useSpeech(
         return;
       current.current = null;
       index.current++;
+      if (index.current === queue.current.length && item.offset !== undefined)
+        c.onCheckpoint?.(item.offset + item.text.length, true, !!item.plain);
       setTimeout(() => launch.current(gen), 0);
     };
     u.onerror = (e) => {
@@ -278,7 +306,7 @@ export function useSpeech(
     if (window.speechSynthesis.paused) window.speechSynthesis.resume();
     launch.current(++generation.current);
   }
-  function speak(text?: string, start?: number) {
+  function speak(text?: string, start?: number, plain = false) {
     stop();
     if (!("speechSynthesis" in window)) {
       onError(
@@ -289,7 +317,7 @@ export function useSpeech(
       return;
     }
     refreshVoices();
-    queue.current = segments(root.current, text, start, shortPauses);
+    queue.current = segments(root.current, text, start, shortPauses, plain);
     if (!queue.current.length) return;
     index.current = 0;
     running.current = true;

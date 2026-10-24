@@ -9,6 +9,25 @@ export default function Tooltips() {
   } | null>(null);
   const bubble = useRef<HTMLDivElement>(null),
     anchor = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    const element = anchor.current;
+    if (!tip || !element) return;
+    if (element.dataset.tooltip !== tip.label)
+      setTip((old) =>
+        element.dataset.tooltip && old
+          ? { ...old, label: element.dataset.tooltip }
+          : null,
+      );
+    const observer = new MutationObserver(() => {
+      const label = element.dataset.tooltip;
+      setTip((old) => (label && old ? { ...old, label } : null));
+    });
+    observer.observe(element, {
+      attributes: true,
+      attributeFilter: ["data-tooltip"],
+    });
+    return () => observer.disconnect();
+  }, [tip?.x, tip?.y]);
   useLayoutEffect(() => {
     if (!tip || !bubble.current || !anchor.current) return;
     const rect = anchor.current.getBoundingClientRect(),

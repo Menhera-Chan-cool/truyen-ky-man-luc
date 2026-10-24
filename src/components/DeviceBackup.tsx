@@ -155,6 +155,9 @@ export default function DeviceBackup({
             {preview.annotations.length}{" "}
             {L("ghi chú/đánh dấu", "notes/bookmarks")} ·{" "}
             {preview.progress.length} {L("vị trí đọc", "reading positions")}
+            {" · "}
+            {preview.listening?.length ?? 0}{" "}
+            {L("chỗ nghe", "listening positions")}
           </p>
           <p className="tiny muted">
             {new Date(preview.exportedAt).toLocaleString(
@@ -182,8 +185,8 @@ export default function DeviceBackup({
           {reading && (
             <p className="tiny muted">
               {L(
-                "Cài đặt và những vị trí có trong file sẽ thay thế giá trị tương ứng trên thiết bị.",
-                "Settings and positions in the file replace their matching device values.",
+                "Cài đặt, vị trí đọc và chỗ nghe có trong file sẽ thay thế giá trị tương ứng trên thiết bị.",
+                "Settings, reading and listening positions in the file replace their matching device values.",
               )}
             </p>
           )}

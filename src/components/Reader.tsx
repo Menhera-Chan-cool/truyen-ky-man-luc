@@ -44,6 +44,7 @@ import type {
   Progress,
   ReaderSettings,
   PdfPosition,
+  ListeningProgress,
 } from "../lib/types";
 import { defaultSettings } from "../lib/types";
 import {
@@ -61,6 +62,8 @@ import {
   saveAnnotation,
   deleteAnnotation,
   restoreDeviceBackup,
+  readListening,
+  writeListening,
 } from "../lib/db";
 import {
   annotationColors,
@@ -76,6 +79,11 @@ import {
 import { IconButton, LanguageLinks, Panel } from "./Ui";
 import ReaderSettingsPanel from "./ReaderSettings";
 import { createProgressSaver } from "../lib/progress-saver";
+import {
+  findBookText,
+  prepareBookText,
+  type SearchMatch,
+} from "../lib/book-search";
 import Soundscape from "./Soundscape";
 import PdfViewer from "./PdfViewer";
 import { useSpeech } from "./useSpeech";
@@ -115,7 +123,7 @@ export default function Reader({
     }),
     [ready, setReady] = useState(false),
     [sidebar, setSidebar] = useState<boolean | null>(null),
-    [tab, setTab] = useState<"contents" | "notes">("contents");
+    [tab, setTab] = useState<"contents" | "notes" | "search">("contents");
   const [query, setQuery] = useState(""),
     [annotations, setAnnotations] = useState<Annotation[]>([]),
     [kind, setKind] = useState("all"),
@@ -165,6 +173,11 @@ export default function Reader({
   const pendingNote = useRef<Annotation | null>(null),
     restoringBackup = useRef(false);
   const lastFragment = useRef("");
+  const sidebarList = useRef<HTMLDivElement>(null);
+  const pendingSearch = useRef<SearchMatch | null>(null);
+  const [pendingListening, setPendingListening] =
+    useState<ListeningProgress | null>(null);
+  const [listening, setListening] = useState<ListeningProgress>();
   const pdfPositionRef = useRef<PdfPosition>({ page: 1, zoom: 1 });
   const contextKey = `${locale}:${chapterId}:${revision}`,
     activeContext = useRef(contextKey);
@@ -190,9 +203,47 @@ export default function Reader({
       }),
     [locale, chapterId, revision],
   );
+  const listeningSaver = useMemo(
+    () =>
+      createProgressSaver<ListeningProgress>(async (value) => {
+        try {
+          await writeListening(value);
+          setListening(value);
+        } catch (error) {
+          notify(
+            L(
+              "Không lưu được chỗ nghe trên thiết bị.",
+              "Unable to save the listening position on this device.",
+            ),
+          );
+          throw error;
+        }
+      }),
+    [locale, chapterId, revision],
+  );
+  const checkpoint = useCallback(
+    (offset: number, completed: boolean, plain: boolean) => {
+      if (activeContext.current !== contextKey || restoringBackup.current)
+        return;
+      if (edition?.kind === "pdf" && !plain) return;
+      listeningSaver.schedule({
+        locale,
+        chapterId,
+        revision,
+        offset,
+        completed,
+        ...(edition?.kind === "pdf"
+          ? { pdfPage: pdfPositionRef.current.page }
+          : {}),
+      });
+      if (completed) void listeningSaver.flush().catch(() => {});
+    },
+    [contextKey, locale, chapterId, revision, listeningSaver, edition?.kind],
+  );
   useEffect(() => {
     const flush = () => {
       void progressSaver.flush().catch(() => {});
+      void listeningSaver.flush().catch(() => {});
     };
     const visibility = () => {
       if (document.hidden) flush();
@@ -204,7 +255,7 @@ export default function Reader({
       window.removeEventListener("pagehide", flush);
       document.removeEventListener("visibilitychange", visibility);
     };
-  }, [progressSaver]);
+  }, [progressSaver, listeningSaver]);
   const onPdfText = useCallback((text: string, page?: number) => {
     setPdfText(text);
     setPdfRenderedPage(page ?? 0);
@@ -221,12 +272,14 @@ export default function Reader({
     notify,
     followSpeech,
     settings.shortPauses,
+    checkpoint,
   );
   const onPdfPosition = useCallback(
     (value: PdfPosition) => {
       const old = pdfPositionRef.current;
       if (old.page !== value.page || old.zoom !== value.zoom) {
         speech.stop();
+        void listeningSaver.flush().catch(() => {});
         setPdfText("");
         setPdfRenderedPage(0);
       }
@@ -375,8 +428,9 @@ export default function Reader({
       readSettings(),
       readProgress(locale, chapterId),
       readAnnotations(),
+      readListening(locale),
     ])
-      .then(([saved, progress, notes]) => {
+      .then(([saved, progress, notes, heard]) => {
         if (cancelled) return;
         setSettings(normalizeSettings(saved ?? initialSettings));
         const valid = progress?.revision === revision ? progress : undefined;
@@ -386,6 +440,7 @@ export default function Reader({
         pdfPositionRef.current = pdf;
         setPdfPosition(pdf);
         setAnnotations(notes);
+        setListening(heard);
         setReady(true);
       })
       .catch(() => {
@@ -406,6 +461,16 @@ export default function Reader({
     // Speech must stop on edition changes, not on every toolbar render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chapterId, locale, revision, deviceVersion]);
+  useEffect(() => {
+    if (!sidebar || tab !== "contents" || query) return;
+    const list = sidebarList.current,
+      active = list?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!list || !active) return;
+    const a = active.getBoundingClientRect(),
+      r = list.getBoundingClientRect();
+    if (a.top < r.top) list.scrollTop += a.top - r.top;
+    else if (a.bottom > r.bottom) list.scrollTop += a.bottom - r.bottom;
+  }, [sidebar, tab, chapterId, query, locale]);
   useEffect(() => {
     if (ready)
       writeSettings(settings).catch(() =>
@@ -703,18 +768,29 @@ export default function Reader({
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       if (restoringBackup.current) return;
+      if ((e.target as HTMLElement).closest("dialog")) return;
+      if (e.key === "Escape" && !e.isComposing) {
+        if ((e.target as HTMLElement).closest(".reader-sidebar"))
+          document
+            .querySelector<HTMLButtonElement>(".reader-location button")
+            ?.focus();
+        else if (
+          (e.target as HTMLElement).closest(".selection-toolbar") &&
+          contentRef.current
+        )
+          focusReadingTarget(contentRef.current);
+        closePanel();
+        setSelection(null);
+        setActiveImage(null);
+        setSidebar(false);
+        return;
+      }
       if (
         (e.target as HTMLElement).closest(
           "input,textarea,select,[contenteditable=true],dialog",
         )
       )
         return;
-      if (e.key === "Escape") {
-        closePanel();
-        setSelection(null);
-        setActiveImage(null);
-        setSidebar(false);
-      }
       if (e.key === "ArrowRight" && paged) {
         e.preventDefault();
         setPage((p) => Math.min(p + 1, pages - 1));
@@ -781,9 +857,11 @@ export default function Reader({
   function toggleSpeech() {
     setAuto(false);
     setMessage("");
-    if (speech.playing) speech.pause();
-    else if (speech.paused) speech.resume();
-    else speech.speak(isPdf ? pdfText : undefined);
+    if (speech.playing) {
+      speech.pause();
+      void listeningSaver.flush().catch(() => {});
+    } else if (speech.paused) speech.resume();
+    else speech.speak(isPdf ? pdfText : undefined, undefined, isPdf);
   }
   function togglePanel(value: typeof panel) {
     if (value === "voice") speech.refreshVoices();
@@ -798,6 +876,8 @@ export default function Reader({
     )
       return;
     pendingNote.current = null;
+    setPendingListening(null);
+    pendingSearch.current = null;
     const anchor = captureAnchor();
     progressSaver.schedule({
       chapterId,
@@ -813,6 +893,7 @@ export default function Reader({
         : {}),
     });
     void progressSaver.flush().catch(() => {});
+    void listeningSaver.flush().catch(() => {});
     speech.stop();
     if (mobile) setSidebar(false);
     restored.current = false;
@@ -1027,6 +1108,96 @@ export default function Reader({
     pendingNote.current = null;
     openNote(note);
   }, [chapterId, ready, layoutVersion, pdfRenderedPage]);
+  function revealSearch(result: SearchMatch) {
+    if (
+      result.revision !== revision ||
+      result.chapterId !== chapterId ||
+      !contentRef.current
+    )
+      return;
+    revealOffset(result.start, true);
+    const range = rangeFromOffsets(
+        contentRef.current,
+        result.start,
+        result.end,
+      ),
+      Highlight = (window as HighlightWindow).Highlight;
+    if (range && Highlight)
+      (CSS as HighlightCSS).highlights?.set(
+        "search-result",
+        new Highlight(range),
+      );
+  }
+  useEffect(() => {
+    const result = pendingSearch.current;
+    if (
+      !result ||
+      result.chapterId !== chapterId ||
+      !ready ||
+      !restored.current
+    )
+      return;
+    pendingSearch.current = null;
+    revealSearch(result);
+  }, [chapterId, ready, layoutVersion]);
+  useEffect(
+    () => () => {
+      (CSS as HighlightCSS).highlights?.delete("search-result");
+    },
+    [chapterId, locale, revision],
+  );
+  const heardEdition =
+    listening &&
+    book.chapters.find((c) => c.id === listening.chapterId)?.[locale];
+  const canListen =
+    listening &&
+    !listening.completed &&
+    listening.locale === locale &&
+    heardEdition?.revision === listening.revision;
+  function continueListening() {
+    if (!canListen || !listening) return;
+    setAuto(false);
+    if (listening.chapterId !== chapterId) go(listening.chapterId);
+    else speech.stop();
+    setPendingListening(listening);
+  }
+  useEffect(() => {
+    const saved = pendingListening;
+    if (
+      !saved ||
+      saved.chapterId !== chapterId ||
+      saved.revision !== revision ||
+      !ready ||
+      !restored.current
+    )
+      return;
+    if (isPdf && pdfRenderedPage !== saved.pdfPage) {
+      setPdfPosition((p) => ({ ...p, page: saved.pdfPage ?? 1 }));
+      return;
+    }
+    const text = isPdf ? pdfText : contentRef.current?.textContent;
+    if (!text || (isPdf && pdfRenderedPage !== saved.pdfPage)) return;
+    setPendingListening(null);
+    if (saved.offset >= text.length) {
+      notify(
+        L(
+          "Chỗ nghe đã lưu không còn phù hợp.",
+          "The saved listening position is no longer available.",
+        ),
+      );
+      return;
+    }
+    speech.speak(isPdf ? text : undefined, saved.offset, isPdf);
+  }, [
+    pendingListening,
+    chapterId,
+    revision,
+    ready,
+    layoutVersion,
+    pdfText,
+    pdfRenderedPage,
+    isPdf,
+  ]);
   async function restoreDeviceData(
     backup: ReaderBackup,
     restoreReading: boolean,
@@ -1036,6 +1207,7 @@ export default function Reader({
     speech.stop();
     try {
       await progressSaver.flush();
+      await listeningSaver.flush();
       const result = await restoreDeviceBackup(backup, restoreReading);
       restored.current = false;
       setReady(false);
@@ -1097,6 +1269,32 @@ export default function Reader({
     a.href = canvas.toDataURL("image/png");
     a.click();
   }
+  const searchIndex = useMemo(
+    () =>
+      tab !== "search"
+        ? []
+        : prepareBookText(
+            book.chapters.flatMap((c) => {
+              const e = c[locale];
+              if (!e || e.kind === "pdf") return [];
+              return [
+                {
+                  chapterId: c.id,
+                  title: e.title,
+                  revision: e.revision,
+                  text:
+                    new DOMParser().parseFromString(e.html, "text/html").body
+                      .textContent ?? "",
+                },
+              ];
+            }),
+          ),
+    [book, locale, tab],
+  );
+  const searchResults = useMemo(
+    () => findBookText(searchIndex, query),
+    [searchIndex, query],
+  );
   const filteredNotes = useMemo(
     () =>
       annotations.filter(
@@ -1273,6 +1471,16 @@ export default function Reader({
               <Bookmark size={15} />
               {L("Đánh dấu", "Bookmarks")}
             </button>
+            <button
+              className={tab === "search" ? "selected" : ""}
+              onClick={() => {
+                setTab("search");
+                setQuery("");
+              }}
+            >
+              <Search size={15} />
+              {L("Tìm trong sách", "Search in book")}
+            </button>
           </div>
           <label className="search-field">
             <Search size={15} />
@@ -1280,19 +1488,23 @@ export default function Reader({
               aria-label={
                 tab === "contents"
                   ? L("Tìm chương", "Find a chapter")
-                  : L("Tìm đánh dấu, ghi chú", "Search bookmarks and notes")
+                  : tab === "search"
+                    ? L("Tìm trong sách", "Search in book")
+                    : L("Tìm đánh dấu, ghi chú", "Search bookmarks and notes")
               }
               placeholder={
                 tab === "contents"
                   ? L("Tìm chương…", "Find a chapter…")
-                  : L("Tìm đánh dấu, ghi chú…", "Search bookmarks and notes…")
+                  : tab === "search"
+                    ? L("Nhập câu hoặc từ cần tìm…", "Find a phrase or word…")
+                    : L("Tìm đánh dấu, ghi chú…", "Search bookmarks and notes…")
               }
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
           </label>
         </div>
-        <div className="sidebar-list">
+        <div className="sidebar-list" ref={sidebarList}>
           {tab === "contents" ? (
             <ol>
               {book.chapters
@@ -1325,6 +1537,40 @@ export default function Reader({
                   </li>
                 ))}
             </ol>
+          ) : tab === "search" ? (
+            <div className="book-search-results">
+              <p className="tiny muted" role="status">
+                {query.trim()
+                  ? `${searchResults.matches.length}${searchResults.truncated ? "+" : ""} ${L("kết quả", "matches")}`
+                  : L(
+                      "Tìm trong nội dung đã xuất bản của bản tiếng Việt.",
+                      "Search the published English edition.",
+                    )}
+              </p>
+              <p className="tiny muted">
+                {L(
+                  "PDF nguyên trang không nằm trong tìm kiếm này.",
+                  "Original-page PDFs are not included in this search.",
+                )}
+              </p>
+              {searchResults.matches.map((result) => (
+                <button
+                  key={`${result.chapterId}:${result.start}`}
+                  className="book-search-result"
+                  data-chapter={result.chapterId}
+                  onClick={() => {
+                    if (result.chapterId !== chapterId) {
+                      go(result.chapterId);
+                      pendingSearch.current = result;
+                    } else revealSearch(result);
+                    if (mobile) setSidebar(false);
+                  }}
+                >
+                  <strong>{result.title}</strong>
+                  <span>{result.snippet}</span>
+                </button>
+              ))}
+            </div>
           ) : (
             <>
               <div className="notes-filters">
@@ -1596,7 +1842,10 @@ export default function Reader({
           setSettings={updateSettings}
           onClose={closePanel}
           onRestore={restoreDeviceData}
-          onBeforeExport={() => progressSaver.flush()}
+          onBeforeExport={async () => {
+            await progressSaver.flush();
+            await listeningSaver.flush();
+          }}
           isPdf={!!isPdf}
         />
       )}
@@ -1768,12 +2017,45 @@ export default function Reader({
                   : L("Đọc chương này", "Read this chapter")}
             </button>
             {(speech.playing || speech.paused) && (
-              <button className="secondary-button" onClick={speech.stop}>
+              <button
+                className="secondary-button"
+                onClick={() => {
+                  speech.stop();
+                  void listeningSaver.flush().catch(() => {});
+                }}
+              >
                 <Square size={16} />
                 {L("Dừng đọc", "Stop reading")}
               </button>
             )}
           </div>
+          {!speech.playing &&
+            !speech.paused &&
+            listening &&
+            !listening.completed && (
+              <div className="saved-listening">
+                <p className="tiny muted">
+                  {heardEdition?.title ??
+                    L("Phần nghe đã lưu", "Saved listening position")}
+                </p>
+                {canListen ? (
+                  <button
+                    className="secondary-button"
+                    onClick={continueListening}
+                  >
+                    <Headphones size={16} />
+                    {L("Nghe tiếp", "Continue listening")}
+                  </button>
+                ) : (
+                  <p role="status" className="tiny">
+                    {L(
+                      "Nội dung đã đổi hoặc không còn xuất bản. Hãy chọn chỗ nghe mới.",
+                      "This edition changed or is no longer published. Choose a new listening position.",
+                    )}
+                  </p>
+                )}
+              </div>
+            )}
         </Panel>
       )}
       {panel === "scroll" && (

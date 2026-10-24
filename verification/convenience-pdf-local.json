@@ -1,0 +1,18 @@
+{
+  "fixtureOnly": true,
+  "serverWrites": false,
+  "results": [
+    {
+      "device": "desktop",
+      "savedPageAndOffset": true,
+      "returnsToSavedPage": true,
+      "nativeSpeechMocked": true
+    },
+    {
+      "device": "mobile",
+      "savedPageAndOffset": true,
+      "returnsToSavedPage": true,
+      "nativeSpeechMocked": true
+    }
+  ]
+}

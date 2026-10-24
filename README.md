@@ -74,6 +74,12 @@ Trong **Giọng đọc & tốc độ**, **Ngắt nghỉ ngắn** mặc định b
 
 Nút đọc trên thanh công cụ chuyển giữa **Tạm dừng đọc / Tiếp tục đọc** khi có phiên nghe; **Dừng đọc** trong bảng giọng đọc kết thúc hàng đợi. Khi giọng bị ngắt, ứng dụng giữ chunk/boundary để bạn chủ động tiếp tục. Đổi tốc độ/giọng khi đang tạm dừng không tự phát lại. Đổi chương, VI/EN hoặc trang PDF dừng phiên cũ.
 
+**Giọng đọc & tốc độ → Nghe tiếp** mở lại chỗ nghe gần nhất của từng ngôn ngữ, kể cả ở chương khác. Chỗ nghe lưu riêng với tiến độ đọc, gồm revision và offset; không tự phát khi tải trang. Bản nội dung đã đổi/thu hồi sẽ báo không còn phù hợp. Có boundary thì tiếp tục từ từ đang nghe, nếu không thì từ đầu chunk ngắn; PDF có chữ lưu trang và offset khi đọc trang bằng “Đọc chương này”. Đọc riêng đoạn chọn trong PDF không thay chỗ nghe trang vì hệ tọa độ lớp chữ khác văn bản trích. Chỗ nghe đi cùng file sao lưu JSON; bản sao cũ vẫn nhập được.
+
+Sidebar có tab **Tìm trong sách**: tìm cả bản published VI hoặc EN đã nạp, không phân biệt hoa/thường hoặc dấu tiếng Việt, tối đa 100 kết quả với đoạn trích; bấm kết quả để mở đúng chương/đoạn và tô sáng. PDF nguyên trang không nằm trong chỉ mục. Mục lục tự hiện chương đang đọc khi mở; Escape đóng bảng từ ô tìm/ghi chú, giữ thao tác IME và phím mũi tên trong input. Tooltip đồng bộ khi nút đổi trạng thái.
+
+Trong editor, **Xem trước → Điện thoại / Máy tính** dùng khung 390px/780px với typography mặc định của reader. Khung rộng cuộn trong vùng preview, không kéo tràn trang quản trị. Chuyển khung không lưu hoặc sửa HTML; preview vẫn làm sạch nội dung. Cài đặt đọc riêng của khách có thể khác preview.
+
 Liên kết chú thích `#id` trong chương dùng chung cơ chế chuyển trang của Reader, đồng bộ tiến độ và Back/Forward. Popup chọn chữ đóng khi chạm bên ngoài; nhập ghi chú và dùng các nút bên trong vẫn giữ popup. Mở sách chỉ chuẩn bị HTML của ngôn ngữ đang đọc; lỗi kết nối/429/5xx của yêu cầu đọc được thử lại tối đa một lần, không áp dụng cho thao tác ghi hoặc lỗi quyền/cấu hình.
 
 Mục lục đếm tổng câu chuyện, không trừ chương chỉ thiếu bản dịch ở ngôn ngữ đang chọn. Bảng giọng đọc chỉ liệt kê giọng phù hợp VI/EN hiện tại, báo rõ khi danh sách trống hoặc chỉ có một giọng; hỗ trợ Làm mới, voiceschanged, quay lại tab và ba lần kiểm tra muộn có giới hạn. Khi điện thoại chỉ hiện “Tự động”, dùng hướng dẫn Android trong bảng để cài dữ liệu giọng đọc rồi Làm mới. Cài thêm gói không bảo đảm browser sẽ liệt kê thêm giọng. Xem [hướng dẫn Android](https://support.google.com/accessibility/android/answer/6006983?hl=vi).

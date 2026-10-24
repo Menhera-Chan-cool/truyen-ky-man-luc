@@ -61,6 +61,14 @@ export type Progress = {
   pdfZoom?: number;
 };
 export type PdfPosition = { page: number; zoom: number };
+export type ListeningProgress = {
+  locale: Locale;
+  chapterId: string;
+  revision: number;
+  offset: number;
+  completed: boolean;
+  pdfPage?: number;
+};
 export type ReaderSettings = {
   theme: string;
   font: string;

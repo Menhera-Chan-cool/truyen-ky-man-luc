@@ -1,6 +1,8 @@
 import type { Progress } from "./types";
-export function createProgressSaver(write: (value: Progress) => Promise<void>) {
-  let pending: Progress | undefined;
+export function createProgressSaver<T = Progress>(
+  write: (value: T) => Promise<void>,
+) {
+  let pending: T | undefined;
   let timer: ReturnType<typeof setTimeout> | undefined;
   async function flush() {
     clearTimeout(timer);
@@ -10,7 +12,7 @@ export function createProgressSaver(write: (value: Progress) => Promise<void>) {
     if (value) await write(value);
   }
   return {
-    schedule(value: Progress) {
+    schedule(value: T) {
       pending = value;
       timer ??= setTimeout(() => {
         void flush().catch(() => {});

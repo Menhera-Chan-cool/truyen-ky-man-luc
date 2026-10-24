@@ -3,6 +3,7 @@ import {
   type Annotation,
   type Progress,
   type ReaderSettings,
+  type ListeningProgress,
 } from "./types";
 import { normalizeSettings } from "./reader";
 export const MAX_BACKUP_BYTES = 10 * 1024 * 1024;
@@ -14,6 +15,7 @@ export type ReaderBackup = {
   settings: ReaderSettings | null;
   progress: { key: string; value: Progress }[];
   annotations: Annotation[];
+  listening?: ListeningProgress[];
 };
 const bad = (): never => {
   throw new Error("Invalid reader backup");
@@ -75,6 +77,31 @@ export function parseReaderBackup(text: string): ReaderBackup {
     Array.isArray(v.annotations) && v.annotations.length <= 10000
       ? v.annotations
       : bad();
+  const listeningItems =
+    v.listening === undefined
+      ? []
+      : Array.isArray(v.listening) && v.listening.length <= 2
+        ? v.listening
+        : bad();
+  const listening: ListeningProgress[] = listeningItems.map((item: unknown) => {
+    const p = object(item);
+    if (
+      (p.locale !== "vi" && p.locale !== "en") ||
+      typeof p.completed !== "boolean"
+    )
+      bad();
+    return {
+      locale: p.locale as "vi" | "en",
+      chapterId: chapter(p.chapterId),
+      revision: num(p.revision, 0, 2_147_483_647, true),
+      offset: num(p.offset, 0, 2_000_000, true),
+      completed: p.completed as boolean,
+      ...(p.pdfPage === undefined
+        ? {}
+        : { pdfPage: num(p.pdfPage, 1, 1_000_000, true) }),
+    };
+  });
+  if (new Set(listening.map((p) => p.locale)).size !== listening.length) bad();
   const progress = progressItems.map((item: unknown) => {
     const p = object(item),
       raw = object(p.value),
@@ -141,6 +168,7 @@ export function parseReaderBackup(text: string): ReaderBackup {
     settings,
     progress,
     annotations,
+    listening,
   };
 }
 export function mergeBackupNotes(

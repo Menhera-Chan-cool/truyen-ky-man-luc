@@ -83,7 +83,8 @@ export function Panel({
     const old = document.activeElement as HTMLElement;
     ref.current?.focus();
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if ((e.target as HTMLElement).closest("dialog")) return;
+      if (e.key === "Escape" && !e.isComposing) onClose();
     };
     document.addEventListener("keydown", handler);
     return () => {

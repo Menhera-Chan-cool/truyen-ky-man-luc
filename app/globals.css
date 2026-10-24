@@ -547,6 +547,15 @@ svg {
   padding: 6px 8px;
   white-space: nowrap;
 }
+.sidebar-tools .segmented button {
+  min-width: 0;
+  padding: 6px 4px;
+  gap: 4px;
+  white-space: normal;
+}
+.sidebar-tools .segmented svg {
+  flex-shrink: 0;
+}
 .segmented button.selected,
 .theme-grid button.selected {
   background: var(--reader-accent, #8d342b);
@@ -664,6 +673,64 @@ svg {
 .prose {
   overflow-wrap: break-word;
   hyphens: none;
+}
+::highlight(search-result) {
+  background-color: #f3dd83;
+  color: #27231d;
+}
+.book-search-results {
+  padding: 12px;
+}
+.book-search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 14px 10px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--reader-fg) 16%, transparent);
+  background: transparent;
+  color: inherit;
+  border-radius: 4px;
+}
+.book-search-result:hover {
+  background: color-mix(in srgb, var(--reader-accent) 9%, transparent);
+}
+.book-search-result strong {
+  font-size: 12px;
+}
+.book-search-result span {
+  font-size: 12px;
+  line-height: 1.7;
+}
+.saved-listening {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--reader-fg) 16%, transparent);
+}
+.editor-device-preview {
+  min-width: 0;
+  margin-top: 12px;
+}
+.editor-preview-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+  padding: 8px 0;
+}
+.editor-device-preview .editor-preview {
+  box-sizing: border-box;
+  max-width: none;
+  margin: 0 auto;
+  min-height: 400px;
+  padding: 24px;
+  color: #302b23;
+  background: #f5f0e5;
+  font:
+    20px/1.9 "Literata Variable",
+    Georgia,
+    serif;
+  --reader-accent: #8d342b;
 }
 .prose p {
   margin: 0 0 1.25em;

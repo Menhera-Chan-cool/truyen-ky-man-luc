@@ -39,6 +39,30 @@ const file = () => ({
   ],
   annotations: [note],
 });
+it("round trips separate listening positions and accepts legacy backups", () => {
+  const listening = [
+    {
+      locale: "vi",
+      chapterId: "chapter-2",
+      revision: 3,
+      offset: 128,
+      completed: false,
+      pdfPage: 2,
+    },
+  ];
+  expect(
+    parseReaderBackup(JSON.stringify({ ...file(), listening })),
+  ).toMatchObject({ listening });
+  expect(parseReaderBackup(JSON.stringify(file())).listening).toEqual([]);
+  for (const bad of [
+    { ...listening[0], offset: -1 },
+    { ...listening[0], locale: "jp" },
+    { ...listening[0], completed: "no" },
+  ])
+    expect(() =>
+      parseReaderBackup(JSON.stringify({ ...file(), listening: [bad] })),
+    ).toThrow();
+});
 it("restores older backups with short pauses enabled and preserves an explicit opt out", () => {
   const legacy = { ...defaultSettings } as Record<string, unknown>;
   delete legacy.shortPauses;
