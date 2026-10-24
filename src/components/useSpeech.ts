@@ -68,6 +68,7 @@ export function useSpeech(
 ) {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]),
     [playing, setPlaying] = useState(false),
+    [paused, setPaused] = useState(false),
     [supported, setSupported] = useState(false);
   const generation = useRef(0),
     queue = useRef<Segment[]>([]),
@@ -111,7 +112,32 @@ export function useSpeech(
       ?.querySelectorAll(".speaking")
       .forEach((el) => el.classList.remove("speaking"));
     setPlaying(false);
+    setPaused(false);
   }, [root]);
+  function rememberCurrent() {
+    const active = current.current;
+    if (active) {
+      const cut = active.boundary;
+      queue.current[index.current] = {
+        text: active.segment.text.slice(cut),
+        offset:
+          active.segment.offset === undefined
+            ? undefined
+            : active.segment.offset + cut,
+      };
+    }
+    current.current = null;
+  }
+  function pause() {
+    if (!running.current) return;
+    generation.current++;
+    running.current = false;
+    rememberCurrent();
+    window.speechSynthesis.cancel();
+    clearHighlight();
+    setPlaying(false);
+    setPaused(index.current < queue.current.length);
+  }
   const launch = useRef<(gen: number) => void>(() => {});
   launch.current = (gen) => {
     if (gen !== generation.current || !running.current) return;
@@ -142,7 +168,12 @@ export function useSpeech(
         );
     };
     u.onstart = () => {
-      if (gen !== generation.current || !running.current) return;
+      if (
+        gen !== generation.current ||
+        !running.current ||
+        current.current?.utterance !== u
+      )
+        return;
       clearHighlight();
       if (item.offset !== undefined && root.current) {
         const range = rangeFromOffsets(
@@ -165,7 +196,12 @@ export function useSpeech(
       }
     };
     u.onend = () => {
-      if (gen !== generation.current || !running.current) return;
+      if (
+        gen !== generation.current ||
+        !running.current ||
+        current.current?.utterance !== u
+      )
+        return;
       current.current = null;
       index.current++;
       setTimeout(() => launch.current(gen), 0);
@@ -174,10 +210,18 @@ export function useSpeech(
       if (
         gen !== generation.current ||
         !running.current ||
-        e.error === "interrupted" ||
-        e.error === "canceled"
+        current.current?.utterance !== u
       )
         return;
+      if (e.error === "interrupted" || e.error === "canceled") {
+        pause();
+        c.onError(
+          c.locale === "vi"
+            ? "Giọng đọc bị ngắt. Bấm Tiếp tục đọc để nghe tiếp."
+            : "Speech was interrupted. Choose Resume reading to continue.",
+        );
+        return;
+      }
       stop();
       const unavailable =
         e.error === "language-unavailable" || e.error === "voice-unavailable";
@@ -218,25 +262,22 @@ export function useSpeech(
   }, [refreshVoices]);
   useEffect(() => {
     if (!running.current) return;
-    const active = current.current;
-    if (active) {
-      const cut = active.boundary;
-      queue.current[index.current] = {
-        text: active.segment.text.slice(cut),
-        offset:
-          active.segment.offset === undefined
-            ? undefined
-            : active.segment.offset + cut,
-      };
-    }
+    rememberCurrent();
     const gen = ++generation.current;
-    current.current = null;
     window.speechSynthesis.cancel();
     launch.current(gen);
   }, [rate, voiceName, shortPauses]);
   useEffect(() => {
     stop();
   }, [locale, stop]);
+  function resume() {
+    if (running.current || index.current >= queue.current.length) return;
+    running.current = true;
+    setPaused(false);
+    setPlaying(true);
+    if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+    launch.current(++generation.current);
+  }
   function speak(text?: string, start?: number) {
     stop();
     if (!("speechSynthesis" in window)) {
@@ -255,5 +296,15 @@ export function useSpeech(
     setPlaying(true);
     launch.current(++generation.current);
   }
-  return { voices, playing, supported, speak, stop, refreshVoices };
+  return {
+    voices,
+    playing,
+    paused,
+    supported,
+    speak,
+    pause,
+    resume,
+    stop,
+    refreshVoices,
+  };
 }

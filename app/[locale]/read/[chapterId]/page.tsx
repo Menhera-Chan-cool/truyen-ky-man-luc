@@ -11,32 +11,14 @@ export default async function ReaderPage({
   const { locale, chapterId } = await params;
   if (!isLocale(locale)) notFound();
   const [book, initialSettings] = await Promise.all([
-    getBook(),
+    getBook(true, locale),
     savedReaderSettings(),
   ]);
   if (!book.chapters.some((c) => c.id === chapterId)) notFound();
   // shortcut: preload this short book; use chapter prefetch if an edition grows to several MB.
-  const readerBook = {
-    ...book,
-    chapters: book.chapters.map((c) => ({
-      ...c,
-      vi: c.vi
-        ? {
-            ...c.vi,
-            html: locale === "vi" ? c.vi.html : "",
-          }
-        : undefined,
-      en: c.en
-        ? {
-            ...c.en,
-            html: locale === "en" ? c.en.html : "",
-          }
-        : undefined,
-    })),
-  };
   return (
     <Reader
-      book={readerBook}
+      book={book}
       locale={locale}
       chapterId={chapterId}
       initialSettings={initialSettings}

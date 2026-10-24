@@ -1,0 +1,19 @@
+{
+  "fixture": true,
+  "serverWrites": false,
+  "originalHtmlCharacters": 29002,
+  "results": [
+    {
+      "cpuSlowdown": 1,
+      "keystrokes": 35,
+      "workP95Ms": 0.6,
+      "inputToFrameP95Ms": 18.2
+    },
+    {
+      "cpuSlowdown": 4,
+      "keystrokes": 35,
+      "workP95Ms": 2.3,
+      "inputToFrameP95Ms": 51.9
+    }
+  ]
+}

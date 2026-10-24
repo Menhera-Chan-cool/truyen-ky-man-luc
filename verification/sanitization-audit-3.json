@@ -1,0 +1,36 @@
+{
+  "fixture": true,
+  "source": "src/data/book.json",
+  "results": [
+    {
+      "name": "both-locales",
+      "editions": 41,
+      "ms": 323
+    },
+    {
+      "name": "vi-only",
+      "editions": 21,
+      "ms": 124
+    },
+    {
+      "name": "both-locales",
+      "editions": 41,
+      "ms": 254
+    },
+    {
+      "name": "vi-only",
+      "editions": 21,
+      "ms": 120
+    },
+    {
+      "name": "both-locales",
+      "editions": 41,
+      "ms": 228
+    },
+    {
+      "name": "vi-only",
+      "editions": 21,
+      "ms": 120
+    }
+  ]
+}

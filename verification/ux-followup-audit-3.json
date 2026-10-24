@@ -1,0 +1,66 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-23T14:32:04.939Z",
+  "checks": [
+    {
+      "device": "desktop",
+      "name": "active speech interrupted",
+      "mockedNativeApi": true,
+      "stillShowsStop": true,
+      "queued": 1
+    },
+    {
+      "device": "desktop",
+      "name": "dismiss selection on outside tap",
+      "selectionCollapsed": true,
+      "toolbarStillVisible": true
+    },
+    {
+      "device": "desktop",
+      "name": "paged footnote link",
+      "fixtureOnly": true,
+      "publishedChapterOneAnchorLinks": 0,
+      "before": "1 / 14",
+      "after": "1 / 14",
+      "nativeScrollLeft": 10764,
+      "targetVisible": true
+    },
+    {
+      "device": "desktop",
+      "name": "browser errors",
+      "errors": []
+    },
+    {
+      "device": "mobile",
+      "name": "active speech interrupted",
+      "mockedNativeApi": true,
+      "stillShowsStop": true,
+      "queued": 1
+    },
+    {
+      "device": "mobile",
+      "name": "dismiss selection on outside tap",
+      "selectionCollapsed": true,
+      "toolbarStillVisible": true
+    },
+    {
+      "device": "mobile",
+      "name": "paged footnote link",
+      "fixtureOnly": true,
+      "publishedChapterOneAnchorLinks": 0,
+      "before": "1 / 30",
+      "after": "1 / 30",
+      "nativeScrollLeft": 11339,
+      "targetVisible": true
+    },
+    {
+      "device": "mobile",
+      "name": "browser errors",
+      "errors": []
+    }
+  ],
+  "sourceSize": {
+    "chapters": 21,
+    "largestEditionHtml": 29002
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "checkedAt": "2026-10-23T14:29:18.083Z",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "results": [
+    {
+      "path": "/vi",
+      "device": "1440px Chromium",
+      "ttfbMs": 2382,
+      "fcpMs": 3460,
+      "responseEndMs": 3270,
+      "lcpMs": 3460,
+      "cls": 0.0015557545937955458,
+      "htmlBytes": 5122,
+      "scriptEncodedBytes": 197137,
+      "scriptDecodedBytes": 584767,
+      "scriptCount": 9,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/00_vjp306flti.js",
+          "bytes": 73427
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/0_3yhyntran49.js",
+          "bytes": 9984
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [],
+      "heading": "Truyền kỳ mạn lục",
+      "horizontalOverflow": false,
+      "errors": []
+    },
+    {
+      "path": "/vi/read/chapter-1",
+      "device": "1440px Chromium",
+      "ttfbMs": 214,
+      "fcpMs": 2428,
+      "responseEndMs": 2434,
+      "lcpMs": 2428,
+      "cls": 0.0035731575671537424,
+      "htmlBytes": 173511,
+      "scriptEncodedBytes": 219843,
+      "scriptDecodedBytes": 649508,
+      "scriptCount": 10,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/00_vjp306flti.js",
+          "bytes": 73427
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/226sxwmw3btpi.js",
+          "bytes": 22120
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [],
+      "heading": "Chương 1: Câu Chuyện Ở Đền Hạng Vương",
+      "horizontalOverflow": false,
+      "scroll": {
+        "frames": 120,
+        "elapsedMs": 1982,
+        "progressPuts": 4,
+        "frameP95Ms": 18,
+        "scrollTop": 1440,
+        "longTasks": []
+      },
+      "errors": []
+    },
+    {
+      "path": "/vi",
+      "device": "390px Chromium, CPU 4x slowdown",
+      "ttfbMs": 1378,
+      "fcpMs": 2204,
+      "responseEndMs": 1833,
+      "lcpMs": 2204,
+      "cls": 0.008565616668797611,
+      "htmlBytes": 5122,
+      "scriptEncodedBytes": 197137,
+      "scriptDecodedBytes": 584767,
+      "scriptCount": 9,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/00_vjp306flti.js",
+          "bytes": 73427
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/0_3yhyntran49.js",
+          "bytes": 9984
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [
+        {
+          "start": 2215.2999999970198,
+          "ms": 141
+        },
+        {
+          "start": 3302.6999999955297,
+          "ms": 80
+        }
+      ],
+      "heading": "Truyền kỳ mạn lục",
+      "horizontalOverflow": false,
+      "errors": []
+    },
+    {
+      "path": "/vi/read/chapter-1",
+      "device": "390px Chromium, CPU 4x slowdown",
+      "ttfbMs": 2809,
+      "fcpMs": 7328,
+      "responseEndMs": 4968,
+      "lcpMs": 7328,
+      "cls": 0,
+      "htmlBytes": 173511,
+      "scriptEncodedBytes": 219843,
+      "scriptDecodedBytes": 649508,
+      "scriptCount": 10,
+      "largestScripts": [
+        {
+          "path": "/_next/static/immutable/chunks/00_vjp306flti.js",
+          "bytes": 73427
+        },
+        {
+          "path": "/_next/static/immutable/chunks/1lm5iv_apaey0.js",
+          "bytes": 49934
+        },
+        {
+          "path": "/_next/static/immutable/chunks/2rahjywo3y3pi.js",
+          "bytes": 45149
+        },
+        {
+          "path": "/_next/static/immutable/chunks/226sxwmw3btpi.js",
+          "bytes": 22120
+        }
+      ],
+      "images": [],
+      "initialLongTasks": [
+        {
+          "start": 7336.79999999702,
+          "ms": 159
+        },
+        {
+          "start": 7724.89999999851,
+          "ms": 64
+        },
+        {
+          "start": 7796.29999999702,
+          "ms": 116
+        }
+      ],
+      "heading": "Chương 1: Câu Chuyện Ở Đền Hạng Vương",
+      "horizontalOverflow": false,
+      "scroll": {
+        "frames": 120,
+        "elapsedMs": 1978,
+        "progressPuts": 4,
+        "frameP95Ms": 18,
+        "scrollTop": 1440,
+        "longTasks": []
+      },
+      "errors": []
+    }
+  ]
+}

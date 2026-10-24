@@ -4,7 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import seed from "../data/book.json";
 import { cleanHtml } from "./sanitize";
-import type { Book } from "./types";
+import type { Book, Locale } from "./types";
 import { settingsFromCookie } from "./reader";
 export async function savedReaderSettings() {
   return settingsFromCookie((await cookies()).get("book-reader")?.value);
@@ -29,31 +29,54 @@ export function serviceClient() {
     { auth: { persistSession: false, autoRefreshToken: false } },
   );
 }
-export async function getBook(includeHtml = true): Promise<Book> {
+export async function getBook(
+  includeHtml = true,
+  locale?: Locale,
+): Promise<Book> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL,
     key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url && !key && !process.env.SUPABASE_SERVICE_ROLE_KEY)
-    return includeHtml
+    return includeHtml && !locale
       ? (seed as Book)
       : ({
           ...seed,
           chapters: seed.chapters.map((c) => ({
             ...c,
-            vi: c.vi ? { ...c.vi, html: "" } : undefined,
-            en: c.en ? { ...c.en, html: "" } : undefined,
+            vi: c.vi
+              ? {
+                  ...c.vi,
+                  html: includeHtml && locale === "vi" ? c.vi.html : "",
+                }
+              : undefined,
+            en: c.en
+              ? {
+                  ...c.en,
+                  html: includeHtml && locale === "en" ? c.en.html : "",
+                }
+              : undefined,
           })),
         } as Book);
   if (!url || !key) throw new Error("Incomplete database configuration");
-  const { data, error } = await publicClient().rpc(
-    includeHtml ? "get_public_book" : "get_public_book_index",
-  );
+  const client = publicClient(),
+    rpc = includeHtml ? "get_public_book" : "get_public_book_index";
+  let result = await client.rpc(rpc);
+  if (
+    result.error &&
+    (result.status === 0 || result.status === 429 || result.status >= 500)
+  ) {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    result = await client.rpc(rpc);
+  }
+  const { data, error } = result;
   if (error || !data)
     throw new Error("Cannot load the published book. Please try again.");
   const book = data as Book;
   if (includeHtml)
     for (const c of book.chapters)
-      for (const locale of ["vi", "en"] as const) {
-        if (c[locale]) c[locale]!.html = cleanHtml(c[locale]!.html);
+      for (const language of ["vi", "en"] as const) {
+        if (c[language])
+          c[language]!.html =
+            locale && locale !== language ? "" : cleanHtml(c[language]!.html);
       }
   return book;
 }

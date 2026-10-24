@@ -22,6 +22,7 @@ import {
   Maximize,
   Minimize,
   Play,
+  Pause,
   Square,
   Volume2,
   ArrowDown,
@@ -163,6 +164,7 @@ export default function Reader({
     lastAnchorTime = useRef(0);
   const pendingNote = useRef<Annotation | null>(null),
     restoringBackup = useRef(false);
+  const lastFragment = useRef("");
   const pdfPositionRef = useRef<PdfPosition>({ page: 1, zoom: 1 });
   const contextKey = `${locale}:${chapterId}:${revision}`,
     activeContext = useRef(contextKey);
@@ -312,6 +314,29 @@ export default function Reader({
     anchorRef.current = at;
   }
   revealRef.current = revealOffset;
+  function fragmentTarget(hash: string) {
+    try {
+      const target =
+        hash && document.getElementById(decodeURIComponent(hash.slice(1)));
+      return target && contentRef.current?.contains(target) ? target : null;
+    } catch {
+      return null;
+    }
+  }
+  function focusReadingTarget(target: HTMLElement) {
+    if (!target.hasAttribute("tabindex")) target.tabIndex = -1;
+    target.focus({ preventScroll: true });
+  }
+  function revealFragment(hash: string) {
+    const target = fragmentTarget(hash);
+    if (!target) return false;
+    if (restored.current) {
+      if (windowRef.current) windowRef.current.scrollLeft = 0;
+      revealRect(target.getBoundingClientRect());
+      focusReadingTarget(target);
+    }
+    return true;
+  }
   const position = book.chapters.findIndex((c) => c.id === chapterId);
   const previous = book.chapters[position - 1],
     next = book.chapters[position + 1];
@@ -521,6 +546,42 @@ export default function Reader({
     setPage((p) => Math.min(p, Math.max(0, pages - 1)));
   }, [pages]);
   useEffect(() => {
+    const apply = () => {
+      if (
+        !ready ||
+        !restored.current ||
+        location.pathname !== `/${locale}/read/${chapterId}`
+      )
+        return;
+      const key = contextKey + location.hash;
+      if (lastFragment.current === key) return;
+      lastFragment.current = key;
+      if (location.hash) revealFragment(location.hash);
+      else {
+        const saved = window.history.state?.bookReaderAnchor;
+        if (
+          saved?.context === contextKey &&
+          Number.isSafeInteger(saved.offset)
+        ) {
+          revealOffset(saved.offset);
+          const root = contentRef.current;
+          const target =
+            root &&
+            rangeFromOffsets(root, saved.offset, saved.offset + 1)
+              ?.startContainer.parentElement;
+          if (target) focusReadingTarget(target);
+        }
+      }
+    };
+    apply();
+    window.addEventListener("popstate", apply);
+    window.addEventListener("hashchange", apply);
+    return () => {
+      window.removeEventListener("popstate", apply);
+      window.removeEventListener("hashchange", apply);
+    };
+  }, [chapterId, locale, revision, ready, layoutVersion, paged]);
+  useEffect(() => {
     if (!message) return;
     const timer = setTimeout(() => setMessage(""), 5500);
     return () => clearTimeout(timer);
@@ -561,10 +622,23 @@ export default function Reader({
         });
       }, 180);
     };
+    const outside = (event: PointerEvent) => {
+      if (
+        !(event.target instanceof Element) ||
+        event.target.closest(".selection-toolbar")
+      )
+        return;
+      clearTimeout(timer);
+      setSelection(null);
+      if (!contentRef.current?.contains(event.target))
+        window.getSelection()?.removeAllRanges();
+    };
     document.addEventListener("selectionchange", capture);
+    document.addEventListener("pointerdown", outside);
     return () => {
       clearTimeout(timer);
       document.removeEventListener("selectionchange", capture);
+      document.removeEventListener("pointerdown", outside);
     };
   }, []);
   useEffect(() => {
@@ -593,7 +667,7 @@ export default function Reader({
       annotationColors.forEach((_, i) => highlights.delete(`note-${i}`));
   }, [annotations, chapterId, locale, revision, edition, pdfRenderedPage]);
   useEffect(() => {
-    if (!auto || speech.playing) return;
+    if (!auto || speech.playing || speech.paused) return;
     let frame = 0,
       last = 0,
       travel = 0;
@@ -625,7 +699,7 @@ export default function Reader({
     };
     frame = requestAnimationFrame(run);
     return () => cancelAnimationFrame(frame);
-  }, [auto, paged, pages, settings.scrollSpeed, speech.playing]);
+  }, [auto, paged, pages, settings.scrollSpeed, speech.playing, speech.paused]);
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       if (restoringBackup.current) return;
@@ -704,6 +778,13 @@ export default function Reader({
     }
     setSettings(normalizeSettings(value));
   }
+  function toggleSpeech() {
+    setAuto(false);
+    setMessage("");
+    if (speech.playing) speech.pause();
+    else if (speech.paused) speech.resume();
+    else speech.speak(isPdf ? pdfText : undefined);
+  }
   function togglePanel(value: typeof panel) {
     if (value === "voice") speech.refreshVoices();
     setPanel(panel === value ? null : value);
@@ -750,6 +831,60 @@ export default function Reader({
       return;
     event.preventDefault();
     go(id);
+  }
+  function onContentClick(event: MouseEvent<HTMLElement>) {
+    const target = event.target as HTMLElement;
+    const link = target.closest("a[href]");
+    if (
+      link &&
+      event.button === 0 &&
+      !event.metaKey &&
+      !event.ctrlKey &&
+      !event.shiftKey &&
+      !event.altKey &&
+      !link.hasAttribute("download") &&
+      (!link.getAttribute("target") || link.getAttribute("target") === "_self")
+    ) {
+      try {
+        const url = new URL(link.getAttribute("href")!, location.href);
+        if (
+          url.origin === location.origin &&
+          url.pathname === location.pathname &&
+          url.search === location.search &&
+          url.hash &&
+          fragmentTarget(url.hash)
+        ) {
+          event.preventDefault();
+          window.history.replaceState(
+            {
+              ...window.history.state,
+              bookReaderAnchor: {
+                context: contextKey,
+                offset: captureAnchor(),
+              },
+            },
+            "",
+          );
+          if (url.hash !== location.hash)
+            window.history.pushState(null, "", url.href);
+          lastFragment.current = restored.current ? contextKey + url.hash : "";
+          setSelection(null);
+          window.getSelection()?.removeAllRanges();
+          revealFragment(url.hash);
+          return;
+        }
+      } catch {
+        /* Invalid fragments retain the browser's normal link behavior. */
+      }
+    }
+    if (target.tagName === "IMG") {
+      setActiveImage({
+        src: target.getAttribute("src")!,
+        alt: target.getAttribute("alt") ?? "",
+      });
+      setSelection(null);
+      setNote("");
+    }
   }
   async function addNote(
     colorValue: string,
@@ -1032,20 +1167,17 @@ export default function Reader({
             }}
           />
           <IconButton
-            icon={speech.playing ? Square : Play}
+            icon={speech.playing ? Pause : Play}
             label={
               speech.playing
-                ? L("Dừng đọc", "Stop reading")
-                : L("Đọc giọng nói", "Read aloud")
+                ? L("Tạm dừng đọc", "Pause reading")
+                : speech.paused
+                  ? L("Tiếp tục đọc", "Resume reading")
+                  : L("Đọc giọng nói", "Read aloud")
             }
             disabled={!edition}
             active={speech.playing}
-            onClick={() => {
-              setAuto(false);
-              speech.playing
-                ? speech.stop()
-                : speech.speak(isPdf ? pdfText : undefined);
-            }}
+            onClick={toggleSpeech}
           />
           <IconButton
             icon={Volume2}
@@ -1345,16 +1477,16 @@ export default function Reader({
                         ? `translateX(-${page * (viewportWidth + 48)}px)`
                         : undefined,
                     }}
-                    onClick={(e) => {
-                      const target = e.target as HTMLElement;
-                      if (target.tagName === "IMG") {
-                        setActiveImage({
-                          src: target.getAttribute("src")!,
-                          alt: target.getAttribute("alt") ?? "",
-                        });
-                        setSelection(null);
-                        setNote("");
-                      }
+                    onClick={onContentClick}
+                    onFocus={(event) => {
+                      if (
+                        !paged ||
+                        !restored.current ||
+                        event.target.tagName !== "A"
+                      )
+                        return;
+                      if (windowRef.current) windowRef.current.scrollLeft = 0;
+                      revealRect(event.target.getBoundingClientRect());
                     }}
                   >
                     {isPdf ? (
@@ -1621,20 +1753,27 @@ export default function Reader({
               "Lighter pauses at . : ; … and dashes. Turn off for the voice’s original phrasing. Timing varies by device.",
             )}
           </p>
-          <button
-            className="primary-button full-width"
-            disabled={!speech.supported || !edition}
-            onClick={() =>
-              speech.playing
-                ? speech.stop()
-                : speech.speak(isPdf ? pdfText : undefined)
-            }
-          >
-            {speech.playing ? <Square size={16} /> : <Play size={16} />}{" "}
-            {speech.playing
-              ? L("Dừng đọc", "Stop reading")
-              : L("Đọc chương này", "Read this chapter")}
-          </button>
+          <div className="button-row">
+            <button
+              className="primary-button"
+              style={{ flex: 1 }}
+              disabled={!speech.supported || !edition}
+              onClick={toggleSpeech}
+            >
+              {speech.playing ? <Pause size={16} /> : <Play size={16} />}{" "}
+              {speech.playing
+                ? L("Tạm dừng đọc", "Pause reading")
+                : speech.paused
+                  ? L("Tiếp tục đọc", "Resume reading")
+                  : L("Đọc chương này", "Read this chapter")}
+            </button>
+            {(speech.playing || speech.paused) && (
+              <button className="secondary-button" onClick={speech.stop}>
+                <Square size={16} />
+                {L("Dừng đọc", "Stop reading")}
+              </button>
+            )}
+          </div>
         </Panel>
       )}
       {panel === "scroll" && (

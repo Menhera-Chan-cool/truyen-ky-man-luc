@@ -72,6 +72,10 @@ Giọng đọc dùng Web Speech API, phụ thuộc giọng mà trình duyệt/h�
 
 Trong **Giọng đọc & tốc độ**, **Ngắt nghỉ ngắn** mặc định bật: gộp các câu ngắn vào cùng lượt đọc và làm nhẹ dấu `. : ; …`/gạch ngang trong bản chữ gửi cho giọng đọc. Nội dung sách, ghi chú và vị trí từ vẫn giữ nguyên; số thập phân, giờ và các viết tắt thông dụng được bảo vệ. Tắt tùy chọn để dùng nhịp gốc. Không đặt được thời lượng nghỉ chính xác bằng Web Speech; mức nghỉ thực tế tùy giọng/thiết bị. Cài đặt lưu trên thiết bị và bản sao JSON cũ vẫn nhập được.
 
+Nút đọc trên thanh công cụ chuyển giữa **Tạm dừng đọc / Tiếp tục đọc** khi có phiên nghe; **Dừng đọc** trong bảng giọng đọc kết thúc hàng đợi. Khi giọng bị ngắt, ứng dụng giữ chunk/boundary để bạn chủ động tiếp tục. Đổi tốc độ/giọng khi đang tạm dừng không tự phát lại. Đổi chương, VI/EN hoặc trang PDF dừng phiên cũ.
+
+Liên kết chú thích `#id` trong chương dùng chung cơ chế chuyển trang của Reader, đồng bộ tiến độ và Back/Forward. Popup chọn chữ đóng khi chạm bên ngoài; nhập ghi chú và dùng các nút bên trong vẫn giữ popup. Mở sách chỉ chuẩn bị HTML của ngôn ngữ đang đọc; lỗi kết nối/429/5xx của yêu cầu đọc được thử lại tối đa một lần, không áp dụng cho thao tác ghi hoặc lỗi quyền/cấu hình.
+
 Mục lục đếm tổng câu chuyện, không trừ chương chỉ thiếu bản dịch ở ngôn ngữ đang chọn. Bảng giọng đọc chỉ liệt kê giọng phù hợp VI/EN hiện tại, báo rõ khi danh sách trống hoặc chỉ có một giọng; hỗ trợ Làm mới, voiceschanged, quay lại tab và ba lần kiểm tra muộn có giới hạn. Khi điện thoại chỉ hiện “Tự động”, dùng hướng dẫn Android trong bảng để cài dữ liệu giọng đọc rồi Làm mới. Cài thêm gói không bảo đảm browser sẽ liệt kê thêm giọng. Xem [hướng dẫn Android](https://support.google.com/accessibility/android/answer/6006983?hl=vi).
 
 Ghi chú gắn với ngôn ngữ, revision và vị trí văn bản. Khi nội dung đổi, ghi chú cũ vẫn giữ nguyên trong danh sách và được đánh dấu cũ; không tự gắn vào đoạn khác. PDF nguyên trang có zoom riêng và không áp dụng thay phông/cỡ chữ của nội dung văn bản.
