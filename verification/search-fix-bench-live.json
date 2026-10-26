@@ -1,0 +1,86 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-26T15:05:31.237Z",
+  "results": [
+    {
+      "locale": "vi",
+      "device": "desktop",
+      "first": {
+        "firstPaintMs": 11,
+        "indexReadyMs": 145,
+        "longTasks": [],
+        "parsedChapters": 21
+      },
+      "repeat": {
+        "paintMs": 21,
+        "parsedChapters": 21
+      },
+      "overlay": {
+        "panelVisible": true,
+        "inputCoveredByPanel": false,
+        "controlsOverflow": false
+      },
+      "errors": []
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "first": {
+        "firstPaintMs": 19,
+        "indexReadyMs": 139,
+        "longTasks": [],
+        "parsedChapters": 20
+      },
+      "repeat": {
+        "paintMs": 24,
+        "parsedChapters": 20
+      },
+      "overlay": {
+        "panelVisible": true,
+        "inputCoveredByPanel": false,
+        "controlsOverflow": false
+      },
+      "errors": []
+    },
+    {
+      "locale": "vi",
+      "device": "mobile-cpu4x",
+      "first": {
+        "firstPaintMs": 25,
+        "indexReadyMs": 764,
+        "longTasks": [],
+        "parsedChapters": 21
+      },
+      "repeat": {
+        "paintMs": 29,
+        "parsedChapters": 21
+      },
+      "overlay": {
+        "panelVisible": false,
+        "inputCoveredByPanel": false,
+        "controlsOverflow": false
+      },
+      "errors": []
+    },
+    {
+      "locale": "en",
+      "device": "mobile-cpu4x",
+      "first": {
+        "firstPaintMs": 20,
+        "indexReadyMs": 669,
+        "longTasks": [],
+        "parsedChapters": 20
+      },
+      "repeat": {
+        "paintMs": 28,
+        "parsedChapters": 20
+      },
+      "overlay": {
+        "panelVisible": false,
+        "inputCoveredByPanel": false,
+        "controlsOverflow": false
+      },
+      "errors": []
+    }
+  ]
+}

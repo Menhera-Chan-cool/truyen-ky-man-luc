@@ -1,6 +1,20 @@
-# Bằng chứng kiểm chứng — cập nhật 24/10/2026
+# Bằng chứng kiểm chứng — cập nhật 26/10/2026
 
-## Chỗ nghe, tìm nội dung và preview thiết bị — release hiện tại
+## Độ mượt tìm kiếm và lớp công cụ — release hiện tại
+
+Production `dpl_3QKCyPvofZHDpMRbtkPwga2K1Saj`, runtime source `d93f93bfb5f4ea629d0e67c29cc884280aaef35f`; alias https://truyen-ky-man-luc.vercel.app xác nhận READY, đúng commit. Cả ba mục trong `tasks/search-smoothness.md` đã triển khai. Các mục tiếp theo là lịch sử release trước.
+
+- **73 unit đạt**, typecheck và production build đạt (2 worker local). Bộ 108 ca local: **101 đạt / 7 skip, 0 lỗi/flaky**, xem `verification/search-fix-local.json`. Lượt đầy đủ trên production: **102 đạt / 5 skip / 1 lỗi** `page.goto net::ERR_CONNECTION_RESET` trước khi ca ambient desktop nạp app. Chạy riêng lại nguyên ca desktop đó, cùng assertion và không bật retry: **1 đạt**. Tổng **103 ca riêng biệt được xác minh**; không gọi lượt đầu sạch lỗi. Giữ cả hai báo cáo trong `verification/search-fix-live.json`.
+- Mục lục nổi và panel loại trừ nhau ở breakpoint CSS <=900px, cả hai chiều; >900px giữ sidebar cạnh panel. Kiểm thử VI/EN desktop/mobile, bốn panel voice/settings/auto-scroll/ambient, resize 901→900, giữ phiên TTS đang chạy. Regression mới còn bắt focus bị panel cleanup kéo về nút cũ; cleanup chỉ phục hồi khi focus vẫn ở panel/body, không giành focus khi người dùng đã chọn control khác.
+- Chỉ mục chuẩn bị theo từng chương, nhường main thread và có loading/error/retry. Giữ index trong vòng đời Book/locale snapshot, dùng lại khi đổi tab/chương; hủy build cũ khi snapshot/locale thay đổi hoặc unmount. Test xác nhận parse chưa hoàn tất ở frame đầu và parse count không tăng khi quay lại tab, lỗi chuẩn bị được thử lại mà không rời Reader, abort không tiêu thụ snapshot cũ. Unit đối chiếu map UTF-16/khác dấu và giới hạn 100 kết quả giữ nguyên.
+- Đổi/xóa query chỉ xóa registry key `search-result`, không xóa highlight ghi chú. VI/EN desktop/mobile đều kiểm tra có highlight trước đổi query, 0 kết quả sau đổi, search-result bị bỏ và note-keep còn nguyên. Các ca tìm liên chương/paged, nghe tiếp, ghi chú, backup và điều hướng cũ nằm trong bộ đầy đủ.
+- Hai batch visual/benchmark có giới hạn: local và xác nhận live, mỗi batch VI/EN × desktop/mobile CPU chậm 4×. Tất cả không tràn controls hoặc page error; trên phone panel không che input mục lục, desktop vẫn mở cả hai. Đã xem ảnh VI phone và EN desktop ở hai batch. Xem `verification/search-fix-bench-local.json`, `verification/search-fix-bench-live.json`.
+- Benchmark live mobile CPU4×: từ click tới hai frame tiếp theo **25 ms VI / 20 ms EN**, so với mẫu audit cũ 321/301 ms. Quay lại tab **29/28 ms**, parse count giữ 21/20 chương, thay vì làm lại. Không có long task được quan sát trong bước chuẩn bị. **Tổng thời gian chuẩn bị lần đầu là 764/669 ms**, dài hơn cách tính đồng bộ trước đó, đổi lại giao diện nhận thao tác và hiển thị đang chuẩn bị; không gọi 20–25 ms là thời gian có đủ kết quả. Các số là mẫu lab khác lượt đo, không phải INP/Core Web Vitals người dùng thật.
+- Chuyển chương live: **16 / 16 / 14 / 14 ms, 0 request chuyển chương**, xem `verification/search-fix-navigation-live.json`. Không thêm dependency, service, server cache, migration hoặc ghi nội dung sách. Không tạo tài khoản/nháp QA trong release này; API editor và dữ liệu xuất bản không đổi. Repo vẫn PRIVATE, cấu hình bí mật/thư mời bị loại khỏi source.
+
+Giới hạn: nhường tác vụ theo chương phù hợp sách ngắn hiện tại; nếu một chương rất lớn tạo long task thì cần chia nhỏ hơn. Chưa thử Android/iOS vật lý hoặc chất lượng/nhịp giọng bằng tai. Kiểm chứng editor/Auth/Storage/PDF thật ở các mục lịch sử không được tính là đã chạy lại trong đợt này.
+
+## Chỗ nghe, tìm nội dung và preview thiết bị — release trước
 
 Production `dpl_6VxqBvENmJkCCLKvsYcYZoo7YpxM`, runtime source `422d36cd8a1a3a0316bc750ddb8e73383e942989`. Alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY và đúng source. Đã triển khai cả 6 mục người dùng chọn trong `tasks/reader-convenience.md`. Các mục bên dưới là lịch sử của các release trước.
 

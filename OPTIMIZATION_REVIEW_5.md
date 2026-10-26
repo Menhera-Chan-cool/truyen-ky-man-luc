@@ -1,6 +1,6 @@
 # Kiểm tra sau release chỗ nghe/tìm sách — 24/10/2026
 
-Đã kiểm tra URL production đang READY `dpl_6VxqBvENmJkCCLKvsYcYZoo7YpxM`, runtime source `422d36cd8a1a3a0316bc750ddb8e73383e942989`; alias xác nhận bằng Vercel API trong lượt này. Source không đổi kể từ release trước. Đây là audit, chưa sửa/deploy thêm hoặc ghi dữ liệu sách.
+Mốc audit trước sửa: production READY `dpl_6VxqBvENmJkCCLKvsYcYZoo7YpxM`, runtime source `422d36cd8a1a3a0316bc750ddb8e73383e942989`. Sau khi người dùng duyệt sửa cả ba mục, đã triển khai vào 26/10/2026 tại `dpl_3QKCyPvofZHDpMRbtkPwga2K1Saj`; xem đầu VERIFICATION.md và DEPLOYMENT.json cho kết quả mới. Những phát hiện/số đo bên dưới vẫn là bằng chứng trước sửa; không ghi nội dung sách trong audit hoặc đợt sửa này.
 
 Web dành cho một sách VI/EN, đọc công khai, vài editor biên tập. Phạm vi mới: mở/tìm/đổi từ khóa, các bảng công cụ chồng nhau, code nghe tiếp và preview; không phải audit bảo mật, WCAG toàn diện hay tải lớn. Hai repo được git fetch lại, upstream vẫn là Novel-Hub `28b6972e5b4f749124e4e27200bd76c4b6168d38`, EPUB-Forge `33120281bfc6faa51d43f5bd45dbbcab882da5d7`.
 

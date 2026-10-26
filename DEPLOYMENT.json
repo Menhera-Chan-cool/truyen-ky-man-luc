@@ -1,106 +1,148 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_6VxqBvENmJkCCLKvsYcYZoo7YpxM",
+  "deploymentId": "dpl_3QKCyPvofZHDpMRbtkPwga2K1Saj",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-c0633x8wr-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-dor39o0w9-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-24T03:22:12.388Z",
+  "checkedAt": "2026-10-26T15:09:38.689Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
-  "runtimeSourceCommit": "422d36cd8a1a3a0316bc750ddb8e73383e942989",
+  "runtimeSourceCommit": "d93f93bfb5f4ea629d0e67c29cc884280aaef35f",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
     "branch": "main"
   },
   "verification": {
-    "unitTests": 71,
+    "unitTests": 73,
     "typecheck": true,
     "productionBuild": true,
     "localBuildWorkers": 2,
     "localPlaywright": {
-      "fullRun": {
-        "startTime": "2026-10-24T03:06:16.992Z",
-        "duration": 192287.29700000002,
-        "expected": 86,
-        "skipped": 6,
-        "unexpected": 0,
-        "flaky": 0
-      },
-      "finalFocused": {
-        "startTime": "2026-10-24T03:11:35.216Z",
-        "duration": 35796.533,
-        "expected": 17,
-        "skipped": 1,
-        "unexpected": 0,
-        "flaky": 0
-      },
-      "note": "Full local suite preceded final CSS/tooltip/dialog polish; affected cases rerun on final build."
+      "startTime": "2026-10-26T14:44:29.907Z",
+      "duration": 300334.724,
+      "expected": 101,
+      "skipped": 7,
+      "unexpected": 0,
+      "flaky": 0
     },
     "livePlaywright": {
-      "scope": "Complete 92-case suite on final deployed source",
-      "startTime": "2026-10-24T03:14:58.836Z",
-      "duration": 340374.826,
-      "expected": 88,
-      "skipped": 4,
-      "unexpected": 0,
-      "flaky": 0,
-      "retries": 0,
-      "proof": "verification/convenience-live.json"
+      "uniquePassed": 103,
+      "fullRun": {
+        "startTime": "2026-10-26T14:53:52.857Z",
+        "duration": 567863.0360000001,
+        "expected": 102,
+        "skipped": 5,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "focusedConfirmation": {
+        "startTime": "2026-10-26T15:04:49.620Z",
+        "duration": 7741.14,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "note": "One initial desktop ambient navigation failed with ERR_CONNECTION_RESET before app load; unchanged focused repeat passed. Full first run was not failure-free, no automatic retries."
     },
-    "liveQA": {
+    "liveBenchmark": {
       "base": "https://truyen-ky-man-luc.vercel.app",
-      "nativeSpeechMocked": true,
+      "checkedAt": "2026-10-26T15:05:31.237Z",
       "results": [
         {
-          "device": "desktop",
           "locale": "vi",
-          "searchControlsFit": true,
-          "resumeDiscoverable": true,
-          "pageErrors": []
-        },
-        {
           "device": "desktop",
-          "locale": "en",
-          "searchControlsFit": true,
-          "resumeDiscoverable": true,
-          "pageErrors": []
+          "first": {
+            "firstPaintMs": 11,
+            "indexReadyMs": 145,
+            "longTasks": [],
+            "parsedChapters": 21
+          },
+          "repeat": {
+            "paintMs": 21,
+            "parsedChapters": 21
+          },
+          "overlay": {
+            "panelVisible": true,
+            "inputCoveredByPanel": false,
+            "controlsOverflow": false
+          },
+          "errors": []
         },
         {
-          "device": "mobile",
+          "locale": "en",
+          "device": "desktop",
+          "first": {
+            "firstPaintMs": 19,
+            "indexReadyMs": 139,
+            "longTasks": [],
+            "parsedChapters": 20
+          },
+          "repeat": {
+            "paintMs": 24,
+            "parsedChapters": 20
+          },
+          "overlay": {
+            "panelVisible": true,
+            "inputCoveredByPanel": false,
+            "controlsOverflow": false
+          },
+          "errors": []
+        },
+        {
           "locale": "vi",
-          "searchControlsFit": true,
-          "resumeDiscoverable": true,
-          "pageErrors": []
+          "device": "mobile-cpu4x",
+          "first": {
+            "firstPaintMs": 25,
+            "indexReadyMs": 764,
+            "longTasks": [],
+            "parsedChapters": 21
+          },
+          "repeat": {
+            "paintMs": 29,
+            "parsedChapters": 21
+          },
+          "overlay": {
+            "panelVisible": false,
+            "inputCoveredByPanel": false,
+            "controlsOverflow": false
+          },
+          "errors": []
         },
         {
-          "device": "mobile",
           "locale": "en",
-          "searchControlsFit": true,
-          "resumeDiscoverable": true,
-          "pageErrors": []
+          "device": "mobile-cpu4x",
+          "first": {
+            "firstPaintMs": 20,
+            "indexReadyMs": 669,
+            "longTasks": [],
+            "parsedChapters": 20
+          },
+          "repeat": {
+            "paintMs": 28,
+            "parsedChapters": 20
+          },
+          "overlay": {
+            "panelVisible": false,
+            "inputCoveredByPanel": false,
+            "controlsOverflow": false
+          },
+          "errors": []
         }
       ]
     },
-    "editor": {
-      "local": "verification/convenience-editor-local.json",
-      "live": "verification/convenience-editor-live.json",
-      "success": true,
-      "privateQADraftsDeleted": true
-    },
-    "pdfFixture": "verification/convenience-pdf-local.json",
-    "pagedSearchAndCompletion": "verification/convenience-extra-live.json",
     "navigation": {
       "base": "https://truyen-ky-man-luc.vercel.app",
       "samples": [
         {
           "label": "Chương sau",
           "target": "Chương 2:",
-          "ms": 18,
+          "ms": 16,
           "serverRequests": 0
         },
         {
@@ -112,32 +154,36 @@
         {
           "label": "Chương sau",
           "target": "Chương 2:",
-          "ms": 15,
+          "ms": 14,
           "serverRequests": 0
         },
         {
           "label": "Chương sau",
           "target": "Chương 3:",
-          "ms": 15,
+          "ms": 14,
           "serverRequests": 0
         }
       ],
       "initialNavigation": {
-        "transferBytes": 173772,
+        "transferBytes": 173729,
         "decodedBytes": 554281
       },
-      "checkedAt": "2026-10-24T03:21:09.558Z"
-    }
+      "checkedAt": "2026-10-26T15:05:37.989Z"
+    },
+    "proofs": [
+      "verification/search-fix-local.json",
+      "verification/search-fix-live.json",
+      "verification/search-fix-bench-live.json"
+    ]
   },
   "limitations": [
-    "Native speech events/voices were mocked; physical Android/iOS and acoustic quality not tested.",
-    "Search indexes published text of the active locale, capped at 100 results; original-page PDFs excluded.",
-    "PDF listening checkpoints apply to page speech, not PDF text selection; device checkpoints do not guarantee OS background playback.",
-    "HTML device preview uses default reader typography; actual reader settings may differ.",
-    "Local visual batch found tab overflow; fixed, covered by final focused tests, and all four final live visual combinations passed."
+    "CPU4x Chromium is a simulation, not a physical Android/iOS voice test.",
+    "Initial index completion is asynchronous and can take longer overall; measured mobile 669-764 ms, with a responsive loading state and 20-25 ms tab paint. Warm tab return reuses the snapshot.",
+    "Index preparation yields per chapter for the current short book; very long chapters may need finer splitting.",
+    "This release does not change admin, server permissions, publication data or Supabase schema. Earlier hosted editor/Auth/PDF tests remain historical evidence."
   ],
   "previousDeployment": {
-    "id": "dpl_FJBcGQUKnXxwJRpcRn2KFACTnRvr",
-    "runtimeSourceCommit": "f7ee05bf28908ec111ae9f2b3b44e9adcb90bcee"
+    "id": "dpl_6VxqBvENmJkCCLKvsYcYZoo7YpxM",
+    "runtimeSourceCommit": "422d36cd8a1a3a0316bc750ddb8e73383e942989"
   }
 }
