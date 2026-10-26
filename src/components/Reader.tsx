@@ -81,7 +81,8 @@ import ReaderSettingsPanel from "./ReaderSettings";
 import { createProgressSaver } from "../lib/progress-saver";
 import {
   findBookText,
-  prepareBookText,
+  prepareBookTextAsync,
+  type SearchChapter,
   type SearchMatch,
 } from "../lib/book-search";
 import Soundscape from "./Soundscape";
@@ -129,6 +130,14 @@ export default function Reader({
     [kind, setKind] = useState("all"),
     [color, setColor] = useState(""),
     [currentOnly, setCurrentOnly] = useState(true);
+  const [searchRequested, setSearchRequested] = useState(false);
+  const [searchAttempt, setSearchAttempt] = useState(0);
+  const [preparedSearch, setPreparedSearch] = useState<{
+    book: Book;
+    locale: Locale;
+    index: Awaited<ReturnType<typeof prepareBookTextAsync>>;
+    failed: boolean;
+  } | null>(null);
   const [panel, setPanel] = useState<
       "settings" | "voice" | "sound" | "scroll" | null
     >(null),
@@ -865,9 +874,24 @@ export default function Reader({
   }
   function togglePanel(value: typeof panel) {
     if (value === "voice") speech.refreshVoices();
+    if (window.matchMedia("(max-width: 900px)").matches && panel !== value)
+      setSidebar(false);
     setPanel(panel === value ? null : value);
     setSelection(null);
   }
+  function toggleSidebar() {
+    if (!sidebar && window.matchMedia("(max-width: 900px)").matches)
+      closePanel();
+    setSidebar(!sidebar);
+  }
+  useEffect(() => {
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const resize = () => {
+      if (narrow.matches && panel) setSidebar(false);
+    };
+    narrow.addEventListener("change", resize);
+    return () => narrow.removeEventListener("change", resize);
+  }, [panel]);
   function go(id: string) {
     if (
       restoringBackup.current ||
@@ -1146,6 +1170,9 @@ export default function Reader({
     },
     [chapterId, locale, revision],
   );
+  useEffect(() => {
+    (CSS as HighlightCSS).highlights?.delete("search-result");
+  }, [query]);
   const heardEdition =
     listening &&
     book.chapters.find((c) => c.id === listening.chapterId)?.[locale];
@@ -1269,31 +1296,42 @@ export default function Reader({
     a.href = canvas.toDataURL("image/png");
     a.click();
   }
-  const searchIndex = useMemo(
-    () =>
-      tab !== "search"
-        ? []
-        : prepareBookText(
-            book.chapters.flatMap((c) => {
-              const e = c[locale];
-              if (!e || e.kind === "pdf") return [];
-              return [
-                {
-                  chapterId: c.id,
-                  title: e.title,
-                  revision: e.revision,
-                  text:
-                    new DOMParser().parseFromString(e.html, "text/html").body
-                      .textContent ?? "",
-                },
-              ];
-            }),
-          ),
-    [book, locale, tab],
-  );
+  useEffect(() => {
+    if (!searchRequested) return;
+    const controller = new AbortController();
+    setPreparedSearch(null);
+    function* chapters(): Generator<SearchChapter> {
+      for (const c of book.chapters) {
+        const edition = c[locale];
+        if (!edition || edition.kind === "pdf") continue;
+        yield {
+          chapterId: c.id,
+          title: edition.title,
+          revision: edition.revision,
+          text:
+            new DOMParser().parseFromString(edition.html, "text/html").body
+              .textContent ?? "",
+        };
+      }
+    }
+    prepareBookTextAsync(chapters(), controller.signal)
+      .then((index) => {
+        if (!controller.signal.aborted)
+          setPreparedSearch({ book, locale, index, failed: false });
+      })
+      .catch(() => {
+        if (!controller.signal.aborted)
+          setPreparedSearch({ book, locale, index: [], failed: true });
+      });
+    return () => controller.abort();
+  }, [book, locale, searchRequested, searchAttempt]);
+  const currentSearch =
+    preparedSearch?.book === book && preparedSearch.locale === locale
+      ? preparedSearch
+      : null;
   const searchResults = useMemo(
-    () => findBookText(searchIndex, query),
-    [searchIndex, query],
+    () => findBookText(currentSearch?.index ?? [], query),
+    [currentSearch, query],
   );
   const filteredNotes = useMemo(
     () =>
@@ -1334,7 +1372,7 @@ export default function Reader({
             label={L("Mở mục lục", "Open contents")}
             active={!!sidebar}
             disabled={!ready}
-            onClick={() => setSidebar(!sidebar)}
+            onClick={toggleSidebar}
           />
           <span>
             {edition?.title ??
@@ -1474,6 +1512,7 @@ export default function Reader({
             <button
               className={tab === "search" ? "selected" : ""}
               onClick={() => {
+                setSearchRequested(true);
                 setTab("search");
                 setQuery("");
               }}
@@ -1540,13 +1579,28 @@ export default function Reader({
           ) : tab === "search" ? (
             <div className="book-search-results">
               <p className="tiny muted" role="status">
-                {query.trim()
-                  ? `${searchResults.matches.length}${searchResults.truncated ? "+" : ""} ${L("kết quả", "matches")}`
-                  : L(
-                      "Tìm trong nội dung đã xuất bản của bản tiếng Việt.",
-                      "Search the published English edition.",
-                    )}
+                {!currentSearch
+                  ? L("Đang chuẩn bị tìm kiếm…", "Preparing search…")
+                  : currentSearch.failed
+                    ? L(
+                        "Không chuẩn bị được tìm kiếm.",
+                        "Unable to prepare search.",
+                      )
+                    : query.trim()
+                      ? `${searchResults.matches.length}${searchResults.truncated ? "+" : ""} ${L("kết quả", "matches")}`
+                      : L(
+                          "Tìm trong nội dung đã xuất bản của bản tiếng Việt.",
+                          "Search the published English edition.",
+                        )}
               </p>
+              {currentSearch?.failed && (
+                <button
+                  className="secondary-button"
+                  onClick={() => setSearchAttempt((v) => v + 1)}
+                >
+                  {L("Thử lại tìm kiếm", "Retry search")}
+                </button>
+              )}
               <p className="tiny muted">
                 {L(
                   "PDF nguyên trang không nằm trong tìm kiếm này.",

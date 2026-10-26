@@ -1,0 +1,86 @@
+{
+  "base": "http://localhost:3001",
+  "checkedAt": "2026-10-26T14:42:10.845Z",
+  "results": [
+    {
+      "locale": "vi",
+      "device": "desktop",
+      "first": {
+        "firstPaintMs": 20,
+        "indexReadyMs": 282,
+        "longTasks": [],
+        "parsedChapters": 21
+      },
+      "repeat": {
+        "paintMs": 20,
+        "parsedChapters": 21
+      },
+      "overlay": {
+        "panelVisible": true,
+        "inputCoveredByPanel": false,
+        "controlsOverflow": false
+      },
+      "errors": []
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "first": {
+        "firstPaintMs": 20,
+        "indexReadyMs": 140,
+        "longTasks": [],
+        "parsedChapters": 20
+      },
+      "repeat": {
+        "paintMs": 22,
+        "parsedChapters": 20
+      },
+      "overlay": {
+        "panelVisible": true,
+        "inputCoveredByPanel": false,
+        "controlsOverflow": false
+      },
+      "errors": []
+    },
+    {
+      "locale": "vi",
+      "device": "mobile-cpu4x",
+      "first": {
+        "firstPaintMs": 60,
+        "indexReadyMs": 681,
+        "longTasks": [],
+        "parsedChapters": 21
+      },
+      "repeat": {
+        "paintMs": 22,
+        "parsedChapters": 21
+      },
+      "overlay": {
+        "panelVisible": false,
+        "inputCoveredByPanel": false,
+        "controlsOverflow": false
+      },
+      "errors": []
+    },
+    {
+      "locale": "en",
+      "device": "mobile-cpu4x",
+      "first": {
+        "firstPaintMs": 27,
+        "indexReadyMs": 680,
+        "longTasks": [],
+        "parsedChapters": 20
+      },
+      "repeat": {
+        "paintMs": 19,
+        "parsedChapters": 20
+      },
+      "overlay": {
+        "panelVisible": false,
+        "inputCoveredByPanel": false,
+        "controlsOverflow": false
+      },
+      "errors": []
+    }
+  ]
+}

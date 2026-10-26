@@ -28,6 +28,21 @@ function fold(text: string) {
 export function prepareBookText(chapters: SearchChapter[]) {
   return chapters.map((chapter) => ({ ...chapter, ...fold(chapter.text) }));
 }
+export async function prepareBookTextAsync(
+  chapters: Iterable<SearchChapter>,
+  signal: AbortSignal,
+) {
+  // shortcut: yield per chapter for this short book; split long chapters if they cause long tasks.
+  const index: ReturnType<typeof prepareBookText> = [];
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  signal.throwIfAborted();
+  for (const chapter of chapters) {
+    index.push(...prepareBookText([chapter]));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    signal.throwIfAborted();
+  }
+  return index;
+}
 export function findBookText(
   chapters: ReturnType<typeof prepareBookText>,
   query: string,

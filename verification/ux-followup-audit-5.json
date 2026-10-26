@@ -1,0 +1,116 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-24T14:21:08.544Z",
+  "deploymentId": "dpl_6VxqBvENmJkCCLKvsYcYZoo7YpxM",
+  "results": [
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "firstOpen": {
+        "ms": 69,
+        "longTasks": [
+          67
+        ]
+      },
+      "repeatOpen": {
+        "ms": 59,
+        "longTasks": [
+          57
+        ]
+      },
+      "warmQuery": {
+        "ms": 20,
+        "matches": 100
+      },
+      "oldHighlightAfterNewQuery": true,
+      "overlay": {
+        "bothOpen": true,
+        "searchInputCoveredByPanel": false,
+        "hitTag": "INPUT"
+      },
+      "errors": []
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "firstOpen": {
+        "ms": 55,
+        "longTasks": [
+          53
+        ]
+      },
+      "repeatOpen": {
+        "ms": 58,
+        "longTasks": [
+          56
+        ]
+      },
+      "warmQuery": {
+        "ms": 23,
+        "matches": 100
+      },
+      "oldHighlightAfterNewQuery": true,
+      "overlay": {
+        "bothOpen": true,
+        "searchInputCoveredByPanel": false,
+        "hitTag": "INPUT"
+      },
+      "errors": []
+    },
+    {
+      "device": "mobile-cpu4x",
+      "locale": "vi",
+      "firstOpen": {
+        "ms": 321,
+        "longTasks": [
+          265,
+          51
+        ]
+      },
+      "repeatOpen": {
+        "ms": 306,
+        "longTasks": [
+          297
+        ]
+      },
+      "warmQuery": {
+        "ms": 155,
+        "matches": 100
+      },
+      "oldHighlightAfterNewQuery": true,
+      "overlay": {
+        "bothOpen": true,
+        "searchInputCoveredByPanel": true,
+        "hitTag": "SECTION"
+      },
+      "errors": []
+    },
+    {
+      "device": "mobile-cpu4x",
+      "locale": "en",
+      "firstOpen": {
+        "ms": 301,
+        "longTasks": [
+          288
+        ]
+      },
+      "repeatOpen": {
+        "ms": 284,
+        "longTasks": [
+          276
+        ]
+      },
+      "warmQuery": {
+        "ms": 72,
+        "matches": 100
+      },
+      "oldHighlightAfterNewQuery": true,
+      "overlay": {
+        "bothOpen": true,
+        "searchInputCoveredByPanel": true,
+        "hitTag": "INPUT"
+      },
+      "errors": []
+    }
+  ]
+}

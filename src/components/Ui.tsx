@@ -81,6 +81,7 @@ export function Panel({
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const old = document.activeElement as HTMLElement;
+    const panel = ref.current?.closest(".reader-panel");
     ref.current?.focus();
     const handler = (e: KeyboardEvent) => {
       if ((e.target as HTMLElement).closest("dialog")) return;
@@ -89,7 +90,11 @@ export function Panel({
     document.addEventListener("keydown", handler);
     return () => {
       document.removeEventListener("keydown", handler);
-      old?.focus();
+      if (
+        document.activeElement === document.body ||
+        panel?.contains(document.activeElement)
+      )
+        old?.focus();
     };
   }, [onClose]);
   return (

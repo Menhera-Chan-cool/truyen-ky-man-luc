@@ -1,5 +1,9 @@
 import { expect, it } from "vitest";
-import { findBookText as find, prepareBookText } from "../src/lib/book-search";
+import {
+  findBookText as find,
+  prepareBookText,
+  prepareBookTextAsync,
+} from "../src/lib/book-search";
 const findBookText = (
   chapters: Parameters<typeof prepareBookText>[0],
   query: string,
@@ -33,4 +37,28 @@ it("bounds results and ignores empty queries", () => {
   const r = findBookText([{ ...index[0], text: "word ".repeat(150) }], "word");
   expect(r.matches).toHaveLength(100);
   expect(r.truncated).toBe(true);
+});
+it("prepares the same anchors asynchronously while yielding to other work", async () => {
+  let yielded = false;
+  setTimeout(() => {
+    yielded = true;
+  }, 0);
+  const result = await prepareBookTextAsync(
+    index,
+    new AbortController().signal,
+  );
+  expect(yielded).toBe(true);
+  expect(result).toEqual(prepareBookText(index));
+});
+it("cancels preparation before it publishes an obsolete snapshot", async () => {
+  const controller = new AbortController();
+  let consumed = 0;
+  function* oldSnapshot() {
+    consumed++;
+    yield index[0];
+  }
+  const pending = prepareBookTextAsync(oldSnapshot(), controller.signal);
+  controller.abort();
+  await expect(pending).rejects.toThrow();
+  expect(consumed).toBe(0);
 });

@@ -78,6 +78,8 @@ Nút đọc trên thanh công cụ chuyển giữa **Tạm dừng đọc / Tiế
 
 Sidebar có tab **Tìm trong sách**: tìm cả bản published VI hoặc EN đã nạp, không phân biệt hoa/thường hoặc dấu tiếng Việt, tối đa 100 kết quả với đoạn trích; bấm kết quả để mở đúng chương/đoạn và tô sáng. PDF nguyên trang không nằm trong chỉ mục. Mục lục tự hiện chương đang đọc khi mở; Escape đóng bảng từ ô tìm/ghi chú, giữ thao tác IME và phím mũi tên trong input. Tooltip đồng bộ khi nút đổi trạng thái.
 
+Chỉ mục được chuẩn bị theo từng chương để giao diện vẫn nhận thao tác, có trạng thái đang chuẩn bị và nút thử lại khi lỗi. Sau đó chỉ mục được giữ trong bộ nhớ khi đổi tab/chương, hủy và làm lại khi Book snapshot hoặc VI/EN đổi; không ghi HTML vào bộ nhớ thiết bị. Đổi/xóa từ khóa chỉ bỏ highlight tìm kiếm cũ, giữ highlight ghi chú. Ở màn hình mục lục nổi (tối đa 900px), mở mục lục và mở bảng công cụ sẽ đóng lớp còn lại, giữ thao tác bàn phím và phiên phát đang chạy; desktop giữ được sidebar cạnh bảng công cụ.
+
 Trong editor, **Xem trước → Điện thoại / Máy tính** dùng khung 390px/780px với typography mặc định của reader. Khung rộng cuộn trong vùng preview, không kéo tràn trang quản trị. Chuyển khung không lưu hoặc sửa HTML; preview vẫn làm sạch nội dung. Cài đặt đọc riêng của khách có thể khác preview.
 
 Liên kết chú thích `#id` trong chương dùng chung cơ chế chuyển trang của Reader, đồng bộ tiến độ và Back/Forward. Popup chọn chữ đóng khi chạm bên ngoài; nhập ghi chú và dùng các nút bên trong vẫn giữ popup. Mở sách chỉ chuẩn bị HTML của ngôn ngữ đang đọc; lỗi kết nối/429/5xx của yêu cầu đọc được thử lại tối đa một lần, không áp dụng cho thao tác ghi hoặc lỗi quyền/cấu hình.
