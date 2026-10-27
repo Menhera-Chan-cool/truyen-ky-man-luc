@@ -1,0 +1,72 @@
+{
+  "base": "http://localhost:3001",
+  "clientDate": "2026-10-27",
+  "lifecycleBoundaryMocked": true,
+  "nativeFreezeNotClaimed": true,
+  "results": [
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "speed": 100,
+      "normal250msDelta": 26,
+      "injectedRafGapMs": 2200,
+      "gapRecoveryDelta": 0,
+      "freezeEventMocked": true,
+      "freeze350msDelta": 0,
+      "manual350msDelta": 0,
+      "labels": [
+        "Tốc độ cuộn"
+      ],
+      "labelClickFocusesSlider": true,
+      "pageErrors": []
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "speed": 100,
+      "normal250msDelta": 26,
+      "injectedRafGapMs": 2200,
+      "gapRecoveryDelta": 0,
+      "freezeEventMocked": true,
+      "freeze350msDelta": 0,
+      "manual350msDelta": 0,
+      "labels": [
+        "Scroll speed"
+      ],
+      "labelClickFocusesSlider": true,
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "speed": 100,
+      "normal250msDelta": 26,
+      "injectedRafGapMs": 2200,
+      "gapRecoveryDelta": 0,
+      "freezeEventMocked": true,
+      "freeze350msDelta": 0,
+      "manual350msDelta": 0,
+      "labels": [
+        "Tốc độ cuộn"
+      ],
+      "labelClickFocusesSlider": true,
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "speed": 100,
+      "normal250msDelta": 26,
+      "injectedRafGapMs": 2200,
+      "gapRecoveryDelta": 0,
+      "freezeEventMocked": true,
+      "freeze350msDelta": 0,
+      "manual350msDelta": 0,
+      "labels": [
+        "Scroll speed"
+      ],
+      "labelClickFocusesSlider": true,
+      "pageErrors": []
+    }
+  ]
+}

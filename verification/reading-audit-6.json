@@ -1,0 +1,89 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "clientDate": "2026-10-27",
+  "checkedAt": "2026-10-27T11:53:39.550Z",
+  "deploymentId": "dpl_3QKCyPvofZHDpMRbtkPwga2K1Saj",
+  "simulatedLifecycle": true,
+  "results": [
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "sliderSemantics": {
+        "labels": [],
+        "ariaLabel": null
+      },
+      "panelAccessibility": "- region \"Tự cuộn\":\n  - heading \"Tự cuộn\" [level=2]\n  - button \"Đóng\"\n  - text: Tốc độ cuộn\n  - status \"Tốc độ cuộn 28\": \"28\"\n  - slider: \"28\"\n  - button \"Bắt đầu tự cuộn\"",
+      "speed": 100,
+      "normal250msDelta": 26,
+      "freezeMs": 2200,
+      "recovery80msDelta": 232,
+      "visibilityBefore": "visible",
+      "visibilityAfter": "visible",
+      "manualGesture": "native wheel",
+      "manual350msDelta": 37,
+      "autoStillActive": "true",
+      "stopped350msDelta": 0,
+      "pageErrors": []
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "sliderSemantics": {
+        "labels": [],
+        "ariaLabel": null
+      },
+      "panelAccessibility": "- region \"Auto-scroll\":\n  - heading \"Auto-scroll\" [level=2]\n  - button \"Close\"\n  - text: Scroll speed\n  - status \"Scroll speed 28\": \"28\"\n  - slider: \"28\"\n  - button \"Start auto-scroll\"",
+      "speed": 100,
+      "normal250msDelta": 28,
+      "freezeMs": 2200,
+      "recovery80msDelta": 232,
+      "visibilityBefore": "visible",
+      "visibilityAfter": "visible",
+      "manualGesture": "native wheel",
+      "manual350msDelta": 36,
+      "autoStillActive": "true",
+      "stopped350msDelta": 0,
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "sliderSemantics": {
+        "labels": [],
+        "ariaLabel": null
+      },
+      "panelAccessibility": "- region \"Tự cuộn\":\n  - heading \"Tự cuộn\" [level=2]\n  - button \"Đóng\"\n  - text: Tốc độ cuộn\n  - status \"Tốc độ cuộn 28\": \"28\"\n  - slider: \"28\"\n  - button \"Bắt đầu tự cuộn\"",
+      "speed": 100,
+      "normal250msDelta": 26,
+      "freezeMs": 2200,
+      "recovery80msDelta": 232,
+      "visibilityBefore": "visible",
+      "visibilityAfter": "visible",
+      "manualGesture": "CDP touch scroll",
+      "manual350msDelta": 35,
+      "autoStillActive": "true",
+      "stopped350msDelta": 0,
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "sliderSemantics": {
+        "labels": [],
+        "ariaLabel": null
+      },
+      "panelAccessibility": "- region \"Auto-scroll\":\n  - heading \"Auto-scroll\" [level=2]\n  - button \"Close\"\n  - text: Scroll speed\n  - status \"Scroll speed 28\": \"28\"\n  - slider: \"28\"\n  - button \"Start auto-scroll\"",
+      "speed": 100,
+      "normal250msDelta": 26,
+      "freezeMs": 2200,
+      "recovery80msDelta": 232,
+      "visibilityBefore": "visible",
+      "visibilityAfter": "visible",
+      "manualGesture": "CDP touch scroll",
+      "manual350msDelta": 37,
+      "autoStillActive": "true",
+      "stopped350msDelta": 0,
+      "pageErrors": []
+    }
+  ]
+}

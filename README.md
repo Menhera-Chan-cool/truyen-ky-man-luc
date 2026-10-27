@@ -80,6 +80,8 @@ Sidebar có tab **Tìm trong sách**: tìm cả bản published VI hoặc EN đ�
 
 Chỉ mục được chuẩn bị theo từng chương để giao diện vẫn nhận thao tác, có trạng thái đang chuẩn bị và nút thử lại khi lỗi. Sau đó chỉ mục được giữ trong bộ nhớ khi đổi tab/chương, hủy và làm lại khi Book snapshot hoặc VI/EN đổi; không ghi HTML vào bộ nhớ thiết bị. Đổi/xóa từ khóa chỉ bỏ highlight tìm kiếm cũ, giữ highlight ghi chú. Ở màn hình mục lục nổi (tối đa 900px), mở mục lục và mở bảng công cụ sẽ đóng lớp còn lại, giữ thao tác bàn phím và phiên phát đang chạy; desktop giữ được sidebar cạnh bảng công cụ.
 
+Tự cuộn dừng khi trang ẩn, nhận freeze/pagehide hoặc gặp khoảng RAF lớn hơn 250ms; không chạy bù thời gian và không tự bật lại khi quay về. Bấm “Bắt đầu tự cuộn” để tiếp tục từ chỗ đang xem. Wheel dọc, vuốt/chạm vùng truyện và lật trang bằng phím dừng auto; thay tốc độ trong panel vẫn giữ auto chạy. Thanh tốc độ có nhãn VI/EN liên kết với input và hỗ trợ bàn phím. Tiến độ được flush thêm khi nhận freeze; không thay đổi dữ liệu nghe/ghi chú.
+
 Trong editor, **Xem trước → Điện thoại / Máy tính** dùng khung 390px/780px với typography mặc định của reader. Khung rộng cuộn trong vùng preview, không kéo tràn trang quản trị. Chuyển khung không lưu hoặc sửa HTML; preview vẫn làm sạch nội dung. Cài đặt đọc riêng của khách có thể khác preview.
 
 Liên kết chú thích `#id` trong chương dùng chung cơ chế chuyển trang của Reader, đồng bộ tiến độ và Back/Forward. Popup chọn chữ đóng khi chạm bên ngoài; nhập ghi chú và dùng các nút bên trong vẫn giữ popup. Mở sách chỉ chuẩn bị HTML của ngôn ngữ đang đọc; lỗi kết nối/429/5xx của yêu cầu đọc được thử lại tối đa một lần, không áp dụng cho thao tác ghi hoặc lỗi quyền/cấu hình.

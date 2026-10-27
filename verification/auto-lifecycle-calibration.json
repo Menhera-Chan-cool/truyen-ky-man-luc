@@ -1,0 +1,15 @@
+{
+  "clientDate": "2026-10-27",
+  "environment": "Headless Chromium through Playwright/CDP",
+  "commands": ["Page.enable", "Page.setWebLifecycleState frozen", "Page.setWebLifecycleState active", "bringToFront on a second tab"],
+  "observed": {
+    "visibilityBefore": "visible",
+    "visibilityAfterSecondTab": "visible",
+    "visibilityAfterCdpFreeze": "visible",
+    "freezeOrResumeEvents": [],
+    "rafCountBefore1200msWait": 6,
+    "rafCountAfter1200msWait": 78
+  },
+  "conclusion": "This visible headless page was not actually frozen. The earlier 232px movement across a 2200ms CDP attempt is normal elapsed scrolling and must not be called a resumed-frame jump.",
+  "replacementCoverage": "Explicit DOM freeze/resume and hidden/pagehide boundaries, plus an independent injected RAF timestamp gap. Physical browser/OS freezing remains unverified."
+}

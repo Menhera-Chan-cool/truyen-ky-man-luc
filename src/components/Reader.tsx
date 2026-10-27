@@ -3,6 +3,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useId,
   useRef,
   useState,
   type CSSProperties,
@@ -112,6 +113,7 @@ export default function Reader({
   chapterId: string;
   initialSettings?: ReaderSettings;
 }) {
+  const autoSpeedId = useId();
   const routeChapterId = usePathname()?.split("/").at(-1);
   const chapter =
     book.chapters.find((c) => c.id === routeChapterId) ??
@@ -259,10 +261,12 @@ export default function Reader({
     };
     window.addEventListener("pagehide", flush);
     document.addEventListener("visibilitychange", visibility);
+    document.addEventListener("freeze", flush);
     return () => {
       flush();
       window.removeEventListener("pagehide", flush);
       document.removeEventListener("visibilitychange", visibility);
+      document.removeEventListener("freeze", flush);
     };
   }, [progressSaver, listeningSaver]);
   const onPdfText = useCallback((text: string, page?: number) => {
@@ -745,7 +749,21 @@ export default function Reader({
     let frame = 0,
       last = 0,
       travel = 0;
+    const pause = () => {
+      cancelAnimationFrame(frame);
+      last = 0;
+      travel = 0;
+      setAuto(false);
+    };
+    const visibility = () => {
+      if (document.hidden) pause();
+    };
     const run = (now: number) => {
+      // Never advance unread text to catch up with a suspended or stalled frame.
+      if (document.hidden || (last && now - last > 250)) {
+        pause();
+        return;
+      }
       if (last) {
         const delta = ((now - last) / 1000) * settings.scrollSpeed;
         travel += delta;
@@ -771,8 +789,20 @@ export default function Reader({
       last = now;
       frame = requestAnimationFrame(run);
     };
+    if (document.hidden) {
+      pause();
+      return;
+    }
+    document.addEventListener("visibilitychange", visibility);
+    document.addEventListener("freeze", pause);
+    window.addEventListener("pagehide", pause);
     frame = requestAnimationFrame(run);
-    return () => cancelAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(frame);
+      document.removeEventListener("visibilitychange", visibility);
+      document.removeEventListener("freeze", pause);
+      window.removeEventListener("pagehide", pause);
+    };
   }, [auto, paged, pages, settings.scrollSpeed, speech.playing, speech.paused]);
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
@@ -801,10 +831,12 @@ export default function Reader({
       )
         return;
       if (e.key === "ArrowRight" && paged) {
+        setAuto(false);
         e.preventDefault();
         setPage((p) => Math.min(p + 1, pages - 1));
       }
       if (e.key === "ArrowLeft" && paged) {
+        setAuto(false);
         e.preventDefault();
         setPage((p) => Math.max(p - 1, 0));
       }
@@ -1741,7 +1773,12 @@ export default function Reader({
           className={`reading-scroll ${paged ? "is-paged" : ""}`}
           ref={scrollRef}
           onScroll={onScroll}
+          onWheel={(e) => {
+            if (e.deltaY) setAuto(false);
+          }}
+          onTouchMove={() => setAuto(false)}
           onPointerDown={(e) => {
+            setAuto(false);
             if (!(e.target as HTMLElement).closest("a,img"))
               setActiveImage(null);
           }}
@@ -2118,19 +2155,22 @@ export default function Reader({
           onClose={closePanel}
           closeLabel={L("Đóng", "Close")}
         >
-          <label className="field-group range-label">
-            {L("Tốc độ cuộn", "Scroll speed")}
+          <div className="field-group range-label">
+            <label htmlFor={autoSpeedId}>
+              {L("Tốc độ cuộn", "Scroll speed")}
+            </label>
             <output>{settings.scrollSpeed}</output>
             <input
               type="range"
               min="8"
               max="100"
+              id={autoSpeedId}
               value={settings.scrollSpeed}
               onChange={(e) =>
                 updateSettings({ ...settings, scrollSpeed: +e.target.value })
               }
             />
-          </label>
+          </div>
           <button
             className="primary-button full-width"
             onClick={() => {
