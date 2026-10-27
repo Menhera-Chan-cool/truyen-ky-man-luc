@@ -2,6 +2,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useId,
   useRef,
@@ -177,6 +178,8 @@ export default function Reader({
     initialProgress = useRef<Progress | undefined>(undefined),
     ratioRef = useRef(0),
     pageRef = useRef(0);
+  const reflowPage = useRef<{ page: number; pages: number } | null>(null);
+  const fontSettling = useRef(false);
   const anchorRef = useRef<number | undefined>(undefined),
     pendingAnchor = useRef<number | undefined>(undefined),
     lastLayout = useRef(""),
@@ -358,6 +361,7 @@ export default function Reader({
       setViewportWidth(width);
       setPages(total);
       setPage(target);
+      return total;
     } else if (scrollRef.current) {
       const scroll = scrollRef.current;
       scroll.scrollTop +=
@@ -376,8 +380,10 @@ export default function Reader({
     const range = rangeFromOffsets(root, at, at + 1);
     if (!range) return;
     if (windowRef.current) windowRef.current.scrollLeft = 0;
-    revealRect(range.getBoundingClientRect(), center);
+    const total = revealRect(range.getBoundingClientRect(), center);
     anchorRef.current = at;
+    if (total !== undefined)
+      reflowPage.current = { page: pageRef.current, pages: total };
   }
   revealRef.current = revealOffset;
   function fragmentTarget(hash: string) {
@@ -430,6 +436,7 @@ export default function Reader({
     anchorRef.current = undefined;
     pendingAnchor.current = undefined;
     lastLayout.current = "";
+    reflowPage.current = null;
     setReady(false);
     setSelection(null);
     setActiveImage(null);
@@ -494,18 +501,22 @@ export default function Reader({
     if (!ready) return;
     let raf = 0;
     let cancelled = false;
-    let fontsReady = false;
-    const restore = () => {
-      if (cancelled || !fontsReady) return;
+    fontSettling.current = true;
+    const restore = (fontChanged = false) => {
+      if (cancelled) return;
       const viewport = windowRef.current;
       const content = contentRef.current;
+      const total =
+        paged && viewport && content
+          ? countPages(content.scrollWidth, viewport.clientWidth, 48)
+          : 1;
       if (viewport && content) {
         const width = viewport.clientWidth;
         const layout = `${width}:${viewport.clientHeight}:${content.scrollWidth}:${content.scrollHeight}`;
         if (
           restored.current &&
           lastLayout.current &&
-          lastLayout.current !== layout &&
+          (fontChanged || lastLayout.current !== layout) &&
           !isPdf
         ) {
           initialProgress.current = {
@@ -519,7 +530,7 @@ export default function Reader({
         }
         lastLayout.current = layout;
         setViewportWidth(width);
-        setPages(paged ? countPages(content.scrollWidth, width, 48) : 1);
+        setPages(total);
       }
       if (!restored.current) {
         const progress = initialProgress.current;
@@ -543,6 +554,9 @@ export default function Reader({
             r *
             (scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
         restored.current = true;
+        reflowPage.current = paged
+          ? { page: pageRef.current, pages: total }
+          : null;
         pendingAnchor.current = undefined;
         if (anchor !== undefined) anchorRef.current = anchor;
         setLayoutVersion((v) => v + 1);
@@ -564,6 +578,18 @@ export default function Reader({
           }).catch(() => {});
       }
     };
+    const queueRestore = (fontChanged = false) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        raf = requestAnimationFrame(() => {
+          if (cancelled) return;
+          restore(fontChanged);
+          if (fontChanged) fontSettling.current = false;
+        });
+      });
+    };
+    // Font downloads must not block fallback layout or later reading progress.
+    queueRestore();
     const font =
       contentRef.current && getComputedStyle(contentRef.current).fontFamily;
     Promise.resolve(
@@ -573,17 +599,15 @@ export default function Reader({
       .then(() => document.fonts.ready)
       .then(() => {
         if (!cancelled) {
-          fontsReady = true;
-          raf = requestAnimationFrame(() => {
-            raf = requestAnimationFrame(restore);
-          });
+          queueRestore(true);
         }
       });
-    const observer = new ResizeObserver(restore);
+    const observer = new ResizeObserver(() => restore());
     if (windowRef.current) observer.observe(windowRef.current);
     if (contentRef.current) observer.observe(contentRef.current);
     return () => {
       cancelled = true;
+      fontSettling.current = false;
       cancelAnimationFrame(raf);
       observer.disconnect();
     };
@@ -601,24 +625,27 @@ export default function Reader({
     revision,
     settings.align,
   ]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     pageRef.current = page;
     if (!ready || !restored.current || !paged || !edition) return;
     const r = pages > 1 ? page / (pages - 1) : 0;
     ratioRef.current = r;
     setRatio(r);
-    const frame = requestAnimationFrame(() => {
-      if (!restored.current) return;
-      const anchor = captureAnchor();
-      writeProgress(locale, {
-        chapterId,
-        ratio: r,
-        page,
-        revision,
-        ...(anchor === undefined ? {} : { anchor }),
-      }).catch(() => {});
-    });
-    return () => cancelAnimationFrame(frame);
+    // Keep a revealed word through reflow, but capture manual page turns before the next paint.
+    const fromReflow =
+      reflowPage.current?.page === page && reflowPage.current.pages === pages;
+    reflowPage.current = null;
+    const anchor =
+      fromReflow && anchorRef.current !== undefined
+        ? anchorRef.current
+        : captureAnchor();
+    writeProgress(locale, {
+      chapterId,
+      ratio: r,
+      page,
+      revision,
+      ...(anchor === undefined ? {} : { anchor }),
+    }).catch(() => {});
   }, [page, pages, paged, ready, locale, chapterId, revision]);
   useEffect(() => {
     setPage((p) => Math.min(p, Math.max(0, pages - 1)));
@@ -830,6 +857,15 @@ export default function Reader({
         )
       )
         return;
+      if (
+        e.altKey ||
+        e.ctrlKey ||
+        e.metaKey ||
+        e.shiftKey ||
+        e.isComposing ||
+        !restored.current
+      )
+        return;
       if (e.key === "ArrowRight" && paged) {
         setAuto(false);
         e.preventDefault();
@@ -858,7 +894,10 @@ export default function Reader({
       node.scrollTop / Math.max(1, node.scrollHeight - node.clientHeight);
     ratioRef.current = r;
     if (Math.round(ratio * 100) !== Math.round(r * 100)) setRatio(r);
-    if (performance.now() - lastAnchorTime.current > 150) {
+    if (
+      fontSettling.current ||
+      performance.now() - lastAnchorTime.current > 150
+    ) {
       captureAnchor();
       lastAnchorTime.current = performance.now();
     }
@@ -1905,7 +1944,7 @@ export default function Reader({
               <IconButton
                 icon={ChevronLeft}
                 label={L("Trang trước", "Previous page")}
-                disabled={page === 0}
+                disabled={!ready || !restored.current || page === 0}
                 onClick={() => setPage((p) => Math.max(0, p - 1))}
               />
               <span>
@@ -1914,7 +1953,7 @@ export default function Reader({
               <IconButton
                 icon={ChevronRight}
                 label={L("Trang sau", "Next page")}
-                disabled={page >= pages - 1}
+                disabled={!ready || !restored.current || page >= pages - 1}
                 onClick={() => setPage((p) => Math.min(pages - 1, p + 1))}
               />
             </div>

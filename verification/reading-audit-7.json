@@ -1,0 +1,168 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "clientDate": "2026-10-27",
+  "deploymentId": "dpl_GR76YBjbPNzbftqbmtsaawbVhbbJ",
+  "fontNetworkHeld": true,
+  "results": [
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "keyboard": {
+        "before": "2 / 19",
+        "after": "1 / 19",
+        "url": "https://truyen-ky-man-luc.vercel.app/vi/read/chapter-1",
+        "events": [
+          {
+            "key": "ArrowLeft",
+            "alt": true,
+            "prevented": true
+          }
+        ],
+        "programmaticBackWorks": true
+      },
+      "font": {
+        "original": {
+          "offset": 927,
+          "text": "Hồ vội vàng sửa sang quần áo. Người ấy đưa ông đi về mé tả, đến một nơ"
+        },
+        "pending": {
+          "ready": "false",
+          "fontStatus": "loading",
+          "fontRequests": 3,
+          "page": "3 / 19"
+        },
+        "advanced": {
+          "offset": 6164,
+          "text": "xây cung ở bên sông, mở đường ở ven núi, đắp nền cho cao bằng những hờ"
+        },
+        "advancedPage": "8 / 19",
+        "restored": {
+          "offset": 927,
+          "text": "Hồ vội vàng sửa sang quần áo. Người ấy đưa ông đi về mé tả, đến một nơ"
+        },
+        "restoredPage": "3 / 19"
+      },
+      "pageErrors": []
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "keyboard": {
+        "before": "2 / 24",
+        "after": "1 / 24",
+        "url": "https://truyen-ky-man-luc.vercel.app/en/read/chapter-1",
+        "events": [
+          {
+            "key": "ArrowLeft",
+            "alt": true,
+            "prevented": true
+          }
+        ],
+        "programmaticBackWorks": true
+      },
+      "font": {
+        "original": {
+          "offset": 1839,
+          "text": "If We could not destroy the Han, could the Han bestow a title upon Us?"
+        },
+        "pending": {
+          "ready": "false",
+          "fontStatus": "loading",
+          "fontRequests": 1,
+          "page": "3 / 24"
+        },
+        "advanced": {
+          "offset": 7638,
+          "text": "eastward duping Qi to plunge her people into starvation. If we do not "
+        },
+        "advancedPage": "8 / 24",
+        "restored": {
+          "offset": 759,
+          "text": "Having finished the inscription, he spurred his horse back to the inn."
+        },
+        "restoredPage": "2 / 24"
+      },
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "keyboard": {
+        "before": "2 / 42",
+        "after": "1 / 42",
+        "url": "https://truyen-ky-man-luc.vercel.app/vi/read/chapter-1",
+        "events": [
+          {
+            "key": "ArrowLeft",
+            "alt": true,
+            "prevented": true
+          }
+        ],
+        "programmaticBackWorks": true
+      },
+      "font": {
+        "original": {
+          "offset": 587,
+          "text": "Thua chạy giời xui đường Trạch Tả (5)\nQuay về đất lấp nẻo Giang Đông ("
+        },
+        "pending": {
+          "ready": "false",
+          "fontStatus": "loading",
+          "fontRequests": 3,
+          "page": "3 / 42"
+        },
+        "advanced": {
+          "offset": 3016,
+          "text": "thương lũ sinh linh, nên mới đem tấm thân tám thước đường đường, ném v"
+        },
+        "advancedPage": "8 / 42",
+        "restored": {
+          "offset": 587,
+          "text": "Thua chạy giời xui đường Trạch Tả (5)\nQuay về đất lấp nẻo Giang Đông ("
+        },
+        "restoredPage": "3 / 41"
+      },
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "keyboard": {
+        "before": "2 / 59",
+        "after": "1 / 59",
+        "url": "https://truyen-ky-man-luc.vercel.app/en/read/chapter-1",
+        "events": [
+          {
+            "key": "ArrowLeft",
+            "alt": true,
+            "prevented": true
+          }
+        ],
+        "programmaticBackWorks": true
+      },
+      "font": {
+        "original": {
+          "offset": 759,
+          "text": "Having finished the inscription, he spurred his horse back to the inn."
+        },
+        "pending": {
+          "ready": "false",
+          "fontStatus": "loading",
+          "fontRequests": 1,
+          "page": "3 / 59"
+        },
+        "advanced": {
+          "offset": 3295,
+          "text": "who lift tripods and uproot mountains (15) cannot boast of skill. Furt"
+        },
+        "advancedPage": "8 / 59",
+        "restored": {
+          "offset": 759,
+          "text": "Having finished the inscription, he spurred his horse back to the inn."
+        },
+        "restoredPage": "3 / 58"
+      },
+      "pageErrors": []
+    }
+  ]
+}

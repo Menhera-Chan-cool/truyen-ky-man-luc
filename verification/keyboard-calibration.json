@@ -1,0 +1,9 @@
+{
+  "environment": "Playwright headless Chromium",
+  "pageHasNoApplicationKeyHandlers": true,
+  "altLeftNavigated": false,
+  "historyApiBackWorks": true,
+  "before": "data:text/html,<title>Control B</title><p>Control B</p>",
+  "after": "data:text/html,<title>Control B</title><p>Control B</p>",
+  "programmaticBack": "data:text/html,<title>Control A</title><p>Control A</p>"
+}
