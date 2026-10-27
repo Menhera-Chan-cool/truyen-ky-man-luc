@@ -1,0 +1,483 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "clientDate": "2026-10-27",
+  "deploymentId": "dpl_GR76YBjbPNzbftqbmtsaawbVhbbJ",
+  "runtimeSourceCommit": "c10b63d78f3a03fc7f97489ecea6aaae912ad102",
+  "scope": "20 new auto-scroll cases plus reader, navigation, device backup and speech-continuity; 66 selected cases, not the full local 128-case suite",
+  "uniquePassed": 65,
+  "latestAutoCasesConfirmed": 20,
+  "initialRun": {
+    "stats": {
+      "startTime": "2026-10-27T12:36:14.279Z",
+      "duration": 286117.97000000003,
+      "expected": 64,
+      "skipped": 1,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "checks": [
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, scroll)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, single)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, scroll)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, single)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops after a long RAF gap even without a visibility event",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the position after hidden/pagehide and restarts only on request",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, scroll)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, single)",
+        "project": "mobile",
+        "status": "unexpected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, scroll)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, single)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops after a long RAF gap even without a visibility event",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the position after hidden/pagehide and restarts only on request",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "exports and restores notes, settings and current progress on a fresh device",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "rejects invalid files and atomically rolls back an interrupted restore",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "exports and restores notes, settings and current progress on a fresh device",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "rejects invalid files and atomically rolls back an interrupted restore",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "changes chapters without waiting for the network and preserves browser history",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "uses the same fast navigation for chapter-end links and the table of contents",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "restores each chapter's scroll position during next, previous and browser Back",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "changes chapters without waiting for the network and preserves browser history",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "uses the same fast navigation for chapter-end links and the table of contents",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "restores each chapter's scroll position during next, previous and browser Back",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "places author attribution below the book title",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "provides at least 40px phone targets for book and reader controls",
+        "project": "desktop",
+        "status": "skipped"
+      },
+      {
+        "title": "returns the correct HTML language before JavaScript runs",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "opens directly on the book and switches the complete edition",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "retains chapter identity when switching languages",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "reports missing English preface without leaking Vietnamese content",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "persists reader settings and progress on the device",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "protects the editor and rejects anonymous API writes",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "saves a selected passage and note through a reload without changing its anchor",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "paginates and adapts double-page reading to the viewport",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "plays ambient noise and starts and stops auto-scroll",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "places author attribution below the book title",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "provides at least 40px phone targets for book and reader controls",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "returns the correct HTML language before JavaScript runs",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "opens directly on the book and switches the complete edition",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "retains chapter identity when switching languages",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "reports missing English preface without leaking Vietnamese content",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "persists reader settings and progress on the device",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "protects the editor and rejects anonymous API writes",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "saves a selected passage and note through a reload without changing its anchor",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "paginates and adapts double-page reading to the viewport",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "plays ambient noise and starts and stops auto-scroll",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "ignores late callbacks from a completed chunk while the next chunk is playing",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "continues the current spoken segment when changing rate and voice",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "moves the paged reader through its page state while speech advances",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "ignores late callbacks from a completed chunk while the next chunk is playing",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "continues the current spoken segment when changing rate and voice",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "moves the paged reader through its page state while speech advances",
+        "project": "mobile",
+        "status": "expected"
+      }
+    ]
+  },
+  "correctedFocused": {
+    "stats": {
+      "startTime": "2026-10-27T12:42:52.396Z",
+      "duration": 91747.777,
+      "expected": 19,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "checks": [
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, scroll)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, single)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, scroll)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, single)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops after a long RAF gap even without a visibility event",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the position after hidden/pagehide and restarts only on request",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (vi)",
+        "project": "mobile",
+        "status": "unexpected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, scroll)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, single)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, scroll)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, single)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops after a long RAF gap even without a visibility event",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the position after hidden/pagehide and restarts only on request",
+        "project": "mobile",
+        "status": "expected"
+      }
+    ]
+  },
+  "confirmation": {
+    "stats": {
+      "startTime": "2026-10-27T12:45:26.425Z",
+      "duration": 5099.45,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "checks": [
+      {
+        "title": "stops for manual reading gestures but allows speed changes (vi)",
+        "project": "mobile",
+        "status": "expected"
+      }
+    ]
+  },
+  "lifecycleBoundaryMocked": true,
+  "nativeFreezeNotClaimed": true,
+  "note": "Initial selected run: one fixture captured placeholder total 1/1 before pagination finished, then compared it to 1/63 although current page stayed 1. Fixture now waits for ready/pagination and compares current page index. Corrected focused run: 19 pass and one layout readiness wait exceeded 5 seconds; unchanged single-case repeat passed. Runtime source was unchanged throughout. Preserve all three reports; do not call the first two runs failure-free or claim native OS freezing."
+}

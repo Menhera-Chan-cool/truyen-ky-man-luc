@@ -1,6 +1,20 @@
-# Bằng chứng kiểm chứng — cập nhật 26/10/2026
+# Bằng chứng kiểm chứng — cập nhật 27/10/2026
 
-## Độ mượt tìm kiếm và lớp công cụ — release hiện tại
+## Tự cuộn an toàn và nhãn tốc độ — release hiện tại
+
+Production `dpl_GR76YBjbPNzbftqbmtsaawbVhbbJ`, runtime source `c10b63d78f3a03fc7f97489ecea6aaae912ad102`; alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY và đúng source. Đã triển khai phạm vi `tasks/auto-scroll-safety.md`. Các mục bên dưới là lịch sử release trước.
+
+- **73 unit đạt**, typecheck và production build đạt. Local chạy đủ **128 ca: 121 đạt / 7 skip theo cấu hình**, không fail/flaky. Nhóm mới chạy riêng **20/20 đạt**. Xem `verification/auto-safety-local.json`. Sau đó chỉ chỉnh fixture chờ phân trang và so chỉ số trang, không sửa runtime.
+- Trên production, chọn **66 ca liên quan**: auto-scroll mới, Reader, navigation, backup và speech continuity; không gọi đó là bộ đầy đủ 128 ca trên cloud. Lượt đầu 64 đạt / 1 skip / 1 lỗi fixture lấy tổng trang tạm 1/1 rồi so với 1/63, dù trang hiện tại đều là 1. Fixture được sửa để chờ layout/pagination và so chỉ số trang. Lượt tập trung mới: 19/20 đạt, một ca chờ layout quá 5 giây; chạy riêng lại nguyên ca đó đạt 1/1. Tổng **65 ca riêng biệt xác minh**, đủ **20 ca auto-scroll với fixture cuối**. Giữ cả ba kết quả trong `verification/auto-safety-live.json`; không gọi các lượt đầu sạch lỗi, không bật test retry để che kết quả.
+- Auto dừng khi nhận hidden/freeze/pagehide, hủy RAF và reset travel/timestamp; không tự chạy lại khi resume. Khoảng RAF lớn hơn 250ms cũng dừng thay vì chạy bù. Kiểm tra scroll/paged, VI/EN, desktop/mobile viewport; kiểm tra explicit restart và tiến độ không trôi. Flush tiến độ đọc/nghe thêm ở freeze.
+- Wheel dọc, touch movement, pointer interaction trong vùng truyện và lật trang bằng phím dừng auto. Thay tốc độ trong panel vẫn giữ auto chạy; programmatic scroll không bị nhầm là thao tác tay. Thanh tốc độ dùng label/for với useId, output tách khỏi label; accessible name đúng VI/EN, click label focus đúng input, ArrowRight đổi giá trị và phím lật trang vẫn hoạt động.
+- **Đính chính lifecycle:** CDP frozen trên page headless visible không đóng băng thật: probe ghi nhận 72 RAF/1,2 giây, không có freeze/resume event. Vì vậy số 232px của audit cũ chỉ là cuộn qua thời gian, không là bước nhảy sau khôi phục. Đã lưu `verification/auto-lifecycle-calibration.json`, đính chính OPTIMIZATION_REVIEW_6.md và thay fixture bằng DOM lifecycle boundary + timestamp RAF độc lập. Không dùng bộ CDP fixture sai làm bằng chứng native freeze đã sửa.
+- QA local và live có giới hạn, mỗi batch 4 tổ hợp VI/EN × desktop/mobile. Sau timestamp RAF tăng giả lập 2.200ms: **delta 0px**; sau mock freeze và 350ms: **0px**; sau wheel/touch và 350ms: **0px**. Native label đúng một liên kết và click focus được, không page error. Đây là số đo mô phỏng, không so trực tiếp với CDP 232px sai trước đó. Xem `verification/auto-safety-qa-local.json`, `verification/auto-safety-qa-live.json`; đã xem ảnh VI phone và EN desktop trong cả hai batch.
+- Chuyển chương production đo 4 lần: **18 / 14 / 16 / 15 ms, 0 request chuyển chương**, xem `verification/auto-safety-navigation-live.json`. Chỉ Reader và tests/docs thay đổi; không sửa sách thật, schema, server permissions hoặc tạo tài khoản/nháp QA. Repo vẫn PRIVATE; source scanner loại khóa cấu hình/thư mời. Runtime không đổi sau deployment; các commit bàn giao sau đó chỉ sửa tests và bằng chứng.
+
+Chưa kiểm tra thiết bị Android/iOS vật lý, freeze/resume thực của OS/browser hoặc âm thanh bằng tai. Không cam kết trình duyệt phát âm thanh nền liên tục. Kiểm chứng editor/Auth/Storage/PDF trong các mục lịch sử không được coi là đã chạy lại ở release này.
+
+## Độ mượt tìm kiếm và lớp công cụ — release trước
 
 Production `dpl_3QKCyPvofZHDpMRbtkPwga2K1Saj`, runtime source `d93f93bfb5f4ea629d0e67c29cc884280aaef35f`; alias https://truyen-ky-man-luc.vercel.app xác nhận READY, đúng commit. Cả ba mục trong `tasks/search-smoothness.md` đã triển khai. Các mục tiếp theo là lịch sử release trước.
 

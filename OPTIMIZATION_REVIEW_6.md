@@ -2,11 +2,13 @@
 
 Production xác nhận READY `dpl_3QKCyPvofZHDpMRbtkPwga2K1Saj`, runtime source `d93f93bfb5f4ea629d0e67c29cc884280aaef35f`, Git HEAD bằng chứng `a92d326`. Bản runtime chưa đổi từ release sửa tìm kiếm/lớp công cụ. Lượt này chỉ khảo sát; không sửa runtime, deploy, nội dung sách hoặc dữ liệu quản trị.
 
+**Trạng thái sau triển khai:** Người dùng duyệt sửa cả ba luồng; release mới `dpl_GR76YBjbPNzbftqbmtsaawbVhbbJ` ngày 27/10/2026 đã thực hiện. Phần dưới giữ mốc audit trước sửa và đính chính; bằng chứng hiện tại ở đầu VERIFICATION.md, DEPLOYMENT.json và verification/auto-safety-*.json.
+
 **Đính chính phép thử lifecycle trong lúc triển khai:** CDP frozen trên page headless vẫn visible đã không đóng băng trang: probe sau đó ghi nhận 72 RAF trong 1,2 giây và không có freeze/resume event. Vì vậy, số 232px bên dưới là cuộn bình thường trong thời gian đó, không chứng minh bước nhảy sau đóng băng. Không dùng cột này làm bằng chứng lỗi. Rủi ro timestamp không giới hạn được kiểm tra riêng bằng fixture tăng timestamp RAF; luồng hidden/freeze/resume/pagehide dùng mock tại ranh giới DOM. Xem `verification/auto-lifecycle-calibration.json`; đóng băng OS/trình duyệt thật chưa được xác minh.
 
 ## Kết luận
 
-Đường chuyển chương vẫn nhanh trong mẫu đo mới: **10 / 14 / 16 / 14 ms, 0 request chuyển chương**. Nhóm nên xử lý tiếp là **tự cuộn**, với ba phát hiện đã tái hiện ở VI/EN trên desktop và viewport điện thoại. Không có bằng chứng mới cần thêm tính năng hoặc viết lại editor.
+Đường chuyển chương vẫn nhanh trong mẫu audit: **10 / 14 / 16 / 14 ms, 0 request chuyển chương**. Nhóm cần xử lý là **tự cuộn**: thao tác tay và nhãn đã tái hiện trực tiếp; nhánh lifecycle/khoảng RAF được kiểm tra bằng fixture DOM/timestamp sau hiệu chuẩn CDP. Không coi phép CDP ban đầu là quan sát đóng băng thật. Không có bằng chứng mới cần thêm tính năng hoặc viết lại editor.
 
 ## 1. P2 — Tự cuộn thiếu bảo vệ khi có khoảng ngắt khung hình/lifecycle
 
@@ -41,7 +43,7 @@ Production xác nhận READY `dpl_3QKCyPvofZHDpMRbtkPwga2K1Saj`, runtime source 
 | Mobile viewport VI | 26 px | 232 px | 35 px | 0 px |
 | Mobile viewport EN | 26 px | 232 px | 37 px | 0 px |
 
-Desktop dùng native wheel; mobile dùng CDP touch scroll. Không có page error trong bốn ca hoàn tất. Harness đầu tiên dùng accessible name cho slider đã dừng vì slider thực sự không có tên; lần hoàn tất dùng CSS locator và lưu cả labels/aria snapshot. Số đo px có thể khác theo tốc độ/frame, mục tiêu là phân biệt khoảng nhảy và chứng minh auto chưa dừng.
+Desktop dùng native wheel; mobile dùng CDP touch scroll. Không có page error trong bốn ca hoàn tất. Harness đầu tiên dùng accessible name cho slider đã dừng vì slider thực sự không có tên; lần hoàn tất dùng CSS locator và lưu cả labels/aria snapshot. Cột CDP chỉ ghi cuộn khi vẫn visible, không dùng để kết luận có bước nhảy. Hai cột thao tác tay/Stop là đối chứng hợp lệ cho việc auto chưa dừng theo ý định người đọc.
 
 ## Đối chiếu nguồn và giới hạn
 

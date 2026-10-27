@@ -9,6 +9,7 @@ const active = (page: Page, locale: string) =>
 const pos = (page: Page) =>
   page.locator(".reading-scroll").evaluate((el) => el.scrollTop);
 async function start(page: Page, locale: string) {
+  await ready(page);
   const L = (vi: string, en: string) => (locale === "vi" ? vi : en);
   await active(page, locale).click();
   await page.locator(".reader-panel input[type=range]").fill("100");
@@ -137,13 +138,27 @@ for (const locale of ["vi", "en"]) {
         await page
           .getByRole("button", { name: L("Đóng", "Close"), exact: true })
           .click();
+        await ready(page);
+        await expect
+          .poll(async () =>
+            Number(
+              (await page.locator(".page-controls span").textContent())!.split(
+                "/",
+              )[1],
+            ),
+          )
+          .toBeGreaterThan(1);
       }
       await start(page, locale);
       await page.waitForTimeout(300);
       const before =
         mode === "scroll"
           ? await pos(page)
-          : await page.locator(".page-controls span").textContent();
+          : Number(
+              (await page.locator(".page-controls span").textContent())!.split(
+                "/",
+              )[0],
+            );
       // Headless Chrome ignores native freezing while visible; exercise the DOM boundary explicitly.
       await page.evaluate(() => document.dispatchEvent(new Event("freeze")));
       await page.waitForTimeout(500);
@@ -156,10 +171,26 @@ for (const locale of ["vi", "en"]) {
         expect(
           Math.abs((await pos(page)) - Number(before)),
         ).toBeLessThanOrEqual(8);
-      else
-        await expect(page.locator(".page-controls span")).toHaveText(
-          String(before),
-        );
+      else {
+        await expect
+          .poll(async () =>
+            Number(
+              (await page.locator(".page-controls span").textContent())!.split(
+                "/",
+              )[0],
+            ),
+          )
+          .toBe(before);
+        await expect
+          .poll(async () =>
+            Number(
+              (await page.locator(".page-controls span").textContent())!.split(
+                "/",
+              )[1],
+            ),
+          )
+          .toBeGreaterThan(1);
+      }
       await page.waitForTimeout(200);
       await expect(active(page, locale)).toHaveAttribute(
         "aria-pressed",
