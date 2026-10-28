@@ -1,6 +1,32 @@
 # Bằng chứng kiểm chứng — cập nhật 28/10/2026
 
-## Chú thích tương tác và TTS — release hiện tại
+## Giao diện Sách và lật giấy — release hiện tại
+
+Production dpl_Gfi4cRa3CKc3GpDrqzmo9k6YSKYD, runtime source b6c7d83eb888e55b85e067c706aeaf15997fd792; alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY, đúng source. Hoàn tất tasks/book-layout.md và yêu cầu lật giấy thật theo mẫu Hanhtrangso. Các mục tiếp theo là lịch sử.
+
+- **82 unit đạt**, typecheck và production build đạt. Bộ local đầy đủ 168 ca: **161 đạt / 7 skip**, 0 fail/flaky. Sau đó có sửa một dòng để đóng drawer Sách khi chọn chương và thêm ca kiểm tra; trên bản dựng cuối chạy đủ **18 ca Sách + 6 navigation: 24/24 đạt**. Không gọi lượt 168 ca trước đó là full 170 ca trên source cuối. Xem verification/book-local.json.
+
+- Trên URL production chọn **106 ca: 104 đạt / 2 skip theo thiết bị**, 0 fail/flaky/retry. Kiểm tra Book, continuity, Reader, footnotes, font chậm/phím tắt, navigation, speech continuity, backup và tiện ích. Sau đó siết assertion thành clipPath bắt đầu bằng polygon (không nhận none): **2/2 desktop/mobile đạt** trên cùng runtime. Đây là tăng độ chặt của test, không sửa sản phẩm. Xem verification/book-live.json.
+
+- Cài đặt có Ebook / Sách ngay trước nhóm chủ đề; Ebook mặc định và giữ mode cuộn/trang cũ. Sách có trang giấy, gáy, số trang, mũi tên cạnh lớn, đầu/cuối chương, drawer mục lục và nút về Ebook. Khổ lá 0.72, lượt hai trang 1.44, tự fit vùng đọc; phone/vùng hẹp dùng một trang. Mục lục không đẩy khổ giấy nhỏ đi và tự đóng khi chọn chương.
+
+- Lật trang thực dùng StPageFlip 2.0.7 MIT tự host 44.058 bytes, có mặt trước/sau, polygon/nếp gấp và bóng, cấu hình 450ms. Chỉ giữ mặt trang trước/sau đang chuyển trong ngữ cảnh srcdoc inert tạm; chữ sống vẫn một Root. Hủy ngữ cảnh sau lật/ẩn/freeze/pagehide/đổi giao diện, không giữ vòng RAF của thư viện ở trạng thái nghỉ. Có mở giấy 180ms và phản hồi mũi tên, mục lục trượt; reduced motion/E-ink tắt chuyển động. Không CDN, không chụp canvas hay dựng tất cả chương.
+
+- Mỗi chương có chuỗi trang riêng, không nối đầu chương mới vào chỗ trống cùng trang cũ. Next qua cuối mở đầu chương sau dù thiết bị đã lưu tiến độ giữa chương đó; Previous ở đầu mở cuối chương trước. Có kiểm tra cả toolbar chương và phím/vuốt. TOC/notes/search/listening giữ hành vi vị trí rõ ràng hiện có. Số trang tính theo chương và đổi theo font/viewport.
+
+- TextContent/UTF-16, revision, chú thích và ghi chú cũ giữ nguyên; tiêu đề in trên lá đầu dùng node rỗng/generated content aria-hidden và heading thật vẫn truy cập được. Sửa giữ neo khi đổi Book/Ebook mà không làm thay đổi continuity của Ebook. Vuốt ngang ngắn ngoài link/ảnh/input mới lật; vùng đang chọn chữ ngay từ pointerdown không bị nhận nhầm. Native TTS bỏ số dẫn, pause/resume/follow vẫn dùng nguồn chữ thật. Backup v1 cũ thiếu layout mặc định Ebook; file có giá trị sai bị từ chối.
+
+- Giữ các bằng chứng đỏ/hiệu chuẩn: build đầu bị EXDEV ở config telemetry Windows và chưa có server, nên lượt focused sớm chỉ connection-refused; tắt telemetry trong tiến trình build khắc phục, không sửa cấu hình hệ thống. Các ca thêm phát hiện drift khi đổi giao diện và vuốt trên selection. Fixture Back ở VI dùng ký tự thực sự nhìn thấy vì EPUB có whitespace đầu; oracle scroll dùng reading-scroll. Bản đầy đủ sau sửa vẫn giữ các assertion continuity cũ.
+
+- Một batch visual local và một lượt xác nhận live, mỗi lượt VI/EN × desktop 1440×900 / phone viewport 390×844, sáng/ngà và tối. Local thấy số footer 8–9px, grid phone rộng hơn viewport và snapshot lệch biên 1px; sửa cùng một đợt, fit khổ giấy thật. Live xác nhận số trang **12px**, lề phone cân, ratio đúng, không tràn/footer hoặc page error; đã xem ảnh đứng và giữa nếp lật, cùng hàng nút Sách trong settings sau transition. Xem verification/book-ui-local.json (trước tinh chỉnh), verification/book-ui-live.json.
+
+- Trên live, trạng thái trang tới một frame sau click: **15 / 18 / 16 / 22 ms** ở bốn mẫu; đây không phải thời gian hoàn thành nếp giấy 450ms hoặc INP thực địa. Đo đổi chương trong Sách: **17 / 27 / 30 / 25 ms, 0 yêu cầu RSC chuyển chương**. Script versioned trả immutable cache; context hoạt ảnh rời DOM sau lật, chỉ một context rỗng làm ấm. Xem verification/book-navigation-live.json.
+
+- Repo vẫn PRIVATE; nguồn/ZIP loại cấu hình bí mật và thư mời. Không ghi sách, nháp, membership, schema hoặc file gốc; PDF vẫn dùng trang/zoom gốc. Source runtime giữ nguyên sau deploy, commit bàn giao sau chỉ ghi bằng chứng và assertion chặt hơn.
+
+Chưa thử điện thoại Android/iOS vật lý, FPS thực địa hoặc giọng đọc bằng tai. Không coi kiểm chứng editor/Auth/Storage có đăng nhập ở mục lịch sử là đã chạy lại đầy đủ. Tham khảo UI [Hanhtrangso](https://hanhtrangso.nxbgd.vn/ebook/read/ngu-van-12-tap-mot-321); giấy lật dùng [StPageFlip](https://github.com/Nodlik/StPageFlip), giữ license trong public/vendor/page-flip.LICENSE. Không sao chép nội dung/ảnh sách giáo khoa.
+
+## Chú thích tương tác và TTS — release trước
 
 Production `dpl_ET7H7yBf4rytqqUG7PPAvfzfMfwk`, runtime source `ca91469fb334bb0fea821050648481dca51829c3`; alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY, đúng source. Đã hoàn tất yêu cầu `tasks/footnotes.md` và giữ hai sửa lỗi font/phím tắt của release trước. Các mục dưới đây là lịch sử.
 

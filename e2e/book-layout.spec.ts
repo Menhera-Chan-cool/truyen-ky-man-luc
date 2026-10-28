@@ -434,7 +434,7 @@ test("turns real page faces without duplicating live text or keeping animation f
       const state = (window.parent as any).foldAudit;
       state.fold ||= [
         ...document.querySelectorAll<HTMLElement>(".stf__item"),
-      ].some((el) => !!el.style.clipPath);
+      ].some((el) => el.style.clipPath.startsWith("polygon("));
       state.shadow ||= !!document.querySelector(
         ".stf__outerShadow,.stf__innerShadow",
       );

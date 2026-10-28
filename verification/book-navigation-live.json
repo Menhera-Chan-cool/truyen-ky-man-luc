@@ -1,0 +1,36 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "layout": "book",
+  "measurement": "Chapter title/state frame, not completion of the configured 450ms fold",
+  "samples": [
+    {
+      "label": "Chương sau",
+      "target": "Chương 2:",
+      "ms": 17,
+      "serverRequests": 0
+    },
+    {
+      "label": "Chương trước",
+      "target": "Chương 1:",
+      "ms": 27,
+      "serverRequests": 0
+    },
+    {
+      "label": "Chương sau",
+      "target": "Chương 2:",
+      "ms": 30,
+      "serverRequests": 0
+    },
+    {
+      "label": "Chương sau",
+      "target": "Chương 3:",
+      "ms": 25,
+      "serverRequests": 0
+    }
+  ],
+  "initialNavigation": {
+    "transferBytes": 173825,
+    "decodedBytes": 554697
+  },
+  "checkedAt": "2026-10-28T15:24:56.928Z"
+}

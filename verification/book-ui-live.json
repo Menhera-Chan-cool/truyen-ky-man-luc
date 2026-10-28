@@ -1,0 +1,149 @@
+{
+  "clientDate": "2026-10-28",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "kind": "live",
+  "checkedAt": "2026-10-28T15:23:38.558Z",
+  "limitations": "Chromium viewport/network simulation; pageStateFrameMs measures first state/frame, not the full 450ms physical turn or field INP. No physical phone calibration.",
+  "results": [
+    {
+      "device": "desktop",
+      "locale": "vi",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "sepia",
+      "geometry": {
+        "paper": {
+          "x": 189.375,
+          "y": 84,
+          "width": 1061.265625,
+          "height": 737
+        },
+        "fits": true,
+        "columnCount": "2",
+        "titleHeight": 72.5,
+        "footerFits": true,
+        "footerHeight": 55,
+        "folioFont": "12px"
+      },
+      "pageStateFrameMs": 15,
+      "fold": {
+        "faces": 4,
+        "clipped": 2,
+        "shadows": 2
+      },
+      "animationContextDetached": true,
+      "liveProseRoots": 1,
+      "warmContexts": 1,
+      "unchangedText": true,
+      "assetCache": "public, max-age=31536000, immutable",
+      "pageErrors": []
+    },
+    {
+      "device": "desktop",
+      "locale": "en",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "theme": "dark",
+      "geometry": {
+        "paper": {
+          "x": 189.375,
+          "y": 84,
+          "width": 1061.265625,
+          "height": 737
+        },
+        "fits": true,
+        "columnCount": "2",
+        "titleHeight": 72.5,
+        "footerFits": true,
+        "footerHeight": 55,
+        "folioFont": "12px"
+      },
+      "pageStateFrameMs": 18,
+      "fold": {
+        "faces": 4,
+        "clipped": 2,
+        "shadows": 2
+      },
+      "animationContextDetached": true,
+      "liveProseRoots": 1,
+      "warmContexts": 1,
+      "unchangedText": true,
+      "assetCache": "public, max-age=31536000, immutable",
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "vi",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "sepia",
+      "geometry": {
+        "paper": {
+          "x": 12,
+          "y": 186.328125,
+          "width": 366,
+          "height": 508.328125
+        },
+        "fits": true,
+        "columnCount": "1",
+        "titleHeight": 69.59375,
+        "footerFits": true,
+        "footerHeight": 55,
+        "folioFont": "12px"
+      },
+      "pageStateFrameMs": 16,
+      "fold": {
+        "faces": 3,
+        "clipped": 2,
+        "shadows": 2
+      },
+      "animationContextDetached": true,
+      "liveProseRoots": 1,
+      "warmContexts": 1,
+      "unchangedText": true,
+      "assetCache": "public, max-age=31536000, immutable",
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "locale": "en",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "geometry": {
+        "paper": {
+          "x": 12,
+          "y": 186.328125,
+          "width": 366,
+          "height": 508.328125
+        },
+        "fits": true,
+        "columnCount": "1",
+        "titleHeight": 69.59375,
+        "footerFits": true,
+        "footerHeight": 55,
+        "folioFont": "12px"
+      },
+      "pageStateFrameMs": 22,
+      "fold": {
+        "faces": 3,
+        "clipped": 2,
+        "shadows": 2
+      },
+      "animationContextDetached": true,
+      "liveProseRoots": 1,
+      "warmContexts": 1,
+      "unchangedText": true,
+      "assetCache": "public, max-age=31536000, immutable",
+      "pageErrors": []
+    }
+  ]
+}

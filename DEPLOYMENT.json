@@ -1,100 +1,119 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_ET7H7yBf4rytqqUG7PPAvfzfMfwk",
+  "deploymentId": "dpl_Gfi4cRa3CKc3GpDrqzmo9k6YSKYD",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-5fcle84e3-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-e59s5kh4u-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-28T12:37:29.568Z",
+  "checkedAt": "2026-10-28T15:27:58.126Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
-  "runtimeSourceCommit": "ca91469fb334bb0fea821050648481dca51829c3",
+  "runtimeSourceCommit": "b6c7d83eb888e55b85e067c706aeaf15997fd792",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
     "branch": "main"
   },
   "verification": {
-    "unitTests": 80,
+    "unitTests": 82,
     "typecheck": true,
     "productionBuild": true,
-    "localBuildWorkers": 2,
-    "localPlaywright": {
-      "startTime": "2026-10-28T12:17:01.306Z",
-      "duration": 283133.552,
-      "expected": 145,
+    "localFullBeforeLastDrawerLine": {
+      "startTime": "2026-10-28T14:39:17.462Z",
+      "duration": 374763.445,
+      "expected": 161,
       "skipped": 7,
       "unexpected": 0,
       "flaky": 0
     },
+    "finalBuildTargeted": {
+      "startTime": "2026-10-28T14:52:46.600Z",
+      "duration": 69997.35299999999,
+      "expected": 24,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
     "livePlaywright": {
-      "scope": "88 selected hosted cases: footnotes, continuity, speech continuity, reader convenience, late fonts/keyboard, reader reliability, reader and navigation. Not the full local 152-case suite.",
-      "startTime": "2026-10-28T12:25:40.493Z",
-      "duration": 325986.59,
-      "expected": 86,
+      "scope": "106 selected production cases: all 18 Book cases, continuity, reader, footnotes, late fonts/keyboard, navigation, speech continuity, device backup and reader convenience. Not a full 170-case final run.",
+      "startTime": "2026-10-28T15:11:28.069Z",
+      "duration": 406873.94,
+      "expected": 104,
       "skipped": 2,
       "unexpected": 0,
       "flaky": 0
     },
-    "sourceSurvey": {
-      "editions": 41,
-      "editionsWithInlineReferences": 40,
-      "references": 776,
-      "allTextUnchanged": true
+    "stricterFoldConfirmation": {
+      "startTime": "2026-10-28T15:23:05.513Z",
+      "duration": 9168.965999999999,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
     },
-    "visualQA": {
-      "local": "verification/footnote-qa-local.json",
-      "live": "verification/footnote-qa-live.json",
+    "visual": {
+      "local": "verification/book-ui-local.json",
+      "live": "verification/book-ui-live.json",
       "combinations": 4,
-      "settledOpacityCheckedOnLive": true,
-      "longPreviewScrollCheckedOnLive": true,
-      "doublePageCheckedOnLiveDesktop": true
+      "allTextUnchanged": true,
+      "liveProseRoots": 1,
+      "animationContextsDetached": true,
+      "physicalLeafRatio": 0.72,
+      "pageStateFrameMs": [
+        15,
+        18,
+        16,
+        22
+      ]
     },
     "navigation": {
       "base": "https://truyen-ky-man-luc.vercel.app",
+      "layout": "book",
+      "measurement": "Chapter title/state frame, not completion of the configured 450ms fold",
       "samples": [
         {
           "label": "Chương sau",
           "target": "Chương 2:",
-          "ms": 19,
+          "ms": 17,
           "serverRequests": 0
         },
         {
           "label": "Chương trước",
           "target": "Chương 1:",
-          "ms": 14,
+          "ms": 27,
           "serverRequests": 0
         },
         {
           "label": "Chương sau",
           "target": "Chương 2:",
-          "ms": 14,
+          "ms": 30,
           "serverRequests": 0
         },
         {
           "label": "Chương sau",
           "target": "Chương 3:",
-          "ms": 15,
+          "ms": 25,
           "serverRequests": 0
         }
       ],
       "initialNavigation": {
-        "transferBytes": 173654,
-        "decodedBytes": 554305
+        "transferBytes": 173825,
+        "decodedBytes": 554697
       },
-      "checkedAt": "2026-10-28T12:35:49.761Z"
+      "checkedAt": "2026-10-28T15:24:56.928Z"
     }
   },
   "limitations": [
-    "Native speech/viewport tests are simulations, not physical Android/iOS or audible voice validation.",
-    "English chapter 2 has endnotes but no inline numbered references; the source was not edited to invent associations.",
-    "Stored HTML, book revisions, permissions, schema, PDF pages and dependencies are unchanged. Later handoff commits only update proof documents."
+    "Full local run was 168 cases before the final one-line Book drawer auto-close change; all 18 Book plus six navigation cases passed on the final build. Do not claim a full 170-case final run.",
+    "Physical Android/iOS gestures, field FPS and audible native speech were not checked.",
+    "PDF stays in its native page/zoom view; Ebook remains the default.",
+    "No source-book data, permissions, storage schema or account changes."
   ],
   "previousDeployment": {
-    "id": "dpl_GEVrVw9Mu3mSosAcUFuAVYcZuBsP",
-    "runtimeSourceCommit": "69da38635e3a67d8a1ab9e69d2f07e7061637ff6"
+    "id": "dpl_ET7H7yBf4rytqqUG7PPAvfzfMfwk",
+    "runtimeSourceCommit": "ca91469fb334bb0fea821050648481dca51829c3"
   }
 }
