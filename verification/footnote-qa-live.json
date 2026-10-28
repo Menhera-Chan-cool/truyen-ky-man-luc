@@ -1,0 +1,147 @@
+{
+  "clientDate": "2026-10-28",
+  "checkedAt": "2026-10-28T12:35:45.920Z",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "kind": "live",
+  "limitations": "Chromium viewport and keyboard focus simulation; no physical phone or audible native voice calibration.",
+  "results": [
+    {
+      "device": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "locale": "vi",
+      "theme": "sepia",
+      "fontSize": "14px",
+      "verticalAlign": "super",
+      "linkColor": "rgb(51, 102, 204)",
+      "previewColor": "rgb(48, 43, 35)",
+      "previewBackground": "rgb(245, 240, 229)",
+      "previewBounds": {
+        "x": 584.34375,
+        "y": 220.84375,
+        "width": 360,
+        "height": 237.84375
+      },
+      "previewFits": true,
+      "describedBy": true,
+      "previewText": "(1) Hồ Tông Thốc: người huyện Thổ Thành, nay là xã Thọ Thành, huyện Yên Thành, tỉnh Nghệ An; trú quán tại xã Vô Ngại, huyện Đường Hào nay thuộc tỉnh Hải Dương. Đời Trần Nghệ Tông (1370-1372) đi sứ nhà Nguyên, làm quan đến chức Hàn lâm học sĩ Thẩm hình viện sự, có tác phẩm Việt sử cương mục và Việt Nam thế chí, Thảo nhàn hiệu tần thi tập, nhưng hiện chỉ còn một bài thơ.",
+      "longPreview": {
+        "chapter": "chapter-14",
+        "scrollTop": 109,
+        "scrollHeight": 467,
+        "clientHeight": 358,
+        "stillOpen": true
+      },
+      "doublePage": {
+        "columnCount": "2",
+        "visible": true,
+        "scrollLeft": 0
+      },
+      "clickedEndnote": "#reader-footnote-1",
+      "pageErrors": []
+    },
+    {
+      "device": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "locale": "en",
+      "theme": "dark",
+      "fontSize": "14px",
+      "verticalAlign": "super",
+      "linkColor": "rgb(138, 180, 248)",
+      "previewColor": "rgb(237, 231, 217)",
+      "previewBackground": "rgb(23, 25, 35)",
+      "previewBounds": {
+        "x": 688.421875,
+        "y": 220.84375,
+        "width": 360,
+        "height": 284.03125
+      },
+      "previewFits": true,
+      "describedBy": true,
+      "previewText": "(1) Ho Tong Thoc: A native of Tho Thanh district, now Tho Thanh commune, Yen Thanh district, Nghe An province; residing at Vo Ngai commune, Duong Hao district, now part of Hai Duong province. During the reign of Emperor Tran Nghe Tong (1370–1372), he served as an envoy to the Yuan dynasty, rising to the rank of Hanlin Academician and Official of the Tribunal of Justice. He authored the Viet su cuong muc, Viet Nam the chi, and Thao nhan hieu tan thi tap, though only a single poem survives today.",
+      "longPreview": {
+        "chapter": "chapter-14",
+        "scrollTop": 63,
+        "scrollHeight": 421,
+        "clientHeight": 358,
+        "stillOpen": true
+      },
+      "doublePage": {
+        "columnCount": "2",
+        "visible": true,
+        "scrollLeft": 0
+      },
+      "clickedEndnote": "#reader-footnote-1",
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "locale": "vi",
+      "theme": "sepia",
+      "fontSize": "14px",
+      "verticalAlign": "super",
+      "linkColor": "rgb(51, 102, 204)",
+      "previewColor": "rgb(48, 43, 35)",
+      "previewBackground": "rgb(245, 240, 229)",
+      "previewBounds": {
+        "x": 22,
+        "y": 261.21875,
+        "width": 360,
+        "height": 237.84375
+      },
+      "previewFits": true,
+      "describedBy": true,
+      "previewText": "(1) Hồ Tông Thốc: người huyện Thổ Thành, nay là xã Thọ Thành, huyện Yên Thành, tỉnh Nghệ An; trú quán tại xã Vô Ngại, huyện Đường Hào nay thuộc tỉnh Hải Dương. Đời Trần Nghệ Tông (1370-1372) đi sứ nhà Nguyên, làm quan đến chức Hàn lâm học sĩ Thẩm hình viện sự, có tác phẩm Việt sử cương mục và Việt Nam thế chí, Thảo nhàn hiệu tần thi tập, nhưng hiện chỉ còn một bài thơ.",
+      "longPreview": {
+        "chapter": "chapter-14",
+        "scrollTop": 109,
+        "scrollHeight": 467,
+        "clientHeight": 358,
+        "stillOpen": true
+      },
+      "clickedEndnote": "#reader-footnote-1",
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "locale": "en",
+      "theme": "dark",
+      "fontSize": "14px",
+      "verticalAlign": "super",
+      "linkColor": "rgb(138, 180, 248)",
+      "previewColor": "rgb(237, 231, 217)",
+      "previewBackground": "rgb(23, 25, 35)",
+      "previewBounds": {
+        "x": 8,
+        "y": 299.21875,
+        "width": 360,
+        "height": 284.03125
+      },
+      "previewFits": true,
+      "describedBy": true,
+      "previewText": "(1) Ho Tong Thoc: A native of Tho Thanh district, now Tho Thanh commune, Yen Thanh district, Nghe An province; residing at Vo Ngai commune, Duong Hao district, now part of Hai Duong province. During the reign of Emperor Tran Nghe Tong (1370–1372), he served as an envoy to the Yuan dynasty, rising to the rank of Hanlin Academician and Official of the Tribunal of Justice. He authored the Viet su cuong muc, Viet Nam the chi, and Thao nhan hieu tan thi tap, though only a single poem survives today.",
+      "longPreview": {
+        "chapter": "chapter-14",
+        "scrollTop": 63,
+        "scrollHeight": 421,
+        "clientHeight": 358,
+        "stillOpen": true
+      },
+      "clickedEndnote": "#reader-footnote-1",
+      "pageErrors": []
+    }
+  ]
+}

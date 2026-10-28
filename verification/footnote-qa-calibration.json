@@ -1,0 +1,11 @@
+{
+  "clientDate": "2026-10-28",
+  "failedCheck": "QA expected positive scrollTop on the longest VI chapter-1 preview",
+  "metrics": {
+    "clientHeight": 259,
+    "scrollHeight": 259,
+    "scrollTop": 0,
+    "textLength": 459
+  },
+  "diagnosis": "Sample fits; no overflow exists to scroll. This is a QA sample error, not a product scroll failure."
+}

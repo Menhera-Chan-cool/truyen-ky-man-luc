@@ -1,6 +1,20 @@
-# Bằng chứng kiểm chứng — cập nhật 27/10/2026
+# Bằng chứng kiểm chứng — cập nhật 28/10/2026
 
-## Phông đến muộn và phím trình duyệt — release hiện tại
+## Chú thích tương tác và TTS — release hiện tại
+
+Production `dpl_ET7H7yBf4rytqqUG7PPAvfzfMfwk`, runtime source `ca91469fb334bb0fea821050648481dca51829c3`; alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY, đúng source. Đã hoàn tất yêu cầu `tasks/footnotes.md` và giữ hai sửa lỗi font/phím tắt của release trước. Các mục dưới đây là lịch sử.
+
+- **80 unit đạt**, typecheck và production build đạt. Toàn bộ local **152 ca: 145 đạt / 7 skip**, 0 fail/flaky ở bản cuối. Trên URL production chọn **88 ca liên quan: 86 đạt / 2 skip theo thiết bị**, 0 fail/flaky/retry. Hai skip là vùng bấm phone ở project desktop và hover tooltip ở project mobile. Không gọi 88 ca là full suite trên cloud. Xem `verification/footnote-local.json`, `verification/footnote-live.json`.
+- Giữ bằng chứng lượt đầu local: 143 đạt / 7 skip / 2 lỗi fixture tạo Range offset 35 trong nút chữ đầu chỉ còn 27 ký tự sau thêm link. Fixture nay chọn đúng nguyên khoảng 2..35 qua các text node và giữ mọi assertion nhập/giữ/đóng ghi chú; không nới assertion. Có thêm regression đỏ cho heading DOCX bị gộp, nhãn VI14 mất và tooltip phải đóng khi lật trang bằng mũi tên. Bản runtime cuối và fixture cuối được chạy lại đủ 152 ca.
+- Số dẫn hợp lệ hiện thành số nhỏ màu xanh phía trên dòng, không có ngoặc nhìn thấy; link xanh sáng hơn trên nền tối. Hover/focus mở preview văn bản thuần theo nền reader, có aria-describedby; chuột vào card vẫn đọc/scroll được. Escape, blur, scroll ngoài card và mũi tên lật trang đóng preview. Click/tap dùng fragment/history/focus hiện có, đến đúng note cuối chương và Back về đoạn trước. Các ca mới kiểm tra VI/EN, scroll/single, touch viewport và TTS; QA live bổ sung double-page thật trên desktop cả hai locale.
+- Survey chỉ đọc **41 edition đã xuất bản**, tìm **776 số dẫn** trong 40 edition có marker; toàn bộ textContent và độ dài UTF-16 giữ nguyên. CSS giấu ngoặc, TTS thay riêng ký hiệu dẫn bằng khoảng trắng cùng độ dài; pause/resume/boundary, ghi chú, tìm kiếm và nghe tiếp giữ offset gốc. Năm như (1330), số không có note và note trùng số không được tự liên kết. Xem `verification/footnote-source-survey.json`. Nội dung note cuối chương vẫn có thể được đọc khi nghe cả chương.
+- Hỗ trợ note cuối dạng (1), 1), paragraph/list, note nhiều đoạn và liên kết superscript có sẵn. Nhãn mất đã xác định ở VI3 (note 7 có hai đoạn) và VI14 (31–43) được phục hồi riêng ở lớp hiển thị; không cập nhật sách/revision. **Chương 2 EN nguồn có endnotes nhưng không có số dẫn trong thân bài**: giữ nguyên, không đoán từ để chèn. Khi editor nhập thêm (n) với mục (n) dưới Chú thích/Notes, Reader tự nhận diện sau xuất bản.
+- QA local/live mỗi batch 4 tổ hợp VI/EN × desktop 1440×900 / viewport 390×844, VI giấy ngà và EN tối, không page error hoặc preview tràn màn hình. Ảnh local được chụp trước khi chờ fade tooltip xong nên không dùng làm mẫu opacity cuối. Lượt xác nhận live chờ **opacity=1**, kiểm tra card dài thực sự cuộn và vẫn mở, kiểm tra target double-page/scrollLeft=0; đã xem ảnh VI phone và EN desktop sau ổn định. Mẫu scroll đầu tiên ở VI1 chỉ cao 259px và không tràn nên không thể cuộn; đã hiệu chuẩn trong `verification/footnote-qa-calibration.json` và dùng note dài ở chương 14 để xác nhận scroll thực. Xem `verification/footnote-qa-local.json`, `verification/footnote-qa-live.json`.
+- Chuyển chương live: **19 / 14 / 14 / 15 ms, 0 request chuyển chương** ở bốn mẫu lab, không là INP người dùng thực. Repo vẫn PRIVATE; scanner loại khóa/thư mời khỏi nguồn. Không đổi dependencies, schema, API quyền, file nguồn, PDF hoặc dữ liệu sách. Runtime không đổi sau deploy; commit bằng chứng bàn giao được ghi riêng.
+
+Chưa kiểm tra điện thoại vật lý, giọng đọc bằng tai hoặc browser chrome shortcut thật; các giới hạn Web Speech/lifecycle từ release trước vẫn áp dụng. Editor/Auth/Storage/PDF có đăng nhập không được coi là đã chạy lại đầy đủ lần này. Mẫu tham khảo hành vi là [Wikipedia Arsenal F.C.](https://vi.wikipedia.org/wiki/Arsenal_F.C.); không sao chép nội dung hoặc mã trang đó.
+
+## Phông đến muộn và phím trình duyệt — release trước
 
 Production `dpl_GEVrVw9Mu3mSosAcUFuAVYcZuBsP`, runtime source `69da38635e3a67d8a1ab9e69d2f07e7061637ff6`; alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY và đúng source. Hai mục được duyệt trong `tasks/font-and-keyboard.md` đã hoàn tất. Các mục dưới đây là lịch sử release trước.
 

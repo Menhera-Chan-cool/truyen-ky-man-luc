@@ -1,49 +1,57 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_GEVrVw9Mu3mSosAcUFuAVYcZuBsP",
+  "deploymentId": "dpl_ET7H7yBf4rytqqUG7PPAvfzfMfwk",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-dzrgup6o7-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-5fcle84e3-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-28T11:49:50.536Z",
+  "checkedAt": "2026-10-28T12:37:29.568Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
-  "runtimeSourceCommit": "69da38635e3a67d8a1ab9e69d2f07e7061637ff6",
+  "runtimeSourceCommit": "ca91469fb334bb0fea821050648481dca51829c3",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
     "branch": "main"
   },
   "verification": {
-    "unitTests": 73,
+    "unitTests": 80,
     "typecheck": true,
     "productionBuild": true,
     "localBuildWorkers": 2,
     "localPlaywright": {
-      "startTime": "2026-10-27T13:55:36.556Z",
-      "duration": 311689.518,
-      "expected": 135,
+      "startTime": "2026-10-28T12:17:01.306Z",
+      "duration": 283133.552,
+      "expected": 145,
       "skipped": 7,
       "unexpected": 0,
       "flaky": 0
     },
     "livePlaywright": {
-      "scope": "14 font/keyboard, 4 continuity, 6 navigation, 22 reader, 14 speech continuity, 4 device backup, 20 auto-scroll cases: 84 selected hosted cases, not the full local 142-case suite",
-      "startTime": "2026-10-27T14:04:59.510Z",
-      "duration": 406097.712,
-      "expected": 83,
-      "skipped": 1,
+      "scope": "88 selected hosted cases: footnotes, continuity, speech continuity, reader convenience, late fonts/keyboard, reader reliability, reader and navigation. Not the full local 152-case suite.",
+      "startTime": "2026-10-28T12:25:40.493Z",
+      "duration": 325986.59,
+      "expected": 86,
+      "skipped": 2,
       "unexpected": 0,
       "flaky": 0
     },
-    "fontNetworkQA": {
-      "local": "verification/font-key-qa-local.json",
-      "live": "verification/font-key-qa-live.json",
+    "sourceSurvey": {
+      "editions": 41,
+      "editionsWithInlineReferences": 40,
+      "references": 776,
+      "allTextUnchanged": true
+    },
+    "visualQA": {
+      "local": "verification/footnote-qa-local.json",
+      "live": "verification/footnote-qa-live.json",
       "combinations": 4,
-      "allLatestOffsetsRemainVisible": true
+      "settledOpacityCheckedOnLive": true,
+      "longPreviewScrollCheckedOnLive": true,
+      "doublePageCheckedOnLiveDesktop": true
     },
     "navigation": {
       "base": "https://truyen-ky-man-luc.vercel.app",
@@ -63,7 +71,7 @@
         {
           "label": "Chương sau",
           "target": "Chương 2:",
-          "ms": 16,
+          "ms": 14,
           "serverRequests": 0
         },
         {
@@ -74,20 +82,19 @@
         }
       ],
       "initialNavigation": {
-        "transferBytes": 173756,
-        "decodedBytes": 554281
+        "transferBytes": 173654,
+        "decodedBytes": 554305
       },
-      "checkedAt": "2026-10-28T11:49:03.334Z"
-    },
-    "keyboardCalibration": "verification/keyboard-calibration.json"
+      "checkedAt": "2026-10-28T12:35:49.761Z"
+    }
   },
   "limitations": [
-    "Font-network and mobile viewport tests are Chromium simulations; no physical Android/iOS or browser chrome shortcut activation was checked.",
-    "Hosted suite selected 84 affected cases; full local suite had 142. Native speech is mocked, not assessed by ear.",
-    "No book content, admin, schema, permissions or dependencies changed. Later proof commits only update verification documents."
+    "Native speech/viewport tests are simulations, not physical Android/iOS or audible voice validation.",
+    "English chapter 2 has endnotes but no inline numbered references; the source was not edited to invent associations.",
+    "Stored HTML, book revisions, permissions, schema, PDF pages and dependencies are unchanged. Later handoff commits only update proof documents."
   ],
   "previousDeployment": {
-    "id": "dpl_GR76YBjbPNzbftqbmtsaawbVhbbJ",
-    "runtimeSourceCommit": "c10b63d78f3a03fc7f97489ecea6aaae912ad102"
+    "id": "dpl_GEVrVw9Mu3mSosAcUFuAVYcZuBsP",
+    "runtimeSourceCommit": "69da38635e3a67d8a1ab9e69d2f07e7061637ff6"
   }
 }

@@ -8,6 +8,7 @@
       "revision": 3,
       "references": 4,
       "targets": 4,
+      "longestPreviewChars": 495,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -16,6 +17,7 @@
       "revision": 1,
       "references": 41,
       "targets": 41,
+      "longestPreviewChars": 459,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -24,6 +26,7 @@
       "revision": 1,
       "references": 41,
       "targets": 41,
+      "longestPreviewChars": 722,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -32,6 +35,7 @@
       "revision": 3,
       "references": 15,
       "targets": 15,
+      "longestPreviewChars": 847,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -40,6 +44,7 @@
       "revision": 1,
       "references": 0,
       "targets": 0,
+      "longestPreviewChars": 0,
       "textAndOffsetsUnchanged": true,
       "notice": "No matched inline numbered reference in source; do not invent one."
     },
@@ -49,6 +54,7 @@
       "revision": 1,
       "references": 9,
       "targets": 9,
+      "longestPreviewChars": 484,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -57,6 +63,7 @@
       "revision": 1,
       "references": 9,
       "targets": 9,
+      "longestPreviewChars": 694,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -65,6 +72,7 @@
       "revision": 1,
       "references": 14,
       "targets": 14,
+      "longestPreviewChars": 689,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -73,6 +81,7 @@
       "revision": 1,
       "references": 14,
       "targets": 14,
+      "longestPreviewChars": 984,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -81,6 +90,7 @@
       "revision": 1,
       "references": 16,
       "targets": 16,
+      "longestPreviewChars": 914,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -89,6 +99,7 @@
       "revision": 1,
       "references": 17,
       "targets": 17,
+      "longestPreviewChars": 1314,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -97,6 +108,7 @@
       "revision": 1,
       "references": 9,
       "targets": 9,
+      "longestPreviewChars": 607,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -105,6 +117,7 @@
       "revision": 1,
       "references": 9,
       "targets": 9,
+      "longestPreviewChars": 898,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -113,6 +126,7 @@
       "revision": 1,
       "references": 21,
       "targets": 21,
+      "longestPreviewChars": 320,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -121,6 +135,7 @@
       "revision": 1,
       "references": 21,
       "targets": 21,
+      "longestPreviewChars": 447,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -129,6 +144,7 @@
       "revision": 1,
       "references": 4,
       "targets": 4,
+      "longestPreviewChars": 211,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -137,6 +153,7 @@
       "revision": 1,
       "references": 4,
       "targets": 4,
+      "longestPreviewChars": 340,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -145,6 +162,7 @@
       "revision": 1,
       "references": 33,
       "targets": 30,
+      "longestPreviewChars": 582,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -153,6 +171,7 @@
       "revision": 1,
       "references": 31,
       "targets": 31,
+      "longestPreviewChars": 845,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -161,6 +180,7 @@
       "revision": 1,
       "references": 12,
       "targets": 12,
+      "longestPreviewChars": 332,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -169,6 +189,7 @@
       "revision": 1,
       "references": 12,
       "targets": 12,
+      "longestPreviewChars": 627,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -177,6 +198,7 @@
       "revision": 1,
       "references": 22,
       "targets": 22,
+      "longestPreviewChars": 1053,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -185,6 +207,7 @@
       "revision": 1,
       "references": 23,
       "targets": 23,
+      "longestPreviewChars": 1436,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -193,6 +216,7 @@
       "revision": 1,
       "references": 16,
       "targets": 16,
+      "longestPreviewChars": 465,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -201,6 +225,7 @@
       "revision": 1,
       "references": 16,
       "targets": 16,
+      "longestPreviewChars": 917,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -209,6 +234,7 @@
       "revision": 1,
       "references": 19,
       "targets": 19,
+      "longestPreviewChars": 940,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -217,6 +243,7 @@
       "revision": 1,
       "references": 20,
       "targets": 20,
+      "longestPreviewChars": 1454,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -225,6 +252,7 @@
       "revision": 1,
       "references": 43,
       "targets": 42,
+      "longestPreviewChars": 787,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -233,6 +261,7 @@
       "revision": 1,
       "references": 43,
       "targets": 43,
+      "longestPreviewChars": 764,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -241,6 +270,7 @@
       "revision": 1,
       "references": 10,
       "targets": 10,
+      "longestPreviewChars": 217,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -249,6 +279,7 @@
       "revision": 1,
       "references": 10,
       "targets": 10,
+      "longestPreviewChars": 336,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -257,6 +288,7 @@
       "revision": 1,
       "references": 27,
       "targets": 27,
+      "longestPreviewChars": 674,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -265,6 +297,7 @@
       "revision": 1,
       "references": 28,
       "targets": 28,
+      "longestPreviewChars": 1063,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -273,6 +306,7 @@
       "revision": 1,
       "references": 8,
       "targets": 8,
+      "longestPreviewChars": 435,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -281,6 +315,7 @@
       "revision": 1,
       "references": 8,
       "targets": 8,
+      "longestPreviewChars": 560,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -289,6 +324,7 @@
       "revision": 1,
       "references": 36,
       "targets": 36,
+      "longestPreviewChars": 536,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -297,6 +333,7 @@
       "revision": 1,
       "references": 36,
       "targets": 36,
+      "longestPreviewChars": 803,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -305,6 +342,7 @@
       "revision": 1,
       "references": 25,
       "targets": 25,
+      "longestPreviewChars": 391,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -313,6 +351,7 @@
       "revision": 1,
       "references": 25,
       "targets": 25,
+      "longestPreviewChars": 594,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -321,6 +360,7 @@
       "revision": 1,
       "references": 13,
       "targets": 12,
+      "longestPreviewChars": 572,
       "textAndOffsetsUnchanged": true
     },
     {
@@ -329,6 +369,7 @@
       "revision": 1,
       "references": 12,
       "targets": 12,
+      "longestPreviewChars": 900,
       "textAndOffsetsUnchanged": true
     }
   ]
