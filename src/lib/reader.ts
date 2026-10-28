@@ -116,6 +116,7 @@ export function normalizeSettings(
   settings: Partial<ReaderSettings>,
 ): ReaderSettings {
   const value = { ...defaultSettings, ...settings };
+  if (!["ebook", "book"].includes(value.layout)) value.layout = "ebook";
   const clamp = (n: number, min: number, max: number, fallback: number) =>
     Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : fallback;
   value.fontSize = clamp(value.fontSize, 14, 36, 20);

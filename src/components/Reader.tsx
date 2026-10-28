@@ -16,6 +16,8 @@ import {
   Menu,
   ChevronLeft,
   ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
   BookOpen,
   Bookmark,
   BookmarkPlus,
@@ -37,6 +39,7 @@ import {
   Trash2,
   ImageIcon,
   Download,
+  FileText,
   ExternalLink,
 } from "lucide-react";
 import type {
@@ -92,6 +95,7 @@ import PdfViewer from "./PdfViewer";
 import { useSpeech } from "./useSpeech";
 import type { ReaderBackup } from "../lib/reader-backup";
 import { decorateFootnotes } from "../lib/footnotes";
+import { BookFlip } from "../lib/book-flip";
 
 type Selection = {
   start: number;
@@ -170,6 +174,20 @@ export default function Reader({
   const [pdfRenderedPage, setPdfRenderedPage] = useState(0);
   const [layoutVersion, setLayoutVersion] = useState(0);
   const [deviceVersion, setDeviceVersion] = useState(0);
+  const [bookWide, setBookWide] = useState(false),
+    [leaves, setLeaves] = useState(1);
+  const bookPaper = useRef<HTMLDivElement>(null),
+    physicalFlip = useRef<BookFlip | null>(null),
+    ebookSidebar = useRef<boolean | null>(null);
+  const turnRef = useRef<(direction: number) => void>(() => {});
+  const pendingBookEdge = useRef<{
+    id: string;
+    locale: Locale;
+    edge: "start" | "end";
+  } | null>(null);
+  const swipeStart = useRef<{ x: number; y: number; time: number } | null>(
+    null,
+  );
   const scrollRef = useRef<HTMLDivElement>(null),
     windowRef = useRef<HTMLDivElement>(null),
     contentRef = useRef<HTMLElement>(null),
@@ -182,6 +200,7 @@ export default function Reader({
   const reflowPage = useRef<{ page: number; pages: number } | null>(null);
   const fontSettling = useRef(false);
   const anchorRef = useRef<number | undefined>(undefined),
+    layoutAnchor = useRef<number | undefined>(undefined),
     pendingAnchor = useRef<number | undefined>(undefined),
     lastLayout = useRef(""),
     lastAnchorTime = useRef(0);
@@ -323,12 +342,51 @@ export default function Reader({
   );
   const theme = readerPalette(settings);
   const isPdf = edition?.kind === "pdf";
+  const bookLayout = settings.layout === "book" && !!edition && !isPdf;
   useLayoutEffect(() => {
     if (!isPdf && contentRef.current)
       decorateFootnotes(contentRef.current, locale, chapterId);
-  }, [edition, isPdf, locale, chapterId]);
-  const paged = settings.mode !== "scroll" && !isPdf;
-  const double = settings.mode === "double" && !mobile;
+  }, [edition, isPdf, locale, chapterId, bookLayout]);
+  const paged = (bookLayout || settings.mode !== "scroll") && !isPdf;
+  const double = bookLayout ? bookWide : settings.mode === "double" && !mobile;
+  useLayoutEffect(() => {
+    if (bookLayout) setSidebar(false);
+  }, [bookLayout]);
+  useLayoutEffect(() => {
+    const node = scrollRef.current;
+    if (!bookLayout || !node) return;
+    const measure = () => setBookWide(node.clientWidth >= 900);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [bookLayout]);
+  useLayoutEffect(() => {
+    if (!bookLayout || settings.theme === "eink" || !bookPaper.current) return;
+    const flip = new BookFlip(bookPaper.current, double);
+    physicalFlip.current = flip;
+    return () => {
+      flip.dispose();
+      physicalFlip.current = null;
+    };
+  }, [
+    bookLayout,
+    double,
+    locale,
+    settings.font,
+    settings.fontSize,
+    settings.lineHeight,
+    settings.width,
+    settings.align,
+    settings.theme,
+    settings.background,
+    settings.foreground,
+    settings.accent,
+  ]);
+  useLayoutEffect(() => {
+    if (bookLayout && ready && restored.current)
+      physicalFlip.current?.commit(`${chapterId}:${page}`);
+  }, [bookLayout, chapterId, page, ready, layoutVersion]);
   function captureAnchor() {
     if (isPdf || !restored.current) return anchorRef.current;
     const root = contentRef.current,
@@ -348,6 +406,11 @@ export default function Reader({
       const translate =
         transform === "none" ? 0 : new DOMMatrixReadOnly(transform).m41;
       const total = countPages(contentRef.current.scrollWidth, width, 48);
+      setLeaves(
+        double
+          ? countPages(contentRef.current.scrollWidth, (width - 48) / 2, 48)
+          : total,
+      );
       const target = Math.max(
         0,
         Math.min(
@@ -387,6 +450,8 @@ export default function Reader({
     if (windowRef.current) windowRef.current.scrollLeft = 0;
     const total = revealRect(range.getBoundingClientRect(), center);
     anchorRef.current = at;
+    if (bookLayout || layoutAnchor.current !== undefined)
+      layoutAnchor.current = at;
     if (total !== undefined)
       reflowPage.current = { page: pageRef.current, pages: total };
   }
@@ -430,7 +495,7 @@ export default function Reader({
 
   useEffect(() => {
     document.documentElement.lang = locale;
-    setSidebar(window.innerWidth >= 1000);
+    setSidebar(settings.layout !== "book" && window.innerWidth >= 1000);
     const resize = () => setMobile(window.innerWidth < 760);
     resize();
     window.addEventListener("resize", resize);
@@ -438,9 +503,21 @@ export default function Reader({
   }, [locale]);
   useEffect(() => {
     let cancelled = false;
+    const boundary = pendingBookEdge.current;
+    pendingBookEdge.current = null;
+    const edgeProgress: Progress | undefined =
+      boundary?.id === chapterId && boundary.locale === locale
+        ? {
+            chapterId,
+            revision,
+            ratio: boundary.edge === "end" ? 1 : 0,
+            page: 0,
+          }
+        : undefined;
     restored.current = false;
-    initialProgress.current = undefined;
+    initialProgress.current = edgeProgress;
     anchorRef.current = undefined;
+    layoutAnchor.current = undefined;
     pendingAnchor.current = undefined;
     lastLayout.current = "";
     reflowPage.current = null;
@@ -460,7 +537,9 @@ export default function Reader({
       .then(([saved, progress, notes, heard]) => {
         if (cancelled) return;
         setSettings(normalizeSettings(saved ?? initialSettings));
-        const valid = progress?.revision === revision ? progress : undefined;
+        const valid =
+          edgeProgress ??
+          (progress?.revision === revision ? progress : undefined);
         initialProgress.current = valid;
         anchorRef.current = valid?.anchor;
         const pdf = { page: valid?.pdfPage ?? 1, zoom: valid?.pdfZoom ?? 1 };
@@ -532,12 +611,17 @@ export default function Reader({
             ratio: ratioRef.current,
             page: pageRef.current,
           };
-          pendingAnchor.current = anchorRef.current;
+          pendingAnchor.current = layoutAnchor.current ?? anchorRef.current;
           restored.current = false;
         }
         lastLayout.current = layout;
         setViewportWidth(width);
         setPages(total);
+        setLeaves(
+          double
+            ? countPages(content.scrollWidth, (width - 48) / 2, 48)
+            : total,
+        );
       }
       if (!restored.current) {
         const progress = initialProgress.current;
@@ -631,6 +715,7 @@ export default function Reader({
     locale,
     revision,
     settings.align,
+    bookLayout,
   ]);
   useLayoutEffect(() => {
     pageRef.current = page;
@@ -874,14 +959,12 @@ export default function Reader({
       )
         return;
       if (e.key === "ArrowRight" && paged) {
-        setAuto(false);
         e.preventDefault();
-        setPage((p) => Math.min(p + 1, pages - 1));
+        turnRef.current(1);
       }
       if (e.key === "ArrowLeft" && paged) {
-        setAuto(false);
         e.preventDefault();
-        setPage((p) => Math.max(p - 1, 0));
+        turnRef.current(-1);
       }
     };
     document.addEventListener("keydown", key);
@@ -901,6 +984,22 @@ export default function Reader({
       node.scrollTop / Math.max(1, node.scrollHeight - node.clientHeight);
     ratioRef.current = r;
     if (Math.round(ratio * 100) !== Math.round(r * 100)) setRatio(r);
+    if (layoutAnchor.current !== undefined && contentRef.current) {
+      const at = layoutAnchor.current,
+        rect = rangeFromOffsets(
+          contentRef.current,
+          at,
+          at + 1,
+        )?.getBoundingClientRect(),
+        viewport = node.getBoundingClientRect();
+      if (
+        !rect ||
+        rect.width <= 0 ||
+        rect.bottom <= viewport.top ||
+        rect.top >= viewport.bottom
+      )
+        layoutAnchor.current = undefined;
+    }
     if (
       fontSettling.current ||
       performance.now() - lastAnchorTime.current > 150
@@ -923,8 +1022,24 @@ export default function Reader({
     });
   }
   function updateSettings(value: ReaderSettings) {
+    physicalFlip.current?.cancel();
+    if (value.layout !== settings.layout) {
+      if (value.layout === "book") {
+        ebookSidebar.current = sidebar;
+        setSidebar(false);
+      } else if (ebookSidebar.current !== null)
+        setSidebar(ebookSidebar.current);
+    }
     if (
-      ["mode", "font", "fontSize", "lineHeight", "width", "align"].some(
+      [
+        "layout",
+        "mode",
+        "font",
+        "fontSize",
+        "lineHeight",
+        "width",
+        "align",
+      ].some(
         (k) =>
           value[k as keyof ReaderSettings] !==
           settings[k as keyof ReaderSettings],
@@ -936,7 +1051,27 @@ export default function Reader({
         ratio: ratioRef.current,
         page: pageRef.current,
       };
-      pendingAnchor.current = captureAnchor();
+      if (value.layout === settings.layout) layoutAnchor.current = undefined;
+      const semantic = layoutAnchor.current;
+      const range =
+        semantic !== undefined && contentRef.current
+          ? rangeFromOffsets(contentRef.current, semantic, semantic + 1)
+          : null;
+      const rect = range?.getBoundingClientRect(),
+        viewport = (
+          paged ? windowRef.current : scrollRef.current
+        )?.getBoundingClientRect();
+      const stillVisible =
+        rect &&
+        viewport &&
+        rect.width > 0 &&
+        rect.right > viewport.left &&
+        rect.left < viewport.right &&
+        rect.bottom > viewport.top &&
+        rect.top < viewport.bottom;
+      pendingAnchor.current = stillVisible ? semantic : captureAnchor();
+      if (value.layout !== settings.layout)
+        layoutAnchor.current = pendingAnchor.current;
       restored.current = false;
     }
     setSettings(normalizeSettings(value));
@@ -952,13 +1087,19 @@ export default function Reader({
   }
   function togglePanel(value: typeof panel) {
     if (value === "voice") speech.refreshVoices();
-    if (window.matchMedia("(max-width: 900px)").matches && panel !== value)
+    if (
+      (bookLayout || window.matchMedia("(max-width: 900px)").matches) &&
+      panel !== value
+    )
       setSidebar(false);
     setPanel(panel === value ? null : value);
     setSelection(null);
   }
   function toggleSidebar() {
-    if (!sidebar && window.matchMedia("(max-width: 900px)").matches)
+    if (
+      !sidebar &&
+      (bookLayout || window.matchMedia("(max-width: 900px)").matches)
+    )
       closePanel();
     setSidebar(!sidebar);
   }
@@ -970,13 +1111,18 @@ export default function Reader({
     narrow.addEventListener("change", resize);
     return () => narrow.removeEventListener("change", resize);
   }, [panel]);
-  function go(id: string) {
+  function go(id: string, edge?: "start" | "end") {
     if (
       restoringBackup.current ||
       id === chapterId ||
       !book.chapters.some((c) => c.id === id)
     )
       return;
+    if (bookLayout && edge)
+      physicalFlip.current?.begin(
+        book.chapters.findIndex((c) => c.id === id) > position ? 1 : -1,
+      );
+    pendingBookEdge.current = edge ? { id, locale, edge } : null;
     pendingNote.current = null;
     setPendingListening(null);
     pendingSearch.current = null;
@@ -997,11 +1143,35 @@ export default function Reader({
     void progressSaver.flush().catch(() => {});
     void listeningSaver.flush().catch(() => {});
     speech.stop();
-    if (mobile) setSidebar(false);
+    if (mobile || bookLayout) setSidebar(false);
     restored.current = false;
     setReady(false);
     // The published locale is already loaded; changing chapters needs no server round trip.
     window.history.pushState(null, "", `/${locale}/read/${id}`);
+  }
+  function turnPage(direction: number) {
+    if (!ready || !restored.current || restoringBackup.current) return;
+    setAuto(false);
+    layoutAnchor.current = undefined;
+    const target = pageRef.current + direction;
+    if (target >= 0 && target < pages) {
+      if (bookLayout) physicalFlip.current?.begin(direction);
+      pageRef.current = target;
+      setPage(target);
+    } else if (bookLayout) {
+      const neighbor = direction > 0 ? next : previous;
+      if (!neighbor) return;
+      go(neighbor.id, direction > 0 ? "start" : "end");
+    } else return;
+  }
+  turnRef.current = turnPage;
+  function jumpPage(target: number) {
+    if (!ready || !restored.current) return;
+    setAuto(false);
+    layoutAnchor.current = undefined;
+    physicalFlip.current?.begin(target >= page ? 1 : -1);
+    pageRef.current = target;
+    setPage(target);
   }
   function onChapterClick(event: MouseEvent<HTMLAnchorElement>, id: string) {
     if (
@@ -1430,8 +1600,10 @@ export default function Reader({
     readerFonts[0].family;
   return (
     <div
-      className={`reader-shell ${sidebar === null ? "sidebar-auto" : sidebar ? "sidebar-open" : ""} ${settings.theme === "eink" ? "eink" : ""}`}
+      className={`reader-shell ${sidebar === null ? "sidebar-auto" : sidebar ? "sidebar-open" : ""} ${settings.theme === "eink" ? "eink" : ""} ${bookLayout ? "reader-book" : ""}`}
       style={style}
+      data-layout={bookLayout ? "book" : "ebook"}
+      data-book-double={bookLayout && double}
       data-ready={ready && restored.current}
       aria-busy={!ready || !restored.current}
     >
@@ -1462,13 +1634,17 @@ export default function Reader({
             icon={ChevronLeft}
             label={L("Chương trước", "Previous chapter")}
             disabled={!previous}
-            onClick={() => previous && go(previous.id)}
+            onClick={() =>
+              previous && go(previous.id, bookLayout ? "start" : undefined)
+            }
           />
           <IconButton
             icon={ChevronRight}
             label={L("Chương sau", "Next chapter")}
             disabled={!next}
-            onClick={() => next && go(next.id)}
+            onClick={() =>
+              next && go(next.id, bookLayout ? "start" : undefined)
+            }
           />
           <span className="toolbar-divider" />
           <IconButton
@@ -1820,22 +1996,67 @@ export default function Reader({
           ref={scrollRef}
           onScroll={onScroll}
           onWheel={(e) => {
-            if (e.deltaY) setAuto(false);
+            if (e.deltaY) {
+              setAuto(false);
+              layoutAnchor.current = undefined;
+            }
           }}
-          onTouchMove={() => setAuto(false)}
+          onTouchMove={() => {
+            setAuto(false);
+            layoutAnchor.current = undefined;
+          }}
           onPointerDown={(e) => {
             setAuto(false);
+            physicalFlip.current?.cancel();
+            layoutAnchor.current = undefined;
+            swipeStart.current =
+              bookLayout &&
+              e.pointerType === "touch" &&
+              e.isPrimary &&
+              window.getSelection()?.isCollapsed !== false &&
+              !(e.target as Element).closest(
+                "a,button,input,select,textarea,img,[contenteditable]",
+              )
+                ? { x: e.clientX, y: e.clientY, time: e.timeStamp }
+                : null;
             if (!(e.target as HTMLElement).closest("a,img"))
               setActiveImage(null);
           }}
+          onPointerCancel={() => {
+            swipeStart.current = null;
+          }}
+          onPointerUp={(e) => {
+            const start = swipeStart.current;
+            swipeStart.current = null;
+            if (
+              !bookLayout ||
+              !start ||
+              window.getSelection()?.isCollapsed === false
+            )
+              return;
+            const dx = e.clientX - start.x,
+              dy = e.clientY - start.y;
+            if (
+              e.timeStamp - start.time < 700 &&
+              Math.abs(dx) > 64 &&
+              Math.abs(dx) > Math.abs(dy) * 2
+            ) {
+              e.preventDefault();
+              turnRef.current(dx < 0 ? 1 : -1);
+            }
+          }}
         >
           <div
+            ref={bookPaper}
             className="reader-document"
-            style={{
-              maxWidth: double
-                ? Math.min(settings.width * 1.6, 1280)
-                : settings.width,
-            }}
+            style={
+              {
+                "--book-max-width": `${double ? Math.min(settings.width * 1.6, 1280) : settings.width}px`,
+                maxWidth: double
+                  ? Math.min(settings.width * 1.6, 1280)
+                  : settings.width,
+              } as CSSProperties
+            }
           >
             {edition ? (
               <>
@@ -1889,10 +2110,63 @@ export default function Reader({
                         </p>
                       )
                     ) : (
-                      <div dangerouslySetInnerHTML={{ __html: edition.html }} />
+                      <>
+                        {bookLayout && (
+                          <div
+                            key="book-heading"
+                            className="book-chapter-heading"
+                            data-title={edition.title}
+                            aria-hidden="true"
+                          />
+                        )}
+                        <div
+                          key="chapter-content"
+                          className="chapter-content"
+                          dangerouslySetInnerHTML={{ __html: edition.html }}
+                        />
+                      </>
                     )}
                   </article>
                 </div>
+                {bookLayout && (
+                  <>
+                    {double && (
+                      <div className="book-spine" aria-hidden="true" />
+                    )}
+                    <div
+                      className="book-folio"
+                      aria-hidden="true"
+                      style={{
+                        gridTemplateColumns: double ? "1fr 1fr" : "1fr",
+                      }}
+                    >
+                      <span>{page * (double ? 2 : 1) + 1}</span>
+                      {double && page * 2 + 2 <= leaves && (
+                        <span>{page * 2 + 2}</span>
+                      )}
+                    </div>
+                    <IconButton
+                      className="icon-button book-edge book-edge-prev"
+                      icon={ChevronLeft}
+                      label={L("Trang sách trước", "Previous book page")}
+                      disabled={
+                        !ready || !restored.current || (page === 0 && !previous)
+                      }
+                      onClick={() => turnPage(-1)}
+                    />
+                    <IconButton
+                      className="icon-button book-edge book-edge-next"
+                      icon={ChevronRight}
+                      label={L("Trang sách sau", "Next book page")}
+                      disabled={
+                        !ready ||
+                        !restored.current ||
+                        (page >= pages - 1 && !next)
+                      }
+                      onClick={() => turnPage(1)}
+                    />
+                  </>
+                )}
                 {!paged && (
                   <div className="chapter-end">
                     <span aria-hidden="true">· · ·</span>
@@ -1945,27 +2219,75 @@ export default function Reader({
           </div>
         </div>
         <footer className="reading-progress">
-          <span>{book.meta[locale].title}</span>
+          {bookLayout ? (
+            <button
+              className="book-footer-action"
+              aria-label={L("Mục lục sách", "Book contents")}
+              aria-expanded={!!sidebar}
+              onClick={toggleSidebar}
+            >
+              <Menu size={18} />
+              <span>{L("Mục lục", "Contents")}</span>
+            </button>
+          ) : (
+            <span>{book.meta[locale].title}</span>
+          )}
           {paged ? (
             <div className="page-controls">
+              {bookLayout && (
+                <IconButton
+                  icon={ChevronsLeft}
+                  label={L("Đầu chương", "First page of chapter")}
+                  disabled={!ready || !restored.current || page === 0}
+                  onClick={() => jumpPage(0)}
+                />
+              )}
               <IconButton
                 icon={ChevronLeft}
                 label={L("Trang trước", "Previous page")}
-                disabled={!ready || !restored.current || page === 0}
-                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                disabled={
+                  !ready ||
+                  !restored.current ||
+                  (page === 0 && !(bookLayout && previous))
+                }
+                onClick={() => turnPage(-1)}
               />
-              <span>
-                {page + 1} / {pages}
+              <span aria-live={bookLayout ? "polite" : undefined}>
+                {bookLayout
+                  ? `${page * (double ? 2 : 1) + 1}${double && page * 2 + 2 <= leaves ? `–${page * 2 + 2}` : ""} / ${leaves}`
+                  : `${page + 1} / ${pages}`}
               </span>
               <IconButton
                 icon={ChevronRight}
                 label={L("Trang sau", "Next page")}
-                disabled={!ready || !restored.current || page >= pages - 1}
-                onClick={() => setPage((p) => Math.min(pages - 1, p + 1))}
+                disabled={
+                  !ready ||
+                  !restored.current ||
+                  (page >= pages - 1 && !(bookLayout && next))
+                }
+                onClick={() => turnPage(1)}
               />
+              {bookLayout && (
+                <IconButton
+                  icon={ChevronsRight}
+                  label={L("Cuối chương", "Last page of chapter")}
+                  disabled={!ready || !restored.current || page >= pages - 1}
+                  onClick={() => jumpPage(pages - 1)}
+                />
+              )}
             </div>
           ) : (
             <span>{Math.round(ratio * 100)}%</span>
+          )}
+          {bookLayout && (
+            <button
+              className="book-footer-action"
+              aria-label={L("Chuyển sang Ebook", "Switch to Ebook")}
+              onClick={() => updateSettings({ ...settings, layout: "ebook" })}
+            >
+              <FileText size={18} />
+              <span>Ebook</span>
+            </button>
           )}
           <div className="progress-track">
             <i style={{ width: `${ratio * 100}%` }} />

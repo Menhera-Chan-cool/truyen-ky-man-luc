@@ -8,6 +8,7 @@ import {
   Moon,
   Palette,
   BookOpen,
+  FileText,
   RotateCcw,
 } from "lucide-react";
 import { Panel } from "./Ui";
@@ -59,6 +60,37 @@ export default function ReaderSettingsPanel({
       onClose={onClose}
       closeLabel={L("Đóng", "Close")}
     >
+      {!isPdf && (
+        <div className="field-group">
+          <h3>{L("Giao diện đọc", "Reader layout")}</h3>
+          <div className="segmented">
+            {(
+              [
+                ["ebook", "Ebook", FileText],
+                ["book", L("Sách", "Book"), BookOpen],
+              ] as const
+            ).map(([id, label, Icon]) => (
+              <button
+                key={id}
+                className={settings.layout === id ? "selected" : ""}
+                aria-pressed={settings.layout === id}
+                onClick={() => update("layout", id)}
+              >
+                <Icon size={16} />
+                {label}
+              </button>
+            ))}
+          </div>
+          {settings.layout === "book" && (
+            <p className="tiny muted">
+              {L(
+                "Lật trang bằng mũi tên hoặc vuốt ngang. Chương mới luôn bắt đầu trên trang sách mới.",
+                "Turn pages with the arrows or a horizontal swipe. Each chapter starts on a new page.",
+              )}
+            </p>
+          )}
+        </div>
+      )}
       <div className="field-group">
         <h3>{L("Chủ đề & nền", "Theme & background")}</h3>
         <div className="theme-grid">
@@ -204,30 +236,39 @@ export default function ReaderSettingsPanel({
               })}
             </div>
           </div>
-          <div className="field-group">
-            <h3>{L("Chế độ đọc", "Reading mode")}</h3>
-            <div className="segmented">
-              {[
-                ["scroll", L("Cuộn", "Scroll")],
-                ["single", L("Trang đơn", "Single page")],
-                ["double", L("Trang đôi", "Double page")],
-              ].map(([id, label]) => (
-                <button
-                  key={id}
-                  className={settings.mode === id ? "selected" : ""}
-                  onClick={() => update("mode", id)}
-                >
-                  {label}
-                </button>
-              ))}
+          {settings.layout !== "book" ? (
+            <div className="field-group">
+              <h3>{L("Chế độ đọc", "Reading mode")}</h3>
+              <div className="segmented">
+                {[
+                  ["scroll", L("Cuộn", "Scroll")],
+                  ["single", L("Trang đơn", "Single page")],
+                  ["double", L("Trang đôi", "Double page")],
+                ].map(([id, label]) => (
+                  <button
+                    key={id}
+                    className={settings.mode === id ? "selected" : ""}
+                    onClick={() => update("mode", id)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <p className="tiny muted">
+                {L(
+                  "Điện thoại tự chuyển trang đôi thành trang đơn.",
+                  "Double-page mode becomes single-page on phones.",
+                )}
+              </p>
             </div>
+          ) : (
             <p className="tiny muted">
               {L(
-                "Điện thoại tự chuyển trang đôi thành trang đơn.",
-                "Double-page mode becomes single-page on phones.",
+                "Sách mở hai trang khi đủ rộng và một trang trên điện thoại. Cài đặt Ebook được giữ riêng.",
+                "Book shows two pages when space allows and one on phones. Your Ebook reading mode is preserved.",
               )}
             </p>
-          </div>
+          )}
         </>
       )}
       <button

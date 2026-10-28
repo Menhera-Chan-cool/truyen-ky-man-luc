@@ -70,6 +70,7 @@ export type ListeningProgress = {
   pdfPage?: number;
 };
 export type ReaderSettings = {
+  layout: "ebook" | "book";
   theme: string;
   font: string;
   fontSize: number;
@@ -86,6 +87,7 @@ export type ReaderSettings = {
   scrollSpeed: number;
 };
 export const defaultSettings: ReaderSettings = {
+  layout: "ebook",
   theme: "sepia",
   font: "Literata",
   fontSize: 20,
