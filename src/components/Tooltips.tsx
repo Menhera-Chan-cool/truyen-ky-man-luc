@@ -1,11 +1,13 @@
 "use client";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 
 export default function Tooltips() {
+  const tooltipId = useId();
   const [tip, setTip] = useState<{
     label: string;
     x: number;
     y: number;
+    footnote: boolean;
   } | null>(null);
   const bubble = useRef<HTMLDivElement>(null),
     anchor = useRef<HTMLElement | null>(null);
@@ -32,6 +34,15 @@ export default function Tooltips() {
     if (!tip || !bubble.current || !anchor.current) return;
     const rect = anchor.current.getBoundingClientRect(),
       box = bubble.current.getBoundingClientRect();
+    const theme = getComputedStyle(anchor.current);
+    bubble.current.style.setProperty(
+      "--note-bg",
+      theme.getPropertyValue("--reader-bg"),
+    );
+    bubble.current.style.setProperty(
+      "--note-fg",
+      theme.getPropertyValue("--reader-fg"),
+    );
     bubble.current.style.left =
       Math.max(
         8 + box.width / 2,
@@ -52,6 +63,8 @@ export default function Tooltips() {
     };
     const dismiss = () => {
       clear();
+      if (anchor.current?.getAttribute("aria-describedby") === tooltipId)
+        anchor.current.removeAttribute("aria-describedby");
       anchor.current = null;
       setTip(null);
     };
@@ -66,20 +79,38 @@ export default function Tooltips() {
       if (anchor.current === element) return;
       const display = () => {
         const rect = element.getBoundingClientRect();
+        if (anchor.current?.getAttribute("aria-describedby") === tooltipId)
+          anchor.current.removeAttribute("aria-describedby");
         anchor.current = element;
+        if (element.dataset.footnote)
+          element.setAttribute("aria-describedby", tooltipId);
         setTip({
           label: element.dataset.tooltip!,
           x: rect.left + rect.width / 2,
           y: rect.bottom + 8,
+          footnote: element.dataset.footnote === "true",
         });
       };
       if (anchor.current || immediate) display();
       else opening = setTimeout(display, 160);
     };
     const over = (e: PointerEvent) => {
+      if (e.target instanceof Node && bubble.current?.contains(e.target)) {
+        clearTimeout(closing);
+        return;
+      }
       if (e.pointerType !== "touch") show(e.target);
     };
     const out = (e: PointerEvent) => {
+      if (
+        e.relatedTarget instanceof Node &&
+        bubble.current?.contains(e.relatedTarget)
+      )
+        return;
+      if (e.target instanceof Node && bubble.current?.contains(e.target)) {
+        closing = setTimeout(dismiss, 80);
+        return;
+      }
       const from =
         e.target instanceof Element ? e.target.closest("[data-tooltip]") : null;
       const to =
@@ -100,7 +131,11 @@ export default function Tooltips() {
     };
     const key = (e: KeyboardEvent) => {
       touch = false;
-      if (e.key === "Escape") dismiss();
+      if (["Escape", "ArrowLeft", "ArrowRight"].includes(e.key)) dismiss();
+    };
+    const scroll = (e: Event) => {
+      if (!(e.target instanceof Node && bubble.current?.contains(e.target)))
+        dismiss();
     };
     document.addEventListener("pointerover", over);
     document.addEventListener("pointerout", out);
@@ -108,7 +143,7 @@ export default function Tooltips() {
     document.addEventListener("focusout", dismiss);
     document.addEventListener("pointerdown", down);
     document.addEventListener("keydown", key);
-    window.addEventListener("scroll", dismiss, true);
+    window.addEventListener("scroll", scroll, true);
     window.addEventListener("resize", dismiss);
     return () => {
       clear();
@@ -118,15 +153,16 @@ export default function Tooltips() {
       document.removeEventListener("focusout", dismiss);
       document.removeEventListener("pointerdown", down);
       document.removeEventListener("keydown", key);
-      window.removeEventListener("scroll", dismiss, true);
+      window.removeEventListener("scroll", scroll, true);
       window.removeEventListener("resize", dismiss);
     };
-  }, []);
+  }, [tooltipId]);
   return tip ? (
     <div
       ref={bubble}
+      id={tooltipId}
       role="tooltip"
-      className="app-tooltip"
+      className={`app-tooltip${tip.footnote ? " footnote-tooltip" : ""}`}
       style={{ left: tip.x, top: tip.y }}
     >
       {tip.label}

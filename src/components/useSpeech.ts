@@ -8,6 +8,7 @@ import {
 } from "react";
 import { rangeFromOffsets, speechSegments, speechText } from "../lib/reader";
 import type { Locale } from "../lib/types";
+import { footnoteSpeechText } from "../lib/footnotes";
 type Segment = { text: string; offset?: number; plain?: boolean };
 function segments(
   root: HTMLElement | null,
@@ -46,6 +47,7 @@ function segments(
     total += node.textContent?.length ?? 0;
   }
   const selector = "h2,h3,p,li:not(:has(p)),figcaption";
+  const spoken = footnoteSpeechText(root);
   const from = start ?? 0,
     to = text === undefined ? total : from + text.length;
   for (const el of root.querySelectorAll(selector)) {
@@ -55,12 +57,12 @@ function segments(
       .nextNode();
     if (!first) continue;
     const offset = positions.get(first) ?? 0,
-      value = el.textContent ?? "";
+      value = spoken.slice(offset, offset + (el.textContent?.length ?? 0));
     const a = Math.max(0, from - offset),
       b = Math.min(value.length, to - offset);
     if (a < b) append(value.slice(a, b), offset + a);
   }
-  if (!result.length && text) append(text, start);
+  if (!result.length && text) append(spoken.slice(from, to), start);
   return result;
 }
 export function useSpeech(

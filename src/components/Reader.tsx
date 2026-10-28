@@ -91,6 +91,7 @@ import Soundscape from "./Soundscape";
 import PdfViewer from "./PdfViewer";
 import { useSpeech } from "./useSpeech";
 import type { ReaderBackup } from "../lib/reader-backup";
+import { decorateFootnotes } from "../lib/footnotes";
 
 type Selection = {
   start: number;
@@ -322,6 +323,10 @@ export default function Reader({
   );
   const theme = readerPalette(settings);
   const isPdf = edition?.kind === "pdf";
+  useLayoutEffect(() => {
+    if (!isPdf && contentRef.current)
+      decorateFootnotes(contentRef.current, locale, chapterId);
+  }, [edition, isPdf, locale, chapterId]);
   const paged = settings.mode !== "scroll" && !isPdf;
   const double = settings.mode === "double" && !mobile;
   function captureAnchor() {
@@ -416,6 +421,8 @@ export default function Reader({
     "--reader-bg": theme.background,
     "--reader-fg": theme.foreground,
     "--reader-accent": theme.accent,
+    "--footnote-link":
+      contrastText(theme.background) === "#ffffff" ? "#8ab4f8" : "#3366cc",
     "--button-ink": contrastText(theme.accent),
     colorScheme:
       contrastText(theme.background) === "#ffffff" ? "dark" : "light",

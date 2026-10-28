@@ -1,0 +1,1570 @@
+{
+  "clientDate": "2026-10-28",
+  "base": "http://127.0.0.1:3001",
+  "unit": {
+    "passed": 80,
+    "files": 17
+  },
+  "typecheck": "passed",
+  "productionBuild": "passed, two local workers",
+  "red": {
+    "unit": "4 expected failing assertions with stub, plus specific joined-heading and legacy-tail regressions",
+    "browser": "5 initial cases fail on previous production; two additional page-arrow preview dismissal cases fail before final handler fix"
+  },
+  "initialFull": {
+    "stats": {
+      "startTime": "2026-10-28T12:09:14.021Z",
+      "duration": 284697.072,
+      "expected": 143,
+      "skipped": 7,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "checks": [
+      {
+        "title": "stop invalidates pending preset playback and repeated starts",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stop invalidates pending preset playback and repeated starts",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, scroll)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, single)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, scroll)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, single)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops after a long RAF gap even without a visibility event",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the position after hidden/pagehide and restarts only on request",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, scroll)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, single)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, scroll)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, single)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops after a long RAF gap even without a visibility event",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the position after hidden/pagehide and restarts only on request",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the visible text anchor after font and mode reflow",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "opens a bookmark in another chapter at its saved passage on the first click",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the visible text anchor after font and mode reflow",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "opens a bookmark in another chapter at its saved passage on the first click",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "exports and restores notes, settings and current progress on a fresh device",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "rejects invalid files and atomically rolls back an interrupted restore",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "exports and restores notes, settings and current progress on a fresh device",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "rejects invalid files and atomically rolls back an interrupted restore",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the latest reading position while a font is delayed (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "leaves browser modifiers alone and keeps plain page arrows (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the latest reading position while a font is delayed (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "leaves browser modifiers alone and keeps plain page arrows (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "late fonts preserve manual scroll position",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "obsolete font callbacks do not restore the previous chapter",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "failed font requests leave a usable fallback reader",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the latest reading position while a font is delayed (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "leaves browser modifiers alone and keeps plain page arrows (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the latest reading position while a font is delayed (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "leaves browser modifiers alone and keeps plain page arrows (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "late fonts preserve manual scroll position",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "obsolete font callbacks do not restore the previous chapter",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "failed font requests leave a usable fallback reader",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "previews and navigates footnotes in scroll and paged reading (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "speech skips inline reference digits while retaining source offsets (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "previews and navigates footnotes in scroll and paged reading (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "speech skips inline reference digits while retaining source offsets (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "links alternate and legacy Vietnamese endnotes without rewriting the text",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "previews and navigates footnotes in scroll and paged reading (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "speech skips inline reference digits while retaining source offsets (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "previews and navigates footnotes in scroll and paged reading (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "speech skips inline reference digits while retaining source offsets (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "links alternate and legacy Vietnamese endnotes without rewriting the text",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "changes chapters without waiting for the network and preserves browser history",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "uses the same fast navigation for chapter-end links and the table of contents",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "restores each chapter's scroll position during next, previous and browser Back",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "changes chapters without waiting for the network and preserves browser history",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "uses the same fast navigation for chapter-end links and the table of contents",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "restores each chapter's scroll position during next, previous and browser Back",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the production sign-in bundle below 400 KB compressed",
+        "project": "desktop",
+        "status": "skipped"
+      },
+      {
+        "title": "coalesces scroll writes and flushes exact progress on navigation",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "flushes pending scroll progress when the page is leaving",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps desktop sidebar geometry before JavaScript runs",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "retains dark appearance across book, locale and reader navigation",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the production sign-in bundle below 400 KB compressed",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "coalesces scroll writes and flushes exact progress on navigation",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "flushes pending scroll progress when the page is leaving",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps desktop sidebar geometry before JavaScript runs",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "retains dark appearance across book, locale and reader navigation",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "shows a shared smooth tooltip without the browser title popup",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shows compact dark custom colors with live hexadecimal values",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "loads additional fonts and retains the selected font after reload",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shows a shared smooth tooltip without the browser title popup",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "shows compact dark custom colors with live hexadecimal values",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "loads additional fonts and retains the selected font after reload",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "reveals the active chapter and dismisses input layers with Escape",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "updates a visible tooltip when its anchor label changes",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "finds and opens a passage in another chapter (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "finds and opens a passage in another chapter (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "resumes listening independently after reload and chapter changes (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "resumes listening independently after reload and chapter changes (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "refuses a saved position from a changed edition and never autoplays",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "reveals the active chapter and dismisses input layers with Escape",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "updates a visible tooltip when its anchor label changes",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "finds and opens a passage in another chapter (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "finds and opens a passage in another chapter (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "resumes listening independently after reload and chapter changes (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "resumes listening independently after reload and chapter changes (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "refuses a saved position from a changed edition and never autoplays",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps footnote links, return links and browser history in the paged reader state",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps a draft note while interacting inside the popup and dismisses it outside",
+        "project": "desktop",
+        "status": "unexpected"
+      },
+      {
+        "title": "keeps footnote links, return links and browser history in the paged reader state",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps a draft note while interacting inside the popup and dismisses it outside",
+        "project": "mobile",
+        "status": "unexpected"
+      },
+      {
+        "title": "places author attribution below the book title",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "provides at least 40px phone targets for book and reader controls",
+        "project": "desktop",
+        "status": "skipped"
+      },
+      {
+        "title": "returns the correct HTML language before JavaScript runs",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "opens directly on the book and switches the complete edition",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "retains chapter identity when switching languages",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "reports missing English preface without leaking Vietnamese content",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "persists reader settings and progress on the device",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "protects the editor and rejects anonymous API writes",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "saves a selected passage and note through a reload without changing its anchor",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "paginates and adapts double-page reading to the viewport",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "plays ambient noise and starts and stops auto-scroll",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "places author attribution below the book title",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "provides at least 40px phone targets for book and reader controls",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "returns the correct HTML language before JavaScript runs",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "opens directly on the book and switches the complete edition",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "retains chapter identity when switching languages",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "reports missing English preface without leaking Vietnamese content",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "persists reader settings and progress on the device",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "protects the editor and rejects anonymous API writes",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "saves a selected passage and note through a reload without changing its anchor",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "paginates and adapts double-page reading to the viewport",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "plays ambient noise and starts and stops auto-scroll",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps phone panels and contents mutually accessible (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "yields on first search and reuses the prepared snapshot (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "clears only obsolete search highlights when a query changes (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps phone panels and contents mutually accessible (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "yields on first search and reuses the prepared snapshot (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "clears only obsolete search highlights when a query changes (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "recovers from a failed index build without leaving the reader",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "matches the 900px overlay boundary and handles resize",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps phone panels and contents mutually accessible (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "yields on first search and reuses the prepared snapshot (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "clears only obsolete search highlights when a query changes (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps phone panels and contents mutually accessible (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "yields on first search and reuses the prepared snapshot (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "clears only obsolete search highlights when a query changes (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "recovers from a failed index build without leaving the reader",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "matches the 900px overlay boundary and handles resize",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "ignores late callbacks from a completed chunk while the next chunk is playing",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "continues the current spoken segment when changing rate and voice",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "moves the paged reader through its page state while speech advances",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "ignores late callbacks from a completed chunk while the next chunk is playing",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "continues the current spoken segment when changing rate and voice",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "moves the paged reader through its page state while speech advances",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "counts all twenty tales even when one locale is missing a translation",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "explains an empty voice list and refreshes late Android voices with the selected rate",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "updates a single English voice when the browser announces more voices",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "counts all twenty tales even when one locale is missing a translation",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "explains an empty voice list and refreshes late Android voices with the selected rate",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "updates a single English voice when the browser announces more voices",
+        "project": "mobile",
+        "status": "expected"
+      }
+    ]
+  },
+  "initialFailureReason": "Both draft-note tests assumed the first text node was >=35 chars; note reference splits it at 27. Updated fixture selects exactly the same offsets across text nodes, preserving all popup assertions. Final runtime also dismisses previews on page-arrow keys.",
+  "finalFull": {
+    "stats": {
+      "startTime": "2026-10-28T12:17:01.306Z",
+      "duration": 283133.552,
+      "expected": 145,
+      "skipped": 7,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "checks": [
+      {
+        "title": "stop invalidates pending preset playback and repeated starts",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stop invalidates pending preset playback and repeated starts",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, scroll)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, single)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, scroll)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, single)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "stops after a long RAF gap even without a visibility event",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the position after hidden/pagehide and restarts only on request",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, scroll)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (vi, single)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "names the auto-scroll speed and keeps keyboard adjustment (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops for manual reading gestures but allows speed changes (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, scroll)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops on freeze and stays stopped on resume (en, single)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "stops after a long RAF gap even without a visibility event",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the position after hidden/pagehide and restarts only on request",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the visible text anchor after font and mode reflow",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "opens a bookmark in another chapter at its saved passage on the first click",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the visible text anchor after font and mode reflow",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "opens a bookmark in another chapter at its saved passage on the first click",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "exports and restores notes, settings and current progress on a fresh device",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "rejects invalid files and atomically rolls back an interrupted restore",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "exports and restores notes, settings and current progress on a fresh device",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "rejects invalid files and atomically rolls back an interrupted restore",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the latest reading position while a font is delayed (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "leaves browser modifiers alone and keeps plain page arrows (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the latest reading position while a font is delayed (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "leaves browser modifiers alone and keeps plain page arrows (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "late fonts preserve manual scroll position",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "obsolete font callbacks do not restore the previous chapter",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "failed font requests leave a usable fallback reader",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the latest reading position while a font is delayed (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "leaves browser modifiers alone and keeps plain page arrows (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the latest reading position while a font is delayed (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "leaves browser modifiers alone and keeps plain page arrows (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "late fonts preserve manual scroll position",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "obsolete font callbacks do not restore the previous chapter",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "failed font requests leave a usable fallback reader",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "previews and navigates footnotes in scroll and paged reading (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "speech skips inline reference digits while retaining source offsets (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "previews and navigates footnotes in scroll and paged reading (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "speech skips inline reference digits while retaining source offsets (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "links alternate and legacy Vietnamese endnotes without rewriting the text",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "previews and navigates footnotes in scroll and paged reading (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "speech skips inline reference digits while retaining source offsets (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "previews and navigates footnotes in scroll and paged reading (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "speech skips inline reference digits while retaining source offsets (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "links alternate and legacy Vietnamese endnotes without rewriting the text",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "changes chapters without waiting for the network and preserves browser history",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "uses the same fast navigation for chapter-end links and the table of contents",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "restores each chapter's scroll position during next, previous and browser Back",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "changes chapters without waiting for the network and preserves browser history",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "uses the same fast navigation for chapter-end links and the table of contents",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "restores each chapter's scroll position during next, previous and browser Back",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the production sign-in bundle below 400 KB compressed",
+        "project": "desktop",
+        "status": "skipped"
+      },
+      {
+        "title": "coalesces scroll writes and flushes exact progress on navigation",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "flushes pending scroll progress when the page is leaving",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps desktop sidebar geometry before JavaScript runs",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "retains dark appearance across book, locale and reader navigation",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps the production sign-in bundle below 400 KB compressed",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "coalesces scroll writes and flushes exact progress on navigation",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "flushes pending scroll progress when the page is leaving",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps desktop sidebar geometry before JavaScript runs",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "retains dark appearance across book, locale and reader navigation",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "shows a shared smooth tooltip without the browser title popup",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shows compact dark custom colors with live hexadecimal values",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "loads additional fonts and retains the selected font after reload",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shows a shared smooth tooltip without the browser title popup",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "shows compact dark custom colors with live hexadecimal values",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "loads additional fonts and retains the selected font after reload",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "reveals the active chapter and dismisses input layers with Escape",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "updates a visible tooltip when its anchor label changes",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "finds and opens a passage in another chapter (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "finds and opens a passage in another chapter (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "resumes listening independently after reload and chapter changes (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "resumes listening independently after reload and chapter changes (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "refuses a saved position from a changed edition and never autoplays",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "reveals the active chapter and dismisses input layers with Escape",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "updates a visible tooltip when its anchor label changes",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "finds and opens a passage in another chapter (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "finds and opens a passage in another chapter (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "resumes listening independently after reload and chapter changes (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "resumes listening independently after reload and chapter changes (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "refuses a saved position from a changed edition and never autoplays",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps footnote links, return links and browser history in the paged reader state",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps a draft note while interacting inside the popup and dismisses it outside",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps footnote links, return links and browser history in the paged reader state",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps a draft note while interacting inside the popup and dismisses it outside",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "places author attribution below the book title",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "provides at least 40px phone targets for book and reader controls",
+        "project": "desktop",
+        "status": "skipped"
+      },
+      {
+        "title": "returns the correct HTML language before JavaScript runs",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "opens directly on the book and switches the complete edition",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "retains chapter identity when switching languages",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "reports missing English preface without leaking Vietnamese content",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "persists reader settings and progress on the device",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "protects the editor and rejects anonymous API writes",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "saves a selected passage and note through a reload without changing its anchor",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "paginates and adapts double-page reading to the viewport",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "plays ambient noise and starts and stops auto-scroll",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "places author attribution below the book title",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "provides at least 40px phone targets for book and reader controls",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "returns the correct HTML language before JavaScript runs",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "opens directly on the book and switches the complete edition",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "retains chapter identity when switching languages",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "reports missing English preface without leaking Vietnamese content",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "persists reader settings and progress on the device",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "protects the editor and rejects anonymous API writes",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "saves a selected passage and note through a reload without changing its anchor",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "paginates and adapts double-page reading to the viewport",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "plays ambient noise and starts and stops auto-scroll",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps phone panels and contents mutually accessible (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "yields on first search and reuses the prepared snapshot (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "clears only obsolete search highlights when a query changes (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps phone panels and contents mutually accessible (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "yields on first search and reuses the prepared snapshot (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "clears only obsolete search highlights when a query changes (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "recovers from a failed index build without leaving the reader",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "matches the 900px overlay boundary and handles resize",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "keeps phone panels and contents mutually accessible (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "yields on first search and reuses the prepared snapshot (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "clears only obsolete search highlights when a query changes (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "keeps phone panels and contents mutually accessible (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "yields on first search and reuses the prepared snapshot (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "clears only obsolete search highlights when a query changes (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "recovers from a failed index build without leaving the reader",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "matches the 900px overlay boundary and handles resize",
+        "project": "mobile",
+        "status": "skipped"
+      },
+      {
+        "title": "ignores late callbacks from a completed chunk while the next chunk is playing",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (vi)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (en)",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "continues the current spoken segment when changing rate and voice",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "moves the paged reader through its page state while speech advances",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "ignores late callbacks from a completed chunk while the next chunk is playing",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "pauses an interrupted session and resumes with current settings (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (vi)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "shortens punctuation pauses without moving the resume offset (en)",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "continues the current spoken segment when changing rate and voice",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "moves the paged reader through its page state while speech advances",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "counts all twenty tales even when one locale is missing a translation",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "explains an empty voice list and refreshes late Android voices with the selected rate",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "updates a single English voice when the browser announces more voices",
+        "project": "desktop",
+        "status": "expected"
+      },
+      {
+        "title": "counts all twenty tales even when one locale is missing a translation",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "explains an empty voice list and refreshes late Android voices with the selected rate",
+        "project": "mobile",
+        "status": "expected"
+      },
+      {
+        "title": "updates a single English voice when the browser announces more voices",
+        "project": "mobile",
+        "status": "expected"
+      }
+    ]
+  },
+  "sourceSurvey": {
+    "editions": 41,
+    "editionsWithInlineReferences": 40,
+    "references": 776,
+    "allTextUnchanged": true
+  },
+  "limitations": [
+    "Chromium viewport/network/native speech mocks, not physical devices or audible voice assessment.",
+    "Local QA screenshots were captured without awaiting finite tooltip animation; final hosted QA waits opacity=1.",
+    "English chapter 2 source has no inline numbered references; notes were not attached to guessed words. PDF pages unchanged."
+  ]
+}

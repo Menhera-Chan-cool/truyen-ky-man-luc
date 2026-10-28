@@ -70,6 +70,8 @@ Trình đọc nạp sẵn nội dung đã xuất bản của ngôn ngữ đang c
 
 Trình đọc đo trang bằng phông dự phòng ngay khi cần, không chờ tải phông xong. Nếu phông đến muộn, vị trí văn bản mới nhất sau các lần lật trang/cuộn được giữ khi dàn trang lại; số trang có thể đổi theo phông. Mũi tên đơn lật trang, các tổ hợp Alt/Ctrl/Meta/Shift và IME được nhường cho trình duyệt hoặc chọn chữ.
 
+Các số dẫn `(1)` có mục giải thích tương ứng dưới **Chú thích / Notes** hiện thành số nhỏ màu xanh phía trên dòng. Rê chuột hoặc focus để xem trước, bấm/chạm để đến cuối chương; Back quay lại chỗ đang đọc. Viết nội dung như `Tên nhân vật (1)` và phần cuối như `Chú thích:` rồi một đoạn riêng `(1) Nội dung giải thích`. Giọng đọc bỏ riêng ký hiệu dẫn trong thân bài; chữ gốc, bản sửa và offset ghi chú không đổi. Nếu bản nguồn không có số dẫn thì không tự đoán chỗ chèn; riêng nhãn bị mất đã xác định ở chương 3/14 VI được phục hồi ở lớp hiển thị. PDF nguyên trang giữ nguyên.
+
 Giọng đọc dùng Web Speech API, phụ thuộc giọng mà trình duyệt/hệ điều hành cung cấp. Một số giọng “online” của thiết bị có thể dùng dịch vụ hệ điều hành; web không có API TTS riêng. Nhiễu trắng/hồng/nâu và tiếng mưa được tạo tại thiết bị bằng Web Audio. File âm thanh riêng không được tải lên server.
 
 Trong **Giọng đọc & tốc độ**, **Ngắt nghỉ ngắn** mặc định bật: gộp các câu ngắn vào cùng lượt đọc và làm nhẹ dấu `. : ; …`/gạch ngang trong bản chữ gửi cho giọng đọc. Nội dung sách, ghi chú và vị trí từ vẫn giữ nguyên; số thập phân, giờ và các viết tắt thông dụng được bảo vệ. Tắt tùy chọn để dùng nhịp gốc. Không đặt được thời lượng nghỉ chính xác bằng Web Speech; mức nghỉ thực tế tùy giọng/thiết bị. Cài đặt lưu trên thiết bị và bản sao JSON cũ vẫn nhập được.

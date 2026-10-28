@@ -750,6 +750,28 @@ svg {
 .prose sup {
   font-size: 0.7em;
 }
+.prose a.footnote-ref {
+  color: var(--footnote-link, #3366cc);
+  vertical-align: super;
+  font-size: 0.7em;
+  line-height: 1;
+  text-decoration: none;
+  padding-inline: 0.1em;
+}
+.prose .footnote-ref:hover,
+.prose .footnote-ref:focus-visible {
+  text-decoration: underline;
+}
+.prose .footnote-paren {
+  font-size: 0;
+}
+.prose .footnote-legacy::before {
+  content: "(" attr(data-footnote-number) ") ";
+}
+.prose sup:has(.footnote-ref) {
+  font-size: inherit;
+  vertical-align: baseline;
+}
 .prose img {
   display: block;
   max-width: 100%;
@@ -1084,6 +1106,23 @@ svg {
   to {
     opacity: 1;
   }
+}
+.app-tooltip.footnote-tooltip {
+  pointer-events: auto;
+  width: 360px;
+  max-width: calc(100vw - 24px);
+  max-height: min(360px, calc(100dvh - 32px));
+  overflow-y: auto;
+  background: var(--note-bg, #f5f0e5);
+  color: var(--note-fg, #302b23);
+  border-color: color-mix(in srgb, currentColor 30%, transparent);
+  padding: 14px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  transition: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .app-tooltip {

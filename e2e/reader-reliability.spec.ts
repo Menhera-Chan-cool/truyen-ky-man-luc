@@ -102,10 +102,21 @@ test("keeps a draft note while interacting inside the popup and dismisses it out
     const p = [...root.querySelectorAll("p")].find(
         (p) => (p.textContent?.length ?? 0) > 80,
       )!,
-      n = document.createTreeWalker(p, NodeFilter.SHOW_TEXT).nextNode()!,
+      walk = document.createTreeWalker(p, NodeFilter.SHOW_TEXT),
+      n = walk.nextNode()!,
       r = document.createRange();
     r.setStart(n, 2);
-    r.setEnd(n, 35);
+    let end = 35,
+      node = n;
+    while (end > (node.textContent?.length ?? 0)) {
+      end -= node.textContent?.length ?? 0;
+      node = walk.nextNode()!;
+    }
+    r.setEnd(node, end);
+    if (r.toString() !== p.textContent!.slice(2, 35))
+      throw Error(
+        "Selection must retain its exact passage across inline nodes",
+      );
     window.getSelection()!.removeAllRanges();
     window.getSelection()!.addRange(r);
     document.dispatchEvent(new Event("selectionchange"));

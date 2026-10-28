@@ -1,0 +1,335 @@
+{
+  "clientDate": "2026-10-28",
+  "source": "Read-only snapshot of published Supabase get_public_book; no writes",
+  "results": [
+    {
+      "id": "preface",
+      "locale": "vi",
+      "revision": 3,
+      "references": 4,
+      "targets": 4,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-1",
+      "locale": "vi",
+      "revision": 1,
+      "references": 41,
+      "targets": 41,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-1",
+      "locale": "en",
+      "revision": 1,
+      "references": 41,
+      "targets": 41,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-2",
+      "locale": "vi",
+      "revision": 3,
+      "references": 15,
+      "targets": 15,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-2",
+      "locale": "en",
+      "revision": 1,
+      "references": 0,
+      "targets": 0,
+      "textAndOffsetsUnchanged": true,
+      "notice": "No matched inline numbered reference in source; do not invent one."
+    },
+    {
+      "id": "chapter-3",
+      "locale": "vi",
+      "revision": 1,
+      "references": 9,
+      "targets": 9,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-3",
+      "locale": "en",
+      "revision": 1,
+      "references": 9,
+      "targets": 9,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-4",
+      "locale": "vi",
+      "revision": 1,
+      "references": 14,
+      "targets": 14,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-4",
+      "locale": "en",
+      "revision": 1,
+      "references": 14,
+      "targets": 14,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-5",
+      "locale": "vi",
+      "revision": 1,
+      "references": 16,
+      "targets": 16,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-5",
+      "locale": "en",
+      "revision": 1,
+      "references": 17,
+      "targets": 17,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-6",
+      "locale": "vi",
+      "revision": 1,
+      "references": 9,
+      "targets": 9,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-6",
+      "locale": "en",
+      "revision": 1,
+      "references": 9,
+      "targets": 9,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-7",
+      "locale": "vi",
+      "revision": 1,
+      "references": 21,
+      "targets": 21,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-7",
+      "locale": "en",
+      "revision": 1,
+      "references": 21,
+      "targets": 21,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-8",
+      "locale": "vi",
+      "revision": 1,
+      "references": 4,
+      "targets": 4,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-8",
+      "locale": "en",
+      "revision": 1,
+      "references": 4,
+      "targets": 4,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-9",
+      "locale": "vi",
+      "revision": 1,
+      "references": 33,
+      "targets": 30,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-9",
+      "locale": "en",
+      "revision": 1,
+      "references": 31,
+      "targets": 31,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-10",
+      "locale": "vi",
+      "revision": 1,
+      "references": 12,
+      "targets": 12,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-10",
+      "locale": "en",
+      "revision": 1,
+      "references": 12,
+      "targets": 12,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-11",
+      "locale": "vi",
+      "revision": 1,
+      "references": 22,
+      "targets": 22,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-11",
+      "locale": "en",
+      "revision": 1,
+      "references": 23,
+      "targets": 23,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-12",
+      "locale": "vi",
+      "revision": 1,
+      "references": 16,
+      "targets": 16,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-12",
+      "locale": "en",
+      "revision": 1,
+      "references": 16,
+      "targets": 16,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-13",
+      "locale": "vi",
+      "revision": 1,
+      "references": 19,
+      "targets": 19,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-13",
+      "locale": "en",
+      "revision": 1,
+      "references": 20,
+      "targets": 20,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-14",
+      "locale": "vi",
+      "revision": 1,
+      "references": 43,
+      "targets": 42,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-14",
+      "locale": "en",
+      "revision": 1,
+      "references": 43,
+      "targets": 43,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-15",
+      "locale": "vi",
+      "revision": 1,
+      "references": 10,
+      "targets": 10,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-15",
+      "locale": "en",
+      "revision": 1,
+      "references": 10,
+      "targets": 10,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-16",
+      "locale": "vi",
+      "revision": 1,
+      "references": 27,
+      "targets": 27,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-16",
+      "locale": "en",
+      "revision": 1,
+      "references": 28,
+      "targets": 28,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-17",
+      "locale": "vi",
+      "revision": 1,
+      "references": 8,
+      "targets": 8,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-17",
+      "locale": "en",
+      "revision": 1,
+      "references": 8,
+      "targets": 8,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-18",
+      "locale": "vi",
+      "revision": 1,
+      "references": 36,
+      "targets": 36,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-18",
+      "locale": "en",
+      "revision": 1,
+      "references": 36,
+      "targets": 36,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-19",
+      "locale": "vi",
+      "revision": 1,
+      "references": 25,
+      "targets": 25,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-19",
+      "locale": "en",
+      "revision": 1,
+      "references": 25,
+      "targets": 25,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-20",
+      "locale": "vi",
+      "revision": 1,
+      "references": 13,
+      "targets": 12,
+      "textAndOffsetsUnchanged": true
+    },
+    {
+      "id": "chapter-20",
+      "locale": "en",
+      "revision": 1,
+      "references": 12,
+      "targets": 12,
+      "textAndOffsetsUnchanged": true
+    }
+  ]
+}

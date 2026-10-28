@@ -33,6 +33,8 @@ colors:
   custom-colors-paper: "#181b2c"
   custom-colors-rule: "#34394d"
   custom-colors-ink: "#aeb7cf"
+  footnote-link-light: "#3366cc"
+  footnote-link-dark: "#8ab4f8"
   tooltip-paper: "#22242e"
   tooltip-rule: "#454955"
   tooltip-ink: "#f1f2f6"
@@ -258,3 +260,7 @@ Buttons transition background and color over 150ms. There is no implemented pape
 - **Don't** shrink reading text to fit a viewport or screenshot.
 - **Don't** claim a paper-fade animation that the code does not implement.
 - **Don't** infer hosted authentication, storage, or publishing verification from the locked admin screen.
+
+### Footnotes — user refinement 28/10/2026
+
+Inline note references use blue superscript digits (0.7em, line-height 1), #3366cc on light paper and #8ab4f8 on dark paper. This requested citation color is an exception to the vermilion control palette. Parentheses remain in DOM text for stable anchors and are visually zero-sized. Legacy missing endnote labels use generated content without changing stored text. The hover/focus preview reuses the tooltip surface with reader paper/ink, 360px width, 14px/1.65 text, internal scrolling and hoverable pointer handling. Clicking/tapping follows existing fragment navigation, focus and Back; Escape/scroll dismisses the preview.
