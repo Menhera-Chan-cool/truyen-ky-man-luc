@@ -1,0 +1,196 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "clientDate": "2026-10-28",
+  "kind": "live",
+  "limitations": "Chromium viewport and network simulation; browser chrome accelerators and physical mobile devices not tested.",
+  "results": [
+    {
+      "device": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "locale": "vi",
+      "pending": {
+        "ready": "true",
+        "fontStatus": "loading",
+        "requests": 3
+      },
+      "latest": {
+        "offset": 6164,
+        "text": "xây cung ở bên sông, mở đường ở ven núi, đắp nền cho cao bằng những hờ"
+      },
+      "beforePage": "8 / 19",
+      "after": {
+        "offset": 6149,
+        "text": "thì không thế, xây cung ở bên sông, mở đường ở ven núi, đắp nền cho ca"
+      },
+      "afterPage": "8 / 19",
+      "latestTextStillVisible": true,
+      "modifiedKeys": [
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "device": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "locale": "en",
+      "pending": {
+        "ready": "true",
+        "fontStatus": "loading",
+        "requests": 1
+      },
+      "latest": {
+        "offset": 6346,
+        "text": "without cause, a vicious tyranny most extreme. Judging by Your Majesty"
+      },
+      "beforePage": "7 / 23",
+      "after": {
+        "offset": 5994,
+        "text": "virtue. The execution of Song Yi (26), a mighty general, showed an utt"
+      },
+      "afterPage": "7 / 24",
+      "latestTextStillVisible": true,
+      "modifiedKeys": [
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 664
+      },
+      "locale": "vi",
+      "pending": {
+        "ready": "true",
+        "fontStatus": "loading",
+        "requests": 3
+      },
+      "latest": {
+        "offset": 1761,
+        "text": "là đem quàng cho ta một cái tước vị hão, để đền bù lại sự hổ thẹn khi "
+      },
+      "beforePage": "8 / 60",
+      "after": {
+        "offset": 1668,
+        "text": "đường một vị bá vương ở nước Sở, lại tự cam nhận lễ Lỗ công hay sao? K"
+      },
+      "afterPage": "8 / 62",
+      "latestTextStillVisible": true,
+      "modifiedKeys": [
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "device": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 664
+      },
+      "locale": "en",
+      "pending": {
+        "ready": "true",
+        "fontStatus": "loading",
+        "requests": 1
+      },
+      "latest": {
+        "offset": 1991,
+        "text": "chose to die in shame by his own hand. How could We, a dignified Hegem"
+      },
+      "beforePage": "8 / 84",
+      "after": {
+        "offset": 1967,
+        "text": "titles from the Han and chose to die in shame by his own hand. How cou"
+      },
+      "afterPage": "8 / 88",
+      "latestTextStillVisible": true,
+      "modifiedKeys": [
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        },
+        {
+          "key": "ArrowRight",
+          "prevented": false
+        }
+      ],
+      "pageErrors": []
+    }
+  ]
+}

@@ -1,6 +1,18 @@
 # Bằng chứng kiểm chứng — cập nhật 27/10/2026
 
-## Tự cuộn an toàn và nhãn tốc độ — release hiện tại
+## Phông đến muộn và phím trình duyệt — release hiện tại
+
+Production `dpl_GEVrVw9Mu3mSosAcUFuAVYcZuBsP`, runtime source `69da38635e3a67d8a1ab9e69d2f07e7061637ff6`; alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY và đúng source. Hai mục được duyệt trong `tasks/font-and-keyboard.md` đã hoàn tất. Các mục dưới đây là lịch sử release trước.
+
+- **73 unit đạt**, typecheck và production build đạt. Toàn bộ local **142 ca: 135 đạt / 7 skip theo điều kiện**, 0 fail/flaky. Trên Vercel chọn **84 ca liên quan: 83 đạt / 1 skip hover tooltip trên mobile**, 0 fail/flaky/retry. Phạm vi gồm font/keyboard, continuity, navigation, reader, speech continuity, device backup và auto-scroll; không gọi đây là full suite trên cloud. Xem `verification/font-key-local.json`, `verification/font-key-live.json`.
+- Layout fallback được đo ngay, không đợi fonts.load/fonts.ready và không đặt timeout tùy ý. Khi phông ổn định, reflow lấy neo văn bản mới nhất. Neo được giữ riêng qua lần reveal/reflow; thao tác lật trang được chụp trước paint và cuộn được theo dõi khi font đang tải. Kiểm thử còn giữ nguyên vị trí sau reload, font lỗi, chuyển chương khi callback phông cũ chưa hoàn tất, mode/font reflow và mở ghi chú liên chương.
+- QA local và live mỗi batch **VI/EN × desktop 1440×900 / viewport 390×664**. Giữ 1–3 request WOFF2; Reader vẫn ready=true khi fonts.status=loading, lật tiếp 5 trang rồi thả font: **cả 4 neo mới nhất vẫn nhìn thấy**. Chấp nhận tổng/số trang đổi theo typography, kiểm tra Range UTF-16 thay vì so số trang cứng. Không page error. Xem `verification/font-key-qa-local.json`, `verification/font-key-qa-live.json`; đã xem ảnh VI phone và EN desktop sau tải font trong cả hai batch.
+- Alt/Ctrl/Meta/Shift/IME không đổi trang hoặc bị preventDefault; mũi tên đơn vẫn lật trang/dừng auto, input/dialog giữ hành vi hiện có. **Hiệu chuẩn:** trên trang data URL không có app handler, headless Chrome cũng không kích hoạt Alt+Back/Forward của browser chrome. Do đó kiểm thử riêng hợp đồng event không bị chặn và page.goBack/goForward đồng bộ URL/chương; không tự bắt Alt để điều hướng thay browser, không tuyên bố đã thử native browser accelerator. Xem `verification/keyboard-calibration.json` và ghi chú đính chính trong OPTIMIZATION_REVIEW_7.md.
+- Chuyển chương production: **19 / 14 / 16 / 15 ms, 0 request chuyển chương** ở bốn mẫu lab; xem `verification/font-key-navigation-live.json`. Đây không phải số INP người dùng thực. Chỉ Reader, tests và tài liệu đổi; không sửa dữ liệu sách, draft, quyền, schema hoặc dependency. Repo xác nhận PRIVATE, nguồn kiểm tra không có khóa/thư mời. Runtime giữ nguyên sau deployment; commit bàn giao sau chỉ cập nhật bằng chứng.
+
+Chưa kiểm tra điện thoại Android/iOS vật lý, browser chrome shortcut thật, freeze/resume của OS hoặc âm thanh bằng tai. Các bài speech/lifecycle dùng mock có giới hạn; kiểm chứng editor/Auth/Storage/PDF thật ở mục lịch sử không được coi là đã chạy lại đầy đủ lần này.
+
+## Tự cuộn an toàn và nhãn tốc độ — release trước
 
 Production `dpl_GR76YBjbPNzbftqbmtsaawbVhbbJ`, runtime source `c10b63d78f3a03fc7f97489ecea6aaae912ad102`; alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY và đúng source. Đã triển khai phạm vi `tasks/auto-scroll-safety.md`. Các mục bên dưới là lịch sử release trước.
 
