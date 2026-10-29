@@ -9,3 +9,5 @@ Phone Book footer hides after 3 seconds idle with a short exit; its space stays 
 Implementation: Reader.tsx gesture/lifecycle and footer state; book-flip.ts interactive rendering; globals.css edge affordance/footer animation; e2e/book-gestures.spec.ts. No new dependency, storage schema, backend or content change.
 
 Verify red tests, typecheck, unit/build, Book and continuity/footnote/navigation regressions desktop/phone; batched visual inspection plus final live confirmation. Push existing private GitHub and deploy existing production alias. Native physical touch/browser-edge gestures and device FPS must remain explicit limitations.
+
+Verified 29/10/2026: 82 unit, typecheck/build; broad local 172 pass/10 skip before last focus/touch fixes; final exact code local and production Book/gestures 27 pass/3 device skips. Production dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy / ded3627c69ce4fddbdb32ba1be9f58b76ca40c46. VI/EN desktop/phone held folds, unchanged paper geometry, settled visible footer, no page errors. Private source pushed; no server book/content/schema/account change. Physical device/FPS limits remain.

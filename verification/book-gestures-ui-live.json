@@ -1,0 +1,100 @@
+{
+  "clientDate": "2026-10-29",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-29T10:41:58.920Z",
+  "limitations": "Chromium simulated viewport and CDP touch; physical devices and FPS not measured.",
+  "results": [
+    {
+      "locale": "vi",
+      "device": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "paper": {
+        "x": 189.375,
+        "y": 84,
+        "width": 1061.265625,
+        "height": 737
+      },
+      "heldFold": {
+        "clips": 2,
+        "shadows": 2
+      },
+      "folioAfterTurn": 3,
+      "noPaperReflow": true,
+      "footerTransitionSettled": null,
+      "oneLiveProse": 1,
+      "pageErrors": []
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "paper": {
+        "x": 189.375,
+        "y": 84,
+        "width": 1061.265625,
+        "height": 737
+      },
+      "heldFold": {
+        "clips": 2,
+        "shadows": 2
+      },
+      "folioAfterTurn": 3,
+      "noPaperReflow": true,
+      "footerTransitionSettled": null,
+      "oneLiveProse": 1,
+      "pageErrors": []
+    },
+    {
+      "locale": "vi",
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "paper": {
+        "x": 12,
+        "y": 186.328125,
+        "width": 366,
+        "height": 508.328125
+      },
+      "heldFold": {
+        "clips": 2,
+        "shadows": 2
+      },
+      "folioAfterTurn": 2,
+      "noPaperReflow": true,
+      "footerTransitionSettled": true,
+      "oneLiveProse": 1,
+      "pageErrors": []
+    },
+    {
+      "locale": "en",
+      "device": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "paper": {
+        "x": 12,
+        "y": 186.328125,
+        "width": 366,
+        "height": 508.328125
+      },
+      "heldFold": {
+        "clips": 2,
+        "shadows": 2
+      },
+      "folioAfterTurn": 2,
+      "noPaperReflow": true,
+      "footerTransitionSettled": true,
+      "oneLiveProse": 1,
+      "pageErrors": []
+    }
+  ]
+}

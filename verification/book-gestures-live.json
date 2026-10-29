@@ -1,0 +1,29 @@
+{
+  "clientDate": "2026-10-29",
+  "deploymentId": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
+  "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-29T10:43:31.594Z",
+  "scope": "All 30 Book presentation and direct gesture cases on the final runtime; 27 pass and three device-specific skips. Earlier 60-case cloud run on cf4bb9e is recorded separately, not claimed as final code.",
+  "stats": {
+    "startTime": "2026-10-29T10:39:44.912Z",
+    "duration": 75212.913,
+    "expected": 27,
+    "skipped": 3,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "visual": {
+    "path": "verification/book-gestures-ui-live.json",
+    "combinations": 4,
+    "realClippedFaces": 2,
+    "shadows": 2,
+    "noPaperReflow": true,
+    "footerTransitionSettled": true,
+    "pageErrors": []
+  },
+  "limitations": [
+    "Chromium mouse, viewport and native CDP touch simulation; no physical Android/iOS or FPS measurement",
+    "Speech assertions use mocked native speech events"
+  ]
+}

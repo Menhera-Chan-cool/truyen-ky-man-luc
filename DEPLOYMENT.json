@@ -1,17 +1,17 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_Gfi4cRa3CKc3GpDrqzmo9k6YSKYD",
+  "deploymentId": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-e59s5kh4u-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-iv4vs2fmk-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-28T15:27:58.126Z",
+  "checkedAt": "2026-10-29T10:43:31.594Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
-  "runtimeSourceCommit": "b6c7d83eb888e55b85e067c706aeaf15997fd792",
+  "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
@@ -21,99 +21,65 @@
     "unitTests": 82,
     "typecheck": true,
     "productionBuild": true,
-    "localFullBeforeLastDrawerLine": {
-      "startTime": "2026-10-28T14:39:17.462Z",
-      "duration": 374763.445,
-      "expected": 161,
-      "skipped": 7,
+    "fullLocalBeforeFinalFocusAndTouchWake": {
+      "startTime": "2026-10-29T10:24:09.056Z",
+      "duration": 200871.779,
+      "expected": 172,
+      "skipped": 10,
       "unexpected": 0,
       "flaky": 0
     },
-    "finalBuildTargeted": {
-      "startTime": "2026-10-28T14:52:46.600Z",
-      "duration": 69997.35299999999,
-      "expected": 24,
-      "skipped": 0,
+    "finalLocalBookAndGestures": {
+      "startTime": "2026-10-29T10:36:43.449Z",
+      "duration": 53379.619,
+      "expected": 27,
+      "skipped": 3,
       "unexpected": 0,
       "flaky": 0
     },
-    "livePlaywright": {
-      "scope": "106 selected production cases: all 18 Book cases, continuity, reader, footnotes, late fonts/keyboard, navigation, speech continuity, device backup and reader convenience. Not a full 170-case final run.",
-      "startTime": "2026-10-28T15:11:28.069Z",
-      "duration": 406873.94,
-      "expected": 104,
-      "skipped": 2,
-      "unexpected": 0,
-      "flaky": 0
-    },
-    "stricterFoldConfirmation": {
-      "startTime": "2026-10-28T15:23:05.513Z",
-      "duration": 9168.965999999999,
-      "expected": 2,
-      "skipped": 0,
-      "unexpected": 0,
-      "flaky": 0
-    },
-    "visual": {
-      "local": "verification/book-ui-local.json",
-      "live": "verification/book-ui-live.json",
-      "combinations": 4,
-      "allTextUnchanged": true,
-      "liveProseRoots": 1,
-      "animationContextsDetached": true,
-      "physicalLeafRatio": 0.72,
-      "pageStateFrameMs": [
-        15,
-        18,
-        16,
-        22
+    "live": {
+      "clientDate": "2026-10-29",
+      "deploymentId": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
+      "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46",
+      "base": "https://truyen-ky-man-luc.vercel.app",
+      "checkedAt": "2026-10-29T10:43:31.594Z",
+      "scope": "All 30 Book presentation and direct gesture cases on the final runtime; 27 pass and three device-specific skips. Earlier 60-case cloud run on cf4bb9e is recorded separately, not claimed as final code.",
+      "stats": {
+        "startTime": "2026-10-29T10:39:44.912Z",
+        "duration": 75212.913,
+        "expected": 27,
+        "skipped": 3,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "visual": {
+        "path": "verification/book-gestures-ui-live.json",
+        "combinations": 4,
+        "realClippedFaces": 2,
+        "shadows": 2,
+        "noPaperReflow": true,
+        "footerTransitionSettled": true,
+        "pageErrors": []
+      },
+      "limitations": [
+        "Chromium mouse, viewport and native CDP touch simulation; no physical Android/iOS or FPS measurement",
+        "Speech assertions use mocked native speech events"
       ]
     },
-    "navigation": {
-      "base": "https://truyen-ky-man-luc.vercel.app",
-      "layout": "book",
-      "measurement": "Chapter title/state frame, not completion of the configured 450ms fold",
-      "samples": [
-        {
-          "label": "Chương sau",
-          "target": "Chương 2:",
-          "ms": 17,
-          "serverRequests": 0
-        },
-        {
-          "label": "Chương trước",
-          "target": "Chương 1:",
-          "ms": 27,
-          "serverRequests": 0
-        },
-        {
-          "label": "Chương sau",
-          "target": "Chương 2:",
-          "ms": 30,
-          "serverRequests": 0
-        },
-        {
-          "label": "Chương sau",
-          "target": "Chương 3:",
-          "ms": 25,
-          "serverRequests": 0
-        }
-      ],
-      "initialNavigation": {
-        "transferBytes": 173825,
-        "decodedBytes": 554697
-      },
-      "checkedAt": "2026-10-28T15:24:56.928Z"
-    }
+    "visual": "verification/book-gestures-ui-live.json"
   },
   "limitations": [
-    "Full local run was 168 cases before the final one-line Book drawer auto-close change; all 18 Book plus six navigation cases passed on the final build. Do not claim a full 170-case final run.",
-    "Physical Android/iOS gestures, field FPS and audible native speech were not checked.",
-    "PDF stays in its native page/zoom view; Ebook remains the default.",
-    "No source-book data, permissions, storage schema or account changes."
+    "Chromium mouse, viewport and native CDP touch simulation; no physical Android/iOS or FPS measurement",
+    "Speech assertions use mocked native speech events",
+    "The full 182-case run preceded final focus selection and touch wake fixes. The final exact code was rebuilt and passed all 30 Book/gesture cases locally and on production.",
+    "Ebook and PDF retain their existing chrome; no server book content, permissions, storage or schema changes."
   ],
   "previousDeployment": {
-    "id": "dpl_ET7H7yBf4rytqqUG7PPAvfzfMfwk",
-    "runtimeSourceCommit": "ca91469fb334bb0fea821050648481dca51829c3"
+    "id": "dpl_HMTyJvjq5DCPakjiBGTs6xPaGBLD",
+    "runtimeSourceCommit": "cf4bb9ee136a7da59662bbe20b5f73a8f8749f86"
+  },
+  "baseDeployment": {
+    "id": "dpl_Gfi4cRa3CKc3GpDrqzmo9k6YSKYD",
+    "runtimeSourceCommit": "b6c7d83eb888e55b85e067c706aeaf15997fd792"
   }
 }

@@ -1,6 +1,25 @@
-# Bằng chứng kiểm chứng — cập nhật 28/10/2026
+# Bằng chứng kiểm chứng — cập nhật 29/10/2026
 
-## Giao diện Sách và lật giấy — release hiện tại
+## Kéo mép giấy và thanh dưới tự ẩn — release hiện tại
+
+Production dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy, runtime ded3627c69ce4fddbdb32ba1be9f58b76ca40c46. Alias https://truyen-ky-man-luc.vercel.app đã được kiểm tra READY và đúng commit. Hoàn tất tasks/book-gestures.md. Các phần tiếp theo là lịch sử.
+
+- PC kéo hai mép giấy bằng chuột trái; điện thoại vuốt ngang. Nếp gấp thật theo độ kéo trong khi giữ, không đổi live text/tiến độ trước khi chốt; thả đủ xa lật một lần, kéo ngắn/hủy trả lại. Chuyển qua chương kế bắt đầu trên giấy mới. Giữ các guard chọn chữ, chú thích, ảnh, vuốt dọc, ngón thứ hai, Escape, blur/resize và giảm chuyển động.
+
+- Thanh dưới điện thoại tự ẩn sau 3 giây, giữ nguyên hàng grid. Chạm vùng trống hoặc mép dưới hiện lại; chữ/link/selection không làm bật nhầm. Điều khiển ẩn có inert; bàn phím đưa focus đến nút còn dùng được trên cả màn hình 360px, dùng preventScroll để giấy không dịch. Primary touch pointerup xử lý cả khi browser không phát click sau native swipe.
+
+- 82 unit đạt; typecheck và production build đạt. Full local 182 ca trước sửa focus và touch wake cuối: 172 đạt / 10 skip / 0 fail, flaky. Trên code cuối dựng lại đủ 30 ca Book và gesture: 27 đạt / 3 skip / 0 fail, flaky. Không gọi full 182 là kiểm tra trên dòng code cuối. Xem verification/book-gestures-local.json.
+
+- Trên URL production/code cuối: đủ 30 ca Book và gesture, 27 đạt / 3 skip theo thiết bị / 0 fail, flaky, retry. Ba skip là mouse PC ở project phone và hai ca phone ở project desktop. Lượt 60 ca trước sửa touch wake cuối đạt 57 / 3 skip; lịch sử đã ghi riêng. Xem verification/book-gestures-live.json.
+
+- Kiểm tra hình ảnh VI/EN cả desktop 1440x900 và phone 390x844: 2 mặt clip thật, 2 shadow trong khi giữ; một live prose; không lỗi trang; paper geometry không đổi sau lật hoặc ẩn/hiện; footer đã kết thúc transition và hiện đúng. Desktop paper 1061.27x737; phone 366x508.33 tại x=12, y=186.33. Xem verification/book-gestures-ui-live.json.
+
+- Giữ bằng chứng lỗi đầu: native touch chuyển implicit capture từ đoạn chữ sang desk phát lostpointercapture ở phần tử con; nay chỉ hủy khi chính desk mất capture. Visual audit đầu thấy focus trong footer đang transition làm ancestor scroll 29px, sửa preventScroll. Audit cloud còn thấy touchstart/up nhưng không click sau vuốt chéo, thêm regression pointerup không click và sửa touch wake. Fixture endnote chương 3 theo bản xuất bản Ban Cơ; unit vẫn kiểm tra đầy đủ legacy continuation Sái nữ, không sửa văn sách.
+
+- Repo vẫn PRIVATE; cấu hình bí mật/thư mời loại khỏi Git và source ZIP. Không thay nội dung sách, nháp, role, schema hoặc file gốc. Chỉ báo kết thúc sau kiểm tra URL và source deployment.
+
+Chưa thử Android/iOS vật lý, FPS thực địa hoặc giọng đọc bằng tai; native CDP touch và viewport Chromium không thay cho thử thiết bị thật.
+## Giao diện Sách và lật giấy — release trước
 
 Production dpl_Gfi4cRa3CKc3GpDrqzmo9k6YSKYD, runtime source b6c7d83eb888e55b85e067c706aeaf15997fd792; alias https://truyen-ky-man-luc.vercel.app đã xác nhận READY, đúng source. Hoàn tất tasks/book-layout.md và yêu cầu lật giấy thật theo mẫu Hanhtrangso. Các mục tiếp theo là lịch sử.
 
