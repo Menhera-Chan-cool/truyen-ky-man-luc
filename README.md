@@ -110,4 +110,9 @@ Không bao gồm: OCR, thư viện nhiều sách, tài khoản người đọc/�
 
 Tham khảo thao tác của [EPUB-Forge](https://github.com/AzenKain/EPUB-Forge) và [Novel-Hub](https://github.com/AzenKain/Novel-Hub). Hai repo được clone riêng trong `work/references`, không bundle backend/binary vào web. Xem [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-Trong chế độ **Sách**, PC cho giữ chuột trái ở mép giấy bên phải và kéo sang trái để tới trang sau; kéo mép trái sang phải để trở lại. Điện thoại vuốt ngang ngay trên trang giấy. Giấy chạy theo thao tác; thả khi kéo quá 64px sẽ lật một lần, kéo ngắn hoặc hủy sẽ trả giấy về. Chọn chữ ở giữa trang và thao tác trên chú thích/ảnh vẫn được giữ. Trên điện thoại, thanh dưới ẩn sau 3 giây không thao tác; chạm vùng giấy trống hoặc thanh nhỏ ở mép dưới để hiện lại. Thanh giữ nguyên khoảng trống khi ẩn để chữ không dồn trang; khi dùng bàn phím hoặc mở bảng điều khiển, nó vẫn hiện.
+Trong chế độ **Sách**, PC cho giữ chuột trái ở mép giấy bên phải và kéo sang trái để tới trang sau; kéo mép trái sang phải để trở lại. Điện thoại vuốt ngang ngay trên trang giấy. Giấy chạy theo thao tác; thả khi kéo đủ xa hoặc hất nhanh trên điện thoại sẽ lật một lần; kéo ngắn chậm hoặc hủy sẽ trả giấy về. Chọn chữ ở giữa trang và thao tác trên chú thích/ảnh vẫn được giữ. Trên điện thoại, thanh dưới ẩn sau 3 giây không thao tác; chạm vùng giấy trống hoặc thanh nhỏ ở mép dưới để hiện lại. Thanh giữ nguyên khoảng trống khi ẩn để chữ không dồn trang; khi dùng bàn phím hoặc mở bảng điều khiển, nó vẫn hiện.
+
+
+Trên điện thoại, mỗi lần thả vuốt hợp lệ được ghi nhận ngay; vuốt tiếp hoặc đảo chiều không chờ hiệu ứng trước chạy xong. Trong lúc chuyển chương, các lượt đã thả được xử lý theo đúng thứ tự. Mặt sau đang gấp dùng trang kế, không lặp lại mặt trước. Khi bật Giảm chuyển động hoặc hiệu ứng chưa sẵn sàng, vẫn đổi đúng trang.
+
+**Chú thích trên điện thoại:** chạm số nhỏ màu xanh để đọc thẻ chú thích ngay tại chỗ; không nhảy xuống cuối chương. Cuộn bên trong để đọc chú thích dài, bấm X, chạm ra ngoài hoặc Escape để đóng. PC vẫn rê chuột xem trước và bấm để tới chú thích ở cuối chương. Nội dung `(1)` trong editor và cách đánh số giữ nguyên.

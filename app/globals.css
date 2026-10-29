@@ -1456,6 +1456,26 @@ svg {
   overflow-wrap: anywhere;
   transition: none;
 }
+.footnote-tooltip.is-pinned {
+  padding-right: 52px;
+  overscroll-behavior: contain;
+}
+.footnote-preview-close {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 4px;
+  color: inherit;
+  background: transparent;
+}
+.footnote-preview-close:hover {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
 @media (prefers-reduced-motion: reduce) {
   .app-tooltip {
     transition: none;

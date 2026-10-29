@@ -10,6 +10,9 @@ type FlipInstance = {
   getRender(): {
     convertToGlobal(point: { x: number; y: number }): { x: number; y: number };
   };
+  getPage(index: number): {
+    getTemporaryCopy(): { getElement(): HTMLElement } | null;
+  };
 };
 type FlipWindow = Window & {
   St?: {
@@ -25,6 +28,7 @@ export class BookFlip {
   private frame: HTMLIFrameElement | null = null;
   private host: HTMLDivElement | null = null;
   private ready = false;
+  private styles: string | undefined;
   private disposed = false;
   private timer = 0;
   private finishFrame = 0;
@@ -35,6 +39,8 @@ export class BookFlip {
     originY: number;
     released?: boolean;
     settled?: boolean;
+    committed?: boolean;
+    targetStamp?: string;
     onTurn: () => void;
   } | null = null;
   private pending: {
@@ -73,6 +79,7 @@ export class BookFlip {
   };
   private hide = () => this.reset(false);
   private css() {
+    if (this.styles) return this.styles;
     let result = "";
     for (const sheet of document.styleSheets) {
       try {
@@ -92,10 +99,9 @@ export class BookFlip {
         /* Cross-origin optional styles are not needed for the self-hosted reader. */
       }
     }
-    return (
+    return (this.styles =
       result +
-      "\nhtml,body{margin:0!important;padding:0!important;background:transparent!important;overflow:hidden!important}.book-animation-stage{position:absolute;left:0;top:0}.book-animation-page{overflow:hidden}.reader-document{animation:none!important;box-shadow:none!important}"
-    );
+      "\nhtml,body{margin:0!important;padding:0!important;background:transparent!important;overflow:hidden!important}.book-animation-stage{position:absolute;left:0;top:0}.book-animation-page{overflow:hidden}.reader-document{animation:none!important;box-shadow:none!important}");
   }
   private warm() {
     if (
@@ -237,7 +243,14 @@ export class BookFlip {
   }
   commit(stamp: string) {
     if (this.drag) {
-      if (this.drag.settled || this.pending?.stamp !== stamp) this.reset(true);
+      if (
+        this.drag.settled ||
+        (!this.drag.committed && this.pending?.stamp !== stamp) ||
+        (this.drag.targetStamp && this.drag.targetStamp !== stamp)
+      )
+        this.reset(true);
+      else if (this.drag.committed && stamp !== this.pending?.stamp)
+        this.drag.targetStamp = stamp;
       return;
     }
     const pending = this.pending,
@@ -306,13 +319,19 @@ export class BookFlip {
   private foldDrag(x: number, y: number) {
     const flip = this.drag?.flip;
     if (flip)
-      flip.getFlipController().fold(flip.getRender().convertToGlobal({ x, y }));
+      flip.getFlipController().fold(
+        flip.getRender().convertToGlobal({
+          x,
+          y: Math.max(1, Math.min((this.pending?.height ?? y + 1) - 1, y)),
+        }),
+      );
   }
-  releaseDrag(commit: boolean) {
+  releaseDrag(commit: boolean, committed = false) {
     const drag = this.drag,
       pending = this.pending;
     if (!drag || !pending || drag.released !== undefined) return;
     drag.released = commit;
+    drag.committed = commit && committed;
     if (drag.flip) this.settleDrag();
   }
   private settleDrag() {
@@ -336,8 +355,11 @@ export class BookFlip {
       if (progress < 1) this.finishFrame = requestAnimationFrame(step);
       else if (drag.released) {
         drag.settled = true;
-        this.timer = window.setTimeout(() => this.reset(true), 1600);
-        drag.onTurn();
+        if (drag.committed) this.reset(true);
+        else {
+          this.timer = window.setTimeout(() => this.reset(true), 1600);
+          drag.onTurn();
+        }
       } else this.reset(true);
     };
     this.finishFrame = requestAnimationFrame(step);
@@ -375,6 +397,15 @@ export class BookFlip {
       pending.direction > 0
         ? [...oldFaces, ...newFaces]
         : [...newFaces, ...oldFaces];
+    const portraitBack = (flip: FlipInstance) => {
+      if (this.double || pending.direction < 0) return;
+      // Portrait mode clones the front for its folded reverse; give that copy the adjacent leaf.
+      const back = flip.getPage(0).getTemporaryCopy()?.getElement();
+      if (back)
+        back.replaceChildren(
+          ...[...newFaces[0].childNodes].map((node) => node.cloneNode(true)),
+        );
+    };
     stage.append(...pages);
     doc.body.append(stage);
     try {
@@ -410,10 +441,13 @@ export class BookFlip {
               x: pending.direction > 0 ? pending.width - 2 : 2,
               y: drag.originY,
             });
+            portraitBack(flip);
             this.foldDrag(leafWidth - drag.x, drag.originY + drag.y);
             if (drag.released !== undefined) this.settleDrag();
-          } else if (pending.direction > 0) flip.flipNext("bottom");
-          else flip.flipPrev("bottom");
+          } else if (pending.direction > 0) {
+            flip.flipNext("bottom");
+            portraitBack(flip);
+          } else flip.flipPrev("bottom");
         }
       });
       flip.loadFromHTML(pages);

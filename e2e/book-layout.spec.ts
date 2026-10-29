@@ -290,6 +290,7 @@ for (const locale of ["vi", "en"]) {
   });
   test(`keeps footnotes and speech usable in the book surface (${locale})`, async ({
     page,
+    isMobile,
   }) => {
     await page.addInitScript(() => {
       (window as any).bookSpeech = [];
@@ -326,8 +327,24 @@ for (const locale of ["vi", "en"]) {
     await ref.focus();
     await page.keyboard.press("Escape");
     await ref.click();
-    await expect(page.locator(href!)).toBeFocused();
-    await page.goBack();
+    if (isMobile) {
+      const card = page.getByRole("dialog", {
+        name: L("Chú thích", "Footnote"),
+        exact: true,
+      });
+      await expect(card).toContainText(
+        (await ref.getAttribute("data-tooltip"))!,
+      );
+      await card
+        .getByRole("button", {
+          name: L("Đóng chú thích", "Close footnote"),
+          exact: true,
+        })
+        .click();
+    } else {
+      await expect(page.locator(href!)).toBeFocused();
+      await page.goBack();
+    }
     await expect(page).toHaveURL(/chapter-1$/);
     await expect.poll(() => offset(page, startOffset)).toBe(startOffset);
     await page

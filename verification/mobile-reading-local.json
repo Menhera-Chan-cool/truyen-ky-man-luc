@@ -1,0 +1,41 @@
+{
+  "clientDate": "2026-10-29",
+  "unit": {
+    "files": 18,
+    "passed": 82
+  },
+  "typecheck": true,
+  "productionBuild": true,
+  "finalFull": {
+    "startTime": "2026-10-29T11:09:51.001Z",
+    "duration": 204197.149,
+    "expected": 178,
+    "skipped": 16,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "initialFull": {
+    "startTime": "2026-10-29T11:03:41.995Z",
+    "duration": 205837.823,
+    "expected": 177,
+    "skipped": 16,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "regressions": [
+    "Original live code failed all four new cases: rapid release lost before 220ms settle, portrait fold folio [2,1] instead of [2,2], VI and EN touch navigated instead of previewing.",
+    "Intermediate native capture recorded a 45px flick: move at 22.5ms, release at 90.4ms; renderer work diluted total-duration velocity below threshold. Recent movement velocity and final pointer sample now drive touch recognition.",
+    "A renderer reset during Reduced Motion change could drop a release when semantic commit belonged to the renderer. Reader now owns every accepted touch release even if animation disappears; desktop mouse settle remains.",
+    "Compatibility-click suppression now excludes separate mouse/keyboard clicks on coarse devices; pinned previews retain internal scrolling and close/outside/Escape behavior."
+  ],
+  "scope": "Reader touch commit/ordered chapter-restoration queue, BookFlip portrait reverse and per-instance CSS cache, Tooltips pinned touch preview. No book/storage/schema/backend changes.",
+  "visual": {
+    "path": "verification/mobile-reading-ui-local.json",
+    "combinations": 4,
+    "noteScreenshot": "Initial capture can show the 120ms entrance; final live confirmation waits for full opacity."
+  },
+  "limitations": [
+    "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
+    "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech."
+  ]
+}

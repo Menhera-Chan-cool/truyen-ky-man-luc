@@ -45,19 +45,34 @@ for (const locale of ["vi", "en"]) {
     await expect(page.getByRole("tooltip")).toHaveCount(0);
     if (isMobile) await ref.tap();
     else await ref.click();
-    await expect(page).toHaveURL(/#reader-footnote-1$/);
-    await expect(target).toBeFocused();
-    expect(
-      await target.evaluate((el) => {
-        const b = el.getBoundingClientRect(),
-          v = document
-            .querySelector(".reading-scroll")!
-            .getBoundingClientRect();
-        return b.top < v.bottom && b.bottom > v.top;
-      }),
-    ).toBe(true);
-    await page.goBack();
-    await expect(page).toHaveURL(new RegExp(`/${locale}/read/chapter-1$`));
+    if (isMobile) {
+      const card = page.getByRole("dialog", {
+        name: L("Chú thích", "Footnote"),
+        exact: true,
+      });
+      await expect(card).toContainText(expected!);
+      await expect(page).toHaveURL(new RegExp(`/${locale}/read/chapter-1$`));
+      await card
+        .getByRole("button", {
+          name: L("Đóng chú thích", "Close footnote"),
+          exact: true,
+        })
+        .tap();
+    } else {
+      await expect(page).toHaveURL(/#reader-footnote-1$/);
+      await expect(target).toBeFocused();
+      expect(
+        await target.evaluate((el) => {
+          const b = el.getBoundingClientRect(),
+            v = document
+              .querySelector(".reading-scroll")!
+              .getBoundingClientRect();
+          return b.top < v.bottom && b.bottom > v.top;
+        }),
+      ).toBe(true);
+      await page.goBack();
+      await expect(page).toHaveURL(new RegExp(`/${locale}/read/chapter-1$`));
+    }
     await page
       .getByRole("button", {
         name: L("Cài đặt trình đọc", "Reader settings"),
@@ -81,26 +96,36 @@ for (const locale of ["vi", "en"]) {
     await ref.evaluate((el) => el.blur());
     await ref.focus();
     await ref.click();
-    await expect(target).toBeFocused();
-    expect(
-      await target.evaluate((el) => {
-        const b = el.getBoundingClientRect(),
-          v = document
-            .querySelector(".reading-window")!
-            .getBoundingClientRect();
-        return (
-          b.left < v.right &&
-          b.right > v.left &&
-          b.top < v.bottom &&
-          b.bottom > v.top
-        );
-      }),
-    ).toBe(true);
-    expect(
-      await page.locator(".reading-window").evaluate((e) => e.scrollLeft),
-    ).toBe(0);
-    await page.goBack();
-    await expect(page).not.toHaveURL(/#reader-footnote/);
+    if (isMobile) {
+      await expect(
+        page.getByRole("dialog", {
+          name: L("Chú thích", "Footnote"),
+          exact: true,
+        }),
+      ).toContainText(expected!);
+      await expect(page).not.toHaveURL(/#reader-footnote/);
+    } else {
+      await expect(target).toBeFocused();
+      expect(
+        await target.evaluate((el) => {
+          const b = el.getBoundingClientRect(),
+            v = document
+              .querySelector(".reading-window")!
+              .getBoundingClientRect();
+          return (
+            b.left < v.right &&
+            b.right > v.left &&
+            b.top < v.bottom &&
+            b.bottom > v.top
+          );
+        }),
+      ).toBe(true);
+      expect(
+        await page.locator(".reading-window").evaluate((e) => e.scrollLeft),
+      ).toBe(0);
+      await page.goBack();
+      await expect(page).not.toHaveURL(/#reader-footnote/);
+    }
   });
   test(`speech skips inline reference digits while retaining source offsets (${locale})`, async ({
     page,

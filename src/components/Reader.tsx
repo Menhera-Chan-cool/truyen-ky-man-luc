@@ -183,6 +183,7 @@ export default function Reader({
   const turnRef = useRef<(direction: number, animate?: boolean) => void>(
     () => {},
   );
+  const touchTurns = useRef<number[]>([]);
   const pendingBookEdge = useRef<{
     id: string;
     locale: Locale;
@@ -196,6 +197,9 @@ export default function Reader({
       edge: number;
       direction: number;
       preview: boolean;
+      lastX: number;
+      lastTime: number;
+      velocity: number;
     } | null>(null),
     suppressBookClick = useRef(0);
   const [bookControlsVisible, setBookControlsVisible] = useState(true),
@@ -391,6 +395,7 @@ export default function Reader({
   ]);
   useEffect(() => {
     const cancel = () => {
+      touchTurns.current = [];
       gesture.current = null;
       bookPaper.current?.removeAttribute("data-dragging");
       physicalFlip.current?.cancel();
@@ -401,15 +406,36 @@ export default function Reader({
     window.addEventListener("blur", cancel);
     window.addEventListener("resize", cancel);
     document.addEventListener("visibilitychange", cancel);
+    document.addEventListener("freeze", cancel);
+    window.addEventListener("pagehide", cancel);
+    window.addEventListener("popstate", cancel);
     document.addEventListener("keydown", key);
     return () => {
-      cancel();
+      touchTurns.current = [];
+      gesture.current = null;
+      bookPaper.current?.removeAttribute("data-dragging");
+      physicalFlip.current?.cancel();
       window.removeEventListener("blur", cancel);
       window.removeEventListener("resize", cancel);
       document.removeEventListener("visibilitychange", cancel);
+      document.removeEventListener("freeze", cancel);
+      window.removeEventListener("pagehide", cancel);
+      window.removeEventListener("popstate", cancel);
       document.removeEventListener("keydown", key);
     };
-  }, [bookLayout, chapterId, locale]);
+  }, [bookLayout, locale]);
+  useEffect(() => {
+    if (!bookLayout) {
+      touchTurns.current = [];
+      return;
+    }
+    if (!ready || !restored.current || !touchTurns.current.length) return;
+    const frame = requestAnimationFrame(() => {
+      while (restored.current && touchTurns.current.length)
+        turnRef.current(touchTurns.current.shift()!, false);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [bookLayout, ready, chapterId, page, layoutVersion]);
   useLayoutEffect(() => {
     if (bookLayout) setSidebar(false);
   }, [bookLayout]);
@@ -987,7 +1013,7 @@ export default function Reader({
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       if (restoringBackup.current) return;
-      if ((e.target as HTMLElement).closest("dialog")) return;
+      if ((e.target as HTMLElement).closest('dialog,[role="dialog"]')) return;
       if (e.key === "Escape" && !e.isComposing) {
         if ((e.target as HTMLElement).closest(".reader-sidebar"))
           document
@@ -1006,7 +1032,7 @@ export default function Reader({
       }
       if (
         (e.target as HTMLElement).closest(
-          "input,textarea,select,[contenteditable=true],dialog",
+          'input,textarea,select,[contenteditable=true],dialog,[role="dialog"]',
         )
       )
         return;
@@ -1083,6 +1109,8 @@ export default function Reader({
     });
   }
   function updateSettings(value: ReaderSettings) {
+    touchTurns.current = [];
+    gesture.current = null;
     physicalFlip.current?.cancel();
     if (value.layout !== settings.layout) {
       if (value.layout === "book") {
@@ -1173,6 +1201,10 @@ export default function Reader({
     return () => narrow.removeEventListener("change", resize);
   }, [panel]);
   function go(id: string, edge?: "start" | "end", animate = true) {
+    if (animate) {
+      touchTurns.current = [];
+      gesture.current = null;
+    }
     if (
       restoringBackup.current ||
       id === chapterId ||
@@ -1226,6 +1258,11 @@ export default function Reader({
     } else return;
   }
   turnRef.current = turnPage;
+  function requestTouchTurn(direction: number) {
+    if (restoringBackup.current) return;
+    if (!ready || !restored.current) touchTurns.current.push(direction);
+    else turnRef.current(direction, false);
+  }
   function startBookGesture(e: ReactPointerEvent<HTMLDivElement>) {
     setAuto(false);
     layoutAnchor.current = undefined;
@@ -1241,8 +1278,7 @@ export default function Reader({
     const rect = bookPaper.current?.getBoundingClientRect();
     if (
       !bookLayout ||
-      !ready ||
-      !restored.current ||
+      (e.pointerType !== "touch" && (!ready || !restored.current)) ||
       !rect ||
       window.getSelection()?.isCollapsed === false ||
       (e.target as Element).closest(
@@ -1275,6 +1311,9 @@ export default function Reader({
       edge,
       direction: 0,
       preview: false,
+      lastX: e.clientX,
+      lastTime: e.timeStamp,
+      velocity: 0,
     };
   }
   function moveBookGesture(e: ReactPointerEvent<HTMLDivElement>) {
@@ -1282,6 +1321,12 @@ export default function Reader({
     if (!start || start.id !== e.pointerId) return;
     const dx = e.clientX - start.x,
       dy = e.clientY - start.y;
+    if (e.clientX !== start.lastX) {
+      start.velocity =
+        (e.clientX - start.lastX) / Math.max(1, e.timeStamp - start.lastTime);
+      start.lastX = e.clientX;
+      start.lastTime = e.timeStamp;
+    }
     if (
       window.getSelection()?.isCollapsed === false ||
       (!start.direction && Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx))
@@ -1307,7 +1352,9 @@ export default function Reader({
       start.direction = direction;
       const sourceChapter = chapterId;
       start.preview =
-        physicalFlip.current?.startDrag(
+        ready &&
+        restored.current &&
+        (physicalFlip.current?.startDrag(
           direction,
           `${chapterId}:${pageRef.current}`,
           (paper) => {
@@ -1351,11 +1398,13 @@ export default function Reader({
           start.y - bookPaper.current!.getBoundingClientRect().top,
           () => {
             if (
+              e.pointerType !== "touch" &&
               activeContext.current === `${locale}:${sourceChapter}:${revision}`
             )
               turnRef.current(direction, false);
           },
-        ) ?? false;
+        ) ??
+          false);
       if (
         e.currentTarget.hasPointerCapture(e.pointerId) ||
         e.nativeEvent.isTrusted
@@ -1385,15 +1434,23 @@ export default function Reader({
         !cancel &&
         window.getSelection()?.isCollapsed !== false &&
         (!start.edge || start.edge === direction) &&
-        -dx * direction > 64 &&
+        (-dx * direction > 64 ||
+          (e.pointerType === "touch" &&
+            -dx * direction > 32 &&
+            -start.velocity * direction > 0.5 &&
+            e.timeStamp - start.lastTime < 180)) &&
         Math.abs(dx) > Math.abs(dy) * 2 &&
         (start.direction !== 0 || e.timeStamp - start.time < 700);
     if (start.direction || commit) {
       suppressBookClick.current = performance.now() + 500;
       e.preventDefault();
     }
-    if (start.preview) physicalFlip.current?.releaseDrag(commit);
-    else if (commit) turnRef.current(direction);
+    if (start.preview) {
+      if (!cancel) physicalFlip.current?.moveDrag(dx, dy);
+      physicalFlip.current?.releaseDrag(commit, e.pointerType === "touch");
+    }
+    if (commit && e.pointerType === "touch") requestTouchTurn(direction);
+    else if (commit && !start.preview) turnRef.current(direction);
     if (
       !cancel &&
       e.pointerType === "touch" &&
