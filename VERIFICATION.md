@@ -1,6 +1,28 @@
 # Bằng chứng kiểm chứng — cập nhật 29/10/2026
 
-## Kéo mép giấy và thanh dưới tự ẩn — release hiện tại
+## Vuốt nhanh và chú thích cảm ứng — release hiện tại
+
+Production dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4, runtime source 7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0. Alias https://truyen-ky-man-luc.vercel.app đã kiểm tra READY và đúng commit. Hoàn tất tasks/mobile-reading.md. Các phần tiếp theo là lịch sử.
+
+- Reader ghi nhận mỗi touch release hợp lệ ngay, độc lập với việc hiệu ứng còn sống hay đã bị hủy. Các lượt qua ranh giới chương chờ layout và xử lý đúng thứ tự. Hất ngắn dùng vận tốc mẫu di chuyển gần nhất, không tính thời gian dựng renderer. Cancel, vuốt dọc, lựa chọn chữ, ngón thứ hai, explicit navigation, locale/settings, resize/ẩn/freeze/pagehide/Back giữ guard. PC chuột vẫn chốt sau settle hiện có.
+
+- Mặt sau đang gấp trên một trang dùng target leaf thay cho temporary copy của mặt trước (public StPageFlip page API). Không sửa thư viện vendor. CSS cho iframe được cache theo instance font/theme; chỉ một context rỗng được làm ấm, không có vendor RAF chạy rỗi sau lật.
+
+- Mobile chạm chú thích mở card nền theo reader, không thêm hash/history và không cuộn. Card có nút X 44px, cuộn nội bộ, đóng ngoài/Escape/reader scroll/resize/popstate. Primary touch pointerup hoạt động khi browser không phát click; click tương thích không bật/tắt hai lần. Mouse/keyboard click riêng trên thiết bị coarse vẫn được nhận. PC hover/focus và click-to-endnote giữ nguyên; TTS vẫn bỏ số chú thích.
+
+- 82 unit đạt; typecheck và production build đạt. Full local trên code cuối: 194 ca, 178 đạt / 16 skip theo điều kiện thiết bị hoặc môi trường, 0 fail/flaky. Lượt đầu full có 177 đạt / 16 skip / 1 lỗi khi renderer bị reset bởi Reduced Motion; đã chuyển quyền chốt trang hoàn toàn sang Reader và chạy lại đủ 194. Xem verification/mobile-reading-local.json.
+
+- Production chọn 52 ca gồm toàn bộ Mobile reading, Book gestures, Book presentation và footnotes: 43 đạt / 9 skip theo thiết bị / 0 fail/flaky/retry. Không gọi đây là full 194 ca trên cloud. Xem verification/mobile-reading-live.json.
+
+- Ca mới bắt lỗi trước sửa: rapid release còn ở folio 1 trước khi hết 220ms; reverse face có [2,1] thay vì [2,2]; VI/EN tap đi fragment thay vì card. Các ca cuối bao gồm native CDP flick 45px đổi hướng, burst qua chương, cold renderer, Reduced Motion giữa cử chỉ, hủy/dọc/ngón thứ hai, card không click, cuộn nội bộ/đóng ngoài, cùng regression PC/Back/voice/notes/backup/fonts.
+
+- UI local batch và live confirmation cả VI/EN, desktop 1440x900 và phone 390x844: 2 mặt clip thật và 2 shadow; phone front 1, folded reverse 2; một live prose, không lỗi trang, vị trí giấy không đổi. Card live chờ opacity 1 trước ảnh xác nhận; card màu sáng/tối đều đọc được và đóng đúng. Xem verification/mobile-reading-ui-live.json.
+
+- Repo PRIVATE, khóa cấu hình/thư mời loại khỏi Git và ZIP. Không ghi nội dung sách, nháp editor, membership, Storage hay schema. Runtime không đổi sau deploy; commit bàn giao tiếp theo chỉ ghi bằng chứng.
+
+Chưa thử Android/iOS vật lý, Safari hoặc FPS thực địa. Native CDP/viewport/lifecycle DOM và mocked speech không thay cho việc thử máy thật.
+
+## Kéo mép giấy và thanh dưới tự ẩn — release trước
 
 Production dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy, runtime ded3627c69ce4fddbdb32ba1be9f58b76ca40c46. Alias https://truyen-ky-man-luc.vercel.app đã được kiểm tra READY và đúng commit. Hoàn tất tasks/book-gestures.md. Các phần tiếp theo là lịch sử.
 

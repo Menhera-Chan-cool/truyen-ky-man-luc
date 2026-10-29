@@ -1,0 +1,30 @@
+{
+  "clientDate": "2026-10-29",
+  "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
+  "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-29T11:19:45.928Z",
+  "scope": "52 selected cloud cases: all mobile reading, Book gesture, Book presentation and footnote cases on the exact final runtime; not a full 194-case cloud run.",
+  "stats": {
+    "startTime": "2026-10-29T11:16:59.957Z",
+    "duration": 94773.591,
+    "expected": 43,
+    "skipped": 9,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "visual": {
+    "path": "verification/mobile-reading-ui-live.json",
+    "combinations": 4,
+    "phoneReverseFolio": 2,
+    "phoneFrontFolio": 1,
+    "touchNotePreview": true,
+    "noteOpacitySettled": true,
+    "noPaperReflow": true,
+    "pageErrors": []
+  },
+  "limitations": [
+    "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
+    "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech."
+  ]
+}

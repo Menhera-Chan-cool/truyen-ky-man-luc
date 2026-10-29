@@ -1,17 +1,17 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
+  "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-iv4vs2fmk-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-84p8nj570-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-29T10:43:31.594Z",
+  "checkedAt": "2026-10-29T11:19:45.928Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
-  "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46",
+  "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
@@ -21,65 +21,53 @@
     "unitTests": 82,
     "typecheck": true,
     "productionBuild": true,
-    "fullLocalBeforeFinalFocusAndTouchWake": {
-      "startTime": "2026-10-29T10:24:09.056Z",
-      "duration": 200871.779,
-      "expected": 172,
-      "skipped": 10,
+    "fullLocal": {
+      "startTime": "2026-10-29T11:09:51.001Z",
+      "duration": 204197.149,
+      "expected": 178,
+      "skipped": 16,
       "unexpected": 0,
       "flaky": 0
     },
-    "finalLocalBookAndGestures": {
-      "startTime": "2026-10-29T10:36:43.449Z",
-      "duration": 53379.619,
-      "expected": 27,
-      "skipped": 3,
-      "unexpected": 0,
-      "flaky": 0
-    },
-    "live": {
+    "selectedLive": {
       "clientDate": "2026-10-29",
-      "deploymentId": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
-      "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46",
+      "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
+      "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
       "base": "https://truyen-ky-man-luc.vercel.app",
-      "checkedAt": "2026-10-29T10:43:31.594Z",
-      "scope": "All 30 Book presentation and direct gesture cases on the final runtime; 27 pass and three device-specific skips. Earlier 60-case cloud run on cf4bb9e is recorded separately, not claimed as final code.",
+      "checkedAt": "2026-10-29T11:19:45.928Z",
+      "scope": "52 selected cloud cases: all mobile reading, Book gesture, Book presentation and footnote cases on the exact final runtime; not a full 194-case cloud run.",
       "stats": {
-        "startTime": "2026-10-29T10:39:44.912Z",
-        "duration": 75212.913,
-        "expected": 27,
-        "skipped": 3,
+        "startTime": "2026-10-29T11:16:59.957Z",
+        "duration": 94773.591,
+        "expected": 43,
+        "skipped": 9,
         "unexpected": 0,
         "flaky": 0
       },
       "visual": {
-        "path": "verification/book-gestures-ui-live.json",
+        "path": "verification/mobile-reading-ui-live.json",
         "combinations": 4,
-        "realClippedFaces": 2,
-        "shadows": 2,
+        "phoneReverseFolio": 2,
+        "phoneFrontFolio": 1,
+        "touchNotePreview": true,
+        "noteOpacitySettled": true,
         "noPaperReflow": true,
-        "footerTransitionSettled": true,
         "pageErrors": []
       },
       "limitations": [
-        "Chromium mouse, viewport and native CDP touch simulation; no physical Android/iOS or FPS measurement",
-        "Speech assertions use mocked native speech events"
+        "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
+        "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech."
       ]
     },
-    "visual": "verification/book-gestures-ui-live.json"
+    "visual": "verification/mobile-reading-ui-live.json"
   },
   "limitations": [
-    "Chromium mouse, viewport and native CDP touch simulation; no physical Android/iOS or FPS measurement",
-    "Speech assertions use mocked native speech events",
-    "The full 182-case run preceded final focus selection and touch wake fixes. The final exact code was rebuilt and passed all 30 Book/gesture cases locally and on production.",
-    "Ebook and PDF retain their existing chrome; no server book content, permissions, storage or schema changes."
+    "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
+    "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech.",
+    "No source book, editor draft, account, storage schema or permissions changed."
   ],
   "previousDeployment": {
-    "id": "dpl_HMTyJvjq5DCPakjiBGTs6xPaGBLD",
-    "runtimeSourceCommit": "cf4bb9ee136a7da59662bbe20b5f73a8f8749f86"
-  },
-  "baseDeployment": {
-    "id": "dpl_Gfi4cRa3CKc3GpDrqzmo9k6YSKYD",
-    "runtimeSourceCommit": "b6c7d83eb888e55b85e067c706aeaf15997fd792"
+    "id": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
+    "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46"
   }
 }
