@@ -30,6 +30,14 @@ import { IconButton, LanguageLinks, ModuleBoundary } from "./Ui";
 const RichEditor = lazy(() => import("./RichEditor"));
 const ImportPanel = lazy(() => import("./ImportPanel"));
 import PdfViewer from "./PdfViewer";
+import {
+  DraftReview,
+  BatchReplace,
+  EditingPresence,
+  AuditLog,
+  ReviewIssues,
+} from "./AdminTools";
+import type { ReviewIssue } from "../lib/editor-tools";
 type Version = {
   id: string;
   chapter_id: string;
@@ -104,6 +112,7 @@ export default function Admin({ locale }: { locale: Locale }) {
   const [historyNext, setHistoryNext] = useState<number | null>(null);
   const [contentError, setContentError] = useState("");
   const [contentAttempt, setContentAttempt] = useState(0);
+  const [reviewIssues, setReviewIssues] = useState<ReviewIssue[] | null>(null);
   const [members, setMembers] = useState<Member[]>([]),
     [invite, setInvite] = useState(""),
     [inviteLink, setInviteLink] = useState("");
@@ -145,6 +154,7 @@ export default function Admin({ locale }: { locale: Locale }) {
     const controller = new AbortController();
     let cancelled = false;
     setContentError("");
+    setReviewIssues(null);
     const apply = (version?: Version) => {
       if (cancelled) return;
       setForm({
@@ -273,8 +283,45 @@ export default function Admin({ locale }: { locale: Locale }) {
       );
     });
   }
+  async function checkPublication(
+    items: { id: string; locale: string; expectedRevision: number }[],
+  ) {
+    const result = (await adminRequest("review", { items })) as {
+      issues: ReviewIssue[];
+    };
+    setReviewIssues(result.issues);
+    if (result.issues.some((i) => i.severity === "error")) {
+      setError(
+        L(
+          "Kiểm tra chưa đạt. Xem danh sách lỗi trước khi xuất bản.",
+          "Publication checks failed. Review the listed errors.",
+        ),
+      );
+      return false;
+    }
+    return (
+      !result.issues.length ||
+      window.confirm(
+        L(
+          `Có ${result.issues.length} cảnh báo. Bạn đã xem và vẫn muốn xuất bản?`,
+          `There are ${result.issues.length} warnings. Have you reviewed them and want to publish?`,
+        ),
+      )
+    );
+  }
   async function publish(withdraw = false) {
     await operation(async () => {
+      if (
+        !withdraw &&
+        !(await checkPublication([
+          {
+            id: selected,
+            locale: editLocale,
+            expectedRevision: head?.revision ?? 0,
+          },
+        ]))
+      )
+        return;
       await adminRequest("chapters", {
         action: withdraw ? "withdraw" : "publish",
         id: selected,
@@ -383,6 +430,16 @@ export default function Admin({ locale }: { locale: Locale }) {
     )
       return;
     await operation(async () => {
+      if (
+        !(await checkPublication(
+          editions.map((e) => ({
+            id: e.chapter_id,
+            locale: e.locale,
+            expectedRevision: e.revision,
+          })),
+        ))
+      )
+        return;
       await adminRequest("chapters", {
         action: "publish-batch",
         items: editions.map((e) => ({
@@ -506,6 +563,8 @@ export default function Admin({ locale }: { locale: Locale }) {
             ],
             ["import", L("Nhập file", "Import files"), Upload],
             ["book", L("Giới thiệu & bìa", "Details & covers"), ImageIcon],
+            ["replace", L("Tìm–thay thế", "Find and replace"), FileText],
+            ["audit", L("Nhật ký", "Activity log"), History],
             ...(state.member.role === "owner"
               ? [["members", L("Người biên tập", "Editors"), Users]]
               : []),
@@ -634,6 +693,14 @@ export default function Admin({ locale }: { locale: Locale }) {
                   })}
                 </aside>
                 <section className="editor-surface">
+                  {selected && head && (
+                    <EditingPresence
+                      locale={locale}
+                      chapterId={selected}
+                      editionLocale={editLocale}
+                      userId={state.member.user_id}
+                    />
+                  )}
                   <div className="editor-heading">
                     <h2>{L("Nội dung chương", "Chapter content")}</h2>
                     <div className="button-row">
@@ -792,6 +859,16 @@ export default function Admin({ locale }: { locale: Locale }) {
                           )}
                         </p>
                       )}
+                      <DraftReview
+                        locale={locale}
+                        id={selected}
+                        editionLocale={editLocale}
+                        head={head}
+                        form={form}
+                        issues={reviewIssues}
+                        onIssues={setReviewIssues}
+                        onError={report}
+                      />
                       {history && (
                         <div className="history-list">
                           <h3>{L("Lịch sử nội dung", "Content history")}</h3>
@@ -971,6 +1048,28 @@ export default function Admin({ locale }: { locale: Locale }) {
                 />
               </ModuleBoundary>
             )}
+            {tab === "replace" && (
+              <BatchReplace
+                locale={locale}
+                editionLocale={editLocale}
+                heads={state.editions.filter((h) =>
+                  state.chapters.some((c) => c.id === h.chapter_id),
+                )}
+                onLocale={setEditLocale}
+                onBusy={setChildBusy}
+                onDone={async () => {
+                  await load();
+                  setMessage(
+                    L(
+                      "Đã tạo bản nháp thay thế. Hãy kiểm tra trước khi xuất bản.",
+                      "Replacement drafts created. Review them before publishing.",
+                    ),
+                  );
+                }}
+                onError={report}
+              />
+            )}
+            {tab === "audit" && <AuditLog locale={locale} />}
             {tab === "book" && (
               <div className="admin-meta">
                 {(["vi", "en"] as Locale[]).map((language) => (

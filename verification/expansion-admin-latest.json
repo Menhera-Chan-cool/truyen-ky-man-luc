@@ -1,0 +1,80 @@
+{
+  "base": "http://localhost:3001",
+  "checks": [
+    "Authenticated comparison of saved versions and clean preflight UI",
+    "Other editor visible; revocation immediately denies presence/audit",
+    "Selected replacement creates only its new draft; real chapter revisions unchanged",
+    "Stale batch refuses all writes; broken drafts cannot be published via API",
+    "Private activity UI records importer/saver/replacement actor; editor cannot delete audit",
+    "Logged-in editor cannot put an unpublished private asset into offline cache"
+  ],
+  "cleanup": [
+    {
+      "label": "presence d18de4dc-b5d2-45e3-9f83-23cca05c0145",
+      "ok": true
+    },
+    {
+      "label": "presence a874cc21-ba60-4fbc-afe2-bd18a3188239",
+      "ok": true
+    },
+    {
+      "label": "editions verify-expansion-1bf7e22a-one",
+      "ok": true
+    },
+    {
+      "label": "versions verify-expansion-1bf7e22a-one",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-expansion-1bf7e22a-one",
+      "ok": true
+    },
+    {
+      "label": "editions verify-expansion-1bf7e22a-two",
+      "ok": true
+    },
+    {
+      "label": "versions verify-expansion-1bf7e22a-two",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-expansion-1bf7e22a-two",
+      "ok": true
+    },
+    {
+      "label": "storage asset",
+      "ok": true
+    },
+    {
+      "label": "asset record",
+      "ok": true
+    },
+    {
+      "label": "verification audit",
+      "ok": true
+    },
+    {
+      "label": "verification audit",
+      "ok": true
+    },
+    {
+      "label": "membership",
+      "ok": true
+    },
+    {
+      "label": "Auth user",
+      "ok": true
+    },
+    {
+      "label": "membership",
+      "ok": true
+    },
+    {
+      "label": "Auth user",
+      "ok": true
+    }
+  ],
+  "requestErrors": [],
+  "publicBookUnchanged": true,
+  "success": true
+}

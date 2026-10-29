@@ -1,4 +1,5 @@
 import { it, expect, vi } from "vitest";
+vi.mock("../src/lib/publication-review",()=>({reviewPublication:vi.fn()}));
 import { GET } from "../app/api/admin/chapters/route";
 const records = Array.from({ length: 61 }, (_, i) => ({
   id: `00000000-0000-4000-8000-${String(i + 1).padStart(12, "0")}`,

@@ -125,10 +125,14 @@ export function normalizeSettings(
   value.rate = clamp(value.rate, 0.5, 2, 1);
   value.shortPauses =
     typeof value.shortPauses === "boolean" ? value.shortPauses : true;
+  value.autoNext = typeof value.autoNext === "boolean" ? value.autoNext : false;
   value.scrollSpeed = clamp(value.scrollSpeed, 8, 100, 28);
   if (!["scroll", "single", "double"].includes(value.mode))
     value.mode = "scroll";
-  if (!readerFonts.some((font) => font.value === value.font))
+  if (
+    !readerFonts.some((font) => font.value === value.font) &&
+    !/^font:[0-9a-f-]{36}$/.test(value.font)
+  )
     value.font = "Literata";
   if (!["original", "left", "center", "right", "justify"].includes(value.align))
     value.align = "original";

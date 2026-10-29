@@ -66,7 +66,23 @@ Trong Cài đặt trình đọc → **Dữ liệu đọc trên thiết bị**, d
 
 Thay phông, cỡ chữ, giãn dòng, chiều rộng hoặc chế độ đọc giữ đoạn đang xem, thay vì giữ số trang cũ. Bấm ghi chú thuộc chương khác mở thẳng đoạn đã đánh dấu nếu đúng phiên bản. PDF nhớ trang/zoom riêng. Khi đổi giọng hoặc tốc độ lúc đang nghe, TTS tiếp tục từ từ đang đọc nếu trình duyệt có boundary; nếu không, đọc lại đoạn ngắn hiện tại.
 
-Trình đọc nạp sẵn nội dung đã xuất bản của ngôn ngữ đang chọn vào bộ nhớ cho quyển sách này. Next/Previous, mục lục và liên kết cuối chương đổi nội dung tại chỗ, cập nhật URL/lịch sử trình duyệt và khôi phục vị trí riêng của chương, không gọi lại server. Làm mới trang hoặc đổi ngôn ngữ sẽ đọc lại bản công khai mới nhất; ảnh/PDF vẫn tải khi cần. Không lưu bản nháp hay HTML cả sách vào IndexedDB.
+Trình đọc nạp sẵn nội dung đã xuất bản của ngôn ngữ đang chọn vào bộ nhớ cho quyển sách này. Next/Previous, mục lục và liên kết cuối chương đổi nội dung tại chỗ, cập nhật URL/lịch sử trình duyệt và khôi phục vị trí riêng của chương, không gọi lại server. Làm mới trang hoặc đổi ngôn ngữ sẽ đọc lại bản công khai mới nhất; ảnh/PDF vẫn tải khi cần. Chỉ khi người đọc chủ động tải ngoại tuyến, bản công khai VI/EN mới được lưu trên thiết bị; bản nháp không được tải.
+
+## Tiện ích đọc và biên tập bổ sung
+
+Trên thanh đọc, nút **Tiện ích đọc** (ba chấm) mở hướng dẫn thao tác, **Đến trang**, **Vị trí gần đây**, **Đọc đối chiếu VI–EN** và **Đọc ngoại tuyến**. Đối chiếu mở hai bản cùng chương, cuộn độc lập trên PC, xếp dọc trên điện thoại; chưa căn chỉnh từng câu. Đóng bảng giữ nguyên chỗ đọc. Lịch sử giữ tối đa 30 vị trí theo ngôn ngữ/phiên bản; bản cũ được giữ nhưng không nhảy vào nội dung mới.
+
+Trong **Giọng đọc & tốc độ**, **Từ điển phát âm tên riêng** nhận mỗi dòng `Tên trong sách = Cách đọc`; tối đa 50 quy tắc riêng cho VI/EN trên thiết bị. Quy tắc chỉ đổi chữ gửi cho giọng, vẫn giữ nguyên văn sách và vị trí ghi chú. **Tự nghe chương kế** mặc định tắt, chỉ tiếp tục khi đọc hết tự nhiên một chương văn bản có bản dịch kế tiếp; không tự phát sau reload, không áp dụng cho đoạn chọn hoặc PDF. Giọng/tốc độ thực tế vẫn do thiết bị cung cấp.
+
+Trong cài đặt, **Phông chữ cá nhân** nhập TTF/OTF/WOFF/WOFF2, tối đa 3 MB/phông và 8 phông. Phông chỉ lưu tại thiết bị, không nằm trong bản sao JSON; máy khác cần nhập lại. File được kiểm tra định dạng và thử tải bằng FontFace trước khi lưu.
+
+**Đọc ngoại tuyến** tải rõ ràng cả hai bản đã xuất bản, vỏ ứng dụng, phông và tài nguyên đang được tham chiếu; tối đa 200 MB/gói. Chỉ báo thành công khi tải đủ; lỗi cập nhật giữ bản hoàn chỉnh trước đó. Mở **Đọc bản đã tải** hoặc `/offline?locale=vi` khi mất mạng. Cập nhật chủ động để nhận bản mới; trình duyệt vẫn có thể xóa dữ liệu khi thiếu dung lượng. Xóa bản tải không xóa ghi chú/tiến độ. Quản trị, phiên đăng nhập và file nguồn không được lưu ngoại tuyến; TTS online của hệ điều hành có thể cần mạng.
+
+Trong editor, **So sánh & kiểm tra** so bản đang sửa với bản công khai hoặc lịch sử, phân biệt thêm/xóa/đổi định dạng theo đoạn. **Kiểm tra trước xuất bản** chặn chương trống, chú thích thiếu đích và ảnh không tồn tại; tiêu đề trùng hoặc số chú thích không ghép được là cảnh báo cần xem lại. Server kiểm tra lại trước khi xuất bản; bìa được kiểm tra khi xuất bản giới thiệu.
+
+Tab **Tìm–thay thế** cho chọn VI/EN, xem trước từng chương, chọn các chương rồi xác nhận lưu nháp. Thay chữ thuần, giữ định dạng/link và không tự xuất bản. Revision cũ làm cả lượt lưu bị từ chối để tránh ghi đè. **Nhật ký quản trị** ghi hành động từ khi áp dụng migration 004, không tái tạo lịch sử cũ. Trạng thái editor làm mới mỗi 25 giây và chỉ hiện người hoạt động trong 90 giây; đây là thông tin hiện diện, cơ chế chống ghi đè vẫn dựa vào revision.
+
+`npm run verify:expansion` dùng Supabase thật và `BASE_URL=http://localhost:3001` (hoặc URL triển khai): tạo tài khoản/chương nháp tạm, kiểm tra so sánh, thay thế, xung đột, preflight, quyền, hiện diện, nhật ký và loại file riêng khỏi cache; không xuất bản fixture, không gửi email, kiểm tra bản công khai không đổi và dọn dữ liệu thử.
 
 Trong **Cài đặt trình đọc → Giao diện đọc**, chọn **Ebook** để dùng giao diện cũ hoặc **Sách** để mở trang giấy có gáy, số trang và hiệu ứng lật hai mặt/nếp gấp/bóng. Màn hình rộng mở hai trang; điện thoại hoặc vùng đọc hẹp mở một trang. Dùng mũi tên, vuốt ngang hoặc nút Đầu/Cuối chương. Lật hết chương mở chương kế từ trang đầu; lật ngược ở đầu chương mở cuối chương trước. Các chương không nối vào phần trống của cùng một trang. Số trang tính trong chương hiện tại và thay đổi theo phông/cỡ màn hình.
 

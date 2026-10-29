@@ -8,6 +8,12 @@ import type {
 } from "./types";
 import { normalizeSettings } from "./reader";
 import { mergeBackupNotes, type ReaderBackup } from "./reader-backup";
+import {
+  mergeRecent,
+  parseRecent,
+  parsePronunciations,
+  type RecentPlace,
+} from "./reader-extras";
 let database: ReturnType<typeof openDB> | undefined;
 const connection = () =>
   (database ??= openDB("truyen-ky-man-luc", 1, {
@@ -66,16 +72,51 @@ export async function saveAnnotation(annotation: Annotation) {
 export async function deleteAnnotation(id: string) {
   await (await connection()).delete("annotations", id);
 }
+export async function readPreference<T>(key: string): Promise<T | undefined> {
+  return (await connection()).get("preferences", key);
+}
+export async function writePreference(key: string, value: unknown) {
+  await (await connection()).put("preferences", value, key);
+}
+export async function deletePreference(key: string) {
+  await (await connection()).delete("preferences", key);
+}
+export async function preferenceKeys() {
+  return (await connection()).getAllKeys("preferences");
+}
+export async function readRecent() {
+  return parseRecent((await readPreference("recent:v1")) ?? []);
+}
+export async function recordRecent(value: RecentPlace) {
+  const db = await connection(),
+    tx = db.transaction("preferences", "readwrite");
+  const old = await tx.store.get("recent:v1");
+  await tx.store.put(mergeRecent(parseRecent(old ?? []), value), "recent:v1");
+  await tx.done;
+}
 export async function readDeviceBackup(): Promise<ReaderBackup> {
   const db = await connection(),
     tx = db.transaction(["preferences", "progress", "annotations"], "readonly");
-  const [settings, values, keys, annotations, vi, en] = await Promise.all([
+  const [
+    settings,
+    values,
+    keys,
+    annotations,
+    vi,
+    en,
+    rulesVi,
+    rulesEn,
+    recent,
+  ] = await Promise.all([
     tx.objectStore("preferences").get("reader"),
     tx.objectStore("progress").getAll(),
     tx.objectStore("progress").getAllKeys(),
     tx.objectStore("annotations").getAll(),
     tx.objectStore("preferences").get("listening:vi"),
     tx.objectStore("preferences").get("listening:en"),
+    tx.objectStore("preferences").get("pronunciation:vi"),
+    tx.objectStore("preferences").get("pronunciation:en"),
+    tx.objectStore("preferences").get("recent:v1"),
   ]);
   await tx.done;
   return {
@@ -87,6 +128,11 @@ export async function readDeviceBackup(): Promise<ReaderBackup> {
     progress: keys.map((key, i) => ({ key: String(key), value: values[i] })),
     annotations,
     listening: [vi, en].filter(Boolean),
+    pronunciations: {
+      vi: parsePronunciations(rulesVi ?? []),
+      en: parsePronunciations(rulesEn ?? []),
+    },
+    recent: parseRecent(recent ?? []),
   };
 }
 export async function restoreDeviceBackup(
@@ -112,6 +158,13 @@ export async function restoreDeviceBackup(
         await tx.objectStore("progress").put(p.value, p.key);
       if (backup.settings)
         await tx.objectStore("preferences").put(backup.settings, "reader");
+      if (backup.pronunciations)
+        for (const locale of ["vi", "en"] as const)
+          await tx
+            .objectStore("preferences")
+            .put(backup.pronunciations[locale], `pronunciation:${locale}`);
+      if (backup.recent)
+        await tx.objectStore("preferences").put(backup.recent, "recent:v1");
     }
     await tx.done;
     if (restoreReading && backup.settings) mirrorSettings(backup.settings);

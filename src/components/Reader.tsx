@@ -12,7 +12,7 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   Menu,
   ChevronLeft,
@@ -42,6 +42,7 @@ import {
   Download,
   FileText,
   ExternalLink,
+  MoreHorizontal,
 } from "lucide-react";
 import type {
   Annotation,
@@ -70,6 +71,10 @@ import {
   restoreDeviceBackup,
   readListening,
   writeListening,
+  readPreference,
+  writePreference,
+  readRecent,
+  recordRecent,
 } from "../lib/db";
 import {
   annotationColors,
@@ -97,6 +102,17 @@ import { useSpeech } from "./useSpeech";
 import type { ReaderBackup } from "../lib/reader-backup";
 import { decorateFootnotes } from "../lib/footnotes";
 import { BookFlip } from "../lib/book-flip";
+import { usePersonalFont } from "../lib/personal-fonts";
+import {
+  parsePronunciations,
+  type PronunciationRule,
+  type RecentPlace,
+  parsePageInput,
+} from "../lib/reader-extras";
+import PronunciationEditor from "./PronunciationEditor";
+import ReaderGuide from "./ReaderGuide";
+import ParallelReader from "./ParallelReader";
+import OfflineDownloads from "./OfflineDownloads";
 
 type Selection = {
   start: number;
@@ -114,14 +130,20 @@ export default function Reader({
   locale,
   chapterId: initialChapterId,
   initialSettings = defaultSettings,
+  offline = false,
 }: {
   book: Book;
   locale: Locale;
   chapterId: string;
   initialSettings?: ReaderSettings;
+  offline?: boolean;
 }) {
   const autoSpeedId = useId();
-  const routeChapterId = usePathname()?.split("/").at(-1);
+  const pathname = usePathname(),
+    routeParams = useSearchParams();
+  const routeChapterId = offline
+    ? (routeParams.get("chapter") ?? initialChapterId)
+    : pathname?.split("/").at(-1);
   const chapter =
     book.chapters.find((c) => c.id === routeChapterId) ??
     book.chapters.find((c) => c.id === initialChapterId)!;
@@ -148,7 +170,15 @@ export default function Reader({
     failed: boolean;
   } | null>(null);
   const [panel, setPanel] = useState<
-      "settings" | "voice" | "sound" | "scroll" | null
+      | "settings"
+      | "voice"
+      | "sound"
+      | "scroll"
+      | "tools"
+      | "guide"
+      | "recent"
+      | "parallel"
+      | null
     >(null),
     [voiceQuery, setVoiceQuery] = useState(""),
     [auto, setAuto] = useState(false),
@@ -184,6 +214,55 @@ export default function Reader({
     () => {},
   );
   const touchTurns = useRef<number[]>([]);
+  const nextSpeech = useRef<{
+    id: string;
+    locale: Locale;
+    revision: number;
+  } | null>(null);
+  const pendingVisit = useRef<RecentPlace | null>(null);
+  const [recentPlaces, setRecentPlaces] = useState<RecentPlace[]>([]),
+    [pageInput, setPageInput] = useState("1"),
+    [pageError, setPageError] = useState(""),
+    [guideHint, setGuideHint] = useState(false);
+  useEffect(() => {
+    let active = true;
+    void readPreference("reader-help-seen")
+      .then((seen) => {
+        if (active) setGuideHint(!seen);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+  useEffect(() => {
+    if (panel === "recent")
+      void readRecent()
+        .then(setRecentPlaces)
+        .catch(() =>
+          notify(
+            L(
+              "Không đọc được lịch sử vị trí.",
+              "Unable to read recent positions.",
+            ),
+          ),
+        );
+  }, [panel]);
+  const [pronunciations, setPronunciations] = useState<PronunciationRule[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    nextSpeech.current = null;
+    void readPreference("pronunciation:" + locale)
+      .then((value) => {
+        if (!cancelled) setPronunciations(parsePronunciations(value ?? []));
+      })
+      .catch(() => {
+        if (!cancelled) setPronunciations([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [locale, deviceVersion]);
   const pendingBookEdge = useRef<{
     id: string;
     locale: Locale;
@@ -326,6 +405,32 @@ export default function Reader({
     followSpeech,
     settings.shortPauses,
     checkpoint,
+    {
+      pronunciations,
+      onComplete: () => {
+        if (!settings.autoNext || chapter[locale]?.kind === "pdf") return;
+        const target = book.chapters
+          .slice(book.chapters.findIndex((c) => c.id === chapterId) + 1)
+          .find((c) => c[locale]?.kind !== "illustration");
+        if (!target) return;
+        const content = target[locale];
+        if (!content || content.kind === "pdf") {
+          notify(
+            L(
+              "Chương kế chưa có bản văn bản để nghe ở ngôn ngữ này.",
+              "The next chapter has no text edition to continue in this language.",
+            ),
+          );
+          return;
+        }
+        go(target.id, "start", false);
+        nextSpeech.current = {
+          id: target.id,
+          locale,
+          revision: content.revision,
+        };
+      },
+    },
   );
   const onPdfPosition = useCallback(
     (value: PdfPosition) => {
@@ -358,6 +463,7 @@ export default function Reader({
     v.lang.toLowerCase().startsWith(locale),
   );
   const theme = readerPalette(settings);
+  const personalFamily = usePersonalFont(settings.font, notify);
   const isPdf = edition?.kind === "pdf";
   const bookLayout = settings.layout === "book" && !!edition && !isPdf;
   useLayoutEffect(() => {
@@ -366,6 +472,8 @@ export default function Reader({
   }, [edition, isPdf, locale, chapterId, bookLayout]);
   const paged = (bookLayout || settings.mode !== "scroll") && !isPdf;
   const double = bookLayout ? bookWide : settings.mode === "double" && !mobile;
+  const jumpCount = bookLayout ? leaves : pages,
+    jumpStride = bookLayout && double ? 2 : 1;
   const bookControlsHidden = bookLayout && mobile && !bookControlsVisible;
   function wakeBookControls() {
     setBookControlsVisible(true);
@@ -469,6 +577,7 @@ export default function Reader({
     settings.background,
     settings.foreground,
     settings.accent,
+    personalFamily,
   ]);
   useLayoutEffect(() => {
     if (bookLayout && ready && restored.current)
@@ -797,6 +906,7 @@ export default function Reader({
     settings.lineHeight,
     settings.width,
     settings.font,
+    personalFamily,
     edition,
     chapterId,
     locale,
@@ -1032,7 +1142,7 @@ export default function Reader({
       }
       if (
         (e.target as HTMLElement).closest(
-          'input,textarea,select,[contenteditable=true],dialog,[role="dialog"]',
+          'input,textarea,select,[contenteditable=true],dialog,[role="dialog"],.reader-panel',
         )
       )
         return;
@@ -1109,6 +1219,7 @@ export default function Reader({
     });
   }
   function updateSettings(value: ReaderSettings) {
+    if (!value.autoNext) nextSpeech.current = null;
     touchTurns.current = [];
     gesture.current = null;
     physicalFlip.current?.cancel();
@@ -1166,6 +1277,7 @@ export default function Reader({
     setSettings(normalizeSettings(value));
   }
   function toggleSpeech() {
+    nextSpeech.current = null;
     setAuto(false);
     setMessage("");
     if (speech.playing) {
@@ -1175,6 +1287,14 @@ export default function Reader({
     else speech.speak(isPdf ? pdfText : undefined, undefined, isPdf);
   }
   function togglePanel(value: typeof panel) {
+    if (value === "tools") {
+      setPageInput(String(pageRef.current * jumpStride + 1));
+      setPageError("");
+    }
+    if (value === "guide") {
+      setGuideHint(false);
+      void writePreference("reader-help-seen", true).catch(() => {});
+    }
     if (value === "voice") speech.refreshVoices();
     if (
       (bookLayout || window.matchMedia("(max-width: 900px)").matches) &&
@@ -1201,6 +1321,8 @@ export default function Reader({
     return () => narrow.removeEventListener("change", resize);
   }, [panel]);
   function go(id: string, edge?: "start" | "end", animate = true) {
+    nextSpeech.current = null;
+    pendingVisit.current = null;
     if (animate) {
       touchTurns.current = [];
       gesture.current = null;
@@ -1220,6 +1342,7 @@ export default function Reader({
     setPendingListening(null);
     pendingSearch.current = null;
     const anchor = captureAnchor();
+    rememberPlace(anchor);
     progressSaver.schedule({
       chapterId,
       revision,
@@ -1240,7 +1363,13 @@ export default function Reader({
     restored.current = false;
     setReady(false);
     // The published locale is already loaded; changing chapters needs no server round trip.
-    window.history.pushState(null, "", `/${locale}/read/${id}`);
+    window.history.pushState(
+      null,
+      "",
+      offline
+        ? `/offline?locale=${locale}&chapter=${id}`
+        : `/${locale}/read/${id}`,
+    );
   }
   function turnPage(direction: number, animate = true) {
     if (!ready || !restored.current || restoringBackup.current) return;
@@ -1495,8 +1624,75 @@ export default function Reader({
     }
     wakeBookControls();
   }
+  function rememberPlace(anchor?: number) {
+    if (!ready || !restored.current || !edition || restoringBackup.current)
+      return;
+    const point = anchor ?? (isPdf ? undefined : captureAnchor());
+    void recordRecent({
+      chapterId,
+      locale,
+      revision,
+      page: pageRef.current,
+      ratio: ratioRef.current,
+      at: Date.now(),
+      ...(point === undefined ? {} : { anchor: point }),
+      ...(isPdf
+        ? {
+            pdfPage: pdfPositionRef.current.page,
+            pdfZoom: pdfPositionRef.current.zoom,
+          }
+        : {}),
+    }).catch(() => {});
+  }
+  function restoreVisit(place: RecentPlace) {
+    const content = book.chapters.find((c) => c.id === place.chapterId)?.[
+      locale
+    ];
+    if (
+      place.locale !== locale ||
+      !content ||
+      content.revision !== place.revision
+    ) {
+      notify(
+        L(
+          "Vị trí thuộc bản cũ hoặc đã thu hồi.",
+          "This position belongs to an older or withdrawn edition.",
+        ),
+      );
+      return;
+    }
+    rememberPlace();
+    nextSpeech.current = null;
+    speech.stop();
+    setAuto(false);
+    closePanel();
+    if (place.chapterId !== chapterId) {
+      go(place.chapterId);
+      pendingVisit.current = place;
+    } else applyVisit(place);
+  }
+  function applyVisit(place: RecentPlace) {
+    if (isPdf)
+      setPdfPosition({ page: place.pdfPage ?? 1, zoom: place.pdfZoom ?? 1 });
+    else if (place.anchor !== undefined) revealOffset(place.anchor);
+    else if (paged) {
+      pageRef.current = Math.round(place.ratio * Math.max(0, pages - 1));
+      setPage(pageRef.current);
+    } else if (scrollRef.current)
+      scrollRef.current.scrollTop =
+        place.ratio *
+        (scrollRef.current.scrollHeight - scrollRef.current.clientHeight);
+  }
+  useEffect(() => {
+    const place = pendingVisit.current;
+    if (!place || place.chapterId !== chapterId || !ready || !restored.current)
+      return;
+    pendingVisit.current = null;
+    if (place.revision === revision) applyVisit(place);
+  }, [chapterId, revision, ready, layoutVersion]);
   function jumpPage(target: number) {
     if (!ready || !restored.current) return;
+    rememberPlace();
     setAuto(false);
     layoutAnchor.current = undefined;
     physicalFlip.current?.begin(target >= page ? 1 : -1);
@@ -1538,6 +1734,7 @@ export default function Reader({
           fragmentTarget(url.hash)
         ) {
           event.preventDefault();
+          rememberPlace();
           window.history.replaceState(
             {
               ...window.history.state,
@@ -1627,6 +1824,7 @@ export default function Reader({
   }
   function openNote(annotation: Annotation) {
     if (restoringBackup.current) return;
+    rememberPlace();
     const target = book.chapters.find((c) => c.id === annotation.chapterId);
     if (!target) {
       notify(
@@ -1717,6 +1915,7 @@ export default function Reader({
       !contentRef.current
     )
       return;
+    rememberPlace();
     revealOffset(result.start, true);
     const range = rangeFromOffsets(
         contentRef.current,
@@ -1760,6 +1959,8 @@ export default function Reader({
     listening.locale === locale &&
     heardEdition?.revision === listening.revision;
   function continueListening() {
+    nextSpeech.current = null;
+    rememberPlace();
     if (!canListen || !listening) return;
     setAuto(false);
     if (listening.chapterId !== chapterId) go(listening.chapterId);
@@ -1803,11 +2004,33 @@ export default function Reader({
     pdfRenderedPage,
     isPdf,
   ]);
+  useEffect(() => {
+    const pending = nextSpeech.current;
+    if (!pending || pending.id !== chapterId || !ready || !restored.current)
+      return;
+    nextSpeech.current = null;
+    if (
+      settings.autoNext &&
+      pending.locale === locale &&
+      pending.revision === revision &&
+      !isPdf
+    )
+      speech.speak();
+  }, [
+    chapterId,
+    locale,
+    revision,
+    ready,
+    layoutVersion,
+    settings.autoNext,
+    isPdf,
+  ]);
   async function restoreDeviceData(
     backup: ReaderBackup,
     restoreReading: boolean,
   ) {
     restoringBackup.current = true;
+    nextSpeech.current = null;
     setAuto(false);
     speech.stop();
     try {
@@ -1926,6 +2149,7 @@ export default function Reader({
     [annotations, locale, chapterId, currentOnly, kind, color, query],
   );
   const fontFamily =
+    personalFamily ??
     readerFonts.find((font) => font.value === settings.font)?.family ??
     readerFonts[0].family;
   return (
@@ -1937,6 +2161,34 @@ export default function Reader({
       data-ready={ready && restored.current}
       data-controls-hidden={bookControlsHidden}
       aria-busy={!ready || !restored.current}
+      data-offline={offline || undefined}
+      onClickCapture={(event) => {
+        if (
+          !offline ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        )
+          return;
+        const link = (event.target as Element).closest<HTMLAnchorElement>(
+          "a[href]",
+        );
+        if (!link || link.target === "_blank") return;
+        const url = new URL(link.href, location.href),
+          match =
+            url.origin === location.origin &&
+            url.pathname.match(/^\/(vi|en)(?:\/read\/([a-z0-9-]+))?\/?$/);
+        if (match && (!match[2] || match[1] !== locale)) {
+          event.preventDefault();
+          event.stopPropagation();
+          window.speechSynthesis?.cancel();
+          window.location.assign(
+            `/offline?locale=${match[1]}${match[2] ? "&chapter=" + match[2] : ""}`,
+          );
+        }
+      }}
     >
       <style>
         {annotationColors
@@ -1961,6 +2213,27 @@ export default function Reader({
           </span>
         </div>
         <div className="reader-toolbar toolbar">
+          <IconButton
+            icon={MoreHorizontal}
+            label={L("Tiện ích đọc", "Reading tools")}
+            active={["tools", "guide", "recent", "parallel"].includes(
+              panel ?? "",
+            )}
+            onClick={() => togglePanel("tools")}
+            style={{ position: "relative" }}
+            aria-description={
+              guideHint
+                ? L(
+                    "Có hướng dẫn thao tác cho người mới.",
+                    "A quick reading guide is available.",
+                  )
+                : undefined
+            }
+          >
+            {guideHint && (
+              <span className="tools-guide-dot" aria-hidden="true" />
+            )}
+          </IconButton>
           <IconButton
             icon={ChevronLeft}
             label={L("Chương trước", "Previous chapter")}
@@ -2627,6 +2900,158 @@ export default function Reader({
           </div>
         </footer>
       </main>
+      {panel === "tools" && (
+        <Panel
+          title={L("Tiện ích đọc", "Reading tools")}
+          onClose={closePanel}
+          closeLabel={L("Đóng", "Close")}
+        >
+          <div className="reading-tool-links">
+            <button
+              className="secondary-button"
+              onClick={() => togglePanel("parallel")}
+            >
+              {L("Đọc đối chiếu VI–EN", "Compare VI–EN")}
+            </button>
+            <button
+              className="secondary-button"
+              onClick={() => togglePanel("recent")}
+            >
+              {L("Vị trí gần đây", "Recent positions")}
+            </button>
+            <button
+              className="secondary-button"
+              onClick={() => togglePanel("guide")}
+            >
+              {L("Hướng dẫn thao tác", "Reading guide")}
+            </button>
+          </div>
+          {paged && !isPdf ? (
+            <form
+              className="page-jump"
+              onSubmit={(event) => {
+                event.preventDefault();
+                try {
+                  const target = parsePageInput(pageInput, jumpCount);
+                  closePanel();
+                  jumpPage(Math.floor(target / jumpStride));
+                } catch {
+                  setPageError(
+                    L(
+                      `Nhập số trang từ 1 đến ${jumpCount}.`,
+                      `Enter a page from 1 to ${jumpCount}.`,
+                    ),
+                  );
+                }
+              }}
+            >
+              <label>
+                {L("Đến trang", "Go to page")}
+                <input
+                  inputMode="numeric"
+                  value={pageInput}
+                  onChange={(e) => setPageInput(e.target.value)}
+                />
+              </label>
+              <p className="tiny muted">
+                {L(
+                  "Số trang trong chương hiện tại.",
+                  "Page number within this chapter.",
+                )}{" "}
+                1–{jumpCount}
+              </p>
+              {pageError && <p role="alert">{pageError}</p>}
+              <button className="primary-button" type="submit">
+                {L("Đi đến trang", "Go to page")}
+              </button>
+            </form>
+          ) : (
+            <p>
+              {isPdf
+                ? L(
+                    "Dùng ô số trang trên thanh PDF.",
+                    "Use the PDF page controls.",
+                  )
+                : L(
+                    "Chọn giao diện Sách hoặc Trang đơn/đôi để nhập số trang.",
+                    "Choose Book or single/double-page mode to jump by page number.",
+                  )}
+            </p>
+          )}
+          <OfflineDownloads locale={locale} />
+        </Panel>
+      )}
+      {panel === "guide" && (
+        <ReaderGuide locale={locale} onClose={closePanel} />
+      )}
+      {panel === "parallel" && (
+        <ParallelReader
+          locale={locale}
+          chapterId={chapterId}
+          settings={settings}
+          offlineBook={offline ? book : undefined}
+          fontFamily={fontFamily}
+          onClose={closePanel}
+          onRead={(language, id) => {
+            closePanel();
+            if (language === locale) go(id);
+            else
+              window.location.assign(
+                offline
+                  ? `/offline?locale=${language}&chapter=${id}`
+                  : `/${language}/read/${id}`,
+              );
+          }}
+        />
+      )}
+      {panel === "recent" && (
+        <Panel
+          title={L("Vị trí gần đây", "Recent positions")}
+          onClose={closePanel}
+          closeLabel={L("Đóng", "Close")}
+        >
+          <p className="tiny muted">
+            {L(
+              "Vị trí trước khi đổi chương, nhảy trang, tìm kiếm hoặc mở ghi chú. Giữ riêng theo ngôn ngữ.",
+              "Positions before chapter changes, page jumps, search or annotations. Stored separately for each language.",
+            )}
+          </p>
+          <ol className="recent-places">
+            {recentPlaces
+              .filter((p) => p.locale === locale)
+              .map((p, index) => {
+                const content = book.chapters.find(
+                    (c) => c.id === p.chapterId,
+                  )?.[locale],
+                  valid = content?.revision === p.revision;
+                return (
+                  <li key={p.at + ":" + index}>
+                    <button
+                      className="secondary-button"
+                      disabled={!valid}
+                      onClick={() => restoreVisit(p)}
+                    >
+                      {content?.title ?? p.chapterId} ·{" "}
+                      {Math.round(p.ratio * 100)}%
+                    </button>
+                    <small>
+                      {new Date(p.at).toLocaleString(
+                        locale === "vi" ? "vi-VN" : "en-US",
+                      )}
+                      {!valid
+                        ? " · " +
+                          L("Bản cũ/đã thu hồi", "Older/withdrawn edition")
+                        : ""}
+                    </small>
+                  </li>
+                );
+              })}
+          </ol>
+          {!recentPlaces.some((p) => p.locale === locale) && (
+            <p>{L("Chưa có vị trí gần đây.", "No recent positions yet.")}</p>
+          )}
+        </Panel>
+      )}
       {panel === "settings" && (
         <ReaderSettingsPanel
           locale={locale}
@@ -2794,6 +3219,36 @@ export default function Reader({
               "Lighter pauses at . : ; … and dashes. Turn off for the voice’s original phrasing. Timing varies by device.",
             )}
           </p>
+          <label className="check-label">
+            <input
+              type="checkbox"
+              checked={settings.autoNext}
+              onChange={(e) =>
+                updateSettings({ ...settings, autoNext: e.target.checked })
+              }
+            />
+            {L("Tự nghe tiếp chương kế", "Continue to the next chapter")}
+          </label>
+          <p className="tiny muted">
+            {L(
+              "Áp dụng khi nghe hết chương văn bản; dừng ở phần thiếu bản dịch hoặc PDF. Không tự phát khi mở web.",
+              "Continues after a text chapter finishes; stops at missing translations or PDFs. Opening the website does not start playback.",
+            )}
+          </p>
+          <PronunciationEditor
+            locale={locale}
+            rules={pronunciations}
+            onSave={async (rules) => {
+              await writePreference("pronunciation:" + locale, rules);
+              setPronunciations(rules);
+              notify(
+                L(
+                  "Đã lưu từ điển phát âm trên thiết bị.",
+                  "Pronunciations saved on this device.",
+                ),
+              );
+            }}
+          />
           <div className="button-row">
             <button
               className="primary-button"
@@ -2812,6 +3267,7 @@ export default function Reader({
               <button
                 className="secondary-button"
                 onClick={() => {
+                  nextSpeech.current = null;
                   speech.stop();
                   void listeningSaver.flush().catch(() => {});
                 }}

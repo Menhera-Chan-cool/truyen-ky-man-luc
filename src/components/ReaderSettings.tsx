@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Panel } from "./Ui";
 import DeviceBackup from "./DeviceBackup";
+import PersonalFonts from "./PersonalFonts";
 import type { ReaderBackup } from "../lib/reader-backup";
 import { tx } from "../lib/content";
 import { readerFonts } from "../lib/reader";
@@ -160,6 +161,11 @@ export default function ReaderSettingsPanel({
               value={settings.font}
               onChange={(e) => update("font", e.target.value)}
             >
+              {settings.font.startsWith("font:") && (
+                <option value={settings.font}>
+                  {L("Phông cá nhân đang chọn", "Selected personal font")}
+                </option>
+              )}
               <optgroup
                 label={L(
                   "Phông chữ hệ thống & chuẩn",
@@ -174,6 +180,11 @@ export default function ReaderSettingsPanel({
               </optgroup>
             </select>
           </label>
+          <PersonalFonts
+            locale={locale}
+            selected={settings.font}
+            onSelect={(font) => update("font", font)}
+          />
           <label className="field-group range-label">
             {L("Cỡ chữ", "Font size")}
             <output>{settings.fontSize}px</output>

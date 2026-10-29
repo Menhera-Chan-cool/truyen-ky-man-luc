@@ -6,6 +6,7 @@ import {
 } from "../../../../src/lib/server";
 import { cleanHtml } from "../../../../src/lib/sanitize";
 import { validateImport } from "../../../../src/lib/content";
+import { reviewPublication } from "../../../../src/lib/publication-review";
 function validate(item: Record<string, unknown>) {
   if (
     !["vi", "en"].includes(String(item.locale)) ||
@@ -98,10 +99,30 @@ export async function POST(request: Request) {
         )
       )
         throw new HttpError("Invalid publication selection");
+      const issues = await reviewPublication(client, body.items);
+      if (issues.some((i) => i.severity === "error"))
+        return Response.json(
+          { error: "Publication checks failed", issues },
+          { status: 422, headers: { "Cache-Control": "no-store" } },
+        );
       result = await client.rpc("publish_chapters", { p_items: body.items });
     } else if (body.action === "publish" || body.action === "withdraw") {
       if (!Number.isInteger(body.expectedRevision))
         throw new HttpError("Expected revision required");
+      if (body.action === "publish") {
+        const issues = await reviewPublication(client, [
+          {
+            id: body.id,
+            locale: body.locale,
+            expectedRevision: body.expectedRevision,
+          },
+        ]);
+        if (issues.some((i) => i.severity === "error"))
+          return Response.json(
+            { error: "Publication checks failed", issues },
+            { status: 422, headers: { "Cache-Control": "no-store" } },
+          );
+      }
       result = await client.rpc("publish_chapter", {
         p_id: body.id,
         p_locale: body.locale,
@@ -142,7 +163,10 @@ export async function POST(request: Request) {
         ).size !== items.length
       )
         throw new HttpError("Duplicate chapters");
-      result = await client.rpc("save_chapters", { p_items: items });
+      result = await client.rpc("save_chapters_with_reason", {
+        p_items: items,
+        p_reason: "import",
+      });
     } else {
       const item = validate(body);
       result = await client.rpc("save_chapter", {

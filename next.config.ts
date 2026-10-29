@@ -5,6 +5,10 @@ const config: NextConfig = {
   async headers() {
     return [
       {
+        source: "/sw.js",
+        headers: [{ key: "Cache-Control", value: "no-store" }],
+      },
+      {
         source: "/vendor/page-flip-2.0.7.js",
         headers: [
           {

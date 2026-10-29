@@ -6,6 +6,12 @@ import {
   type ListeningProgress,
 } from "./types";
 import { normalizeSettings } from "./reader";
+import {
+  parsePronunciations,
+  parseRecent,
+  type PronunciationRule,
+  type RecentPlace,
+} from "./reader-extras";
 export const MAX_BACKUP_BYTES = 10 * 1024 * 1024;
 export type ReaderBackup = {
   format: "truyen-ky-man-luc-reader-backup";
@@ -16,6 +22,8 @@ export type ReaderBackup = {
   progress: { key: string; value: Progress }[];
   annotations: Annotation[];
   listening?: ListeningProgress[];
+  pronunciations?: { vi: PronunciationRule[]; en: PronunciationRule[] };
+  recent?: RecentPlace[];
 };
 const bad = (): never => {
   throw new Error("Invalid reader backup");
@@ -63,7 +71,8 @@ export function parseReaderBackup(text: string): ReaderBackup {
     const selected: Record<string, unknown> = {};
     for (const [k, d] of Object.entries(defaultSettings)) {
       const value =
-        ["shortPauses", "layout"].includes(k) && raw[k] === undefined
+        ["shortPauses", "layout", "autoNext"].includes(k) &&
+        raw[k] === undefined
           ? d
           : raw[k];
       if (typeof value !== typeof d) bad();
@@ -172,6 +181,15 @@ export function parseReaderBackup(text: string): ReaderBackup {
     progress,
     annotations,
     listening,
+    ...(v.pronunciations === undefined
+      ? {}
+      : {
+          pronunciations: {
+            vi: parsePronunciations(object(v.pronunciations).vi),
+            en: parsePronunciations(object(v.pronunciations).en),
+          },
+        }),
+    ...(v.recent === undefined ? {} : { recent: parseRecent(v.recent) }),
   };
 }
 export function mergeBackupNotes(

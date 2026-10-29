@@ -1,3 +1,11 @@
+# Tiện ích đọc và biên tập — kiểm tra trước phát hành 30/10/2026
+
+- Source cuối: 95 unit / 25 file đạt, typecheck và production build đạt.
+- Full Playwright trên bản dựng cuối: 189 đạt / 17 skip theo thiết bị, 0 fail/flaky trong 206 ca; gồm đối chiếu, nhảy trang/lịch sử, phông riêng, phát âm/auto-next, ngoại tuyến và hồi quy Book/ghi chú/TTS/VI–EN. Xem verification/expansion-local.json.
+- Supabase thật: kiểm thử quản trị mở rộng và editor VI/EN đạt, cleanup toàn bộ fixture thành công; public book và revision thật không đổi. Xem verification/expansion-admin-latest.json và verification/editor-switch-latest.json.
+- Migration 004 đã được owner chạy thành công và xác minh bảng qua API. Chỉ bổ sung nhật ký/hiện diện/RPC lưu nháp; không sửa nội dung sách.
+- Chưa phát hành bundle này ở checkpoint này; xác nhận Vercel/source commit và bằng chứng cloud sẽ bổ sung sau khi deployment READY.
+
 # Bằng chứng kiểm chứng — cập nhật 29/10/2026
 
 ## Vuốt nhanh và chú thích cảm ứng — release hiện tại

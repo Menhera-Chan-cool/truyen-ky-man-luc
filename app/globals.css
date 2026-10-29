@@ -2945,3 +2945,341 @@ dialog::backdrop {
     transition: none !important;
   }
 }
+.draft-review,
+.replacement-results,
+.editing-presence {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #cfc4b2;
+}
+.editing-presence {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  margin: 0 0 16px;
+}
+.review-issues {
+  margin: 18px 0;
+}
+.review-issues li {
+  padding: 8px 0;
+}
+.review-issues li p {
+  margin: 4px 0;
+  overflow-wrap: anywhere;
+}
+.review-issues .error strong {
+  color: #9b2f23;
+}
+.review-issues .warning strong {
+  color: #76521d;
+}
+.version-diff {
+  margin: 16px 0;
+}
+.version-diff > p {
+  padding: 10px 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.version-diff > p > strong {
+  display: block;
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+.diff-added {
+  background: #e4efdc;
+  color: #233d1a;
+}
+.diff-removed {
+  background: #f5ded9;
+  color: #6f241c;
+  text-decoration: line-through;
+}
+.diff-format {
+  background: #f5e9c9;
+  color: #604813;
+}
+.diff-same {
+  opacity: 0.7;
+}
+.batch-replace {
+  max-width: 1000px;
+  margin: auto;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.replacement-entry {
+  padding: 14px 0;
+  border-top: 1px solid #cfc4b2;
+}
+.replacement-entry .check-label {
+  align-items: flex-start;
+}
+.audit-log {
+  max-width: 1000px;
+  margin: auto;
+}
+.audit-log ol {
+  list-style: none;
+  padding: 0;
+}
+.audit-log li {
+  padding: 14px 0;
+  border-bottom: 1px solid #cfc4b2;
+  overflow-wrap: anywhere;
+}
+.audit-log li p {
+  margin: 6px 0;
+  font-size: 12px;
+  opacity: 0.75;
+}
+@media (max-width: 759px) {
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .draft-review .button-row {
+    flex-wrap: wrap;
+  }
+  .version-diff select {
+    max-width: 100%;
+  }
+}
+.reading-tool-links {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+.page-jump {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--reader-fg) 20%, transparent);
+}
+.page-jump label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.page-jump input {
+  width: 100%;
+  min-height: 44px;
+}
+.reader-guide {
+  padding-left: 22px;
+}
+.reader-guide li {
+  margin: 0 0 24px;
+}
+.reader-guide h3 {
+  margin-bottom: 8px;
+}
+.reader-guide p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.recent-places {
+  list-style: none;
+  padding: 0;
+}
+.recent-places li {
+  margin: 14px 0;
+}
+.recent-places button {
+  width: 100%;
+  text-align: left;
+  white-space: normal;
+}
+.recent-places small {
+  display: block;
+  margin-top: 6px;
+  opacity: 0.7;
+}
+.parallel-reader .reader-panel {
+  width: min(1260px, calc(100vw - 32px));
+  right: 16px;
+}
+.parallel-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin: 18px 0;
+}
+.parallel-edition {
+  min-width: 0;
+}
+.parallel-edition h3 {
+  font:
+    600 14px "Be Vietnam Pro",
+    sans-serif;
+  margin: 0 0 12px;
+}
+.parallel-scroll {
+  height: calc(100dvh - 300px);
+  min-height: 220px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--reader-fg) 20%, transparent);
+  border-radius: 4px;
+}
+.parallel-scroll h4 {
+  font:
+    600 22px "Literata Variable",
+    Georgia,
+    serif;
+  margin: 0 0 24px;
+}
+.parallel-scroll .prose {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+.parallel-edition .missing-translation {
+  min-height: 0;
+  display: block;
+  font-size: 14px;
+}
+.comparison-picker {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+}
+.comparison-picker select {
+  width: 100%;
+  min-width: 0;
+}
+.parallel-reader > .reader-panel > .panel-content {
+  min-width: 0;
+}
+.personal-fonts,
+.pronunciation-editor {
+  margin: 18px 0;
+}
+.personal-fonts summary,
+.pronunciation-editor summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+.personal-fonts .button-row {
+  margin: 8px 0;
+}
+.pronunciation-editor textarea {
+  width: 100%;
+  min-height: 130px;
+  margin: 10px 0;
+  resize: vertical;
+}
+@media (max-width: 759px) {
+  .parallel-reader .reader-panel {
+    width: calc(100vw - 16px);
+    right: 8px;
+  }
+  .parallel-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  .parallel-scroll {
+    height: 35dvh;
+    min-height: 180px;
+  }
+}
+.offline-download {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid color-mix(in srgb, var(--reader-fg) 20%, transparent);
+}
+.offline-download .button-row {
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.offline-download a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.offline-home {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 36px 24px;
+  line-height: 1.7;
+}
+.offline-home h1 {
+  font:
+    600 36px "Literata Variable",
+    Georgia,
+    serif;
+}
+.offline-home li {
+  padding: 12px 0;
+  border-bottom: 1px solid #cfc4b2;
+}
+.offline-home a {
+  color: inherit;
+}
+.offline-home .button-row {
+  flex-wrap: wrap;
+}
+
+.tools-guide-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--reader-accent);
+  border: 1px solid var(--reader-bg);
+  pointer-events: none;
+}
+.parallel-scroll .prose p,
+.parallel-scroll .prose li,
+.parallel-scroll .prose div {
+  font-size: inherit;
+  line-height: inherit;
+  font-family: inherit;
+}
+.parallel-scroll .prose :is(h1, h2, h3, h4) {
+  font-size: 1.1em;
+  line-height: 1.5;
+}
+.personal-fonts summary,
+.pronunciation-editor summary {
+  min-height: 44px;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+.reader-panel .check-label,
+.draft-review .check-label,
+.batch-replace .check-label {
+  font-size: 14px;
+  min-height: 44px;
+}
+.page-jump input {
+  background: color-mix(in srgb, var(--reader-fg) 5%, var(--reader-bg));
+  color: var(--reader-fg);
+  border: 1px solid color-mix(in srgb, var(--reader-fg) 25%, var(--reader-bg));
+  border-radius: 4px;
+  padding: 10px;
+  font: inherit;
+}
+.form-grid input,
+.form-grid select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #cfc4b2;
+  border-radius: 4px;
+  padding: 10px;
+  background: #eee9dd;
+  color: #302b23;
+  font: inherit;
+}

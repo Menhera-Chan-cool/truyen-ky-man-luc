@@ -9,6 +9,8 @@ import {
 import { rangeFromOffsets, speechSegments, speechText } from "../lib/reader";
 import type { Locale } from "../lib/types";
 import { footnoteSpeechText } from "../lib/footnotes";
+import { pronounceText, type PronunciationRule } from "../lib/reader-extras";
+const NO_RULES: PronunciationRule[] = [];
 type Segment = { text: string; offset?: number; plain?: boolean };
 function segments(
   root: HTMLElement | null,
@@ -74,7 +76,12 @@ export function useSpeech(
   onFollow?: (offset: number) => void,
   shortPauses = true,
   onCheckpoint?: (offset: number, completed: boolean, plain: boolean) => void,
+  extras: {
+    pronunciations?: PronunciationRule[];
+    onComplete?: () => void;
+  } = {},
 ) {
+  const pronunciationRules = extras.pronunciations ?? NO_RULES;
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]),
     [playing, setPlaying] = useState(false),
     [paused, setPaused] = useState(false),
@@ -83,6 +90,10 @@ export function useSpeech(
     queue = useRef<Segment[]>([]),
     index = useRef(0),
     running = useRef(false);
+  const completion = useRef<{ eligible: boolean; locale: Locale }>({
+    eligible: false,
+    locale,
+  });
   const current = useRef<{
     utterance: SpeechSynthesisUtterance;
     segment: Segment;
@@ -96,6 +107,8 @@ export function useSpeech(
     onFollow,
     shortPauses,
     onCheckpoint,
+    pronunciationRules,
+    onComplete: extras.onComplete,
   });
   config.current = {
     locale,
@@ -105,6 +118,8 @@ export function useSpeech(
     onFollow,
     shortPauses,
     onCheckpoint,
+    pronunciationRules,
+    onComplete: extras.onComplete,
   };
   const refreshVoices = useCallback(() => {
     if (!("speechSynthesis" in window)) return [];
@@ -125,6 +140,7 @@ export function useSpeech(
     queue.current = [];
     index.current = 0;
     current.current = null;
+    completion.current.eligible = false;
     window.speechSynthesis?.cancel();
     root.current
       ?.querySelectorAll(".speaking")
@@ -162,11 +178,20 @@ export function useSpeech(
     if (gen !== generation.current || !running.current) return;
     const item = queue.current[index.current];
     if (!item) {
+      const finished =
+        completion.current.eligible &&
+        completion.current.locale === config.current.locale;
+      const onComplete = config.current.onComplete;
       stop();
+      if (finished) onComplete?.();
       return;
     }
     const c = config.current,
-      u = new SpeechSynthesisUtterance(speechText(item.text, c.shortPauses));
+      spoken = pronounceText(
+        speechText(item.text, c.shortPauses),
+        c.pronunciationRules,
+      ),
+      u = new SpeechSynthesisUtterance(spoken.text);
     const available = window.speechSynthesis
       .getVoices()
       .filter((v) => v.lang.toLowerCase().startsWith(c.locale));
@@ -183,7 +208,10 @@ export function useSpeech(
       ) {
         current.current.boundary = Math.max(
           0,
-          Math.min(item.text.length - 1, e.charIndex),
+          Math.min(
+            item.text.length - 1,
+            spoken.offsets[e.charIndex] ?? item.text.length - 1,
+          ),
         );
         if (item.offset !== undefined)
           c.onCheckpoint?.(
@@ -296,7 +324,7 @@ export function useSpeech(
     const gen = ++generation.current;
     window.speechSynthesis.cancel();
     launch.current(gen);
-  }, [rate, voiceName, shortPauses]);
+  }, [rate, voiceName, shortPauses, pronunciationRules]);
   useEffect(() => {
     stop();
   }, [locale, stop]);
@@ -321,6 +349,7 @@ export function useSpeech(
     refreshVoices();
     queue.current = segments(root.current, text, start, shortPauses, plain);
     if (!queue.current.length) return;
+    completion.current = { eligible: text === undefined && !plain, locale };
     index.current = 0;
     running.current = true;
     setPlaying(true);

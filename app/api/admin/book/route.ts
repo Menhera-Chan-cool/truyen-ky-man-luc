@@ -29,6 +29,26 @@ export async function POST(request: Request) {
           )
         )
           throw new HttpError("Upload covers to the book storage");
+      if (body.publish)
+        for (const url of new Set(
+          [meta.frontCover, meta.backCover].filter(Boolean),
+        )) {
+          if (url === "/book/cover.jpg") continue;
+          const path = url.slice("/api/assets/".length),
+            registered = await client
+              .from("assets")
+              .select("path")
+              .eq("path", path)
+              .maybeSingle();
+          if (
+            registered.error ||
+            !registered.data ||
+            !(await client.storage.from("book-assets").exists(path)).data
+          )
+            throw new HttpError(
+              "Cover file is unavailable. Upload it again before publishing.",
+            );
+        }
     }
     const { data, error } = await client.rpc("save_book", {
       p_meta: body.meta,

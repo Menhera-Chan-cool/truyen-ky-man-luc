@@ -418,6 +418,9 @@ try {
 } finally {
   if (browser) await browser.close();
   if (uid) {
+    await clean("editing presence", () =>
+      admin.from("editor_presence").delete().eq("user_id", uid),
+    );
     for (const id of ids) {
       await clean("edition " + id, () =>
         admin.from("chapter_editions").delete().eq("chapter_id", id),
@@ -429,6 +432,12 @@ try {
         admin.from("chapters").delete().eq("id", id),
       );
     }
+    await clean("verification audit", () =>
+      admin
+        .from("admin_audit")
+        .delete()
+        .or(`actor_id.eq.${uid},entity_id.in.(${[uid, ...ids].join(",")})`),
+    );
     await clean("membership", () =>
       admin.from("members").delete().eq("user_id", uid),
     );

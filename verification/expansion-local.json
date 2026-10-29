@@ -1,0 +1,23 @@
+{
+  "base": "http://127.0.0.1:3001",
+  "checkedAt": "2026-10-29T23:54:54.585Z",
+  "scope": "Full 206-case Chromium desktop/mobile suite on final production build, including final comparison typography, offline worker index and cover publication guard.",
+  "unit": {
+    "files": 25,
+    "passed": 95
+  },
+  "typecheck": true,
+  "productionBuild": true,
+  "stats": {
+    "startTime": "2026-10-29T23:47:54.008Z",
+    "duration": 402033.57,
+    "expected": 189,
+    "skipped": 17,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "limitations": [
+    "Conditional skips are device/environment-specific; Chromium touch emulation is not physical Android/iOS or Safari.",
+    "Speech fixtures mock Web Speech API; no acoustic voice quality or real-device FPS claim."
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "base": "https://truyen-ky-man-luc.vercel.app",
+  "base": "http://localhost:3001",
   "checks": [
     "vi import and inline-image parent lock; failed import preserves preview/discard warning; retry waits for parent refresh (mocked storage/import boundaries, no uploaded objects)",
     "vi rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
@@ -10,39 +10,47 @@
   ],
   "cleanup": [
     {
-      "label": "edition verify-editor-4d5f6e10-preface",
+      "label": "editing presence",
       "ok": true
     },
     {
-      "label": "versions verify-editor-4d5f6e10-preface",
+      "label": "edition verify-editor-bd39ef3b-preface",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-4d5f6e10-preface",
+      "label": "versions verify-editor-bd39ef3b-preface",
       "ok": true
     },
     {
-      "label": "edition verify-editor-4d5f6e10-one",
+      "label": "chapter verify-editor-bd39ef3b-preface",
       "ok": true
     },
     {
-      "label": "versions verify-editor-4d5f6e10-one",
+      "label": "edition verify-editor-bd39ef3b-one",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-4d5f6e10-one",
+      "label": "versions verify-editor-bd39ef3b-one",
       "ok": true
     },
     {
-      "label": "edition verify-editor-4d5f6e10-two",
+      "label": "chapter verify-editor-bd39ef3b-one",
       "ok": true
     },
     {
-      "label": "versions verify-editor-4d5f6e10-two",
+      "label": "edition verify-editor-bd39ef3b-two",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-4d5f6e10-two",
+      "label": "versions verify-editor-bd39ef3b-two",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-bd39ef3b-two",
+      "ok": true
+    },
+    {
+      "label": "verification audit",
       "ok": true
     },
     {
@@ -73,15 +81,7 @@
     },
     {
       "path": "/api/admin/chapters",
-      "failure": "net::ERR_ABORTED"
-    },
-    {
-      "path": "/api/admin/chapters",
       "status": 409
-    },
-    {
-      "path": "/api/admin/chapters",
-      "failure": "net::ERR_ABORTED"
     },
     {
       "path": "/api/admin/chapters",

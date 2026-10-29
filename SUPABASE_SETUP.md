@@ -22,6 +22,8 @@ Nếu đã chạy bản `001_book.sql` trước khi bổ sung điều kiện UPD
 
 Chạy thêm `supabase/migrations/003_public_book_index.sql` sau 001/002. Hàm này trả metadata/mục lục đã xuất bản, không lấy nội dung HTML của các chương. Cần áp dụng trước khi chạy bản tối ưu mới; migration không thay đổi nội dung sách và có thể chạy lại.
 
+Tiếp theo chạy toàn bộ `supabase/migrations/004_collaboration.sql` để bật nhật ký quản trị, trạng thái editor và lưu nháp hàng loạt có ghi nguồn thao tác. Bảng mới có RLS, khách không truy cập được; migration không sửa nội dung sách. Project hiện tại đã chạy 004 thành công. Với database hiện hữu, không chạy lại 001–003 chỉ để áp dụng 004.
+
 Trong **Authentication → Sign In / Providers → Email**, bật Email/Password nhưng tắt **Allow new users to sign up** trong cấu hình đăng ký. Tài khoản chỉ được cấp qua Admin API bởi lệnh owner hoặc owner hiện có.
 
 Lấy **Project URL**, khóa **anon** và khóa **service_role** từ phần Connect / API Keys của project. Tên tab có thể thay đổi theo giao diện Supabase; dùng các khóa legacy tương ứng với biến dưới đây. Khóa `service_role` chỉ ở server.
