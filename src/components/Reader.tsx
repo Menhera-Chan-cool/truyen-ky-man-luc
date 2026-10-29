@@ -9,6 +9,7 @@ import {
   useState,
   type CSSProperties,
   type MouseEvent,
+  type PointerEvent as ReactPointerEvent,
 } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -179,15 +180,27 @@ export default function Reader({
   const bookPaper = useRef<HTMLDivElement>(null),
     physicalFlip = useRef<BookFlip | null>(null),
     ebookSidebar = useRef<boolean | null>(null);
-  const turnRef = useRef<(direction: number) => void>(() => {});
+  const turnRef = useRef<(direction: number, animate?: boolean) => void>(
+    () => {},
+  );
   const pendingBookEdge = useRef<{
     id: string;
     locale: Locale;
     edge: "start" | "end";
   } | null>(null);
-  const swipeStart = useRef<{ x: number; y: number; time: number } | null>(
-    null,
-  );
+  const gesture = useRef<{
+      x: number;
+      y: number;
+      time: number;
+      id: number;
+      edge: number;
+      direction: number;
+      preview: boolean;
+    } | null>(null),
+    suppressBookClick = useRef(0);
+  const [bookControlsVisible, setBookControlsVisible] = useState(true),
+    [bookControlActivity, setBookControlActivity] = useState(0);
+  const bookFooter = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null),
     windowRef = useRef<HTMLDivElement>(null),
     contentRef = useRef<HTMLElement>(null),
@@ -349,6 +362,54 @@ export default function Reader({
   }, [edition, isPdf, locale, chapterId, bookLayout]);
   const paged = (bookLayout || settings.mode !== "scroll") && !isPdf;
   const double = bookLayout ? bookWide : settings.mode === "double" && !mobile;
+  const bookControlsHidden = bookLayout && mobile && !bookControlsVisible;
+  function wakeBookControls() {
+    setBookControlsVisible(true);
+    setBookControlActivity((value) => value + 1);
+  }
+  useEffect(() => {
+    if (!bookLayout || !mobile || panel || sidebar || selection || imageOpen) {
+      setBookControlsVisible(true);
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      if (
+        !bookFooter.current?.querySelector(":focus-visible") &&
+        !gesture.current
+      )
+        setBookControlsVisible(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [
+    bookLayout,
+    mobile,
+    panel,
+    sidebar,
+    selection,
+    imageOpen,
+    bookControlActivity,
+  ]);
+  useEffect(() => {
+    const cancel = () => {
+      gesture.current = null;
+      bookPaper.current?.removeAttribute("data-dragging");
+      physicalFlip.current?.cancel();
+    };
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape") cancel();
+    };
+    window.addEventListener("blur", cancel);
+    window.addEventListener("resize", cancel);
+    document.addEventListener("visibilitychange", cancel);
+    document.addEventListener("keydown", key);
+    return () => {
+      cancel();
+      window.removeEventListener("blur", cancel);
+      window.removeEventListener("resize", cancel);
+      document.removeEventListener("visibilitychange", cancel);
+      document.removeEventListener("keydown", key);
+    };
+  }, [bookLayout, chapterId, locale]);
   useLayoutEffect(() => {
     if (bookLayout) setSidebar(false);
   }, [bookLayout]);
@@ -1111,14 +1172,14 @@ export default function Reader({
     narrow.addEventListener("change", resize);
     return () => narrow.removeEventListener("change", resize);
   }, [panel]);
-  function go(id: string, edge?: "start" | "end") {
+  function go(id: string, edge?: "start" | "end", animate = true) {
     if (
       restoringBackup.current ||
       id === chapterId ||
       !book.chapters.some((c) => c.id === id)
     )
       return;
-    if (bookLayout && edge)
+    if (bookLayout && edge && animate)
       physicalFlip.current?.begin(
         book.chapters.findIndex((c) => c.id === id) > position ? 1 : -1,
       );
@@ -1149,22 +1210,226 @@ export default function Reader({
     // The published locale is already loaded; changing chapters needs no server round trip.
     window.history.pushState(null, "", `/${locale}/read/${id}`);
   }
-  function turnPage(direction: number) {
+  function turnPage(direction: number, animate = true) {
     if (!ready || !restored.current || restoringBackup.current) return;
     setAuto(false);
     layoutAnchor.current = undefined;
     const target = pageRef.current + direction;
     if (target >= 0 && target < pages) {
-      if (bookLayout) physicalFlip.current?.begin(direction);
+      if (bookLayout && animate) physicalFlip.current?.begin(direction);
       pageRef.current = target;
       setPage(target);
     } else if (bookLayout) {
       const neighbor = direction > 0 ? next : previous;
       if (!neighbor) return;
-      go(neighbor.id, direction > 0 ? "start" : "end");
+      go(neighbor.id, direction > 0 ? "start" : "end", animate);
     } else return;
   }
   turnRef.current = turnPage;
+  function startBookGesture(e: ReactPointerEvent<HTMLDivElement>) {
+    setAuto(false);
+    layoutAnchor.current = undefined;
+    if (!(e.target as HTMLElement).closest("a,img")) setActiveImage(null);
+    if (!e.isPrimary) {
+      gesture.current = null;
+      bookPaper.current?.removeAttribute("data-dragging");
+      physicalFlip.current?.cancel();
+      return;
+    }
+    physicalFlip.current?.cancel();
+    gesture.current = null;
+    const rect = bookPaper.current?.getBoundingClientRect();
+    if (
+      !bookLayout ||
+      !ready ||
+      !restored.current ||
+      !rect ||
+      window.getSelection()?.isCollapsed === false ||
+      (e.target as Element).closest(
+        "a,button,input,select,textarea,img,[contenteditable]",
+      ) ||
+      (e.pointerType !== "touch" &&
+        (e.pointerType !== "mouse" || e.button !== 0))
+    )
+      return;
+    const inside =
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom &&
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right;
+    const edge =
+      e.pointerType === "mouse"
+        ? e.clientX <= rect.left + 28
+          ? -1
+          : e.clientX >= rect.right - 28
+            ? 1
+            : 0
+        : 0;
+    if (e.pointerType === "mouse" && (!inside || !edge)) return;
+    if (e.pointerType === "mouse") e.preventDefault();
+    gesture.current = {
+      x: e.clientX,
+      y: e.clientY,
+      time: e.timeStamp,
+      id: e.pointerId,
+      edge,
+      direction: 0,
+      preview: false,
+    };
+  }
+  function moveBookGesture(e: ReactPointerEvent<HTMLDivElement>) {
+    const start = gesture.current;
+    if (!start || start.id !== e.pointerId) return;
+    const dx = e.clientX - start.x,
+      dy = e.clientY - start.y;
+    if (
+      window.getSelection()?.isCollapsed === false ||
+      (!start.direction && Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx))
+    ) {
+      gesture.current = null;
+      bookPaper.current?.removeAttribute("data-dragging");
+      physicalFlip.current?.releaseDrag(false);
+      return;
+    }
+    if (
+      !start.direction &&
+      Math.abs(dx) > 10 &&
+      Math.abs(dx) > Math.abs(dy) * 2
+    ) {
+      const direction = dx < 0 ? 1 : -1,
+        target = pageRef.current + direction,
+        neighbor = direction > 0 ? next : previous;
+      if (
+        (start.edge && direction !== start.edge) ||
+        ((target < 0 || target >= pages) && !neighbor)
+      )
+        return;
+      start.direction = direction;
+      const sourceChapter = chapterId;
+      start.preview =
+        physicalFlip.current?.startDrag(
+          direction,
+          `${chapterId}:${pageRef.current}`,
+          (paper) => {
+            const prose = paper.querySelector<HTMLElement>(".prose")!,
+              viewport = paper.querySelector<HTMLElement>(".reading-window")!;
+            let targetPage = target,
+              targetLeaves = leaves;
+            if (target < 0 || target >= pages) {
+              const edition = neighbor?.[locale];
+              if (!edition || edition.kind === "pdf") return;
+              paper.querySelector(".chapter-content")!.innerHTML = edition.html;
+              paper.querySelector(".chapter-title")!.textContent =
+                edition.title;
+              (
+                paper.querySelector(".book-chapter-heading") as HTMLElement
+              ).dataset.title = edition.title;
+              decorateFootnotes(prose, locale, neighbor!.id);
+              targetLeaves = countPages(
+                prose.scrollWidth,
+                double ? (viewport.clientWidth - 48) / 2 : viewport.clientWidth,
+                48,
+              );
+              targetPage =
+                direction > 0
+                  ? 0
+                  : countPages(prose.scrollWidth, viewport.clientWidth, 48) - 1;
+            }
+            prose.style.transform = `translateX(-${Math.max(0, targetPage) * (viewport.clientWidth + 48)}px)`;
+            const firstLeaf = Math.max(0, targetPage) * (double ? 2 : 1) + 1;
+            paper.querySelector(".book-folio")!.replaceChildren(
+              ...Array.from(
+                { length: double && firstLeaf < targetLeaves ? 2 : 1 },
+                (_, i) => {
+                  const span = paper.ownerDocument.createElement("span");
+                  span.textContent = String(firstLeaf + i);
+                  return span;
+                },
+              ),
+            );
+          },
+          start.y - bookPaper.current!.getBoundingClientRect().top,
+          () => {
+            if (
+              activeContext.current === `${locale}:${sourceChapter}:${revision}`
+            )
+              turnRef.current(direction, false);
+          },
+        ) ?? false;
+      if (
+        e.currentTarget.hasPointerCapture(e.pointerId) ||
+        e.nativeEvent.isTrusted
+      )
+        e.currentTarget.setPointerCapture(e.pointerId);
+      bookPaper.current?.setAttribute("data-dragging", "true");
+    }
+    if (start.direction) {
+      e.preventDefault();
+      physicalFlip.current?.moveDrag(dx, dy);
+    }
+  }
+  function endBookGesture(
+    e: ReactPointerEvent<HTMLDivElement>,
+    cancel = false,
+  ) {
+    const start = gesture.current;
+    if (!start || start.id !== e.pointerId) return;
+    gesture.current = null;
+    bookPaper.current?.removeAttribute("data-dragging");
+    if (e.currentTarget.hasPointerCapture(e.pointerId))
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    const dx = e.clientX - start.x,
+      dy = e.clientY - start.y,
+      direction = start.direction || (dx < 0 ? 1 : -1),
+      commit =
+        !cancel &&
+        window.getSelection()?.isCollapsed !== false &&
+        (!start.edge || start.edge === direction) &&
+        -dx * direction > 64 &&
+        Math.abs(dx) > Math.abs(dy) * 2 &&
+        (start.direction !== 0 || e.timeStamp - start.time < 700);
+    if (start.direction || commit) {
+      suppressBookClick.current = performance.now() + 500;
+      e.preventDefault();
+    }
+    if (start.preview) physicalFlip.current?.releaseDrag(commit);
+    else if (commit) turnRef.current(direction);
+    if (mobile) setBookControlActivity((value) => value + 1);
+  }
+  function onBookBlankClick(e: MouseEvent<HTMLDivElement>) {
+    if (
+      !bookLayout ||
+      !mobile ||
+      !bookControlsHidden ||
+      performance.now() < suppressBookClick.current ||
+      window.getSelection()?.isCollapsed === false ||
+      (e.target as Element).closest(
+        "a,button,input,select,textarea,img,[contenteditable]",
+      )
+    )
+      return;
+    const root = contentRef.current;
+    if (root) {
+      const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT),
+        range = document.createRange();
+      let node: Node | null;
+      while ((node = walk.nextNode())) {
+        if (!node.textContent?.trim()) continue;
+        range.selectNodeContents(node);
+        if (
+          [...range.getClientRects()].some(
+            (rect) =>
+              e.clientX >= rect.left &&
+              e.clientX <= rect.right &&
+              e.clientY >= rect.top &&
+              e.clientY <= rect.bottom,
+          )
+        )
+          return;
+      }
+    }
+    wakeBookControls();
+  }
   function jumpPage(target: number) {
     if (!ready || !restored.current) return;
     setAuto(false);
@@ -1605,6 +1870,7 @@ export default function Reader({
       data-layout={bookLayout ? "book" : "ebook"}
       data-book-double={bookLayout && double}
       data-ready={ready && restored.current}
+      data-controls-hidden={bookControlsHidden}
       aria-busy={!ready || !restored.current}
     >
       <style>
@@ -2005,46 +2271,15 @@ export default function Reader({
             setAuto(false);
             layoutAnchor.current = undefined;
           }}
-          onPointerDown={(e) => {
-            setAuto(false);
-            physicalFlip.current?.cancel();
-            layoutAnchor.current = undefined;
-            swipeStart.current =
-              bookLayout &&
-              e.pointerType === "touch" &&
-              e.isPrimary &&
-              window.getSelection()?.isCollapsed !== false &&
-              !(e.target as Element).closest(
-                "a,button,input,select,textarea,img,[contenteditable]",
-              )
-                ? { x: e.clientX, y: e.clientY, time: e.timeStamp }
-                : null;
-            if (!(e.target as HTMLElement).closest("a,img"))
-              setActiveImage(null);
+          onPointerDown={startBookGesture}
+          onPointerMove={moveBookGesture}
+          onPointerCancel={(e) => endBookGesture(e, true)}
+          onLostPointerCapture={(e) => {
+            // Touch implicitly captures the text node first; moving capture to the desk is not cancellation.
+            if (e.target === e.currentTarget) endBookGesture(e, true);
           }}
-          onPointerCancel={() => {
-            swipeStart.current = null;
-          }}
-          onPointerUp={(e) => {
-            const start = swipeStart.current;
-            swipeStart.current = null;
-            if (
-              !bookLayout ||
-              !start ||
-              window.getSelection()?.isCollapsed === false
-            )
-              return;
-            const dx = e.clientX - start.x,
-              dy = e.clientY - start.y;
-            if (
-              e.timeStamp - start.time < 700 &&
-              Math.abs(dx) > 64 &&
-              Math.abs(dx) > Math.abs(dy) * 2
-            ) {
-              e.preventDefault();
-              turnRef.current(dx < 0 ? 1 : -1);
-            }
-          }}
+          onPointerUp={endBookGesture}
+          onClick={onBookBlankClick}
         >
           <div
             ref={bookPaper}
@@ -2218,7 +2453,34 @@ export default function Reader({
             )}
           </div>
         </div>
-        <footer className="reading-progress">
+        {bookControlsHidden && (
+          <button
+            className="book-controls-wake"
+            aria-label={L("Hiện điều khiển đọc", "Show reading controls")}
+            onClick={wakeBookControls}
+            onFocus={() => {
+              wakeBookControls();
+              requestAnimationFrame(() =>
+                bookFooter.current
+                  ?.querySelector<HTMLButtonElement>(
+                    ".page-controls button:not(:disabled)",
+                  )
+                  ?.focus({ preventScroll: true }),
+              );
+            }}
+          >
+            <span aria-hidden="true" />
+          </button>
+        )}
+        <footer
+          className="reading-progress"
+          ref={bookFooter}
+          inert={bookControlsHidden}
+          aria-hidden={bookControlsHidden || undefined}
+          onPointerDown={wakeBookControls}
+          onFocus={wakeBookControls}
+          onBlur={wakeBookControls}
+        >
           {bookLayout ? (
             <button
               className="book-footer-action"

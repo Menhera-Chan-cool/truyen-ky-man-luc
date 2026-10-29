@@ -1,0 +1,40 @@
+{
+  "clientDate": "2026-10-29",
+  "unit": {
+    "files": 18,
+    "passed": 82
+  },
+  "typecheck": true,
+  "productionBuild": true,
+  "initialFull": {
+    "startTime": "2026-10-29T10:19:43.191Z",
+    "duration": 208338.459,
+    "expected": 170,
+    "skipped": 10,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "fullBeforeFinalFocusSelector": {
+    "startTime": "2026-10-29T10:24:09.056Z",
+    "duration": 200871.779,
+    "expected": 172,
+    "skipped": 10,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scopeNote": "Final code later selects the first enabled page-control button for keyboard wake on screens below 380px. The final Book, gestures, footnote, navigation and font suites run on that exact rebuilt code. Initial full failures were two stale published-note fixtures (Ban Co versus Sai nu); legacy continuation unit coverage retained. No book content changed.",
+  "redEvidence": "Original live/local code fails held pointer folding and footer inert assertions; native CDP touch then exposed bubbled implicit lostpointercapture; fixed by handling only desk capture loss.",
+  "visualEvidence": "Initial batched UI audit exposed 29px ancestor scroll when wake transferred focus during footer transition. Final focus uses preventScroll; live confirmation will verify unchanged paper geometry.",
+  "limitations": [
+    "Chromium mouse, viewport and native CDP touch simulation; no physical Android/iOS or FPS measurement",
+    "Speech assertions use mocked native speech events"
+  ],
+  "finalBuildTargeted": {
+    "startTime": "2026-10-29T10:28:06.775Z",
+    "duration": 81480.207,
+    "expected": 57,
+    "skipped": 3,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

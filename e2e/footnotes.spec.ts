@@ -177,7 +177,8 @@ test("links alternate and legacy Vietnamese endnotes without rewriting the text"
   for (const [id, n, phrase] of [
     ["chapter-14", 1, "Thần Môn"],
     ["chapter-14", 43, "Xử sĩ"],
-    ["chapter-3", 7, "Sái nữ"],
+    // The published edition labels this Ban Cơ; the legacy continuation is covered by the unit fixture.
+    ["chapter-3", 7, "Ban Cơ"],
     ["preface", 1, "Lời Tựa"],
   ] as const) {
     await page.goto(`/vi/read/${id}`);

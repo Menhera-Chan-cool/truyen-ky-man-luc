@@ -1,0 +1,11 @@
+# Direct book gestures and phone controls — 29/10/2026
+
+Extend the existing Book presentation only. PC primary mouse pulls from either paper edge; phone primary horizontal swipe pulls from the paper. A held drag shows a real folded leaf following displacement before release. Releasing a sufficient inward pull commits one page; short/reversed, vertical, pointer cancellation, selection, multitouch, resize/lifecycle interruption return without navigating. Normal arrow/key turns remain. Drag across chapter boundaries opens fresh next chapter / previous chapter end; no source or position data mutations before commitment. Preserve selection, footnote/link/image interactions and PDF/Ebook behavior.
+
+Reuse the disposable StPageFlip renderer and its old/new snapshots. Preview the target spread inside the isolated context, not by moving live prose or changing reading progress. Keep at most one animation context, no idle library RAF. Reduced motion/e-ink/unready renderer falls back to normal page turn on release. Clip/shadow changes track pointer, pointer capture retains mouse outside paper, interrupted gestures release safely.
+
+Phone Book footer hides after 3 seconds idle with a short exit; its space stays reserved. A labelled 44px bottom wake target and taps on actual blank paper/desk show it again. Text/link/selection taps do not toggle controls. Footer interaction resets idle; keyboard focus, open panels/TOC/selection keep it visible. Hidden controls are inert and absent from accessibility navigation; keyboard focus can reveal them through the wake control. Desktop footer stays visible. Reduced motion disables footer transition.
+
+Implementation: Reader.tsx gesture/lifecycle and footer state; book-flip.ts interactive rendering; globals.css edge affordance/footer animation; e2e/book-gestures.spec.ts. No new dependency, storage schema, backend or content change.
+
+Verify red tests, typecheck, unit/build, Book and continuity/footnote/navigation regressions desktop/phone; batched visual inspection plus final live confirmation. Push existing private GitHub and deploy existing production alias. Native physical touch/browser-edge gestures and device FPS must remain explicit limitations.

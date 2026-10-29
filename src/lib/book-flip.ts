@@ -3,6 +3,13 @@ type FlipInstance = {
   loadFromHTML(pages: HTMLElement[]): void;
   flipNext(corner: string): void;
   flipPrev(corner: string): void;
+  getFlipController(): {
+    start(point: { x: number; y: number }): boolean;
+    fold(point: { x: number; y: number }): void;
+  };
+  getRender(): {
+    convertToGlobal(point: { x: number; y: number }): { x: number; y: number };
+  };
 };
 type FlipWindow = Window & {
   St?: {
@@ -21,6 +28,15 @@ export class BookFlip {
   private disposed = false;
   private timer = 0;
   private finishFrame = 0;
+  private drag: {
+    flip?: FlipInstance;
+    x: number;
+    y: number;
+    originY: number;
+    released?: boolean;
+    settled?: boolean;
+    onTurn: () => void;
+  } | null = null;
   private pending: {
     old: HTMLElement;
     direction: number;
@@ -220,6 +236,10 @@ export class BookFlip {
     this.timer = window.setTimeout(() => this.reset(true), 1600);
   }
   commit(stamp: string) {
+    if (this.drag) {
+      if (this.drag.settled || this.pending?.stamp !== stamp) this.reset(true);
+      return;
+    }
     const pending = this.pending,
       frame = this.frame,
       doc = frame?.contentDocument,
@@ -238,8 +258,97 @@ export class BookFlip {
       return;
     }
     pending.stamp = stamp;
-    const next = this.snapshot(),
-      stage = doc.createElement("div"),
+    this.render(this.snapshot());
+  }
+  startDrag(
+    direction: number,
+    stamp: string,
+    preview: (paper: HTMLElement) => void,
+    y: number,
+    onTurn: () => void,
+  ) {
+    this.begin(direction);
+    const pending = this.pending,
+      doc = this.frame?.contentDocument;
+    if (!pending || !doc) return false;
+    pending.stamp = stamp;
+    clearTimeout(this.timer);
+    const wrapper = this.wrapper(
+      doc,
+      this.snapshot(),
+      pending.width,
+      pending.height,
+    );
+    wrapper.style.visibility = "hidden";
+    doc.body.append(wrapper);
+    const next = wrapper.firstElementChild as HTMLElement;
+    preview(next);
+    const snapshot = next.cloneNode(true) as HTMLElement;
+    wrapper.remove();
+    this.drag = {
+      x: 0,
+      y: 0,
+      originY: Math.max(2, Math.min(pending.height - 2, y)),
+      onTurn,
+    };
+    this.render(snapshot);
+    return true;
+  }
+  moveDrag(dx: number, dy: number) {
+    const drag = this.drag,
+      pending = this.pending;
+    if (!drag || !pending || drag.released !== undefined) return;
+    const leaf = pending.width / (this.double ? 2 : 1);
+    drag.x = Math.max(0, Math.min(leaf * 2 - 1, -dx * pending.direction));
+    drag.y = dy;
+    this.foldDrag(leaf - drag.x, drag.originY + dy);
+  }
+  private foldDrag(x: number, y: number) {
+    const flip = this.drag?.flip;
+    if (flip)
+      flip.getFlipController().fold(flip.getRender().convertToGlobal({ x, y }));
+  }
+  releaseDrag(commit: boolean) {
+    const drag = this.drag,
+      pending = this.pending;
+    if (!drag || !pending || drag.released !== undefined) return;
+    drag.released = commit;
+    if (drag.flip) this.settleDrag();
+  }
+  private settleDrag() {
+    const drag = this.drag,
+      pending = this.pending;
+    if (!drag || !pending) return;
+    const leaf = pending.width / (this.double ? 2 : 1),
+      startX = leaf - drag.x,
+      endX = drag.released ? -leaf + 1 : leaf - 1,
+      startY = drag.originY + drag.y,
+      endY = drag.originY > pending.height / 2 ? pending.height - 1 : 1,
+      started = performance.now();
+    const step = (now: number) => {
+      if (this.drag !== drag) return;
+      const progress = Math.min(1, (now - started) / 220),
+        ease = 1 - (1 - progress) ** 3;
+      this.foldDrag(
+        startX + (endX - startX) * ease,
+        startY + (endY - startY) * ease,
+      );
+      if (progress < 1) this.finishFrame = requestAnimationFrame(step);
+      else if (drag.released) {
+        drag.settled = true;
+        this.timer = window.setTimeout(() => this.reset(true), 1600);
+        drag.onTurn();
+      } else this.reset(true);
+    };
+    this.finishFrame = requestAnimationFrame(step);
+  }
+  private render(next: HTMLElement) {
+    const pending = this.pending,
+      frame = this.frame,
+      doc = frame?.contentDocument,
+      win = frame?.contentWindow as FlipWindow | null;
+    if (!pending || !doc || !win?.St) return;
+    const stage = doc.createElement("div"),
       leafWidth = pending.width / (this.double ? 2 : 1);
     stage.className = "book-animation-stage";
     stage.style.width = `${pending.width}px`;
@@ -287,13 +396,23 @@ export class BookFlip {
       });
       let started = false;
       flip.on("changeState", (event) => {
+        if (this.drag) return;
         if (event.data === "flipping") started = true;
         if (event.data === "read" && started)
           this.finishFrame = requestAnimationFrame(() => this.reset(true));
       });
       flip.on("init", () => {
         if (this.frame === frame && this.pending === pending) {
-          if (pending.direction > 0) flip.flipNext("bottom");
+          if (this.drag) {
+            const drag = this.drag;
+            drag.flip = flip;
+            flip.getFlipController().start({
+              x: pending.direction > 0 ? pending.width - 2 : 2,
+              y: drag.originY,
+            });
+            this.foldDrag(leafWidth - drag.x, drag.originY + drag.y);
+            if (drag.released !== undefined) this.settleDrag();
+          } else if (pending.direction > 0) flip.flipNext("bottom");
           else flip.flipPrev("bottom");
         }
       });
@@ -312,6 +431,7 @@ export class BookFlip {
     this.host = null;
     this.frame = null;
     this.pending = null;
+    this.drag = null;
     this.ready = false;
     delete this.paper.dataset.flipping;
     delete this.paper.dataset.flipReady;

@@ -109,3 +109,5 @@ Không bao gồm: OCR, thư viện nhiều sách, tài khoản người đọc/�
 ## Tham khảo và giấy phép
 
 Tham khảo thao tác của [EPUB-Forge](https://github.com/AzenKain/EPUB-Forge) và [Novel-Hub](https://github.com/AzenKain/Novel-Hub). Hai repo được clone riêng trong `work/references`, không bundle backend/binary vào web. Xem [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Trong chế độ **Sách**, PC cho giữ chuột trái ở mép giấy bên phải và kéo sang trái để tới trang sau; kéo mép trái sang phải để trở lại. Điện thoại vuốt ngang ngay trên trang giấy. Giấy chạy theo thao tác; thả khi kéo quá 64px sẽ lật một lần, kéo ngắn hoặc hủy sẽ trả giấy về. Chọn chữ ở giữa trang và thao tác trên chú thích/ảnh vẫn được giữ. Trên điện thoại, thanh dưới ẩn sau 3 giây không thao tác; chạm vùng giấy trống hoặc thanh nhỏ ở mép dưới để hiện lại. Thanh giữ nguyên khoảng trống khi ẩn để chữ không dồn trang; khi dùng bàn phím hoặc mở bảng điều khiển, nó vẫn hiện.
