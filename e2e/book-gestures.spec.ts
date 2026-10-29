@@ -89,7 +89,7 @@ test("mobile controls hide without reflow and wake from blank paper or bottom ed
   await expect(footer).toHaveAttribute("inert", "");
   await page
     .getByRole("button", { name: "Show reading controls", exact: true })
-    .tap();
+    .dispatchEvent("pointerup", { pointerType: "touch", isPrimary: true });
   await expect(footer).not.toHaveAttribute("inert", "");
   expect(await paper.boundingBox()).toEqual(before);
   await footer.getByRole("button", { name: "Next page", exact: true }).tap();
@@ -262,6 +262,14 @@ test("native phone swipe previews and turns one page without waking hidden contr
   await expect(folio(page)).toHaveText("2");
   await expect(page.locator(".reading-progress")).toHaveAttribute("inert", "");
   await expect(page.locator(".book-flip-layer")).toHaveCount(0);
+  await page
+    .getByRole("button", { name: "Show reading controls", exact: true })
+    .tap();
+  await expect(page.locator(".reading-progress")).not.toHaveAttribute(
+    "inert",
+    "",
+  );
+  expect(await page.locator(".reader-document").boundingBox()).toEqual(b);
   await cdp.detach();
 });
 

@@ -29,9 +29,27 @@
     "Chromium mouse, viewport and native CDP touch simulation; no physical Android/iOS or FPS measurement",
     "Speech assertions use mocked native speech events"
   ],
-  "finalBuildTargeted": {
+  "beforeTouchWakeFixTargeted": {
     "startTime": "2026-10-29T10:28:06.775Z",
     "duration": 81480.207,
+    "expected": 57,
+    "skipped": 3,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "finalBuildBookAndGestures": {
+    "startTime": "2026-10-29T10:36:43.449Z",
+    "duration": 53379.619,
+    "expected": 27,
+    "skipped": 3,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "touchWake": "Live audit observed pointerdown/touchstart/pointerup/touchend with no click immediately after a diagonal native swipe. Added a failing pointerup-without-click regression. Wake button and genuine blank taps now handle primary touch pointerup; native mouse/keyboard click remains. Exact scenario now shows controls and shell scrollTop stays zero.",
+  "previousLiveBeforeTouchWake": {
+    "runtimeCommit": "cf4bb9ee136a7da59662bbe20b5f73a8f8749f86",
+    "startTime": "2026-10-29T10:32:25.727Z",
+    "duration": 117119.022,
     "expected": 57,
     "skipped": 3,
     "unexpected": 0,

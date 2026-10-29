@@ -1394,14 +1394,22 @@ export default function Reader({
     }
     if (start.preview) physicalFlip.current?.releaseDrag(commit);
     else if (commit) turnRef.current(direction);
+    if (
+      !cancel &&
+      e.pointerType === "touch" &&
+      Math.abs(dx) < 8 &&
+      Math.abs(dy) < 8 &&
+      e.timeStamp - start.time < 500
+    )
+      onBookBlankClick(e, true);
     if (mobile) setBookControlActivity((value) => value + 1);
   }
-  function onBookBlankClick(e: MouseEvent<HTMLDivElement>) {
+  function onBookBlankClick(e: MouseEvent<HTMLDivElement>, touchTap = false) {
     if (
       !bookLayout ||
       !mobile ||
       !bookControlsHidden ||
-      performance.now() < suppressBookClick.current ||
+      (!touchTap && performance.now() < suppressBookClick.current) ||
       window.getSelection()?.isCollapsed === false ||
       (e.target as Element).closest(
         "a,button,input,select,textarea,img,[contenteditable]",
@@ -2458,6 +2466,12 @@ export default function Reader({
             className="book-controls-wake"
             aria-label={L("Hiện điều khiển đọc", "Show reading controls")}
             onClick={wakeBookControls}
+            onPointerUp={(event) => {
+              if (event.isPrimary && event.pointerType === "touch") {
+                event.preventDefault();
+                wakeBookControls();
+              }
+            }}
             onFocus={() => {
               wakeBookControls();
               requestAnimationFrame(() =>
