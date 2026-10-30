@@ -1,5 +1,6 @@
 "use client";
 import { openDB } from "idb";
+import type {Locale} from "./types";
 import { useEffect, useRef, useState } from "react";
 import {
   comicMime,
@@ -54,9 +55,10 @@ let db: ReturnType<typeof connection> | undefined;
 const getDB = () => (db ??= connection());
 export async function readComicDraft(
   id: string,
+  locale:Locale="vi",
 ): Promise<ComicDraft | undefined> {
-  const d = await (await getDB()).get("chapters", id);
-  return d ? restoreComicDraft(d) : undefined;
+  const d = await (await getDB()).get("chapters",locale==="vi"?id:`en:${id}`);
+  return d ? restoreComicDraft({...d,id}) : undefined;
 }
 export type ComicSummary = {
   id: string;
@@ -65,12 +67,12 @@ export type ComicSummary = {
   updatedAt: number;
   source: "local" | "sample" | "missing" | "published";
 };
-export async function localComicSummaries(): Promise<ComicSummary[]> {
-  const drafts = (await (await getDB()).getAll("chapters")) as ComicDraft[];
+export async function localComicSummaries(locale:Locale="vi"): Promise<ComicSummary[]> {
+  const drafts = (await (await getDB()).getAll("chapters")) as (ComicDraft&{chapterId?:string;locale?:Locale})[];
   return drafts
-    .filter((d) => d && typeof d.id === "string" && Array.isArray(d.pages))
+    .filter((d) => d && (d.locale??"vi")===locale&&typeof d.id === "string" && Array.isArray(d.pages))
     .map((d) => ({
-      id: d.id,
+      id: d.chapterId??d.id,
       title: d.title,
       pages: d.pages.length,
       updatedAt: d.updatedAt,
@@ -80,13 +82,15 @@ export async function localComicSummaries(): Promise<ComicSummary[]> {
 export async function saveComicDraft(
   draft: ComicDraft,
   expectedRevision: number,
+  locale:Locale="vi",
 ): Promise<ComicDraft> {
   validComicDraft(draft);
   // Materialize bytes before opening the transaction; avoid WebKit's async Blob-preparation path.
   const record = await serializeComicDraft(draft);
   const tx = (await getDB()).transaction("chapters", "readwrite");
   try {
-    const current = await tx.store.get(draft.id);
+    const key=locale==="vi"?draft.id:`en:${draft.id}`;
+    const current = await tx.store.get(key);
     if ((current?.revision ?? 0) !== expectedRevision) {
       throw Error("Bản nháp đã được sửa ở cửa sổ khác. Tải lại trước khi lưu.");
     }
@@ -97,6 +101,7 @@ export async function saveComicDraft(
     };
     await tx.store.put({
       ...record,
+      id:key,chapterId:draft.id,locale,
       revision: saved.revision,
       updatedAt: saved.updatedAt,
     });

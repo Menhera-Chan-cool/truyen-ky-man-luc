@@ -2,8 +2,9 @@
 import {browserClient,adminRequest} from "./supabase";
 import {comicMime,type ComicDraft,type ComicPage} from "./comic";
 import type {ComicHead} from "./comic-publication";
-export const readSharedComic=(id:string):Promise<ComicHead>=>adminRequest(`comic?chapter=${encodeURIComponent(id)}`,undefined,"GET");
-export async function saveSharedComic(draft:ComicDraft,uploaded:Map<string,ComicPage>,progress:(s:string)=>void):Promise<ComicHead> {
+import type {Locale} from "./types";
+export const readSharedComic=(id:string,locale:Locale):Promise<ComicHead>=>adminRequest(`comic?chapter=${encodeURIComponent(id)}&locale=${locale}`,undefined,"GET");
+export async function saveSharedComic(draft:ComicDraft,locale:Locale,uploaded:Map<string,ComicPage>,progress:(s:string)=>void):Promise<ComicHead> {
   const client=browserClient(), {data:{user},error}=await client.auth.getUser();
   if(error||!user) throw Error("Please sign in again");
   const pages:ComicPage[]=[];
@@ -26,7 +27,7 @@ export async function saveSharedComic(draft:ComicDraft,uploaded:Map<string,Comic
     const saved={id:page.id,name:page.name,...asset} as ComicPage;
     uploaded.set(page.id,saved);pages.push(saved);
   }
-  return adminRequest("comic",{action:"save",draft:{...draft,pages}});
+  return adminRequest("comic",{action:"save",locale,draft:{...draft,pages}});
 }
-export const publishSharedComic=(id:string,revision:number,withdraw=false):Promise<ComicHead>=>
-  adminRequest("comic",{action:withdraw?"withdraw":"publish",id,revision});
+export const publishSharedComic=(id:string,locale:Locale,revision:number,withdraw=false):Promise<ComicHead>=>
+  adminRequest("comic",{action:withdraw?"withdraw":"publish",locale,id,revision});

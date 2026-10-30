@@ -674,14 +674,14 @@
         "grid": "Auto-fill 148px minimum /18px gap; at 1200px minimum 140px; phone 2 columns /13px gap.",
         "metadata": "One full-width title field; default-direction control removed, model unchanged.",
         "phone": "Editor text inputs/selects and chapter search/source select:16px. Editor card action 42px /selection row 40px; not universally 44px.",
-        "integration": "Only TT-enabled text-reader phone toolbar:132px; panel top 138px.",
+        "integration": "Two language triggers; native top-layer edition menus. No special third-link mobile row.",
         "publication": "Warm editor wrapping flex row above metadata, 10px gap, 22px bottom margin, 18px bottom padding, 1px existing rule; 44px minimum action height. Phone login inputs16px."
       },
       "behavior": {
         "chrome": "Three-second idle hide guarded by modal/hover/focus. Activity, center/blank contact,44px wake and tab return reveal tools.",
         "autoScroll": "Explicit play/pause in vertical mode; dialogs pause. Blur/hidden/freeze/pagehide stop; return never restarts. Reduced-motion removes decorative motion, not explicit auto-scroll.",
         "settings": "Vertical/LTR/RTL, gap 0-100px, zoom 10-200% step 5, keyboard fast/smooth step 10-200% viewport, auto 20-600px/s, progress edge/hidden, preload some/all, grayscale/dim.",
-        "persistence": "Preferences/stable page-ID positions remain in IndexedDB. Public reading ignores local drafts. Authenticated shared drafts, immutable assets and revision-checked publication/withdrawal use Supabase with RLS.",
+        "persistence": "Shared drafts, revisions and publication scoped by locale; existing TT remains VI. IndexedDB positions and disconnected drafts also locale-scoped; public reader ignores local drafts.",
         "chapters": "Published/missing source filters in shared mode; original sample/local filters only in disconnected prototype. Existing chapter search, ordering and 10-row pagination preserved."
       },
       "provenance": {
@@ -712,6 +712,38 @@
         "verification/comic-shared-local.json",
         "verification/comic-shared-live.json"
       ]
+    },
+    "editionSwitch": {
+      "scope": "VI/EN triggers on book, novel, comic and both editors; no standalone TT.",
+      "choices": {
+        "vi": [
+          "Novel",
+          "TT"
+        ],
+        "en": [
+          "Novel",
+          "Comic"
+        ]
+      },
+      "interaction": "Desktop hover; touch tap; manual native top-layer popover with arrows/Home/End/Escape and outside dismissal.",
+      "layout": {
+        "width": 150,
+        "padding": 5,
+        "radius": 8,
+        "viewportInset": 8,
+        "linkHeightDesktop": 38,
+        "linkHeightPhone": 44,
+        "triggerMinDesktop": 34,
+        "triggerMinPhone": 44
+      },
+      "motion": {
+        "enterMs": 110,
+        "translateY": 3,
+        "hoverLeaveMs": 120,
+        "reducedMotion": true
+      },
+      "persistence": "Comic drafts/versions/publication and reading positions scoped by locale; pre-006 records remain VI.",
+      "authority": "SPEC-edition-switch.md"
     }
   },
   "components": [

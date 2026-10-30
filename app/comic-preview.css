@@ -1070,33 +1070,6 @@
     display: none;
   }
 }
-@media (max-width: 600px) {
-  .reader-shell:has(.comic-mode-link) {
-    grid-template-rows: 132px minmax(0, 1fr);
-  }
-  .reader-toolbar:has(.comic-mode-link) .language-switch {
-    grid-row: 1;
-    grid-column: 1/-1;
-    display: flex;
-    justify-content: center;
-    min-height: 40px;
-  }
-  .reader-toolbar:has(.comic-mode-link) .language-switch a {
-    min-width: 80px;
-    min-height: 40px;
-  }
-  .reader-shell:has(.comic-mode-link) .reader-sidebar,
-  .reader-shell:has(.comic-mode-link) .sidebar-backdrop {
-    top: 132px;
-  }
-  .reader-shell:has(.comic-mode-link) .reader-panel {
-    top: 138px;
-    max-height: calc(100dvh - 150px);
-  }
-  .reader-shell:has(.comic-mode-link):not(.reader-book) .reading-window.paged {
-    height: calc(100dvh - 306px);
-  }
-}
 @media (prefers-reduced-motion: reduce) {
   .comic-editor * {
     animation: none !important;

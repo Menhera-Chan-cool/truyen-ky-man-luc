@@ -15,6 +15,7 @@ import "pdfjs-dist/web/pdf_viewer.css";
 import "./globals.css";
 import "./comic-preview.css";
 import "./comic-reader.css";
+import "./edition-switch.css";
 import { savedReaderSettings } from "../src/lib/server";
 import { readerPalette, themes } from "../src/lib/reader";
 export const metadata: Metadata = {

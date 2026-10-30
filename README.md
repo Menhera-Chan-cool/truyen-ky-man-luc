@@ -2,7 +2,7 @@
 
 Web đọc một quyển sách bằng tiếng Việt và tiếng Anh. Mở `/vi` hoặc `/en` để đọc; `/admin` dành cho owner/editor. Mặc định giấy ngà, có giao diện tối và các cài đặt đọc riêng trên thiết bị.
 
-TT là chế độ truyện tranh cạnh VI/EN: `/vi/comic/chapter-1`. Owner/editor đăng nhập tại `/admin/comic?chapter=chapter-1&lang=vi`, tải PNG/JPEG/WebP hoặc ZIP/CBZ, kiểm tra thứ tự, lưu nháp chung và xem thử trước khi bấm **Xuất bản TT**. **Thu hồi TT** giữ lại nháp. Khách chỉ xem bản đã xuất bản; nháp trên thiết bị không thay bản công khai. Cần migration `005_comics.sql` sau 001–004. Xem [hướng dẫn TT](COMIC_PUBLISHING.md).
+VI/EN nay mở menu Novel và TT (VI) / Comic (EN): `/vi/comic/chapter-1`. Owner/editor đăng nhập tại `/admin/comic?chapter=chapter-1&lang=vi`, tải PNG/JPEG/WebP hoặc ZIP/CBZ, kiểm tra thứ tự, lưu nháp chung và xem thử trước khi bấm **Xuất bản TT**. **Thu hồi TT** giữ lại nháp. Khách chỉ xem bản đã xuất bản; nháp trên thiết bị không thay bản công khai. Cần migration `005_comics.sql`, rồi `006_comic_locales.sql`. Nháp, ảnh và xuất bản VI/EN tách riêng. Xem [hướng dẫn TT](COMIC_PUBLISHING.md).
 
 Source được quản lý tại repository private [Menhera-Chan-cool/truyen-ky-man-luc](https://github.com/Menhera-Chan-cool/truyen-ky-man-luc). Repo không chứa `.env.local`, khóa dịch vụ, thư mời, dữ liệu sao lưu riêng hay dependency/build output. Biến môi trường trên Vercel được cấu hình riêng; push GitHub không tự triển khai khi chưa nối Git integration.
 

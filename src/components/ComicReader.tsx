@@ -192,7 +192,7 @@ export default function ComicReader({
       if (
         panelRef.current ||
         root.current?.querySelector(
-          ".cc-chrome:hover,.cc-chrome :focus-visible",
+          '.cc-chrome:hover,.cc-chrome :focus-visible,[data-edition-open="true"]',
         )
       )
         return;
@@ -206,14 +206,14 @@ export default function ComicReader({
     setReady(false);
     setError("");
     Promise.all([
-      shared ? Promise.resolve(shared.edition) : readComicDraft(chapterId),
+      shared ? Promise.resolve(shared.edition) : readComicDraft(chapterId,locale),
       comicPreference<ComicSettings>(PREFS).catch(()=>undefined),
-      comicPreference<Position>("position:" + chapterId).catch(()=>undefined),
-      shared ? Promise.resolve(shared.summaries) : localComicSummaries(),
+      comicPreference<Position>(`position:${locale}:${chapterId}`).then(p=>p??(locale==="vi"?comicPreference<Position>("position:"+chapterId):undefined)).catch(()=>undefined),
+      shared ? Promise.resolve(shared.summaries) : localComicSummaries(locale),
     ])
       .then(([stored, settings, position, local]) => {
         if (!active) return;
-        const d = stored ?? (shared?{...sampleComic(chapterId,title),pages:[]}:sampleComic(chapterId, title)),
+        const d = stored ?? (shared||locale==="en"?{...sampleComic(chapterId,title),pages:[]}:sampleComic(chapterId, title)),
           p = normalizeComicSettings(
             settings ?? {
               ...defaultComicSettings,
@@ -237,9 +237,9 @@ export default function ComicReader({
               local.find((v) => v.id === c.id) ?? {
                 id: c.id,
                 title: c.title,
-                pages: !shared&&c.id === "chapter-1" ? 2 : 0,
+                pages: !shared&&locale==="vi"&&c.id === "chapter-1" ? 2 : 0,
                 updatedAt: 0,
-                source: !shared&&c.id === "chapter-1" ? "sample" : "missing",
+                source: !shared&&locale==="vi"&&c.id === "chapter-1" ? "sample" : "missing",
               },
           ),
         );
@@ -258,7 +258,7 @@ export default function ComicReader({
       cancelAnimationFrame(scrollFrame.current);
       cancelAnimationFrame(pendingLayout.current);
     };
-  }, [chapterId, title, book, retry,shared]);
+  }, [chapterId, title, book, retry,shared,locale]);
   useLayoutEffect(() => {
     const el = stage.current;
     if (!el) return;
@@ -294,7 +294,7 @@ export default function ComicReader({
     if (!restored.current) return;
     const p = capture();
     if (p)
-      void saveComicPreference("position:" + chapterId, p).catch(() =>
+      void saveComicPreference(`position:${locale}:${chapterId}`, p).catch(() =>
         setMessage(
           L(
             "Chưa lưu được vị trí đọc trên máy. Hãy thử tải lại.",
@@ -302,7 +302,7 @@ export default function ComicReader({
           ),
         ),
       );
-  }, [capture, chapterId]);
+  }, [capture, chapterId,locale]);
   const persistRef = useRef(persist);
   persistRef.current = persist;
   function place(position: Position | undefined) {
@@ -735,8 +735,8 @@ export default function ComicReader({
             <h1>{draft?.title ?? title}</h1>
             <p>
               {L(
-                "Chương này chưa có trang truyện tranh.",
-                "This chapter has no comic pages yet.",
+                "Chương này chưa có trang TT tiếng Việt.",
+                "This chapter has no English comic pages yet.",
               )}
             </p>
             <a

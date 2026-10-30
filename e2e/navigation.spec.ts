@@ -33,7 +33,8 @@ test("changes chapters without waiting for the network and preserves browser his
   await expect(page.locator(".chapter-title")).toContainText(/Chương\s*2:/);
   expect(requests).toEqual([]);
   await page.unroute("**/*");
-  await page.getByRole("link", { name: "English", exact: true }).click();
+  await page.getByRole("button", { name: "English", exact: true }).click();
+  await page.getByRole("menuitem", { name: "Novel", exact: true }).click();
   await expect(page).toHaveURL(/\/en\/read\/chapter-2$/);
   await expect(page.locator(".prose")).toContainText("Tu Dat");
 });

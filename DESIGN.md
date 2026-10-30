@@ -492,3 +492,10 @@ Touch note cards reuse the paper/ink preview at 360px maximum width. A pinned no
 - **Don't** invent groups/dates, a complete adaptation, connected auth/storage or Publish.
 - **Don't** promote the two-fix local ship verdict into whole-surface/production approval.
 - **Don't** repair pre-existing cover/art provenance drift in this extension; the supplied cover remains outside TT asset scope.
+
+
+### VI/EN edition menus — 30/10/2026
+
+The standalone TT action is removed. Exactly two compact VI/EN triggers open Novel plus TT (VI) / Comic (EN), through mouse hover on PC or tap on phone. A selected item opens one same-chapter surface. Native manual popovers enter the top layer and inherit the book/reader palette; 150px width, 5px padding, 8px radius, 1px existing foreground-mixed rule, soft 0/12/30px shadow. Links are 38px desktop /44px phone; triggers34px /44px. Popup position clamps8px within viewport. A110ms opacity/3px entrance honors reduced motion, mouse leave closes after120ms, keyboard arrows/Home/End/Escape and outside focus/contact work. Open menus hold comic chrome visible. The old132px mobile header accommodation for a third TT link is removed.
+
+Comic editor adds VI/EN above publication controls and names the edited edition. Unsaved navigation asks before discarding. Drafts, revision tokens, publication and stable-image reading positions are locale-scoped; existing shared TT data remains VI. Missing EN does not render VI images. No new palette, asset, font or dependency. See SPEC-edition-switch.md.

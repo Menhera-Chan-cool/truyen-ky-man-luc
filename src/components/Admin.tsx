@@ -81,7 +81,7 @@ const blankMeta: Record<Locale, BookMeta> = {
     frontCover: "/book/cover.jpg",
   },
 };
-export default function Admin({ locale, comicChapter }: { locale: Locale; comicChapter?: string }) {
+export default function Admin({ locale, comicChapter,initialChapter }: { locale: Locale; comicChapter?: string;initialChapter?:string }) {
   const L = useCallback(
     (vi: string, en: string) => tx(locale, vi, en),
     [locale],
@@ -96,7 +96,7 @@ export default function Admin({ locale, comicChapter }: { locale: Locale; comicC
   const busy = operationBusy || childBusy;
   const [tab, setTab] = useState("chapters"),
     [editLocale, setEditLocale] = useState<Locale>(locale),
-    [selected, setSelected] = useState(""),
+    [selected, setSelected] = useState(initialChapter??""),
     [dirty, setDirty] = useState(false),
     [metaDirty, setMetaDirty] = useState(false),
     [newKind, setNewKind] = useState<"text" | "illustration">("text");
@@ -474,7 +474,7 @@ export default function Admin({ locale, comicChapter }: { locale: Locale; comicC
   if (!session)
     return (
       <main className="auth-page">
-        <LanguageLinks locale={locale} admin />
+        <LanguageLinks locale={locale} admin comic={!!comicChapter} chapterId={comicChapter??initialChapter} disabled={busy}/>
         <BookOpen size={35} />
         <h1>{L("Đăng nhập", "Sign in")}</h1>
         <p className="muted">
@@ -545,8 +545,7 @@ export default function Admin({ locale, comicChapter }: { locale: Locale; comicC
           <BookOpen size={21} /> {L("Biên tập sách", "Book editor")}
         </h1>
         <div className="button-row">
-          <LanguageLinks locale={locale} admin disabled={busy} />
-          <a href={`/admin/comic?lang=${locale}&chapter=${selected||"chapter-1"}`} onClick={e=>{if(busy||!confirmUnsaved())e.preventDefault();}}>{L("Biên tập TT","Comic editor")}</a>
+          <LanguageLinks locale={locale} admin chapterId={selected} disabled={busy} onNavigate={confirmUnsaved}/>
           <a href={`/${locale}`} target="_blank" rel="noopener noreferrer">
             {L("Xem sách", "View book")}
           </a>

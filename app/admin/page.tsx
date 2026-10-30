@@ -7,9 +7,9 @@ export const dynamic = "force-dynamic";
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ lang?: string; activation?: string }>;
+  searchParams: Promise<{ lang?: string; activation?: string;chapter?:string }>;
 }) {
-  const { lang, activation } = await searchParams;
+  const { lang, activation,chapter } = await searchParams;
   const locale = lang && isLocale(lang) ? lang : "vi";
   const L = (vi: string, en: string) => tx(locale, vi, en);
   if (activation)
@@ -82,5 +82,5 @@ export default async function AdminPage({
         </a>
       </main>
     );
-  return <Admin locale={locale} />;
+  return <Admin locale={locale} initialChapter={chapter&&/^[a-z0-9-]{1,80}$/.test(chapter)?chapter:undefined}/>;
 }

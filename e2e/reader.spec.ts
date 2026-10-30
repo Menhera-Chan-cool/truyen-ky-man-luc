@@ -64,7 +64,8 @@ test("opens directly on the book and switches the complete edition", async ({
     page.getByRole("heading", { name: "Truyền kỳ mạn lục", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("link", { name: /Chương 20:/ })).toBeVisible();
-  await page.getByRole("link", { name: "English", exact: true }).click();
+  await page.getByRole("button", { name: "English", exact: true }).click();
+  await page.getByRole("menuitem", { name: "Novel", exact: true }).click();
   await expect(page.locator("#book-title")).toHaveText(englishTitle!);
   await expect(page.getByRole("link", { name: /Chapter 20:/ })).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
@@ -74,7 +75,8 @@ test("retains chapter identity when switching languages", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Chương 2",
   );
-  await page.getByRole("link", { name: "English", exact: true }).click();
+  await page.getByRole("button", { name: "English", exact: true }).click();
+  await page.getByRole("menuitem", { name: "Novel", exact: true }).click();
   await expect(page).toHaveURL(/\/en\/read\/chapter-2/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Chapter 2",

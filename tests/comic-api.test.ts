@@ -2,6 +2,7 @@ import {beforeEach,it,expect,vi} from "vitest";
 import {publicationDraft,comicAssetPath} from "../src/lib/comic-publication";
 import {GET,POST} from "../app/api/admin/comic/route";
 import {POST as register} from "../app/api/admin/comic/assets/route";
+import {comicHead} from "../src/lib/comic-server";
 const guard=vi.hoisted(()=>vi.fn());
 vi.mock("../src/lib/comic-server",()=>({comicHead:vi.fn()}));
 vi.mock("../src/lib/server",()=>({requireEditor:guard,jsonBody:async(r:Request)=>JSON.parse(await r.text()),serviceClient:vi.fn(),HttpError:class extends Error{},apiError:(e:unknown)=>Response.json({error:(e as Error).message},{status:403})}));
@@ -22,4 +23,14 @@ it("accepts only registered canonical page URLs and strips extra payload fields"
   expect(()=>publicationDraft({...d,revision:-1})).toThrow(/revision/);
   expect(()=>publicationDraft({...d,pages:[{...d.pages[0],path:"https://evil.test/a.png"}]})).toThrow();
   expect(()=>publicationDraft({...d,pages:[{...d.pages[0],blob:new Blob(["bad"])}]})).toThrow(/Upload/);
+});
+it("requires an explicit write locale and passes the chosen locale to protected RPCs",async()=>{
+  const rpc=vi.fn().mockResolvedValue({error:null}),client={rpc};guard.mockResolvedValue({client});
+  vi.mocked(comicHead).mockResolvedValue({draft:null,revision:1,publishedRevision:null});
+  const request=(body:unknown)=>new Request("https://book.test/api/admin/comic",{method:"POST",body:JSON.stringify(body)});
+  const missing=await POST(request({action:"publish",id:"chapter-1",revision:0}));
+  expect((await missing.json()).error).toContain("Select VI/EN");expect(rpc).not.toHaveBeenCalled();
+  await POST(request({action:"publish",id:"chapter-1",revision:0,locale:"en"}));
+  expect(rpc).toHaveBeenCalledWith("publish_comic",{p_id:"chapter-1",p_expected_revision:0,p_withdraw:false,p_locale:"en"});
+  expect(comicHead).toHaveBeenCalledWith(client,"chapter-1","en");
 });

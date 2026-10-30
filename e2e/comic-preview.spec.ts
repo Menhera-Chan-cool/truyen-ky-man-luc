@@ -25,7 +25,8 @@ test("TT mode switches from the same text chapter and retains comic settings/pag
       external.push(r.url());
   });
   await page.goto("/vi/read/chapter-1");
-  await page.getByRole("link", { name: "Truyện tranh", exact: true }).click();
+  await page.getByRole("button", { name: "Tiếng Việt", exact: true }).click();
+  await page.getByRole("menuitem", { name: "TT", exact: true }).click();
   await expect(page).toHaveURL(/\/vi\/comic\/chapter-1$/);
   await expect(page.locator(".comic-reader")).toHaveAttribute(
     "data-ready",
@@ -41,7 +42,8 @@ test("TT mode switches from the same text chapter and retains comic settings/pag
   await page.waitForTimeout(350);
   await page.reload();
   await expect(page.locator(".comic-reader")).toHaveAttribute("data-page", "2");
-  await page.getByRole("link", { name: "Tiếng Việt", exact: true }).click();
+  await page.getByRole("button", { name: "Tiếng Việt", exact: true }).click();
+  await page.getByRole("menuitem", { name: "Novel", exact: true }).click();
   await expect(page).toHaveURL(/\/vi\/read\/chapter-1$/);
   expect(external).toEqual([]);
 });

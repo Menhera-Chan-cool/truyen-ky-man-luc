@@ -1,0 +1,17 @@
+.language-switch.edition-switch > .edition-language { width: auto; background: transparent; margin: 0; display: inline-flex; align-items: center; height: auto; border: 0; opacity: 1; }
+.edition-switch .edition-divider { height: 14px; border-left: 1px solid currentColor; opacity: .2; margin-right: 3px; }
+.edition-trigger { min-width: 34px; min-height: 34px; padding: 8px; border: 0; border-radius: 4px; background: transparent; color: inherit; font: inherit; cursor: pointer; opacity: .7; }
+.edition-trigger[aria-current] { color: var(--reader-accent,#8d342b); background: color-mix(in srgb,var(--reader-accent,#8d342b) 10%,transparent); opacity: 1; }
+.edition-trigger:hover,.edition-trigger[aria-expanded="true"] { opacity: 1; background: color-mix(in srgb,var(--reader-fg,#302b23) 8%,transparent); }
+.edition-trigger:disabled { cursor: default; opacity: .4; }
+.edition-options { position: fixed; inset: auto; margin: 0; padding: 5px; min-width: 150px; max-width: calc(100vw - 16px); border: 1px solid color-mix(in srgb,var(--reader-fg,#302b23) 20%,transparent); border-radius: 8px; background: var(--reader-bg,#f5f0e5); color: var(--reader-fg,#302b23); box-shadow: 0 12px 30px #0003; font: 500 13px/1.5 "Be Vietnam Pro",sans-serif; }
+.edition-options:popover-open { display: grid; animation: edition-open 110ms ease-out; }
+.language-switch .edition-options a { display: flex; align-items: center; text-align: left; padding: 9px 12px; min-height: 38px; border-radius: 4px; opacity: 1; }
+.language-switch .edition-options a:hover,.language-switch .edition-options a:focus-visible { background: color-mix(in srgb,var(--reader-fg,#302b23) 9%,transparent); }
+.language-switch .edition-options a[aria-current] { background: color-mix(in srgb,var(--reader-accent,#8d342b) 12%,transparent); color: var(--reader-accent,#8d342b); }
+.edition-switch :focus-visible { outline: 2px solid var(--reader-accent,#8d342b); outline-offset: 2px; }
+.ce-edition-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: 0 0 18px; font-size: 12px; }
+.ce-edition-tabs > span { color: #6b6051; }
+@keyframes edition-open { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@media (max-width: 759px) { .edition-switch .edition-trigger { min-width: 44px; min-height: 44px; } .language-switch .edition-options a { min-height: 44px; } }
+@media (prefers-reduced-motion: reduce) { .edition-options:popover-open { animation: none; } }

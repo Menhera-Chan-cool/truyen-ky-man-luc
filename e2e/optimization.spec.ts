@@ -157,7 +157,8 @@ test("retains dark appearance across book, locale and reader navigation", async 
   expect(await response.text()).toContain('class="book-site site-dark"');
   await page.goto("/vi");
   await expect(page.locator(".book-site")).toHaveClass(/site-dark/);
-  await page.getByRole("link", { name: "English", exact: true }).click();
+  await page.getByRole("button", { name: "English", exact: true }).click();
+  await page.getByRole("menuitem", { name: "Novel", exact: true }).click();
   await expect(page.locator(".book-site")).toHaveClass(/site-dark/);
   await page.goto("/en/read/chapter-1");
   await expect(page.locator(".reader-shell")).toHaveCSS("color-scheme", "dark");

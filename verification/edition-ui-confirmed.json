@@ -1,0 +1,254 @@
+[
+  {
+    "locale": "vi",
+    "surface": "book",
+    "mobile": false,
+    "menu": {
+      "x": 998.8125,
+      "y": 66,
+      "width": 150,
+      "height": 88
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(245, 240, 229)",
+      "color": "rgb(48, 43, 35)"
+    },
+    "items": [
+      "Novel",
+      "TT"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "vi",
+    "surface": "novel",
+    "mobile": false,
+    "menu": {
+      "x": 1151,
+      "y": 51.5,
+      "width": 150,
+      "height": 88
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(245, 240, 229)",
+      "color": "rgb(48, 43, 35)"
+    },
+    "items": [
+      "Novel",
+      "TT"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "vi",
+    "surface": "comic",
+    "mobile": false,
+    "menu": {
+      "x": 8,
+      "y": 51,
+      "width": 150,
+      "height": 88
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(34, 42, 44)",
+      "color": "rgb(191, 204, 207)"
+    },
+    "items": [
+      "Novel",
+      "TT"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "en",
+    "surface": "book",
+    "mobile": false,
+    "menu": {
+      "x": 1065.8125,
+      "y": 66,
+      "width": 150,
+      "height": 88
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(245, 240, 229)",
+      "color": "rgb(48, 43, 35)"
+    },
+    "items": [
+      "Novel",
+      "Comic"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "en",
+    "surface": "novel",
+    "mobile": false,
+    "menu": {
+      "x": 1192,
+      "y": 51.5,
+      "width": 150,
+      "height": 88
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(245, 240, 229)",
+      "color": "rgb(48, 43, 35)"
+    },
+    "items": [
+      "Novel",
+      "Comic"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "en",
+    "surface": "comic",
+    "mobile": false,
+    "menu": {
+      "x": 8,
+      "y": 51,
+      "width": 150,
+      "height": 88
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(34, 42, 44)",
+      "color": "rgb(191, 204, 207)"
+    },
+    "items": [
+      "Novel",
+      "Comic"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "vi",
+    "surface": "book",
+    "mobile": true,
+    "menu": {
+      "x": 75,
+      "y": 65,
+      "width": 150,
+      "height": 100
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(245, 240, 229)",
+      "color": "rgb(48, 43, 35)"
+    },
+    "items": [
+      "Novel",
+      "TT"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "vi",
+    "surface": "novel",
+    "mobile": true,
+    "menu": {
+      "x": 63.984375,
+      "y": 92.5,
+      "width": 150,
+      "height": 100
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(245, 240, 229)",
+      "color": "rgb(48, 43, 35)"
+    },
+    "items": [
+      "Novel",
+      "TT"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "vi",
+    "surface": "comic",
+    "mobile": true,
+    "menu": {
+      "x": 8,
+      "y": 58,
+      "width": 150,
+      "height": 100
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(34, 42, 44)",
+      "color": "rgb(191, 204, 207)"
+    },
+    "items": [
+      "Novel",
+      "TT"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "en",
+    "surface": "book",
+    "mobile": true,
+    "menu": {
+      "x": 126,
+      "y": 65,
+      "width": 150,
+      "height": 100
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(245, 240, 229)",
+      "color": "rgb(48, 43, 35)"
+    },
+    "items": [
+      "Novel",
+      "Comic"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "en",
+    "surface": "novel",
+    "mobile": true,
+    "menu": {
+      "x": 113.984375,
+      "y": 92.5,
+      "width": 150,
+      "height": 100
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(245, 240, 229)",
+      "color": "rgb(48, 43, 35)"
+    },
+    "items": [
+      "Novel",
+      "Comic"
+    ],
+    "overflow": false
+  },
+  {
+    "locale": "en",
+    "surface": "comic",
+    "mobile": true,
+    "menu": {
+      "x": 8,
+      "y": 58,
+      "width": 150,
+      "height": 100
+    },
+    "style": {
+      "opacity": "1",
+      "background": "rgb(34, 42, 44)",
+      "color": "rgb(191, 204, 207)"
+    },
+    "items": [
+      "Novel",
+      "Comic"
+    ],
+    "overflow": false
+  }
+]

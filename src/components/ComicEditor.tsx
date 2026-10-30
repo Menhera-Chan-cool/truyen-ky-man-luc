@@ -27,7 +27,7 @@ import {
   Globe,
   EyeOff,
 } from "lucide-react";
-import { IconButton } from "./Ui";
+import { IconButton,LanguageLinks } from "./Ui";
 import {
   sampleComic,
   naturalComicOrder,
@@ -93,10 +93,10 @@ export default function ComicEditor({
     setDirty(false);
     setSelected(new Set());
     uploaded.current.clear();
-    (shared?readSharedComic(chapterId):readComicDraft(chapterId).then(draft=>({draft:draft??null,publishedRevision:null,revision:draft?.revision??0})))
+    (shared?readSharedComic(chapterId,locale):readComicDraft(chapterId,locale).then(draft=>({draft:draft??null,publishedRevision:null,revision:draft?.revision??0})))
       .then((head) => {
         if (!active) return;
-        const stored=head.draft,next=stored??{...sampleComic(chapterId,chapter.title),pages:shared?[]:sampleComic(chapterId,chapter.title).pages,revision:head.revision};
+        const stored=head.draft,next=stored??{...sampleComic(chapterId,chapter.title),pages:shared||locale==="en"?[]:sampleComic(chapterId,chapter.title).pages,revision:head.revision};
         setPublishedRevision(head.publishedRevision);
         setDraft(next);
         setInspector(window.matchMedia("(min-width: 1001px)").matches);
@@ -121,12 +121,12 @@ export default function ComicEditor({
       active = false;
       lastImport.current++;
     };
-  }, [chapterId, chapter.title, reload,shared]);
+  }, [chapterId, chapter.title, reload,shared,locale]);
   useEffect(()=>{
     let active=true;
-    if(shared) readComicDraft(chapterId).then(d=>{if(active)setLocalDraft(d??null);}).catch(()=>{});
+    if(shared) readComicDraft(chapterId,locale).then(d=>{if(active)setLocalDraft(d??null);}).catch(()=>{});
     return()=>{active=false;};
-  },[shared,chapterId]);
+  },[shared,chapterId,locale]);
   useEffect(() => {
     const warn = (e: BeforeUnloadEvent) => {
       if (dirty && !allowLeave.current) {
@@ -225,9 +225,9 @@ export default function ComicEditor({
     setBusy(true);
     setError("");
     try {
-      const head=shared?await saveSharedComic(draft,uploaded.current,s=>setProgress(L("Đang tải ảnh lên Supabase ","Uploading images to Supabase ")+s)):null;
+      const head=shared?await saveSharedComic(draft,locale,uploaded.current,s=>setProgress(L("Đang tải ảnh lên Supabase ","Uploading images to Supabase ")+s)):null;
       if(shared&&!head?.draft)throw Error(L("Chưa xác nhận được bản nháp trên server. Hãy tải lại để kiểm tra.","Could not confirm the server draft. Reload to check."));
-      const saved = head?.draft??await saveComicDraft(draft, draft.revision);
+      const saved = head?.draft??await saveComicDraft(draft, draft.revision,locale);
       if(head)setPublishedRevision(head.publishedRevision);
       setDraft(saved);
       setDirty(false);
@@ -245,7 +245,7 @@ export default function ComicEditor({
     if(!window.confirm(withdraw?L("Thu hồi TT chương này khỏi trang công khai?","Withdraw this comic chapter from public reading?"):L("Xuất bản bản nháp TT này cho mọi người đọc?","Publish this comic draft for everyone?")))return;
     setBusy(true);setError("");
     try {
-      const head=await publishSharedComic(chapterId,draft.revision,withdraw);
+      const head=await publishSharedComic(chapterId,locale,draft.revision,withdraw);
       if(head.draft)setDraft(head.draft);
       setPublishedRevision(head.publishedRevision);
       setStatus(withdraw?L("Đã thu hồi TT. Bản nháp được giữ lại.","Comic withdrawn. Draft preserved."):L("Đã xuất bản TT.","Comic published."));
@@ -446,8 +446,15 @@ export default function ComicEditor({
           </div>
         ) : draft ? (
           <>
+            <div className="ce-edition-tabs">
+              <LanguageLinks locale={locale} chapterId={chapterId} admin comic disabled={busy} onNavigate={()=>{
+                if(dirty&&!window.confirm(L("Bỏ thay đổi chưa lưu và chuyển bản?","Discard unsaved changes and switch editions?")))return false;
+                allowLeave.current=true;return true;
+              }}/>
+              <span>{L("Đang biên tập: VI · TT","Editing: EN · Comic")}</span>
+            </div>
             {shared&&<section className="ce-publication" aria-label={L("Xuất bản TT","Comic publication")}>
-              <a href={`/admin?lang=${locale}`}>{L("Biên tập sách", "Book editor")}</a>
+              <a href={`/admin?lang=${locale}&chapter=${chapterId}`} onClick={e=>{if(dirty&&!window.confirm(L("Bỏ thay đổi chưa lưu và chuyển bản?","Discard unsaved changes and switch editions?")))e.preventDefault();else allowLeave.current=true;}}>{L("Biên tập sách", "Book editor")}</a>
               <span>{dirty?L("Lưu nháp trước khi xuất bản","Save draft before publishing"):L(`Bản nháp · phiên bản ${draft.revision}`,`Draft · revision ${draft.revision}`)}</span>
               <button className="ce-primary" disabled={busy||dirty||!pages.length||draft.revision===0} onClick={()=>publication()}><Globe size={16}/>{L("Xuất bản TT","Publish comic")}</button>
               <button className="ce-secondary" disabled={busy||dirty||publishedRevision===null} onClick={()=>publication(true)}><EyeOff size={16}/>{L("Thu hồi TT","Withdraw comic")}</button>

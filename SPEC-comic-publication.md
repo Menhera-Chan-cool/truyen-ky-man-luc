@@ -1,6 +1,6 @@
 # TT shared publication
 
-User authorization: publish the approved TT reader/editor and enable shared Supabase storage/publication. TT is one image edition per stable chapter, shared by VI/EN interface languages; text editions remain untouched.
+User authorization: publish the approved TT reader/editor and enable shared Supabase storage/publication. The subsequent SPEC-edition-switch.md splits image editions, draft revisions and publication by stable chapter plus VI/EN. Existing records become VI; text editions remain untouched.
 
 ## Contract and build order
 

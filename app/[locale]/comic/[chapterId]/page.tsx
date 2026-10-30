@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import seed from "../../../../src/data/book.json";
 import { isLocale } from "../../../../src/lib/types";
 import ComicReader from "../../../../src/components/ComicReader";
-import {configured,getBook,requireEditor} from "../../../../src/lib/server";
+import {configured,getBook,requireEditor,publicClient} from "../../../../src/lib/server";
 import {publicComic,comicHead} from "../../../../src/lib/comic-server";
 import {headers} from "next/headers";
 import {redirect} from "next/navigation";
@@ -20,7 +20,7 @@ export default async function Page({
   const { locale, chapterId } = await params;
   if (!isLocale(locale)) notFound();
   const connected=configured();
-  const [book,published]=connected?await Promise.all([getBook(false),publicComic(chapterId)]):[seed,undefined];
+  const [book,published]=connected?await Promise.all([getBook(false),publicComic(chapterId,locale)]):[seed,undefined];
   const preview=connected&&(await searchParams).preview==="draft";
   let shared=published;
   let chapters=book.chapters.map(c=>({id:c.id,title:c[locale]?.title??(locale==="vi"?"Phần chưa có tiêu đề":"Untitled section")}));
@@ -29,10 +29,15 @@ export default async function Page({
     const request=new Request("https://reader.internal/",{headers:await headers()});
     let editor;
     try {editor=await requireEditor(request);}catch{redirect(`/admin/comic?chapter=${chapterId}&lang=${locale}`);}
-    const [head,privateChapters]=await Promise.all([comicHead(editor.client,chapterId),editor.client.from("chapters").select("id,sort_order").eq("archived",false).order("sort_order")]);
+    const [head,privateChapters]=await Promise.all([comicHead(editor.client,chapterId,locale),editor.client.from("chapters").select("id,sort_order").eq("archived",false).order("sort_order")]);
     if(privateChapters.error) throw Error("Cannot load private chapter index");
     chapters=(privateChapters.data??[]).map(c=>({id:c.id,title:c.id===chapterId?head.draft?.title??chapters.find(p=>p.id===c.id)?.title??c.id:chapters.find(p=>p.id===c.id)?.title??c.id}));
     shared={edition:head.draft,summaries:shared!.summaries};
+  }
+  if(!chapters.some(c=>c.id===chapterId)&&connected&&!preview){
+    const {data:other,error}=await publicClient().rpc("get_public_comic",{p_id:chapterId,p_locale:locale==="vi"?"en":"vi"});
+    if(error)throw Error("Cannot check comic translation availability");
+    if(other)chapters.push({id:chapterId,title:locale==="vi"?"Chưa có bản TT tiếng Việt":"English comic not available"});
   }
   if(!chapters.some(c=>c.id===chapterId))notFound();
   return (

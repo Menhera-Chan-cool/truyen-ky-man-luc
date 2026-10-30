@@ -6,7 +6,8 @@
     "chromium: private preview requires verified editor",
     "chromium: concurrent editor conflict preserves saved draft",
     "chromium: tab-return tools and background auto-scroll stop",
-    "chromium: public images load, device draft ignored, VI/EN interfaces and text return links",
+    "chromium: EN missing edition never displays VI pages",
+    "chromium: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
     "chromium: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
     "chromium: withdrawal removes public metadata and new image access",
     "webkit: guest editor gate",
@@ -14,7 +15,8 @@
     "webkit: private preview requires verified editor",
     "webkit: concurrent editor conflict preserves saved draft",
     "webkit: tab-return tools and background auto-scroll stop",
-    "webkit: public images load, device draft ignored, VI/EN interfaces and text return links",
+    "webkit: EN missing edition never displays VI pages",
+    "webkit: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
     "webkit: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
     "webkit: withdrawal removes public metadata and new image access",
     "revoked editor denied through API, RPC and RLS"
@@ -82,15 +84,11 @@
   ],
   "failedRequests": [
     {
-      "path": "/api/comic/assets/a39e577a-9596-492c-8ef7-6b93f85465a6/comics/9ead877b-9255-4989-b064-722334259d04.png",
-      "reason": "Load request cancelled"
-    },
-    {
-      "path": "/api/comic/assets/a39e577a-9596-492c-8ef7-6b93f85465a6/comics/d2d49524-f92b-4397-affd-5d7305f264a7.png",
+      "path": "/api/comic/assets/f266411c-485c-4adb-822d-da12ceeeaafd/comics/106efd4f-7634-4e33-97dc-20873c18411c.png",
       "reason": "Load request cancelled"
     }
   ],
   "publicBookUnchanged": true,
   "passed": true,
-  "checkedAt": "2026-10-30T13:51:29.565Z"
+  "checkedAt": "2026-10-30T14:42:21.987Z"
 }

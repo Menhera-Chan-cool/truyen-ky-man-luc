@@ -62,3 +62,26 @@ it("rejects unregistered or forged page metadata, empty publication and revoked 
   await expect(as(editor,"select public.save_comic('chapter-2','Bad','ltr','[]',1)")).rejects.toThrow(/forbidden/i);
   expect((await as(editor,"select * from public.comic_versions")).rows).toHaveLength(0);
 });
+it("upgrades old comics into VI and keeps EN saves, publication, conflicts and withdrawal independent",async()=>{
+  await db.exec("reset role;insert into public.chapters(id,sort_order) values('chapter-3',3)");
+  await as(owner,`select public.save_comic('chapter-3','Existing VI','ltr','${pages}',0)`);
+  await as(owner,"select public.publish_comic('chapter-3',1,false)");
+  await db.exec("reset role");
+  await db.exec(await readFile("supabase/migrations/006_comic_locales.sql","utf8"));
+  expect((await db.query<any>("select column_name from information_schema.columns where table_name='comic_editions' and column_name='locale'")).rows[0]?.column_name).toBe("locale");
+  expect((await as(null,"select public.get_public_comic('chapter-3','vi') as edition")).rows[0].edition.title).toBe("Existing VI");
+  expect((await as(null,"select public.get_public_comic('chapter-3','en') as edition")).rows[0].edition).toBeNull();
+  await as(owner,`select public.save_comic('chapter-3','English comic','ltr','${pages}',0,'en')`);
+  await as(owner,"select public.publish_comic('chapter-3',1,false,'en')");
+  expect((await as(null,"select public.get_public_comic('chapter-3') as edition")).rows[0].edition.title).toBe("Existing VI");
+  expect((await as(null,"select public.get_public_comic('chapter-3','en') as edition")).rows[0].edition.title).toBe("English comic");
+  await expect(as(owner,`select public.save_comic('chapter-3','Stale','ltr','${pages}',0,'en')`)).rejects.toThrow(/conflict/i);
+  await as(owner,"select public.publish_comic('chapter-3',2,true,'vi')");
+  expect((await as(null,"select public.get_public_comic('chapter-3','vi') as edition")).rows[0].edition).toBeNull();
+  expect((await as(null,`select public.can_read_comic_asset('${path}') as ok`)).rows[0].ok).toBe(true);
+  await as(owner,"select public.publish_comic('chapter-3',2,true,'en')");
+  expect((await as(null,`select public.can_read_comic_asset('${path}') as ok`)).rows[0].ok).toBe(false);
+  await expect(as(editor,`select public.save_comic('chapter-3','Revoked','ltr','${pages}',3,'en')`)).rejects.toThrow(/forbidden/i);
+  await expect(as(owner,`select public.save_comic('chapter-3','Invalid','ltr','${pages}',3,'fr')`)).rejects.toThrow(/locale/i);
+  expect((await as(owner,"select distinct locale from public.admin_audit where entity_type='comic' and entity_id='chapter-3' and locale is not null order by locale")).rows.map(r=>r.locale)).toEqual(["en","vi"]);
+});

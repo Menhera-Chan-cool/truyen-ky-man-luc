@@ -1,0 +1,49 @@
+{
+  "checkedAt": "2026-10-30T14:50:49.288Z",
+  "unit": {
+    "passed": 111,
+    "files": 29
+  },
+  "typecheck": true,
+  "build": true,
+  "migration": "006_comic_locales.sql",
+  "shared": {
+    "checks": 19,
+    "passed": true,
+    "pageErrors": 0,
+    "fixturesRemoved": true,
+    "textUnchanged": true
+  },
+  "menus": {
+    "chromium": {
+      "startTime": "2026-10-30T14:35:49.446Z",
+      "duration": 27047.286,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "webkit": {
+      "startTime": "2026-10-30T14:37:07.504Z",
+      "duration": 8611.235,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "regression": {
+    "startTime": "2026-10-30T14:43:39.287Z",
+    "duration": 86890.404,
+    "expected": 40,
+    "skipped": 10,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "visual": {
+    "captures": 12,
+    "allOpaque": true,
+    "overflow": false
+  },
+  "scope": "Language/edition menus and independent comic locales. Physical iPhone not tested."
+}
