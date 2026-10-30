@@ -112,16 +112,26 @@ export function LanguageLinks({
   chapterId,
   admin = false,
   disabled = false,
+  comic = false,
 }: {
   locale: string;
   chapterId?: string;
   admin?: boolean;
   disabled?: boolean;
+  comic?: boolean;
 }) {
   return (
     <nav
       className="language-switch"
-      aria-label={locale === "vi" ? "Ngôn ngữ" : "Language"}
+      aria-label={
+        admin
+          ? locale === "vi"
+            ? "Ngôn ngữ"
+            : "Language"
+          : locale === "vi"
+            ? "Phiên bản đọc"
+            : "Reading edition"
+      }
     >
       <a
         href={
@@ -133,7 +143,7 @@ export function LanguageLinks({
         aria-disabled={disabled || undefined}
         tabIndex={disabled ? -1 : undefined}
         lang="vi"
-        aria-current={locale === "vi" ? "page" : undefined}
+        aria-current={!comic && locale === "vi" ? "page" : undefined}
         onClick={(e) => {
           if (disabled) {
             e.preventDefault();
@@ -156,7 +166,7 @@ export function LanguageLinks({
         aria-disabled={disabled || undefined}
         tabIndex={disabled ? -1 : undefined}
         lang="en"
-        aria-current={locale === "en" ? "page" : undefined}
+        aria-current={!comic && locale === "en" ? "page" : undefined}
         onClick={(e) => {
           if (disabled) {
             e.preventDefault();
@@ -168,6 +178,25 @@ export function LanguageLinks({
       >
         EN
       </a>
+      {!admin && (
+        <a
+          className="comic-mode-link"
+          href={`/${locale}/comic/${chapterId ?? "chapter-1"}`}
+          aria-label={locale === "vi" ? "Truyện tranh" : "Comic edition"}
+          aria-current={comic ? "page" : undefined}
+          aria-disabled={disabled || undefined}
+          tabIndex={disabled ? -1 : undefined}
+          onClick={(e) => {
+            if (disabled) {
+              e.preventDefault();
+              return;
+            }
+            window.speechSynthesis?.cancel();
+          }}
+        >
+          TT
+        </a>
+      )}
     </nav>
   );
 }

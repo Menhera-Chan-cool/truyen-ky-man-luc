@@ -1,0 +1,2 @@
+import {defineConfig,devices} from "@playwright/test";
+export default defineConfig({testDir:"e2e",testMatch:/comic-(preview|comix)\.spec\.ts/,workers:1,timeout:30000,reporter:[["list"]],use:{baseURL:process.env.BASE_URL??"http://127.0.0.1:3002",screenshot:"only-on-failure",trace:"retain-on-failure"},projects:[{name:"webkit-phone",use:{...devices["iPhone 13"],defaultBrowserType:"webkit"}}]});

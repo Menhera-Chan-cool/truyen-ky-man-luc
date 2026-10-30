@@ -1,0 +1,96 @@
+{
+  "base": "http://localhost:3003",
+  "checks": [
+    "chromium: guest editor gate",
+    "chromium: natural order, reorder, private direct upload/save and anonymous asset denial",
+    "chromium: private preview requires verified editor",
+    "chromium: concurrent editor conflict preserves saved draft",
+    "chromium: tab-return tools and background auto-scroll stop",
+    "chromium: public images load, device draft ignored, VI/EN interfaces and text return links",
+    "chromium: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
+    "chromium: withdrawal removes public metadata and new image access",
+    "webkit: guest editor gate",
+    "webkit: natural order, reorder, private direct upload/save and anonymous asset denial",
+    "webkit: private preview requires verified editor",
+    "webkit: concurrent editor conflict preserves saved draft",
+    "webkit: tab-return tools and background auto-scroll stop",
+    "webkit: public images load, device draft ignored, VI/EN interfaces and text return links",
+    "webkit: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
+    "webkit: withdrawal removes public metadata and new image access",
+    "revoked editor denied through API, RPC and RLS"
+  ],
+  "cleanup": [
+    {
+      "label": "comic heads",
+      "ok": true
+    },
+    {
+      "label": "comic versions",
+      "ok": true
+    },
+    {
+      "label": "image objects",
+      "ok": true
+    },
+    {
+      "label": "asset registry",
+      "ok": true
+    },
+    {
+      "label": "audit fixtures",
+      "ok": true
+    },
+    {
+      "label": "asset registry",
+      "ok": true
+    },
+    {
+      "label": "audit fixtures",
+      "ok": true
+    },
+    {
+      "label": "chapter fixtures",
+      "ok": true
+    },
+    {
+      "label": "member fixture",
+      "ok": true
+    },
+    {
+      "label": "auth fixture",
+      "ok": true
+    },
+    {
+      "label": "member fixture",
+      "ok": true
+    },
+    {
+      "label": "auth fixture",
+      "ok": true
+    }
+  ],
+  "pageErrors": 0,
+  "authResponses": [
+    {
+      "engine": "chromium",
+      "status": 200
+    },
+    {
+      "engine": "webkit",
+      "status": 200
+    }
+  ],
+  "failedRequests": [
+    {
+      "path": "/api/comic/assets/a39e577a-9596-492c-8ef7-6b93f85465a6/comics/9ead877b-9255-4989-b064-722334259d04.png",
+      "reason": "Load request cancelled"
+    },
+    {
+      "path": "/api/comic/assets/a39e577a-9596-492c-8ef7-6b93f85465a6/comics/d2d49524-f92b-4397-affd-5d7305f264a7.png",
+      "reason": "Load request cancelled"
+    }
+  ],
+  "publicBookUnchanged": true,
+  "passed": true,
+  "checkedAt": "2026-10-30T13:51:29.565Z"
+}

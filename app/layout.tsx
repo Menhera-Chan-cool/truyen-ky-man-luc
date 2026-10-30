@@ -13,6 +13,8 @@ import "@fontsource-variable/jetbrains-mono";
 import "@fontsource/opendyslexic/400.css";
 import "pdfjs-dist/web/pdf_viewer.css";
 import "./globals.css";
+import "./comic-preview.css";
+import "./comic-reader.css";
 import { savedReaderSettings } from "../src/lib/server";
 import { readerPalette, themes } from "../src/lib/reader";
 export const metadata: Metadata = {

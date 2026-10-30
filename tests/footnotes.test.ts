@@ -59,6 +59,19 @@ it("recognizes a DOCX note heading joined to an original-title note by line brea
   decorateFootnotes(root, "en", "chapter-1");
   expect(root.querySelectorAll(".footnote-ref")).toHaveLength(1);
 });
+it("links the first note when its definition shares the note-heading paragraph",()=>{
+  for(const [locale,heading] of [["vi","Chú thích:"],["en","Notes:"]] as const) {
+    const root=article(`<p>Name (1) and (2).</p><p><strong>${heading}</strong> (1) First note.</p><p>(2) Second note.</p>`),text=root.textContent;
+    decorateFootnotes(root,locale,"preface");
+    const refs=[...root.querySelectorAll<HTMLAnchorElement>(".footnote-ref")];
+    expect(refs).toHaveLength(2);
+    expect(refs[0].dataset.tooltip).toBe("(1) First note.");
+    expect(root.querySelector(refs[0].getAttribute("href")!)?.textContent).toContain(heading);
+    expect(root.textContent).toBe(text);
+    expect(footnoteSpeechText(root).startsWith("Name     and    .")).toBe(true);
+    decorateFootnotes(root,locale,"preface");expect(root.querySelectorAll(".footnote-ref")).toHaveLength(2);
+  }
+});
 it("keeps the early preface note and gives repeated definitions no ambiguous link", () => {
   const root = article(
     "<p>Preface (1) and (2).</p><p>(1) First.</p><p>Chú thích</p><p>(2) Second.</p><p>(2) Duplicate.</p>",

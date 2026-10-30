@@ -9,10 +9,15 @@ export function decorateFootnotes(
   const blocks = [
     ...root.querySelectorAll<HTMLElement>("p,li,h1,h2,h3,h4,hr"),
   ].filter((el) => !el.parentElement?.closest("p,li"));
+  const headingPrefix=/^(?:chú thích|chú giải|ghi chú|notes|footnotes|endnotes|annotations)\s*(?:[:\n]|\(\*\)|$)/iu;
   const heading = (el: HTMLElement) =>
-    /^(?:chú thích|chú giải|ghi chú|notes|footnotes|endnotes|annotations)\s*(?:[:\n]|\(\*\)|$)/iu.test(
+    headingPrefix.test(
       (el.textContent ?? "").trim(),
     );
+  const content=(el:HTMLElement)=>{
+    const text=(el.textContent??"").trim();
+    return heading(el)?text.replace(headingPrefix,"").trim():text;
+  };
   const divider = (el: HTMLElement) =>
     el.tagName === "HR" || /^[-_—]{3,}$/.test((el.textContent ?? "").trim());
   const section = blocks.findIndex((el) => heading(el) || divider(el));
@@ -20,12 +25,12 @@ export function decorateFootnotes(
     [];
   if (section >= 0)
     blocks.forEach((block, index) => {
-      const match = (block.textContent ?? "").match(
+      const match = content(block).match(
         /^\s*(?:\((\d{1,3})\)|(\d{1,3})\))\s+\S/u,
       );
       if (
         match &&
-        (index > section || (index === section - 1 && match[1] === "1"))
+        (index >= section || (index === section - 1 && match[1] === "1"))
       )
         definitions.push({ number: match[1] ?? match[2], block, index });
     });
@@ -85,7 +90,7 @@ export function decorateFootnotes(
     )
       return;
     const { block, number } = definition;
-    if (!/^\s*(?:\(\d+\)|\d+\))/.test(block.textContent ?? "")) {
+    if (!/^\s*(?:\(\d+\)|\d+\))/.test(content(block))) {
       block.classList.add("footnote-legacy");
       block.dataset.footnoteNumber = number;
     }
@@ -98,8 +103,8 @@ export function decorateFootnotes(
     }
     const text = blocks
       .slice(definition.index, definitions[index + 1]?.index)
-      .filter((el) => !heading(el) && !divider(el))
-      .map((el) => el.textContent?.trim() ?? "")
+      .filter((el) => el===block || (!heading(el) && !divider(el)))
+      .map(content)
       .filter(Boolean)
       .join("\n");
     notes.set(number, { target: block, text });

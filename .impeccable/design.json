@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-22T12:08:36.742Z",
+  "generatedAt": "2026-10-30T12:44:22.225Z",
   "title": "Design System: Truyền kỳ mạn lục",
   "extensions": {
     "colorMeta": {
@@ -395,6 +395,78 @@
           "oklch(83.6% 0.0114 78.18)",
           "oklch(95% 0.0114 78.18)"
         ]
+      },
+      "comic-ground": {
+        "role": "neutral",
+        "displayName": "Graphite Ground"
+      },
+      "comic-panel": {
+        "role": "neutral",
+        "displayName": "Teal Panel"
+      },
+      "comic-control": {
+        "role": "neutral",
+        "displayName": "Control Slate"
+      },
+      "comic-ink": {
+        "role": "neutral",
+        "displayName": "Pale Slate Ink"
+      },
+      "comic-muted": {
+        "role": "neutral",
+        "displayName": "Readable Muted Slate"
+      },
+      "comic-accent": {
+        "role": "primary",
+        "displayName": "Comic Cyan"
+      },
+      "comic-selected": {
+        "role": "neutral",
+        "displayName": "Selected Teal"
+      },
+      "comic-hover": {
+        "role": "neutral",
+        "displayName": "Hover Slate"
+      },
+      "comic-rule": {
+        "role": "neutral",
+        "displayName": "Comic Divider"
+      },
+      "comic-range": {
+        "role": "neutral",
+        "displayName": "Range Track"
+      },
+      "comic-backdrop": {
+        "role": "neutral",
+        "displayName": "Comic Modal Backdrop"
+      },
+      "editor-inset": {
+        "role": "neutral",
+        "displayName": "Editor Inset Paper"
+      },
+      "editor-field": {
+        "role": "neutral",
+        "displayName": "Editor Field Paper"
+      },
+      "editor-upload": {
+        "role": "neutral",
+        "displayName": "Editor Upload Paper"
+      },
+      "editor-upload-rule": {
+        "role": "neutral",
+        "displayName": "Editor Upload Rule"
+      },
+      "editor-rule": {
+        "role": "neutral",
+        "displayName": "Editor Row Rule"
+      },
+      "editor-selected": {
+        "role": "neutral",
+        "displayName": "Editor Selected Paper"
+      },
+      "editor-primary-hover": {
+        "role": "primary",
+        "displayName": "Editor Deep Vermilion"
       }
     },
     "typographyMeta": {
@@ -429,6 +501,46 @@
       "byline": {
         "displayName": "Author Byline",
         "purpose": "Immediately below h1 with normal tracking."
+      },
+      "comic-body": {
+        "displayName": "Comic Body",
+        "purpose": "Image-reader controls; scoped LOCAL TT."
+      },
+      "comic-dialog-title": {
+        "displayName": "Comic Dialog Title",
+        "purpose": "Native dialog h2 preserves global Literata."
+      },
+      "comic-section-label": {
+        "displayName": "Comic Section Label",
+        "purpose": "Compact uppercase settings labels; scoped tracking exception."
+      },
+      "comic-chapter-label": {
+        "displayName": "Comic Chapter Label",
+        "purpose": "One-line chapter widget; 10px on phones."
+      },
+      "comic-chapter-title": {
+        "displayName": "Comic Chapter Title",
+        "purpose": "Final chapter-list heading after source overrides."
+      },
+      "comic-chapter-subtitle": {
+        "displayName": "Comic Chapter Subtitle",
+        "purpose": "Final chapter-list story title after source overrides."
+      },
+      "editor-heading": {
+        "displayName": "Editor Heading",
+        "purpose": "Warm editor h1; 26px on phones."
+      },
+      "editor-body": {
+        "displayName": "Editor Body",
+        "purpose": "Warm upload-workbench interface text."
+      },
+      "editor-action": {
+        "displayName": "Editor Action",
+        "purpose": "Local save/preview/upload action text."
+      },
+      "editor-field": {
+        "displayName": "Editor Field",
+        "purpose": "Chapter title; final phone input/select text is 16px."
       }
     },
     "shadows": [
@@ -451,6 +563,26 @@
         "name": "toast",
         "value": "0 6px 24px #0003",
         "purpose": "Transient feedback."
+      },
+      {
+        "name": "comic-dialog",
+        "value": "0 18px 60px #0008",
+        "purpose": "Centered native comic dialogs."
+      },
+      {
+        "name": "comic-toast",
+        "value": "0 10px 32px #0005",
+        "purpose": "Transient reader feedback."
+      },
+      {
+        "name": "comic-editor-inspector",
+        "value": "0 16px 45px #302b2333",
+        "purpose": "Floating inspector at 1000px and below."
+      },
+      {
+        "name": "comic-editor-drawer",
+        "value": "12px 0 34px #302b2330",
+        "purpose": "Phone editor chapter drawer."
       }
     ],
     "motion": [
@@ -458,6 +590,26 @@
         "name": "control-color-transition",
         "value": "background 0.15s, color 0.15s",
         "purpose": "Button transitions; reduced-motion and eink disable motion."
+      },
+      {
+        "name": "comic-chrome",
+        "value": "opacity 0.18s ease-out",
+        "purpose": "Three-second idle hide; activity/tab return restore controls."
+      },
+      {
+        "name": "comic-dialog-in",
+        "value": "0.13s ease-out; opacity 0 to 1; translateY(5px) to 0",
+        "purpose": "Comic dialog entrance."
+      },
+      {
+        "name": "comic-editor-control",
+        "value": "background 0.15s, border-color 0.15s",
+        "purpose": "Upload target; cards use border-color/background over the same duration."
+      },
+      {
+        "name": "comic-editor-drawer",
+        "value": "transform 0.18s ease-out",
+        "purpose": "Phone chapter drawer. Scoped decorative motion disabled under prefers-reduced-motion."
       }
     ],
     "breakpoints": [
@@ -476,6 +628,18 @@
       {
         "name": "phone",
         "value": "600px"
+      },
+      {
+        "name": "comic-editor-compact",
+        "value": "1200px"
+      },
+      {
+        "name": "comic-editor-floating-inspector",
+        "value": "1000px"
+      },
+      {
+        "name": "comic-phone",
+        "value": "759px"
       }
     ],
     "readerControls": {
@@ -489,6 +653,65 @@
       ],
       "tooltip": "Shared fixed bubble; native titles removed; first hover 160 ms; consecutive targets immediate; 120 ms easing; reduced motion supported",
       "customColors": "Dark compact panel, 26 px swatch and live uppercase HEX; native color-scheme follows actual background"
+    },
+    "comicSurface": {
+      "scope": "TT shared publication approved after local review; preserve incumbent book/VI/EN and warm editor.",
+      "authority": ".impeccable/comic-surface.md; user-pinned Comix screenshots; three SPEC-comic-*.md files. Shared production behavior: SPEC-comic-publication.md.",
+      "sources": [
+        "app/comic-reader.css",
+        "app/comic-preview.css",
+        "app/globals.css",
+        "src/components/ComicReader.tsx",
+        "src/components/ComicDialogs.tsx",
+        "src/components/ComicEditor.tsx",
+        "src/lib/comic.ts"
+      ],
+      "layout": {
+        "reader": "100dvh stage; art starts at top. Fresh vertical mode:50% viewport-width desktop /100% below 760px. Saved preferences win.",
+        "controls": "36px base rail icons; 34px desktop chapter/zoom. Phone final targets/heights 44px, chapter arrow width36px. No thumbnail drawer/bottom image counter.",
+        "dialogs": "Centered native settings/help and chapters follow frontmatter widths. Desktop max-height min(720px,100dvh - 48px); phone viewport -24px wide /-32px high.",
+        "editor": "76px header +35px status; columns 218px/flexible/284px. At 1200px:190px/flexible/240px; at 1000px inspector floats; at 759px:one column,70px header, drawer/bottom inspector.",
+        "grid": "Auto-fill 148px minimum /18px gap; at 1200px minimum 140px; phone 2 columns /13px gap.",
+        "metadata": "One full-width title field; default-direction control removed, model unchanged.",
+        "phone": "Editor text inputs/selects and chapter search/source select:16px. Editor card action 42px /selection row 40px; not universally 44px.",
+        "integration": "Only TT-enabled text-reader phone toolbar:132px; panel top 138px.",
+        "publication": "Warm editor wrapping flex row above metadata, 10px gap, 22px bottom margin, 18px bottom padding, 1px existing rule; 44px minimum action height. Phone login inputs16px."
+      },
+      "behavior": {
+        "chrome": "Three-second idle hide guarded by modal/hover/focus. Activity, center/blank contact,44px wake and tab return reveal tools.",
+        "autoScroll": "Explicit play/pause in vertical mode; dialogs pause. Blur/hidden/freeze/pagehide stop; return never restarts. Reduced-motion removes decorative motion, not explicit auto-scroll.",
+        "settings": "Vertical/LTR/RTL, gap 0-100px, zoom 10-200% step 5, keyboard fast/smooth step 10-200% viewport, auto 20-600px/s, progress edge/hidden, preload some/all, grayscale/dim.",
+        "persistence": "Preferences/stable page-ID positions remain in IndexedDB. Public reading ignores local drafts. Authenticated shared drafts, immutable assets and revision-checked publication/withdrawal use Supabase with RLS.",
+        "chapters": "Published/missing source filters in shared mode; original sample/local filters only in disconnected prototype. Existing chapter search, ordering and 10-row pagination preserved."
+      },
+      "provenance": {
+        "assets": [
+          "public/comic-demo/demo-01.png",
+          "public/comic-demo/demo-02.png"
+        ],
+        "source": "Original built-in image_gen illustrative samples, not book originals or complete adaptation.",
+        "prompts": "docs/assets/comic-demo-prompts.json",
+        "manifest": "public/comic-demo/PROVENANCE.md",
+        "embedded": "PNG iTXt Description carries exact source/prompt; tt-local.json records original pixels unchanged.",
+        "exclusion": "Pre-existing cover/art provenance outside TT scope; no metadata repair or cover replacement."
+      },
+      "evidence": {
+        "captures": ".impeccable/review/tt-verdict/:all 15 final captures opened; VI/EN desktop/mobile reader-restored/settings/editor; VI desktop/mobile chapters; VI mobile text-entry.",
+        "viewports": [
+          "1876x 1004",
+          "390x 844"
+        ],
+        "metrics": "verification/tt-ui-verdict.json:desktop settings 480x 720 at 698,142; phone 366x 812 at 12,16. Four cases:no page errors; tabReturnShowsUI true.",
+        "verdict": ".impeccable/review/tt-verdict/finish-verdict.md:ship for two scored fixes only, not new whole-surface/production approval.",
+        "contrast": "Final comic-muted/control pair 4.776763:1; disabled controls exempt.",
+        "checks": "Supplied tt-local.json records 102unit tests, typecheck/build,14Chromium+7WebKit. Documenter did not repeat browser execution.",
+        "detector": "Existing work/tt-detect.json:144 advisory/0 non-advisory; no second detector/context run.",
+        "limits": "Not physical iPhone or production auth/RLS/Storage/publication."
+      },
+      "sharedVerification": [
+        "verification/comic-shared-local.json",
+        "verification/comic-shared-live.json"
+      ]
     }
   },
   "components": [
@@ -547,6 +770,54 @@
       "description": "Scrollable tinted overlay; preview stays in flow, while source is fixed below toolbar.",
       "html": "<section class=\"ds-panel\" aria-label=\"Cài đặt trình đọc\"><header class=\"ds-panel-heading\"><h2>Cài đặt trình đọc</h2><button class=\"ds-close ds-focus\" aria-label=\"Đóng\"><svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"m18 6-12 12M6 6l12 12\"/></svg></button></header><p>Màu sắc và kiểu chữ</p></section>",
       "css": ".ds-panel{font-family:\"Be Vietnam Pro\",sans-serif;width:min(425px,calc(100vw - 24px));max-height:calc(100dvh - 90px);overflow:auto;background:color-mix(in srgb,var(--reader-bg,#f5f0e5) 96%,var(--reader-fg,#302b23));color:var(--reader-fg,#302b23);padding:16px 20px 22px;border-radius:12px;box-shadow:0 14px 50px #0003}.ds-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.ds-panel h2{font-family:\"Be Vietnam Pro\",sans-serif;font-size:13px;font-weight:600;margin:0}.ds-panel p{font-size:12px;line-height:1.8}.ds-close{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;border:0;background:transparent;color:inherit;border-radius:6px;cursor:pointer}.ds-close:hover{background:color-mix(in srgb,currentColor 8%,transparent)}@media(max-width:600px){.ds-panel{max-height:calc(100dvh - 110px);padding:16px 18px}.ds-close{width:40px;height:40px}}.ds-focus:focus-visible{outline:2px solid var(--reader-accent,#8d342b);outline-offset:4px}@media(prefers-reduced-motion:reduce){button{transition:none!important}}"
+    },
+    {
+      "name": "Comic Rail Icon",
+      "kind": "button",
+      "refersTo": "comic-icon",
+      "description": "Labelled reader rail action. Final phone size follows scoped overrides.",
+      "html": "<button class=\"ds-cc-icon\" aria-label=\"Mục lục truyện tranh\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01\"/></svg></button>",
+      "css": ".ds-cc-icon{display:inline-grid;place-items:center;width:36px;height:36px;min-width:36px;padding:0;border:0;border-radius:3px;background:var(--cc-panel,#293235);color:var(--cc-muted,#9cabb0);cursor:pointer}.ds-cc-icon:hover:not(:disabled){background:#364448;color:var(--reader-fg,#bfcccf)}.ds-cc-icon[aria-pressed=\"true\"]{background:#30484d;color:var(--reader-accent,#5de4f4)}.ds-cc-icon:disabled{opacity:.38;cursor:default}.ds-cc-icon:focus-visible{outline:2px solid var(--reader-accent,#5de4f4);outline-offset:3px}@media(max-width:759px){.ds-cc-icon{width:44px;height:44px;min-width:44px}}"
+    },
+    {
+      "name": "Comic Selected Choice",
+      "kind": "chip",
+      "refersTo": "comic-choice-selected",
+      "description": "Pressed reading setting. Static example does not change saved preferences.",
+      "html": "<button class=\"ds-cc-choice\" aria-pressed=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><circle cx=\"12\" cy=\"12\" r=\"1\"/></svg>Cuộn nhanh</button>",
+      "css": ".ds-cc-choice{font:11px/1.6 \"Be Vietnam Pro\",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:40px;padding:9px 7px;border:0;border-radius:4px;background:var(--cc-control,#323c40);color:var(--reader-fg,#bfcccf);cursor:pointer}.ds-cc-choice[aria-pressed=\"true\"]{background:#30484d;color:var(--reader-accent,#5de4f4)}.ds-cc-choice:hover{background:color-mix(in srgb,currentColor 8%,transparent)}.ds-cc-choice:focus-visible{outline:2px solid var(--reader-accent,#5de4f4);outline-offset:3px}@media(max-width:759px){.ds-cc-choice{min-height:44px;font-size:10px}}"
+    },
+    {
+      "name": "Comic Chapter Row",
+      "kind": "nav",
+      "refersTo": "comic-chapter-row",
+      "description": "Current real chapter with page availability; no fabricated group/date.",
+      "html": "<a class=\"ds-cc-chapter\" href=\"/vi/comic/chapter-1\" aria-current=\"page\"><span>Chương 1</span><small>Câu Chuyện Ở Đền Hạng Vương</small><em>2 trang</em></a>",
+      "css": ".ds-cc-chapter{font-family:\"Be Vietnam Pro\",sans-serif;position:relative;display:block;min-height:52px;padding:7px 74px 7px 10px;border-radius:4px;color:var(--reader-fg,#bfcccf);background:var(--cc-panel,#293235);text-decoration:none}.ds-cc-chapter:hover{background:#354044}.ds-cc-chapter[aria-current]{color:var(--reader-accent,#5de4f4);background:#30484d}.ds-cc-chapter:focus-visible{outline:2px solid var(--reader-accent,#5de4f4);outline-offset:3px}.ds-cc-chapter>span{display:block;font-size:13px;font-weight:600;line-height:1.5}.ds-cc-chapter>small{display:block;margin-top:1px;font-size:11px;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--cc-muted,#9cabb0)}.ds-cc-chapter[aria-current]>small{color:#76d1de}.ds-cc-chapter>em{position:absolute;top:12px;right:10px;font-size:10px;font-style:normal;font-variant-numeric:tabular-nums;color:var(--cc-muted,#9cabb0)}.ds-cc-chapter[aria-current]>em{color:var(--reader-accent,#5de4f4)}@media(max-width:759px){.ds-cc-chapter{min-height:55px}}"
+    },
+    {
+      "name": "Local Comic Save",
+      "kind": "button",
+      "refersTo": "editor-primary",
+      "description": "Browser-local draft action, not publication. Application supplies save behavior.",
+      "html": "<button class=\"ds-ce-save\">Lưu nháp trên máy</button>",
+      "css": ".ds-ce-save{font:500 12px \"Be Vietnam Pro\",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:11px 17px;border:0;border-radius:5px;background:#8d342b;color:#fffaf0;cursor:pointer}.ds-ce-save:hover:not(:disabled){background:#742a23}.ds-ce-save:disabled{opacity:.38;cursor:not-allowed}.ds-ce-save:focus-visible{outline:2px solid #8d342b;outline-offset:4px}"
+    },
+    {
+      "name": "Local Comic Metadata Field",
+      "kind": "input",
+      "refersTo": "editor-field",
+      "description": "Single chapter-title field. Phone input text is 16px; no direction control.",
+      "html": "<label class=\"ds-ce-label\">Tiêu đề chương<input class=\"ds-ce-field\" value=\"Chương 1: Câu Chuyện Ở Đền Hạng Vương\"/></label>",
+      "css": ".ds-ce-label{font:500 11px \"Be Vietnam Pro\",sans-serif;display:block;color:#302b23}.ds-ce-field{display:block;width:100%;min-height:44px;margin-top:9px;padding:10px 12px;border:1px solid #cfc4b2;border-radius:5px;background:#faf7ef;color:#302b23;font:400 12px \"Be Vietnam Pro\",sans-serif}.ds-ce-field:focus-visible{outline:2px solid #8d342b;outline-offset:4px}@media(max-width:759px){.ds-ce-field{font-size:16px}}"
+    },
+    {
+      "name": "Local Comic Upload Target",
+      "kind": "custom",
+      "refersTo": "editor-upload",
+      "description": "Warm dashed upload target and concrete limits. Static snippet omits file import behavior.",
+      "html": "<section class=\"ds-ce-upload\"><div class=\"ds-ce-symbol\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" aria-hidden=\"true\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12\"/></svg></div><div class=\"ds-ce-copy\"><h2>Thả trang truyện vào đây</h2><p>Chọn nhiều ảnh hoặc một tệp ZIP/CBZ.</p><small>JPG · PNG · WebP　20 MB/ảnh · 50 MB/ZIP</small></div><button>Chọn tệp</button></section>",
+      "css": ".ds-ce-upload{font:13px/1.6 \"Be Vietnam Pro\",sans-serif;display:flex;align-items:center;gap:20px;padding:27px 24px;border:1px dashed #aa9981;border-radius:8px;background:#efe9dc;color:#302b23;transition:background .15s,border-color .15s}.ds-ce-upload.ds-dragover{background:#e8d9c9;border-color:#8d342b}.ds-ce-symbol{display:grid;place-items:center;flex-shrink:0;width:58px;height:58px;color:#8d342b;background:#e4d8c5;border-radius:8px}.ds-ce-copy{flex:1;min-width:0}.ds-ce-copy h2{font:600 15px \"Literata Variable\",Georgia,serif;margin:0 0 6px}.ds-ce-copy p{font-size:11px;line-height:1.7;color:#6b6051;margin:0 0 9px}.ds-ce-copy small{font-size:10px;color:#6b6051}.ds-ce-upload>button{font:500 12px \"Be Vietnam Pro\",sans-serif;min-height:44px;padding:10px 14px;border:1px solid #c6bdad;border-radius:5px;background:#f5f0e5;color:#302b23;cursor:pointer}.ds-ce-upload>button:hover{background:#e8e0d1}.ds-ce-upload>button:focus-visible{outline:2px solid #8d342b;outline-offset:4px}@media(max-width:759px){.ds-ce-upload{display:grid;grid-template-columns:46px minmax(0,1fr);align-items:start;gap:12px 15px;padding:20px 18px}.ds-ce-symbol{width:46px;height:46px}.ds-ce-copy h2{font-size:13px;line-height:1.6}.ds-ce-copy p{font-size:10px}.ds-ce-copy small{font-size:9px}.ds-ce-upload>button{grid-column:2;justify-self:start}}@media(prefers-reduced-motion:reduce){.ds-ce-upload{transition:none}}"
     }
   ],
   "narrative": {
@@ -573,6 +844,11 @@
         "name": "The Quiet Surface Rule",
         "body": "Keep the reading page flat. Reserve shadows for the physical cover and temporary overlays.",
         "section": "elevation"
+      },
+      {
+        "name": "The Scoped Comic Palette Rule",
+        "body": "Graphite/teal/cyan belong to the local image reader. Preserve incumbent book/VI/EN values and warm editor.",
+        "section": "colors"
       }
     ],
     "dos": [
@@ -581,14 +857,18 @@
       "Do preserve the two-row phone toolbar, grouped VI/EN control, and 40px minimum targets in the covered phone controls.",
       "Do keep settings scrollable, keyboard focus visible, and reduced-motion handling intact.",
       "Do let chosen reader typography and colors govern the text; distinguish defaults from preferences.",
-      "Do re-extract values when code changes and check the final applicable media rule."
+      "Do re-extract values when code changes and check the final applicable media rule.",
+      "Do preserve local comic final phone rules, original sample pixels and prompt provenance.",
+      "Do distinguish local drafts and the two-fix ship verdict from production approval."
     ],
     "donts": [
       "Don't introduce synthetic cover art or promote cover blue into a new interface palette.",
       "Don't add decorative eyebrows, tracked author labels, or extra display faces.",
       "Don't shrink reading text to fit a viewport or screenshot.",
       "Don't claim a paper-fade animation that the code does not implement.",
-      "Don't infer hosted authentication, storage, or publishing verification from the locked admin screen."
+      "Don't infer hosted authentication, storage, or publishing verification from the locked admin screen.",
+      "Don't treat TT as a locale, invent groups/dates, restore editor default-direction, or add reader thumbnails/bottom image counters.",
+      "Don't apply the no-synthetic-cover rule to separately labelled original TT sample pages; preserve the supplied cover."
     ]
   }
 }

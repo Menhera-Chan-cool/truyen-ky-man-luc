@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-30T13:52:43.472Z",
+  "unit": {
+    "passed": 109,
+    "files": 29
+  },
+  "typecheck": true,
+  "productionBuild": true,
+  "sharedChecks": 17,
+  "sharedPassed": true,
+  "pageErrors": 0,
+  "fixturesRemoved": true,
+  "publicBookUnchanged": true,
+  "textRegression": {
+    "startTime": "2026-10-30T13:41:59.030Z",
+    "duration": 44676.933,
+    "expected": 20,
+    "skipped": 6,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "visual": {
+    "captures": 6,
+    "scope": "VI/EN editor desktop/phone and public reader; native images loaded before capture; approved Comix geometry preserved."
+  },
+  "limits": [
+    "Automated Chromium/WebKit, not a physical iPhone.",
+    "Demo artwork remains optional editor input, not automatically published."
+  ]
+}

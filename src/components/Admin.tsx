@@ -29,6 +29,7 @@ import type { BookMeta, Locale, Member } from "../lib/types";
 import { IconButton, LanguageLinks, ModuleBoundary } from "./Ui";
 const RichEditor = lazy(() => import("./RichEditor"));
 const ImportPanel = lazy(() => import("./ImportPanel"));
+const ComicEditor = lazy(() => import("./ComicEditor"));
 import PdfViewer from "./PdfViewer";
 import {
   DraftReview,
@@ -80,7 +81,7 @@ const blankMeta: Record<Locale, BookMeta> = {
     frontCover: "/book/cover.jpg",
   },
 };
-export default function Admin({ locale }: { locale: Locale }) {
+export default function Admin({ locale, comicChapter }: { locale: Locale; comicChapter?: string }) {
   const L = useCallback(
     (vi: string, en: string) => tx(locale, vi, en),
     [locale],
@@ -151,6 +152,7 @@ export default function Admin({ locale }: { locale: Locale }) {
   const editorContext = `${selected}:${editLocale}:${head?.draft_id ?? "new"}:${newKind}`;
   const formReady = form.context === editorContext;
   useEffect(() => {
+    if(comicChapter)return;
     const controller = new AbortController();
     let cancelled = false;
     setContentError("");
@@ -185,7 +187,7 @@ export default function Admin({ locale }: { locale: Locale }) {
       cancelled = true;
       controller.abort();
     };
-  }, [editorContext, contentAttempt]);
+  }, [editorContext, contentAttempt,comicChapter]);
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
       if (dirty || metaDirty || importDirty || busy) {
@@ -530,6 +532,12 @@ export default function Admin({ locale }: { locale: Locale }) {
         {returnLink}
       </main>
     );
+  if (comicChapter && state) {
+    const chapterId=state.chapters.some(c=>c.id===comicChapter)?comicChapter:state.chapters[0]?.id;
+    if(chapterId) return <ModuleBoundary locale={locale}><ComicEditor key={`${locale}:${chapterId}`} shared locale={locale} chapterId={chapterId} book={{
+      title:state.book.draft[locale].title,author:"Nguyễn Dữ",chapters:state.chapters.map(c=>({id:c.id,title:state.versions.find(v=>v.chapter_id===c.id&&v.locale===locale)?.title??c.id}))
+    }}/></ModuleBoundary>;
+  }
   return (
     <div className="admin-site">
       <header className="admin-header">
@@ -538,6 +546,7 @@ export default function Admin({ locale }: { locale: Locale }) {
         </h1>
         <div className="button-row">
           <LanguageLinks locale={locale} admin disabled={busy} />
+          <a href={`/admin/comic?lang=${locale}&chapter=${selected||"chapter-1"}`} onClick={e=>{if(busy||!confirmUnsaved())e.preventDefault();}}>{L("Biên tập TT","Comic editor")}</a>
           <a href={`/${locale}`} target="_blank" rel="noopener noreferrer">
             {L("Xem sách", "View book")}
           </a>
