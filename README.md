@@ -30,6 +30,10 @@ npm run test:e2e
 
 `NEXT_TELEMETRY_DISABLED` tránh lỗi ghi cấu hình telemetry trên một số máy Windows; không ảnh hưởng nội dung web. `scripts/copy-worker.mjs` đưa PDF.js worker cùng phiên bản vào public; chạy khi cài dependency.
 
+Kiểm tra Safari/WebKit: chạy `npx playwright install webkit`, mở bản production local rồi đặt `BASE_URL=http://127.0.0.1:3001` và chạy `npm run verify:webkit`. Verifier kiểm tra VI/EN trên phone/desktop: Book một/hai trang, trang kế/trước, chữ cuối chương, hai ranh giới chương, đổi viewport và Ebook trang đơn. Có thể truyền đường dẫn tuyệt đối tới package Playwright cũ được cài riêng cho verifier để kiểm tra WebKit 18; không đổi dependency ứng dụng. WebKit tự động không thay cho thử iPhone vật lý.
+
+Chia trang khai báo cả `column-count` lẫn `column-width` để WebKit 18 không bỏ qua fragmentation của cột đơn. Đếm/dịch trang và mặt giấy tạm dùng chiều rộng thực có phần thập phân; không dùng số `clientWidth` đã làm tròn để tránh dư trang trắng ở cuối chương.
+
 ## Bật biên tập dùng chung
 
 Editor chỉ mở Tiptap khi ID chương, ngôn ngữ và revision khớp dữ liệu form. Trong lúc lưu/upload, vùng nhập bị khóa để không chuyển chương hoặc ghi tiếp vào bản đang gửi. Lịch sử cũ không bị xóa. Kiểm thử hồi quy `npm run verify:editor` cần cấu hình Supabase và `BASE_URL` trỏ tới app đã chạy: tạo tài khoản/chương nháp tạm, dán và lưu ba chương ở cả VI/EN, kiểm tra sau reload rồi xóa dữ liệu thử; không gửi email và không xuất bản chương thử.

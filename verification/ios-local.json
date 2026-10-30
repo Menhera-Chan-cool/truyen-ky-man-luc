@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-10-30T02:40:37.336Z",
+  "unit": {
+    "passed": 95,
+    "files": 25
+  },
+  "typecheck": true,
+  "productionBuild": true,
+  "scope": "94 selected Chromium desktop/mobile cases on final runtime code: Book, gestures, touch, footnotes, source position/font reflow, comparison/jump, selection and speech.",
+  "stats": {
+    "startTime": "2026-10-30T02:36:13.431Z",
+    "duration": 204356.682,
+    "expected": 84,
+    "skipped": 10,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "webkit": [
+    {
+      "engine": "18.0",
+      "cases": 4,
+      "success": true
+    },
+    {
+      "engine": "27.2",
+      "cases": 4,
+      "success": true
+    }
+  ],
+  "redEvidence": {
+    "webkit18": {
+      "width": 323,
+      "height": 451,
+      "scrollWidth": 323,
+      "scrollHeight": 22724,
+      "pages": 1
+    },
+    "fractionalViewport": {
+      "actualWidth": 999.265625,
+      "roundedWidth": 999,
+      "falseLeaves": 29,
+      "actualLeaves": 28,
+      "lastCharacterX": -220.765625
+    }
+  },
+  "limitations": [
+    "Automated WebKit on Windows with phone/touch emulation; no physical iPhone or iOS in-app browser control.",
+    "Native voice quality not assessed."
+  ]
+}

@@ -170,12 +170,14 @@ export class BookFlip {
     const sourceWindow =
         this.paper.querySelector<HTMLElement>(".reading-window"),
       targetWindow = clone.querySelector<HTMLElement>(".reading-window");
-    if (sourceWindow && targetWindow)
+    if (sourceWindow && targetWindow) {
+      const windowRect = sourceWindow.getBoundingClientRect();
       Object.assign(targetWindow.style, {
-        width: `${sourceWindow.clientWidth}px`,
-        height: `${sourceWindow.clientHeight}px`,
+        width: `${windowRect.width}px`,
+        height: `${windowRect.height}px`,
         flex: "none",
       });
+    }
     const images = clone.querySelectorAll<HTMLImageElement>("img");
     this.paper
       .querySelectorAll<HTMLImageElement>("img")

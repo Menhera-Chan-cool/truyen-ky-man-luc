@@ -597,7 +597,7 @@ export default function Reader({
   function revealRect(rect: DOMRect, center = false) {
     if (paged && windowRef.current && contentRef.current) {
       const viewport = windowRef.current,
-        width = viewport.clientWidth;
+        width = viewport.getBoundingClientRect().width;
       const transform = getComputedStyle(contentRef.current).transform;
       const translate =
         transform === "none" ? 0 : new DOMMatrixReadOnly(transform).m41;
@@ -788,12 +788,12 @@ export default function Reader({
       if (cancelled) return;
       const viewport = windowRef.current;
       const content = contentRef.current;
+      const width = viewport?.getBoundingClientRect().width ?? 0;
       const total =
         paged && viewport && content
-          ? countPages(content.scrollWidth, viewport.clientWidth, 48)
+          ? countPages(content.scrollWidth, width, 48)
           : 1;
       if (viewport && content) {
-        const width = viewport.clientWidth;
         const layout = `${width}:${viewport.clientHeight}:${content.scrollWidth}:${content.scrollHeight}`;
         if (
           restored.current &&
@@ -831,7 +831,7 @@ export default function Reader({
             r *
               Math.max(
                 0,
-                countPages(content.scrollWidth, viewport.clientWidth, 48) - 1,
+                countPages(content.scrollWidth, width, 48) - 1,
               ),
           );
           pageRef.current = target;
@@ -1488,7 +1488,8 @@ export default function Reader({
           `${chapterId}:${pageRef.current}`,
           (paper) => {
             const prose = paper.querySelector<HTMLElement>(".prose")!,
-              viewport = paper.querySelector<HTMLElement>(".reading-window")!;
+              viewport = paper.querySelector<HTMLElement>(".reading-window")!,
+              width = viewport.getBoundingClientRect().width;
             let targetPage = target,
               targetLeaves = leaves;
             if (target < 0 || target >= pages) {
@@ -1503,15 +1504,15 @@ export default function Reader({
               decorateFootnotes(prose, locale, neighbor!.id);
               targetLeaves = countPages(
                 prose.scrollWidth,
-                double ? (viewport.clientWidth - 48) / 2 : viewport.clientWidth,
+                double ? (width - 48) / 2 : width,
                 48,
               );
               targetPage =
                 direction > 0
                   ? 0
-                  : countPages(prose.scrollWidth, viewport.clientWidth, 48) - 1;
+                  : countPages(prose.scrollWidth, width, 48) - 1;
             }
-            prose.style.transform = `translateX(-${Math.max(0, targetPage) * (viewport.clientWidth + 48)}px)`;
+            prose.style.transform = `translateX(-${Math.max(0, targetPage) * (width + 48)}px)`;
             const firstLeaf = Math.max(0, targetPage) * (double ? 2 : 1) + 1;
             paper.querySelector(".book-folio")!.replaceChildren(
               ...Array.from(

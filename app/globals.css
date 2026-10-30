@@ -880,6 +880,8 @@ svg {
   height: 100%;
   column-gap: 48px;
   column-fill: auto;
+  /* WebKit 18 needs a definite width to fragment one column; count still sets one/two pages. */
+  column-width: 1px;
   width: 100%;
   will-change: transform;
 }

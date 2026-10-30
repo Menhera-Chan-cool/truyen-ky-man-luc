@@ -13,6 +13,7 @@
     "test:e2e": "playwright test",
     "verify:editor": "node scripts/verify-editor.mjs",
     "verify:expansion": "node scripts/verify-expansion-admin.mjs",
+    "verify:webkit": "node scripts/verify-webkit.mjs",
     "seed:book": "tsx scripts/import-book.ts",
     "check:sources": "tsx scripts/check-sources.ts",
     "setup:owner": "tsx scripts/setup-owner.ts",
