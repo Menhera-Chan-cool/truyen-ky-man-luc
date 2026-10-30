@@ -620,7 +620,7 @@ export default function ComicReader({
       onFocusCapture={wake}
     >
       <header className="cc-topbar cc-chrome">
-        <LanguageLinks locale={locale} chapterId={chapterId} comic />
+        <LanguageLinks locale={locale} chapterId={chapterId} comic onOpen={stopAuto}/>
         {(!shared||preview)&&<span className="cc-local">{preview?L("Bản nháp riêng tư","Private draft"):"Local"}</span>}
       </header>
       <div

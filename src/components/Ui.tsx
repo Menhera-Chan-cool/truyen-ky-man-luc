@@ -107,23 +107,24 @@ export function Panel({
     </section>
   );
 }
-export function LanguageLinks({locale,chapterId,admin=false,disabled=false,comic=false,onNavigate}: {
-  locale:string;chapterId?:string;admin?:boolean;disabled?:boolean;comic?:boolean;onNavigate?:()=>boolean;
+export function LanguageLinks({locale,chapterId,admin=false,disabled=false,comic=false,onNavigate,onOpen}: {
+  locale:string;chapterId?:string;admin?:boolean;disabled?:boolean;comic?:boolean;onNavigate?:()=>boolean;onOpen?:()=>void;
 }) {
   const [open,setOpen]=useState<"vi"|"en"|null>(null),id=useId();
   const nav=useRef<HTMLElement>(null),popup=useRef<HTMLDivElement>(null),buttons=useRef<Record<string,HTMLButtonElement|null>>({});
   const closing=useRef<ReturnType<typeof setTimeout>|undefined>(undefined),focusFirst=useRef(false),pointer=useRef("");
   const clearClose=()=>clearTimeout(closing.current);
-  const show=(lang:"vi"|"en")=>{clearClose();if(!disabled)setOpen(lang);};
+  const show=(lang:"vi"|"en")=>{clearClose();if(!disabled){onOpen?.();setOpen(lang);}};
   useEffect(()=>()=>clearTimeout(closing.current),[]);
   useEffect(()=>{if(disabled)setOpen(null);},[disabled]);
   useEffect(()=>{
     if(!open)return;
     const outside=(e:Event)=>{if(e.target instanceof Node&&!nav.current?.contains(e.target))setOpen(null);};
     const close=()=>setOpen(null);
+    const scroll=(e:Event)=>{if(e.target instanceof Node&&nav.current&&e.target.contains(nav.current))close();};
     document.addEventListener("pointerdown",outside);document.addEventListener("focusin",outside);
-    window.addEventListener("blur",close);window.addEventListener("resize",close);document.addEventListener("scroll",close,true);
-    return()=>{document.removeEventListener("pointerdown",outside);document.removeEventListener("focusin",outside);window.removeEventListener("blur",close);window.removeEventListener("resize",close);document.removeEventListener("scroll",close,true);};
+    window.addEventListener("blur",close);window.addEventListener("resize",close);document.addEventListener("scroll",scroll,true);
+    return()=>{document.removeEventListener("pointerdown",outside);document.removeEventListener("focusin",outside);window.removeEventListener("blur",close);window.removeEventListener("resize",close);document.removeEventListener("scroll",scroll,true);};
   },[open]);
   useLayoutEffect(()=>{
     const menu=popup.current,button=open&&buttons.current[open];if(!menu||!button)return;
@@ -146,8 +147,8 @@ export function LanguageLinks({locale,chapterId,admin=false,disabled=false,comic
         aria-label={lang==="vi"?"Tiếng Việt":"English"} aria-haspopup="menu" aria-expanded={open===lang} aria-controls={open===lang?id+"menu":undefined}
         aria-current={locale===lang?"page":undefined} disabled={disabled}
         onPointerDown={e=>{pointer.current=e.pointerType;}} onPointerEnter={e=>{if(e.pointerType==="mouse")show(lang);}}
-        onClick={e=>{focusFirst.current=e.detail===0;clearClose();setOpen(old=>(e.detail===0||pointer.current==="touch")&&old===lang?null:lang);}}
-        onKeyDown={e=>{if(e.key==="ArrowDown"){e.preventDefault();focusFirst.current=true;if(open===lang)popup.current?.querySelector<HTMLAnchorElement>("a")?.focus();else show(lang);}}}>
+        onClick={e=>{focusFirst.current=e.detail===0;clearClose();onOpen?.();setOpen(old=>(e.detail===0||pointer.current==="touch")&&old===lang?null:lang);}}
+        onKeyDown={e=>{if(e.key==="ArrowDown"){e.preventDefault();focusFirst.current=true;if(open===lang){focusFirst.current=false;popup.current?.querySelector<HTMLAnchorElement>("a")?.focus();}else show(lang);}}}>
         {lang.toUpperCase()}
       </button>
     </span>)}

@@ -725,7 +725,7 @@
           "Comic"
         ]
       },
-      "interaction": "Desktop hover; touch tap; manual native top-layer popover with arrows/Home/End/Escape and outside dismissal.",
+      "interaction": "Desktop hover; touch tap; manual native top-layer popover with arrows/Home/End/Escape and outside dismissal. Opening a comic edition menu stops auto-scroll; sibling scroll restoration does not dismiss it.",
       "layout": {
         "width": 150,
         "padding": 5,

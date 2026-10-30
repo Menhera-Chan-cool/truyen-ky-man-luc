@@ -10,10 +10,13 @@ test("VI/EN menus select one same-chapter edition and support keyboard and outsi
   await page.getByRole("menuitem",{name:"TT",exact:true}).click();
   await expect(page).toHaveURL(/\/vi\/comic\/chapter-2$/);
   await expect(page.locator(".comic-reader")).toBeVisible();await expect(page.locator(".reader-shell")).toHaveCount(0);
+  await expect(page.locator(".comic-reader")).toHaveAttribute("data-ready","true");
   await page.evaluate(()=>window.dispatchEvent(new Event("focus")));
   const en=page.getByRole("button",{name:"English",exact:true});
   await en.focus();await page.keyboard.press("ArrowDown");
   await expect(page.getByRole("menuitem",{name:"Novel",exact:true})).toBeFocused();
+  await page.locator(".cc-stage").evaluate(el=>el.dispatchEvent(new Event("scroll")));
+  await expect(page.getByRole("menu")).toBeVisible();
   await page.keyboard.press("ArrowDown");await expect(page.getByRole("menuitem",{name:"Comic",exact:true})).toBeFocused();
   await page.keyboard.press("Escape");await expect(en).toBeFocused();await expect(page.getByRole("menu")).toHaveCount(0);
   if(isMobile)await en.tap();else await en.hover();
@@ -24,5 +27,5 @@ test("VI/EN menus select one same-chapter edition and support keyboard and outsi
   await page.getByRole("menuitem",{name:"Novel",exact:true}).click();
   await expect(page).toHaveURL(/\/en\/read\/chapter-2$/);
   await page.getByRole("button",{name:"English",exact:true}).click();
-  await page.locator(".reader-document h1").click();await expect(page.getByRole("menu")).toHaveCount(0);
+  await page.locator(".reading-window").click({position:{x:10,y:200}});await expect(page.getByRole("menu")).toHaveCount(0);
 });

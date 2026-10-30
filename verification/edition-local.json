@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-30T14:50:49.288Z",
+  "checkedAt": "2026-10-30T15:07:54.160Z",
   "unit": {
     "passed": 111,
     "files": 29
@@ -8,7 +8,10 @@
   "build": true,
   "migration": "006_comic_locales.sql",
   "shared": {
-    "checks": 19,
+    "checks": 10,
+    "browsers": [
+      "Chromium lifecycle delta"
+    ],
     "passed": true,
     "pageErrors": 0,
     "fixturesRemoved": true,
@@ -16,16 +19,16 @@
   },
   "menus": {
     "chromium": {
-      "startTime": "2026-10-30T14:35:49.446Z",
-      "duration": 27047.286,
+      "startTime": "2026-10-30T15:05:02.857Z",
+      "duration": 9589.088,
       "expected": 2,
       "skipped": 0,
       "unexpected": 0,
       "flaky": 0
     },
     "webkit": {
-      "startTime": "2026-10-30T14:37:07.504Z",
-      "duration": 8611.235,
+      "startTime": "2026-10-30T15:06:40.062Z",
+      "duration": 7396.907,
       "expected": 1,
       "skipped": 0,
       "unexpected": 0,
@@ -45,5 +48,13 @@
     "allOpaque": true,
     "overflow": false
   },
-  "scope": "Language/edition menus and independent comic locales. Physical iPhone not tested."
+  "scope": "Language/edition menus and independent comic locales. Physical iPhone not tested.",
+  "earlierShared": {
+    "checks": 19,
+    "passed": true,
+    "pageErrors": 0,
+    "fixturesRemoved": true,
+    "textUnchanged": true,
+    "sourceCommit": "c16f35856a669a5d3a0914280d2535219fb73175"
+  }
 }

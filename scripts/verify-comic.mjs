@@ -122,6 +122,10 @@ try {
     await publicPage.getByRole("button",{name:"Bắt đầu tự cuộn",exact:true}).click();
     await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-auto","true");
     await expect.poll(()=>publicPage.locator(".cc-stage").evaluate(el=>el.scrollTop)).toBeGreaterThan(0);
+    await publicPage.getByRole("button",{name:"English",exact:true}).click();
+    await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-auto","false",{timeout:2000});
+    await expect(publicPage.getByRole("menu")).toBeVisible();
+    await publicPage.keyboard.press("Escape");
     await publicPage.evaluate(()=>window.dispatchEvent(new Event("blur")));
     await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-auto","false");
     await publicPage.evaluate(()=>window.dispatchEvent(new Event("focus")));

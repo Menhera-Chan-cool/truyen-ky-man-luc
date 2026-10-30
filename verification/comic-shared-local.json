@@ -10,15 +10,6 @@
     "chromium: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
     "chromium: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
     "chromium: withdrawal removes public metadata and new image access",
-    "webkit: guest editor gate",
-    "webkit: natural order, reorder, private direct upload/save and anonymous asset denial",
-    "webkit: private preview requires verified editor",
-    "webkit: concurrent editor conflict preserves saved draft",
-    "webkit: tab-return tools and background auto-scroll stop",
-    "webkit: EN missing edition never displays VI pages",
-    "webkit: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
-    "webkit: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
-    "webkit: withdrawal removes public metadata and new image access",
     "revoked editor denied through API, RPC and RLS"
   ],
   "cleanup": [
@@ -76,19 +67,10 @@
     {
       "engine": "chromium",
       "status": 200
-    },
-    {
-      "engine": "webkit",
-      "status": 200
     }
   ],
-  "failedRequests": [
-    {
-      "path": "/api/comic/assets/f266411c-485c-4adb-822d-da12ceeeaafd/comics/106efd4f-7634-4e33-97dc-20873c18411c.png",
-      "reason": "Load request cancelled"
-    }
-  ],
+  "failedRequests": [],
   "publicBookUnchanged": true,
   "passed": true,
-  "checkedAt": "2026-10-30T14:42:21.987Z"
+  "checkedAt": "2026-10-30T15:03:44.800Z"
 }
