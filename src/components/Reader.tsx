@@ -1401,10 +1401,10 @@ export default function Reader({
     } else return;
   }
   turnRef.current = turnPage;
-  function requestTouchTurn(direction: number) {
+  function requestTouchTurn(direction: number, animate = false) {
     if (restoringBackup.current) return;
     if (!ready || !restored.current) touchTurns.current.push(direction);
-    else turnRef.current(direction, false);
+    else turnRef.current(direction, animate);
   }
   function startBookGesture(e: ReactPointerEvent<HTMLDivElement>) {
     setAuto(false);
@@ -1628,9 +1628,7 @@ export default function Reader({
       if (start.tapEdge && window.getSelection()?.isCollapsed !== false) {
         suppressBookClick.current = performance.now() + 500;
         e.preventDefault();
-        if (ready && restored.current)
-          physicalFlip.current?.begin(start.tapEdge);
-        requestTouchTurn(start.tapEdge);
+        requestTouchTurn(start.tapEdge, true);
       } else onBookBlankClick(e, true);
     }
     if (mobile) setBookControlActivity((value) => value + 1);
@@ -1662,8 +1660,7 @@ export default function Reader({
           Math.hypot(e.clientX - last.startX, e.clientY - last.startY) < 8);
       if (edge && !duplicate) {
         e.preventDefault();
-        if (ready && restored.current) physicalFlip.current?.begin(edge);
-        requestTouchTurn(edge);
+        requestTouchTurn(edge, true);
         return;
       }
     }

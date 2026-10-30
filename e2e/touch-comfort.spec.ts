@@ -1,6 +1,9 @@
 import { test, expect } from "@playwright/test";
-async function book(page: import("@playwright/test").Page) {
-  await page.goto("/vi/read/chapter-1");
+async function book(
+  page: import("@playwright/test").Page,
+  chapter = "chapter-1",
+) {
+  await page.goto(`/vi/read/${chapter}`);
   await expect(page.locator(".reader-shell")).toHaveAttribute(
     "data-ready",
     "true",
@@ -107,6 +110,28 @@ test("48px paper edges tap forward/back exactly once without blocking footnotes 
   );
   await expect(page.locator(".book-folio span").first()).toHaveText("1");
   expect(await page.locator(".prose").textContent()).toBe(source);
+});
+test("tapping beyond the last chapter does not leave a frozen animation layer", async ({
+  page,
+  isMobile,
+}) => {
+  test.skip(!isMobile, "Touch boundary");
+  await book(page, "chapter-20");
+  await page.getByRole("button", { name: "Cuối chương", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Trang sau", exact: true }),
+  ).toBeDisabled();
+  await expect(page.locator(".reader-document")).toHaveAttribute(
+    "data-flip-ready",
+    "true",
+  );
+  const before = await page.locator(".book-folio span").first().textContent();
+  const b = (await page.locator(".reader-document").boundingBox())!;
+  await page.touchscreen.tap(b.x + b.width - 8, b.y + b.height * 0.5);
+  expect(
+    await page.locator(".reader-document").getAttribute("data-flipping"),
+  ).toBeNull();
+  await expect(page.locator(".book-folio span").first()).toHaveText(before!);
 });
 test("touch move bursts render at most one new fold per animation frame", async ({
   page,

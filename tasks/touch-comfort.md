@@ -10,3 +10,5 @@
 No book content, local progress offsets, Supabase data/schema or dependencies change. Physical iPhone FPS and native touch feel need user device feedback; automated WebKit old/current tests cover behavior.
 
 Final local source: 50 pass / 12 conditional skips / zero failures or flaky in 62 selected Chromium cases; 95 unit tests and production build/typecheck pass. WebKit 18.0 and 27.2 each pass four VI/EN phone/desktop cases including gentle swipe and edge tap. Coarse-pointer click fallback was added after legacy WebKit emitted only click events for a tap; duplicate pointer compatibility clicks remain suppressed. Exact cloud verification remains.
+
+Final boundary correction: warm renderer at the last chapter initially left a pending animation on an edge tap. The new regression was red. Edge taps now use the existing bounds-checked page turn; all four comfort cases pass on the rebuilt final code. This is the only runtime delta after the 62-case run; cloud suite will include the boundary case.
