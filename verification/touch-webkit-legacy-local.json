@@ -1,0 +1,132 @@
+{
+  "base": "http://127.0.0.1:3001",
+  "checkedAt": "2026-10-30T03:21:56.397Z",
+  "engine": "18.0",
+  "scope": "Automated WebKit phone/desktop VI/EN, not a physical iPhone run",
+  "cases": [
+    {
+      "locale": "vi",
+      "device": "phone",
+      "first": {
+        "width": 323,
+        "height": 451,
+        "scrollWidth": 19615,
+        "scrollHeight": 451,
+        "total": 53,
+        "folio": "1"
+      },
+      "nextFolio": "2",
+      "gentleSwipeAndEdgeTap": true,
+      "finalTextReachable": true,
+      "chapterEdges": true,
+      "resized": {
+        "width": 289,
+        "height": 403,
+        "scrollWidth": 22181,
+        "scrollHeight": 403,
+        "total": 66,
+        "folio": "1"
+      },
+      "ebook": {
+        "width": 390,
+        "height": 374,
+        "scrollWidth": 24042,
+        "scrollHeight": 374,
+        "total": 55
+      }
+    },
+    {
+      "locale": "en",
+      "device": "phone",
+      "first": {
+        "width": 323,
+        "height": 451,
+        "scrollWidth": 29261,
+        "scrollHeight": 451,
+        "total": 79,
+        "folio": "1"
+      },
+      "nextFolio": "2",
+      "gentleSwipeAndEdgeTap": true,
+      "finalTextReachable": true,
+      "chapterEdges": true,
+      "resized": {
+        "width": 289,
+        "height": 403,
+        "scrollWidth": 32958,
+        "scrollHeight": 403,
+        "total": 98,
+        "folio": "1"
+      },
+      "ebook": {
+        "width": 390,
+        "height": 374,
+        "scrollWidth": 34554,
+        "scrollHeight": 374,
+        "total": 79
+      }
+    },
+    {
+      "locale": "vi",
+      "device": "desktop",
+      "first": {
+        "width": 999,
+        "height": 667,
+        "scrollWidth": 14090,
+        "scrollHeight": 667,
+        "total": 27,
+        "folio": "1"
+      },
+      "nextFolio": "3",
+      "finalTextReachable": true,
+      "chapterEdges": true,
+      "resized": {
+        "width": 798,
+        "height": 527,
+        "scrollWidth": 16865,
+        "scrollHeight": 527,
+        "total": 40,
+        "folio": "1"
+      },
+      "ebook": {
+        "width": 780,
+        "height": 542,
+        "scrollWidth": 18996,
+        "scrollHeight": 542,
+        "total": 23
+      }
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "first": {
+        "width": 999,
+        "height": 667,
+        "scrollWidth": 18279,
+        "scrollHeight": 667,
+        "total": 35,
+        "folio": "1"
+      },
+      "nextFolio": "3",
+      "finalTextReachable": true,
+      "chapterEdges": true,
+      "resized": {
+        "width": 798,
+        "height": 527,
+        "scrollWidth": 24476,
+        "scrollHeight": 527,
+        "total": 58,
+        "folio": "1"
+      },
+      "ebook": {
+        "width": 780,
+        "height": 542,
+        "scrollWidth": 23136,
+        "scrollHeight": 542,
+        "total": 28
+      }
+    }
+  ],
+  "errors": [],
+  "success": true
+}

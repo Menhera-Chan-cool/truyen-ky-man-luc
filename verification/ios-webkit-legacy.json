@@ -1,6 +1,6 @@
 {
-  "base": "https://truyen-ky-man-luc.vercel.app",
-  "checkedAt": "2026-10-30T02:43:09.075Z",
+  "base": "http://127.0.0.1:3001",
+  "checkedAt": "2026-10-30T03:21:56.397Z",
   "engine": "18.0",
   "scope": "Automated WebKit phone/desktop VI/EN, not a physical iPhone run",
   "cases": [
@@ -16,6 +16,7 @@
         "folio": "1"
       },
       "nextFolio": "2",
+      "gentleSwipeAndEdgeTap": true,
       "finalTextReachable": true,
       "chapterEdges": true,
       "resized": {
@@ -46,6 +47,7 @@
         "folio": "1"
       },
       "nextFolio": "2",
+      "gentleSwipeAndEdgeTap": true,
       "finalTextReachable": true,
       "chapterEdges": true,
       "resized": {
@@ -126,7 +128,5 @@
     }
   ],
   "errors": [],
-  "success": true,
-  "deploymentId": "dpl_AXqrTzKeVX43dk98QwjxyVvAA9X3",
-  "runtimeSourceCommit": "5b08129e125350b771a62bdf4e9a1f3d2d5f137f"
+  "success": true
 }

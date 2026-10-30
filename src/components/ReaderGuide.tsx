@@ -29,8 +29,8 @@ export default function ReaderGuide({
           <h3>{L("Vuốt trên điện thoại", "Swipe on your phone")}</h3>
           <p>
             {L(
-              "Vuốt trái/phải để đổi trang. Thanh dưới tự ẩn; chạm vùng trống hoặc mép dưới để hiện lại. Có thể nhập số trang trong Tiện ích đọc.",
-              "Swipe left/right to turn pages. Bottom controls hide automatically; tap blank space or the bottom edge to reveal them. Reading tools also lets you enter a page number.",
+              "Vuốt nhẹ trái/phải hoặc chạm mép phải/trái của tờ giấy để tiến/lùi trang. Thanh dưới tự ẩn; chạm vùng trống ở giữa giấy hoặc mép dưới để hiện lại. Có thể nhập số trang trong Tiện ích đọc.",
+              "Swipe gently left/right, or tap the right/left paper edge to go forward/back. Bottom controls hide automatically; tap blank space in the middle or the bottom edge to reveal them. Reading tools also lets you enter a page number.",
             )}
           </p>
         </li>

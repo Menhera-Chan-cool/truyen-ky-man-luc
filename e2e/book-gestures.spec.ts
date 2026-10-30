@@ -83,7 +83,7 @@ test("mobile controls hide without reflow and wake from blank paper or bottom ed
       const range = document.createRange();
       range.selectNodeContents(p.firstChild!);
       const rect = range.getClientRects()[0];
-      return { x: rect.left + 12, y: rect.top + rect.height / 2 };
+      return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
     });
   await page.touchscreen.tap(textPoint.x, textPoint.y);
   await expect(footer).toHaveAttribute("inert", "");

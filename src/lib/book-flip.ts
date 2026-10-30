@@ -32,6 +32,7 @@ export class BookFlip {
   private disposed = false;
   private timer = 0;
   private finishFrame = 0;
+  private dragFrame = 0;
   private drag: {
     flip?: FlipInstance;
     x: number;
@@ -290,7 +291,7 @@ export class BookFlip {
     clearTimeout(this.timer);
     const wrapper = this.wrapper(
       doc,
-      this.snapshot(),
+      pending.old,
       pending.width,
       pending.height,
     );
@@ -316,7 +317,12 @@ export class BookFlip {
     const leaf = pending.width / (this.double ? 2 : 1);
     drag.x = Math.max(0, Math.min(leaf * 2 - 1, -dx * pending.direction));
     drag.y = dy;
-    this.foldDrag(leaf - drag.x, drag.originY + dy);
+    if (!this.dragFrame)
+      this.dragFrame = requestAnimationFrame(() => {
+        this.dragFrame = 0;
+        if (this.drag === drag && drag.released === undefined)
+          this.foldDrag(leaf - drag.x, drag.originY + drag.y);
+      });
   }
   private foldDrag(x: number, y: number) {
     const flip = this.drag?.flip;
@@ -332,6 +338,8 @@ export class BookFlip {
     const drag = this.drag,
       pending = this.pending;
     if (!drag || !pending || drag.released !== undefined) return;
+    cancelAnimationFrame(this.dragFrame);
+    this.dragFrame = 0;
     drag.released = commit;
     drag.committed = commit && committed;
     if (drag.flip) this.settleDrag();
@@ -463,6 +471,8 @@ export class BookFlip {
   private reset(rewarm: boolean) {
     clearTimeout(this.timer);
     cancelAnimationFrame(this.finishFrame);
+    cancelAnimationFrame(this.dragFrame);
+    this.dragFrame = 0;
     this.host?.remove();
     this.host = null;
     this.frame = null;

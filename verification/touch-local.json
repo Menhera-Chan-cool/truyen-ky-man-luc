@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-10-30T03:27:24.054Z",
+  "unit": {
+    "passed": 95,
+    "files": 25
+  },
+  "typecheck": true,
+  "productionBuild": true,
+  "scope": "62 selected Chromium desktop/mobile cases on final runtime: touch comfort, Book gesture/layout, mobile reading, footnotes, reliability.",
+  "stats": {
+    "startTime": "2026-10-30T03:24:20.851Z",
+    "duration": 132722.447,
+    "expected": 50,
+    "skipped": 12,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "webkit": [
+    {
+      "engine": "18.0",
+      "cases": 4,
+      "success": true
+    },
+    {
+      "engine": "27.2",
+      "cases": 4,
+      "success": true
+    }
+  ],
+  "redEvidence": {
+    "slow30pxSwipe": "Stayed at page 1 before change",
+    "edge40pxInsetTap": "Stayed at page 1 before change",
+    "foldCallsDuring80SynchronousMoves": {
+      "before": 80,
+      "after": 0,
+      "afterNextFrame": 1
+    }
+  },
+  "calibration": "Legacy WebKit click-only tap after a swipe initially timed out. Added coarse-pointer click fallback with compatibility-click coordinate suppression; the same sequence then passed.",
+  "limits": [
+    "Automated Chromium/WebKit emulation; no physical iPhone FPS or tactile calibration."
+  ]
+}

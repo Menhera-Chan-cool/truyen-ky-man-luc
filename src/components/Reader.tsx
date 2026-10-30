@@ -124,6 +124,17 @@ type Selection = {
 type HighlightWindow = Window & {
   Highlight?: new (...ranges: Range[]) => unknown;
 };
+function paperEdge(rect: DOMRect | undefined, x: number, y: number) {
+  if (
+    !rect ||
+    x < rect.left ||
+    x > rect.right ||
+    y < rect.top ||
+    y > rect.bottom
+  )
+    return 0;
+  return x <= rect.left + 48 ? -1 : x >= rect.right - 48 ? 1 : 0;
+}
 type HighlightCSS = typeof CSS & { highlights?: Map<string, unknown> };
 export default function Reader({
   book,
@@ -274,13 +285,20 @@ export default function Reader({
       time: number;
       id: number;
       edge: number;
+      tapEdge: number;
       direction: number;
       preview: boolean;
       lastX: number;
       lastTime: number;
       velocity: number;
     } | null>(null),
-    suppressBookClick = useRef(0);
+    suppressBookClick = useRef(0),
+    lastBookPointer = useRef<{
+      x: number;
+      y: number;
+      startX: number;
+      startY: number;
+    } | null>(null);
   const [bookControlsVisible, setBookControlsVisible] = useState(true),
     [bookControlActivity, setBookControlActivity] = useState(0);
   const bookFooter = useRef<HTMLElement>(null);
@@ -828,11 +846,7 @@ export default function Reader({
         if (anchor !== undefined && !isPdf) revealOffset(anchor);
         else if (paged && viewport && content) {
           const target = Math.round(
-            r *
-              Math.max(
-                0,
-                countPages(content.scrollWidth, width, 48) - 1,
-              ),
+            r * Math.max(0, countPages(content.scrollWidth, width, 48) - 1),
           );
           pageRef.current = target;
           setPage(target);
@@ -1404,6 +1418,15 @@ export default function Reader({
     }
     physicalFlip.current?.cancel();
     gesture.current = null;
+    if (e.pointerType === "touch") {
+      suppressBookClick.current = performance.now() + 500;
+      lastBookPointer.current = {
+        x: e.clientX,
+        y: e.clientY,
+        startX: e.clientX,
+        startY: e.clientY,
+      };
+    }
     const rect = bookPaper.current?.getBoundingClientRect();
     if (
       !bookLayout ||
@@ -1438,6 +1461,8 @@ export default function Reader({
       time: e.timeStamp,
       id: e.pointerId,
       edge,
+      tapEdge:
+        e.pointerType === "touch" ? paperEdge(rect, e.clientX, e.clientY) : 0,
       direction: 0,
       preview: false,
       lastX: e.clientX,
@@ -1467,8 +1492,8 @@ export default function Reader({
     }
     if (
       !start.direction &&
-      Math.abs(dx) > 10 &&
-      Math.abs(dx) > Math.abs(dy) * 2
+      Math.abs(dx) > (e.pointerType === "touch" ? 8 : 10) &&
+      Math.abs(dx) > Math.abs(dy) * (e.pointerType === "touch" ? 1.35 : 2)
     ) {
       const direction = dx < 0 ? 1 : -1,
         target = pageRef.current + direction,
@@ -1544,7 +1569,10 @@ export default function Reader({
     }
     if (start.direction) {
       e.preventDefault();
-      physicalFlip.current?.moveDrag(dx, dy);
+      physicalFlip.current?.moveDrag(
+        e.pointerType === "touch" ? dx * 2 : dx,
+        dy,
+      );
     }
   }
   function endBookGesture(
@@ -1554,6 +1582,10 @@ export default function Reader({
     const start = gesture.current;
     if (!start || start.id !== e.pointerId) return;
     gesture.current = null;
+    if (e.pointerType === "touch" && lastBookPointer.current) {
+      lastBookPointer.current.x = e.clientX;
+      lastBookPointer.current.y = e.clientY;
+    }
     bookPaper.current?.removeAttribute("data-dragging");
     if (e.currentTarget.hasPointerCapture(e.pointerId))
       e.currentTarget.releasePointerCapture(e.pointerId);
@@ -1564,19 +1596,24 @@ export default function Reader({
         !cancel &&
         window.getSelection()?.isCollapsed !== false &&
         (!start.edge || start.edge === direction) &&
-        (-dx * direction > 64 ||
-          (e.pointerType === "touch" &&
-            -dx * direction > 32 &&
-            -start.velocity * direction > 0.5 &&
-            e.timeStamp - start.lastTime < 180)) &&
-        Math.abs(dx) > Math.abs(dy) * 2 &&
+        (e.pointerType === "touch"
+          ? -dx * direction >= 24 ||
+            (-dx * direction >= 14 &&
+              -start.velocity * direction > 0.25 &&
+              e.timeStamp - start.lastTime < 180)
+          : -dx * direction > 64) &&
+        Math.abs(dx) > Math.abs(dy) * (e.pointerType === "touch" ? 1.35 : 2) &&
         (start.direction !== 0 || e.timeStamp - start.time < 700);
     if (start.direction || commit) {
       suppressBookClick.current = performance.now() + 500;
       e.preventDefault();
     }
     if (start.preview) {
-      if (!cancel) physicalFlip.current?.moveDrag(dx, dy);
+      if (!cancel)
+        physicalFlip.current?.moveDrag(
+          e.pointerType === "touch" ? dx * 2 : dx,
+          dy,
+        );
       physicalFlip.current?.releaseDrag(commit, e.pointerType === "touch");
     }
     if (commit && e.pointerType === "touch") requestTouchTurn(direction);
@@ -1587,22 +1624,50 @@ export default function Reader({
       Math.abs(dx) < 8 &&
       Math.abs(dy) < 8 &&
       e.timeStamp - start.time < 500
-    )
-      onBookBlankClick(e, true);
+    ) {
+      if (start.tapEdge && window.getSelection()?.isCollapsed !== false) {
+        suppressBookClick.current = performance.now() + 500;
+        e.preventDefault();
+        if (ready && restored.current)
+          physicalFlip.current?.begin(start.tapEdge);
+        requestTouchTurn(start.tapEdge);
+      } else onBookBlankClick(e, true);
+    }
     if (mobile) setBookControlActivity((value) => value + 1);
   }
   function onBookBlankClick(e: MouseEvent<HTMLDivElement>, touchTap = false) {
     if (
       !bookLayout ||
       !mobile ||
-      !bookControlsHidden ||
-      (!touchTap && performance.now() < suppressBookClick.current) ||
       window.getSelection()?.isCollapsed === false ||
       (e.target as Element).closest(
         "a,button,input,select,textarea,img,[contenteditable]",
       )
     )
       return;
+    const suppressed =
+      !touchTap && performance.now() < suppressBookClick.current;
+    if (!touchTap && window.matchMedia("(pointer: coarse)").matches) {
+      const edge = paperEdge(
+        bookPaper.current?.getBoundingClientRect(),
+        e.clientX,
+        e.clientY,
+      );
+      const last = lastBookPointer.current;
+      // Some older WebKit hosts send a click without pointer events for a tap.
+      const duplicate =
+        suppressed &&
+        last &&
+        (Math.hypot(e.clientX - last.x, e.clientY - last.y) < 8 ||
+          Math.hypot(e.clientX - last.startX, e.clientY - last.startY) < 8);
+      if (edge && !duplicate) {
+        e.preventDefault();
+        if (ready && restored.current) physicalFlip.current?.begin(edge);
+        requestTouchTurn(edge);
+        return;
+      }
+    }
+    if (!bookControlsHidden || suppressed) return;
     const root = contentRef.current;
     if (root) {
       const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT),

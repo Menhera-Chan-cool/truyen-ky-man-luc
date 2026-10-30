@@ -105,6 +105,89 @@ try {
       const second = await measure();
       assert.equal(second.text, first.text);
       assert.equal(second.folio, mobile ? "2" : "3");
+      if (mobile) {
+        let action = "";
+        const contact = (dx, dy, duration, cancel = false) =>
+          page.locator(".reading-scroll").evaluate(
+            (el, args) => {
+              const b = document
+                .querySelector(".reader-document")
+                .getBoundingClientRect();
+              const p = {
+                bubbles: true,
+                pointerId: 52,
+                pointerType: "touch",
+                isPrimary: true,
+                clientX: b.left + b.width * 0.65,
+                clientY: b.top + b.height * 0.65,
+              };
+              const fire = (type, x, y, time) => {
+                const e = new PointerEvent(type, {
+                  ...p,
+                  clientX: x,
+                  clientY: y,
+                });
+                Object.defineProperty(e, "timeStamp", { value: time });
+                el.dispatchEvent(e);
+              };
+              fire("pointerdown", p.clientX, p.clientY, 1000);
+              fire(
+                "pointermove",
+                p.clientX + args.dx,
+                p.clientY + args.dy,
+                1000 + args.duration,
+              );
+              fire(
+                args.cancel ? "pointercancel" : "pointerup",
+                p.clientX + args.dx,
+                p.clientY + args.dy,
+                1010 + args.duration,
+              );
+            },
+            { dx, dy, duration, cancel },
+          );
+        const at = async (n) => {
+          try {
+            await page.waitForFunction(
+              (n) =>
+                document.querySelector(".book-folio span")?.textContent ===
+                String(n),
+              n,
+              { timeout: 6000 },
+            );
+          } catch {
+            throw Error(
+              `Touch ${action} expected page ${n}: ${JSON.stringify(await page.evaluate(() => ({ page: document.querySelector(".book-folio span")?.textContent, selection: getSelection()?.toString(), collapsed: getSelection()?.isCollapsed, coarse: matchMedia("(pointer: coarse)").matches, ready: document.querySelector(".reader-shell")?.getAttribute("data-ready") })))}`,
+            );
+          }
+        };
+        const edge = async (right) => {
+          action = right ? "right edge" : "left edge";
+          const b = await page.locator(".reader-document").boundingBox();
+          await page.touchscreen.tap(
+            right ? b.x + b.width - 40 : b.x + 40,
+            b.y + b.height / 2,
+          );
+        };
+        action = "slow swipe";
+        await contact(-30, 10, 500);
+        await at(3);
+        await edge(false);
+        await at(2);
+        action = "quick flick";
+        await contact(-16, 1, 30);
+        await at(3);
+        await edge(false);
+        await at(2);
+        await edge(true);
+        await at(3);
+        await edge(false);
+        await at(2);
+        await contact(-10, 1, 500);
+        await contact(-12, 70, 100);
+        await contact(-40, 3, 50, true);
+        await at(2);
+      }
       await page
         .getByRole("button", {
           name: L("Trang trước", "Previous page"),
@@ -227,6 +310,7 @@ try {
         device: mobile ? "phone" : "desktop",
         first: { ...first, text: undefined },
         nextFolio: second.folio,
+        gentleSwipeAndEdgeTap: mobile || undefined,
         finalTextReachable: true,
         chapterEdges: true,
         resized: { ...resized, text: undefined },
