@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-10-30T14:08:36.742Z",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "routes": [
+    {
+      "path": "/vi",
+      "status": 200
+    },
+    {
+      "path": "/en",
+      "status": 200
+    },
+    {
+      "path": "/vi/comic/chapter-1",
+      "status": 200
+    },
+    {
+      "path": "/en/comic/chapter-1",
+      "status": 200
+    },
+    {
+      "path": "/admin/comic?chapter=chapter-1&lang=vi",
+      "status": 200
+    }
+  ],
+  "assets": [
+    {
+      "path": "/comic-demo/demo-01.png",
+      "bytes": 3595143,
+      "hashMatch": true
+    },
+    {
+      "path": "/comic-demo/demo-02.png",
+      "bytes": 3466133,
+      "hashMatch": true
+    }
+  ]
+}

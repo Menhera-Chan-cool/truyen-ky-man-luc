@@ -1,0 +1,13 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-30T14:10:09.505Z",
+  "scope": "Selected footnotes, mobile Book gestures/reading and reader reliability, not the complete project suite.",
+  "stats": {
+    "startTime": "2026-10-30T14:05:06.996Z",
+    "duration": 91724.86899999999,
+    "expected": 20,
+    "skipped": 6,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

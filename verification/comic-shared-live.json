@@ -1,0 +1,96 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checks": [
+    "chromium: guest editor gate",
+    "chromium: natural order, reorder, private direct upload/save and anonymous asset denial",
+    "chromium: private preview requires verified editor",
+    "chromium: concurrent editor conflict preserves saved draft",
+    "chromium: tab-return tools and background auto-scroll stop",
+    "chromium: public images load, device draft ignored, VI/EN interfaces and text return links",
+    "chromium: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
+    "chromium: withdrawal removes public metadata and new image access",
+    "webkit: guest editor gate",
+    "webkit: natural order, reorder, private direct upload/save and anonymous asset denial",
+    "webkit: private preview requires verified editor",
+    "webkit: concurrent editor conflict preserves saved draft",
+    "webkit: tab-return tools and background auto-scroll stop",
+    "webkit: public images load, device draft ignored, VI/EN interfaces and text return links",
+    "webkit: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
+    "webkit: withdrawal removes public metadata and new image access",
+    "revoked editor denied through API, RPC and RLS"
+  ],
+  "cleanup": [
+    {
+      "label": "comic heads",
+      "ok": true
+    },
+    {
+      "label": "comic versions",
+      "ok": true
+    },
+    {
+      "label": "image objects",
+      "ok": true
+    },
+    {
+      "label": "asset registry",
+      "ok": true
+    },
+    {
+      "label": "audit fixtures",
+      "ok": true
+    },
+    {
+      "label": "asset registry",
+      "ok": true
+    },
+    {
+      "label": "audit fixtures",
+      "ok": true
+    },
+    {
+      "label": "chapter fixtures",
+      "ok": true
+    },
+    {
+      "label": "member fixture",
+      "ok": true
+    },
+    {
+      "label": "auth fixture",
+      "ok": true
+    },
+    {
+      "label": "member fixture",
+      "ok": true
+    },
+    {
+      "label": "auth fixture",
+      "ok": true
+    }
+  ],
+  "pageErrors": 0,
+  "authResponses": [
+    {
+      "engine": "chromium",
+      "status": 200
+    },
+    {
+      "engine": "webkit",
+      "status": 200
+    }
+  ],
+  "failedRequests": [
+    {
+      "path": "/storage/v1/object/sign/comic-assets/387b759a-c2ad-4279-87b9-3782d204c311/comics/d99ca1e1-0293-4f88-ba0b-51e8c3b71d4a.png",
+      "reason": "Load request cancelled"
+    },
+    {
+      "path": "/storage/v1/object/sign/comic-assets/387b759a-c2ad-4279-87b9-3782d204c311/comics/09b86f92-72a6-4bcf-b6dc-3a798c67888e.png",
+      "reason": "Load request cancelled"
+    }
+  ],
+  "publicBookUnchanged": true,
+  "passed": true,
+  "checkedAt": "2026-10-30T14:07:32.440Z"
+}
