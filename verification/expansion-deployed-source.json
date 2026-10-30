@@ -1,0 +1,150 @@
+{
+  "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
+  "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012",
+  "files": 285,
+  "treeDigestsMatched": 265,
+  "additionalDigestLookups": [
+    {
+      "file": "app/admin/activate/page.tsx",
+      "sha": "4ed384ce9cec9f1f647eea029bc64024fb0e1a31",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/admin/assets/route.ts",
+      "sha": "c311b1dd9b475e6c9557d1476fa4f5d7a3a43f85",
+      "lookupByDigest": true,
+      "responseTruncated": true,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/admin/audit/route.ts",
+      "sha": "936117437b629f6a5b0f2af720e9d2613664a2b3",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/admin/book/route.ts",
+      "sha": "f49004c97031918e3cb602dc740e06152a5beed3",
+      "lookupByDigest": true,
+      "responseTruncated": true,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/admin/chapters/route.ts",
+      "sha": "914d036ed35732ae50951284d9d453f0c47a8d17",
+      "lookupByDigest": true,
+      "responseTruncated": true,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/admin/members/route.ts",
+      "sha": "cf3eaee74f541c6a3d0b77b41be60087f3776635",
+      "lookupByDigest": true,
+      "responseTruncated": true,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/admin/presence/route.ts",
+      "sha": "9011cf1ea4e95ec9530e04571776760b4802367b",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/admin/replace/route.ts",
+      "sha": "aed71bf8d4a164fc8db259aefe91bab072f71eb8",
+      "lookupByDigest": true,
+      "responseTruncated": true,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/admin/review/route.ts",
+      "sha": "dac27ef8bba685c3c0758ebb50c4e85ef47a79c1",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/admin/state/route.ts",
+      "sha": "3703f0a61da7c6679460a6bec09c68aa2f1541eb",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/assets/[...path]/route.ts",
+      "sha": "6185a915e20320d1e5f141e4e3a396cf97abad3d",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/api/book/route.ts",
+      "sha": "3df799e66574257acbbe87b5e7ed1d2221b5f5f6",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/auth/confirm/route.ts",
+      "sha": "d703e07bfde26dbfb53c1cc9008464e1007c25a2",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "app/[locale]/read/[chapterId]/page.tsx",
+      "sha": "f953e8eff332c2c84fbcc860b384e4ed814df923",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "verification/footnote-live.json",
+      "sha": "318241757c64cde835597478d8030eeeeb4eee50",
+      "lookupByDigest": true,
+      "responseTruncated": true,
+      "prefixMatched": true
+    },
+    {
+      "file": "verification/footnote-local.json",
+      "sha": "5e0dd037dd9a54a967181e09527c3fce91417b18",
+      "lookupByDigest": true,
+      "responseTruncated": true,
+      "prefixMatched": true
+    },
+    {
+      "file": "verification/footnote-navigation-live.json",
+      "sha": "6448f82d503b531ef1a21a08aff2c18e027cc3c5",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "verification/footnote-qa-calibration.json",
+      "sha": "d2657e5513b10da5f00735948850d43efdc0e198",
+      "lookupByDigest": true,
+      "responseTruncated": false,
+      "prefixMatched": true
+    },
+    {
+      "file": "verification/footnote-qa-live.json",
+      "sha": "57ae6007202317349027f4e97bf0c75da7bc2d56",
+      "lookupByDigest": true,
+      "responseTruncated": true,
+      "prefixMatched": true
+    },
+    {
+      "file": "verification/footnote-qa-local.json",
+      "sha": "ce35a16b279b6886acb365fe3257eaadc0aaca76",
+      "lookupByDigest": true,
+      "responseTruncated": true,
+      "prefixMatched": true
+    }
+  ],
+  "privateFilesAbsent": true,
+  "note": "MCP truncates deep tree entries and long base64 responses. Additional files were retrieved using their submitted digest and their returned content/prefix matched; not a full rehash of truncated content."
+}

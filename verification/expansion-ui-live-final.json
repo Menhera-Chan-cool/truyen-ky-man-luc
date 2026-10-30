@@ -1,0 +1,120 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-30T00:02:30.773Z",
+  "kind": "live-final",
+  "limitations": "Chromium viewport/touch emulation, no physical-device calibration",
+  "results": [
+    {
+      "locale": "vi",
+      "device": "desktop",
+      "headerFits": true,
+      "paperPositionPreserved": true,
+      "comparisonGeometry": [
+        {
+          "x": 184,
+          "y": 258.59375,
+          "width": 598,
+          "height": 630
+        },
+        {
+          "x": 806,
+          "y": 258.59375,
+          "width": 598,
+          "height": 630
+        }
+      ],
+      "comparisonTargetHeight": 44,
+      "parallelTypography": {
+        "fontSize": "20px",
+        "fontFamily": "\"Literata Variable\", Georgia, serif"
+      },
+      "fontSummaryHeight": 44,
+      "voiceSummaryHeight": 44,
+      "pageErrors": []
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "headerFits": true,
+      "paperPositionPreserved": true,
+      "comparisonGeometry": [
+        {
+          "x": 184,
+          "y": 258.59375,
+          "width": 598,
+          "height": 630
+        },
+        {
+          "x": 806,
+          "y": 258.59375,
+          "width": 598,
+          "height": 630
+        }
+      ],
+      "comparisonTargetHeight": 44,
+      "parallelTypography": {
+        "fontSize": "20px",
+        "fontFamily": "\"Literata Variable\", Georgia, serif"
+      },
+      "fontSummaryHeight": 44,
+      "voiceSummaryHeight": 44,
+      "pageErrors": []
+    },
+    {
+      "locale": "vi",
+      "device": "phone",
+      "headerFits": true,
+      "paperPositionPreserved": true,
+      "comparisonGeometry": [
+        {
+          "x": 26,
+          "y": 310.1875,
+          "width": 338,
+          "height": 325.390625
+        },
+        {
+          "x": 26,
+          "y": 655.578125,
+          "width": 338,
+          "height": 325.390625
+        }
+      ],
+      "comparisonTargetHeight": 44,
+      "parallelTypography": {
+        "fontSize": "20px",
+        "fontFamily": "\"Literata Variable\", Georgia, serif"
+      },
+      "fontSummaryHeight": 44,
+      "voiceSummaryHeight": 44,
+      "pageErrors": []
+    },
+    {
+      "locale": "en",
+      "device": "phone",
+      "headerFits": true,
+      "paperPositionPreserved": true,
+      "comparisonGeometry": [
+        {
+          "x": 26,
+          "y": 331.78125,
+          "width": 338,
+          "height": 325.390625
+        },
+        {
+          "x": 26,
+          "y": 677.171875,
+          "width": 338,
+          "height": 325.390625
+        }
+      ],
+      "comparisonTargetHeight": 44,
+      "parallelTypography": {
+        "fontSize": "20px",
+        "fontFamily": "\"Literata Variable\", Georgia, serif"
+      },
+      "fontSummaryHeight": 44,
+      "voiceSummaryHeight": 44,
+      "pageErrors": []
+    }
+  ]
+}

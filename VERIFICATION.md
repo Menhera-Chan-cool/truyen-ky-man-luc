@@ -1,3 +1,21 @@
+# Tiện ích đọc và biên tập — đã phát hành 30/10/2026
+
+Production **dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA**, source **85f6ee1717defd260063563cdc9c787fe456d012**, alias https://truyen-ky-man-luc.vercel.app đã xác minh READY, đúng commit. GitHub vẫn PRIVATE. Source ZIP được đóng lại sau bản bằng chứng này.
+
+- 95 unit / 25 file đạt; typecheck và production build đạt. Full local 206 ca trên 54cc5cd: **189 đạt / 17 skip / 0 fail, flaky**. Sau đó chỉ sửa CSS ô chọn chương đối chiếu lên 44px và thêm assertion: dựng lại bản cuối, chạy đủ reader-expansion **5 đạt / 1 skip**. Không gọi full 206 là kiểm tra lại trên source 85f6ee1.
+- Trên đúng runtime cuối: **70 ca chọn lọc, 60 đạt / 10 skip theo thiết bị / 0 fail, flaky**; ngoại tuyến thật bằng cách ngắt mạng, VI/EN, phông cá nhân, phát âm/auto-next, vuốt/lật/chuyển chương, chú thích, vị trí/nghe/ghi chú. Xem verification/expansion-live.json.
+- Kiểm tra giao diện VI/EN × PC/phone: chữ đối chiếu 20px theo phông reader, các vùng chọn/mở rộng 44px, đúng hai cột/xếp dọc, đóng bảng giữ vị trí giấy, không page error. Xem verification/expansion-ui-live-final.json.
+- Hai verifier authenticated trên URL production dùng Supabase thật đều thành công: so sánh/preflight, thay thế nháp/conflict rollback, hiện diện/thu hồi quyền/audit bất biến, private asset không vào offline cache; editor dán/lưu/chuyển/reload ba chương riêng VI và EN. Public book và revision thật không đổi; tất cả fixture đã dọn. Các 409/ERR_ABORTED trong editor là tình huống xung đột/hủy request được kiểm soát.
+- Migration 004 đã áp dụng. Không thay nội dung sách hay file nguồn; thêm nhật ký/hiện diện/RPC có RLS. API xuất bản kiểm tra lại chương/ảnh/chú thích; bìa được kiểm tra trước khi xuất bản giới thiệu.
+- Nút ba chấm mở đối chiếu, hướng dẫn, nhảy trang, lịch sử và tải ngoại tuyến. Giọng đọc có phát âm riêng và tự nghe chương kế (mặc định tắt); settings có phông riêng. Editor có so sánh/kiểm tra, thay thế và nhật ký. Chi tiết giới hạn và cách dùng ở README.md.
+- Giữ bằng chứng hiệu chuẩn: ô chọn chương ban đầu chỉ 22px, assertion mới đỏ trước sửa; lần cloud đầu gặp thêm lỗi thư mục trace do hai test runner cùng output. Bản cuối tách output, đủ 70 ca sạch, không hạ assertion.
+
+Chưa thử Android/iOS vật lý, Safari, FPS thực địa hoặc nghe chất lượng giọng thật bằng tai. Đọc ngoại tuyến cần tải trước; trình duyệt có thể xóa dữ liệu khi thiếu dung lượng. API log Vercel chưa được cấp scope nên không tuyên bố đã quét toàn bộ runtime logs.
+
+---
+
+## Lịch sử checkpoint và release trước
+
 # Tiện ích đọc và biên tập — kiểm tra trước phát hành 30/10/2026
 
 - Source cuối: 95 unit / 25 file đạt, typecheck và production build đạt.

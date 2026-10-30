@@ -1,0 +1,27 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
+  "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012",
+  "checkedAt": "2026-10-30T00:06:51.152Z",
+  "scope": "70 selected cloud cases on exact final runtime: expansion, fonts/pronunciation/auto-next, offline reload/update failure retention, mobile reading/Book gestures, footnotes, reliability, speech continuity and chapter navigation. Not full 206-case cloud suite.",
+  "stats": {
+    "startTime": "2026-10-30T00:02:00.726Z",
+    "duration": 223638.216,
+    "expected": 60,
+    "skipped": 10,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "visual": "verification/expansion-ui-live-final.json",
+  "admin": "verification/expansion-admin-latest.json",
+  "editor": "verification/editor-switch-latest.json",
+  "calibration": [
+    "First 54cc5cd cloud run: 58 passed, 10 skipped, 2 failures. One trace-directory collision from concurrent Playwright invocations; one new 44px picker assertion correctly rejected the old 22px control.",
+    "Final run uses a separate artifacts directory and corrected 85f6ee1 CSS. Final stats above have no unexpected or flaky cases."
+  ],
+  "limitations": [
+    "Chromium mouse/touch emulation, no physical Android/iOS or Safari validation.",
+    "Web Speech tests mock engine callbacks; native voice quality and real-device FPS remain untested.",
+    "Vercel log endpoint returned a scope permission error; no full runtime-log scan is claimed. Browser visual checks recorded zero page errors."
+  ]
+}

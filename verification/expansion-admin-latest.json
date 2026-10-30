@@ -1,5 +1,5 @@
 {
-  "base": "http://localhost:3001",
+  "base": "https://truyen-ky-man-luc.vercel.app",
   "checks": [
     "Authenticated comparison of saved versions and clean preflight UI",
     "Other editor visible; revocation immediately denies presence/audit",
@@ -10,35 +10,35 @@
   ],
   "cleanup": [
     {
-      "label": "presence d18de4dc-b5d2-45e3-9f83-23cca05c0145",
+      "label": "presence f85818df-3f6c-4afa-960d-5dbbc7b6637b",
       "ok": true
     },
     {
-      "label": "presence a874cc21-ba60-4fbc-afe2-bd18a3188239",
+      "label": "presence 421af740-8a29-4e91-9c74-92d10a6b6f39",
       "ok": true
     },
     {
-      "label": "editions verify-expansion-1bf7e22a-one",
+      "label": "editions verify-expansion-2799f406-one",
       "ok": true
     },
     {
-      "label": "versions verify-expansion-1bf7e22a-one",
+      "label": "versions verify-expansion-2799f406-one",
       "ok": true
     },
     {
-      "label": "chapter verify-expansion-1bf7e22a-one",
+      "label": "chapter verify-expansion-2799f406-one",
       "ok": true
     },
     {
-      "label": "editions verify-expansion-1bf7e22a-two",
+      "label": "editions verify-expansion-2799f406-two",
       "ok": true
     },
     {
-      "label": "versions verify-expansion-1bf7e22a-two",
+      "label": "versions verify-expansion-2799f406-two",
       "ok": true
     },
     {
-      "label": "chapter verify-expansion-1bf7e22a-two",
+      "label": "chapter verify-expansion-2799f406-two",
       "ok": true
     },
     {
@@ -76,5 +76,8 @@
   ],
   "requestErrors": [],
   "publicBookUnchanged": true,
-  "success": true
+  "success": true,
+  "checkedAt": "2026-10-30T00:04:20.090Z",
+  "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
+  "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012"
 }

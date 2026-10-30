@@ -1,73 +1,159 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
+  "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-84p8nj570-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-q30pbczem-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-10-29T11:19:45.928Z",
+  "checkedAt": "2026-10-30T00:06:51.152Z",
   "runtime": {
     "node": "24.x",
     "NODE_OPTIONS": "--experimental-require-module"
   },
-  "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
+  "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
     "branch": "main"
   },
   "verification": {
-    "unitTests": 82,
+    "unitTests": 95,
     "typecheck": true,
     "productionBuild": true,
     "fullLocal": {
-      "startTime": "2026-10-29T11:09:51.001Z",
-      "duration": 204197.149,
-      "expected": 178,
-      "skipped": 16,
-      "unexpected": 0,
-      "flaky": 0
-    },
-    "selectedLive": {
-      "clientDate": "2026-10-29",
-      "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
-      "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
-      "base": "https://truyen-ky-man-luc.vercel.app",
-      "checkedAt": "2026-10-29T11:19:45.928Z",
-      "scope": "52 selected cloud cases: all mobile reading, Book gesture, Book presentation and footnote cases on the exact final runtime; not a full 194-case cloud run.",
+      "runtimeSourceCommit": "54cc5cd957ac8aad657eb3255fc076f1589a93c8",
       "stats": {
-        "startTime": "2026-10-29T11:16:59.957Z",
-        "duration": 94773.591,
-        "expected": 43,
-        "skipped": 9,
+        "startTime": "2026-10-29T23:47:54.008Z",
+        "duration": 402033.57,
+        "expected": 189,
+        "skipped": 17,
         "unexpected": 0,
         "flaky": 0
       },
-      "visual": {
-        "path": "verification/mobile-reading-ui-live.json",
-        "combinations": 4,
-        "phoneReverseFolio": 2,
-        "phoneFrontFolio": 1,
-        "touchNotePreview": true,
-        "noteOpacitySettled": true,
-        "noPaperReflow": true,
-        "pageErrors": []
+      "scope": "Full suite before final CSS-only comparison picker correction."
+    },
+    "finalCssLocal": {
+      "passed": 5,
+      "skipped": 1,
+      "failed": 0,
+      "scope": "Rebuilt 85f6ee1, all reader-expansion cases after 44px picker correction."
+    },
+    "selectedLive": {
+      "base": "https://truyen-ky-man-luc.vercel.app",
+      "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
+      "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012",
+      "checkedAt": "2026-10-30T00:06:51.152Z",
+      "scope": "70 selected cloud cases on exact final runtime: expansion, fonts/pronunciation/auto-next, offline reload/update failure retention, mobile reading/Book gestures, footnotes, reliability, speech continuity and chapter navigation. Not full 206-case cloud suite.",
+      "stats": {
+        "startTime": "2026-10-30T00:02:00.726Z",
+        "duration": 223638.216,
+        "expected": 60,
+        "skipped": 10,
+        "unexpected": 0,
+        "flaky": 0
       },
+      "visual": "verification/expansion-ui-live-final.json",
+      "admin": "verification/expansion-admin-latest.json",
+      "editor": "verification/editor-switch-latest.json",
+      "calibration": [
+        "First 54cc5cd cloud run: 58 passed, 10 skipped, 2 failures. One trace-directory collision from concurrent Playwright invocations; one new 44px picker assertion correctly rejected the old 22px control.",
+        "Final run uses a separate artifacts directory and corrected 85f6ee1 CSS. Final stats above have no unexpected or flaky cases."
+      ],
       "limitations": [
-        "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
-        "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech."
+        "Chromium mouse/touch emulation, no physical Android/iOS or Safari validation.",
+        "Web Speech tests mock engine callbacks; native voice quality and real-device FPS remain untested.",
+        "Vercel log endpoint returned a scope permission error; no full runtime-log scan is claimed. Browser visual checks recorded zero page errors."
       ]
     },
-    "visual": "verification/mobile-reading-ui-live.json"
+    "visual": {
+      "path": "verification/expansion-ui-live-final.json",
+      "combinations": 4,
+      "pageErrors": [],
+      "comparisonFontSize": "20px",
+      "touchTargets": 44
+    },
+    "adminIntegration": true,
+    "editorIntegration": true,
+    "fixtureCleanup": true,
+    "publishedBookUnchanged": true
   },
   "limitations": [
-    "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
-    "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech.",
-    "No source book, editor draft, account, storage schema or permissions changed."
+    "Chromium mouse/touch emulation, no physical Android/iOS or Safari validation.",
+    "Web Speech tests mock engine callbacks; native voice quality and real-device FPS remain untested.",
+    "Vercel log endpoint returned a scope permission error; no full runtime-log scan is claimed. Browser visual checks recorded zero page errors."
   ],
   "previousDeployment": {
-    "id": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
-    "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46"
+    "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
+    "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
+    "url": "https://truyen-ky-man-luc.vercel.app",
+    "immutableUrl": "https://truyen-ky-man-84p8nj570-anh-tun.vercel.app",
+    "target": "production",
+    "region": "sin1",
+    "state": "READY",
+    "checkedAt": "2026-10-29T11:19:45.928Z",
+    "runtime": {
+      "node": "24.x",
+      "NODE_OPTIONS": "--experimental-require-module"
+    },
+    "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
+    "github": {
+      "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
+      "visibility": "PRIVATE",
+      "branch": "main"
+    },
+    "verification": {
+      "unitTests": 82,
+      "typecheck": true,
+      "productionBuild": true,
+      "fullLocal": {
+        "startTime": "2026-10-29T11:09:51.001Z",
+        "duration": 204197.149,
+        "expected": 178,
+        "skipped": 16,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "selectedLive": {
+        "clientDate": "2026-10-29",
+        "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
+        "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
+        "base": "https://truyen-ky-man-luc.vercel.app",
+        "checkedAt": "2026-10-29T11:19:45.928Z",
+        "scope": "52 selected cloud cases: all mobile reading, Book gesture, Book presentation and footnote cases on the exact final runtime; not a full 194-case cloud run.",
+        "stats": {
+          "startTime": "2026-10-29T11:16:59.957Z",
+          "duration": 94773.591,
+          "expected": 43,
+          "skipped": 9,
+          "unexpected": 0,
+          "flaky": 0
+        },
+        "visual": {
+          "path": "verification/mobile-reading-ui-live.json",
+          "combinations": 4,
+          "phoneReverseFolio": 2,
+          "phoneFrontFolio": 1,
+          "touchNotePreview": true,
+          "noteOpacitySettled": true,
+          "noPaperReflow": true,
+          "pageErrors": []
+        },
+        "limitations": [
+          "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
+          "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech."
+        ]
+      },
+      "visual": "verification/mobile-reading-ui-live.json"
+    },
+    "limitations": [
+      "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
+      "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech.",
+      "No source book, editor draft, account, storage schema or permissions changed."
+    ],
+    "previousDeployment": {
+      "id": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
+      "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46"
+    }
   }
 }
