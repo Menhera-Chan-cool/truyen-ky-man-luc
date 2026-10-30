@@ -1,0 +1,32 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "deploymentId": "dpl_AXqrTzKeVX43dk98QwjxyVvAA9X3",
+  "runtimeSourceCommit": "5b08129e125350b771a62bdf4e9a1f3d2d5f137f",
+  "checkedAt": "2026-10-30T02:49:33.948Z",
+  "scope": "56 selected Chromium desktop/mobile cases on exact final runtime: Book layouts/gestures, mobile reading, footnotes and reader reliability. Not the full suite.",
+  "stats": {
+    "startTime": "2026-10-30T02:43:20.357Z",
+    "duration": 173908.58,
+    "expected": 47,
+    "skipped": 9,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "webkit": [
+    {
+      "engine": "18.0",
+      "cases": 4,
+      "success": true
+    },
+    {
+      "engine": "27.2",
+      "cases": 4,
+      "success": true
+    }
+  ],
+  "visual": "verification/ios-ui-live.json",
+  "limitations": [
+    "WebKit 18.0 and 27.2 run on Windows with phone/touch emulation. No physical iPhone or Zalo/Messenger in-app browser control.",
+    "Native voice quality is not assessed."
+  ]
+}

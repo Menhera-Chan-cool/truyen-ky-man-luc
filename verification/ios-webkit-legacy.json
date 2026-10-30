@@ -1,6 +1,8 @@
 {
-  "base": "http://127.0.0.1:3001",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-30T02:43:09.075Z",
   "engine": "18.0",
+  "scope": "Automated WebKit phone/desktop VI/EN, not a physical iPhone run",
   "cases": [
     {
       "locale": "vi",
@@ -124,5 +126,7 @@
     }
   ],
   "errors": [],
-  "success": true
+  "success": true,
+  "deploymentId": "dpl_AXqrTzKeVX43dk98QwjxyVvAA9X3",
+  "runtimeSourceCommit": "5b08129e125350b771a62bdf4e9a1f3d2d5f137f"
 }

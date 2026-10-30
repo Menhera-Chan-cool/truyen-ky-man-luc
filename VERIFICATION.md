@@ -1,3 +1,19 @@
+# Sửa chia trang iOS — production 30/10/2026
+
+Deployment **dpl_AXqrTzKeVX43dk98QwjxyVvAA9X3**, runtime source **5b08129e125350b771a62bdf4e9a1f3d2d5f137f**, https://truyen-ky-man-luc.vercel.app đã xác minh READY và khớp source các file CSS/Reader/BookFlip/verifier/package. GitHub tiếp tục private.
+
+- Đã xem video 51.83 giây và ảnh người dùng. WebKit 18 tái hiện đúng: khung 323×451px nhưng nội dung tràn dọc 22.724px, scrollWidth chỉ 323px, bộ đếm 1/1; Next bỏ qua phần còn lại. Regression đỏ trước khi sửa.
+- Khai báo column-width cụ thể để WebKit cũ tạo đúng các trang ngang một cột; column-count vẫn quyết định một/hai trang. Không sửa HTML/nội dung sách/offset ghi chú/nghe.
+- Verifier chữ cuối còn phát hiện lỗi làm tròn: viewport thực 999.265625px bị đọc thành 999px, tính thừa một lá (29 thay vì 28), tạo trang cuối rỗng. Dùng kích thước thực trong Reader và snapshot lật giấy; regression chữ cuối đỏ trước sửa, xanh sau sửa.
+- 95 unit / 25 file đạt; build và TypeScript đạt. Trên source cuối local, **94 ca chọn lọc: 84 đạt / 10 skip / 0 fail, flaky**. Không tuyên bố chạy lại full 206 ca.
+- Trên đúng production cuối, **56 ca Chromium: 47 đạt / 9 skip / 0 fail, flaky**. WebKit 18.0 và 27.2 mỗi bản đạt 4 tổ hợp VI/EN × phone/desktop: trang trước/sau, chữ cuối, hai ranh giới chương, resize và Ebook single page.
+- Bốn kiểm tra hình ảnh phone VI/EN × hai WebKit đạt: bộ đếm nhiều trang, chuỗi vuốt +,+,-,+ dừng trang 3 trong chương 1, chú thích mở thẻ tại chỗ, không page error. Đã xem ảnh đầu/trang 3 trên WebKit 18; kiểm tra text Range không phát hiện dòng chữ giao biên bị cắt. Xem verification/ios-*.json.
+- Không đổi database, schema, file nguồn, quyền thành viên hay bản công khai. Runtime/dependency của ứng dụng không đổi. Playwright cũ và bộ đọc video được cài riêng dưới work/.
+
+Chưa thao tác trực tiếp trên iPhone vật lý hoặc trình duyệt nhúng Zalo/Messenger. Người dùng cần tải lại trang; bản đã tải ngoại tuyến cần Cập nhật bản tải để nhận mã giao diện mới. Các mục dưới đây là lịch sử release trước.
+
+---
+
 # Tiện ích đọc và biên tập — đã phát hành 30/10/2026
 
 Production **dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA**, source **85f6ee1717defd260063563cdc9c787fe456d012**, alias https://truyen-ky-man-luc.vercel.app đã xác minh READY, đúng commit. GitHub vẫn PRIVATE. Source ZIP được đóng lại sau bản bằng chứng này.
