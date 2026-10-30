@@ -52,6 +52,11 @@ test("compares the same chapter in VI and EN without moving the main reader", as
   await expect(page.locator('.parallel-edition[lang="en"]')).toContainText(
     "Ho Tong Thoc",
   );
+  expect(
+    await page.locator(".comparison-picker select").evaluate(
+      (el) => el.getBoundingClientRect().height,
+    ),
+  ).toBeGreaterThanOrEqual(44);
   await page
     .getByRole("button", { name: "Chương đối chiếu kế", exact: true })
     .click();

@@ -49,3 +49,7 @@
 ## Final local verification
 
 Full final-source production-build Playwright: **189 passed / 17 conditional skips / 0 failures / 0 flaky** (206 cases). See verification/expansion-local.json. Unit: 95/95, typecheck and build pass. Private-source release and exact Vercel checks are the remaining release steps.
+
+## Final picker correction
+
+Cloud visual review found the native comparison chapter select was only 22px high. New assertion failed before the CSS correction; rebuilt production app passes all six reader-expansion cases (5 pass / 1 mobile double-page skip). Scope since full 206-case run is only themed select styling and this assertion. Rerun cloud selected suite on the corrected deployment with a separate artifacts directory.

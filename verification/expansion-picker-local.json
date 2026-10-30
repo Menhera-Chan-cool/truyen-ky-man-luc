@@ -1,0 +1,18 @@
+{
+  "base": "http://127.0.0.1:3001",
+  "checkedAt": "2026-10-30T00:00:38.432Z",
+  "scope": "Only final CSS change: theme-aware comparison picker and 44px minimum target. Rebuilt production app; all reader-expansion cases rerun desktop/mobile.",
+  "red": {
+    "expectedMinHeight": 44,
+    "observedHeight": 22,
+    "failed": true
+  },
+  "green": {
+    "passed": 5,
+    "skipped": 1,
+    "failed": 0
+  },
+  "typecheckDuringBuild": true,
+  "productionBuild": true,
+  "priorFullSuite": "verification/expansion-local.json"
+}

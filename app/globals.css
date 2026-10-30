@@ -3156,6 +3156,17 @@ dialog::backdrop {
 .comparison-picker select {
   width: 100%;
   min-width: 0;
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: 6px;
+  background: color-mix(in srgb, currentColor 6%, transparent);
+  color: inherit;
+  font: inherit;
+}
+.comparison-picker select option {
+  background: var(--reader-bg);
+  color: var(--reader-fg);
 }
 .parallel-reader > .reader-panel > .panel-content {
   min-width: 0;
