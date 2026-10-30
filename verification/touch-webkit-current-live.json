@@ -1,0 +1,134 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-30T03:36:52.222Z",
+  "engine": "27.2",
+  "scope": "Automated WebKit phone/desktop VI/EN, not a physical iPhone run",
+  "cases": [
+    {
+      "locale": "vi",
+      "device": "phone",
+      "first": {
+        "width": 323,
+        "height": 451,
+        "scrollWidth": 21099,
+        "scrollHeight": 451,
+        "total": 57,
+        "folio": "1"
+      },
+      "nextFolio": "2",
+      "gentleSwipeAndEdgeTap": true,
+      "finalTextReachable": true,
+      "chapterEdges": true,
+      "resized": {
+        "width": 289,
+        "height": 403,
+        "scrollWidth": 23865,
+        "scrollHeight": 403,
+        "total": 71,
+        "folio": "1"
+      },
+      "ebook": {
+        "width": 390,
+        "height": 374,
+        "scrollWidth": 25794,
+        "scrollHeight": 374,
+        "total": 59
+      }
+    },
+    {
+      "locale": "en",
+      "device": "phone",
+      "first": {
+        "width": 323,
+        "height": 451,
+        "scrollWidth": 31116,
+        "scrollHeight": 451,
+        "total": 84,
+        "folio": "1"
+      },
+      "nextFolio": "2",
+      "gentleSwipeAndEdgeTap": true,
+      "finalTextReachable": true,
+      "chapterEdges": true,
+      "resized": {
+        "width": 289,
+        "height": 403,
+        "scrollWidth": 35652,
+        "scrollHeight": 403,
+        "total": 106,
+        "folio": "1"
+      },
+      "ebook": {
+        "width": 390,
+        "height": 374,
+        "scrollWidth": 36744,
+        "scrollHeight": 374,
+        "total": 84
+      }
+    },
+    {
+      "locale": "vi",
+      "device": "desktop",
+      "first": {
+        "width": 999,
+        "height": 667,
+        "scrollWidth": 14614,
+        "scrollHeight": 667,
+        "total": 28,
+        "folio": "1"
+      },
+      "nextFolio": "3",
+      "finalTextReachable": true,
+      "chapterEdges": true,
+      "resized": {
+        "width": 798,
+        "height": 527,
+        "scrollWidth": 18134,
+        "scrollHeight": 527,
+        "total": 43,
+        "folio": "1"
+      },
+      "ebook": {
+        "width": 780,
+        "height": 542,
+        "scrollWidth": 19824,
+        "scrollHeight": 542,
+        "total": 24
+      }
+    },
+    {
+      "locale": "en",
+      "device": "desktop",
+      "first": {
+        "width": 999,
+        "height": 667,
+        "scrollWidth": 19326,
+        "scrollHeight": 667,
+        "total": 37,
+        "folio": "1"
+      },
+      "nextFolio": "3",
+      "finalTextReachable": true,
+      "chapterEdges": true,
+      "resized": {
+        "width": 798,
+        "height": 527,
+        "scrollWidth": 25745,
+        "scrollHeight": 527,
+        "total": 61,
+        "folio": "1"
+      },
+      "ebook": {
+        "width": 780,
+        "height": 542,
+        "scrollWidth": 23964,
+        "scrollHeight": 542,
+        "total": 29
+      }
+    }
+  ],
+  "errors": [],
+  "success": true,
+  "deploymentId": "dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk",
+  "runtimeSourceCommit": "35746a3d79d66708368c71889a3be32c4e1121fe"
+}

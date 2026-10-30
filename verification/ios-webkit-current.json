@@ -1,6 +1,6 @@
 {
-  "base": "http://127.0.0.1:3001",
-  "checkedAt": "2026-10-30T03:22:27.506Z",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-30T03:36:52.222Z",
   "engine": "27.2",
   "scope": "Automated WebKit phone/desktop VI/EN, not a physical iPhone run",
   "cases": [

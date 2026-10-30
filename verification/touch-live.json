@@ -1,0 +1,43 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "deploymentId": "dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk",
+  "runtimeSourceCommit": "35746a3d79d66708368c71889a3be32c4e1121fe",
+  "checkedAt": "2026-10-30T03:40:53.530Z",
+  "scope": "64 selected Chromium desktop/mobile cases on exact final runtime: touch comfort and bounds, Book layout/gesture, mobile reading, footnotes and reliability. Not full 214-case suite.",
+  "stats": {
+    "startTime": "2026-10-30T03:36:09.141Z",
+    "duration": 183152.36000000002,
+    "expected": 51,
+    "skipped": 13,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "webkit": [
+    {
+      "engine": "18.0",
+      "cases": 4,
+      "success": true
+    },
+    {
+      "engine": "27.2",
+      "cases": 4,
+      "success": true
+    }
+  ],
+  "visual": "verification/touch-ui-live.json",
+  "source": "verification/touch-source.json",
+  "renderBudget": {
+    "beforeSynchronousFolds": 80,
+    "afterSynchronousFolds": 0,
+    "nextAnimationFrameFolds": 1
+  },
+  "touch": {
+    "slowDistance": 24,
+    "quickDistance": 14,
+    "previewGain": 2,
+    "edgeWidth": 48
+  },
+  "limits": [
+    "Automated WebKit/Chromium emulation; no physical iPhone FPS, native gesture latency or tactile calibration."
+  ]
+}

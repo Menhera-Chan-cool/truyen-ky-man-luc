@@ -1,0 +1,32 @@
+{
+  "deploymentId": "dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk",
+  "runtimeSourceCommit": "35746a3d79d66708368c71889a3be32c4e1121fe",
+  "submittedFiles": 303,
+  "criticalFiles": [
+    {
+      "file": "src/components/Reader.tsx",
+      "sha": "ecbf434badfa8f1ad6d31715e3aaa4a4b4bf4676",
+      "matched": true
+    },
+    {
+      "file": "src/components/ReaderGuide.tsx",
+      "sha": "e0608632e9f5a2a170d01a3b3c97fd73cfeedacb",
+      "matched": true
+    },
+    {
+      "file": "src/lib/book-flip.ts",
+      "sha": "f60f2fa9e3e1863b676243acdc5fd32c546b50f5",
+      "matched": true
+    },
+    {
+      "file": "e2e/touch-comfort.spec.ts",
+      "sha": "aeaae58f5f75b8d45f565362cd8d3ddc63d9ced0",
+      "matched": true
+    },
+    {
+      "file": "scripts/verify-webkit.mjs",
+      "sha": "d30b3dc4213a2e96ece8e2913da215c2fd5474be",
+      "matched": true
+    }
+  ]
+}

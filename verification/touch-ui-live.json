@@ -1,0 +1,47 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checkedAt": "2026-10-30T03:37:30.881Z",
+  "scope": "Automated WebKit phone emulation; not physical-device FPS or touch feel",
+  "results": [
+    {
+      "engine": "18",
+      "locale": "vi",
+      "heldFold": true,
+      "shortSwipe": true,
+      "edgeBack": true,
+      "edgeNext": true,
+      "sourceTextUnchanged": true,
+      "pageErrors": []
+    },
+    {
+      "engine": "18",
+      "locale": "en",
+      "heldFold": true,
+      "shortSwipe": true,
+      "edgeBack": true,
+      "edgeNext": true,
+      "sourceTextUnchanged": true,
+      "pageErrors": []
+    },
+    {
+      "engine": "27",
+      "locale": "vi",
+      "heldFold": true,
+      "shortSwipe": true,
+      "edgeBack": true,
+      "edgeNext": true,
+      "sourceTextUnchanged": true,
+      "pageErrors": []
+    },
+    {
+      "engine": "27",
+      "locale": "en",
+      "heldFold": true,
+      "shortSwipe": true,
+      "edgeBack": true,
+      "edgeNext": true,
+      "sourceTextUnchanged": true,
+      "pageErrors": []
+    }
+  ]
+}

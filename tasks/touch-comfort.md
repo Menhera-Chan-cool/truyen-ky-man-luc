@@ -5,10 +5,12 @@
 - [x] Touch uses 24px slow / 14px quick gesture, 1.35 horizontal ratio, 2x fold displacement. Mouse keeps existing thresholds. Explicit 48px paper-edge taps turn once; center blank/bottom wake controls, interactive content and selections remain protected.
 - [x] Renderer coalesces held motion to one RAF, cancels queued work on release/reset/disposal, reuses the immutable snapshot for its preview copy.
 - [x] Three new mobile browser regressions pass on rebuilt app. Existing center-text tap fixture now uses the middle of its line rather than the newly intentional edge zone.
-- [ ] Final unit/browser/WebKit checks, private push, production release and exact live checks.
+- [x] Final unit/browser/WebKit checks, private push, production release and exact live checks.
 
 No book content, local progress offsets, Supabase data/schema or dependencies change. Physical iPhone FPS and native touch feel need user device feedback; automated WebKit old/current tests cover behavior.
 
 Final local source: 50 pass / 12 conditional skips / zero failures or flaky in 62 selected Chromium cases; 95 unit tests and production build/typecheck pass. WebKit 18.0 and 27.2 each pass four VI/EN phone/desktop cases including gentle swipe and edge tap. Coarse-pointer click fallback was added after legacy WebKit emitted only click events for a tap; duplicate pointer compatibility clicks remain suppressed. Exact cloud verification remains.
 
 Final boundary correction: warm renderer at the last chapter initially left a pending animation on an edge tap. The new regression was red. Edge taps now use the existing bounds-checked page turn; all four comfort cases pass on the rebuilt final code. This is the only runtime delta after the 62-case run; cloud suite will include the boundary case.
+
+Released dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk / 35746a3d79d66708368c71889a3be32c4e1121fe. Exact live: 51 Chromium pass / 13 conditional skips / zero failures or flaky; eight old/current WebKit cases and four phone visual cases pass. Source hash checks match all critical changed files. Native hardware limitation remains explicit.

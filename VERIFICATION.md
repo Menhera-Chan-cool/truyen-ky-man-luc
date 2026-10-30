@@ -1,3 +1,20 @@
+# Vuốt nhẹ và chạm mép trên cảm ứng — production 30/10/2026
+
+Production **dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk**, runtime source **35746a3d79d66708368c71889a3be32c4e1121fe**, https://truyen-ky-man-luc.vercel.app đã xác minh READY và khớp hash các file Reader/Guide/BookFlip/verifier/regression. GitHub vẫn private.
+
+- Touch vuốt chậm từ 24px hoặc hất nhanh từ 14px; tỷ lệ ngang 1.35 thay vì 2. Nếp giấy đi 2× quãng kéo. Chuột giữ ngưỡng 64px và tỷ lệ 2 như trước.
+- Chạm vùng 48px mép phải/trái của giấy để tiến/lùi. Xử lý cả WebKit cũ chỉ phát click cho tap, chặn click tương thích sau pointerup để tránh lật hai lần. Text selection, links/images và chú thích có ưu tiên. Chạm giữa vùng trống/mép dưới vẫn hiện thanh điều khiển.
+- Gộp move bằng một RAF; cùng 80 sự kiện trong một lượt, renderer từ 80 fold đồng bộ xuống 0 đồng bộ / 1 ở frame kế. Bỏ một snapshot/đợt đo thừa lúc bắt đầu kéo; cancel/release/reset/dispose hủy RAF đang chờ. Đây là hợp đồng số lần vẽ, không phải đo FPS thực trên iPhone.
+- TDD: ba ca mới đỏ trước sửa (vuốt chậm 30px không đổi, chạm mép không đổi, 80 fold đồng bộ). Sau đó bắt thêm biên cuối sách giữ pending animation; ca đỏ đúng vùng đệm trống, sửa bằng đường turnPage có kiểm tra biên. Bốn ca mới đều đạt. Fixture chạm chữ cũ dùng giữa dòng để không đụng vùng mép mới.
+- Build/TypeScript và 95 unit đạt. Local trước delta biên: 62 ca chọn lọc, 50 đạt / 12 skip / 0 fail, flaky; sau delta chỉ rerun đủ 4 ca comfort trên bản dựng cuối, 4/4 đạt. Không gọi đó là full 214 ca.
+- Trên runtime cuối: **64 ca Chromium, 51 đạt / 13 skip theo thiết bị / 0 fail, flaky**. WebKit 18.0 và 27.2 mỗi bản đạt 4 ca VI/EN phone/desktop; phone kiểm tra vuốt chậm 30px/nhanh 16px rồi chạm mép qua lại, thao tác nhỏ/dọc/hủy không lật; vẫn tới đúng chữ cuối và ranh giới chương.
+- Bốn tổ hợp phone VI/EN × hai WebKit có nếp lật khi giữ 30px, thả tới trang 2, chạm trái về 1/phải tới 2, chữ gốc không đổi và không page error. Đã xem ảnh held/released. Xem verification/touch-*.json.
+- Không sửa nội dung, schema, tài khoản/quyền, file nguồn hay offset dữ liệu đọc. Không thêm dependency. Bản source ZIP được cập nhật sau bằng chứng này.
+
+Chưa trực tiếp hiệu chuẩn cảm giác vuốt/FPS trên iPhone vật lý. Tải lại trang để nhận bản mới; nếu dùng ngoại tuyến, chọn Cập nhật bản tải. Các mục dưới là lịch sử release trước.
+
+---
+
 # Sửa chia trang iOS — production 30/10/2026
 
 Deployment **dpl_AXqrTzKeVX43dk98QwjxyVvAA9X3**, runtime source **5b08129e125350b771a62bdf4e9a1f3d2d5f137f**, https://truyen-ky-man-luc.vercel.app đã xác minh READY và khớp source các file CSS/Reader/BookFlip/verifier/package. GitHub tiếp tục private.
