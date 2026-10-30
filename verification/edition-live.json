@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-10-30T15:14:14.758Z",
+  "source": "293c15a27aacc6cafb2f1655b8e7730d88df233f",
+  "deploymentId": "dpl_Gsd8HnQHDARi4y9u8aoSqbuGZXj2",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "menus": {
+    "chromium": {
+      "startTime": "2026-10-30T15:10:12.156Z",
+      "duration": 19404.911,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "webkit": {
+      "startTime": "2026-10-30T15:10:33.164Z",
+      "duration": 11992.869,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "shared": {
+    "report": "verification/comic-shared-live.json",
+    "checks": 19,
+    "passed": true,
+    "pageErrors": 0,
+    "fixturesRemoved": true,
+    "textUnchanged": true
+  },
+  "scope": "VI/EN edition menus and independent comic publication; Chromium desktop/phone plus WebKit phone automation. Not physical iPhone."
+}

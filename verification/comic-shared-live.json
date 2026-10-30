@@ -6,7 +6,8 @@
     "chromium: private preview requires verified editor",
     "chromium: concurrent editor conflict preserves saved draft",
     "chromium: tab-return tools and background auto-scroll stop",
-    "chromium: public images load, device draft ignored, VI/EN interfaces and text return links",
+    "chromium: EN missing edition never displays VI pages",
+    "chromium: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
     "chromium: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
     "chromium: withdrawal removes public metadata and new image access",
     "webkit: guest editor gate",
@@ -14,7 +15,8 @@
     "webkit: private preview requires verified editor",
     "webkit: concurrent editor conflict preserves saved draft",
     "webkit: tab-return tools and background auto-scroll stop",
-    "webkit: public images load, device draft ignored, VI/EN interfaces and text return links",
+    "webkit: EN missing edition never displays VI pages",
+    "webkit: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
     "webkit: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
     "webkit: withdrawal removes public metadata and new image access",
     "revoked editor denied through API, RPC and RLS"
@@ -82,15 +84,15 @@
   ],
   "failedRequests": [
     {
-      "path": "/storage/v1/object/sign/comic-assets/387b759a-c2ad-4279-87b9-3782d204c311/comics/d99ca1e1-0293-4f88-ba0b-51e8c3b71d4a.png",
+      "path": "/api/comic/assets/77687e1d-c65b-4808-817c-5f2824d3c2e7/comics/ac1c079c-4622-46db-ac78-1cff49a649d1.png",
       "reason": "Load request cancelled"
     },
     {
-      "path": "/storage/v1/object/sign/comic-assets/387b759a-c2ad-4279-87b9-3782d204c311/comics/09b86f92-72a6-4bcf-b6dc-3a798c67888e.png",
+      "path": "/api/comic/assets/77687e1d-c65b-4808-817c-5f2824d3c2e7/comics/560d8862-130c-48bd-bac2-8ddce36abcaa.png",
       "reason": "Load request cancelled"
     }
   ],
   "publicBookUnchanged": true,
   "passed": true,
-  "checkedAt": "2026-10-30T14:07:32.440Z"
+  "checkedAt": "2026-10-30T15:12:35.469Z"
 }
