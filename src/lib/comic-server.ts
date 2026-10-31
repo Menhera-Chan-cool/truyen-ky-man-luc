@@ -5,9 +5,12 @@ import type { ComicSummary } from "./comic-db";
 import type { ComicHead } from "./comic-publication";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type {Locale} from "./types";
+import {publicRead,readFetch} from "./public-read";
 export async function publicComic(chapterId: string,locale:Locale) {
-  const client=publicClient();
-  const [edition,index]=await Promise.all([client.rpc("get_public_comic",{p_id:chapterId,p_locale:locale}),client.rpc("get_public_comic_index",{p_locale:locale})]);
+  const [edition,index]=await Promise.all([
+    publicRead(signal=>publicClient(readFetch(signal)).rpc("get_public_comic",{p_id:chapterId,p_locale:locale})),
+    publicRead(signal=>publicClient(readFetch(signal)).rpc("get_public_comic_index",{p_locale:locale}))
+  ]);
   if(edition.error||index.error) throw new HttpError("Cannot load comics. Please retry.",503);
   return {edition:edition.data as ComicDraft|null, summaries:index.data as ComicSummary[]};
 }

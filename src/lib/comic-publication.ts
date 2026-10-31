@@ -2,6 +2,7 @@ import { validComicDraft, type ComicDraft } from "./comic";
 export type ComicHead = { draft: ComicDraft | null; publishedRevision: number | null; revision: number };
 export const comicAssetPath = (path: unknown): path is string =>
   typeof path === "string" && /^[a-f0-9-]{36}\/comics\/[a-f0-9-]{36}\.(png|jpg|webp)$/.test(path);
+export const comicThumbnailPath=(path:string)=>path.replace(/\.(png|jpg|webp)$/,"-thumb.webp");
 export function publicationDraft(value: unknown): ComicDraft {
   const d = validComicDraft(value as ComicDraft);
   if (!Number.isSafeInteger(d.revision) || d.revision < 0) throw Error("Invalid revision");

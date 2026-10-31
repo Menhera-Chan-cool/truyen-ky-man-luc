@@ -534,7 +534,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
     );
   if (comicChapter && state) {
     const chapterId=state.chapters.some(c=>c.id===comicChapter)?comicChapter:state.chapters[0]?.id;
-    if(chapterId) return <ModuleBoundary locale={locale}><ComicEditor key={`${locale}:${chapterId}`} shared locale={locale} chapterId={chapterId} book={{
+    if(chapterId) return <ModuleBoundary locale={locale}><ComicEditor key={`${locale}:${chapterId}`} shared accountId={state.member.user_id} locale={locale} chapterId={chapterId} book={{
       title:state.book.draft[locale].title,author:"Nguyễn Dữ",chapters:state.chapters.map(c=>({id:c.id,title:state.versions.find(v=>v.chapter_id===c.id&&v.locale===locale)?.title??c.id}))
     }}/></ModuleBoundary>;
   }

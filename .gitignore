@@ -8,3 +8,4 @@ playwright-report/
 *.tsbuildinfo
 .*invitation.txt
 .impeccable/review/
+supabase/.temp/

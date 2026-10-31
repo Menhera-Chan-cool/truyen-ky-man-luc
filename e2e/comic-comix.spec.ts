@@ -1,4 +1,14 @@
 import { test, expect } from "@playwright/test";
+test("chapter intent survives navigation, Back and reload without WebKit abort errors",async({page})=>{
+  const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
+  await page.goto("/vi/comic/chapter-1");await expect(page.locator(".comic-reader")).toHaveAttribute("data-ready","true");
+  const boot=await page.evaluate(()=>((window as any).__comicBoot=crypto.randomUUID()));
+  await page.evaluate(()=>window.dispatchEvent(new Event("focus")));
+  await page.getByRole("button",{name:"Chương trước",exact:true}).hover();
+  await page.getByRole("button",{name:"Chương trước",exact:true}).click();await expect(page).toHaveURL(/\/comic\/preface$/);
+  await expect.poll(()=>page.evaluate(()=>(window as any).__comicBoot)).toBe(boot);
+  await page.goBack();await page.reload();await expect(page.locator(".comic-reader")).toHaveAttribute("data-ready","true");expect(errors).toEqual([]);
+});
 test("tools recover from idle and returning to a long-inactive tab", async ({
   page,
 }) => {

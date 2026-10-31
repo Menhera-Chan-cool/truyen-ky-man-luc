@@ -1,5 +1,5 @@
 {
-  "base": "https://truyen-ky-man-luc.vercel.app",
+  "base": "http://localhost:3003",
   "checks": [
     "vi import and inline-image parent lock; failed import preserves preview/discard warning; retry waits for parent refresh (mocked storage/import boundaries, no uploaded objects)",
     "vi rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
@@ -14,39 +14,39 @@
       "ok": true
     },
     {
-      "label": "edition verify-editor-a48992bc-preface",
+      "label": "edition verify-editor-c1cf3ed7-preface",
       "ok": true
     },
     {
-      "label": "versions verify-editor-a48992bc-preface",
+      "label": "versions verify-editor-c1cf3ed7-preface",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-a48992bc-preface",
+      "label": "chapter verify-editor-c1cf3ed7-preface",
       "ok": true
     },
     {
-      "label": "edition verify-editor-a48992bc-one",
+      "label": "edition verify-editor-c1cf3ed7-one",
       "ok": true
     },
     {
-      "label": "versions verify-editor-a48992bc-one",
+      "label": "versions verify-editor-c1cf3ed7-one",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-a48992bc-one",
+      "label": "chapter verify-editor-c1cf3ed7-one",
       "ok": true
     },
     {
-      "label": "edition verify-editor-a48992bc-two",
+      "label": "edition verify-editor-c1cf3ed7-two",
       "ok": true
     },
     {
-      "label": "versions verify-editor-a48992bc-two",
+      "label": "versions verify-editor-c1cf3ed7-two",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-a48992bc-two",
+      "label": "chapter verify-editor-c1cf3ed7-two",
       "ok": true
     },
     {
@@ -101,11 +101,12 @@
     },
     {
       "path": "/api/admin/chapters",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "path": "/api/admin/chapters",
       "status": 409
     }
   ],
-  "success": true,
-  "checkedAt": "2026-10-30T00:04:20.092Z",
-  "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
-  "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012"
+  "success": true
 }

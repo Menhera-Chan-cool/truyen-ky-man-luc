@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import {
   useEffect,
   useId,
@@ -345,6 +346,8 @@ export function ComicChaptersDialog({
   onlyWithImages,
   onOnlyWithImages,
   onClose,
+  onNavigate,
+  onIntent,
 }: {
   locale: "vi" | "en";
   book: ComicBookIndex;
@@ -353,6 +356,8 @@ export function ComicChaptersDialog({
   onlyWithImages: boolean;
   onOnlyWithImages: (v: boolean) => void;
   onClose: () => void;
+  onNavigate?: (id:string)=>void;
+  onIntent?: (id:string)=>void;
 }) {
   const L = (vi: string, en: string) => (locale === "vi" ? vi : en),
     [query, setQuery] = useState(""),
@@ -475,9 +480,12 @@ export function ComicChaptersDialog({
       </label>
       <div className="cc-chapter-list" ref={list}>
         {rows.slice(page * perPage, (page + 1) * perPage).map((c) => (
-          <a
+          <Link
             key={c.id}
+            prefetch={false}
             href={`/${locale}/comic/${c.id}`}
+            onNavigate={onNavigate?e=>{e.preventDefault();onNavigate(c.id);}:undefined}
+            onMouseEnter={()=>onIntent?.(c.id)} onFocus={()=>onIntent?.(c.id)}
             aria-current={c.id === chapterId ? "page" : undefined}
             title={c.title}
           >
@@ -494,7 +502,7 @@ export function ComicChaptersDialog({
                 ? `${c.meta.pages} ${L("trang", "pages")}`
                 : L("Chưa có ảnh", "No pages")}
             </em>
-          </a>
+          </Link>
         ))}
         {!rows.length && (
           <p className="cc-no-results">

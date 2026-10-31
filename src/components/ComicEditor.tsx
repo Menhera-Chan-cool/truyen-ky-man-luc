@@ -38,6 +38,7 @@ import {
 import { readComicDraft, saveComicDraft, useComicUrls } from "../lib/comic-db";
 import type { ComicBookIndex } from "./ComicReader";
 import {readSharedComic,saveSharedComic,publishSharedComic} from "../lib/comic-remote";
+import {writeRecovery,listRecoveries,readRecovery,discardRecovery,recoveryKey,clearUploadCheckpoints,type RecoveryCandidate,type UploadCheckpoint} from "../lib/comic-recovery";
 const bytes = (n: number) =>
   n < 1024 * 1024
     ? `${Math.round(n / 1024)} KB`
@@ -47,11 +48,13 @@ export default function ComicEditor({
   chapterId,
   locale,
   shared=false,
+  accountId,
 }: {
   book: ComicBookIndex;
   chapterId: string;
   locale: "vi" | "en";
   shared?:boolean;
+  accountId?:string;
 }) {
   const L = (vi: string, en: string) => (locale === "vi" ? vi : en),
     chapter = book.chapters.find((c) => c.id === chapterId)!;
@@ -73,13 +76,47 @@ export default function ComicEditor({
     [reload, setReload] = useState(0),
     [undo, setUndo] = useState<ComicPage[]>(),
     [publishedRevision,setPublishedRevision]=useState<number|null>(null),
-    [localDraft,setLocalDraft]=useState<ComicDraft|null>(null);
+    [localDraft,setLocalDraft]=useState<ComicDraft|null>(null),
+    [recoveries,setRecoveries]=useState<RecoveryCandidate[]>([]),
+    [recoveryState,setRecoveryState]=useState(""),
+    [recoveryWarning,setRecoveryWarning]=useState("");
   const file = useRef<HTMLInputElement>(null),
     replace = useRef<HTMLInputElement>(null),
     dialog = useRef<HTMLDialogElement>(null),
     allowLeave = useRef(false),
     lastImport = useRef(0),
-    uploaded=useRef(new Map<string,ComicPage>());
+    uploaded=useRef(new Map<string,UploadCheckpoint>()),
+    recoverySession=useRef(""),recoverySequence=useRef(0),
+    recoveryQueue=useRef<Promise<unknown>>(Promise.resolve()),
+    recoveryTimer=useRef<ReturnType<typeof setTimeout>|undefined>(undefined),
+    recoverySnapshot=useRef<ComicDraft|undefined>(undefined),
+    recovered=useRef<RecoveryCandidate|undefined>(undefined);
+  const scope=shared&&accountId?{accountId,chapterId,locale}:undefined;
+  const warnRecovery=()=>setRecoveryWarning(L("Không giữ được bản khôi phục trên thiết bị. Hãy lưu nháp chung trước khi rời trang.","Device recovery is unavailable. Save the shared draft before leaving."));
+  function persistRecovery(){
+    const snapshot=recoverySnapshot.current;if(!scope||!snapshot)return;
+    recoverySession.current ||= crypto.randomUUID();
+    const sequence=++recoverySequence.current,session=recoverySession.current;
+    recoveryQueue.current=recoveryQueue.current.catch(()=>{}).then(()=>writeRecovery(scope,session,sequence,snapshot)).then(()=>{
+      if(sequence===recoverySequence.current&&recoverySnapshot.current){setRecoveryState(L("Đã giữ bản khôi phục trên thiết bị","Recovery copy kept on this device"));setRecoveryWarning("");}
+    }).catch(warnRecovery);
+  }
+  async function clearRecovery(){
+    clearTimeout(recoveryTimer.current);recoverySnapshot.current=undefined;
+    if(!scope)return;
+    const sequence=++recoverySequence.current;
+    recoveryQueue.current=recoveryQueue.current.catch(()=>{}).then(async()=>{
+      if(recoverySession.current)await discardRecovery(scope,recoveryKey(scope,recoverySession.current),sequence);
+      if(recovered.current){const r=recovered.current;await discardRecovery(scope,r.key,r.sequence,r.sequence);recovered.current=undefined;}
+      setRecoveries(await listRecoveries(scope));setRecoveryState("");
+    }).catch(warnRecovery);
+    await recoveryQueue.current;
+  }
+  async function leave(href:string){
+    if(busy)return;
+    if(dirty&&!window.confirm(L("Bỏ thay đổi chưa lưu và chuyển bản?","Discard unsaved changes and switch editions?")))return;
+    setBusy(true);await clearRecovery();allowLeave.current=true;location.assign(href);
+  }
   const pages = draft?.pages ?? [],
     urls = useComicUrls(pages),
     activePage = pages.find((p) => p.id === active),
@@ -127,6 +164,15 @@ export default function ComicEditor({
     if(shared) readComicDraft(chapterId,locale).then(d=>{if(active)setLocalDraft(d??null);}).catch(()=>{});
     return()=>{active=false;};
   },[shared,chapterId,locale]);
+  useEffect(()=>{
+    if(!shared||!accountId)return;
+    const context={accountId,chapterId,locale};let active=true;
+    listRecoveries(context).then(rows=>{if(active)setRecoveries(rows);}).catch(()=>{if(active)warnRecovery();});
+    const flush=()=>{clearTimeout(recoveryTimer.current);persistRecovery();};
+    const hidden=()=>{if(document.hidden)flush();};
+    window.addEventListener("pagehide",flush);document.addEventListener("visibilitychange",hidden);
+    return()=>{active=false;flush();window.removeEventListener("pagehide",flush);document.removeEventListener("visibilitychange",hidden);};
+  },[shared,accountId,chapterId,locale]);
   useEffect(() => {
     const warn = (e: BeforeUnloadEvent) => {
       if (dirty && !allowLeave.current) {
@@ -156,6 +202,7 @@ export default function ComicEditor({
     setDraft(next);
     setDirty(true);
     setStatus(L("Có thay đổi chưa lưu", "Unsaved changes"));
+    if(scope){recoverySnapshot.current=next;setRecoveryState(L("Đang giữ bản khôi phục…","Keeping a recovery copy…"));clearTimeout(recoveryTimer.current);recoveryTimer.current=setTimeout(persistRecovery,650);}
   }
   function switchChapter(id: string) {
     if (busy || id === chapterId) return;
@@ -169,8 +216,7 @@ export default function ComicEditor({
       )
     )
       return;
-    allowLeave.current = true;
-    location.href = `/${shared?"admin/comic":"local/comic-editor"}?chapter=${id}&lang=${locale}`;
+    setBusy(true);void clearRecovery().then(()=>{allowLeave.current = true;location.href = `/${shared?"admin/comic":"local/comic-editor"}?chapter=${id}&lang=${locale}`;});
   }
   async function upload(files: File[], replacement = false) {
     if (!draft || busy || !files.length) return;
@@ -225,12 +271,14 @@ export default function ComicEditor({
     setBusy(true);
     setError("");
     try {
-      const head=shared?await saveSharedComic(draft,locale,uploaded.current,s=>setProgress(L("Đang tải ảnh lên Supabase ","Uploading images to Supabase ")+s)):null;
+      const head=shared?await saveSharedComic(draft,locale,uploaded.current,s=>setProgress(L("Đang tải ảnh lên Supabase ","Uploading images to Supabase ")+s),warnRecovery):null;
       if(shared&&!head?.draft)throw Error(L("Chưa xác nhận được bản nháp trên server. Hãy tải lại để kiểm tra.","Could not confirm the server draft. Reload to check."));
       const saved = head?.draft??await saveComicDraft(draft, draft.revision,locale);
       if(head)setPublishedRevision(head.publishedRevision);
       setDraft(saved);
       setDirty(false);
+      await clearRecovery();
+      if(scope)try{await clearUploadCheckpoints(scope,draft.pages);}catch{warnRecovery();}
       setStatus(shared?L("Đã lưu nháp chung. Chưa thay bản công khai.","Shared draft saved. Public edition unchanged."):L("Đã lưu bản nháp trên máy", "Draft saved on this device"));
       return saved;
     } catch (e) {
@@ -283,7 +331,7 @@ export default function ComicEditor({
         >
           <Menu size={20} />
         </button>
-        <a className="ce-book" href={`/${locale}`}>
+        <a className="ce-book" href={`/${locale}`} onClick={e=>{e.preventDefault();void leave(`/${locale}`);}}>
           <BookImage size={24} />
           <span>
             {book.title}
@@ -424,7 +472,7 @@ export default function ComicEditor({
                         ),
                       )
                     )
-                      setReload((n) => n + 1);
+                      void clearRecovery().then(()=>setReload((n) => n + 1));
                   }}
                 >
                   {L("Tải lại bản đã lưu", "Reload saved draft")}
@@ -447,18 +495,24 @@ export default function ComicEditor({
         ) : draft ? (
           <>
             <div className="ce-edition-tabs">
-              <LanguageLinks locale={locale} chapterId={chapterId} admin comic disabled={busy} onNavigate={()=>{
-                if(dirty&&!window.confirm(L("Bỏ thay đổi chưa lưu và chuyển bản?","Discard unsaved changes and switch editions?")))return false;
-                allowLeave.current=true;return true;
-              }}/>
+              <LanguageLinks locale={locale} chapterId={chapterId} admin comic disabled={busy} onNavigate={href=>{void leave(href);return false;}}/>
               <span>{L("Đang biên tập: VI · TT","Editing: EN · Comic")}</span>
             </div>
             {shared&&<section className="ce-publication" aria-label={L("Xuất bản TT","Comic publication")}>
-              <a href={`/admin?lang=${locale}&chapter=${chapterId}`} onClick={e=>{if(dirty&&!window.confirm(L("Bỏ thay đổi chưa lưu và chuyển bản?","Discard unsaved changes and switch editions?")))e.preventDefault();else allowLeave.current=true;}}>{L("Biên tập sách", "Book editor")}</a>
+              <a href={`/admin?lang=${locale}&chapter=${chapterId}`} onClick={e=>{e.preventDefault();void leave(e.currentTarget.href);}}>{L("Biên tập sách", "Book editor")}</a>
               <span>{dirty?L("Lưu nháp trước khi xuất bản","Save draft before publishing"):L(`Bản nháp · phiên bản ${draft.revision}`,`Draft · revision ${draft.revision}`)}</span>
               <button className="ce-primary" disabled={busy||dirty||!pages.length||draft.revision===0} onClick={()=>publication()}><Globe size={16}/>{L("Xuất bản TT","Publish comic")}</button>
               <button className="ce-secondary" disabled={busy||dirty||publishedRevision===null} onClick={()=>publication(true)}><EyeOff size={16}/>{L("Thu hồi TT","Withdraw comic")}</button>
               {localDraft&&<button className="ce-secondary" disabled={busy} onClick={()=>{if(window.confirm(L("Đưa nháp trên thiết bị vào vùng soạn? Bạn vẫn cần lưu nháp chung; bản server chưa bị thay đổi.","Load this device's draft into the editor? You must save it to update the shared draft.")))change({...localDraft,revision:draft.revision});}}>{L("Mở nháp trên thiết bị","Open device draft")}</button>}
+            </section>}
+            {shared&&<div className="ce-recovery-state" role="status">{recoveryState}</div>}
+            {recoveryWarning&&<p className="ce-error" role="alert">{recoveryWarning}</p>}
+            {!!recoveries.length&&<section className="ce-recoveries" aria-label={L("Thay đổi có thể khôi phục","Recoverable changes")}>
+              <h2>{L("Có thay đổi chưa lưu trên thiết bị này","Unsaved changes on this device")}</h2>
+              <p>{L("Khôi phục để xem lại; bản server và bản công khai chưa thay đổi.","Restore to review. The server draft and public edition stay unchanged.")}</p>
+              {recoveries.map(r=><div key={r.key}><span><strong>{r.title||L("Chưa có tiêu đề","Untitled")}</strong><small>{L(`Bản ${r.revision} · ${r.pages} trang`,`Revision ${r.revision} · ${r.pages} pages`)} · {new Date(r.savedAt).toLocaleString(locale)}</small></span>
+                <button className="ce-secondary" disabled={busy||dirty} onClick={async()=>{if(!scope)return;try{const copy=await readRecovery(scope,r.key);recovered.current=r;change(copy);setActive(copy.pages[0]?.id);}catch{warnRecovery();}}}>{L("Khôi phục thay đổi","Restore changes")}</button>
+                <button className="ce-secondary" disabled={busy} onClick={async()=>{if(!scope||!window.confirm(L("Xóa bản khôi phục này?","Delete this recovery copy?")))return;try{await discardRecovery(scope,r.key,r.sequence,r.sequence);setRecoveries(await listRecoveries(scope));}catch{warnRecovery();}}}>{L("Xóa bản khôi phục","Delete recovery copy")}</button></div>)}
             </section>}
             <div className="ce-metadata">
               <label>
@@ -688,7 +742,9 @@ export default function ComicEditor({
                       }}
                     >
                       <img
-                        src={urls[p.id] ?? p.path}
+                        src={p.path?.startsWith("/api/comic/assets/")?p.path+"?view=thumb":urls[p.id] ?? p.path}
+                        loading="lazy" decoding="async"
+                        onError={e=>{if(p.path&&e.currentTarget.src.includes("view=thumb"))e.currentTarget.src=p.path;}}
                         alt={p.name}
                         width={p.width}
                         height={p.height}

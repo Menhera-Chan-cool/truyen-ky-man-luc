@@ -2,14 +2,31 @@
   "base": "http://localhost:3003",
   "checks": [
     "chromium: guest editor gate",
+    "chromium: unsaved shared draft and images recover explicitly after reload",
+    "chromium: failed registration resumes after reload without re-uploading or partial server save",
+    "chromium: protected small thumbnail and unchanged original checksum",
     "chromium: natural order, reorder, private direct upload/save and anonymous asset denial",
     "chromium: private preview requires verified editor",
     "chromium: concurrent editor conflict preserves saved draft",
+    "chromium: internal chapter navigation and Back preserve the document",
     "chromium: tab-return tools and background auto-scroll stop",
     "chromium: EN missing edition never displays VI pages",
     "chromium: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
     "chromium: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
     "chromium: withdrawal removes public metadata and new image access",
+    "webkit: guest editor gate",
+    "webkit: unsaved shared draft and images recover explicitly after reload",
+    "webkit: failed registration resumes after reload without re-uploading or partial server save",
+    "webkit: protected small thumbnail and unchanged original checksum",
+    "webkit: natural order, reorder, private direct upload/save and anonymous asset denial",
+    "webkit: private preview requires verified editor",
+    "webkit: concurrent editor conflict preserves saved draft",
+    "webkit: internal chapter navigation and Back preserve the document",
+    "webkit: tab-return tools and background auto-scroll stop",
+    "webkit: EN missing edition never displays VI pages",
+    "webkit: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
+    "webkit: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
+    "webkit: withdrawal removes public metadata and new image access",
     "revoked editor denied through API, RPC and RLS"
   ],
   "cleanup": [
@@ -67,10 +84,19 @@
     {
       "engine": "chromium",
       "status": 200
+    },
+    {
+      "engine": "webkit",
+      "status": 200
     }
   ],
-  "failedRequests": [],
+  "failedRequests": [
+    {
+      "path": "/api/comic/assets/ed521d01-f21c-47d8-a008-79e0db0f5b42/comics/12eff551-307e-46c6-98b3-f72588d70516.png",
+      "reason": "Load request cancelled"
+    }
+  ],
   "publicBookUnchanged": true,
   "passed": true,
-  "checkedAt": "2026-10-30T15:03:44.800Z"
+  "checkedAt": "2026-10-31T11:33:32.769Z"
 }

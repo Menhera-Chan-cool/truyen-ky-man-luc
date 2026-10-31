@@ -5,8 +5,11 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useTransition,
   type MouseEvent,
 } from "react";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
 import {
   ArrowLeftRight,
   BookOpen,
@@ -139,6 +142,27 @@ export default function ComicReader({
   const L = (vi: string, en: string) => (locale === "vi" ? vi : en),
     at = book.chapters.findIndex((c) => c.id === chapterId),
     title = book.chapters[at].title;
+  const router=useRouter(),[navigating,startNavigation]=useTransition(),navigationLock=useRef(false);
+  const warmed=useRef(new Set<string>()),warming=useRef(new Map<string,()=>void>());
+  useEffect(()=>()=>{for(const cancel of warming.current.values())cancel();warming.current.clear();},[]);
+  function warmChapter(id:string){
+    if(!shared||preview||warmed.current.has(id)||warmed.current.size>=2)return;
+    const connection=(navigator as Navigator&{connection?:{saveData?:boolean;effectiveType?:string}}).connection;
+    if(connection?.saveData||["slow-2g","2g"].includes(connection?.effectiveType??""))return;
+    warmed.current.add(id);
+    let active=true,cancelImages=()=>{};
+    const timer=setTimeout(()=>{active=false;},5000);
+    warming.current.set(id,()=>{clearTimeout(timer);active=false;cancelImages();});
+    // WebKit reports aborted fetches as page errors; let this tiny, server-bounded metadata request finish.
+    void fetch(`/api/comic?chapter=${encodeURIComponent(id)}&locale=${locale}`,{keepalive:true,credentials:"omit",cache:"no-store"})
+      .then(async response=>{if(!response.ok)return;const data=await response.json();if(active&&data.firstPage?.path?.startsWith("/api/comic/assets/"))cancelImages=preloadComicImages([data.firstPage.path]);})
+      .catch(()=>{}).finally(()=>clearTimeout(timer));
+  }
+  function navigateChapter(id:string){
+    if(id===chapterId||navigationLock.current)return;
+    stopAuto();persistRef.current();open(null);navigationLock.current=true;
+    startNavigation(()=>router.push(`/${locale}/comic/${id}`,{scroll:false}));
+  }
   const [draft, setDraft] = useState<ComicDraft>(),
     [prefs, setPrefs] = useState(defaultComicSettings),
     [ready, setReady] = useState(false),
@@ -613,6 +637,7 @@ export default function ComicReader({
       data-chrome={chrome || !!panel}
       data-auto={auto}
       data-grayscale={prefs.grayscale}
+      aria-busy={navigating}
       onPointerMove={(e) => {
         if (e.pointerType !== "touch") wake();
       }}
@@ -789,16 +814,16 @@ export default function ComicReader({
                 </p>
                 <div>
                   {previous && (
-                    <a href={`/${locale}/comic/${previous.id}`}>
+                    <Link prefetch={false} href={`/${locale}/comic/${previous.id}`} onMouseEnter={()=>warmChapter(previous.id)} onFocus={()=>warmChapter(previous.id)} onNavigate={e=>{e.preventDefault();navigateChapter(previous.id);}}>
                       <ChevronLeft size={16} />
                       {L("Chương trước", "Previous chapter")}
-                    </a>
+                    </Link>
                   )}
                   {next && (
-                    <a href={`/${locale}/comic/${next.id}`}>
+                    <Link prefetch={false} href={`/${locale}/comic/${next.id}`} onMouseEnter={()=>warmChapter(next.id)} onFocus={()=>warmChapter(next.id)} onNavigate={e=>{e.preventDefault();navigateChapter(next.id);}}>
                       {L("Chương sau", "Next chapter")}
                       <ChevronRight size={16} />
-                    </a>
+                    </Link>
                   )}
                 </div>
                 <small>
@@ -844,9 +869,11 @@ export default function ComicReader({
         <IconButton
           icon={ChevronLeft}
           label={L("Chương trước", "Previous chapter")}
-          disabled={!previous}
+          disabled={!previous||navigating}
+          onPointerEnter={e=>{if(previous&&e.pointerType!=="touch")warmChapter(previous.id);}}
+          onFocus={()=>{if(previous)warmChapter(previous.id);}}
           onClick={() => {
-            if (previous) location.href = `/${locale}/comic/${previous.id}`;
+            if (previous) navigateChapter(previous.id);
           }}
         />
         <button
@@ -859,9 +886,11 @@ export default function ComicReader({
         <IconButton
           icon={ChevronRight}
           label={L("Chương sau", "Next chapter")}
-          disabled={!next}
+          disabled={!next||navigating}
+          onPointerEnter={e=>{if(next&&e.pointerType!=="touch")warmChapter(next.id);}}
+          onFocus={()=>{if(next)warmChapter(next.id);}}
           onClick={() => {
-            if (next) location.href = `/${locale}/comic/${next.id}`;
+            if (next) navigateChapter(next.id);
           }}
         />
       </div>
@@ -978,8 +1007,11 @@ export default function ComicReader({
           onlyWithImages={prefs.onlyWithImages}
           onOnlyWithImages={(onlyWithImages) => update({ onlyWithImages })}
           onClose={() => open(null)}
+          onNavigate={navigateChapter}
+          onIntent={warmChapter}
         />
       )}
+      {navigating&&<div className="cc-navigation-status" role="status"><LoaderCircle size={16} className="cc-spin"/>{L("Đang mở chương…","Opening chapter…")}</div>}
       {panel === "help" && (
         <ComicModal
           title={L("Trợ giúp", "Reader help")}

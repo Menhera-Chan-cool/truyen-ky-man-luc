@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-10-31T11:34:26.122Z",
+  "unit": {
+    "passed": 127,
+    "files": 35
+  },
+  "typecheck": true,
+  "productionBuild": true,
+  "comic": {
+    "report": "verification/comic-shared-local.json",
+    "groups": 27,
+    "passed": true,
+    "pageErrors": 0,
+    "fixturesRemoved": true,
+    "novelUnchanged": true
+  },
+  "novelEditor": {
+    "report": "verification/editor-switch-latest.json",
+    "groups": 6,
+    "passed": true
+  },
+  "standaloneBrowserChecks": [
+    "real IndexedDB recovery, images, stale writes and account/locale isolation on Chromium/WebKit",
+    "empty-image render loop bounded on Chromium/WebKit",
+    "queued ancestor-scroll event does not dismiss edition menu; actual movement does"
+  ],
+  "thumbnails": {
+    "registeredOriginalsChecked": 2,
+    "derivedCreated": 2,
+    "originalBytes": 7058084,
+    "thumbnailBytes": 72550,
+    "originalChecksumsPreserved": true
+  },
+  "publicUITests": {
+    "desktopAndMobile": 10,
+    "webkitPhone": 5,
+    "finalFocusChangeMenuRerun": 3
+  },
+  "limitations": [
+    "No physical iPhone or real FPS measurement.",
+    "Device recovery is best effort; deleting browser data or OS termination before persistence can lose the latest unsaved changes.",
+    "No additional paid Supabase image transformations or dependencies."
+  ]
+}

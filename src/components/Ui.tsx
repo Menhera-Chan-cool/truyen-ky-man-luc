@@ -108,7 +108,7 @@ export function Panel({
   );
 }
 export function LanguageLinks({locale,chapterId,admin=false,disabled=false,comic=false,onNavigate,onOpen}: {
-  locale:string;chapterId?:string;admin?:boolean;disabled?:boolean;comic?:boolean;onNavigate?:()=>boolean;onOpen?:()=>void;
+  locale:string;chapterId?:string;admin?:boolean;disabled?:boolean;comic?:boolean;onNavigate?:(href:string)=>boolean;onOpen?:()=>void;
 }) {
   const [open,setOpen]=useState<"vi"|"en"|null>(null),id=useId();
   const nav=useRef<HTMLElement>(null),popup=useRef<HTMLDivElement>(null),buttons=useRef<Record<string,HTMLButtonElement|null>>({});
@@ -119,9 +119,17 @@ export function LanguageLinks({locale,chapterId,admin=false,disabled=false,comic
   useEffect(()=>{if(disabled)setOpen(null);},[disabled]);
   useEffect(()=>{
     if(!open)return;
+    const positions=new Map<Node,string>();
+    for(let el:Element|null=nav.current;el;el=el.parentElement)positions.set(el,`${el.scrollLeft}:${el.scrollTop}`);
+    positions.set(document,`${window.scrollX}:${window.scrollY}`);
     const outside=(e:Event)=>{if(e.target instanceof Node&&!nav.current?.contains(e.target))setOpen(null);};
     const close=()=>setOpen(null);
-    const scroll=(e:Event)=>{if(e.target instanceof Node&&nav.current&&e.target.contains(nav.current))close();};
+    const scroll=(e:Event)=>{
+      const el=e.target;if(!(el instanceof Node)||!nav.current||!el.contains(nav.current))return;
+      const position=el instanceof Element?`${el.scrollLeft}:${el.scrollTop}`:`${window.scrollX}:${window.scrollY}`;
+      // A queued focus/scroll event can arrive after opening, without any new movement.
+      if(positions.get(el)!==position)close();
+    };
     document.addEventListener("pointerdown",outside);document.addEventListener("focusin",outside);
     window.addEventListener("blur",close);window.addEventListener("resize",close);document.addEventListener("scroll",scroll,true);
     return()=>{document.removeEventListener("pointerdown",outside);document.removeEventListener("focusin",outside);window.removeEventListener("blur",close);window.removeEventListener("resize",close);document.removeEventListener("scroll",scroll,true);};
@@ -148,7 +156,7 @@ export function LanguageLinks({locale,chapterId,admin=false,disabled=false,comic
         aria-current={locale===lang?"page":undefined} disabled={disabled}
         onPointerDown={e=>{pointer.current=e.pointerType;}} onPointerEnter={e=>{if(e.pointerType==="mouse")show(lang);}}
         onClick={e=>{focusFirst.current=e.detail===0;clearClose();onOpen?.();setOpen(old=>(e.detail===0||pointer.current==="touch")&&old===lang?null:lang);}}
-        onKeyDown={e=>{if(e.key==="ArrowDown"){e.preventDefault();focusFirst.current=true;if(open===lang){focusFirst.current=false;popup.current?.querySelector<HTMLAnchorElement>("a")?.focus();}else show(lang);}}}>
+        onKeyDown={e=>{if(e.key==="ArrowDown"){e.preventDefault();clearClose();focusFirst.current=true;if(open===lang){focusFirst.current=false;popup.current?.querySelector<HTMLAnchorElement>("a")?.focus({preventScroll:true});}else show(lang);}}}>
         {lang.toUpperCase()}
       </button>
     </span>)}
@@ -159,7 +167,8 @@ export function LanguageLinks({locale,chapterId,admin=false,disabled=false,comic
       }}>
       {(["novel","comic"] as const).map(mode=><a key={mode} role="menuitem" href={href(open,mode)} hrefLang={open} lang={open}
         aria-current={locale===open&&(comic?mode==="comic":mode==="novel")?"page":undefined}
-        onClick={e=>{if(disabled||onNavigate?.()===false){e.preventDefault();return;}window.speechSynthesis?.cancel();setOpen(null);}}>
+        onMouseDown={e=>{if(e.button===0){e.preventDefault();e.currentTarget.focus({preventScroll:true});}}}
+        onClick={e=>{if(disabled||onNavigate?.(e.currentTarget.href)===false){e.preventDefault();return;}window.speechSynthesis?.cancel();setOpen(null);}}>
         {mode==="novel"?"Novel":open==="vi"?"TT":"Comic"}
       </a>)}
     </div>}

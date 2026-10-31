@@ -6,6 +6,7 @@ import seed from "../data/book.json";
 import { cleanHtml } from "./sanitize";
 import type { Book, Locale } from "./types";
 import { settingsFromCookie } from "./reader";
+import {publicRead,readFetch} from "./public-read";
 export async function savedReaderSettings() {
   return settingsFromCookie((await cookies()).get("book-reader")?.value);
 }
@@ -15,18 +16,18 @@ export const configured = () =>
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
     process.env.SUPABASE_SERVICE_ROLE_KEY
   );
-export function publicClient() {
+export function publicClient(fetcher?:typeof fetch) {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { auth: { persistSession: false, autoRefreshToken: false } },
+    { auth: { persistSession: false, autoRefreshToken: false },global:{fetch:fetcher} },
   );
 }
-export function serviceClient() {
+export function serviceClient(fetcher?:typeof fetch) {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { persistSession: false, autoRefreshToken: false } },
+    { auth: { persistSession: false, autoRefreshToken: false },global:{fetch:fetcher} },
   );
 }
 export async function getBook(
@@ -57,16 +58,8 @@ export async function getBook(
           })),
         } as Book);
   if (!url || !key) throw new Error("Incomplete database configuration");
-  const client = publicClient(),
-    rpc = includeHtml ? "get_public_book" : "get_public_book_index";
-  let result = await client.rpc(rpc);
-  if (
-    result.error &&
-    (result.status === 0 || result.status === 429 || result.status >= 500)
-  ) {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    result = await client.rpc(rpc);
-  }
+  const rpc = includeHtml ? "get_public_book" : "get_public_book_index";
+  const result = await publicRead(signal=>publicClient(readFetch(signal)).rpc(rpc));
   const { data, error } = result;
   if (error || !data)
     throw new Error("Cannot load the published book. Please try again.");

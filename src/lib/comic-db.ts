@@ -123,7 +123,9 @@ export async function comicPreference<T>(key: string): Promise<T | undefined> {
 export async function saveComicPreference(key: string, value: unknown) {
   await (await getDB()).put("preferences", value, key);
 }
-export function useComicUrls(pages: ComicPage[]) {
+const EMPTY_PAGES: ComicPage[]=[];
+export function useComicUrls(input: ComicPage[]) {
+  const pages=input.length?input:EMPTY_PAGES;
   const cache = useRef(new Map<string, { blob: Blob; url: string }>()),
     [urls, setUrls] = useState<Record<string, string>>({});
   useEffect(() => {

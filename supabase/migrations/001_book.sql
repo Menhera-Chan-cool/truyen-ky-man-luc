@@ -185,13 +185,14 @@ begin
     end loop;
   end loop;
 end $$;
-revoke execute on function public.seed_book(jsonb),public.publish_chapters(jsonb) from public;
+revoke execute on function public.seed_book(jsonb),public.publish_chapters(jsonb) from public,anon;
 grant execute on function public.seed_book(jsonb) to service_role;
 grant execute on function public.publish_chapters(jsonb) to authenticated,service_role;
 
-revoke execute on function public.is_editor(),public.is_owner(),public.protect_last_owner(),public.save_chapter(text,text,text,text,text,text,integer),public.save_chapters(jsonb),public.publish_chapter(text,text,integer,boolean),public.save_book(jsonb,integer,boolean),public.reorder_chapters(text[],integer),public.archive_chapter(text),public.get_public_book(),public.can_read_asset(text) from public;
+revoke execute on function public.is_editor(),public.is_owner(),public.protect_last_owner(),public.save_chapter(text,text,text,text,text,text,integer),public.save_chapters(jsonb),public.publish_chapter(text,text,integer,boolean),public.save_book(jsonb,integer,boolean),public.reorder_chapters(text[],integer),public.archive_chapter(text),public.get_public_book(),public.can_read_asset(text) from public,anon;
 grant execute on function public.is_editor(),public.is_owner(),public.save_chapter(text,text,text,text,text,text,integer),public.save_chapters(jsonb),public.publish_chapter(text,text,integer,boolean),public.save_book(jsonb,integer,boolean),public.reorder_chapters(text[],integer),public.archive_chapter(text) to authenticated,service_role;
 grant execute on function public.get_public_book(),public.can_read_asset(text) to anon,authenticated,service_role;
+revoke execute on function public.seed_book(jsonb),public.protect_last_owner() from authenticated;
 
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types) values
  ('book-assets','book-assets',false,52428800,array['image/jpeg','image/png','image/webp','image/gif','application/pdf']),
