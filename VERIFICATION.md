@@ -1,3 +1,18 @@
+# Phông heading do editor quản lý — production 31/10/2026
+
+Production **dpl_3ezjCMmz8U4dArMgeHqckcs3bmJr**, runtime source **39a65ef181d05a1ae4cf903a99b6377bb7054442**, https://truyen-ky-man-luc.vercel.app đã xác minh READY; **185 hash** runtime/test/migration quan trọng khớp source. GitHub private.
+
+- Thêm `Thông tin sách → Phông heading`: mặc định được giữ, FZ Thư Pháp Tiểu Tự là lựa chọn thứ hai; owner/editor thêm và xóa phông dùng chung. VI/EN chọn riêng qua nháp/xuất bản metadata, có CAS. Chặn xóa phông còn dùng ở nháp hoặc công khai, giữ file và ghi nhật ký.
+- Bucket riêng, RLS/ACL và gateway chỉ cho khách tải phông đã dùng trong metadata công khai; editor xem trước được. Kiểm tra 3MB trước đọc toàn file, native font decode, chữ ký/container và tồn tại file trước xuất bản. Dynamic CSS chỉ nhận UUID chuẩn. Không thêm dependency, không sửa HTML chương hoặc file nguồn.
+- Đã áp dụng `20261031134023_heading_fonts.sql`. Font FZ 393.520 byte giữ nguyên SHA256 `1c66e4ca4489c9fcd7bf526d63d10aabb9d320b47a903d206c18d8f0b706194e` và metadata tác giả. Mẫu glyph VI/EN được kiểm tra.
+- **135 unit / 37 file**, typecheck/build đạt. TDD cho riêng quyền/chọn nháp/xuất bản/xóa đang dùng, từ chối file hỏng/quá lớn/CSS lạ, file mất trước xuất bản và nguồn ngoại tuyến. Tái hiện mặt giấy lật chưa nạp phông heading; sửa warm font trong iframe, bỏ style font trùng khỏi snapshot và dựng lại khi đổi lựa chọn.
+- Local và production: **7 nhóm Chromium/WebKit**, gồm upload/xem trước/xóa thật, font/body/default/VI–EN, ngoại tuyến/đối chiếu và chữ cuối, font đang công khai thật tải ẩn danh, thu hồi quyền. Fixture hình thức dùng bytes font mock để không đổi sách; kiểm tra bản công khai hiện tại dùng gateway/font thật. **2 ca menu desktop/mobile** đạt trên production. Không page error.
+- Owner có chỉnh metadata trong quá trình làm; giữ nguyên lựa chọn của owner. Verifier không ghi metadata sách và có audit kiểm tra điều đó. Cleanup live gặp lỗi Data API tạm thời ở một tài khoản đã thu hồi; đã thử lại, dọn xong và xác nhận không còn tài khoản/phông thử. Xem `verification/heading-fonts-local.json`, `verification/heading-fonts-live.json` và `HEADING_FONTS.md`.
+
+Chưa hiệu chuẩn trên iPhone vật lý. Những mục phía dưới là lịch sử release trước.
+
+---
+
 # Độ ổn định editor và chuyển chương TT — production 31/10/2026
 
 Production **dpl_HnE6qBvm2SD7o4TdUKoZNCCyJgSh**, runtime source **c6e9a271b7c48f1c0d4023bd552cecc1d7b7e399**, https://truyen-ky-man-luc.vercel.app đã xác minh READY. 174 tệp runtime/test/migration quan trọng và 341 hash được API liệt kê khớp source; phần API không liệt kê chỉ thuộc các báo cáo verification. GitHub tiếp tục private.

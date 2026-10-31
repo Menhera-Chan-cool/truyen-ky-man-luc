@@ -1,0 +1,26 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "checks": [
+    "chromium: real font upload, protected preview, independent VI/EN selectors, body/default preserved and archive",
+    "chromium: reader/comparison/offline fixture uses VI custom headings, EN default, unchanged Georgia body, delayed-font pagination and visible final text; published-font bytes mocked without changing the real book",
+    "chromium: actual current published VI/EN heading fonts load anonymously through the protected gateway, without mocking or changing book metadata",
+    "webkit: real font upload, protected preview, independent VI/EN selectors, body/default preserved and archive",
+    "webkit: reader/comparison/offline fixture uses VI custom headings, EN default, unchanged Georgia body, delayed-font pagination and visible final text; published-font bytes mocked without changing the real book",
+    "webkit: actual current published VI/EN heading fonts load anonymously through the protected gateway, without mocking or changing book metadata",
+    "revoked editor denied via API and RLS"
+  ],
+  "cleanup": [
+    "cleanup failed; retained any font now in use and revoked the temporary editor",
+    "Retried and verified removal of the single revoked temporary account after a transient data API cleanup failure; no test fonts or accounts remain"
+  ],
+  "pageErrors": [],
+  "bookWritesByTest": 0,
+  "bookEditsByOthers": 0,
+  "passed": true,
+  "cleanupError": "Data request failed: ",
+  "bookMetadataUnchanged": true,
+  "bookMetadataPreserved": true,
+  "checkedAt": "2026-10-31T15:29:16.075Z",
+  "cleanupRecovered": true,
+  "finishedAt": "2026-10-31T15:34:18.628Z"
+}
