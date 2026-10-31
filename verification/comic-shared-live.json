@@ -2,18 +2,26 @@
   "base": "https://truyen-ky-man-luc.vercel.app",
   "checks": [
     "chromium: guest editor gate",
+    "chromium: unsaved shared draft and images recover explicitly after reload",
+    "chromium: failed registration resumes after reload without re-uploading or partial server save",
+    "chromium: protected small thumbnail and unchanged original checksum",
     "chromium: natural order, reorder, private direct upload/save and anonymous asset denial",
     "chromium: private preview requires verified editor",
     "chromium: concurrent editor conflict preserves saved draft",
+    "chromium: internal chapter navigation and Back preserve the document",
     "chromium: tab-return tools and background auto-scroll stop",
     "chromium: EN missing edition never displays VI pages",
     "chromium: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
     "chromium: invalid save/upload, overwrite/delete and editor role-management denied; public retained",
     "chromium: withdrawal removes public metadata and new image access",
     "webkit: guest editor gate",
+    "webkit: unsaved shared draft and images recover explicitly after reload",
+    "webkit: failed registration resumes after reload without re-uploading or partial server save",
+    "webkit: protected small thumbnail and unchanged original checksum",
     "webkit: natural order, reorder, private direct upload/save and anonymous asset denial",
     "webkit: private preview requires verified editor",
     "webkit: concurrent editor conflict preserves saved draft",
+    "webkit: internal chapter navigation and Back preserve the document",
     "webkit: tab-return tools and background auto-scroll stop",
     "webkit: EN missing edition never displays VI pages",
     "webkit: unsaved switch guard and independent VI/EN drafts, revisions, images and publication",
@@ -84,15 +92,15 @@
   ],
   "failedRequests": [
     {
-      "path": "/api/comic/assets/77687e1d-c65b-4808-817c-5f2824d3c2e7/comics/ac1c079c-4622-46db-ac78-1cff49a649d1.png",
+      "path": "/storage/v1/object/sign/comic-assets/0dae1179-04ee-4610-9248-07af9f8f9d84/comics/54b11bdc-6229-4c36-95f2-8acb63a2147f.png",
       "reason": "Load request cancelled"
     },
     {
-      "path": "/api/comic/assets/77687e1d-c65b-4808-817c-5f2824d3c2e7/comics/560d8862-130c-48bd-bac2-8ddce36abcaa.png",
+      "path": "/api/comic/assets/0dae1179-04ee-4610-9248-07af9f8f9d84/comics/e326d98d-1ec7-4b24-bde2-1ea9fad079bc.png",
       "reason": "Load request cancelled"
     }
   ],
   "publicBookUnchanged": true,
   "passed": true,
-  "checkedAt": "2026-10-30T15:12:35.469Z"
+  "checkedAt": "2026-10-31T11:41:31.614Z"
 }

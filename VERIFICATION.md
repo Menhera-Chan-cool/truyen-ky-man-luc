@@ -1,3 +1,18 @@
+# Độ ổn định editor và chuyển chương TT — production 31/10/2026
+
+Production **dpl_HnE6qBvm2SD7o4TdUKoZNCCyJgSh**, runtime source **c6e9a271b7c48f1c0d4023bd552cecc1d7b7e399**, https://truyen-ky-man-luc.vercel.app đã xác minh READY. 174 tệp runtime/test/migration quan trọng và 341 hash được API liệt kê khớp source; phần API không liệt kê chỉ thuộc các báo cáo verification. GitHub tiếp tục private.
+
+- Đã áp dụng sáu mục trong `SPEC-comic-stability.md`: giới hạn quyền RPC, khôi phục nháp TT theo tài khoản/ngôn ngữ/chương, thumbnail riêng, hai tác vụ upload có checkpoint, điều hướng chương nội bộ và deadline/retry cho safe reads. Ảnh gốc và nội dung xuất bản được giữ nguyên. Không thêm dependency hay dịch vụ biến đổi ảnh trả phí.
+- Hai ảnh cũ tổng 7.058.084 byte có bản xem nhanh tổng 72.550 byte, giảm khoảng 99% riêng dung lượng thumbnail so với bản gốc. Ảnh lớn vẫn dùng bản gốc. Backfill chạy lại chỉ nhận diện hai bản đã có, không tạo trùng.
+- RED/GREEN: quyền mặc định Supabase, upload tuần tự/mất checkpoint, nhầm 503 thành 404, render lặp khi chưa có ảnh, tải lại document khi chuyển chương. Đã tái hiện thêm queued scroll đóng menu sau mở và sửa bằng kiểm tra vị trí cuộn thực. Các regression browser chạy trên Chromium/WebKit.
+- Local: **127 unit / 35 file**, typecheck, production build đạt. Shared TT **27 nhóm** gồm lỗi đăng ký ảnh giả lập, reload/khôi phục, không upload trùng, hash gốc, preview riêng, CAS, đổi VI/EN, publish/withdraw và thu hồi quyền. Novel editor **6 nhóm** VI/EN đạt; phần import/inline-image boundary của verifier được mock, không coi đó là kiểm thử upload file thật toàn bộ định dạng.
+- Trên URL production: shared TT **27 nhóm**, Novel editor **6 nhóm**, UI **15 ca** (10 Chromium desktop/mobile, 5 WebKit phone) đạt. Không page error trong shared TT; fixture đã dọn và hash sách Novel không đổi. Các request ảnh bị hủy khi điều hướng là bình thường. Hai runner Playwright lúc đầu va chạm thư mục trace; chạy lại bằng thư mục artifact riêng đều đạt.
+- Xem `verification/stability-local.json`, `verification/stability-live.json` và hướng dẫn khôi phục trong `COMIC_PUBLISHING.md`. Bằng chứng quyền RPC được lưu bằng Codex Security artifact manager (`artifacts/validation/rpc-grants-check.json`), không lưu khóa vào repo.
+
+Chưa đo FPS hoặc hiệu chuẩn trực tiếp trên iPhone vật lý. Bản khôi phục trên thiết bị là best effort; xóa dữ liệu trình duyệt hoặc OS đóng ứng dụng trước khi ghi có thể mất thay đổi mới nhất. Những mục phía dưới là lịch sử release trước.
+
+---
+
 # Vuốt nhẹ và chạm mép trên cảm ứng — production 30/10/2026
 
 Production **dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk**, runtime source **35746a3d79d66708368c71889a3be32c4e1121fe**, https://truyen-ky-man-luc.vercel.app đã xác minh READY và khớp hash các file Reader/Guide/BookFlip/verifier/regression. GitHub vẫn private.

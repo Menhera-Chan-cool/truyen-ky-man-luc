@@ -1,5 +1,5 @@
 {
-  "base": "http://localhost:3003",
+  "base": "https://truyen-ky-man-luc.vercel.app",
   "checks": [
     "vi import and inline-image parent lock; failed import preserves preview/discard warning; retry waits for parent refresh (mocked storage/import boundaries, no uploaded objects)",
     "vi rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
@@ -14,39 +14,39 @@
       "ok": true
     },
     {
-      "label": "edition verify-editor-c1cf3ed7-preface",
+      "label": "edition verify-editor-f4ca6135-preface",
       "ok": true
     },
     {
-      "label": "versions verify-editor-c1cf3ed7-preface",
+      "label": "versions verify-editor-f4ca6135-preface",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-c1cf3ed7-preface",
+      "label": "chapter verify-editor-f4ca6135-preface",
       "ok": true
     },
     {
-      "label": "edition verify-editor-c1cf3ed7-one",
+      "label": "edition verify-editor-f4ca6135-one",
       "ok": true
     },
     {
-      "label": "versions verify-editor-c1cf3ed7-one",
+      "label": "versions verify-editor-f4ca6135-one",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-c1cf3ed7-one",
+      "label": "chapter verify-editor-f4ca6135-one",
       "ok": true
     },
     {
-      "label": "edition verify-editor-c1cf3ed7-two",
+      "label": "edition verify-editor-f4ca6135-two",
       "ok": true
     },
     {
-      "label": "versions verify-editor-c1cf3ed7-two",
+      "label": "versions verify-editor-f4ca6135-two",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-c1cf3ed7-two",
+      "label": "chapter verify-editor-f4ca6135-two",
       "ok": true
     },
     {

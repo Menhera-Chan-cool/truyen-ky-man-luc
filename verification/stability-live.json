@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-10-31T11:43:33.721Z",
+  "deploymentId": "dpl_HnE6qBvm2SD7o4TdUKoZNCCyJgSh",
+  "runtimeSourceCommit": "c6e9a271b7c48f1c0d4023bd552cecc1d7b7e399",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "state": "READY",
+  "sourceHashes": {
+    "listed": 341,
+    "submitted": 376,
+    "critical": 174,
+    "criticalMatched": true,
+    "listedMatched": true,
+    "listingOmittedOnlyVerificationReports": true
+  },
+  "comic": {
+    "groups": 27,
+    "passed": true,
+    "pageErrors": 0,
+    "fixturesRemoved": true,
+    "novelUnchanged": true,
+    "report": "verification/comic-shared-live.json"
+  },
+  "novelEditor": {
+    "groups": 6,
+    "passed": true,
+    "fixturesRemoved": true,
+    "report": "verification/editor-switch-latest.json"
+  },
+  "publicUI": {
+    "chromiumDesktopMobile": 10,
+    "webkitPhone": 5,
+    "passed": 15,
+    "failed": 0,
+    "note": "Final reruns used separate artifact output directories after concurrent Playwright runners collided during trace teardown; no application assertion failed in those collisions."
+  },
+  "githubPrivate": true,
+  "unitTests": 127,
+  "typecheck": true,
+  "productionBuild": true,
+  "limitations": [
+    "No physical iPhone or real FPS measurement.",
+    "Device recovery is best effort; deleting browser data or OS termination before persistence can lose the latest unsaved changes.",
+    "No additional paid Supabase image transformations or dependencies."
+  ]
+}

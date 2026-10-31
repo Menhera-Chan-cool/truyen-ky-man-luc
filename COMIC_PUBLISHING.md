@@ -9,6 +9,10 @@
 
 VI và EN có bản ảnh, nháp, phiên bản và trạng thái xuất bản riêng. TT cũ trước migration 006 được giữ ở VI; EN không tự lấy ảnh VI. Rê chuột vào VI/EN trên PC hoặc chạm trên điện thoại để chọn Novel hay TT/Comic. Mỗi lựa chọn mở một bản của cùng chương. Vị trí TT được nhớ riêng theo ngôn ngữ; cài đặt đọc vẫn lưu trên thiết bị. Thao tác lật trang/giãn ảnh không sửa file gốc. Không có OCR hay TTS ảnh.
 
+Trong lúc biên tập, trình duyệt giữ bản khôi phục theo tài khoản, ngôn ngữ và chương. Sau khi tải lại, bấm **Khôi phục thay đổi** để xem lại rồi **Lưu nháp** khi muốn ghi lên server. Bản khôi phục giữ số phiên bản cũ để server vẫn phát hiện xung đột. Các cửa sổ có bản khôi phục riêng; có thể xóa từng bản rõ ràng. Giữ ảnh nguồn và lưu nháp chung thường xuyên: xóa dữ liệu trình duyệt hoặc hệ điều hành đóng ứng dụng trước khi kịp ghi có thể làm mất thay đổi mới nhất.
+
+Khi lưu ảnh gặp lỗi, thử lại hoặc khôi phục sau tải lại sẽ dùng các ảnh đã tải thành công. Hai tác vụ tải chạy song song và vẫn giữ thứ tự trang. Editor dùng ảnh xem nhanh WebP tải theo vùng nhìn; mở ảnh lớn vẫn xem bản gốc. File gốc được giữ nguyên byte và kiểm tra checksum.
+
 Giới hạn mỗi chương: 300 trang, 20 MB/ảnh, 200 MB tổng ảnh; ZIP/CBZ tối đa 50 MB nén. Ảnh mẫu do ImageGen tạo chỉ để thử giao diện, không phải bản truyện tranh hoàn chỉnh. Nút **Ảnh mẫu** ở chương 1 nạp mẫu vào vùng soạn; vẫn phải lưu nháp và xuất bản rõ ràng.
 
 Khách đọc `/vi/comic/<chapterId>` hoặc `/en/comic/<chapterId>`. Nháp local cũ không tự nhập hay ghi đè nháp chung. Bản local riêng tại `work/tt-preview` vẫn có IndexedDB/origin riêng; dữ liệu ở `localhost:3002` không tự chuyển sang tên miền Vercel. Giữ ảnh nguồn khi chuyển môi trường.

@@ -15,7 +15,7 @@
     "novelUnchanged": true
   },
   "novelEditor": {
-    "report": "verification/editor-switch-latest.json",
+    "report": "verification/editor-switch-local-stability.json",
     "groups": 6,
     "passed": true
   },
