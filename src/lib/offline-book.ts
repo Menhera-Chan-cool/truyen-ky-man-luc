@@ -1,6 +1,7 @@
 import { parse } from "node-html-parser";
 import { cleanHtml } from "./sanitize";
 import type { Book, Chapter, Locale } from "./types";
+import {validHeadingFontId,headingFontId} from "./heading-fonts";
 export const OFFLINE_KEY = "offline-book:v1",
   OFFLINE_CACHE_PREFIX = "tkml-offline-data-";
 export const publicAssetPath = (value: string) =>
@@ -31,6 +32,7 @@ export function validateOfflineBook(value: unknown): Book {
       m.summary.length > 20000 ||
       !publicAssetPath(m.frontCover) ||
       (m.backCover && !publicAssetPath(m.backCover))
+      || (m.headingFont!==undefined&&!validHeadingFontId(m.headingFont))
     )
       throw Error("Invalid public book metadata");
   }
@@ -89,6 +91,7 @@ export function validateOfflineBook(value: unknown): Book {
 export function bookAssetPaths(book: Book) {
   const urls = new Set<string>();
   for (const l of ["vi", "en"] as const) {
+    const font=headingFontId(book.meta[l].headingFont);if(font!=="default")urls.add("/api/heading-fonts/"+font);
     urls.add(book.meta[l].frontCover);
     if (book.meta[l].backCover) urls.add(book.meta[l].backCover!);
   }
@@ -100,7 +103,7 @@ export function bookAssetPaths(book: Book) {
         urls.add(img.getAttribute("src") ?? "");
       if (e.pdfPath) urls.add("/api/assets/" + e.pdfPath);
     }
-  return [...urls].filter(publicAssetPath);
+  return [...urls].filter(url=>publicAssetPath(url)||/^\/api\/heading-fonts\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(url));
 }
 export type OfflineBook = {
   book: Book;

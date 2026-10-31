@@ -12,6 +12,7 @@ export type BookMeta = {
   summary: string;
   frontCover: string;
   backCover?: string;
+  headingFont?: string;
 };
 export type Book = {
   id: "truyen-ky-man-luc";

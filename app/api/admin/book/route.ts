@@ -3,7 +3,10 @@ import {
   apiError,
   jsonBody,
   HttpError,
+  serviceClient,
 } from "../../../../src/lib/server";
+import {validHeadingFontId} from "../../../../src/lib/heading-fonts";
+import {publicRead,readFetch} from "../../../../src/lib/public-read";
 export async function POST(request: Request) {
   try {
     const { client } = await requireEditor(request);
@@ -21,6 +24,7 @@ export async function POST(request: Request) {
         meta.summary.length > 20000
       )
         throw new HttpError("Invalid title or introduction");
+      if(meta.headingFont!==undefined&&!validHeadingFontId(meta.headingFont))throw new HttpError("Invalid heading font");
       for (const url of [meta.frontCover, meta.backCover])
         if (
           url &&
@@ -49,6 +53,13 @@ export async function POST(request: Request) {
               "Cover file is unavailable. Upload it again before publishing.",
             );
         }
+    }
+    const fonts=[...new Set([body.meta.vi.headingFont,body.meta.en.headingFont].filter(id=>id&&id!=="default"))];
+    if(body.publish&&fonts.length){
+      const {data:registered,error:lookup}=await client.from("heading_fonts").select("id,path").in("id",fonts).eq("archived",false);
+      if(lookup)throw new HttpError("Cannot check heading fonts. Retry publishing.",503);
+      if(registered?.length!==fonts.length)throw new HttpError("A heading font was removed. Choose another font before publishing.");
+      for(const font of registered){const {data:exists,error}=await publicRead(signal=>serviceClient(readFetch(signal)).storage.from("heading-fonts").exists(font.path));if(error||!exists)throw new HttpError("Heading font file is unavailable. Retry or choose another font.",error?503:400);}
     }
     const { data, error } = await client.rpc("save_book", {
       p_meta: body.meta,

@@ -16,6 +16,7 @@ import "./globals.css";
 import "./comic-preview.css";
 import "./comic-reader.css";
 import "./edition-switch.css";
+import "./heading-fonts.css";
 import { savedReaderSettings } from "../src/lib/server";
 import { readerPalette, themes } from "../src/lib/reader";
 export const metadata: Metadata = {

@@ -6,16 +6,20 @@ import { decorateFootnotes } from "../lib/footnotes";
 import PdfViewer from "./PdfViewer";
 import type { Book, Chapter, Locale, ReaderSettings } from "../lib/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import HeadingFontFaces,{headingFontStyle} from "./HeadingFontFaces";
+import {headingFontId} from "../lib/heading-fonts";
 function EditionView({
   chapter,
   language,
   settings,
   fontFamily,
+  headingFont,
 }: {
   chapter: Chapter;
   language: Locale;
   settings: ReaderSettings;
   fontFamily: string;
+  headingFont?: string;
 }) {
   const root = useRef<HTMLElement>(null),
     scroll = useRef<HTMLDivElement>(null),
@@ -57,7 +61,8 @@ function EditionView({
           onText={() => {}}
         />
       ) : (
-        <div className="parallel-scroll" ref={scroll}>
+        <div className="parallel-scroll" ref={scroll} data-heading-font={headingFontId(headingFont)} style={headingFontStyle(headingFont)}>
+          <HeadingFontFaces ids={[headingFont]}/>
           <h4>{edition.title}</h4>
           <article
             className="prose"
@@ -217,6 +222,7 @@ export default function ParallelReader({
                       language={language}
                       settings={settings}
                       fontFamily={fontFamily}
+                      headingFont={book.meta[language].headingFont}
                     />
                   ))}
                 </div>

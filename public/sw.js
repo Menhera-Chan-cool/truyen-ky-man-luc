@@ -5,6 +5,7 @@ const STATIC_CACHE = "tkml-public-static-v1",
 let active;
 const asset = (p) =>
   p === "/book/cover.jpg" ||
+  /^\/api\/heading-fonts\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(p) ||
   /^\/api\/assets\/[a-zA-Z0-9/_-]+\.(jpg|jpeg|png|gif|webp|pdf)$/.test(p);
 const safe = (u) => {
   const p = new URL(u, self.location.origin);

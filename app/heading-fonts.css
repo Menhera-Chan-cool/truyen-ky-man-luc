@@ -1,0 +1,19 @@
+[data-heading-font]:not([data-heading-font="default"]) :is(h1,h2,h3,h4),
+[data-heading-font]:not([data-heading-font="default"]) .book-chapter-heading::before {
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-synthesis: none;
+}
+.heading-font-settings { grid-column: 1 / -1; min-width: 0; padding-bottom: 24px; border-bottom: 1px solid #cfc4b2; }
+.heading-font-actions { display: flex; align-items: start; flex-wrap: wrap; gap: 16px; }
+.heading-font-actions > div { flex: 1 1 320px; }
+.heading-font-actions h2 { margin-top: 0; }
+.heading-font-choices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; margin: 20px 0; }
+.heading-font-choices > div { min-width: 0; }
+.heading-font-sample { min-height: 92px; padding: 16px; background: #eee8dc; border-radius: 6px; overflow-wrap: anywhere; }
+.heading-font-sample h3 { font-family: "Literata Variable",Georgia,serif; font-size: 36px; line-height: 1.55; margin: 0; }
+.heading-font-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 10px 0; }
+.heading-font-row > span { flex: 1 1 230px; overflow-wrap: anywhere; }
+.heading-font-row small { color: #6b6051; }
+.heading-font-settings button { min-height: 44px; }
+@media(max-width:759px) { .heading-font-choices { grid-template-columns: minmax(0,1fr); gap: 16px; } .heading-font-settings select { font-size: 16px; } }

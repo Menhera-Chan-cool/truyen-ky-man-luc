@@ -26,6 +26,8 @@ import { cleanHtml } from "../lib/sanitize";
 import { uploadAsset } from "../lib/uploads";
 import { tx } from "../lib/content";
 import type { Locale } from "../lib/types";
+import HeadingFontFaces,{headingFontStyle} from "./HeadingFontFaces";
+import {headingFontId} from "../lib/heading-fonts";
 const NoteIds = Extension.create({
   name: "noteIds",
   addGlobalAttributes() {
@@ -71,12 +73,14 @@ export default function RichEditor({
   locale,
   onError,
   onBusyChange,
+  headingFont,
 }: {
   html: string;
   onChange: (value: string) => void;
   locale: Locale;
   onError: (error: string) => void;
   onBusyChange?: (busy: boolean) => void;
+  headingFont?: string;
 }) {
   const [mode, setMode] = useState("visual"),
     [uploading, setUploading] = useState(false);
@@ -188,7 +192,8 @@ export default function RichEditor({
     },
   ];
   return (
-    <div>
+    <div data-heading-font={headingFontId(headingFont)} style={headingFontStyle(headingFont)}>
+      <HeadingFontFaces ids={[headingFont]}/>
       <div className="editor-controls">
         {actions.map(({ Icon, label, name, run }) => (
           <button

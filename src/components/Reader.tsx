@@ -54,6 +54,8 @@ import type {
   ListeningProgress,
 } from "../lib/types";
 import { defaultSettings } from "../lib/types";
+import HeadingFontFaces,{headingFontStyle} from "./HeadingFontFaces";
+import {headingFontId} from "../lib/heading-fonts";
 import {
   tx,
   resolveAnchor,
@@ -596,6 +598,7 @@ export default function Reader({
     settings.foreground,
     settings.accent,
     personalFamily,
+    book.meta[locale].headingFont,
   ]);
   useLayoutEffect(() => {
     if (bookLayout && ready && restored.current)
@@ -927,6 +930,7 @@ export default function Reader({
     revision,
     settings.align,
     bookLayout,
+    book.meta[locale].headingFont,
   ]);
   useLayoutEffect(() => {
     pageRef.current = page;
@@ -2685,8 +2689,10 @@ export default function Reader({
           <div
             ref={bookPaper}
             className="reader-document"
+            data-heading-font={headingFontId(book.meta[locale].headingFont)}
             style={
               {
+                ...headingFontStyle(book.meta[locale].headingFont),
                 "--book-max-width": `${double ? Math.min(settings.width * 1.6, 1280) : settings.width}px`,
                 maxWidth: double
                   ? Math.min(settings.width * 1.6, 1280)
@@ -2696,6 +2702,7 @@ export default function Reader({
           >
             {edition ? (
               <>
+                <HeadingFontFaces ids={[book.meta[locale].headingFont]}/>
                 <h1 className="chapter-title">{edition.title}</h1>
                 <div
                   ref={windowRef}

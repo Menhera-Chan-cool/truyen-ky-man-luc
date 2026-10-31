@@ -12,6 +12,8 @@ Bản public đã kiểm tra: [truyen-ky-man-luc.vercel.app](https://truyen-ky-m
 
 ## Chạy trên máy
 
+Phông heading dùng chung: vào **Thông tin sách → Phông heading** để chọn riêng VI/EN hoặc thêm/xóa phông. Lưu nháp rồi xuất bản thông tin sách để áp dụng cho khách đọc. Xem [hướng dẫn phông heading](HEADING_FONTS.md).
+
 Yêu cầu Node.js 22 trở lên (đã kiểm tra bằng Node 24).
 
 ```powershell

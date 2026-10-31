@@ -137,13 +137,15 @@ export class BookFlip {
       style.textContent = this.css();
       doc.head.append(style);
       const prose = this.paper.querySelector(".prose"),
-        font = prose && getComputedStyle(prose);
+        font = prose && getComputedStyle(prose),
+        heading = this.paper.querySelector(".book-chapter-heading"),
+        headingFont = heading && getComputedStyle(heading,"::before");
       try {
         await Promise.all([
           font
             ? doc.fonts.load(`${font.fontSize} ${font.fontFamily}`)
             : undefined,
-          doc.fonts.load('600 25px "Literata Variable"'),
+          doc.fonts.load(headingFont?`${headingFont.fontWeight} ${headingFont.fontSize} ${headingFont.fontFamily}`:'600 25px "Literata Variable"'),
         ]);
         await doc.fonts.ready;
       } catch {
@@ -159,7 +161,7 @@ export class BookFlip {
     const clone = this.paper.cloneNode(true) as HTMLElement,
       rect = this.paper.getBoundingClientRect();
     clone
-      .querySelectorAll("[data-book-animation],.book-edge")
+      .querySelectorAll("[data-book-animation],.book-edge,style[data-heading-font-face]")
       .forEach((el) => el.remove());
     Object.assign(clone.style, {
       width: `${rect.width}px`,

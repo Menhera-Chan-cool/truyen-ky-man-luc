@@ -703,7 +703,9 @@ export function AuditLog({ locale }: { locale: Locale }) {
     restore_chapter: L("Mở lại chương", "Restore chapter"),
     reorder: L("Sắp xếp", "Reorder"),
     save_book: L("Lưu giới thiệu", "Save details"),
-    publish_book: L("Xuất bản giới thiệu", "Publish details"),
+    publish_book: L("Xuất bản thông tin sách", "Publish book details"),
+    add_heading_font: L("Thêm phông heading", "Add heading font"),
+    remove_heading_font: L("Xóa phông heading", "Remove heading font"),
     upload: L("Tải tài nguyên", "Upload asset"),
     member_changed: L("Đổi quyền/tài khoản", "Change membership"),
   };

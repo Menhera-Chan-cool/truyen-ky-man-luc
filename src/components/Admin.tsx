@@ -30,6 +30,7 @@ import { IconButton, LanguageLinks, ModuleBoundary } from "./Ui";
 const RichEditor = lazy(() => import("./RichEditor"));
 const ImportPanel = lazy(() => import("./ImportPanel"));
 const ComicEditor = lazy(() => import("./ComicEditor"));
+const HeadingFonts = lazy(() => import("./HeadingFonts"));
 import PdfViewer from "./PdfViewer";
 import {
   DraftReview,
@@ -374,12 +375,12 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
       setMessage(
         publish
           ? L(
-              "Đã xuất bản giới thiệu và bìa.",
-              "Book details and covers published.",
+              "Đã xuất bản thông tin sách và phông heading.",
+              "Book details and heading fonts published.",
             )
           : L(
-              "Đã lưu bản nháp giới thiệu và bìa.",
-              "Book details and covers saved as a draft.",
+              "Đã lưu nháp thông tin sách và phông heading.",
+              "Book details and heading fonts saved as a draft.",
             ),
       );
     });
@@ -570,7 +571,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
               FileText,
             ],
             ["import", L("Nhập file", "Import files"), Upload],
-            ["book", L("Giới thiệu & bìa", "Details & covers"), ImageIcon],
+            ["book", L("Thông tin sách", "Book details"), ImageIcon],
             ["replace", L("Tìm–thay thế", "Find and replace"), FileText],
             ["audit", L("Nhật ký", "Activity log"), History],
             ...(state.member.role === "owner"
@@ -785,6 +786,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
                           <RichEditor
                             key={editorContext}
                             html={form.html}
+                            headingFont={meta[editLocale].headingFont}
                             onChange={(html) => updateForm({ html })}
                             locale={locale}
                             onError={(e) => setError(e)}
@@ -1080,6 +1082,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
             {tab === "audit" && <AuditLog locale={locale} />}
             {tab === "book" && (
               <div className="admin-meta">
+                <ModuleBoundary locale={locale}><HeadingFonts locale={locale} meta={meta} published={state.book.published} disabled={busy} onBusyChange={setChildBusy} onChange={next=>{setMeta(next);setMetaDirty(true);}}/></ModuleBoundary>
                 {(["vi", "en"] as Locale[]).map((language) => (
                   <section key={language}>
                     <h2>{language === "vi" ? "Tiếng Việt" : "English"}</h2>
@@ -1205,7 +1208,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
                     onClick={() => saveMeta(true)}
                   >
                     <Globe size={15} />
-                    {L("Xuất bản giới thiệu & bìa", "Publish details & covers")}
+                    {L("Xuất bản thông tin sách", "Publish book details")}
                   </button>
                 </div>
               </div>
