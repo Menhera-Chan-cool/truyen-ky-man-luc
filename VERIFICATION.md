@@ -1,3 +1,20 @@
+# Novel chống treo và giảm render cuộn TT — production 01/11/2026
+
+Production **dpl_C8dmmDjVmKoxZcbLzVqkHh82Mawn**, runtime source **6ce3337025f0fa0f2dae972ee9a87fa78977b768**, https://truyen-ky-man-luc.vercel.app READY. **196 hash** mã quan trọng khớp source Vercel. GitHub private. Commit theo sau chỉ cập nhật báo cáo, không đổi runtime.
+
+- Deadline chung bao gồm session/fetch/JSON, giữ caller cancellation và chặn ghi muộn nếu auth trả sau timeout. Mặc định 15s, import/batch 30s, TT registration 45s, upload 120s. Dùng lại deadline của TT. Khi RPC mất kết nối, chapters/book trả 503 thay vì đánh đồng với dữ liệu không hợp lệ.
+- Novel save/import/restore xác nhận revision mới và HTML đã sanitize; publication/batch/withdraw dùng đúng draft ID và revision không tăng (khác TT). Metadata/order/archive kiểm tra đúng trạng thái mong muốn. Không tự retry ghi. Kết quả chưa rõ hoặc refresh lỗi giữ nội dung/danh sách và giải thích cần kiểm tra bản server. Import chỉ bỏ candidates sau khi parent refresh thành công. Giữ nguyên CAS/RLS/role.
+- TT bỏ state ratio theo frame, cập nhật CSS/ARIA qua rAF. 90px/90 frame: **90 React commits trước sửa → 0 sau sửa** trên Chromium desktop/mobile và WebKit phone, cả local và production. Tiến độ/reload, autoscroll, đổi chế độ/vị trí thanh/ẩn hiện và resize đạt. Đây không phải FPS trên iPhone vật lý.
+- **171 unit / 42 file**, typecheck/build đạt. Production: **13 nhóm Novel trên mỗi Chromium/WebKit (26 tổng)**, **31 nhóm TT integration**, **6 ca progress browser**. Các ca cắt phản hồi save/import sau commit không gửi lại POST; hung read kết thúc và Retry đúng chương; refresh sau ghi lỗi vẫn giữ nội dung. Import source/inline upload của verifier có boundary mock, không coi là kiểm thử upload thật mọi định dạng. Publication/metadata reconciliation có unit; không sửa metadata sách thật để thử.
+- Candidate 1bc931b đã qua nội dung nhưng collector mới phát hiện WebKit phát lỗi access-control khi presence request bị hủy lúc reload. Đã sửa: metadata presence nhỏ dùng keepalive, không tạo cleanup fetch, không tiếp tục GET từ effect đã đóng; giữ lease 90s có sẵn. Bản cuối đã qua 5 lần reload nhanh local và hai lượt đầy đủ WebKit; **pageErrors = 0**. Không nới Origin/CORS hay quyền truy cập.
+- Fixture đã dọn; hash sách công khai trước/sau TT verifier không đổi. Các requestfailed/409/400 được tiêm hoặc hủy khi điều hướng là lỗi kiểm thử dự kiến, không phải page error.
+
+Bằng chứng: `SPEC-novel-deadlines-comic-scroll.md`, `verification/novel-scroll-live.json`, `verification/editor-network-chromium-live.json`, `verification/editor-network-webkit-live.json`, `verification/comic-shared-live.json`. Báo cáo hoàn chỉnh được cập nhật trong commit sau runtime snapshot.
+
+Chưa đo FPS/RAM trên iPhone vật lý hoặc tải nhiều người kéo dài. Những mục phía dưới là lịch sử release trước.
+
+---
+
 # Bốn tối ưu từ follow-up audit — production 01/11/2026
 
 Production **dpl_88oCJhbjc2r6UxAjokuJmxnzwe3Y**, runtime source **cde80583f8523ef6844cb43990c0aa5103ebc4f5**, https://truyen-ky-man-luc.vercel.app READY. **189 hash** mã quan trọng khớp source Vercel; API listing bị cắt chỉ phần báo cáo, không thiếu tệp quan trọng. GitHub private. Commit sau chỉ ghi kết quả kiểm chứng, không đổi runtime.

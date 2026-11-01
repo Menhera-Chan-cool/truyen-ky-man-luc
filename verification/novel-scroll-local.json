@@ -5,7 +5,7 @@
   "typecheck": true,
   "productionBuild": true,
   "chromiumNovelChecks": 13,
-  "webkitNovelChecks": 12,
+  "webkitNovelChecks": 13,
   "novelReports": [
     "verification/editor-network-chromium-local.json",
     "verification/editor-network-webkit-local.json"
@@ -29,5 +29,6 @@
     "engine": "webkit",
     "reloads": 5,
     "pageErrors": 0
-  }
+  },
+  "webkitPageErrors": 0
 }

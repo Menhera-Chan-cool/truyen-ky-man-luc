@@ -1,5 +1,5 @@
 {
-  "base": "http://localhost:3003",
+  "base": "https://truyen-ky-man-luc.vercel.app",
   "engine": "webkit",
   "checks": [
     "vi committed save recovered after lost response without retry",
@@ -22,39 +22,39 @@
       "ok": true
     },
     {
-      "label": "edition verify-editor-3f31dd15-preface",
+      "label": "edition verify-editor-534a7391-preface",
       "ok": true
     },
     {
-      "label": "versions verify-editor-3f31dd15-preface",
+      "label": "versions verify-editor-534a7391-preface",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-3f31dd15-preface",
+      "label": "chapter verify-editor-534a7391-preface",
       "ok": true
     },
     {
-      "label": "edition verify-editor-3f31dd15-one",
+      "label": "edition verify-editor-534a7391-one",
       "ok": true
     },
     {
-      "label": "versions verify-editor-3f31dd15-one",
+      "label": "versions verify-editor-534a7391-one",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-3f31dd15-one",
+      "label": "chapter verify-editor-534a7391-one",
       "ok": true
     },
     {
-      "label": "edition verify-editor-3f31dd15-two",
+      "label": "edition verify-editor-534a7391-two",
       "ok": true
     },
     {
-      "label": "versions verify-editor-3f31dd15-two",
+      "label": "versions verify-editor-534a7391-two",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-3f31dd15-two",
+      "label": "chapter verify-editor-534a7391-two",
       "ok": true
     },
     {
@@ -73,6 +73,10 @@
   "networkErrors": [
     {
       "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
       "failure": "Blocked by Web Inspector"
     },
     {
@@ -88,6 +92,10 @@
       "failure": "Load request cancelled"
     },
     {
+      "path": "/api/admin/presence",
+      "failure": "Load request cancelled"
+    },
+    {
       "path": "/api/admin/chapters",
       "failure": "Load request cancelled"
     },
@@ -116,7 +124,7 @@
       "failure": "Load request cancelled"
     },
     {
-      "path": "/storage/v1/object/book-assets/b5479ac0-acef-4466-b71c-ed56b48a3092/0f2e92fd-3fa0-4476-bce7-7333058d8616.png",
+      "path": "/storage/v1/object/book-assets/4a7d11e3-f15f-42fe-9b3a-e1573e86a925/d17661b7-c0ce-4362-a45f-7bb937a3d7a3.png",
       "status": 400
     },
     {
@@ -128,7 +136,7 @@
       "failure": "Load request cancelled"
     },
     {
-      "path": "/api/admin/chapters",
+      "path": "/api/admin/presence",
       "failure": "Load request cancelled"
     },
     {
@@ -152,14 +160,14 @@
       "failure": "Blocked by Web Inspector"
     },
     {
-      "path": "/storage/v1/object/book-assets/b5479ac0-acef-4466-b71c-ed56b48a3092/2225b974-0e04-48c2-b71f-bd864b84672a.png",
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/storage/v1/object/book-assets/4a7d11e3-f15f-42fe-9b3a-e1573e86a925/f2586c49-5a18-4d8f-bb0e-428148bccfba.png",
       "status": 400
     }
   ],
-  "pageErrors": [
-    "/localhost:3003/api/admin/presence due to access control checks.",
-    "/localhost:3003/api/admin/presence due to access control checks.",
-    "/localhost:3003/api/admin/presence due to access control checks."
-  ],
-  "success": false
+  "pageErrors": [],
+  "success": true
 }

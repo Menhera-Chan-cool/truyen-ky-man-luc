@@ -108,11 +108,11 @@
       "reason": "Blocked by Web Inspector"
     },
     {
-      "path": "/api/comic/assets/7b7e9fb7-d032-41e1-8b63-44e536ea7506/comics/8552262e-2005-40c0-be18-fc851204ac50.png",
+      "path": "/storage/v1/object/sign/comic-assets/87c3a065-5be0-4801-8dad-1efffc6ce018/comics/5a22aadc-e133-4180-85fb-893396ca5811-read-v1.webp",
       "reason": "Load request cancelled"
     },
     {
-      "path": "/storage/v1/object/sign/comic-assets/7b7e9fb7-d032-41e1-8b63-44e536ea7506/comics/4372d820-2dbe-4562-aa1c-eec1946035fe-read-v1.webp",
+      "path": "/storage/v1/object/sign/comic-assets/87c3a065-5be0-4801-8dad-1efffc6ce018/comics/f33fe661-0242-459a-ba0f-064df226994d-read-v1.webp",
       "reason": "Load request cancelled"
     },
     {
@@ -122,5 +122,5 @@
   ],
   "publicBookUnchanged": true,
   "passed": true,
-  "checkedAt": "2026-11-01T03:16:58.701Z"
+  "checkedAt": "2026-11-01T03:30:39.858Z"
 }
