@@ -1,3 +1,16 @@
+# Bỏ lớp lật thừa khi đến trang hiện tại — production 01/11/2026
+
+Production **dpl_9u22jRepBbkiXN4dcNb8e9PBRHdk**, runtime **e566fde640f8c2c85584f7b542364f92bd6f1bb8**, https://truyen-ky-man-luc.vercel.app READY. 199 hash source quan trọng khớp Vercel; GitHub private. Commit sau chỉ cập nhật bằng chứng.
+
+- Reader.jumpPage return trước lịch sử/begin khi target===pageRef.current. Nhập lại trang hiện tại hoặc trang 2 trong spread 1–2 không tạo lớp phủ/watchdog 1600ms. Nhảy tới trang khác vẫn animate.
+- RED trên production cũ: MutationObserver ghi 1 lượt data-flipping khi yêu cầu cùng trang. Sau sửa: 0; regression đồng thời xác nhận target khác tạo fold và folio đúng.
+- Local và production: **8 ca Chromium PC/mobile +4 WebKit phone**, pageErrors=0; gồm lật liên tiếp, touch fallback, qua lại chương và same-page/spread. **177 unit /43 file**, typecheck/build đạt. Không thay nội dung, schema hoặc dependency.
+- Xem `verification/same-page-local.json`, `verification/same-page-live.json`. User đã xác nhận giọng Việt hoạt động đúng trên Android Chrome sau release trước; đó là xác nhận từ user, không phải đo audio/FPS vật lý của agent.
+
+Chưa đo FPS trên điện thoại thật. Các mục dưới là lịch sử release trước.
+
+---
+
 # Giọng đúng ngôn ngữ và animation Sách ổn định — production 01/11/2026
 
 Production **dpl_FAMneQLgKhs3PyxmVv2339Go8qVx**, runtime source **1098d8c464a9f805b644c38c826ddc324f928ee9**, https://truyen-ky-man-luc.vercel.app READY; **199 hash** source quan trọng khớp Vercel. GitHub private. Commit theo sau chỉ ghi kết quả/harness, không đổi mã chạy.

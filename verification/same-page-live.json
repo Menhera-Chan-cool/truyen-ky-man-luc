@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-11-01T09:16:37.308859+00:00",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "deploymentId": "dpl_9u22jRepBbkiXN4dcNb8e9PBRHdk",
+  "runtimeSourceCommit": "e566fde640f8c2c85584f7b542364f92bd6f1bb8",
+  "state": "READY",
+  "criticalSourceHashesMatched": 199,
+  "unitTests": 177,
+  "unitFiles": 43,
+  "typecheck": true,
+  "productionBuild": true,
+  "chromiumCases": 8,
+  "webkitCases": 4,
+  "pageErrors": 0,
+  "samePageAndSpreadNoOp": true,
+  "otherPageStillAnimates": true,
+  "schemaChanged": false,
+  "dependenciesAdded": false,
+  "userConfirmedVietnameseAudioOnAndroidChrome": true,
+  "physicalPhoneFpsVerified": false
+}
