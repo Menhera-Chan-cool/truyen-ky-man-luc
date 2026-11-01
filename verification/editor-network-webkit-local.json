@@ -3,6 +3,7 @@
   "engine": "webkit",
   "checks": [
     "vi committed save recovered after lost response without retry",
+    "confirmed write with failed refresh keeps editor content and explains server outcome",
     "vi hung chapter read ends with retry; correct content reopens",
     "vi committed import recovered after lost response; candidates retained after conflict",
     "vi import and inline-image parent lock; failed import preserves preview/discard warning; retry waits for parent refresh (mocked storage/import boundaries, no uploaded objects)",
@@ -21,39 +22,39 @@
       "ok": true
     },
     {
-      "label": "edition verify-editor-138078e2-preface",
+      "label": "edition verify-editor-3f31dd15-preface",
       "ok": true
     },
     {
-      "label": "versions verify-editor-138078e2-preface",
+      "label": "versions verify-editor-3f31dd15-preface",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-138078e2-preface",
+      "label": "chapter verify-editor-3f31dd15-preface",
       "ok": true
     },
     {
-      "label": "edition verify-editor-138078e2-one",
+      "label": "edition verify-editor-3f31dd15-one",
       "ok": true
     },
     {
-      "label": "versions verify-editor-138078e2-one",
+      "label": "versions verify-editor-3f31dd15-one",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-138078e2-one",
+      "label": "chapter verify-editor-3f31dd15-one",
       "ok": true
     },
     {
-      "label": "edition verify-editor-138078e2-two",
+      "label": "edition verify-editor-3f31dd15-two",
       "ok": true
     },
     {
-      "label": "versions verify-editor-138078e2-two",
+      "label": "versions verify-editor-3f31dd15-two",
       "ok": true
     },
     {
-      "label": "chapter verify-editor-138078e2-two",
+      "label": "chapter verify-editor-3f31dd15-two",
       "ok": true
     },
     {
@@ -72,10 +73,6 @@
   "networkErrors": [
     {
       "path": "/api/admin/chapters",
-      "failure": "Load request cancelled"
-    },
-    {
-      "path": "/api/admin/chapters",
       "failure": "Blocked by Web Inspector"
     },
     {
@@ -84,6 +81,10 @@
     },
     {
       "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/state",
       "failure": "Load request cancelled"
     },
     {
@@ -111,7 +112,11 @@
       "failure": "Blocked by Web Inspector"
     },
     {
-      "path": "/storage/v1/object/book-assets/7e47b7b9-e6ad-40d6-ba46-ab162ca8cde5/7b10d0c5-f568-48f0-88db-44bd1a587463.png",
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/storage/v1/object/book-assets/b5479ac0-acef-4466-b71c-ed56b48a3092/0f2e92fd-3fa0-4476-bce7-7333058d8616.png",
       "status": 400
     },
     {
@@ -131,10 +136,6 @@
       "failure": "Load request cancelled"
     },
     {
-      "path": "/api/admin/presence",
-      "failure": "Load request cancelled"
-    },
-    {
       "path": "/api/admin/chapters",
       "failure": "Load request cancelled"
     },
@@ -151,9 +152,14 @@
       "failure": "Blocked by Web Inspector"
     },
     {
-      "path": "/storage/v1/object/book-assets/7e47b7b9-e6ad-40d6-ba46-ab162ca8cde5/53ba780f-2abd-46bd-8232-b2bf1326678e.png",
+      "path": "/storage/v1/object/book-assets/b5479ac0-acef-4466-b71c-ed56b48a3092/2225b974-0e04-48c2-b71f-bd864b84672a.png",
       "status": 400
     }
   ],
-  "success": true
+  "pageErrors": [
+    "/localhost:3003/api/admin/presence due to access control checks.",
+    "/localhost:3003/api/admin/presence due to access control checks.",
+    "/localhost:3003/api/admin/presence due to access control checks."
+  ],
+  "success": false
 }

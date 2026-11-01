@@ -1,7 +1,7 @@
 {
   "checkedAt": "2026-11-01T03:12:15.176698+00:00",
-  "unitTests": 169,
-  "unitFiles": 41,
+  "unitTests": 171,
+  "unitFiles": 42,
   "typecheck": true,
   "productionBuild": true,
   "chromiumNovelChecks": 13,
@@ -24,5 +24,10 @@
   "progressAndReloadVerified": true,
   "schemaChanged": false,
   "dependenciesAdded": false,
-  "physicalIPhoneChecked": false
+  "physicalIPhoneChecked": false,
+  "presenceNavigation": {
+    "engine": "webkit",
+    "reloads": 5,
+    "pageErrors": 0
+  }
 }

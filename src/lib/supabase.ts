@@ -22,6 +22,7 @@ export async function adminRequest(
   signal?.throwIfAborted();
   const response = await fetch(`/api/admin/${path}`, {
     signal,
+    keepalive:path==="presence",
     method,
     headers: {
       "Content-Type": "application/json",

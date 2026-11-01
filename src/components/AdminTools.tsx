@@ -598,6 +598,7 @@ export function EditingPresence({
     const lease = crypto.randomUUID();
     let active = true;
     async function update() {
+      if(!active)return;
       try {
         if (!document.hidden && document.hasFocus())
           await adminRequest("presence", {
@@ -606,6 +607,7 @@ export function EditingPresence({
             locale: editionLocale,
             leave: false,
           });
+        if(!active)return;
         const rows = await adminRequest("presence", undefined, "GET");
         if (active) {
           setPeople(rows);
@@ -624,7 +626,7 @@ export function EditingPresence({
       clearInterval(timer);
       window.removeEventListener("focus", update);
       document.removeEventListener("visibilitychange", update);
-      void adminRequest("presence", { lease, leave: true }).catch(() => {});
+      // Let the existing 90s lease expire; starting a fetch during navigation fails in WebKit.
     };
   }, [chapterId, editionLocale, userId]);
   const others = people.filter((p) => p.user_id !== userId);

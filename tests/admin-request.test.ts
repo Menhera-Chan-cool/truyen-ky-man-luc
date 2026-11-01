@@ -17,3 +17,8 @@ it("honors caller cancellation even during auth lookup",async()=>{
 it("does not send a write if auth resolves after timeout",async()=>{
  let finish!:(value:unknown)=>void;m.session.mockImplementation(()=>new Promise(resolve=>{finish=resolve;}));const result=expect(adminRequest("chapters",{})).rejects.toThrow(/timed out/);await vi.advanceTimersByTimeAsync(16000);await result;finish({data:{session:{access_token:"test"}}});await vi.advanceTimersByTimeAsync(1);expect(m.fetch).not.toHaveBeenCalled();
 });
+
+it("keeps only tiny presence requests alive across document navigation",async()=>{
+ m.fetch.mockResolvedValue({ok:true,json:async()=>({ok:true})});await adminRequest("presence",{lease:"one",leave:false});expect(m.fetch.mock.calls[0][1]).toMatchObject({keepalive:true});expect(m.fetch.mock.calls[0][1].signal).toBeInstanceOf(AbortSignal);
+ await adminRequest("chapters",{});expect(m.fetch.mock.calls[1][1].keepalive).not.toBe(true);
+});
