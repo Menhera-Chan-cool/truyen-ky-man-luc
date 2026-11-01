@@ -1,5 +1,6 @@
 "use client";
 import { createBrowserClient } from "@supabase/ssr";
+import {requestDeadline} from "./request-deadline";
 import type { SupabaseClient } from "@supabase/supabase-js";
 let client: SupabaseClient | undefined;
 export function browserClient(): SupabaseClient {
@@ -13,7 +14,9 @@ export async function adminRequest(
   body?: unknown,
   method = "POST",
   signal?: AbortSignal,
+  timeoutMs=15000,
 ) {
+  return requestDeadline(async signal=>{
   const { data } = await browserClient().auth.getSession();
   if (!data.session) throw new Error("Please sign in again");
   signal?.throwIfAborted();
@@ -29,4 +32,5 @@ export async function adminRequest(
   const result = await response.json();
   if (!response.ok) throw Object.assign(new Error(result.error ?? "Request failed"),{status:response.status});
   return result;
+  },timeoutMs,signal);
 }

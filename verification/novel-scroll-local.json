@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-11-01T03:12:15.176698+00:00",
+  "unitTests": 169,
+  "unitFiles": 41,
+  "typecheck": true,
+  "productionBuild": true,
+  "chromiumNovelChecks": 13,
+  "webkitNovelChecks": 12,
+  "novelReports": [
+    "verification/editor-network-chromium-local.json",
+    "verification/editor-network-webkit-local.json"
+  ],
+  "comicProgressBrowserCases": 6,
+  "scrollMeasurement": {
+    "frames": 90,
+    "pixels": 90,
+    "beforeReactCommits": 90,
+    "afterReactCommits": {
+      "chromiumDesktop": 0,
+      "chromiumPhone": 0,
+      "webkitPhone": 0
+    }
+  },
+  "progressAndReloadVerified": true,
+  "schemaChanged": false,
+  "dependenciesAdded": false,
+  "physicalIPhoneChecked": false
+}

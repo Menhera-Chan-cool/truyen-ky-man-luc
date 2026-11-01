@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Upload, FilePlus2, CheckSquare } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
 import { importFile } from "../lib/importer";
-import { adminRequest } from "../lib/supabase";
+import {novelRequest as adminRequest} from "../lib/novel-remote";
 import { storeSource, uploadAsset, uploadInlineImages } from "../lib/uploads";
 import { tx } from "../lib/content";
 import type { ImportChapter, Locale } from "../lib/types";
@@ -96,6 +96,7 @@ export default function ImportPanel({
   async function save() {
     if (!selected.length) return;
     setWorking(true);
+    let committed=false;
     try {
       const sources = new Map<File, string>();
       const prepared = [];
@@ -144,14 +145,15 @@ export default function ImportPanel({
         items: prepared,
         confirmReplace: replace,
       });
+      committed=true;
+      await onDone();
       setItems([]);
       onDirtyChange?.(false);
       setStatus("");
-      await onDone();
     } catch (e) {
-      onError(e instanceof Error ? e.message : "Import failed");
+      onError(committed?L("Server đã xác nhận nhập nháp nhưng chưa tải lại được. Giữ danh sách và tải lại bản server trước khi nhập tiếp.","Draft import was confirmed, but refresh failed. Keep this list and reload server state before importing again."):e instanceof Error ? e.message : "Import failed");
     } finally {
-      setWorking(false);
+      setStatus("");setWorking(false);
     }
   }
   async function extractForReview(item: Candidate) {

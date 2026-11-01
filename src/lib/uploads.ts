@@ -1,10 +1,11 @@
 "use client";
+import {requestDeadline as deadline} from "./request-deadline";
 import { browserClient, adminRequest } from "./supabase";
 export async function uploadAsset(file: Blob, name: string) {
   const client = browserClient();
   const {
     data: { user },
-  } = await client.auth.getUser();
+  } = await deadline(()=>client.auth.getUser());
   if (!user) throw new Error("Please sign in again");
   const extension = name.split(".").pop()?.toLowerCase();
   if (!["jpg", "jpeg", "png", "webp", "gif", "pdf"].includes(extension ?? ""))
@@ -24,9 +25,9 @@ export async function uploadAsset(file: Blob, name: string) {
     bitmap.close();
   }
   const path = `${user.id}/${crypto.randomUUID()}.${extension}`;
-  const { error } = await client.storage
+  const { error } = await deadline(()=>client.storage
     .from("book-assets")
-    .upload(path, file, { contentType: mime, upsert: false });
+    .upload(path, file, { contentType: mime, upsert: false }),120000);
   if (error) throw new Error(error.message);
   return adminRequest("assets", { path, contentType: mime });
 }
@@ -58,7 +59,7 @@ export async function uploadInlineImages(html: string) {
 export async function storeSource(file: File) {
   const {
     data: { user },
-  } = await browserClient().auth.getUser();
+  } = await deadline(()=>browserClient().auth.getUser());
   if (!user) throw new Error("Please sign in again");
   const ext = file.name.split(".").pop()?.toLowerCase();
   const mime: Record<string, string> = {
@@ -70,12 +71,12 @@ export async function storeSource(file: File) {
     txt: "text/plain",
   };
   const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
-  const { error } = await browserClient()
+  const { error } = await deadline(()=>browserClient()
     .storage.from("book-sources")
     .upload(path, file, {
       contentType: mime[ext ?? ""] ?? "application/octet-stream",
       upsert: false,
-    });
+    }),120000);
   if (error) throw new Error(error.message);
   return path;
 }

@@ -1,0 +1,159 @@
+{
+  "base": "http://localhost:3003",
+  "engine": "webkit",
+  "checks": [
+    "vi committed save recovered after lost response without retry",
+    "vi hung chapter read ends with retry; correct content reopens",
+    "vi committed import recovered after lost response; candidates retained after conflict",
+    "vi import and inline-image parent lock; failed import preserves preview/discard warning; retry waits for parent refresh (mocked storage/import boundaries, no uploaded objects)",
+    "vi rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
+    "vi stale chapter request is cancelled; import tool loads on demand",
+    "en committed save recovered after lost response without retry",
+    "en hung chapter read ends with retry; correct content reopens",
+    "en committed import recovered after lost response; candidates retained after conflict",
+    "en import and inline-image parent lock; failed import preserves preview/discard warning; retry waits for parent refresh (mocked storage/import boundaries, no uploaded objects)",
+    "en rich paste/save/switch/reload keeps three chapter contents separate; state responses contain no HTML",
+    "en stale chapter request is cancelled; import tool loads on demand"
+  ],
+  "cleanup": [
+    {
+      "label": "editing presence",
+      "ok": true
+    },
+    {
+      "label": "edition verify-editor-138078e2-preface",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-138078e2-preface",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-138078e2-preface",
+      "ok": true
+    },
+    {
+      "label": "edition verify-editor-138078e2-one",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-138078e2-one",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-138078e2-one",
+      "ok": true
+    },
+    {
+      "label": "edition verify-editor-138078e2-two",
+      "ok": true
+    },
+    {
+      "label": "versions verify-editor-138078e2-two",
+      "ok": true
+    },
+    {
+      "label": "chapter verify-editor-138078e2-two",
+      "ok": true
+    },
+    {
+      "label": "verification audit",
+      "ok": true
+    },
+    {
+      "label": "membership",
+      "ok": true
+    },
+    {
+      "label": "Auth user",
+      "ok": true
+    }
+  ],
+  "networkErrors": [
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Blocked by Web Inspector"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/presence",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "status": 409
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Blocked by Web Inspector"
+    },
+    {
+      "path": "/storage/v1/object/book-assets/7e47b7b9-e6ad-40d6-ba46-ab162ca8cde5/7b10d0c5-f568-48f0-88db-44bd1a587463.png",
+      "status": 400
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Blocked by Web Inspector"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/presence",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/presence",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/chapters",
+      "status": 409
+    },
+    {
+      "path": "/api/admin/chapters",
+      "failure": "Blocked by Web Inspector"
+    },
+    {
+      "path": "/storage/v1/object/book-assets/7e47b7b9-e6ad-40d6-ba46-ab162ca8cde5/53ba780f-2abd-46bd-8232-b2bf1326678e.png",
+      "status": 400
+    }
+  ],
+  "success": true
+}

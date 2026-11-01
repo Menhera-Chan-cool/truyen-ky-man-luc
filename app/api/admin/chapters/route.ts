@@ -179,7 +179,7 @@ export async function POST(request: Request) {
         p_expected_revision: item.expectedRevision,
       });
     }
-    if (result.error) throw new Error(result.error.message);
+    if (result.error) throw result.status===0||result.status>=500?new HttpError(result.error.message,503):new Error(result.error.message);
     return Response.json(
       { data: result.data },
       { headers: { "Cache-Control": "no-store" } },

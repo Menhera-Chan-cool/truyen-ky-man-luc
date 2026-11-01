@@ -4,12 +4,11 @@ import {comicMime,type ComicDraft,type ComicPage} from "./comic";
 import type {ComicHead} from "./comic-publication";
 import type {Locale} from "./types";
 import {readUploadCheckpoint,writeUploadCheckpoint,type UploadCheckpoint} from "./comic-recovery";
-async function deadline<T>(run:(signal:AbortSignal)=>PromiseLike<T>,ms=15000):Promise<T>{
- const controller=new AbortController();let timer:ReturnType<typeof setTimeout>|undefined;
- try{return await Promise.race([Promise.resolve().then(()=>run(controller.signal)),new Promise<never>((_,reject)=>{timer=setTimeout(()=>{const error=new Error("Hết thời gian chờ / Request timed out. Bản nháp vẫn được giữ; hãy kiểm tra mạng rồi thử lại.");error.name="TimeoutError";controller.abort(error);reject(error);},ms);})]);}finally{clearTimeout(timer);}
-}
-const request=(path:string,body?:unknown,method="POST")=>deadline(signal=>adminRequest(path,body,method,signal),path==="comic/assets"?45000:15000);
-const uncertain=(error:unknown)=>error instanceof TypeError||error instanceof SyntaxError||(error instanceof Error&&["TimeoutError","AbortError"].includes(error.name))||Number((error as {status?:number})?.status)>=500;
+import {requestDeadline as deadline,uncertainRequest as uncertain} from "./request-deadline";
+const request=(path:string,body?:unknown,method="POST")=>{
+ const ms=path==="comic/assets"?45000:15000;
+ return deadline(signal=>adminRequest(path,body,method,signal,ms),ms);
+};
 async function confirmWrite(write:()=>Promise<ComicHead>,id:string,locale:Locale,matches:(head:ComicHead)=>boolean):Promise<ComicHead>{
  try{return await write();}catch(error){
   if(!uncertain(error))throw error;

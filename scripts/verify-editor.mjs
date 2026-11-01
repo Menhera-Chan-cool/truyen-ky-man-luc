@@ -7,7 +7,7 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 const require = createRequire(new URL("../package.json", import.meta.url));
 require("@next/env").loadEnvConfig(root, false, { info() {}, error() {} });
 const { createClient } = require("@supabase/supabase-js"),
-  { chromium, expect } = require("@playwright/test");
+  { chromium, webkit, expect } = require("@playwright/test");
 const config = { auth: { persistSession: false, autoRefreshToken: false } };
 const admin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -30,7 +30,7 @@ const base =
 let uid,
   browser,
   phase = "setup";
-const report = { base, checks: [], cleanup: [], networkErrors: [] };
+const report = { base,engine:process.env.EDITOR_ENGINE??"chromium", checks: [], cleanup: [], networkErrors: [],pageErrors:[] };
 function ok(r) {
   if (r.error)
     throw Error("Request failed " + (r.error.code ?? r.error.status ?? ""));
@@ -67,11 +67,12 @@ try {
           p_expected_revision: 0,
         }),
       );
-  browser = await chromium.launch();
+  browser = await (process.env.EDITOR_ENGINE==="webkit"?webkit:chromium).launch();
   for (const locale of ["vi", "en"]) {
     phase = "open " + locale;
     const page = await browser.newPage();
     page.setDefaultTimeout(30000);
+    page.on("pageerror",e=>report.pageErrors.push(e.message.replace(/https?:\/\/\S+/g,"[url]").replaceAll(password,"[redacted]")));
     page.on("requestfailed", (request) =>
       report.networkErrors.push({
         path: new URL(request.url()).pathname,
@@ -145,6 +146,10 @@ try {
         );
       }, marker);
       assert.equal((await page.locator(".tiptap").innerText()).trim(), marker);
+      let writes=0,lost=false;
+      if(id===ids[0])await page.route("**/api/admin/chapters",async route=>{
+        writes++;const response=await route.fetch();if(response.ok()){lost=true;await route.abort();}else await route.fulfill({response});
+      });
       await page
         .getByRole("button", {
           name: locale === "vi" ? "Lưu bản nháp" : "Save draft",
@@ -157,6 +162,18 @@ try {
           hasText: locale === "vi" ? "Đã lưu bản nháp" : "Draft saved",
         })
         .waitFor({ timeout: 45000 });
+      if(id===ids[0]){await page.unroute("**/api/admin/chapters");assert(lost&&writes===1);report.checks.push(locale+" committed save recovered after lost response without retry");}
+    }
+    if(locale==="vi"){
+      phase="confirmed write but refresh hangs";
+      await page.locator(".tiptap").fill("PASTED "+locale+" "+ids[2]);
+      let held,release;await page.route("**/api/admin/state",async route=>{held=route;await new Promise(resolve=>{release=resolve;});});
+      await page.getByRole("button",{name:"Lưu bản nháp",exact:true}).click();
+      await expect(page.getByRole("alert").filter({hasText:"Server đã xác nhận"})).toBeVisible({timeout:20000});
+      await expect(page.locator(".tiptap")).toContainText("PASTED "+locale+" "+ids[2]);
+      await held?.abort().catch(()=>{});release?.();await page.unroute("**/api/admin/state");
+      page.removeAllListeners("dialog");page.on("dialog",d=>d.accept());await page.reload();await page.locator(".editor-chapter").first().waitFor();page.removeAllListeners("dialog");page.on("dialog",d=>d.dismiss());
+      report.checks.push("confirmed write with failed refresh keeps editor content and explains server outcome");
     }
     for (const id of ids) {
       phase = "verify saved " + locale + " " + id;
@@ -241,6 +258,19 @@ try {
       "PASTED " + locale + " " + ids[1],
     );
     await page.unroute("**/api/admin/chapters?*");
+    phase="hung chapter read "+locale;
+    let held,release;
+    await page.route("**/api/admin/chapters?*",async route=>{
+      if(new URL(route.request().url()).searchParams.get("id")===ids[0]){held=route;await new Promise(resolve=>{release=resolve;});}
+      else await route.continue();
+    });
+    await page.locator(".editor-chapter").filter({hasText:ids[0]}).locator("button").first().click();
+    await expect(page.locator(".empty-admin").getByRole("alert")).toContainText(/timed out|hết thời gian/i,{timeout:20000});
+    await held?.abort().catch(()=>{});release?.();await page.unroute("**/api/admin/chapters?*");
+    await page.getByRole("button",{name:locale==="vi"?"Thử lại":"Retry",exact:true}).click();
+    await expect(page.locator(".tiptap")).toContainText("PASTED "+locale+" "+ids[0]);
+    report.checks.push(locale+" hung chapter read ends with retry; correct content reopens");
+
     await page
       .getByRole("button", {
         name: locale === "vi" ? "Nhập file" : "Import files",
@@ -289,11 +319,8 @@ try {
       );
       attempt++;
       await new Promise((resolve) => setTimeout(resolve, 700));
-      await route.fulfill({
-        status: attempt === 1 ? 409 : 200,
-        json:
-          attempt === 1 ? { error: "QA controlled conflict" } : { ok: true },
-      });
+      if(attempt===1)await route.fulfill({status:409,json:{error:"QA controlled conflict"}});
+      else{const response=await route.fetch();assert(response.ok());await route.abort();}
     });
     const saveImport = page.getByRole("button", {
       name:
@@ -345,6 +372,7 @@ try {
       }),
     ).toHaveCount(0);
     assert.equal(attempt, 2);
+    report.checks.push(locale+" committed import recovered after lost response; candidates retained after conflict");
     await page.unroute("**/api/admin/chapters");
     await page.unroute("**/storage/v1/object/book-sources/**");
     await chaptersTab.click();
@@ -443,12 +471,13 @@ try {
     );
     await clean("Auth user", () => admin.auth.admin.deleteUser(uid));
   }
-  report.success = !report.failure && report.cleanup.every((x) => x.ok);
+  report.success = !report.failure && report.cleanup.every((x) => x.ok)&&report.pageErrors.length===0;
   if (!report.success) process.exitCode = 1;
   await mkdir(new URL("../verification", import.meta.url), { recursive: true });
   await writeFile(
     new URL("../verification/editor-switch-latest.json", import.meta.url),
     JSON.stringify(report, null, 2) + "\n",
   );
+  await writeFile(new URL(`../verification/editor-network-${report.engine}-${base.includes("localhost")?"local":"live"}.json`,import.meta.url),JSON.stringify(report,null,2)+"\n");
   console.log(JSON.stringify(report));
 }

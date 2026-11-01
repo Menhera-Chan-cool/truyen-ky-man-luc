@@ -61,12 +61,12 @@ export async function POST(request: Request) {
       if(registered?.length!==fonts.length)throw new HttpError("A heading font was removed. Choose another font before publishing.");
       for(const font of registered){const {data:exists,error}=await publicRead(signal=>serviceClient(readFetch(signal)).storage.from("heading-fonts").exists(font.path));if(error||!exists)throw new HttpError("Heading font file is unavailable. Retry or choose another font.",error?503:400);}
     }
-    const { data, error } = await client.rpc("save_book", {
+    const { data, error,status } = await client.rpc("save_book", {
       p_meta: body.meta,
       p_expected_revision: body.expectedRevision,
       p_publish: !!body.publish,
     });
-    if (error) throw new Error(error.message);
+    if (error) throw status===0||status>=500?new HttpError(error.message,503):new Error(error.message);
     return Response.json({ revision: data });
   } catch (e) {
     return apiError(e);

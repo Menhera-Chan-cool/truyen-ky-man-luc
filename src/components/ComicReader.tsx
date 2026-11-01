@@ -176,13 +176,13 @@ export default function ComicReader({
     [page, setPage] = useState(0),
     [panel, setPanel] = useState<"settings" | "chapters" | "help" | null>(null),
     [auto, setAuto] = useState(false),
-    [ratio, setRatio] = useState(0),
     [summaries, setSummaries] = useState<ComicSummary[]>([]),
     [message, setMessage] = useState(""),
     [size, setSize] = useState({ width: 1440, height: 900, mobile:false }),
     [full, setFull] = useState(false);
   const root = useRef<HTMLDivElement>(null),
     stage = useRef<HTMLDivElement>(null),
+    progressBar=useRef<HTMLDivElement>(null),
     figures = useRef(new Map<number, HTMLElement>()),
     current = useRef(0),
     restored = useRef(false),
@@ -428,6 +428,12 @@ export default function ComicReader({
     const queue=selectComicPreloads(pages,page,prefs.preload,connection).map(n=>comicReadingUrl(urls[pages[n].id]??pages[n].path??"",zoom>100)).filter(u=>!!u&&!u.startsWith("blob:"));
     return preloadComicImages(queue,loadedImages.current,pendingImages.current);
   }, [ready,pages,page,prefs.preload,prefs.mode,urls,connection,zoom]);
+  function updateProgress(){
+    const bar=progressBar.current,el=stage.current;if(!bar||!el)return;
+    const value=prefs.mode==="vertical"?el.scrollTop/Math.max(1,el.scrollHeight-el.clientHeight):pages.length>1?current.current/(pages.length-1):0;
+    const ratio=Math.max(0,Math.min(1,value));bar.style.setProperty("--cc-progress",`${ratio*100}%`);bar.setAttribute("aria-valuenow",String(Math.round(ratio*100)));
+  }
+  useLayoutEffect(()=>{updateProgress();},[page,pages,prefs.mode,prefs.progress,prefs.zoom,prefs.stretch,prefs.gap,ready,size.width,size.height]);
   function go(n: number) {
     if (!pages.length) return;
     const next = Math.max(0, Math.min(pages.length - 1, n));
@@ -632,15 +638,7 @@ export default function ComicReader({
           if (!scrollFrame.current)
             scrollFrame.current = requestAnimationFrame(() => {
               scrollFrame.current = 0;
-              const s = stage.current;
-              if (s)
-                setRatio(
-                  prefs.mode === "vertical"
-                    ? s.scrollTop / Math.max(1, s.scrollHeight - s.clientHeight)
-                    : pages.length > 1
-                      ? current.current / (pages.length - 1)
-                      : 0,
-                );
+              updateProgress();
             });
         }}
         onWheel={() => {
@@ -822,25 +820,10 @@ export default function ComicReader({
           aria-label={L("Tiến độ đọc truyện tranh", "Comic reading progress")}
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-valuenow={Math.round(
-            (prefs.mode === "single"
-              ? pages.length > 1
-                ? page / (pages.length - 1)
-                : 0
-              : ratio) * 100,
-          )}
+          aria-valuenow={0}
+          ref={progressBar}
         >
-          <i
-            style={
-              prefs.progress === "left" || prefs.progress === "right"
-                ? {
-                    height: `${(prefs.mode === "single" ? (pages.length > 1 ? page / (pages.length - 1) : 0) : ratio) * 100}%`,
-                  }
-                : {
-                    width: `${(prefs.mode === "single" ? (pages.length > 1 ? page / (pages.length - 1) : 0) : ratio) * 100}%`,
-                  }
-            }
-          />
+          <i style={prefs.progress==="left"||prefs.progress==="right"?{height:"var(--cc-progress,0%)"}:{width:"var(--cc-progress,0%)"}} />
         </div>
         </div>
       )}

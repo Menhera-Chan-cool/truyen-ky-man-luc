@@ -21,7 +21,9 @@ import {
   LockKeyhole,
   RotateCcw,
 } from "lucide-react";
-import { browserClient, adminRequest } from "../lib/supabase";
+import {requestDeadline} from "../lib/request-deadline";
+import { browserClient } from "../lib/supabase";
+import {novelRequest as adminRequest} from "../lib/novel-remote";
 import { uploadAsset, uploadInlineImages } from "../lib/uploads";
 import { cleanHtml } from "../lib/sanitize";
 import { tx } from "../lib/content";
@@ -135,14 +137,18 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
     );
     return result;
   }, []);
+  async function reloadAfterWrite(){
+    try{return await load();}catch{throw Error(L("Server đã xác nhận thao tác nhưng chưa tải lại được. Giữ phần đang sửa và tải lại trước khi ghi tiếp.","Server confirmed the change, but refresh failed. Keep your edits and reload before writing again."));}
+  }
   useEffect(() => {
     document.documentElement.lang = locale;
     const client = browserClient();
-    client.auth.getSession().then(({ data }) => setSession(data.session));
+    let active=true;
+    requestDeadline(()=>client.auth.getSession()).then(({data})=>{if(active)setSession(data.session);}).catch(e=>{if(active){setError(e.message);setSession(null);}});
     const {
       data: { subscription },
     } = client.auth.onAuthStateChange((_event, session) => setSession(session));
-    return () => subscription.unsubscribe();
+    return () => {active=false;subscription.unsubscribe();};
   }, [locale]);
   useEffect(() => {
     if (session) load().catch((e) => setError(e.message));
@@ -278,7 +284,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
         pdfPath: form.pdfPath || null,
         expectedRevision: head?.revision ?? 0,
       });
-      await load();
+      await reloadAfterWrite();
       setMessage(
         L(
           "Đã lưu bản nháp. Người đọc vẫn thấy bản đã xuất bản.",
@@ -332,7 +338,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
         locale: editLocale,
         expectedRevision: head?.revision ?? 0,
       });
-      await load();
+      await reloadAfterWrite();
       setMessage(
         withdraw
           ? L(
@@ -362,7 +368,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
         ids,
         expectedRevision: state.book.revision,
       });
-      await load();
+      await reloadAfterWrite();
     });
   }
   async function saveMeta(publish: boolean) {
@@ -372,7 +378,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
         expectedRevision: state?.book.revision,
         publish,
       });
-      await load();
+      await reloadAfterWrite();
       setMessage(
         publish
           ? L(
@@ -452,7 +458,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
           expectedRevision: e.revision,
         })),
       });
-      await load();
+      await reloadAfterWrite();
       setMessage(
         L(
           "Đã xuất bản tất cả bản nháp đã chọn.",
@@ -490,10 +496,10 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
             e.preventDefault();
             const data = new FormData(e.currentTarget);
             operation(async () => {
-              const { error } = await browserClient().auth.signInWithPassword({
+              const { error } = await requestDeadline(()=>browserClient().auth.signInWithPassword({
                 email: String(data.get("email")).trim(),
                 password: String(data.get("password")),
-              });
+              }));
               if (error)
                 throw new Error(
                   L(
@@ -854,7 +860,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
                                   action: "archive",
                                   id: selected,
                                 });
-                                await load();
+                                await reloadAfterWrite();
                               });
                           }}
                         >
@@ -932,7 +938,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
                                       pdfPath: saved.pdf_path,
                                       expectedRevision: head?.revision ?? 0,
                                     });
-                                    await load();
+                                    await reloadAfterWrite();
                                     setMessage(
                                       L(
                                         "Đã khôi phục thành bản nháp mới.",
@@ -1047,7 +1053,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
                   onBusyChange={setChildBusy}
                   onDirtyChange={setImportDirty}
                   onDone={async () => {
-                    await load();
+                    await reloadAfterWrite();
                     setMessage(
                       L(
                         "Đã nhập bản nháp. Mở Chương & minh họa để kiểm tra và xuất bản.",
@@ -1069,7 +1075,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
                 onLocale={setEditLocale}
                 onBusy={setChildBusy}
                 onDone={async () => {
-                  await load();
+                  await reloadAfterWrite();
                   setMessage(
                     L(
                       "Đã tạo bản nháp thay thế. Hãy kiểm tra trước khi xuất bản.",
