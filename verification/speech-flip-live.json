@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-11-01T07:46:59.742349+00:00",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "deploymentId": "dpl_FAMneQLgKhs3PyxmVv2339Go8qVx",
+  "runtimeSourceCommit": "1098d8c464a9f805b644c38c826ddc324f928ee9",
+  "state": "READY",
+  "criticalSourceHashesMatched": 199,
+  "missingCriticalSources": [],
+  "unitTests": 177,
+  "unitFiles": 43,
+  "typecheck": true,
+  "productionBuild": true,
+  "finalChromiumCases": 23,
+  "finalWebkitCases": 11,
+  "skippedPlatformCases": 5,
+  "priorCandidateSpeechContinuityCases": 14,
+  "localFinalBookCases": {
+    "chromiumDesktopPhone": 33,
+    "webkitPhone": 16
+  },
+  "fontRendererProof": "verification/speech-flip-font-live.json",
+  "bookPageErrors": 0,
+  "voicesSimulatedInBrowserTests": true,
+  "userDevice": "Android Chrome",
+  "userAndroidSystemVietnameseSampleWorks": true,
+  "userChromeVietnameseVoiceConfirmed": false,
+  "nativeAudioHeardByAgent": false,
+  "physicalPhoneAnimationVerified": false,
+  "schemaChanged": false,
+  "dependenciesAdded": false,
+  "bookContentChanged": false
+}

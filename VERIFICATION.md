@@ -1,3 +1,19 @@
+# Giọng đúng ngôn ngữ và animation Sách ổn định — production 01/11/2026
+
+Production **dpl_FAMneQLgKhs3PyxmVv2339Go8qVx**, runtime source **1098d8c464a9f805b644c38c826ddc324f928ee9**, https://truyen-ky-man-luc.vercel.app READY; **199 hash** source quan trọng khớp Vercel. GitHub private. Commit theo sau chỉ ghi kết quả/harness, không đổi mã chạy.
+
+- Tái hiện VI không có voice nhưng vẫn gọi speak với voice unset, để engine dùng giọng mặc định khác ngôn ngữ. Chặn trước mọi utterance: chọn voice thật do getVoices trả về, khớp subtag VI/EN chính xác, chuẩn hóa dấu gạch dưới; bỏ voice đã lưu của ngôn ngữ khác. Resume/chunk tiếp theo cũng kiểm tra lại. Lang lấy từ voice đã chọn; thiếu voice dừng và không gọi onComplete/auto-next. Không thêm TTS cloud.
+- Bảng đọc không còn hứa “Tự động” khi không có giọng, khóa dropdown/play trống và mở hướng dẫn Android. Hỗ trợ voiceschanged, late probes và Refresh hiện có. User xác nhận Android Chrome, mẫu hệ thống tiếng Việt đã đọc đúng; chưa xác nhận Chrome sau restart/refresh. Các bài TTS mô phỏng danh sách thiết bị, không phải thu âm trên điện thoại thật. Nguồn: MDN SpeechSynthesisUtterance.voice và Google Android TTS guide được ghi trong spec.
+- Tái hiện animation mất khi frame/font phải nạp lại và touch không có preview chuyển trang không animation. Thử spare-frame vẫn có khoảng trống WebKit. Bản cuối giữ một iframe đã nạp phông, hủy PageFlip instance sau mỗi lượt, hủy RAF của renderer và gỡ resize listener mà page-flip 2.0.7 không tự gỡ khi useMouseEvents=false. Giữ CSS/font đã nạp; clear stage DOM. Hidden/reduced-motion/dispose vẫn bỏ frame. Không sửa vendor hay dependency.
+- Nút, mép giấy, kéo/vuốt và chuyển chương được kiểm tra trên PC/mobile. Touch fallback có animation; preview commit một lần; hàng đợi nhanh giữ đúng bước và gom hiển thị lượt cuối. Phông thân/heading thực sự loaded trong frame trên production; **1 frame khi chạy và khi nghỉ**, stage rỗng và RAF dừng khi nghỉ. Reduced motion/e-ink chủ động không animate.
+- **177 unit / 43 file**, typecheck/build đạt. Local bản cuối: 33 ca Chromium book và 16 WebKit book, trước đó 26 speech/reliability +12 extras (chú thích/nghe tiếp/phát âm/phông cá nhân). Production bản cuối: **23 Chromium desktop/mobile +11 WebKit phone**, 5 lượt skip đúng nền tảng (mouse desktop/CDP Chromium). Harness reliability có pageerror assertion. Candidate trước có 14 ca speech continuity bổ sung đạt; mã TTS không đổi giữa hai candidate. Không sửa metadata/nội dung sách/schema, không thêm thư viện.
+
+Xem `SPEC-speech-language.md`, `SPEC-book-animation-reliability.md`, `verification/speech-flip-live.json`, `verification/speech-flip-font-live.json`. Fixture speech cũ dùng danh sách rỗng đã được sửa thành voice VI/EN hợp lệ để kiểm tra chức năng thực; các ca empty/English-only riêng giữ nguyên để chứng minh không fallback.
+
+Chưa đo âm thanh/FPS trên điện thoại thật. Chrome chỉ dùng được giọng hệ điều hành mà nó công bố; mẫu Android đúng không tự chứng minh Chrome đã có voice VI. Các mục bên dưới là lịch sử release trước.
+
+---
+
 # Novel chống treo và giảm render cuộn TT — production 01/11/2026
 
 Production **dpl_C8dmmDjVmKoxZcbLzVqkHh82Mawn**, runtime source **6ce3337025f0fa0f2dae972ee9a87fa78977b768**, https://truyen-ky-man-luc.vercel.app READY. **196 hash** mã quan trọng khớp source Vercel. GitHub private. Commit theo sau chỉ cập nhật báo cáo, không đổi runtime.
