@@ -135,7 +135,7 @@ for (const locale of ["vi", "en"])
       Object.defineProperty(window, "speechSynthesis", {
         configurable: true,
         value: Object.assign(new EventTarget(), {
-          getVoices: () => [],
+          getVoices: () => [ {name:"Test Vietnamese",lang:"vi-VN",voiceURI:"test-vi"}, {name:"Test English",lang:"en-US",voiceURI:"test-en"} ],
           cancel() {},
           speak(u: any) {
             (window as any).speechQueue.push(u);

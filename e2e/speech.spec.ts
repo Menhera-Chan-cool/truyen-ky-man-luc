@@ -69,22 +69,12 @@ test("explains an empty voice list and refreshes late Android voices with the se
     .click();
   const panel = page.locator(".reader-panel");
   await expect(
-    panel.getByText(/chưa liệt kê giọng đọc tiếng Việt/),
+    panel.getByText(/chưa cung cấp giọng tiếng Việt/),
   ).toBeVisible();
-  await page.evaluate(() => {
-    (window as typeof window & { testSpeechError: string }).testSpeechError =
-      "language-unavailable";
-  });
-  await panel
-    .getByRole("button", { name: "Đọc chương này", exact: true })
-    .click();
-  await expect(
-    page.getByText(/Thiết bị không có giọng đọc cho ngôn ngữ này/),
-  ).toBeVisible();
-  await panel.getByText("Cài giọng trên Android", { exact: true }).click();
-  await expect(
-    panel.getByRole("link", { name: "Hướng dẫn cài giọng trên Android" }),
-  ).toHaveAttribute("href", /support\.google\.com/);
+  await expect(panel.getByRole("button",{name:"Đọc chương này",exact:true})).toBeDisabled();
+  await expect(panel.getByRole("combobox",{name:"Chọn giọng đọc",exact:true})).toBeDisabled();
+  expect(await page.evaluate(()=>(window as any).testSpeech)).toBeNull();
+  await expect(panel.getByRole("link",{name:"Hướng dẫn cài giọng trên Android"})).toHaveAttribute("href",/support\.google\.com/);
   await page.evaluate(() => {
     const state = window as typeof window & {
       testVoices: unknown[];
@@ -181,4 +171,11 @@ test("updates a single English voice when the browser announces more voices", as
       .getByRole("combobox", { name: "Choose voice", exact: true })
       .locator("option"),
   ).toHaveCount(2);
+});
+
+test("English-only Android defaults never speak Vietnamese text",async({page})=>{
+ await page.goto("/vi/read/chapter-1");await expect(page.locator(".reader-shell")).toHaveAttribute("data-ready","true");
+ await page.evaluate(()=>{(window as any).testVoices=[{name:"Android English",lang:"en-US",default:true,voiceURI:"en"}];speechSynthesis.dispatchEvent(new Event("voiceschanged"));});
+ await page.getByRole("button",{name:"Đọc giọng nói",exact:true}).click();expect(await page.evaluate(()=>(window as any).testSpeech)).toBeNull();await expect(page.getByText(/Trình duyệt chưa cung cấp giọng tiếng Việt/)).toBeVisible();
+ await page.getByRole("button",{name:"Giọng đọc & tốc độ",exact:true}).click();await expect(page.getByRole("combobox",{name:"Chọn giọng đọc",exact:true})).toBeDisabled();await expect(page.getByRole("button",{name:"Đọc chương này",exact:true})).toBeDisabled();
 });

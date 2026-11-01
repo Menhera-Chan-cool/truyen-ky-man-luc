@@ -108,6 +108,7 @@ import Soundscape from "./Soundscape";
 import dynamic from "next/dynamic";
 const PdfViewer=dynamic(()=>import("./PdfViewer"));
 import { useSpeech } from "./useSpeech";
+import {voiceMatchesLocale} from "../lib/speech-voices";
 import type { ReaderBackup } from "../lib/reader-backup";
 import { decorateFootnotes } from "../lib/footnotes";
 import { BookFlip } from "../lib/book-flip";
@@ -229,6 +230,7 @@ export default function Reader({
     [leaves, setLeaves] = useState(1);
   const bookPaper = useRef<HTMLDivElement>(null),
     physicalFlip = useRef<BookFlip | null>(null),
+    animationFonts=useRef(new Map<string,Promise<string|undefined>>()),
     ebookSidebar = useRef<boolean | null>(null);
   const turnRef = useRef<(direction: number, animate?: boolean) => void>(
     () => {},
@@ -487,7 +489,7 @@ export default function Reader({
     [chapterId, revision, progressSaver, speech.stop],
   );
   const availableVoices = speech.voices.filter((v) =>
-    v.lang.toLowerCase().startsWith(locale),
+    voiceMatchesLocale(v,locale),
   );
   const theme = readerPalette(settings);
   const personalFamily = usePersonalFont(settings.font, notify);
@@ -567,7 +569,7 @@ export default function Reader({
     if (!ready || !restored.current || !touchTurns.current.length) return;
     const frame = requestAnimationFrame(() => {
       while (restored.current && touchTurns.current.length)
-        turnRef.current(touchTurns.current.shift()!, false);
+        turnRef.current(touchTurns.current.shift()!, touchTurns.current.length===0);
     });
     return () => cancelAnimationFrame(frame);
   }, [bookLayout, ready, chapterId, page, layoutVersion]);
@@ -583,9 +585,10 @@ export default function Reader({
     observer.observe(node);
     return () => observer.disconnect();
   }, [bookLayout]);
+  useEffect(()=>()=>BookFlip.releaseFonts(animationFonts.current),[]);
   useLayoutEffect(() => {
     if (!bookLayout || settings.theme === "eink" || !bookPaper.current) return;
-    const flip = new BookFlip(bookPaper.current, double);
+    const flip = new BookFlip(bookPaper.current, double,animationFonts.current);
     physicalFlip.current = flip;
     return () => {
       flip.dispose();
@@ -1412,7 +1415,7 @@ export default function Reader({
     } else return;
   }
   turnRef.current = turnPage;
-  function requestTouchTurn(direction: number, animate = false) {
+  function requestTouchTurn(direction: number, animate = true) {
     if (restoringBackup.current) return;
     if (!ready || !restored.current) touchTurns.current.push(direction);
     else turnRef.current(direction, animate);
@@ -1627,7 +1630,7 @@ export default function Reader({
         );
       physicalFlip.current?.releaseDrag(commit, e.pointerType === "touch");
     }
-    if (commit && e.pointerType === "touch") requestTouchTurn(direction);
+    if (commit && e.pointerType === "touch") requestTouchTurn(direction,!start.preview);
     else if (commit && !start.preview) turnRef.current(direction);
     if (
       !cancel &&
@@ -3168,8 +3171,8 @@ export default function Reader({
               <p className="tiny muted" role="status">
                 {availableVoices.length === 0
                   ? L(
-                      "Trình duyệt chưa liệt kê giọng đọc tiếng Việt. Bạn vẫn có thể thử chế độ tự động.",
-                      "The browser has not listed an English voice. You can still try automatic speech.",
+                      "Trình duyệt chưa cung cấp giọng tiếng Việt. Đã tắt đọc để tránh dùng nhầm giọng ngôn ngữ khác.",
+                      "No English voice is available. Reading is disabled to avoid using another language.",
                     )
                   : L(
                       `${availableVoices.length} giọng đọc tiếng Việt trên thiết bị.`,
@@ -3186,14 +3189,14 @@ export default function Reader({
                 {L("Làm mới giọng đọc", "Refresh voices")}
               </button>
               {availableVoices.length <= 1 && (
-                <details className="voice-help">
+                <details className="voice-help" open={availableVoices.length===0}>
                   <summary>
                     {L("Cài giọng trên Android", "More voices on Android")}
                   </summary>
                   <p>
                     {L(
-                      "Trong Cài đặt điện thoại, tìm “Chuyển văn bản thành giọng nói”, chọn công cụ và cài dữ liệu tiếng Việt hoặc tiếng Anh. Sau đó quay lại đây và bấm Làm mới giọng đọc. Tên mục có thể khác tùy máy.",
-                      "In your phone settings, search for “Text-to-speech”, choose an engine and install Vietnamese or English voice data. Return here and refresh the voices. Setting names vary by device.",
+                      "Trong Cài đặt Android, tìm “Chuyển văn bản thành giọng nói” (Text-to-speech). Chọn công cụ của Google nếu có, mở bánh răng → Cài đặt dữ liệu giọng nói → Tiếng Việt (hoặc English khi đọc EN). Chọn ngôn ngữ tương ứng và bấm Phát trong cài đặt để kiểm tra. Sau đó mở lại Chrome, quay về web và bấm Làm mới giọng đọc. Tên mục có thể khác tùy máy.",
+                      "In Android settings, search for “Text-to-speech”. Choose the Google engine if available, open its settings and install Vietnamese or English voice data. Select the matching language and play the system sample. Reopen Chrome, then refresh voices here. Setting names vary by device.",
                     )}
                   </p>
                   <p>
@@ -3234,6 +3237,7 @@ export default function Reader({
             {L("Chọn giọng đọc", "Choose voice")}
             <select
               aria-label={L("Chọn giọng đọc", "Choose voice")}
+              disabled={!availableVoices.length}
               value={
                 availableVoices.some((v) => v.name === settings.voice)
                   ? settings.voice
@@ -3244,7 +3248,7 @@ export default function Reader({
               }}
             >
               <option value="">
-                {L("Tự động theo VI / EN", "Automatic for VI / EN")}
+                {availableVoices.length?L("Tự chọn giọng tiếng Việt", "Automatic English voice"):L("Chưa có giọng tiếng Việt", "No English voice available")}
               </option>
               {availableVoices
                 .filter(
@@ -3330,7 +3334,7 @@ export default function Reader({
             <button
               className="primary-button"
               style={{ flex: 1 }}
-              disabled={!speech.supported || !edition}
+              disabled={!speech.supported || !edition || (!speech.playing&&!speech.paused&&!availableVoices.length)}
               onClick={toggleSpeech}
             >
               {speech.playing ? <Pause size={16} /> : <Play size={16} />}{" "}

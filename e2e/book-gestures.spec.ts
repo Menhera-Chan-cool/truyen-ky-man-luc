@@ -231,9 +231,9 @@ test("drag crosses chapter edges on fresh paper and Escape aborts a held fold", 
 
 test("native phone swipe previews and turns one page without waking hidden controls", async ({
   page,
-  isMobile,
+  isMobile,browserName,
 }) => {
-  test.skip(!isMobile, "Chromium touch input");
+  test.skip(!isMobile||browserName!=="chromium", "Native CDP touch input requires Chromium");
   await openBook(page);
   await expect(page.locator(".reading-progress")).toHaveAttribute("inert", "", {
     timeout: 6500,

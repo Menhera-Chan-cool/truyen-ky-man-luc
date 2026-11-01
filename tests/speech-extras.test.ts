@@ -4,7 +4,7 @@ import {useSpeech} from '../src/components/useSpeech';
 it('pronunciation changes preserve source boundaries/resume and completion only follows full text',async()=>{
  (globalThis as any).IS_REACT_ACT_ENVIRONMENT=true;const utterances:any[]=[];
  Object.defineProperty(window,'SpeechSynthesisUtterance',{configurable:true,value:class{constructor(public text:string){}}});
- Object.defineProperty(window,'speechSynthesis',{configurable:true,value:Object.assign(new EventTarget(),{getVoices:()=>[],cancel(){},speak(u:any){utterances.push(u);u.onstart?.({});},paused:false,resume(){}})});
+ Object.defineProperty(window,'speechSynthesis',{configurable:true,value:Object.assign(new EventTarget(),{getVoices:()=>[ {name:"Test Vietnamese",lang:"vi-VN",voiceURI:"test-vi"}, {name:"Test English",lang:"en-US",voiceURI:"test-en"} ],cancel(){},speak(u:any){utterances.push(u);u.onstart?.({});},paused:false,resume(){}})});
  let api!:ReturnType<typeof useSpeech>;const checkpoint=vi.fn(),complete=vi.fn(),rules=[{from:'Nguyễn Dữ',to:'nguyễn dữ tác giả'}],text='Tôi gặp Nguyễn Dữ rồi.';
  function Harness(){const ref=useRef<HTMLElement|null>(null);api=useSpeech(ref,'vi',1,'',vi.fn(),vi.fn(),true,checkpoint,{pronunciations:rules,onComplete:complete});return React.createElement('article',{ref},React.createElement('p',null,text));}
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);await act(async()=>root.render(React.createElement(Harness)));

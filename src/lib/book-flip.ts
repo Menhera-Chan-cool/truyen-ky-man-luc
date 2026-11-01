@@ -1,3 +1,4 @@
+import {requestDeadline} from "./request-deadline";
 type FlipInstance = {
   on(name: string, callback: (event: { data: string }) => void): void;
   loadFromHTML(pages: HTMLElement[]): void;
@@ -28,7 +29,9 @@ export class BookFlip {
   private frame: HTMLIFrameElement | null = null;
   private host: HTMLDivElement | null = null;
   private ready = false;
-  private styles: string | undefined;
+  private spare:{host:HTMLDivElement;frame:HTMLIFrameElement;ready:boolean}|null=null;
+  private styles: Promise<string> | undefined;
+
   private disposed = false;
   private timer = 0;
   private finishFrame = 0;
@@ -57,12 +60,14 @@ export class BookFlip {
   constructor(
     private paper: HTMLElement,
     private double: boolean,
+    private fonts:Map<string,Promise<string|undefined>>,
   ) {
     this.size = `${paper.clientWidth}:${paper.clientHeight}`;
     this.observer = new ResizeObserver(() => {
       const size = `${paper.clientWidth}:${paper.clientHeight}`;
       if (size !== this.size) {
         this.size = size;
+        this.spare?.host.remove();this.spare=null;
         this.reset(true);
       }
     });
@@ -82,32 +87,46 @@ export class BookFlip {
   private css() {
     if (this.styles) return this.styles;
     let result = "";
+    const family=(value:string)=>value.split(",")[0].replace(/["']/g,"").trim().toLowerCase();
+    const prose=this.paper.querySelector(".prose"),heading=this.paper.querySelector(".book-chapter-heading");
+    const families=new Set([family(getComputedStyle(document.body).fontFamily),prose?family(getComputedStyle(prose).fontFamily):"",heading?family(getComputedStyle(heading,"::before").fontFamily):""]);
+    const fonts=new Set<string>();
     for (const sheet of document.styleSheets) {
       try {
         const base = sheet.href ?? location.href;
         result += [...sheet.cssRules]
-          .map((rule) =>
-            rule.cssText.replace(
-              /url\((['"]?)(.*?)\1\)/g,
-              (all, _quote, url) =>
-                /^(data:|#)/.test(url)
-                  ? all
-                  : `url("${new URL(url, base).href}")`,
-            ),
-          )
+          .map((rule) => {
+            const font=rule.type===CSSRule.FONT_FACE_RULE&&families.has(family((rule as CSSFontFaceRule).style.fontFamily));
+            return rule.cssText.replace(/url\((['"]?)(.*?)\1\)/g,(all,_quote,url)=>{
+              if(/^(data:|blob:|#)/.test(url))return all;
+              const absolute=new URL(url,base).href;if(font&&new URL(absolute).origin===location.origin)fonts.add(absolute);
+              return `url("${absolute}")`;
+            });
+          })
           .join("\n");
       } catch {
         /* Cross-origin optional styles are not needed for the self-hosted reader. */
       }
     }
-    return (this.styles =
-      result +
-      "\nhtml,body{margin:0!important;padding:0!important;background:transparent!important;overflow:hidden!important}.book-animation-stage{position:absolute;left:0;top:0}.book-animation-page{overflow:hidden}.reader-document{animation:none!important;box-shadow:none!important}");
+    result+="\nhtml,body{margin:0!important;padding:0!important;background:transparent!important;overflow:hidden!important}.book-animation-stage{position:absolute;left:0;top:0}.book-animation-page{overflow:hidden}.reader-document{animation:none!important;box-shadow:none!important}";
+    // Reuse verified font bytes across disposable frames; private font redirects are otherwise fetched every turn.
+    return this.styles=Promise.all([...fonts].map(async url=>{
+      let cached=this.fonts.get(url);
+      if(!cached){
+        cached=requestDeadline(async signal=>{const r=await fetch(url,{signal});if(!r.ok)throw Error("Font unavailable");const blob=await r.blob();if(blob.size>3*1024*1024)throw Error("Font too large");return URL.createObjectURL(blob);},5000).catch(()=>undefined);
+        this.fonts.set(url,cached);
+      }
+      return {url,cached:await cached};
+    })).then(files=>{for(const file of files)if(file.cached)result=result.split(`url("${file.url}")`).join(`url("${file.cached}")`);return result;});
   }
-  private warm() {
+  static releaseFonts(fonts:Map<string,Promise<string|undefined>>){
+    for(const task of fonts.values())void task.then(url=>{if(url)URL.revokeObjectURL(url);});
+    fonts.clear();
+  }
+  private warm(preparing=false) {
     if (
       this.disposed ||
-      this.frame ||
+      (preparing?this.spare:this.frame) ||
       document.hidden ||
       this.reduced.matches ||
       !this.paper.isConnected
@@ -115,7 +134,7 @@ export class BookFlip {
       return;
     const host = document.createElement("div"),
       frame = document.createElement("iframe");
-    host.dataset.bookAnimation = "true";
+    if(preparing)host.dataset.bookWarm="true";else host.dataset.bookAnimation="true";
     host.className = "book-animation-host";
     host.style.visibility = "hidden";
     host.setAttribute("aria-hidden", "true");
@@ -126,15 +145,15 @@ export class BookFlip {
     frame.style.height = `${innerHeight}px`;
     host.append(frame);
     this.paper.append(host);
-    this.host = host;
-    this.frame = frame;
-    this.paper.dataset.flipReady = "false";
+    const slot={host,frame,ready:false};
+    if(preparing)this.spare=slot;else{this.host=host;this.frame=frame;this.paper.dataset.flipReady="false";}
     frame.onload = async () => {
       const doc = frame.contentDocument,
         win = frame.contentWindow as FlipWindow | null;
-      if (!doc || !win?.St || this.frame !== frame || this.disposed) return;
+      if (!doc || !win?.St || (this.frame!==frame&&this.spare?.frame!==frame) || this.disposed) return;
       const style = doc.createElement("style");
-      style.textContent = this.css();
+      style.textContent = await this.css();
+      if(this.disposed||(this.frame!==frame&&this.spare?.frame!==frame))return;
       doc.head.append(style);
       const prose = this.paper.querySelector(".prose"),
         font = prose && getComputedStyle(prose),
@@ -143,17 +162,17 @@ export class BookFlip {
       try {
         await Promise.all([
           font
-            ? doc.fonts.load(`${font.fontSize} ${font.fontFamily}`)
+            ? doc.fonts.load(`${font.fontSize} ${font.fontFamily}`,(this.paper.textContent??"").slice(0,512))
             : undefined,
-          doc.fonts.load(headingFont?`${headingFont.fontWeight} ${headingFont.fontSize} ${headingFont.fontFamily}`:'600 25px "Literata Variable"'),
+          doc.fonts.load(headingFont?`${headingFont.fontWeight} ${headingFont.fontSize} ${headingFont.fontFamily}`:'600 25px "Literata Variable"',heading?.getAttribute("data-title")??heading?.textContent??"Chương Nguyễn Dữ"),
         ]);
         await doc.fonts.ready;
       } catch {
         /* Reading remains instant if an optional animation/font cannot load. */
       }
-      if (this.frame !== frame || this.disposed) return;
-      this.ready = true;
-      this.paper.dataset.flipReady = "true";
+      if ((this.frame!==frame&&this.spare?.frame!==frame) || this.disposed) return;
+      slot.ready=true;
+      if(this.frame===frame){this.ready=true;this.paper.dataset.flipReady="true";}
     };
     frame.srcdoc = `<!doctype html><html><head><meta charset="utf-8"><script src="${location.origin}/vendor/page-flip-2.0.7.js"></script></head><body></body></html>`;
   }
@@ -161,7 +180,7 @@ export class BookFlip {
     const clone = this.paper.cloneNode(true) as HTMLElement,
       rect = this.paper.getBoundingClientRect();
     clone
-      .querySelectorAll("[data-book-animation],.book-edge,style[data-heading-font-face]")
+      .querySelectorAll("[data-book-animation],[data-book-warm],.book-edge,style[data-heading-font-face]")
       .forEach((el) => el.remove());
     Object.assign(clone.style, {
       width: `${rect.width}px`,
@@ -223,15 +242,11 @@ export class BookFlip {
     return wrapper;
   }
   begin(direction: number) {
-    if (this.pending) {
-      this.reset(true);
-      return;
-    }
+    if (this.pending) this.reset(true);
     if (
       !this.ready ||
       !this.frame?.contentDocument ||
-      !this.host ||
-      document.fonts.status === "loading"
+      !this.host
     )
       return;
     const rect = this.paper.getBoundingClientRect(),
@@ -244,6 +259,7 @@ export class BookFlip {
     this.paper.dataset.flipping = "true";
     this.paper.dataset.flipReady = "false";
     this.ready = false;
+    this.warm(true);
     this.timer = window.setTimeout(() => this.reset(true), 1600);
   }
   commit(stamp: string) {
@@ -475,15 +491,17 @@ export class BookFlip {
     cancelAnimationFrame(this.finishFrame);
     cancelAnimationFrame(this.dragFrame);
     this.dragFrame = 0;
+    const spare=rewarm?this.spare:null;
     this.host?.remove();
-    this.host = null;
-    this.frame = null;
-    this.pending = null;
-    this.drag = null;
-    this.ready = false;
+    if(!rewarm)this.spare?.host.remove();
+    this.spare=null;
+    this.host=spare?.host??null;
+    this.frame=spare?.frame??null;
+    this.pending=null;this.drag=null;this.ready=spare?.ready??false;
     delete this.paper.dataset.flipping;
     delete this.paper.dataset.flipReady;
-    if (rewarm) this.warm();
+    if(spare){delete spare.host.dataset.bookWarm;spare.host.dataset.bookAnimation="true";this.paper.dataset.flipReady=String(this.ready);}
+    else if(rewarm)this.warm();
   }
   dispose() {
     this.disposed = true;

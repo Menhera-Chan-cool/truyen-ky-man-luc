@@ -5,11 +5,11 @@ test.beforeEach(async ({ page }) => {
       speechQueue: SpeechSynthesisUtterance[];
     };
     state.speechQueue = [];
-    const voices = ["A", "B"].map((name) => ({
+    const voices = ["vi-VN","en-US"].flatMap(lang=>["A", "B"].map((name) => ({
       name: "Continuity " + name,
-      lang: "vi-VN",
-      voiceURI: name,
-    }));
+      lang,
+      voiceURI: lang+name,
+    })));
     Object.defineProperty(window, "SpeechSynthesisUtterance", {
       configurable: true,
       value: class {

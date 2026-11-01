@@ -58,7 +58,7 @@ test("pronunciations stay out of source text and auto-next only follows natural 
     Object.defineProperty(window, "speechSynthesis", {
       configurable: true,
       value: Object.assign(new EventTarget(), {
-        getVoices: () => [],
+        getVoices: () => [ {name:"Test Vietnamese",lang:"vi-VN",voiceURI:"test-vi"}, {name:"Test English",lang:"en-US",voiceURI:"test-en"} ],
         cancel() {},
         speak(u: any) {
           (window as any).spoken.push(u);

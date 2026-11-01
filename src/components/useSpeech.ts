@@ -10,6 +10,7 @@ import { rangeFromOffsets, speechSegments, speechText } from "../lib/reader";
 import type { Locale } from "../lib/types";
 import { footnoteSpeechText } from "../lib/footnotes";
 import { pronounceText, type PronunciationRule } from "../lib/reader-extras";
+import {speechVoice} from "../lib/speech-voices";
 const NO_RULES: PronunciationRule[] = [];
 type Segment = { text: string; offset?: number; plain?: boolean };
 function segments(
@@ -186,19 +187,14 @@ export function useSpeech(
       if (finished) onComplete?.();
       return;
     }
-    const c = config.current,
-      spoken = pronounceText(
-        speechText(item.text, c.shortPauses),
-        c.pronunciationRules,
-      ),
-      u = new SpeechSynthesisUtterance(spoken.text);
-    const available = window.speechSynthesis
-      .getVoices()
-      .filter((v) => v.lang.toLowerCase().startsWith(c.locale));
-    u.lang = c.locale === "vi" ? "vi-VN" : "en-US";
-    u.rate = c.rate;
-    const voice = available.find((v) => v.name === c.voiceName) ?? available[0];
-    if (voice) u.voice = voice;
+    const c = config.current,voice=speechVoice(window.speechSynthesis.getVoices(),c.locale,c.voiceName);
+    if(!voice){
+      stop();refreshVoices();
+      c.onError(c.locale==="vi"?"Trình duyệt chưa cung cấp giọng tiếng Việt. Hãy cài hoặc chọn giọng Việt trong cài đặt chuyển văn bản thành giọng nói của điện thoại, rồi làm mới danh sách.":"No English voice is available in this browser. Install or select English voice data in your device text-to-speech settings, then refresh voices.");
+      return;
+    }
+    const spoken=pronounceText(speechText(item.text,c.shortPauses),c.pronunciationRules),u=new SpeechSynthesisUtterance(spoken.text);
+    u.lang=voice.lang.replace(/_/g,"-");u.rate=c.rate;u.voice=voice;
     current.current = { utterance: u, segment: item, boundary: 0 };
     u.onboundary = (e) => {
       if (

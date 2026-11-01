@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-11-01T07:16:56.992541+00:00",
+  "unitTests": 177,
+  "unitFiles": 43,
+  "typecheck": true,
+  "productionBuild": true,
+  "chromiumSpeechAndNewAnimationCases": 26,
+  "chromiumBookLayoutGestureCases": 27,
+  "chromiumExtraReadingCases": 12,
+  "webkitCases": 17,
+  "webkitSkipped": 2,
+  "additionalChapterToolbarCase": 1,
+  "visualReview": [
+    "PC mid-fold",
+    "phone mid-fold"
+  ],
+  "nativeVoiceSimulated": true,
+  "actualAndroidAudioVerified": false,
+  "physicalIPhoneVerified": false,
+  "schemaChanged": false,
+  "dependenciesAdded": false
+}
