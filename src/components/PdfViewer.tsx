@@ -1,4 +1,5 @@
 "use client";
+import "pdfjs-dist/web/pdf_viewer.css";
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react";
 import { IconButton } from "./Ui";

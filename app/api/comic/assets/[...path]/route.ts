@@ -1,5 +1,5 @@
 import {configured,publicClient,requireEditor,serviceClient} from "../../../../../src/lib/server";
-import {comicAssetPath,comicThumbnailPath} from "../../../../../src/lib/comic-publication";
+import {comicAssetPath,comicThumbnailPath,comicReadingPath} from "../../../../../src/lib/comic-publication";
 import {publicRead,readFetch,readStatus,missingStorageObject} from "../../../../../src/lib/public-read";
 export async function GET(request:Request,{params}:{params:Promise<{path:string[]}>}) {
   const unavailable=()=>new Response("Unavailable",{status:503,headers:{"Cache-Control":"no-store","Retry-After":"2"}});
@@ -15,8 +15,9 @@ export async function GET(request:Request,{params}:{params:Promise<{path:string[
     if(lookupError)return unavailable();
     if(!registered) return missing();
   }
-  const object=new URL(request.url).searchParams.get("view")==="thumb"?comicThumbnailPath(path):path;
-  const {data,error:signError}=await publicRead(signal=>serviceClient(readFetch(signal)).storage.from("comic-assets").createSignedUrl(object,60));
+  const view=new URL(request.url).searchParams.get("view"),object=view==="thumb"?comicThumbnailPath(path):view==="read"?comicReadingPath(path):path;
+  let {data,error:signError}=await publicRead(signal=>serviceClient(readFetch(signal)).storage.from("comic-assets").createSignedUrl(object,60));
+  if(view==="read"&&missingStorageObject(signError))({data,error:signError}=await publicRead(signal=>serviceClient(readFetch(signal)).storage.from("comic-assets").createSignedUrl(path,60)));
   if(signError||!data) return missingStorageObject(signError)?missing():unavailable();
   return new Response(null,{status:307,headers:{Location:data.signedUrl,"Cache-Control":"private, no-store"}});
   }catch{return unavailable();}

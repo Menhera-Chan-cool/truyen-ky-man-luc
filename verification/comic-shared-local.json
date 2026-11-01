@@ -3,11 +3,13 @@
   "checks": [
     "chromium: guest editor gate",
     "chromium: unsaved shared draft and images recover explicitly after reload",
+    "chromium: committed save confirmed after lost response without resubmitting",
     "chromium: failed registration resumes after reload without re-uploading or partial server save",
     "chromium: protected small thumbnail and unchanged original checksum",
     "chromium: natural order, reorder, private direct upload/save and anonymous asset denial",
     "chromium: private preview requires verified editor",
     "chromium: concurrent editor conflict preserves saved draft",
+    "chromium: committed publication confirmed after lost response without resubmitting",
     "chromium: internal chapter navigation and Back preserve the document",
     "chromium: tab-return tools and background auto-scroll stop",
     "chromium: EN missing edition never displays VI pages",
@@ -16,11 +18,13 @@
     "chromium: withdrawal removes public metadata and new image access",
     "webkit: guest editor gate",
     "webkit: unsaved shared draft and images recover explicitly after reload",
+    "webkit: committed save confirmed after lost response without resubmitting",
     "webkit: failed registration resumes after reload without re-uploading or partial server save",
     "webkit: protected small thumbnail and unchanged original checksum",
     "webkit: natural order, reorder, private direct upload/save and anonymous asset denial",
     "webkit: private preview requires verified editor",
     "webkit: concurrent editor conflict preserves saved draft",
+    "webkit: committed publication confirmed after lost response without resubmitting",
     "webkit: internal chapter navigation and Back preserve the document",
     "webkit: tab-return tools and background auto-scroll stop",
     "webkit: EN missing edition never displays VI pages",
@@ -92,11 +96,31 @@
   ],
   "failedRequests": [
     {
-      "path": "/api/comic/assets/ed521d01-f21c-47d8-a008-79e0db0f5b42/comics/12eff551-307e-46c6-98b3-f72588d70516.png",
+      "path": "/api/admin/comic",
+      "reason": "net::ERR_FAILED"
+    },
+    {
+      "path": "/api/admin/comic",
+      "reason": "net::ERR_FAILED"
+    },
+    {
+      "path": "/api/admin/comic",
+      "reason": "Blocked by Web Inspector"
+    },
+    {
+      "path": "/storage/v1/object/sign/comic-assets/0cdeca40-cc69-4cdd-bad1-7311618e4ff8/comics/6bbd5279-ca30-463f-bac6-08e79ec9caf6-read-v1.webp",
       "reason": "Load request cancelled"
+    },
+    {
+      "path": "/storage/v1/object/sign/comic-assets/0cdeca40-cc69-4cdd-bad1-7311618e4ff8/comics/bcebe5ef-d7f1-4674-95d6-ab411518273c-read-v1.webp",
+      "reason": "Load request cancelled"
+    },
+    {
+      "path": "/api/admin/comic",
+      "reason": "Blocked by Web Inspector"
     }
   ],
   "publicBookUnchanged": true,
   "passed": true,
-  "checkedAt": "2026-10-31T11:33:32.769Z"
+  "checkedAt": "2026-11-01T02:27:51.872Z"
 }

@@ -25,6 +25,14 @@ const bookHash=async()=>{
   if(result.error&&(result.status===0||result.status>=500))result=await anon.rpc("get_public_book");
   return createHash("sha256").update(JSON.stringify(ok(result))).digest("hex");
 };
+async function loseMutationResponse(page,action){
+ let lost=false;
+ await page.route("**/api/admin/comic",async route=>{
+  if(!lost&&route.request().postDataJSON()?.action===action){const response=await route.fetch();if(response.ok()){lost=true;await route.abort();return;}await route.fulfill({response});return;}
+  await route.continue();
+ });
+ return async()=>{await page.unroute("**/api/admin/comic");assert(lost,"Expected a committed response to be lost");};
+}
 async function login(page,id) {
   await page.goto(base+"/admin/comic?chapter="+id);
   await page.locator('input[name="email"],.comic-editor').first().waitFor({state:"visible",timeout:30000});
@@ -92,9 +100,11 @@ try {
     assert.equal((await api(actors[0],"comic?chapter="+id,undefined,"GET")).body.revision,0);
     await page.reload();await expect(page.locator(".comic-editor")).toHaveAttribute("data-ready","true");
     await page.getByRole("button",{name:"Khôi phục thay đổi",exact:true}).first().click();
+    const confirmedSave=await loseMutationResponse(page,"save");
     await page.getByRole("button",{name:"Lưu nháp chung",exact:true}).click();
     await expect(page.locator(".ce-status")).toContainText("Đã lưu nháp chung",{timeout:30000});
     assert.equal(uploads,uploadedBeforeRetry);await page.unroute("**/api/admin/comic/assets");
+    await confirmedSave();check(name+": committed save confirmed after lost response without resubmitting");
     check(name+": failed registration resumes after reload without re-uploading or partial server save");
     let head=(await api(actors[0],"comic?chapter="+id,undefined,"GET")).body;
     assert.equal(head.revision,1);assert.deepEqual(head.draft.pages.map(p=>p.name),["page10.png","page2.png"]);
@@ -102,6 +112,7 @@ try {
     const imagePath=head.draft.pages[0].path;
     assert.equal((await fetch(base+imagePath,{redirect:"manual"})).status,404);
     assert.equal((await fetch(base+imagePath+"?view=thumb",{redirect:"manual"})).status,404);
+    assert.equal((await fetch(base+imagePath+"?view=read",{redirect:"manual"})).status,404);
     const thumbnail=await fetch(base+imagePath+"?view=thumb",{redirect:"manual",headers:{Authorization:"Bearer "+actors[0].token}});
     assert.equal(thumbnail.status,307);
     const small=Buffer.from(await (await fetch(thumbnail.headers.get("location"))).arrayBuffer()),smallMeta=await sharp(small).metadata();
@@ -131,8 +142,10 @@ try {
     await expect(page.getByLabel("Tiêu đề chương",{exact:true})).toHaveValue("Other editor "+name);
     check(name+": concurrent editor conflict preserves saved draft");
     phase=name+" publish";
+    const confirmedPublication=await loseMutationResponse(page,"publish");
     await page.getByRole("button",{name:"Xuất bản TT",exact:true}).click();
     await expect(page.locator(".ce-status")).toContainText("Đã xuất bản TT");
+    await confirmedPublication();check(name+": committed publication confirmed after lost response without resubmitting");
     phase=name+" public first load";
     await publicPage.goto(base+"/vi/comic/"+id);
     await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-pages","2");
@@ -228,6 +241,7 @@ try {
     assert.equal(ok(await anon.rpc("get_public_comic",{p_id:id})),null);
     assert.equal((await fetch(base+imagePath,{redirect:"manual"})).status,404);
     assert.equal((await fetch(base+imagePath+"?view=thumb",{redirect:"manual"})).status,404);
+    assert.equal((await fetch(base+imagePath+"?view=read",{redirect:"manual"})).status,404);
     assert.equal(ok(await anon.rpc("get_public_comic",{p_id:id,p_locale:"en"})).pages.length,1);
     assert.equal((await api(actors[0],"comic",{action:"withdraw",id,revision:2,locale:"en"})).status,200);
     assert.equal(ok(await anon.rpc("get_public_comic",{p_id:id,p_locale:"en"})),null);

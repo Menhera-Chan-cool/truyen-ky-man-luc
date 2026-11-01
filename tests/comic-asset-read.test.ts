@@ -25,3 +25,10 @@ it("preserves infrastructure failures during private authorization",async()=>{
  m.rpc.mockResolvedValue({data:false,error:null});m.guard.mockRejectedValue({status:503});
  expect((await get()).status).toBe(503);
 });
+
+it("uses a private reading variant but falls back only when it is genuinely absent",async()=>{
+ m.sign.mockResolvedValueOnce({data:null,error:{statusCode:404,message:"Object not found"}}).mockResolvedValueOnce({data:{signedUrl:"https://storage.test/original"},error:null});
+ const result=await get("?view=read");expect(result.status).toBe(307);expect(result.headers.get("Location")).toContain("original");expect(m.sign.mock.calls.map(c=>c[0])).toEqual([path.replace(".png","-read-v1.webp"),path]);
+ m.sign.mockReset().mockResolvedValue({data:null,error:{status:503}});expect((await get("?view=read")).status).toBe(503);expect(m.sign.mock.calls.every(c=>c[0].endsWith("-read-v1.webp"))).toBe(true);
+ m.rpc.mockResolvedValue({data:false,error:null});m.guard.mockRejectedValue({status:401});m.sign.mockClear();expect((await get("?view=read")).status).toBe(404);expect(m.sign).not.toHaveBeenCalled();
+});

@@ -1,4 +1,10 @@
 "use client";
+import "@fontsource-variable/lora";
+import "@fontsource-variable/merriweather";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/roboto";
+import "@fontsource-variable/jetbrains-mono";
+import "@fontsource/opendyslexic/400.css";
 import {
   useCallback,
   useEffect,
@@ -99,7 +105,8 @@ import {
   type SearchMatch,
 } from "../lib/book-search";
 import Soundscape from "./Soundscape";
-import PdfViewer from "./PdfViewer";
+import dynamic from "next/dynamic";
+const PdfViewer=dynamic(()=>import("./PdfViewer"));
 import { useSpeech } from "./useSpeech";
 import type { ReaderBackup } from "../lib/reader-backup";
 import { decorateFootnotes } from "../lib/footnotes";

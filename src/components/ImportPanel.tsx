@@ -7,7 +7,8 @@ import { adminRequest } from "../lib/supabase";
 import { storeSource, uploadAsset, uploadInlineImages } from "../lib/uploads";
 import { tx } from "../lib/content";
 import type { ImportChapter, Locale } from "../lib/types";
-import PdfViewer from "./PdfViewer";
+import dynamic from "next/dynamic";
+const PdfViewer=dynamic(()=>import("./PdfViewer"));
 import { slicePdf } from "../lib/pdf";
 type Candidate = ImportChapter & {
   key: string;

@@ -31,7 +31,8 @@ const RichEditor = lazy(() => import("./RichEditor"));
 const ImportPanel = lazy(() => import("./ImportPanel"));
 const ComicEditor = lazy(() => import("./ComicEditor"));
 const HeadingFonts = lazy(() => import("./HeadingFonts"));
-import PdfViewer from "./PdfViewer";
+import dynamic from "next/dynamic";
+const PdfViewer=dynamic(()=>import("./PdfViewer"));
 import {
   DraftReview,
   BatchReplace,

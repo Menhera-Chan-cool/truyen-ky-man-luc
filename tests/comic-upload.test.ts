@@ -1,5 +1,5 @@
 import {beforeEach,it,expect,vi} from "vitest";
-import {saveSharedComic} from "../src/lib/comic-remote";
+import {saveSharedComic,publishSharedComic,readSharedComic} from "../src/lib/comic-remote";
 import type {ComicDraft,ComicPage} from "../src/lib/comic";
 const m=vi.hoisted(()=>({upload:vi.fn(),request:vi.fn(),checkpoints:new Map<string,unknown>()}));
 vi.mock("../src/lib/supabase",()=>({browserClient:()=>({auth:{getUser:async()=>({data:{user:{id:"11111111-1111-4111-8111-111111111111"}},error:null})},storage:{from:()=>({upload:m.upload})}}),adminRequest:m.request}));
@@ -35,8 +35,35 @@ it("rechecks an upload whose response was lost, but never saves a mismatched ima
  m.upload.mockResolvedValue({error:{statusCode:"409",message:"Duplicate"}});
  m.request.mockImplementation(async(name,body)=>name==="comic"?{draft:body.draft}:{...pages[0],blob:undefined,path:"/api/comic/assets/"+path});
  await saveSharedComic({...draft,pages:[pages[0]]},"vi",new Map(),()=>{});
- expect(m.upload.mock.calls[0][0]).toBe(path);
+ expect(m.upload).not.toHaveBeenCalled();expect(m.request.mock.calls[0][1]).toEqual({path});
  m.request.mockReset().mockResolvedValue({...pages[0],blob:undefined,hash:"f".repeat(64),path:"/api/comic/assets/"+path});m.checkpoints.set(pages[0].id,{path,hash:pages[0].hash,phase:"uploaded"});
  await expect(saveSharedComic({...draft,pages:[pages[0]]},"vi",new Map(),()=>{})).rejects.toThrow("does not match");
  expect(m.request.mock.calls.some(c=>c[0]==="comic")).toBe(false);
+});
+
+it("reconciles a save committed before its response was lost without retrying the write",async()=>{
+ const page={...pages[0],blob:undefined,path:"/api/comic/assets/test"},saved={...draft,pages:[page],revision:1};
+ m.request.mockImplementation(async(_name,body)=>{if(body)throw new TypeError("Failed to fetch");return {draft:saved,revision:1,publishedRevision:null};});
+ expect((await saveSharedComic({...draft,pages:[page]},"vi",new Map(),()=>{})).revision).toBe(1);expect(m.request.mock.calls.filter(c=>c[1]).length).toBe(1);
+});
+it("confirms lost publication responses using the published revision, never retries publishing",async()=>{
+ let committed=false;m.request.mockImplementation(async(_name,body)=>{if(body){committed=true;throw new TypeError("Failed to fetch");}return {draft:null,draftRevision:4,revision:committed?5:4,publishedRevision:committed?4:3};});
+ expect((await publishSharedComic("chapter-1","en",4)).publishedRevision).toBe(4);expect(m.request.mock.calls.filter(c=>c[1]).length).toBe(1);
+});
+it("ends a hung draft read with a useful timeout",async()=>{
+ vi.useFakeTimers();m.request.mockImplementation(()=>new Promise(()=>{}));
+ const pending=expect(readSharedComic("chapter-1","vi")).rejects.toThrow(/timed out|hết thời gian/i);await vi.advanceTimersByTimeAsync(16000);await pending;vi.useRealTimers();
+});
+
+it("keeps checkpoints and ends an upload that never responds",async()=>{
+ vi.useFakeTimers();try{m.upload.mockImplementation(()=>new Promise(()=>{}));const pending=expect(saveSharedComic({...draft,pages:[pages[0]]},"vi",new Map(),()=>{})).rejects.toThrow(/timed out/);await vi.advanceTimersByTimeAsync(121000);await pending;expect(m.request).not.toHaveBeenCalled();expect([...m.checkpoints.values()][0]).toMatchObject({phase:"uploading"});}finally{vi.useRealTimers();}
+});
+it("retains an uncertain write when the head differs instead of claiming it saved",async()=>{
+ let committed=false;m.request.mockImplementation(async(_name,body)=>{if(body){committed=true;throw new TypeError("Failed to fetch");}return {draft:null,draftRevision:4,revision:committed?8:4,publishedRevision:committed?8:3};});
+ await expect(publishSharedComic("chapter-1","vi",4)).rejects.toThrow(/outcome unknown/);expect(m.request.mock.calls.filter(c=>c[1]).length).toBe(1);
+});
+
+it("confirms a publication whose JSON response was truncated",async()=>{
+ let committed=false;m.request.mockImplementation(async(_name,body)=>{if(body){committed=true;throw new SyntaxError("Unexpected end of JSON input");}return {draft:null,draftRevision:4,revision:committed?5:4,publishedRevision:committed?4:3};});
+ expect((await publishSharedComic("chapter-1","vi",4)).publishedRevision).toBe(4);expect(m.request.mock.calls.filter(c=>c[1]).length).toBe(1);
 });

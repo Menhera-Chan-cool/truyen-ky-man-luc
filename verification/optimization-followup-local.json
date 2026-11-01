@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-11-01T02:28:20.584509+00:00",
+  "unitTests": 150,
+  "unitFiles": 38,
+  "typecheck": true,
+  "productionBuild": true,
+  "comicIntegrationGroups": 31,
+  "comicIntegration": "verification/comic-shared-local.json",
+  "chromiumUiCases": 21,
+  "webkitComicUiCases": 4,
+  "fontLayoutCases": 10,
+  "readingImages": "verification/optimization-reading-images.json",
+  "cssBefore": {
+    "base": "https://truyen-ky-man-luc.vercel.app",
+    "routes": {
+      "/vi": {
+        "cssBytes": 284393,
+        "stylesheets": 3
+      },
+      "/vi/read/chapter-1": {
+        "cssBytes": 284393,
+        "stylesheets": 3
+      },
+      "/vi/comic/chapter-1": {
+        "cssBytes": 284393,
+        "stylesheets": 3
+      },
+      "/admin": {
+        "cssBytes": 284393,
+        "stylesheets": 3
+      }
+    }
+  },
+  "cssAfter": {
+    "base": "http://127.0.0.1:3003",
+    "routes": {
+      "/vi": {
+        "cssBytes": 57968,
+        "stylesheets": 1
+      },
+      "/vi/read/chapter-1": {
+        "cssBytes": 72221,
+        "stylesheets": 2
+      },
+      "/vi/comic/chapter-1": {
+        "cssBytes": 76729,
+        "stylesheets": 2
+      },
+      "/admin": {
+        "cssBytes": 57968,
+        "stylesheets": 1
+      }
+    }
+  },
+  "bookPreserved": true,
+  "schemaChanged": false,
+  "dependenciesAdded": false,
+  "physicalIPhoneChecked": false
+}

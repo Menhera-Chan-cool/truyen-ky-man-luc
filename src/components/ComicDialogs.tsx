@@ -301,9 +301,10 @@ export function ComicSettingsDialog({
               active={s.preload === "all"}
               onClick={() => onChange({ preload: "all" })}
             >
-              {L("Nạp tất cả", "Preload all")}
+              {L("Nạp nhiều hơn", "Preload more")}
             </Radio>
           </div>
+          <p>{L("Giới hạn 8 MB ảnh chờ; mạng yếu giảm còn tối đa 1 MB, Data Saver tắt nạp trước.","Up to 8 MB of pending images; slow connections use at most 1 MB. Data Saver disables preloading.")}</p>
         </section>
         <button
           className="cc-grayscale"

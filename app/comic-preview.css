@@ -1143,5 +1143,4 @@
 .ce-recoveries > div > span { flex: 1 1 220px; overflow-wrap: anywhere; }
 .ce-recoveries small { display: block; color: #6b6051; margin-top: 4px; }
 .ce-recoveries button { min-height: 44px; }
-.cc-navigation-status { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 5px; background: #293235; color: #c6d1d5; z-index: 50; font-size: 13px; }
 @media (max-width: 759px) { .auth-page input { font-size: 16px; } }

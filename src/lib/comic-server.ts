@@ -22,7 +22,7 @@ export async function comicHead(client: SupabaseClient, chapterId: string,locale
   const {data:versions,error:versionError}=await client.from("comic_versions").select("id,chapter_id,title,direction,pages,revision,created_at").eq("locale",locale).in("id",ids);
   if(versionError) throw new HttpError("Cannot load comic version. Please retry.",503);
   const draft=versions?.find(v=>v.id===head.draft_id), published=versions?.find(v=>v.id===head.published_id);
-  return {revision:head.revision,publishedRevision:published?.revision??null,draft:draft?{
+  return {revision:head.revision,draftRevision:draft?.revision??null,publishedRevision:published?.revision??null,draft:draft?{
     id:draft.chapter_id,title:draft.title,direction:draft.direction,pages:draft.pages,revision:head.revision,updatedAt:Date.parse(draft.created_at)
   }:null};
 }

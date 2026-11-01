@@ -1188,3 +1188,5 @@
 .cc-chapter-list > a > em {
   font-size: 10px;
 }
+
+.cc-navigation-status { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 5px; background: #293235; color: #c6d1d5; z-index: 50; font-size: 13px; }

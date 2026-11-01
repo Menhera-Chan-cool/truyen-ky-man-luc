@@ -1,9 +1,9 @@
 import sharp from "sharp";
 import {createHash} from "node:crypto";
 import {requireEditor,apiError,jsonBody,HttpError,serviceClient} from "../../../../../src/lib/server";
-import {comicAssetPath,comicThumbnailPath} from "../../../../../src/lib/comic-publication";
+import {comicAssetPath,comicThumbnailPath,comicReadingPath} from "../../../../../src/lib/comic-publication";
 import {comicMime} from "../../../../../src/lib/comic";
-import {comicThumbnail} from "../../../../../src/lib/comic-thumbnail";
+import {comicThumbnail,comicReadingImage} from "../../../../../src/lib/comic-thumbnail";
 import {publicRead,readFetch} from "../../../../../src/lib/public-read";
 export async function POST(request:Request) {
   try {
@@ -24,6 +24,8 @@ export async function POST(request:Request) {
     await image.resize(1,1).toBuffer();
     const thumb=await comicThumbnail(bytes),{error:thumbError}=await service.storage.from("comic-assets").upload(comicThumbnailPath(body.path),thumb,{contentType:"image/webp",upsert:false});
     if(thumbError&&Number(thumbError.statusCode)!==409)throw new HttpError("Could not prepare the image preview. Retry saving.",503);
+    const reading=await comicReadingImage(bytes);
+    if(reading){const {error:readingError}=await service.storage.from("comic-assets").upload(comicReadingPath(body.path),reading,{contentType:"image/webp",upsert:false});if(readingError&&Number(readingError.statusCode)!==409)throw new HttpError("Could not prepare reading image. Retry saving.",503);}
     const rotated=(meta.orientation??0)>=5&&(meta.orientation??0)<=8;
     const asset={path:body.path,content_type:mime,bytes:bytes.length,width:rotated?meta.height:meta.width,height:rotated?meta.width:meta.height,hash:createHash("sha256").update(bytes).digest("hex"),created_by:user.id};
     const {error:insertError}=await service.from("comic_assets").insert(asset);

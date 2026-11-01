@@ -22,3 +22,11 @@ Khách đọc `/vi/comic/<chapterId>` hoặc `/en/comic/<chapterId>`. Nháp loca
 Triển khai cần `supabase/migrations/005_comics.sql` và `006_comic_locales.sql` đã áp dụng và cùng ba biến Supabase của phần sách. Không mở bucket `comic-assets` thành public; không cấp quyền overwrite/delete cho authenticated. File tải lên thất bại có thể còn trong bucket riêng; không tự xóa ảnh vì các phiên bản đã lưu có thể đang dùng chúng.
 
 Kiểm tra: `npm test -- --maxWorkers=1`, `npm run typecheck`, `npm run build`; `BASE_URL` trỏ bản cần kiểm tra rồi chạy `node scripts/verify-comic.mjs`. Script tạo editor/chương/ảnh tạm, kiểm tra bằng Chromium/WebKit rồi dọn fixture; không gửi email hoặc sửa sách VI/EN.
+
+## Ảnh đọc và phục hồi khi mạng lỗi — 01/11/2026
+
+Ảnh đọc dùng bản WebP lossless nguyên độ phân giải khi nhỏ hơn nguồn; zoom PC trên 100% dùng nguồn. Chỉ ký URL bản đọc sau khi kiểm tra quyền của ảnh gốc. Thiếu bản đọc thì dùng nguồn; lỗi hạ tầng vẫn báo 503. Bản đọc nằm cùng bucket riêng, không sửa file nguồn. Backfill idempotent: chạy `npx tsx scripts/backfill-comic-thumbnails.ts --reading` để xem trước; thêm `--apply` để tạo những bản còn thiếu, không overwrite. Hai ảnh đang xuất bản đã được tạo và so sánh toàn bộ điểm ảnh/checksum.
+
+Nạp trước chủ động có ngân sách tối đa 8 MiB tính theo dung lượng nguồn, tối đa hai trang kế ở chế độ Một phần. Mạng 3G/đường truyền chậm giảm còn một trang/1 MiB; Data Saver và 2G không nạp trước chủ động. Ảnh đang xem và lazy loading của trình duyệt vẫn hoạt động; ngân sách này không phải giới hạn tổng lưu lượng của trình duyệt. Cùng URL đã tải/đang chờ không tạo yêu cầu nạp trước trùng.
+
+Đọc nháp/lưu/xuất bản có deadline 15 giây, đăng ký/chuẩn bị ảnh 45 giây, upload 120 giây. Mất phản hồi lưu/xuất bản sẽ đọc lại head để xác nhận đúng revision/nội dung, không tự gửi lại lệnh ghi. Head trả thêm draftRevision (phiên bản nội dung), khác revision (phiên biên tập); xuất bản tăng revision. Upload SDK có thể hoàn tất sau deadline, nên checkpoint giữ đường dẫn bất biến và đăng ký lại để xác nhận trước khi tải lại cùng đường dẫn. Nếu không xác nhận được, giữ nháp và tải lại bản server để kiểm tra; không bấm xuất bản liên tục.

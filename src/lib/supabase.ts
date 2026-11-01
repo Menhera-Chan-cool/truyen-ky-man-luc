@@ -16,6 +16,7 @@ export async function adminRequest(
 ) {
   const { data } = await browserClient().auth.getSession();
   if (!data.session) throw new Error("Please sign in again");
+  signal?.throwIfAborted();
   const response = await fetch(`/api/admin/${path}`, {
     signal,
     method,
@@ -26,6 +27,6 @@ export async function adminRequest(
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   const result = await response.json();
-  if (!response.ok) throw new Error(result.error ?? "Request failed");
+  if (!response.ok) throw Object.assign(new Error(result.error ?? "Request failed"),{status:response.status});
   return result;
 }

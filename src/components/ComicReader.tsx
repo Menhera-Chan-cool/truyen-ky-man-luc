@@ -1,4 +1,5 @@
 "use client";
+import "../../app/comic-reader.css";
 import {
   useCallback,
   useEffect,
@@ -32,7 +33,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { IconButton, LanguageLinks } from "./Ui";
-import {preloadComicImages} from "../lib/comic-preload";
+import {preloadComicImages,selectComicPreloads,comicReadingUrl,type ComicConnection} from "../lib/comic-preload";
 import {useComicControls} from "./useComicControls";
 import {
   ComicModal,
@@ -69,6 +70,7 @@ function ComicImage({
   filter,
   locale,
   eager,
+  onLoad,
   onClick,
 }: {
   page: ComicPage;
@@ -78,6 +80,7 @@ function ComicImage({
   filter: string;
   locale: "vi" | "en";
   eager: boolean;
+  onLoad:()=>void;
   onClick: (e: MouseEvent<HTMLImageElement>) => void;
 }) {
   const [error, setError] = useState(false),
@@ -121,6 +124,7 @@ function ComicImage({
       loading={eager ? "eager" : "lazy"}
       decoding="async"
       draggable={false}
+      onLoad={onLoad}
       onError={() => setError(true)}
       onClick={onClick}
     />
@@ -156,7 +160,7 @@ export default function ComicReader({
     warming.current.set(id,()=>{clearTimeout(timer);active=false;cancelImages();});
     // WebKit reports aborted fetches as page errors; let this tiny, server-bounded metadata request finish.
     void fetch(`/api/comic?chapter=${encodeURIComponent(id)}&locale=${locale}`,{keepalive:true,credentials:"omit",cache:"no-store"})
-      .then(async response=>{if(!response.ok)return;const data=await response.json();if(active&&data.firstPage?.path?.startsWith("/api/comic/assets/"))cancelImages=preloadComicImages([data.firstPage.path]);})
+      .then(async response=>{if(!response.ok)return;const data=await response.json();if(active&&data.firstPage?.path?.startsWith("/api/comic/assets/")&&selectComicPreloads([{bytes:0},data.firstPage],0,"some",connection).length)cancelImages=preloadComicImages([comicReadingUrl(data.firstPage.path)],loadedImages.current,pendingImages.current);})
       .catch(()=>{}).finally(()=>clearTimeout(timer));
   }
   function navigateChapter(id:string){
@@ -195,7 +199,8 @@ export default function ComicReader({
     ignoreClick = useRef(0),
     lastTap=useRef<{x:number;y:number;time:number}|null>(null),
     touchDoubleUntil=useRef(0),
-    edgeClick=useRef<ReturnType<typeof setTimeout>|undefined>(undefined);
+    edgeClick=useRef<ReturnType<typeof setTimeout>|undefined>(undefined),
+    loadedImages=useRef(new Set<string>()),pendingImages=useRef(new Set<string>());
   const controls=useComicControls(!!panel),mobile=size.mobile,zoom=mobile?100:prefs.zoom,stretch=mobile?true:prefs.stretch;
   const pages = draft?.pages ?? [],
     urls = useComicUrls(pages);
@@ -412,17 +417,17 @@ export default function ComicReader({
     frame = requestAnimationFrame(step);
     return () => cancelAnimationFrame(frame);
   }, [auto, prefs.autoSpeed, prefs.mode, panel, stopAuto]);
+  const [connection,setConnection]=useState<ComicConnection|null>(null);
+  useEffect(()=>{
+    const network=(navigator as Navigator&{connection?:ComicConnection&EventTarget}).connection;
+    const update=()=>setConnection({saveData:network?.saveData,effectiveType:network?.effectiveType,downlink:network?.downlink});update();network?.addEventListener("change",update);return()=>network?.removeEventListener("change",update);
+  },[]);
+  const preloadIndices=selectComicPreloads(pages,page,prefs.preload,connection??{saveData:true});
   useEffect(() => {
-    if (!ready || !pages.length) return;
-    const indices =
-        prefs.preload === "all" ? pages.map((_, n) => n) : [page + 1, page + 2];
-    const queue = indices
-      .map((n) => pages[n])
-      .filter(Boolean)
-      .map((p) => urls[p.id] ?? p.path)
-      .filter((u): u is string => !!u && !u.startsWith("blob:"));
-    return preloadComicImages(queue);
-  }, [ready, pages, page, prefs.preload, urls]);
+    if (!ready || !connection || !pages.length || prefs.mode==="vertical") return;
+    const queue=selectComicPreloads(pages,page,prefs.preload,connection).map(n=>comicReadingUrl(urls[pages[n].id]??pages[n].path??"",zoom>100)).filter(u=>!!u&&!u.startsWith("blob:"));
+    return preloadComicImages(queue,loadedImages.current,pendingImages.current);
+  }, [ready,pages,page,prefs.preload,prefs.mode,urls,connection,zoom]);
   function go(n: number) {
     if (!pages.length) return;
     const next = Math.max(0, Math.min(pages.length - 1, n));
@@ -764,7 +769,7 @@ export default function ComicReader({
                   <ComicImage
                     page={p}
                     index={n}
-                    src={urls[p.id] ?? p.path}
+                    src={comicReadingUrl(urls[p.id] ?? p.path ?? "",zoom>100)}
                     width={
                       stretch
                         ? (size.width * zoom) / 100
@@ -772,7 +777,8 @@ export default function ComicReader({
                     }
                     filter={filter}
                     locale={locale}
-                    eager={prefs.preload === "all" || Math.abs(page - n) < 2}
+                    eager={n===page||preloadIndices.includes(n)}
+                    onLoad={()=>loadedImages.current.add(comicReadingUrl(urls[p.id]??p.path??"",zoom>100))}
                     onClick={imageClick}
                   />
                 </figure>

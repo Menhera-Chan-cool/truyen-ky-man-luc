@@ -1,4 +1,5 @@
 "use client";
+import "../../app/comic-preview.css";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
