@@ -1,3 +1,17 @@
+# TT không tạo lại hàng đợi ảnh khi thông tin mạng không đổi — production 01/11/2026
+
+Production **dpl_8pLPNyZyPRwqnHTdWErrY68n9rWG**, runtime **25ac75f99e8d3ddc866a54cfead2d7745eaaf9b6**, https://truyen-ky-man-luc.vercel.app READY. **205 hash source quan trọng** khớp Vercel; GitHub private. Commit tiếp theo chỉ cập nhật bằng chứng.
+
+- Listener so sánh saveData/effectiveType/downlink trước khi gọi React; không cập nhật state vì các thông báo mạng có cùng giá trị. Effect nạp ảnh phụ thuộc danh sách URL thực tế, nên URL map đổi object identity nhưng cùng URL cũng không hủy ảnh đang chờ. Bật/tắt Data Saver hoặc đổi queue thật vẫn cập nhật như trước. Không sửa quyền, schema, tài nguyên gốc hoặc nội dung sách.
+- RED trên production cũ, với 6 sự kiện change cùng thông tin và giữ ảnh speculative ở trạng thái chờ: mỗi Chromium desktop/mobile ghi nhận 6 commit React; số Image tạo 4→16 và hủy 2→14. GREEN local/live: tạo 2→2, hủy 0→0, commit=0. Data Saver bật hủy pending và tắt lại tiếp tục nạp đúng. Đây là số công việc Image trong fixture, không phải số byte HTTP hoặc benchmark FPS thực tế.
+- **183 unit /45 file**, typecheck/build đạt. **21 ca browser đạt ở mỗi môi trường local/live**: 18 Chromium PC/mobile, 3 WebKit phone; 2 ca bỏ qua vì WebKit không có Network Information API và mobile không có zoom. Novel next/prev/mục lục/Back/vị trí từng chương, TT navigation/Back/reload, settings, synthetic blur/focus auto-scroll và ảnh lỗi/thử lại đạt. Cuộn 90 frame: 0 React commit trên ba model.
+- Lượt harness đầu vào single mode quá muộn sau khi ảnh vertical đã tải, được đổi để khởi động thẳng single mode. Bản guard React trung gian vẫn có một commit, nên guard cuối đặt trước setState. Một lần mở chương local cold còn pending sau assertion 5s; bài test hiện cho 15s, không thay logic điều hướng hoặc hứa mở TT chưa cache tức thì.
+- Xem `verification/comic-network-stability-local.json` và `verification/comic-network-stability-live.json`. Tài liệu sự kiện: [MDN NetworkInformation change](https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation/change_event).
+
+Chưa đo FPS trên điện thoại vật lý, native audio, byte tiết kiệm hoặc độ trễ mạng thực tế ở Android. Các bài mạng/blur/focus dùng sự kiện mô phỏng; lần mở TT chưa cache vẫn phụ thuộc server và mạng.
+
+---
+
 # TT giữ nguyên trang khi ảnh tải lỗi — production 01/11/2026
 
 Production **dpl_BPsvqhkgojiZWyuZbY4iTo8PsnoL**, runtime **c40bbb28c022fde504c64a134e6aadcf056426e4**, https://truyen-ky-man-luc.vercel.app READY. **204 hash source quan trọng** khớp artifact Vercel; GitHub private. Commit tiếp theo chỉ cập nhật bài kiểm thử/bằng chứng, không đổi mã chạy.

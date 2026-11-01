@@ -1,0 +1,61 @@
+{
+  "deployment": "dpl_8pLPNyZyPRwqnHTdWErrY68n9rWG",
+  "commit": "25ac75f99e8d3ddc866a54cfead2d7745eaaf9b6",
+  "criticalMatched": 205,
+  "mismatched": [],
+  "checkedAt": "2026-11-01T14:01:59.996Z",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "unitTests": 183,
+  "unitFiles": 45,
+  "typecheck": true,
+  "productionBuild": true,
+  "local": {
+    "chromiumPassed": 18,
+    "webkitPassed": 3,
+    "skipped": 2
+  },
+  "live": {
+    "chromiumPassed": 18,
+    "webkitPassed": 3,
+    "skipped": 2,
+    "networkEvents": 6,
+    "beforeEvents": {
+      "created": 2,
+      "cancelled": 0
+    },
+    "afterEvents": {
+      "created": 2,
+      "cancelled": 0
+    },
+    "reactCommits": 0,
+    "dataSaverOnAndOffPassed": true,
+    "scroll90FramesReactCommits": {
+      "desktop": 0,
+      "mobile": 0,
+      "webkit": 0
+    },
+    "novelFastNavigationAndHistoryPassed": true,
+    "comicNavigationBackReloadPassed": true,
+    "blurFocusAutoScrollPassed": true,
+    "imageErrorRetryGeometryPassed": true
+  },
+  "baseline": {
+    "sourceCommit": "c40bbb28c022fde504c64a134e6aadcf056426e4",
+    "beforeEvents": {
+      "created": 4,
+      "cancelled": 2
+    },
+    "afterEvents": {
+      "created": 16,
+      "cancelled": 14
+    },
+    "reactCommits": 6
+  },
+  "limits": [
+    "Synthetic NetworkInformation events and held speculative Image completion; image job counts are not measured HTTP byte savings.",
+    "Browser phone models; no physical-device FPS or native audio measurement.",
+    "Uncached TT chapter navigation still depends on server/network response; the old 5s assertion was increased to 15s after observing the pending state.",
+    "WebKit's unsupported Network Information case and mobile's absent zoom control were skipped."
+  ],
+  "documentation": "https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation/change_event"
+}
