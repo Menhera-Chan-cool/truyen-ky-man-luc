@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-11-01T13:24:31.185Z",
+  "unitTests": 183,
+  "unitFiles": 45,
+  "typecheck": true,
+  "productionBuild": true,
+  "baseline": {
+    "url": "https://truyen-ky-man-luc.vercel.app",
+    "deployment": "dpl_ACx6kmZPAFFWgeecyXoNjQsQAU8S",
+    "failures": 3,
+    "heights": [
+      {
+        "profile": "desktop",
+        "zoom": 50,
+        "image": 954.75,
+        "error": 300
+      },
+      {
+        "profile": "desktop",
+        "zoom": 10,
+        "image": 190.9375,
+        "error": 300
+      },
+      {
+        "profile": "chromium-phone",
+        "effectiveZoom": 100,
+        "image": 574.5,
+        "error": 300
+      }
+    ]
+  },
+  "after": {
+    "chromiumPassed": 7,
+    "webkitPassed": 1,
+    "skippedMobileZoom": 2,
+    "imageHeightDeltaPx": 0,
+    "retryRestoresOriginalGeometry": true,
+    "nativeCancelHandledSynchronously": true,
+    "scroll90FramesReactCommits": {
+      "desktop": 0,
+      "mobile": 0
+    }
+  },
+  "scope": [
+    "Image request failure and explicit retry; original media and persisted settings are unchanged.",
+    "Shared ComicModal Escape cancellation, including settings, chapters and help."
+  ],
+  "limitations": [
+    "Browser models, not physical device FPS.",
+    "Network failures are injected at the image-request boundary.",
+    "First unrestricted parallel unit/build attempt ran out of host memory; bounded two-worker unit rerun passed."
+  ]
+}

@@ -62,6 +62,7 @@ export function ComicModal({
       ref={ref}
       className={`cc-modal ${className}`}
       aria-labelledby={id}
+      onCancel={(e) => {e.preventDefault();onClose();}}
       onClose={(e) => {
         if (!e.currentTarget.open) onClose();
       }}

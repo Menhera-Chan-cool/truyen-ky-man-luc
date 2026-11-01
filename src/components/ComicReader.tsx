@@ -85,30 +85,33 @@ function ComicImage({
 }) {
   const [error, setError] = useState(false),
     [attempt, setAttempt] = useState(0);
+  const height = (width * page.height) / page.width;
   useEffect(() => setError(false), [src]);
   if (error)
     return (
-      <div className="cc-image-error" style={{ width }} role="alert">
-        <FileImage size={28} />
-        <p>
-          {locale === "vi" ? "Không tải được trang" : "Unable to load page"}{" "}
-          {index + 1}.
-        </p>
-        <button
-          onClick={() => {
-            setError(false);
-            setAttempt((n) => n + 1);
-          }}
-        >
-          {locale === "vi" ? "Thử lại" : "Retry"}
-        </button>
+      <div className="cc-image-error" style={{ width, height }} role="alert">
+        <div className="cc-image-error-content">
+          <FileImage size={28} />
+          <p>
+            {locale === "vi" ? "Không tải được trang" : "Unable to load page"}{" "}
+            {index + 1}.
+          </p>
+          <button
+            onClick={() => {
+              setError(false);
+              setAttempt((n) => n + 1);
+            }}
+          >
+            {locale === "vi" ? "Thử lại" : "Retry"}
+          </button>
+        </div>
       </div>
     );
   if (!src)
     return (
       <div
         className="cc-image-loading"
-        style={{ width, height: (width * page.height) / page.width }}
+        style={{ width, height }}
       >
         <LoaderCircle className="cc-spin" />
       </div>

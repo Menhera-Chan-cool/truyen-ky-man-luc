@@ -859,7 +859,7 @@
 }
 .cc-image-error,
 .cc-image-loading {
-  min-height: 300px;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -868,6 +868,20 @@
   background: #293235;
   color: var(--cc-muted);
 }
+.cc-image-error {
+  overflow: auto;
+  justify-content: flex-start;
+}
+.cc-image-error-content {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 12px;
+  margin-block: auto;
+  padding: 12px;
+}
 .cc-image-error button {
   min-height: 40px;
   border: 0;
@@ -875,8 +889,10 @@
   background: #364448;
   padding: 8px 18px;
 }
-.cc-image-error > p {
+.cc-image-error p {
   font-size: 12px;
+  margin: 0;
+  text-align: center;
 }
 .cc-toast {
   position: absolute;
