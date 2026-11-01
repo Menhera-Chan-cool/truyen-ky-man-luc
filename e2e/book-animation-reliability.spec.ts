@@ -19,3 +19,11 @@ test("a coalesced touch swipe still animates when no drag preview was rendered",
 test("chapter toolbar buttons also animate between adjacent text chapters",async({page})=>{
  await open(page);await page.locator(".reader-toolbar").getByRole("button",{name:"Next chapter",exact:true}).click();await expect(page.locator(".reader-document")).toHaveAttribute("data-flipping","true");await expect(page).toHaveURL(/chapter-2$/);await expect(page.locator(".book-flip-layer")).toHaveCount(0,{timeout:3000});await page.locator(".reader-toolbar").getByRole("button",{name:"Previous chapter",exact:true}).click();await expect(page.locator(".reader-document")).toHaveAttribute("data-flipping","true");await expect(page).toHaveURL(/chapter-1$/);
 });
+
+test("jumping to the visible page or spread is a no-op, while another page still animates",async({page})=>{
+ await open(page);const paper=page.locator(".reader-document"),double=await page.locator(".reader-shell").getAttribute("data-book-double")==="true";
+ await paper.evaluate(el=>{(window as any).samePageFlips=0;new MutationObserver(records=>{for(const record of records)if(record.attributeName==="data-flipping"&&el.getAttribute("data-flipping")==="true")(window as any).samePageFlips++;}).observe(el,{attributes:true,attributeFilter:["data-flipping"]});});
+ const jump=async(value:string)=>{await page.getByRole("button",{name:"Reading tools",exact:true}).click();await page.locator(".page-jump input").fill(value);await page.locator(".page-jump").getByRole("button",{name:"Go to page",exact:true}).click();};
+ for(const value of double?["1","2"]:["1"]){await jump(value);await page.waitForTimeout(100);expect(await page.evaluate(()=>(window as any).samePageFlips)).toBe(0);await expect(page.locator(".book-flip-layer")).toHaveCount(0);}
+ await jump(double?"3":"2");await expect(paper).toHaveAttribute("data-flipping","true");await expect(page.locator(".book-folio span").first()).toHaveText(double?"3":"2");await expect(page.locator(".book-flip-layer")).toHaveCount(0,{timeout:3000});
+});

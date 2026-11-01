@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-11-01T09:13:16.689251+00:00",
+  "unitTests": 177,
+  "unitFiles": 43,
+  "typecheck": true,
+  "productionBuild": true,
+  "chromiumCases": 8,
+  "webkitCases": 4,
+  "checks": [
+    "same page is a no-op",
+    "same two-page spread is a no-op",
+    "different target still animates",
+    "existing repeated/gesture/chapter cases"
+  ],
+  "change": "Return before rememberPlace/begin when target equals pageRef.current",
+  "schemaChanged": false,
+  "dependenciesAdded": false
+}

@@ -1766,7 +1766,7 @@ export default function Reader({
     if (place.revision === revision) applyVisit(place);
   }, [chapterId, revision, ready, layoutVersion]);
   function jumpPage(target: number) {
-    if (!ready || !restored.current) return;
+    if (!ready || !restored.current || target === pageRef.current) return;
     rememberPlace();
     setAuto(false);
     layoutAnchor.current = undefined;
