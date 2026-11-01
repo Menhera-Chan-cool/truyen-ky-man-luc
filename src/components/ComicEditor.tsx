@@ -29,6 +29,7 @@ import {
   EyeOff,
 } from "lucide-react";
 import { IconButton,LanguageLinks } from "./Ui";
+import NetworkNotice from "./NetworkNotice";
 import {
   sampleComic,
   naturalComicOrder,
@@ -171,8 +172,8 @@ export default function ComicEditor({
     listRecoveries(context).then(rows=>{if(active)setRecoveries(rows);}).catch(()=>{if(active)warnRecovery();});
     const flush=()=>{clearTimeout(recoveryTimer.current);persistRecovery();};
     const hidden=()=>{if(document.hidden)flush();};
-    window.addEventListener("pagehide",flush);document.addEventListener("visibilitychange",hidden);
-    return()=>{active=false;flush();window.removeEventListener("pagehide",flush);document.removeEventListener("visibilitychange",hidden);};
+    window.addEventListener("pagehide",flush);window.addEventListener("offline",flush);document.addEventListener("visibilitychange",hidden);
+    return()=>{active=false;flush();window.removeEventListener("pagehide",flush);window.removeEventListener("offline",flush);document.removeEventListener("visibilitychange",hidden);};
   },[shared,accountId,chapterId,locale]);
   useEffect(() => {
     const warn = (e: BeforeUnloadEvent) => {
@@ -456,6 +457,7 @@ export default function ComicEditor({
             onClick={() => setInspector(!inspector)}
           />
         </div>
+        {shared && <NetworkNotice locale={locale} active={busy} activity={progress} className="ce-error"/>}
         {error && (
           <div className="ce-error" role="alert">
             <AlertTriangle size={20} />

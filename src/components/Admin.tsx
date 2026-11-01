@@ -22,6 +22,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import {requestDeadline} from "../lib/request-deadline";
+import NetworkNotice from "./NetworkNotice";
 import { browserClient } from "../lib/supabase";
 import {novelRequest as adminRequest} from "../lib/novel-remote";
 import { uploadAsset, uploadInlineImages } from "../lib/uploads";
@@ -600,6 +601,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
           })}
         </nav>
       )}
+      <NetworkNotice locale={locale} active={busy} activity={message}/>
       <main className="admin-content" inert={busy} aria-busy={busy}>
         {(error || message) && (
           <div

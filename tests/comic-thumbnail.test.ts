@@ -17,3 +17,11 @@ it("reading WebP preserves every oriented pixel at full resolution",async()=>{
  expect((await sharp(reading!).ensureAlpha().raw().toBuffer()).equals(await sharp(original).ensureAlpha().raw().toBuffer())).toBe(true);
  const a=await sharp(reading!).metadata();expect([a.width,a.height]).toEqual([900,1400]);
 });
+
+it("keeps the original when a lossless copy saves less than five percent",async()=>{
+ let seed=1234;
+ const noise=Buffer.from(Array.from({length:384*384*3},()=>{seed=(1664525*seed+1013904223)>>>0;return seed>>>24;}));
+ const original=await sharp(noise,{raw:{width:384,height:384,channels:3}}).png().toBuffer();
+ const reading=await comicReadingImage(original);
+ expect(reading===null).toBe(true);
+});

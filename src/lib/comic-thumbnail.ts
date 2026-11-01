@@ -4,5 +4,6 @@ export const comicThumbnail=(bytes:Buffer)=>sharp(bytes,{limitInputPixels:40_000
 
 export async function comicReadingImage(bytes:Buffer){
  const reading=await sharp(bytes,{limitInputPixels:40_000_000,failOn:"error"}).rotate().webp({lossless:true,effort:5}).toBuffer();
- return reading.length<bytes.length?reading:null;
+ // Tiny savings do not justify uploading and storing another full-resolution image.
+ return reading.length<=bytes.length*.95?reading:null;
 }
