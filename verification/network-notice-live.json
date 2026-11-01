@@ -1,0 +1,107 @@
+{
+  "startedAt": "2026-11-01T12:33:30.386Z",
+  "checks": [
+    "Offline notice appears promptly while pending save remains disabled",
+    "Interrupted pre-response upload preserves unsaved page and recovery copy",
+    "Reconnect does not retry writes automatically",
+    "Reload/restore/retry commits one intact private draft at the same immutable upload path",
+    "Novel editor VI/EN announces offline outside the inert region and clears on reconnect"
+  ],
+  "cleanup": [
+    {
+      "label": "comic head",
+      "ok": true
+    },
+    {
+      "label": "comic versions",
+      "ok": true
+    },
+    {
+      "label": "fixture images",
+      "ok": true
+    },
+    {
+      "label": "asset rows",
+      "ok": true
+    },
+    {
+      "label": "presence",
+      "ok": true
+    },
+    {
+      "label": "audit",
+      "ok": true
+    },
+    {
+      "label": "chapter",
+      "ok": true
+    },
+    {
+      "label": "member",
+      "ok": true
+    },
+    {
+      "label": "auth",
+      "ok": true
+    }
+  ],
+  "published": false,
+  "fixtureAccount": "949084e0-4bfd-4b85-b6c7-54e20c35c37f",
+  "fixtureChapter": "verify-upload-cut-5e2d4092",
+  "payloadBytes": 6493356,
+  "imposedUploadBytesPerSec": 65536,
+  "requests": [
+    {
+      "path": "/api/admin/state",
+      "method": "GET",
+      "ms": 3663
+    },
+    {
+      "path": "/api/admin/comic",
+      "method": "GET",
+      "ms": 638
+    },
+    {
+      "path": "/storage/v1/object/comic-assets/949084e0-4bfd-4b85-b6c7-54e20c35c37f/comics/25fe59af-d89e-40ac-849c-b2bc30a33d10.png",
+      "method": "POST",
+      "ms": 57510
+    },
+    {
+      "path": "/api/admin/comic/assets",
+      "method": "POST",
+      "ms": 1,
+      "failure": "net::ERR_INTERNET_DISCONNECTED"
+    },
+    {
+      "path": "/api/admin/state",
+      "method": "GET",
+      "ms": 1298
+    },
+    {
+      "path": "/api/admin/comic",
+      "method": "GET",
+      "ms": 929
+    },
+    {
+      "path": "/api/admin/comic/assets",
+      "method": "POST",
+      "ms": 5781
+    },
+    {
+      "path": "/api/admin/comic",
+      "method": "POST",
+      "ms": 821
+    }
+  ],
+  "responseReceivedBeforeCut": false,
+  "cutAt": "2026-11-01T12:33:42.625Z",
+  "noticeAfterCutMs": 5,
+  "errorAfterCutMs": 57575,
+  "uploadAttempts": 1,
+  "sameImmutablePath": true,
+  "sha256Matches": true,
+  "readingDerivativeCreated": false,
+  "publicBookUnchanged": true,
+  "completedAt": "2026-11-01T12:35:02.928Z",
+  "passed": true
+}

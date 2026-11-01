@@ -1,3 +1,17 @@
+# Editor phản hồi sớm khi mất mạng — production 01/11/2026
+
+Production **dpl_ACx6kmZPAFFWgeecyXoNjQsQAU8S**, runtime **9661b86ec79e2670c238ca0d6b631e1fe44b391a**, https://truyen-ky-man-luc.vercel.app READY. **201 hash source quan trọng** khớp Vercel; GitHub private. Commit sau chỉ cập nhật bằng chứng.
+
+- Novel/import và TT dùng chung thông báo mất mạng và chờ lâu sau 8 giây không có tiến độ mới; không xác nhận hay gửi lại thao tác dựa vào trạng thái mạng. Giữ busy guard/CAS/server reconciliation. TT flush bản khôi phục hiện có ngay khi offline.
+- Bản ảnh đọc lossless phải giảm ít nhất 5% mới được lưu thêm; nếu không dùng ảnh gốc theo fallback có sẵn. Với PNG nhiễu thử 6,493,356 byte, local registration giảm từ 43,643 xuống 4,131 ms; live 5,781 ms. Đây là từng phép đo của cùng loại workload, không phải cam kết tốc độ mọi ảnh/mạng. Không sửa bản gốc hoặc tài nguyên đã xuất bản.
+- **182 unit /44 file**, typecheck/build đạt. Local và live: **6 luồng editor VI/EN** trên desktop Chromium, Android Chromium model, iPhone WebKit model; chờ thật, form giữ nguyên sau lỗi tiêm, không replay POST khi reconnect, pageErrors=0. **8 ca animation Chromium +4 WebKit** mỗi môi trường đạt.
+- Upload Supabase thật bị ngắt trước phản hồi: banner live hiện sau 5 ms kể từ sự kiện offline mô phỏng; reload/khôi phục/lưu thành công, đúng SHA-256, chỉ 1 Storage POST, cùng immutable path, guest asset 404. Draft không xuất bản, hash sách công khai trước/sau không đổi, fixture đã dọn. Không suy ra số byte truyền trước khi cắt hay tốc độ điện thoại vật lý.
+- Xem `verification/network-notice-release.json`, `network-notice-local.json`, `network-notice-live.json`, và hai báo cáo `network-notice-browsers-*.json`. Các lượt local lỗi origin/timeout và cleanup follow-up được ghi rõ, không tính thành lượt đạt.
+
+Chưa đo FPS hoặc nghe native TTS trên điện thoại thật. Trạng thái online chỉ là gợi ý; dịch vụ chậm vẫn có thể cần thử lại có chủ ý.
+
+---
+
 # Bỏ lớp lật thừa khi đến trang hiện tại — production 01/11/2026
 
 Production **dpl_9u22jRepBbkiXN4dcNb8e9PBRHdk**, runtime **e566fde640f8c2c85584f7b542364f92bd6f1bb8**, https://truyen-ky-man-luc.vercel.app READY. 199 hash source quan trọng khớp Vercel; GitHub private. Commit sau chỉ cập nhật bằng chứng.

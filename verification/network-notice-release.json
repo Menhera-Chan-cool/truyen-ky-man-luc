@@ -1,0 +1,39 @@
+{
+  "deployment": "dpl_ACx6kmZPAFFWgeecyXoNjQsQAU8S",
+  "commit": "9661b86ec79e2670c238ca0d6b631e1fe44b391a",
+  "criticalMatched": 201,
+  "mismatched": [],
+  "checkedAt": "2026-11-01T12:36:03.253Z",
+  "unitTests": 182,
+  "unitFiles": 44,
+  "typecheck": true,
+  "productionBuild": true,
+  "local": {
+    "editorLocaleFlows": 6,
+    "chromiumAnimationCases": 8,
+    "webkitAnimationCases": 4,
+    "interruptedUploadPassed": true,
+    "registrationMs": 4131
+  },
+  "live": {
+    "editorLocaleFlows": 6,
+    "chromiumAnimationCases": 8,
+    "webkitAnimationCases": 4,
+    "interruptedUploadPassed": true,
+    "registrationMs": 5781,
+    "noticeAfterOfflineEventMs": 5,
+    "originalSha256Matches": true,
+    "uploadAttempts": 1,
+    "publicBookUnchanged": true,
+    "fixturesRemoved": true
+  },
+  "performance": {
+    "priorLocalRegistrationMs": 43643,
+    "afterLocalRegistrationMs": 4131,
+    "workload": "6493356-byte random PNG; one measured run each, not a general speed guarantee"
+  },
+  "limitations": [
+    "No physical phone FPS or native speech audio measurement.",
+    "Online state is advisory; a slow remote service can still time out."
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "profiles": [
+    {
+      "name": "iphone-webkit-model",
+      "checks": [
+        "vi: pending hint, busy guard, retained form, offline/online, no automatic retry",
+        "en: pending hint, busy guard, retained form, offline/online, no automatic retry"
+      ],
+      "pageErrors": []
+    },
+    {
+      "name": "android-model",
+      "checks": [
+        "vi: pending hint, busy guard, retained form, offline/online, no automatic retry",
+        "en: pending hint, busy guard, retained form, offline/online, no automatic retry"
+      ],
+      "pageErrors": []
+    },
+    {
+      "name": "desktop",
+      "checks": [
+        "vi: pending hint, busy guard, retained form, offline/online, no automatic retry",
+        "en: pending hint, busy guard, retained form, offline/online, no automatic retry"
+      ],
+      "pageErrors": []
+    }
+  ],
+  "cleanup": [
+    {
+      "label": "presence",
+      "ok": true
+    },
+    {
+      "label": "member",
+      "ok": true
+    },
+    {
+      "label": "auth",
+      "ok": true
+    }
+  ],
+  "passed": true
+}
