@@ -18,5 +18,13 @@
   "actualAndroidAudioVerified": false,
   "physicalIPhoneVerified": false,
   "schemaChanged": false,
-  "dependenciesAdded": false
+  "dependenciesAdded": false,
+  "finalBookLifecycle": {
+    "chromiumCases": 33,
+    "webkitCases": 16,
+    "chromiumSkipped": 3,
+    "webkitSkipped": 2,
+    "singleWarmIframe": true,
+    "idleRafLoopStopped": true
+  }
 }

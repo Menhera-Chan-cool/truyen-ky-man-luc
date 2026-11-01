@@ -230,7 +230,6 @@ export default function Reader({
     [leaves, setLeaves] = useState(1);
   const bookPaper = useRef<HTMLDivElement>(null),
     physicalFlip = useRef<BookFlip | null>(null),
-    animationFonts=useRef(new Map<string,Promise<string|undefined>>()),
     ebookSidebar = useRef<boolean | null>(null);
   const turnRef = useRef<(direction: number, animate?: boolean) => void>(
     () => {},
@@ -585,10 +584,9 @@ export default function Reader({
     observer.observe(node);
     return () => observer.disconnect();
   }, [bookLayout]);
-  useEffect(()=>()=>BookFlip.releaseFonts(animationFonts.current),[]);
   useLayoutEffect(() => {
     if (!bookLayout || settings.theme === "eink" || !bookPaper.current) return;
-    const flip = new BookFlip(bookPaper.current, double,animationFonts.current);
+    const flip = new BookFlip(bookPaper.current, double);
     physicalFlip.current = flip;
     return () => {
       flip.dispose();

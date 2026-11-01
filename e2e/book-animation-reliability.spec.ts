@@ -1,4 +1,7 @@
 import {test,expect,type Page} from "@playwright/test";
+const errors=new WeakMap<Page,string[]>();
+test.beforeEach(({page})=>{const list:string[]=[];errors.set(page,list);page.on("pageerror",e=>list.push(e.message.replace(/https?:\/\/\S+/g,"[url]")));});
+test.afterEach(({page})=>{expect(errors.get(page)).toEqual([]);});
 async function open(page:Page){await page.goto("/en/read/chapter-1");await expect(page.locator(".reader-shell")).toHaveAttribute("data-ready","true");await page.getByRole("button",{name:"Reader settings",exact:true}).click();await page.getByRole("button",{name:"Book",exact:true}).click();await page.getByRole("button",{name:"Close",exact:true}).click();await expect(page.locator(".reader-document")).toHaveAttribute("data-flip-ready","true");}
 test("ordinary consecutive turns animate even when animation frame startup is delayed",async({page,isMobile})=>{
  let loads=0;await page.route("**/vendor/page-flip-2.0.7.js",async route=>{if(loads++>0)await new Promise(r=>setTimeout(r,180));await route.continue().catch(()=>{});});await open(page);

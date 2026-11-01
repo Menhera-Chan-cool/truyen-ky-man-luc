@@ -1,6 +1,6 @@
-import {requestDeadline} from "./request-deadline";
 type FlipInstance = {
   on(name: string, callback: (event: { data: string }) => void): void;
+  destroy():void;
   loadFromHTML(pages: HTMLElement[]): void;
   flipNext(corner: string): void;
   flipPrev(corner: string): void;
@@ -29,9 +29,10 @@ export class BookFlip {
   private frame: HTMLIFrameElement | null = null;
   private host: HTMLDivElement | null = null;
   private ready = false;
-  private spare:{host:HTMLDivElement;frame:HTMLIFrameElement;ready:boolean}|null=null;
-  private styles: Promise<string> | undefined;
-
+  private loaded=false;
+  private activeFlip:FlipInstance|null=null;
+  private releaseRuntime:(()=>void)|null=null;
+  private styles: string | undefined;
   private disposed = false;
   private timer = 0;
   private finishFrame = 0;
@@ -60,14 +61,12 @@ export class BookFlip {
   constructor(
     private paper: HTMLElement,
     private double: boolean,
-    private fonts:Map<string,Promise<string|undefined>>,
   ) {
     this.size = `${paper.clientWidth}:${paper.clientHeight}`;
     this.observer = new ResizeObserver(() => {
       const size = `${paper.clientWidth}:${paper.clientHeight}`;
       if (size !== this.size) {
         this.size = size;
-        this.spare?.host.remove();this.spare=null;
         this.reset(true);
       }
     });
@@ -87,46 +86,32 @@ export class BookFlip {
   private css() {
     if (this.styles) return this.styles;
     let result = "";
-    const family=(value:string)=>value.split(",")[0].replace(/["']/g,"").trim().toLowerCase();
-    const prose=this.paper.querySelector(".prose"),heading=this.paper.querySelector(".book-chapter-heading");
-    const families=new Set([family(getComputedStyle(document.body).fontFamily),prose?family(getComputedStyle(prose).fontFamily):"",heading?family(getComputedStyle(heading,"::before").fontFamily):""]);
-    const fonts=new Set<string>();
     for (const sheet of document.styleSheets) {
       try {
         const base = sheet.href ?? location.href;
         result += [...sheet.cssRules]
-          .map((rule) => {
-            const font=rule.type===CSSRule.FONT_FACE_RULE&&families.has(family((rule as CSSFontFaceRule).style.fontFamily));
-            return rule.cssText.replace(/url\((['"]?)(.*?)\1\)/g,(all,_quote,url)=>{
-              if(/^(data:|blob:|#)/.test(url))return all;
-              const absolute=new URL(url,base).href;if(font&&new URL(absolute).origin===location.origin)fonts.add(absolute);
-              return `url("${absolute}")`;
-            });
-          })
+          .map((rule) =>
+            rule.cssText.replace(
+              /url\((['"]?)(.*?)\1\)/g,
+              (all, _quote, url) =>
+                /^(data:|#)/.test(url)
+                  ? all
+                  : `url("${new URL(url, base).href}")`,
+            ),
+          )
           .join("\n");
       } catch {
         /* Cross-origin optional styles are not needed for the self-hosted reader. */
       }
     }
-    result+="\nhtml,body{margin:0!important;padding:0!important;background:transparent!important;overflow:hidden!important}.book-animation-stage{position:absolute;left:0;top:0}.book-animation-page{overflow:hidden}.reader-document{animation:none!important;box-shadow:none!important}";
-    // Reuse verified font bytes across disposable frames; private font redirects are otherwise fetched every turn.
-    return this.styles=Promise.all([...fonts].map(async url=>{
-      let cached=this.fonts.get(url);
-      if(!cached){
-        cached=requestDeadline(async signal=>{const r=await fetch(url,{signal});if(!r.ok)throw Error("Font unavailable");const blob=await r.blob();if(blob.size>3*1024*1024)throw Error("Font too large");return URL.createObjectURL(blob);},5000).catch(()=>undefined);
-        this.fonts.set(url,cached);
-      }
-      return {url,cached:await cached};
-    })).then(files=>{for(const file of files)if(file.cached)result=result.split(`url("${file.url}")`).join(`url("${file.cached}")`);return result;});
+    return (this.styles =
+      result +
+      "\nhtml,body{margin:0!important;padding:0!important;background:transparent!important;overflow:hidden!important}.book-animation-stage{position:absolute;left:0;top:0}.book-animation-page{overflow:hidden}.reader-document{animation:none!important;box-shadow:none!important}");
   }
-  static releaseFonts(fonts:Map<string,Promise<string|undefined>>){
-    for(const task of fonts.values())void task.then(url=>{if(url)URL.revokeObjectURL(url);});
-    fonts.clear();
-  }
-  private warm(preparing=false) {
+  private warm() {
     if (
       this.disposed ||
-      (preparing?this.spare:this.frame) ||
+      this.frame ||
       document.hidden ||
       this.reduced.matches ||
       !this.paper.isConnected
@@ -134,7 +119,7 @@ export class BookFlip {
       return;
     const host = document.createElement("div"),
       frame = document.createElement("iframe");
-    if(preparing)host.dataset.bookWarm="true";else host.dataset.bookAnimation="true";
+    host.dataset.bookAnimation = "true";
     host.className = "book-animation-host";
     host.style.visibility = "hidden";
     host.setAttribute("aria-hidden", "true");
@@ -145,15 +130,20 @@ export class BookFlip {
     frame.style.height = `${innerHeight}px`;
     host.append(frame);
     this.paper.append(host);
-    const slot={host,frame,ready:false};
-    if(preparing)this.spare=slot;else{this.host=host;this.frame=frame;this.paper.dataset.flipReady="false";}
+    this.host = host;
+    this.frame = frame;
+    this.paper.dataset.flipReady = "false";
     frame.onload = async () => {
       const doc = frame.contentDocument,
         win = frame.contentWindow as FlipWindow | null;
-      if (!doc || !win?.St || (this.frame!==frame&&this.spare?.frame!==frame) || this.disposed) return;
+      if (!doc || !win?.St || this.frame !== frame || this.disposed) return;
+      const frames=new Set<number>(),resizeListeners:EventListenerOrEventListenerObject[]=[];
+      const request=win.requestAnimationFrame.bind(win),cancel=win.cancelAnimationFrame.bind(win),add=win.addEventListener.bind(win),remove=win.removeEventListener.bind(win);
+      win.requestAnimationFrame=callback=>{let id=0;id=request(time=>{frames.delete(id);callback(time);});frames.add(id);return id;};
+      win.addEventListener=((type:string,listener:EventListenerOrEventListenerObject,options?:boolean|AddEventListenerOptions)=>{if(type==="resize")resizeListeners.push(listener);add(type,listener,options);}) as Window["addEventListener"];
+      this.releaseRuntime=()=>{for(const id of frames)cancel(id);frames.clear();for(const listener of resizeListeners)remove("resize",listener);resizeListeners.length=0;};
       const style = doc.createElement("style");
-      style.textContent = await this.css();
-      if(this.disposed||(this.frame!==frame&&this.spare?.frame!==frame))return;
+      style.textContent = this.css();
       doc.head.append(style);
       const prose = this.paper.querySelector(".prose"),
         font = prose && getComputedStyle(prose),
@@ -170,9 +160,10 @@ export class BookFlip {
       } catch {
         /* Reading remains instant if an optional animation/font cannot load. */
       }
-      if ((this.frame!==frame&&this.spare?.frame!==frame) || this.disposed) return;
-      slot.ready=true;
-      if(this.frame===frame){this.ready=true;this.paper.dataset.flipReady="true";}
+      if (this.frame !== frame || this.disposed) return;
+      this.loaded=true;
+      this.ready = true;
+      this.paper.dataset.flipReady = "true";
     };
     frame.srcdoc = `<!doctype html><html><head><meta charset="utf-8"><script src="${location.origin}/vendor/page-flip-2.0.7.js"></script></head><body></body></html>`;
   }
@@ -180,7 +171,7 @@ export class BookFlip {
     const clone = this.paper.cloneNode(true) as HTMLElement,
       rect = this.paper.getBoundingClientRect();
     clone
-      .querySelectorAll("[data-book-animation],[data-book-warm],.book-edge,style[data-heading-font-face]")
+      .querySelectorAll("[data-book-animation],.book-edge,style[data-heading-font-face]")
       .forEach((el) => el.remove());
     Object.assign(clone.style, {
       width: `${rect.width}px`,
@@ -259,7 +250,6 @@ export class BookFlip {
     this.paper.dataset.flipping = "true";
     this.paper.dataset.flipReady = "false";
     this.ready = false;
-    this.warm(true);
     this.timer = window.setTimeout(() => this.reset(true), 1600);
   }
   commit(stamp: string) {
@@ -453,6 +443,7 @@ export class BookFlip {
         clickEventForward: false,
         mobileScrollSupport: false,
       });
+      this.activeFlip=flip;
       let started = false;
       flip.on("changeState", (event) => {
         if (this.drag) return;
@@ -491,17 +482,19 @@ export class BookFlip {
     cancelAnimationFrame(this.finishFrame);
     cancelAnimationFrame(this.dragFrame);
     this.dragFrame = 0;
-    const spare=rewarm?this.spare:null;
-    this.host?.remove();
-    if(!rewarm)this.spare?.host.remove();
-    this.spare=null;
-    this.host=spare?.host??null;
-    this.frame=spare?.frame??null;
-    this.pending=null;this.drag=null;this.ready=spare?.ready??false;
+    try{this.activeFlip?.destroy();}catch{ /* A cancelled init may already have removed its stage. */ }
+    this.activeFlip=null;this.releaseRuntime?.();
+    this.pending=null;this.drag=null;
     delete this.paper.dataset.flipping;
-    delete this.paper.dataset.flipReady;
-    if(spare){delete spare.host.dataset.bookWarm;spare.host.dataset.bookAnimation="true";this.paper.dataset.flipReady=String(this.ready);}
-    else if(rewarm)this.warm();
+    if(rewarm&&this.frame&&this.host&&!document.hidden&&!this.reduced.matches){
+      this.frame.contentDocument?.body.replaceChildren();
+      this.frame.style.width=`${innerWidth}px`;this.frame.style.height=`${innerHeight}px`;
+      this.host.classList.remove("book-flip-layer");this.host.style.visibility="hidden";
+      this.ready=this.loaded;this.paper.dataset.flipReady=String(this.ready);
+    }else{
+      this.host?.remove();this.host=null;this.frame=null;this.ready=false;this.loaded=false;this.releaseRuntime=null;
+      delete this.paper.dataset.flipReady;if(rewarm)this.warm();
+    }
   }
   dispose() {
     this.disposed = true;

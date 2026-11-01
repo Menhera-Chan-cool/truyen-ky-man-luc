@@ -442,6 +442,7 @@ test("turns real page faces without duplicating live text or keeping animation f
       .elementHandle(),
     frame = await handle!.contentFrame();
   await frame!.evaluate(() => {
+    (window as any).frameTicks=0;const request=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=callback=>request(time=>{(window as any).frameTicks++;callback(time);});
     (window.parent as any).foldAudit = {
       fold: false,
       shadow: false,
@@ -472,7 +473,9 @@ test("turns real page faces without duplicating live text or keeping animation f
     timeout: 2500,
   });
   await expect(paper).toHaveAttribute("data-flip-ready", "true");
-  expect(frame!.isDetached()).toBe(true);
+  expect(frame!.isDetached()).toBe(false);
+  const ticks=await frame!.evaluate(()=>(window as any).frameTicks);await page.waitForTimeout(120);expect(await frame!.evaluate(()=>(window as any).frameTicks)).toBe(ticks);
+  expect(await frame!.locator("body > *").count()).toBe(0);
   await expect(page.locator(".prose")).toHaveCount(1);
   await expect(page.locator("[data-book-animation] iframe")).toHaveCount(1);
   await page.emulateMedia({ reducedMotion: "reduce" });
