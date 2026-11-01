@@ -1,0 +1,62 @@
+{
+  "deployment": "dpl_BPsvqhkgojiZWyuZbY4iTo8PsnoL",
+  "commit": "c40bbb28c022fde504c64a134e6aadcf056426e4",
+  "criticalMatched": 204,
+  "mismatched": [],
+  "checkedAt": "2026-11-01T13:31:28.380Z",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "unitTests": 183,
+  "unitFiles": 45,
+  "typecheck": true,
+  "productionBuild": true,
+  "live": {
+    "uniquePassedCases": 8,
+    "mobileZoomCasesSkipped": 2,
+    "geometry": [
+      {
+        "profile": "desktop",
+        "zoom": 50,
+        "before": 948.71875,
+        "failed": 948.71875,
+        "delta": 0
+      },
+      {
+        "profile": "desktop",
+        "zoom": 10,
+        "before": 189.734375,
+        "failed": 189.734375,
+        "delta": 0
+      },
+      {
+        "profile": "chromium-phone",
+        "effectiveZoom": 100,
+        "before": 570.875,
+        "failed": 570.875,
+        "delta": 0
+      },
+      {
+        "profile": "webkit-phone",
+        "effectiveZoom": 100,
+        "before": 570.875,
+        "failed": 570.875,
+        "delta": 0
+      }
+    ],
+    "manualImageRetryPassed": true,
+    "imageCasePageErrors": 0,
+    "scroll90FramesReactCommits": {
+      "desktop": 0,
+      "mobile": 0
+    },
+    "actualChapterPages": 12,
+    "nextPageProgress": 9,
+    "escapeThenArrowSelectsPageIndex": 1,
+    "positionReloadAndProgressPlacementPassed": true
+  },
+  "testCorrection": "The first live progress run assumed a two-page chapter and failed twice on valid 9% progress. The public chapter has 12 pages. The follow-up test derives expected progress and additionally asserts the selected page index. All four progress cases then passed; no runtime change was needed.",
+  "limits": [
+    "Browser emulation, not physical device FPS or native audio.",
+    "Image failures were injected at the request boundary.",
+    "No publication, schema, original image or book text writes were performed."
+  ]
+}

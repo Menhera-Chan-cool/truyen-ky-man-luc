@@ -1,125 +1,172 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_ACx6kmZPAFFWgeecyXoNjQsQAU8S",
+  "deploymentId": "dpl_BPsvqhkgojiZWyuZbY4iTo8PsnoL",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "immutableUrl": "https://truyen-ky-man-dadbvjhcn-anh-tun.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-b2pr89t2c-anh-tun.vercel.app",
   "target": "production",
   "region": "sin1",
   "state": "READY",
-  "checkedAt": "2026-11-01T12:36:04.0630022Z",
+  "checkedAt": "2026-11-01T13:31:29.6028049Z",
   "runtime": {
     "node": "24.x"
   },
-  "runtimeSourceCommit": "9661b86ec79e2670c238ca0d6b631e1fe44b391a",
+  "runtimeSourceCommit": "c40bbb28c022fde504c64a134e6aadcf056426e4",
   "github": {
     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
     "visibility": "PRIVATE",
     "branch": "main"
   },
   "limitations": [
-    "Browser phone models tested; no physical-device FPS or native audio measurement.",
-    "Online status is advisory; slow services can still time out.",
-    "No automatic write retry after connection loss."
+    "No physical-device FPS or native speech audio measurement in this release.",
+    "Image failures are simulated at the network request boundary.",
+    "Mobile zoom cases intentionally skipped because mobile has no zoom control."
   ],
   "verification": {
-    "deployment": "dpl_ACx6kmZPAFFWgeecyXoNjQsQAU8S",
-    "commit": "9661b86ec79e2670c238ca0d6b631e1fe44b391a",
-    "criticalMatched": 201,
+    "deployment": "dpl_BPsvqhkgojiZWyuZbY4iTo8PsnoL",
+    "commit": "c40bbb28c022fde504c64a134e6aadcf056426e4",
+    "criticalMatched": 204,
     "mismatched": [],
-    "checkedAt": "2026-11-01T12:36:03.253Z",
-    "unitTests": 182,
-    "unitFiles": 44,
+    "checkedAt": "2026-11-01T13:31:28.38Z",
+    "url": "https://truyen-ky-man-luc.vercel.app",
+    "unitTests": 183,
+    "unitFiles": 45,
     "typecheck": true,
     "productionBuild": true,
-    "local": {
-      "editorLocaleFlows": 6,
-      "chromiumAnimationCases": 8,
-      "webkitAnimationCases": 4,
-      "interruptedUploadPassed": true,
-      "registrationMs": 4131
-    },
     "live": {
-      "editorLocaleFlows": 6,
-      "chromiumAnimationCases": 8,
-      "webkitAnimationCases": 4,
-      "interruptedUploadPassed": true,
-      "registrationMs": 5781,
-      "noticeAfterOfflineEventMs": 5,
-      "originalSha256Matches": true,
-      "uploadAttempts": 1,
-      "publicBookUnchanged": true,
-      "fixturesRemoved": true
+      "uniquePassedCases": 8,
+      "mobileZoomCasesSkipped": 2,
+      "geometry": [
+        {
+          "profile": "desktop",
+          "zoom": 50,
+          "before": 948.71875,
+          "failed": 948.71875,
+          "delta": 0
+        },
+        {
+          "profile": "desktop",
+          "zoom": 10,
+          "before": 189.734375,
+          "failed": 189.734375,
+          "delta": 0
+        },
+        {
+          "profile": "chromium-phone",
+          "effectiveZoom": 100,
+          "before": 570.875,
+          "failed": 570.875,
+          "delta": 0
+        },
+        {
+          "profile": "webkit-phone",
+          "effectiveZoom": 100,
+          "before": 570.875,
+          "failed": 570.875,
+          "delta": 0
+        }
+      ],
+      "manualImageRetryPassed": true,
+      "imageCasePageErrors": 0,
+      "scroll90FramesReactCommits": {
+        "desktop": 0,
+        "mobile": 0
+      },
+      "actualChapterPages": 12,
+      "nextPageProgress": 9,
+      "escapeThenArrowSelectsPageIndex": 1,
+      "positionReloadAndProgressPlacementPassed": true
     },
-    "performance": {
-      "priorLocalRegistrationMs": 43643,
-      "afterLocalRegistrationMs": 4131,
-      "workload": "6493356-byte random PNG; one measured run each, not a general speed guarantee"
-    },
-    "limitations": [
-      "No physical phone FPS or native speech audio measurement.",
-      "Online state is advisory; a slow remote service can still time out."
+    "testCorrection": "The first live progress run assumed a two-page chapter and failed twice on valid 9% progress. The public chapter has 12 pages. The follow-up test derives expected progress and additionally asserts the selected page index. All four progress cases then passed; no runtime change was needed.",
+    "limits": [
+      "Browser emulation, not physical device FPS or native audio.",
+      "Image failures were injected at the request boundary.",
+      "No publication, schema, original image or book text writes were performed."
     ]
   },
   "previousDeployment": {
     "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-    "deploymentId": "dpl_9u22jRepBbkiXN4dcNb8e9PBRHdk",
+    "deploymentId": "dpl_ACx6kmZPAFFWgeecyXoNjQsQAU8S",
     "url": "https://truyen-ky-man-luc.vercel.app",
-    "immutableUrl": "https://truyen-ky-man-hngu2i6y7-anh-tun.vercel.app",
+    "immutableUrl": "https://truyen-ky-man-dadbvjhcn-anh-tun.vercel.app",
     "target": "production",
     "region": "sin1",
     "state": "READY",
-    "checkedAt": "2026-11-01T16:16:37.308859+07:00",
+    "checkedAt": "2026-11-01T12:36:04.0630022Z",
     "runtime": {
       "node": "24.x"
     },
-    "runtimeSourceCommit": "e566fde640f8c2c85584f7b542364f92bd6f1bb8",
+    "runtimeSourceCommit": "9661b86ec79e2670c238ca0d6b631e1fe44b391a",
     "github": {
       "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
       "visibility": "PRIVATE",
       "branch": "main"
     },
     "limitations": [
-      "No physical phone FPS measurement.",
-      "Reduced motion and e-ink intentionally disable book animation.",
-      "User has confirmed Vietnamese speech works in Android Chrome."
+      "Browser phone models tested; no physical-device FPS or native audio measurement.",
+      "Online status is advisory; slow services can still time out.",
+      "No automatic write retry after connection loss."
     ],
     "verification": {
-      "unitTests": 177,
-      "unitFiles": 43,
+      "deployment": "dpl_ACx6kmZPAFFWgeecyXoNjQsQAU8S",
+      "commit": "9661b86ec79e2670c238ca0d6b631e1fe44b391a",
+      "criticalMatched": 201,
+      "mismatched": [],
+      "checkedAt": "2026-11-01T12:36:03.253Z",
+      "unitTests": 182,
+      "unitFiles": 44,
       "typecheck": true,
       "productionBuild": true,
-      "criticalSourceHashesMatched": 199,
-      "local": "verification/same-page-local.json",
-      "live": "verification/same-page-live.json",
-      "chromiumCases": 8,
-      "webkitCases": 4,
-      "pageErrors": 0,
-      "samePageAndSpreadNoOp": true,
-      "otherPageStillAnimates": true
+      "local": {
+        "editorLocaleFlows": 6,
+        "chromiumAnimationCases": 8,
+        "webkitAnimationCases": 4,
+        "interruptedUploadPassed": true,
+        "registrationMs": 4131
+      },
+      "live": {
+        "editorLocaleFlows": 6,
+        "chromiumAnimationCases": 8,
+        "webkitAnimationCases": 4,
+        "interruptedUploadPassed": true,
+        "registrationMs": 5781,
+        "noticeAfterOfflineEventMs": 5,
+        "originalSha256Matches": true,
+        "uploadAttempts": 1,
+        "publicBookUnchanged": true,
+        "fixturesRemoved": true
+      },
+      "performance": {
+        "priorLocalRegistrationMs": 43643,
+        "afterLocalRegistrationMs": 4131,
+        "workload": "6493356-byte random PNG; one measured run each, not a general speed guarantee"
+      },
+      "limitations": [
+        "No physical phone FPS or native speech audio measurement.",
+        "Online state is advisory; a slow remote service can still time out."
+      ]
     },
     "previousDeployment": {
       "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-      "deploymentId": "dpl_FAMneQLgKhs3PyxmVv2339Go8qVx",
+      "deploymentId": "dpl_9u22jRepBbkiXN4dcNb8e9PBRHdk",
       "url": "https://truyen-ky-man-luc.vercel.app",
-      "immutableUrl": "https://truyen-ky-man-kq0e09e9k-anh-tun.vercel.app",
+      "immutableUrl": "https://truyen-ky-man-hngu2i6y7-anh-tun.vercel.app",
       "target": "production",
       "region": "sin1",
       "state": "READY",
-      "checkedAt": "2026-11-01T14:46:59.742349+07:00",
+      "checkedAt": "2026-11-01T16:16:37.308859+07:00",
       "runtime": {
         "node": "24.x"
       },
-      "runtimeSourceCommit": "1098d8c464a9f805b644c38c826ddc324f928ee9",
+      "runtimeSourceCommit": "e566fde640f8c2c85584f7b542364f92bd6f1bb8",
       "github": {
         "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
         "visibility": "PRIVATE",
         "branch": "main"
       },
       "limitations": [
-        "Device voices must be exposed by the browser; absent VI/EN voice is blocked instead of falling back.",
-        "User confirmed Android system Vietnamese sample, Chrome actual voice is not yet confirmed.",
-        "No physical phone FPS/audio measurement.",
-        "Reduced motion and e-ink intentionally disable book animation."
+        "No physical phone FPS measurement.",
+        "Reduced motion and e-ink intentionally disable book animation.",
+        "User has confirmed Vietnamese speech works in Android Chrome."
       ],
       "verification": {
         "unitTests": 177,
@@ -127,66 +174,65 @@
         "typecheck": true,
         "productionBuild": true,
         "criticalSourceHashesMatched": 199,
-        "local": "verification/speech-flip-local.json",
-        "live": "verification/speech-flip-live.json",
-        "finalBrowserCases": 34,
-        "finalPlatformSkips": 5,
-        "fontProof": "verification/speech-flip-font-live.json",
-        "schemaChanged": false,
-        "bookPreserved": true
+        "local": "verification/same-page-local.json",
+        "live": "verification/same-page-live.json",
+        "chromiumCases": 8,
+        "webkitCases": 4,
+        "pageErrors": 0,
+        "samePageAndSpreadNoOp": true,
+        "otherPageStillAnimates": true
       },
       "previousDeployment": {
         "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-        "deploymentId": "dpl_C8dmmDjVmKoxZcbLzVqkHh82Mawn",
+        "deploymentId": "dpl_FAMneQLgKhs3PyxmVv2339Go8qVx",
         "url": "https://truyen-ky-man-luc.vercel.app",
-        "immutableUrl": "https://truyen-ky-man-arli53fwf-anh-tun.vercel.app",
+        "immutableUrl": "https://truyen-ky-man-kq0e09e9k-anh-tun.vercel.app",
         "target": "production",
         "region": "sin1",
         "state": "READY",
-        "checkedAt": "2026-11-01T10:31:42.348499+07:00",
+        "checkedAt": "2026-11-01T14:46:59.742349+07:00",
         "runtime": {
           "node": "24.x"
         },
-        "runtimeSourceCommit": "6ce3337025f0fa0f2dae972ee9a87fa78977b768",
+        "runtimeSourceCommit": "1098d8c464a9f805b644c38c826ddc324f928ee9",
         "github": {
           "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
           "visibility": "PRIVATE",
           "branch": "main"
         },
         "limitations": [
-          "No physical iPhone FPS or sustained multi-user load benchmark.",
-          "Editing presence uses its existing 90-second lease from the last heartbeat.",
-          "Storage SDK uploads may complete after the UI deadline."
+          "Device voices must be exposed by the browser; absent VI/EN voice is blocked instead of falling back.",
+          "User confirmed Android system Vietnamese sample, Chrome actual voice is not yet confirmed.",
+          "No physical phone FPS/audio measurement.",
+          "Reduced motion and e-ink intentionally disable book animation."
         ],
         "verification": {
-          "unitTests": 171,
-          "unitFiles": 42,
+          "unitTests": 177,
+          "unitFiles": 43,
           "typecheck": true,
           "productionBuild": true,
-          "criticalSourceHashesMatched": 196,
-          "local": "verification/novel-scroll-local.json",
-          "live": "verification/novel-scroll-live.json",
-          "novelBrowserGroups": 26,
-          "comicIntegrationGroups": 31,
-          "comicProgressCases": 6,
-          "pageErrors": 0,
-          "bookPreserved": true,
-          "cleanupComplete": true,
-          "schemaChanged": false
+          "criticalSourceHashesMatched": 199,
+          "local": "verification/speech-flip-local.json",
+          "live": "verification/speech-flip-live.json",
+          "finalBrowserCases": 34,
+          "finalPlatformSkips": 5,
+          "fontProof": "verification/speech-flip-font-live.json",
+          "schemaChanged": false,
+          "bookPreserved": true
         },
         "previousDeployment": {
           "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-          "deploymentId": "dpl_88oCJhbjc2r6UxAjokuJmxnzwe3Y",
+          "deploymentId": "dpl_C8dmmDjVmKoxZcbLzVqkHh82Mawn",
           "url": "https://truyen-ky-man-luc.vercel.app",
-          "immutableUrl": "https://truyen-ky-man-l0kd7ejwa-anh-tun.vercel.app",
+          "immutableUrl": "https://truyen-ky-man-arli53fwf-anh-tun.vercel.app",
           "target": "production",
           "region": "sin1",
           "state": "READY",
-          "checkedAt": "2026-11-01T09:36:15.229339+07:00",
+          "checkedAt": "2026-11-01T10:31:42.348499+07:00",
           "runtime": {
             "node": "24.x"
           },
-          "runtimeSourceCommit": "cde80583f8523ef6844cb43990c0aa5103ebc4f5",
+          "runtimeSourceCommit": "6ce3337025f0fa0f2dae972ee9a87fa78977b768",
           "github": {
             "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
             "visibility": "PRIVATE",
@@ -194,19 +240,20 @@
           },
           "limitations": [
             "No physical iPhone FPS or sustained multi-user load benchmark.",
-            "A Storage upload may finish after the UI timeout; checkpoints reconcile the immutable path before retry."
+            "Editing presence uses its existing 90-second lease from the last heartbeat.",
+            "Storage SDK uploads may complete after the UI deadline."
           ],
           "verification": {
-            "unitTests": 150,
-            "unitFiles": 38,
+            "unitTests": 171,
+            "unitFiles": 42,
             "typecheck": true,
             "productionBuild": true,
-            "criticalSourceHashesMatched": 189,
-            "local": "verification/optimization-followup-local.json",
-            "live": "verification/optimization-followup-live.json",
-            "liveComicGroups": 31,
-            "liveUiCases": 23,
-            "liveFontCases": 10,
+            "criticalSourceHashesMatched": 196,
+            "local": "verification/novel-scroll-local.json",
+            "live": "verification/novel-scroll-live.json",
+            "novelBrowserGroups": 26,
+            "comicIntegrationGroups": 31,
+            "comicProgressCases": 6,
             "pageErrors": 0,
             "bookPreserved": true,
             "cleanupComplete": true,
@@ -214,386 +261,292 @@
           },
           "previousDeployment": {
             "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-            "deploymentId": "dpl_kThn8dDu38veuq6QH5FkuEMctm4p",
+            "deploymentId": "dpl_88oCJhbjc2r6UxAjokuJmxnzwe3Y",
             "url": "https://truyen-ky-man-luc.vercel.app",
-            "immutableUrl": "https://truyen-ky-man-4xk0qndcl-anh-tun.vercel.app",
+            "immutableUrl": "https://truyen-ky-man-l0kd7ejwa-anh-tun.vercel.app",
             "target": "production",
             "region": "sin1",
             "state": "READY",
-            "checkedAt": "2026-11-01T09:07:00.547597+07:00",
+            "checkedAt": "2026-11-01T09:36:15.229339+07:00",
             "runtime": {
               "node": "24.x"
             },
-            "runtimeSourceCommit": "e1cc31e5b6c6de017e32d5a22910d2f7f97a340e",
+            "runtimeSourceCommit": "cde80583f8523ef6844cb43990c0aa5103ebc4f5",
             "github": {
               "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
               "visibility": "PRIVATE",
               "branch": "main"
             },
             "limitations": [
-              "WebKit phone emulation checked; physical iPhone not calibrated.",
-              "Visibility is stored per tab; browser storage clearing resets saved preferences."
+              "No physical iPhone FPS or sustained multi-user load benchmark.",
+              "A Storage upload may finish after the UI timeout; checkpoints reconcile the immutable path before retry."
             ],
             "verification": {
-              "unitTests": 139,
+              "unitTests": 150,
               "unitFiles": 38,
               "typecheck": true,
               "productionBuild": true,
-              "criticalSourceHashesMatched": 188,
-              "local": "verification/comic-controls-local.json",
-              "live": "verification/comic-controls-live.json",
-              "liveBrowserCases": 23,
-              "desktopOnlyCasesSkippedOnPhones": 4,
-              "bookWritesByTest": false,
-              "verificationOnlyFollowup": "Timer harness frozen before navigation; docs/evidence updated after deployment. Application runtime files unchanged."
+              "criticalSourceHashesMatched": 189,
+              "local": "verification/optimization-followup-local.json",
+              "live": "verification/optimization-followup-live.json",
+              "liveComicGroups": 31,
+              "liveUiCases": 23,
+              "liveFontCases": 10,
+              "pageErrors": 0,
+              "bookPreserved": true,
+              "cleanupComplete": true,
+              "schemaChanged": false
             },
             "previousDeployment": {
               "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-              "deploymentId": "dpl_3ezjCMmz8U4dArMgeHqckcs3bmJr",
+              "deploymentId": "dpl_kThn8dDu38veuq6QH5FkuEMctm4p",
               "url": "https://truyen-ky-man-luc.vercel.app",
-              "immutableUrl": "https://truyen-ky-man-cllcofals-anh-tun.vercel.app",
+              "immutableUrl": "https://truyen-ky-man-4xk0qndcl-anh-tun.vercel.app",
               "target": "production",
               "region": "sin1",
               "state": "READY",
-              "checkedAt": "2026-10-31T15:34:18.628Z",
+              "checkedAt": "2026-11-01T09:07:00.547597+07:00",
               "runtime": {
                 "node": "24.x"
               },
-              "runtimeSourceCommit": "39a65ef181d05a1ae4cf903a99b6377bb7054442",
+              "runtimeSourceCommit": "e1cc31e5b6c6de017e32d5a22910d2f7f97a340e",
               "github": {
                 "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
                 "visibility": "PRIVATE",
                 "branch": "main"
               },
+              "limitations": [
+                "WebKit phone emulation checked; physical iPhone not calibrated.",
+                "Visibility is stored per tab; browser storage clearing resets saved preferences."
+              ],
               "verification": {
-                "unitTests": 135,
-                "unitFiles": 37,
+                "unitTests": 139,
+                "unitFiles": 38,
                 "typecheck": true,
                 "productionBuild": true,
-                "criticalSourceHashesMatched": 185,
-                "local": "verification/heading-fonts-local.json",
-                "live": "verification/heading-fonts-live.json",
-                "liveGroups": 7,
-                "livePageErrors": 0,
-                "menuTests": 2,
-                "migration": "20261031134023_heading_fonts.sql",
-                "bookMetadataPreserved": true,
-                "bookWritesByTest": 0
+                "criticalSourceHashesMatched": 188,
+                "local": "verification/comic-controls-local.json",
+                "live": "verification/comic-controls-live.json",
+                "liveBrowserCases": 23,
+                "desktopOnlyCasesSkippedOnPhones": 4,
+                "bookWritesByTest": false,
+                "verificationOnlyFollowup": "Timer harness frozen before navigation; docs/evidence updated after deployment. Application runtime files unchanged."
               },
-              "limitations": [
-                "Automated Chromium/WebKit; physical iPhone not calibrated.",
-                "Removing a font archives the catalog entry; files are retained and in-use fonts cannot be removed."
-              ],
               "previousDeployment": {
                 "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-                "deploymentId": "dpl_HnE6qBvm2SD7o4TdUKoZNCCyJgSh",
+                "deploymentId": "dpl_3ezjCMmz8U4dArMgeHqckcs3bmJr",
                 "url": "https://truyen-ky-man-luc.vercel.app",
-                "immutableUrl": "https://truyen-ky-man-fs3ao4xk1-anh-tun.vercel.app",
+                "immutableUrl": "https://truyen-ky-man-cllcofals-anh-tun.vercel.app",
                 "target": "production",
                 "region": "sin1",
                 "state": "READY",
-                "checkedAt": "2026-10-31T11:43:33.721Z",
+                "checkedAt": "2026-10-31T15:34:18.628Z",
                 "runtime": {
                   "node": "24.x"
                 },
-                "runtimeSourceCommit": "c6e9a271b7c48f1c0d4023bd552cecc1d7b7e399",
+                "runtimeSourceCommit": "39a65ef181d05a1ae4cf903a99b6377bb7054442",
                 "github": {
                   "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
                   "visibility": "PRIVATE",
                   "branch": "main"
                 },
                 "verification": {
-                  "unitTests": 127,
+                  "unitTests": 135,
+                  "unitFiles": 37,
                   "typecheck": true,
                   "productionBuild": true,
-                  "local": "verification/stability-local.json",
-                  "live": "verification/stability-live.json",
-                  "sharedLive": {
-                    "groups": 27,
-                    "passed": true,
-                    "pageErrors": 0,
-                    "fixturesRemoved": true,
-                    "novelUnchanged": true,
-                    "report": "verification/comic-shared-live.json"
-                  },
-                  "novelEditorLive": {
-                    "groups": 6,
-                    "passed": true,
-                    "fixturesRemoved": true,
-                    "report": "verification/editor-switch-latest.json"
-                  },
-                  "publicUILive": {
-                    "chromiumDesktopMobile": 10,
-                    "webkitPhone": 5,
-                    "passed": 15,
-                    "failed": 0,
-                    "note": "Final reruns used separate artifact output directories after concurrent Playwright runners collided during trace teardown; no application assertion failed in those collisions."
-                  },
-                  "migration": "20261031103949_restrict_management_rpc.sql"
+                  "criticalSourceHashesMatched": 185,
+                  "local": "verification/heading-fonts-local.json",
+                  "live": "verification/heading-fonts-live.json",
+                  "liveGroups": 7,
+                  "livePageErrors": 0,
+                  "menuTests": 2,
+                  "migration": "20261031134023_heading_fonts.sql",
+                  "bookMetadataPreserved": true,
+                  "bookWritesByTest": 0
                 },
                 "limitations": [
-                  "No physical iPhone or real FPS measurement.",
-                  "Device recovery is best effort; deleting browser data or OS termination before persistence can lose the latest unsaved changes.",
-                  "No additional paid Supabase image transformations or dependencies."
+                  "Automated Chromium/WebKit; physical iPhone not calibrated.",
+                  "Removing a font archives the catalog entry; files are retained and in-use fonts cannot be removed."
                 ],
                 "previousDeployment": {
                   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-                  "deploymentId": "dpl_Gsd8HnQHDARi4y9u8aoSqbuGZXj2",
+                  "deploymentId": "dpl_HnE6qBvm2SD7o4TdUKoZNCCyJgSh",
                   "url": "https://truyen-ky-man-luc.vercel.app",
-                  "immutableUrl": "https://truyen-ky-man-qvgv3efvz-anh-tun.vercel.app",
+                  "immutableUrl": "https://truyen-ky-man-fs3ao4xk1-anh-tun.vercel.app",
                   "target": "production",
                   "region": "sin1",
                   "state": "READY",
-                  "checkedAt": "2026-10-30T15:14:14.758Z",
+                  "checkedAt": "2026-10-31T11:43:33.721Z",
                   "runtime": {
                     "node": "24.x"
                   },
-                  "runtimeSourceCommit": "293c15a27aacc6cafb2f1655b8e7730d88df233f",
+                  "runtimeSourceCommit": "c6e9a271b7c48f1c0d4023bd552cecc1d7b7e399",
                   "github": {
                     "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
                     "visibility": "PRIVATE",
                     "branch": "main"
                   },
                   "verification": {
-                    "unitTests": 111,
+                    "unitTests": 127,
                     "typecheck": true,
                     "productionBuild": true,
-                    "local": "verification/edition-local.json",
-                    "live": "verification/edition-live.json",
+                    "local": "verification/stability-local.json",
+                    "live": "verification/stability-live.json",
                     "sharedLive": {
-                      "report": "verification/comic-shared-live.json",
-                      "checks": 19,
+                      "groups": 27,
                       "passed": true,
                       "pageErrors": 0,
                       "fixturesRemoved": true,
-                      "textUnchanged": true
+                      "novelUnchanged": true,
+                      "report": "verification/comic-shared-live.json"
                     },
-                    "menuCases": 3,
-                    "localRegression": {
-                      "passed": 40,
-                      "skipped": 10,
-                      "failed": 0
+                    "novelEditorLive": {
+                      "groups": 6,
+                      "passed": true,
+                      "fixturesRemoved": true,
+                      "report": "verification/editor-switch-latest.json"
                     },
-                    "migration": "006_comic_locales.sql"
+                    "publicUILive": {
+                      "chromiumDesktopMobile": 10,
+                      "webkitPhone": 5,
+                      "passed": 15,
+                      "failed": 0,
+                      "note": "Final reruns used separate artifact output directories after concurrent Playwright runners collided during trace teardown; no application assertion failed in those collisions."
+                    },
+                    "migration": "20261031103949_restrict_management_rpc.sql"
                   },
                   "limitations": [
-                    "Automated Chromium/WebKit, not physical iPhone calibration.",
-                    "Existing TT stays VI; EN requires its own uploaded/published content."
+                    "No physical iPhone or real FPS measurement.",
+                    "Device recovery is best effort; deleting browser data or OS termination before persistence can lose the latest unsaved changes.",
+                    "No additional paid Supabase image transformations or dependencies."
                   ],
                   "previousDeployment": {
                     "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-                    "deploymentId": "dpl_Hbz6LezWpdt3iKooP2MzboQ9i1yj",
+                    "deploymentId": "dpl_Gsd8HnQHDARi4y9u8aoSqbuGZXj2",
                     "url": "https://truyen-ky-man-luc.vercel.app",
-                    "immutableUrl": "https://truyen-ky-man-5cgka884a-anh-tun.vercel.app",
+                    "immutableUrl": "https://truyen-ky-man-qvgv3efvz-anh-tun.vercel.app",
+                    "target": "production",
+                    "region": "sin1",
                     "state": "READY",
-                    "runtimeSourceCommit": "c16f35856a669a5d3a0914280d2535219fb73175",
-                    "note": "Intermediate language-menu release, superseded by scroll/restore stabilization.",
+                    "checkedAt": "2026-10-30T15:14:14.758Z",
+                    "runtime": {
+                      "node": "24.x"
+                    },
+                    "runtimeSourceCommit": "293c15a27aacc6cafb2f1655b8e7730d88df233f",
+                    "github": {
+                      "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
+                      "visibility": "PRIVATE",
+                      "branch": "main"
+                    },
+                    "verification": {
+                      "unitTests": 111,
+                      "typecheck": true,
+                      "productionBuild": true,
+                      "local": "verification/edition-local.json",
+                      "live": "verification/edition-live.json",
+                      "sharedLive": {
+                        "report": "verification/comic-shared-live.json",
+                        "checks": 19,
+                        "passed": true,
+                        "pageErrors": 0,
+                        "fixturesRemoved": true,
+                        "textUnchanged": true
+                      },
+                      "menuCases": 3,
+                      "localRegression": {
+                        "passed": 40,
+                        "skipped": 10,
+                        "failed": 0
+                      },
+                      "migration": "006_comic_locales.sql"
+                    },
+                    "limitations": [
+                      "Automated Chromium/WebKit, not physical iPhone calibration.",
+                      "Existing TT stays VI; EN requires its own uploaded/published content."
+                    ],
                     "previousDeployment": {
                       "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-                      "deploymentId": "dpl_9LV32XhmqEQRoVedKjedWHLrfpq2",
+                      "deploymentId": "dpl_Hbz6LezWpdt3iKooP2MzboQ9i1yj",
                       "url": "https://truyen-ky-man-luc.vercel.app",
-                      "immutableUrl": "https://truyen-ky-man-lr2mjjmb8-anh-tun.vercel.app",
-                      "target": "production",
-                      "region": "sin1",
+                      "immutableUrl": "https://truyen-ky-man-5cgka884a-anh-tun.vercel.app",
                       "state": "READY",
-                      "checkedAt": "2026-10-30T14:10:09.506Z",
-                      "runtime": {
-                        "node": "24.x"
-                      },
-                      "runtimeSourceCommit": "e29c7691ad11522f669e310cc640ca767037fd61",
-                      "github": {
-                        "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
-                        "visibility": "PRIVATE",
-                        "branch": "main"
-                      },
-                      "verification": {
-                        "unitTests": 109,
-                        "typecheck": true,
-                        "productionBuild": true,
-                        "local": "verification/comic-local-release.json",
-                        "sharedLive": {
-                          "report": "verification/comic-shared-live.json",
-                          "passed": true,
-                          "checks": 17,
-                          "browsers": [
-                            "Chromium desktop",
-                            "WebKit phone"
-                          ],
-                          "pageErrors": 0,
-                          "fixturesRemoved": true,
-                          "publishedTextUnchanged": true
-                        },
-                        "textLive": {
-                          "report": "verification/comic-text-live.json",
-                          "stats": {
-                            "startTime": "2026-10-30T14:05:06.996Z",
-                            "duration": 91724.86899999999,
-                            "expected": 20,
-                            "skipped": 6,
-                            "unexpected": 0,
-                            "flaky": 0
-                          }
-                        },
-                        "httpAndAssets": {
-                          "report": "verification/comic-http-live.json",
-                          "routes": 5,
-                          "demoAssetsHashMatch": true
-                        },
-                        "schemaMigrations": [
-                          "005_comics.sql"
-                        ]
-                      },
-                      "limitations": [
-                        "Browser automation is not physical iPhone/native FPS verification.",
-                        "Optional generated sample pages are not a complete comic and were not automatically published.",
-                        "Previously issued signed image URLs remain valid up to 60 seconds after withdrawal."
-                      ],
+                      "runtimeSourceCommit": "c16f35856a669a5d3a0914280d2535219fb73175",
+                      "note": "Intermediate language-menu release, superseded by scroll/restore stabilization.",
                       "previousDeployment": {
                         "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-                        "deploymentId": "dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk",
+                        "deploymentId": "dpl_9LV32XhmqEQRoVedKjedWHLrfpq2",
                         "url": "https://truyen-ky-man-luc.vercel.app",
-                        "immutableUrl": "https://truyen-ky-man-7hsmwqm5k-anh-tun.vercel.app",
+                        "immutableUrl": "https://truyen-ky-man-lr2mjjmb8-anh-tun.vercel.app",
                         "target": "production",
                         "region": "sin1",
                         "state": "READY",
-                        "checkedAt": "2026-10-30T03:40:53.53Z",
+                        "checkedAt": "2026-10-30T14:10:09.506Z",
                         "runtime": {
-                          "node": "24.x",
-                          "NODE_OPTIONS": "--experimental-require-module"
+                          "node": "24.x"
                         },
-                        "runtimeSourceCommit": "35746a3d79d66708368c71889a3be32c4e1121fe",
+                        "runtimeSourceCommit": "e29c7691ad11522f669e310cc640ca767037fd61",
                         "github": {
                           "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
                           "visibility": "PRIVATE",
                           "branch": "main"
                         },
                         "verification": {
-                          "unitTests": 95,
+                          "unitTests": 109,
                           "typecheck": true,
                           "productionBuild": true,
-                          "selectedLocal": {
-                            "checkedAt": "2026-10-30T03:27:24.054Z",
-                            "unit": {
-                              "passed": 95,
-                              "files": 25
-                            },
-                            "typecheck": true,
-                            "productionBuild": true,
-                            "scope": "62 selected Chromium desktop/mobile cases on final runtime: touch comfort, Book gesture/layout, mobile reading, footnotes, reliability.",
-                            "stats": {
-                              "startTime": "2026-10-30T03:24:20.851Z",
-                              "duration": 132722.447,
-                              "expected": 50,
-                              "skipped": 12,
-                              "unexpected": 0,
-                              "flaky": 0
-                            },
-                            "webkit": [
-                              {
-                                "engine": "18.0",
-                                "cases": 4,
-                                "success": true
-                              },
-                              {
-                                "engine": "27.2",
-                                "cases": 4,
-                                "success": true
-                              }
+                          "local": "verification/comic-local-release.json",
+                          "sharedLive": {
+                            "report": "verification/comic-shared-live.json",
+                            "passed": true,
+                            "checks": 17,
+                            "browsers": [
+                              "Chromium desktop",
+                              "WebKit phone"
                             ],
-                            "redEvidence": {
-                              "slow30pxSwipe": "Stayed at page 1 before change",
-                              "edge40pxInsetTap": "Stayed at page 1 before change",
-                              "foldCallsDuring80SynchronousMoves": {
-                                "before": 80,
-                                "after": 0,
-                                "afterNextFrame": 1
-                              }
-                            },
-                            "calibration": "Legacy WebKit click-only tap after a swipe initially timed out. Added coarse-pointer click fallback with compatibility-click coordinate suppression; the same sequence then passed.",
-                            "limits": [
-                              "Automated Chromium/WebKit emulation; no physical iPhone FPS or tactile calibration."
-                            ]
+                            "pageErrors": 0,
+                            "fixturesRemoved": true,
+                            "publishedTextUnchanged": true
                           },
-                          "finalBoundaryLocal": {
-                            "base": "http://127.0.0.1:3001",
-                            "checkedAt": "2026-10-30T03:33:04.87Z",
-                            "scope": "Final delta routes edge animations through existing bounds-checked turnPage. All touch comfort tests rerun on rebuilt final app.",
-                            "red": "Tap in the last paper padding kept data-flipping=true with no destination",
+                          "textLive": {
+                            "report": "verification/comic-text-live.json",
                             "stats": {
-                              "startTime": "2026-10-30T03:32:04.684Z",
-                              "duration": 9541.723,
-                              "expected": 4,
-                              "skipped": 0,
+                              "startTime": "2026-10-30T14:05:06.996Z",
+                              "duration": 91724.86899999999,
+                              "expected": 20,
+                              "skipped": 6,
                               "unexpected": 0,
                               "flaky": 0
-                            },
-                            "typecheck": true,
-                            "productionBuild": true
+                            }
                           },
-                          "selectedLive": {
-                            "base": "https://truyen-ky-man-luc.vercel.app",
-                            "deploymentId": "dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk",
-                            "runtimeSourceCommit": "35746a3d79d66708368c71889a3be32c4e1121fe",
-                            "checkedAt": "2026-10-30T03:40:53.53Z",
-                            "scope": "64 selected Chromium desktop/mobile cases on exact final runtime: touch comfort and bounds, Book layout/gesture, mobile reading, footnotes and reliability. Not full 214-case suite.",
-                            "stats": {
-                              "startTime": "2026-10-30T03:36:09.141Z",
-                              "duration": 183152.36000000002,
-                              "expected": 51,
-                              "skipped": 13,
-                              "unexpected": 0,
-                              "flaky": 0
-                            },
-                            "webkit": [
-                              {
-                                "engine": "18.0",
-                                "cases": 4,
-                                "success": true
-                              },
-                              {
-                                "engine": "27.2",
-                                "cases": 4,
-                                "success": true
-                              }
-                            ],
-                            "visual": "verification/touch-ui-live.json",
-                            "source": "verification/touch-source.json",
-                            "renderBudget": {
-                              "beforeSynchronousFolds": 80,
-                              "afterSynchronousFolds": 0,
-                              "nextAnimationFrameFolds": 1
-                            },
-                            "touch": {
-                              "slowDistance": 24,
-                              "quickDistance": 14,
-                              "previewGain": 2,
-                              "edgeWidth": 48
-                            },
-                            "limits": [
-                              "Automated WebKit/Chromium emulation; no physical iPhone FPS, native gesture latency or tactile calibration."
-                            ]
+                          "httpAndAssets": {
+                            "report": "verification/comic-http-live.json",
+                            "routes": 5,
+                            "demoAssetsHashMatch": true
                           },
-                          "webkitCases": 8,
-                          "visualCases": 4,
-                          "noContentOrSchemaChanges": true
+                          "schemaMigrations": [
+                            "005_comics.sql"
+                          ]
                         },
                         "limitations": [
-                          "Automated WebKit/Chromium emulation; no physical iPhone FPS, native gesture latency or tactile calibration."
+                          "Browser automation is not physical iPhone/native FPS verification.",
+                          "Optional generated sample pages are not a complete comic and were not automatically published.",
+                          "Previously issued signed image URLs remain valid up to 60 seconds after withdrawal."
                         ],
                         "previousDeployment": {
                           "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-                          "deploymentId": "dpl_AXqrTzKeVX43dk98QwjxyVvAA9X3",
+                          "deploymentId": "dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk",
                           "url": "https://truyen-ky-man-luc.vercel.app",
-                          "immutableUrl": "https://truyen-ky-man-byj0arg4s-anh-tun.vercel.app",
+                          "immutableUrl": "https://truyen-ky-man-7hsmwqm5k-anh-tun.vercel.app",
                           "target": "production",
                           "region": "sin1",
                           "state": "READY",
-                          "checkedAt": "2026-10-30T02:49:33.948Z",
+                          "checkedAt": "2026-10-30T03:40:53.53Z",
                           "runtime": {
                             "node": "24.x",
                             "NODE_OPTIONS": "--experimental-require-module"
                           },
-                          "runtimeSourceCommit": "5b08129e125350b771a62bdf4e9a1f3d2d5f137f",
+                          "runtimeSourceCommit": "35746a3d79d66708368c71889a3be32c4e1121fe",
                           "github": {
                             "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
                             "visibility": "PRIVATE",
@@ -604,19 +557,19 @@
                             "typecheck": true,
                             "productionBuild": true,
                             "selectedLocal": {
-                              "checkedAt": "2026-10-30T02:40:37.336Z",
+                              "checkedAt": "2026-10-30T03:27:24.054Z",
                               "unit": {
                                 "passed": 95,
                                 "files": 25
                               },
                               "typecheck": true,
                               "productionBuild": true,
-                              "scope": "94 selected Chromium desktop/mobile cases on final runtime code: Book, gestures, touch, footnotes, source position/font reflow, comparison/jump, selection and speech.",
+                              "scope": "62 selected Chromium desktop/mobile cases on final runtime: touch comfort, Book gesture/layout, mobile reading, footnotes, reliability.",
                               "stats": {
-                                "startTime": "2026-10-30T02:36:13.431Z",
-                                "duration": 204356.682,
-                                "expected": 84,
-                                "skipped": 10,
+                                "startTime": "2026-10-30T03:24:20.851Z",
+                                "duration": 132722.447,
+                                "expected": 50,
+                                "skipped": 12,
                                 "unexpected": 0,
                                 "flaky": 0
                               },
@@ -633,37 +586,46 @@
                                 }
                               ],
                               "redEvidence": {
-                                "webkit18": {
-                                  "width": 323,
-                                  "height": 451,
-                                  "scrollWidth": 323,
-                                  "scrollHeight": 22724,
-                                  "pages": 1
-                                },
-                                "fractionalViewport": {
-                                  "actualWidth": 999.265625,
-                                  "roundedWidth": 999,
-                                  "falseLeaves": 29,
-                                  "actualLeaves": 28,
-                                  "lastCharacterX": -220.765625
+                                "slow30pxSwipe": "Stayed at page 1 before change",
+                                "edge40pxInsetTap": "Stayed at page 1 before change",
+                                "foldCallsDuring80SynchronousMoves": {
+                                  "before": 80,
+                                  "after": 0,
+                                  "afterNextFrame": 1
                                 }
                               },
-                              "limitations": [
-                                "Automated WebKit on Windows with phone/touch emulation; no physical iPhone or iOS in-app browser control.",
-                                "Native voice quality not assessed."
+                              "calibration": "Legacy WebKit click-only tap after a swipe initially timed out. Added coarse-pointer click fallback with compatibility-click coordinate suppression; the same sequence then passed.",
+                              "limits": [
+                                "Automated Chromium/WebKit emulation; no physical iPhone FPS or tactile calibration."
                               ]
+                            },
+                            "finalBoundaryLocal": {
+                              "base": "http://127.0.0.1:3001",
+                              "checkedAt": "2026-10-30T03:33:04.87Z",
+                              "scope": "Final delta routes edge animations through existing bounds-checked turnPage. All touch comfort tests rerun on rebuilt final app.",
+                              "red": "Tap in the last paper padding kept data-flipping=true with no destination",
+                              "stats": {
+                                "startTime": "2026-10-30T03:32:04.684Z",
+                                "duration": 9541.723,
+                                "expected": 4,
+                                "skipped": 0,
+                                "unexpected": 0,
+                                "flaky": 0
+                              },
+                              "typecheck": true,
+                              "productionBuild": true
                             },
                             "selectedLive": {
                               "base": "https://truyen-ky-man-luc.vercel.app",
-                              "deploymentId": "dpl_AXqrTzKeVX43dk98QwjxyVvAA9X3",
-                              "runtimeSourceCommit": "5b08129e125350b771a62bdf4e9a1f3d2d5f137f",
-                              "checkedAt": "2026-10-30T02:49:33.948Z",
-                              "scope": "56 selected Chromium desktop/mobile cases on exact final runtime: Book layouts/gestures, mobile reading, footnotes and reader reliability. Not the full suite.",
+                              "deploymentId": "dpl_HvBSSpkmEhdsmeWCoUUsoZecaofk",
+                              "runtimeSourceCommit": "35746a3d79d66708368c71889a3be32c4e1121fe",
+                              "checkedAt": "2026-10-30T03:40:53.53Z",
+                              "scope": "64 selected Chromium desktop/mobile cases on exact final runtime: touch comfort and bounds, Book layout/gesture, mobile reading, footnotes and reliability. Not full 214-case suite.",
                               "stats": {
-                                "startTime": "2026-10-30T02:43:20.357Z",
-                                "duration": 173908.58,
-                                "expected": 47,
-                                "skipped": 9,
+                                "startTime": "2026-10-30T03:36:09.141Z",
+                                "duration": 183152.36000000002,
+                                "expected": 51,
+                                "skipped": 13,
                                 "unexpected": 0,
                                 "flaky": 0
                               },
@@ -679,35 +641,44 @@
                                   "success": true
                                 }
                               ],
-                              "visual": "verification/ios-ui-live.json",
-                              "limitations": [
-                                "WebKit 18.0 and 27.2 run on Windows with phone/touch emulation. No physical iPhone or Zalo/Messenger in-app browser control.",
-                                "Native voice quality is not assessed."
+                              "visual": "verification/touch-ui-live.json",
+                              "source": "verification/touch-source.json",
+                              "renderBudget": {
+                                "beforeSynchronousFolds": 80,
+                                "afterSynchronousFolds": 0,
+                                "nextAnimationFrameFolds": 1
+                              },
+                              "touch": {
+                                "slowDistance": 24,
+                                "quickDistance": 14,
+                                "previewGain": 2,
+                                "edgeWidth": 48
+                              },
+                              "limits": [
+                                "Automated WebKit/Chromium emulation; no physical iPhone FPS, native gesture latency or tactile calibration."
                               ]
                             },
                             "webkitCases": 8,
                             "visualCases": 4,
-                            "privateSourceChecked": true,
                             "noContentOrSchemaChanges": true
                           },
                           "limitations": [
-                            "WebKit 18.0 and 27.2 run on Windows with phone/touch emulation. No physical iPhone or Zalo/Messenger in-app browser control.",
-                            "Native voice quality is not assessed."
+                            "Automated WebKit/Chromium emulation; no physical iPhone FPS, native gesture latency or tactile calibration."
                           ],
                           "previousDeployment": {
                             "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-                            "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
+                            "deploymentId": "dpl_AXqrTzKeVX43dk98QwjxyVvAA9X3",
                             "url": "https://truyen-ky-man-luc.vercel.app",
-                            "immutableUrl": "https://truyen-ky-man-q30pbczem-anh-tun.vercel.app",
+                            "immutableUrl": "https://truyen-ky-man-byj0arg4s-anh-tun.vercel.app",
                             "target": "production",
                             "region": "sin1",
                             "state": "READY",
-                            "checkedAt": "2026-10-30T00:06:51.152Z",
+                            "checkedAt": "2026-10-30T02:49:33.948Z",
                             "runtime": {
                               "node": "24.x",
                               "NODE_OPTIONS": "--experimental-require-module"
                             },
-                            "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012",
+                            "runtimeSourceCommit": "5b08129e125350b771a62bdf4e9a1f3d2d5f137f",
                             "github": {
                               "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
                               "visibility": "PRIVATE",
@@ -717,139 +688,254 @@
                               "unitTests": 95,
                               "typecheck": true,
                               "productionBuild": true,
-                              "fullLocal": {
-                                "runtimeSourceCommit": "54cc5cd957ac8aad657eb3255fc076f1589a93c8",
-                                "stats": {
-                                  "startTime": "2026-10-29T23:47:54.008Z",
-                                  "duration": 402033.57,
-                                  "expected": 189,
-                                  "skipped": 17,
-                                  "unexpected": 0,
-                                  "flaky": 0
+                              "selectedLocal": {
+                                "checkedAt": "2026-10-30T02:40:37.336Z",
+                                "unit": {
+                                  "passed": 95,
+                                  "files": 25
                                 },
-                                "scope": "Full suite before final CSS-only comparison picker correction."
-                              },
-                              "finalCssLocal": {
-                                "passed": 5,
-                                "skipped": 1,
-                                "failed": 0,
-                                "scope": "Rebuilt 85f6ee1, all reader-expansion cases after 44px picker correction."
-                              },
-                              "selectedLive": {
-                                "base": "https://truyen-ky-man-luc.vercel.app",
-                                "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
-                                "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012",
-                                "checkedAt": "2026-10-30T00:06:51.152Z",
-                                "scope": "70 selected cloud cases on exact final runtime: expansion, fonts/pronunciation/auto-next, offline reload/update failure retention, mobile reading/Book gestures, footnotes, reliability, speech continuity and chapter navigation. Not full 206-case cloud suite.",
+                                "typecheck": true,
+                                "productionBuild": true,
+                                "scope": "94 selected Chromium desktop/mobile cases on final runtime code: Book, gestures, touch, footnotes, source position/font reflow, comparison/jump, selection and speech.",
                                 "stats": {
-                                  "startTime": "2026-10-30T00:02:00.726Z",
-                                  "duration": 223638.216,
-                                  "expected": 60,
+                                  "startTime": "2026-10-30T02:36:13.431Z",
+                                  "duration": 204356.682,
+                                  "expected": 84,
                                   "skipped": 10,
                                   "unexpected": 0,
                                   "flaky": 0
                                 },
-                                "visual": "verification/expansion-ui-live-final.json",
-                                "admin": "verification/expansion-admin-latest.json",
-                                "editor": "verification/editor-switch-latest.json",
-                                "calibration": [
-                                  "First 54cc5cd cloud run: 58 passed, 10 skipped, 2 failures. One trace-directory collision from concurrent Playwright invocations; one new 44px picker assertion correctly rejected the old 22px control.",
-                                  "Final run uses a separate artifacts directory and corrected 85f6ee1 CSS. Final stats above have no unexpected or flaky cases."
+                                "webkit": [
+                                  {
+                                    "engine": "18.0",
+                                    "cases": 4,
+                                    "success": true
+                                  },
+                                  {
+                                    "engine": "27.2",
+                                    "cases": 4,
+                                    "success": true
+                                  }
                                 ],
+                                "redEvidence": {
+                                  "webkit18": {
+                                    "width": 323,
+                                    "height": 451,
+                                    "scrollWidth": 323,
+                                    "scrollHeight": 22724,
+                                    "pages": 1
+                                  },
+                                  "fractionalViewport": {
+                                    "actualWidth": 999.265625,
+                                    "roundedWidth": 999,
+                                    "falseLeaves": 29,
+                                    "actualLeaves": 28,
+                                    "lastCharacterX": -220.765625
+                                  }
+                                },
                                 "limitations": [
-                                  "Chromium mouse/touch emulation, no physical Android/iOS or Safari validation.",
-                                  "Web Speech tests mock engine callbacks; native voice quality and real-device FPS remain untested.",
-                                  "Vercel log endpoint returned a scope permission error; no full runtime-log scan is claimed. Browser visual checks recorded zero page errors."
+                                  "Automated WebKit on Windows with phone/touch emulation; no physical iPhone or iOS in-app browser control.",
+                                  "Native voice quality not assessed."
                                 ]
                               },
-                              "visual": {
-                                "path": "verification/expansion-ui-live-final.json",
-                                "combinations": 4,
-                                "pageErrors": [],
-                                "comparisonFontSize": "20px",
-                                "touchTargets": 44
+                              "selectedLive": {
+                                "base": "https://truyen-ky-man-luc.vercel.app",
+                                "deploymentId": "dpl_AXqrTzKeVX43dk98QwjxyVvAA9X3",
+                                "runtimeSourceCommit": "5b08129e125350b771a62bdf4e9a1f3d2d5f137f",
+                                "checkedAt": "2026-10-30T02:49:33.948Z",
+                                "scope": "56 selected Chromium desktop/mobile cases on exact final runtime: Book layouts/gestures, mobile reading, footnotes and reader reliability. Not the full suite.",
+                                "stats": {
+                                  "startTime": "2026-10-30T02:43:20.357Z",
+                                  "duration": 173908.58,
+                                  "expected": 47,
+                                  "skipped": 9,
+                                  "unexpected": 0,
+                                  "flaky": 0
+                                },
+                                "webkit": [
+                                  {
+                                    "engine": "18.0",
+                                    "cases": 4,
+                                    "success": true
+                                  },
+                                  {
+                                    "engine": "27.2",
+                                    "cases": 4,
+                                    "success": true
+                                  }
+                                ],
+                                "visual": "verification/ios-ui-live.json",
+                                "limitations": [
+                                  "WebKit 18.0 and 27.2 run on Windows with phone/touch emulation. No physical iPhone or Zalo/Messenger in-app browser control.",
+                                  "Native voice quality is not assessed."
+                                ]
                               },
-                              "adminIntegration": true,
-                              "editorIntegration": true,
-                              "fixtureCleanup": true,
-                              "publishedBookUnchanged": true
+                              "webkitCases": 8,
+                              "visualCases": 4,
+                              "privateSourceChecked": true,
+                              "noContentOrSchemaChanges": true
                             },
                             "limitations": [
-                              "Chromium mouse/touch emulation, no physical Android/iOS or Safari validation.",
-                              "Web Speech tests mock engine callbacks; native voice quality and real-device FPS remain untested.",
-                              "Vercel log endpoint returned a scope permission error; no full runtime-log scan is claimed. Browser visual checks recorded zero page errors."
+                              "WebKit 18.0 and 27.2 run on Windows with phone/touch emulation. No physical iPhone or Zalo/Messenger in-app browser control.",
+                              "Native voice quality is not assessed."
                             ],
                             "previousDeployment": {
                               "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-                              "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
+                              "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
                               "url": "https://truyen-ky-man-luc.vercel.app",
-                              "immutableUrl": "https://truyen-ky-man-84p8nj570-anh-tun.vercel.app",
+                              "immutableUrl": "https://truyen-ky-man-q30pbczem-anh-tun.vercel.app",
                               "target": "production",
                               "region": "sin1",
                               "state": "READY",
-                              "checkedAt": "2026-10-29T11:19:45.928Z",
+                              "checkedAt": "2026-10-30T00:06:51.152Z",
                               "runtime": {
                                 "node": "24.x",
                                 "NODE_OPTIONS": "--experimental-require-module"
                               },
-                              "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
+                              "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012",
                               "github": {
                                 "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
                                 "visibility": "PRIVATE",
                                 "branch": "main"
                               },
                               "verification": {
-                                "unitTests": 82,
+                                "unitTests": 95,
                                 "typecheck": true,
                                 "productionBuild": true,
                                 "fullLocal": {
-                                  "startTime": "2026-10-29T11:09:51.001Z",
-                                  "duration": 204197.149,
-                                  "expected": 178,
-                                  "skipped": 16,
-                                  "unexpected": 0,
-                                  "flaky": 0
-                                },
-                                "selectedLive": {
-                                  "clientDate": "2026-10-29",
-                                  "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
-                                  "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
-                                  "base": "https://truyen-ky-man-luc.vercel.app",
-                                  "checkedAt": "2026-10-29T11:19:45.928Z",
-                                  "scope": "52 selected cloud cases: all mobile reading, Book gesture, Book presentation and footnote cases on the exact final runtime; not a full 194-case cloud run.",
+                                  "runtimeSourceCommit": "54cc5cd957ac8aad657eb3255fc076f1589a93c8",
                                   "stats": {
-                                    "startTime": "2026-10-29T11:16:59.957Z",
-                                    "duration": 94773.591,
-                                    "expected": 43,
-                                    "skipped": 9,
+                                    "startTime": "2026-10-29T23:47:54.008Z",
+                                    "duration": 402033.57,
+                                    "expected": 189,
+                                    "skipped": 17,
                                     "unexpected": 0,
                                     "flaky": 0
                                   },
-                                  "visual": {
-                                    "path": "verification/mobile-reading-ui-live.json",
-                                    "combinations": 4,
-                                    "phoneReverseFolio": 2,
-                                    "phoneFrontFolio": 1,
-                                    "touchNotePreview": true,
-                                    "noteOpacitySettled": true,
-                                    "noPaperReflow": true,
-                                    "pageErrors": []
+                                  "scope": "Full suite before final CSS-only comparison picker correction."
+                                },
+                                "finalCssLocal": {
+                                  "passed": 5,
+                                  "skipped": 1,
+                                  "failed": 0,
+                                  "scope": "Rebuilt 85f6ee1, all reader-expansion cases after 44px picker correction."
+                                },
+                                "selectedLive": {
+                                  "base": "https://truyen-ky-man-luc.vercel.app",
+                                  "deploymentId": "dpl_6Re7gMgYSrwJmZZEg2AvNMgmMJQA",
+                                  "runtimeSourceCommit": "85f6ee1717defd260063563cdc9c787fe456d012",
+                                  "checkedAt": "2026-10-30T00:06:51.152Z",
+                                  "scope": "70 selected cloud cases on exact final runtime: expansion, fonts/pronunciation/auto-next, offline reload/update failure retention, mobile reading/Book gestures, footnotes, reliability, speech continuity and chapter navigation. Not full 206-case cloud suite.",
+                                  "stats": {
+                                    "startTime": "2026-10-30T00:02:00.726Z",
+                                    "duration": 223638.216,
+                                    "expected": 60,
+                                    "skipped": 10,
+                                    "unexpected": 0,
+                                    "flaky": 0
                                   },
+                                  "visual": "verification/expansion-ui-live-final.json",
+                                  "admin": "verification/expansion-admin-latest.json",
+                                  "editor": "verification/editor-switch-latest.json",
+                                  "calibration": [
+                                    "First 54cc5cd cloud run: 58 passed, 10 skipped, 2 failures. One trace-directory collision from concurrent Playwright invocations; one new 44px picker assertion correctly rejected the old 22px control.",
+                                    "Final run uses a separate artifacts directory and corrected 85f6ee1 CSS. Final stats above have no unexpected or flaky cases."
+                                  ],
                                   "limitations": [
-                                    "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
-                                    "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech."
+                                    "Chromium mouse/touch emulation, no physical Android/iOS or Safari validation.",
+                                    "Web Speech tests mock engine callbacks; native voice quality and real-device FPS remain untested.",
+                                    "Vercel log endpoint returned a scope permission error; no full runtime-log scan is claimed. Browser visual checks recorded zero page errors."
                                   ]
                                 },
-                                "visual": "verification/mobile-reading-ui-live.json"
+                                "visual": {
+                                  "path": "verification/expansion-ui-live-final.json",
+                                  "combinations": 4,
+                                  "pageErrors": [],
+                                  "comparisonFontSize": "20px",
+                                  "touchTargets": 44
+                                },
+                                "adminIntegration": true,
+                                "editorIntegration": true,
+                                "fixtureCleanup": true,
+                                "publishedBookUnchanged": true
                               },
                               "limitations": [
-                                "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
-                                "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech.",
-                                "No source book, editor draft, account, storage schema or permissions changed."
+                                "Chromium mouse/touch emulation, no physical Android/iOS or Safari validation.",
+                                "Web Speech tests mock engine callbacks; native voice quality and real-device FPS remain untested.",
+                                "Vercel log endpoint returned a scope permission error; no full runtime-log scan is claimed. Browser visual checks recorded zero page errors."
                               ],
                               "previousDeployment": {
-                                "id": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
-                                "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46"
+                                "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
+                                "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
+                                "url": "https://truyen-ky-man-luc.vercel.app",
+                                "immutableUrl": "https://truyen-ky-man-84p8nj570-anh-tun.vercel.app",
+                                "target": "production",
+                                "region": "sin1",
+                                "state": "READY",
+                                "checkedAt": "2026-10-29T11:19:45.928Z",
+                                "runtime": {
+                                  "node": "24.x",
+                                  "NODE_OPTIONS": "--experimental-require-module"
+                                },
+                                "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
+                                "github": {
+                                  "url": "https://github.com/Menhera-Chan-cool/truyen-ky-man-luc",
+                                  "visibility": "PRIVATE",
+                                  "branch": "main"
+                                },
+                                "verification": {
+                                  "unitTests": 82,
+                                  "typecheck": true,
+                                  "productionBuild": true,
+                                  "fullLocal": {
+                                    "startTime": "2026-10-29T11:09:51.001Z",
+                                    "duration": 204197.149,
+                                    "expected": 178,
+                                    "skipped": 16,
+                                    "unexpected": 0,
+                                    "flaky": 0
+                                  },
+                                  "selectedLive": {
+                                    "clientDate": "2026-10-29",
+                                    "deploymentId": "dpl_2Kyz1NC9CXAVoCPCxKBQbPCpXCV4",
+                                    "runtimeSourceCommit": "7fb30b6e8a8fa0a8e9f93878a6f6fe1c34f415f0",
+                                    "base": "https://truyen-ky-man-luc.vercel.app",
+                                    "checkedAt": "2026-10-29T11:19:45.928Z",
+                                    "scope": "52 selected cloud cases: all mobile reading, Book gesture, Book presentation and footnote cases on the exact final runtime; not a full 194-case cloud run.",
+                                    "stats": {
+                                      "startTime": "2026-10-29T11:16:59.957Z",
+                                      "duration": 94773.591,
+                                      "expected": 43,
+                                      "skipped": 9,
+                                      "unexpected": 0,
+                                      "flaky": 0
+                                    },
+                                    "visual": {
+                                      "path": "verification/mobile-reading-ui-live.json",
+                                      "combinations": 4,
+                                      "phoneReverseFolio": 2,
+                                      "phoneFrontFolio": 1,
+                                      "touchNotePreview": true,
+                                      "noteOpacitySettled": true,
+                                      "noPaperReflow": true,
+                                      "pageErrors": []
+                                    },
+                                    "limitations": [
+                                      "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
+                                      "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech."
+                                    ]
+                                  },
+                                  "visual": "verification/mobile-reading-ui-live.json"
+                                },
+                                "limitations": [
+                                  "Chromium mouse, synthetic pointer and native CDP touch; no physical Android/iOS, Safari or field FPS calibration.",
+                                  "Lifecycle tests use DOM events, not a claim of actual OS freezing; speech tests mock browser speech.",
+                                  "No source book, editor draft, account, storage schema or permissions changed."
+                                ],
+                                "previousDeployment": {
+                                  "id": "dpl_J8tBp1BTDzfd95bbEGt5UaUjCSNy",
+                                  "runtimeSourceCommit": "ded3627c69ce4fddbdb32ba1be9f58b76ca40c46"
+                                }
                               }
                             }
                           }

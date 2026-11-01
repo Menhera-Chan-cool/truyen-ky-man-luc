@@ -10,8 +10,9 @@ test("scroll updates progress and persists position without per-frame React comm
 
 test("progress remains correct across single-page mode, hiding, placement and resizing",async({page})=>{
  await page.goto("/vi/comic/chapter-1");await expect(page.locator(".comic-reader")).toHaveAttribute("data-ready","true");
- const settings=page.getByRole("button",{name:"Cài đặt truyện tranh",exact:true});await settings.click();await page.getByRole("button",{name:"Trái → phải",exact:true}).click();await page.getByRole("button",{name:"Thanh tiến độ phía dưới",exact:true}).click();await page.keyboard.press("Escape");await page.keyboard.press("ArrowRight");await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow","100");
+ const count=await page.locator(".cc-page").count();expect(count).toBeGreaterThan(1);const progress=String(Math.round(100/(count-1)));console.log(JSON.stringify({chapterPages:count,nextPageProgress:progress}));
+ const settings=page.getByRole("button",{name:"Cài đặt truyện tranh",exact:true});await settings.click();await page.getByRole("button",{name:"Trái → phải",exact:true}).click();await page.getByRole("button",{name:"Thanh tiến độ phía dưới",exact:true}).click();await page.keyboard.press("Escape");await page.keyboard.press("ArrowRight");await expect(page.locator(".cc-page")).toHaveCount(1);await expect(page.locator(".cc-page")).toHaveAttribute("data-index","1");await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow",progress);
  await settings.click();await page.getByRole("button",{name:"Thanh tiến độ ẩn",exact:true}).click();await page.keyboard.press("Escape");await expect(page.getByRole("progressbar")).toHaveCount(0);
- await settings.click();await page.getByRole("button",{name:"Thanh tiến độ bên trái",exact:true}).click();await page.keyboard.press("Escape");await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow","100");
- const size=page.viewportSize()!;await page.setViewportSize({width:size.width,height:size.height-100});await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow","100");
+ await settings.click();await page.getByRole("button",{name:"Thanh tiến độ bên trái",exact:true}).click();await page.keyboard.press("Escape");await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow",progress);
+ const size=page.viewportSize()!;await page.setViewportSize({width:size.width,height:size.height-100});await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow",progress);
 });

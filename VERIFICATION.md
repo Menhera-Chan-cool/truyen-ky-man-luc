@@ -1,3 +1,18 @@
+# TT giữ nguyên trang khi ảnh tải lỗi — production 01/11/2026
+
+Production **dpl_BPsvqhkgojiZWyuZbY4iTo8PsnoL**, runtime **c40bbb28c022fde504c64a134e6aadcf056426e4**, https://truyen-ky-man-luc.vercel.app READY. **204 hash source quan trọng** khớp artifact Vercel; GitHub private. Commit tiếp theo chỉ cập nhật bài kiểm thử/bằng chứng, không đổi mã chạy.
+
+- RED trên bản production trước: ảnh lỗi làm chiều cao trang desktop 954,75 →300 px, zoom 10% 190,94 →300 px, mobile 574,5 →300 px. Khung tải/lỗi nay giữ tỷ lệ kích thước ảnh gốc; phần báo lỗi/thử lại nằm trong khung có thể cuộn khi quá nhỏ. Không đổi ảnh, byte tải, nội dung sách hoặc quyền đọc.
+- ComicModal xử lý cancel của Escape ngay, không đợi sự kiện close xếp hàng. Cả Settings/Chapters/Help dùng chung cơ chế. Unit RED xác nhận callback chưa được gọi khi cancel; GREEN gọi một lần và ngăn native close trễ. Không thêm timeout hoặc thư viện.
+- **183 unit /45 file**, typecheck/build đạt. Lượt unit/build chạy song song không giới hạn worker gặp thiếu bộ nhớ host; lượt unit hai worker và build kế tiếp đạt. Local có 8 ca browser đạt, 2 ca zoom mobile bỏ qua vì mobile không có zoom.
+- Live: **8 ca browser riêng biệt đạt** (7 Chromium desktop/mobile, 1 WebKit phone); ảnh lỗi và thử lại giữ chiều cao **delta=0** ở cả zoom thường/nhỏ, pageErrors=0 trong các ca ảnh. Cuộn 90 frame ghi nhận 0 React commit trên mỗi Chromium desktop/mobile; lưu/khôi phục vị trí, mode, ẩn/đổi vị trí progress và resize đạt.
+- Lượt live đầu có 2 assertion tiến độ cũ thất bại vì giả định chương chỉ có 2 ảnh. Chương công khai hiện có **12 ảnh**, nên trang kế đúng là **9%**. Bài test đã đổi sang số trang thực và kiểm tra thêm data-index=1; 4 ca progress sau đó đạt, không cần thay runtime hay dữ liệu sách.
+- Chi tiết: `verification/comic-image-recovery-local.json`, `verification/comic-image-recovery-live.json`. Screenshot local desktop zoom nhỏ/WebKit đã được xem; ảnh/trace nằm trong work, không đưa binary vào source.
+
+Chưa đo FPS trên điện thoại vật lý hoặc nghe TTS native trong lượt này. Các lỗi mạng ảnh được tiêm ở biên request; không phải đo toàn bộ chất lượng mạng thực tế.
+
+---
+
 # Editor phản hồi sớm khi mất mạng — production 01/11/2026
 
 Production **dpl_ACx6kmZPAFFWgeecyXoNjQsQAU8S**, runtime **9661b86ec79e2670c238ca0d6b631e1fe44b391a**, https://truyen-ky-man-luc.vercel.app READY. **201 hash source quan trọng** khớp Vercel; GitHub private. Commit sau chỉ cập nhật bằng chứng.
