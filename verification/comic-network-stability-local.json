@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-11-01T13:55:57.985Z",
+  "unitTests": 183,
+  "unitFiles": 45,
+  "typecheck": true,
+  "productionBuild": true,
+  "scenario": {
+    "events": 6,
+    "platforms": [
+      "Chromium desktop",
+      "Chromium mobile"
+    ],
+    "input": "Identical saveData/effectiveType/downlink values; synthetic change events; speculative image completion held at the Image boundary."
+  },
+  "before": {
+    "created": 4,
+    "cancelled": 2,
+    "afterEvents": {
+      "created": 16,
+      "cancelled": 14
+    },
+    "reactCommits": 6
+  },
+  "after": {
+    "created": 2,
+    "cancelled": 0,
+    "afterEvents": {
+      "created": 2,
+      "cancelled": 0
+    },
+    "reactCommits": 0,
+    "dataSaverCancelsPending": true,
+    "disablingDataSaverRestartsPreloads": true
+  },
+  "browserChecks": {
+    "chromiumPassed": 18,
+    "webkitPassed": 3,
+    "skipped": 2,
+    "coverage": [
+      "Novel next/previous/TOC/browser history and per-chapter position",
+      "TT navigation/Back/reload, settings and blur/focus auto-scroll",
+      "90-frame scroll progress, settings persistence, image failure and retry"
+    ],
+    "skipReasons": [
+      "WebKit has no Network Information API.",
+      "Mobile has no zoom control."
+    ]
+  },
+  "notes": [
+    "Image job counts are controlled browser observations, not HTTP byte savings or a physical-device FPS benchmark.",
+    "The first harness entered single-page mode after vertical images had already loaded; it was corrected to start directly in single-page mode.",
+    "An intermediate same-state React setter still produced one commit; the event listener now checks the last snapshot before calling React.",
+    "One cold local chapter navigation remained pending beyond the old 5-second test assertion. The assertion now allows 15 seconds; no instant cloud navigation guarantee is claimed."
+  ],
+  "documentation": "https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation/change_event"
+}

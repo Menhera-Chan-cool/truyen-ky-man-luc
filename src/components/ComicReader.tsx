@@ -423,14 +423,22 @@ export default function ComicReader({
   const [connection,setConnection]=useState<ComicConnection|null>(null);
   useEffect(()=>{
     const network=(navigator as Navigator&{connection?:ComicConnection&EventTarget}).connection;
-    const update=()=>setConnection({saveData:network?.saveData,effectiveType:network?.effectiveType,downlink:network?.downlink});update();network?.addEventListener("change",update);return()=>network?.removeEventListener("change",update);
+    let previous:ComicConnection|undefined;
+    const update=()=>{
+      const next={saveData:network?.saveData,effectiveType:network?.effectiveType,downlink:network?.downlink};
+      if(previous&&previous.saveData===next.saveData&&previous.effectiveType===next.effectiveType&&previous.downlink===next.downlink)return;
+      previous=next;setConnection(next);
+    };
+    update();network?.addEventListener("change",update);return()=>network?.removeEventListener("change",update);
   },[]);
   const preloadIndices=selectComicPreloads(pages,page,prefs.preload,connection??{saveData:true});
+  const preloadKey=ready&&connection&&prefs.mode!=="vertical"
+    ?JSON.stringify(preloadIndices.map(n=>comicReadingUrl(urls[pages[n].id]??pages[n].path??"",zoom>100)).filter(u=>!!u&&!u.startsWith("blob:")))
+    :"";
   useEffect(() => {
-    if (!ready || !connection || !pages.length || prefs.mode==="vertical") return;
-    const queue=selectComicPreloads(pages,page,prefs.preload,connection).map(n=>comicReadingUrl(urls[pages[n].id]??pages[n].path??"",zoom>100)).filter(u=>!!u&&!u.startsWith("blob:"));
-    return preloadComicImages(queue,loadedImages.current,pendingImages.current);
-  }, [ready,pages,page,prefs.preload,prefs.mode,urls,connection,zoom]);
+    if (!preloadKey) return;
+    return preloadComicImages(JSON.parse(preloadKey),loadedImages.current,pendingImages.current);
+  }, [preloadKey]);
   function updateProgress(){
     const bar=progressBar.current,el=stage.current;if(!bar||!el)return;
     const value=prefs.mode==="vertical"?el.scrollTop/Math.max(1,el.scrollHeight-el.clientHeight):pages.length>1?current.current/(pages.length-1):0;

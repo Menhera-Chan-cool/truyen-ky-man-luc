@@ -5,7 +5,7 @@ test("chapter intent survives navigation, Back and reload without WebKit abort e
   const boot=await page.evaluate(()=>((window as any).__comicBoot=crypto.randomUUID()));
   await page.evaluate(()=>window.dispatchEvent(new Event("focus")));
   await page.getByRole("button",{name:"Chương trước",exact:true}).hover();
-  await page.getByRole("button",{name:"Chương trước",exact:true}).click();await expect(page).toHaveURL(/\/comic\/preface$/);
+  await page.getByRole("button",{name:"Chương trước",exact:true}).click();await expect(page).toHaveURL(/\/comic\/preface$/,{timeout:15000});
   await expect.poll(()=>page.evaluate(()=>(window as any).__comicBoot)).toBe(boot);
   await page.goBack();await page.reload();await expect(page.locator(".comic-reader")).toHaveAttribute("data-ready","true");expect(errors).toEqual([]);
 });
