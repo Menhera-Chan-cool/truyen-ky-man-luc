@@ -1,3 +1,17 @@
+# UI đọc TT/Comic — production 01/11/2026
+
+Production **dpl_kThn8dDu38veuq6QH5FkuEMctm4p**, runtime source **e1cc31e5b6c6de017e32d5a22910d2f7f97a340e**, https://truyen-ky-man-luc.vercel.app đã xác minh READY; **188 hash** mã runtime/test/migration quan trọng khớp source. GitHub private. Commit theo sau chỉ cập nhật harness kiểm thử, hướng dẫn và bằng chứng; không thay mã chạy ứng dụng.
+
+- UI hiện khi mở tab mới, tự ẩn sau 10 giây. Nhấp đúp/chạm đúp bật–tắt toàn bộ; cuộn, di chuột trên nội dung và quay lại tab không gọi UI trở lại. PC hover/focus từng cụm độc lập. Giữ trạng thái ẩn khi đổi chương, VI/EN, Back và reload cùng tab.
+- Mobile không có Stretch/zoom %, ảnh vừa chiều rộng và giữ cài đặt PC khi đổi kích thước. Giữ native pinch. Phân biệt chạm mép với chạm đúp; chặn compatibility dblclick sau touch/cancel để không bật UI hai lần hoặc chuyển trang ngoài ý muốn. Dialog tạm dừng bộ đếm; tự cuộn vẫn dừng khi rời tab.
+- **139 unit / 38 file**, typecheck và production build đạt. Local và URL production đều **23 ca browser đạt**: 16 Chromium desktop/mobile, 7 WebKit phone. Bốn lượt được bỏ qua vì chỉ áp dụng PC (focus bàn phím và resize giữ zoom). Kiểm tra ảnh đã tải trên PC/phone bằng screenshot. Một ca thời gian ở lượt live đầu cộng cả độ trễ mạng vào 9 giây; đã đóng băng clock trước điều hướng và chạy lại đầy đủ, đạt.
+- `interact` đã dùng được để dò Comix: lệnh Node/Playwright ngắn, scrapeId đã biết, phiên tuần tự và explicit stop. Không đổi khóa/cấu hình plugin. Reference xác nhận double gesture, giữ ẩn qua chương và không zoom mobile; 10 giây và hover từng cụm được triển khai theo yêu cầu người dùng vì phiên reference không tái hiện hoàn toàn hai điểm này.
+- Không sửa nội dung, metadata, schema hay file nguồn sách; không chạy fixture xuất bản. Xem `SPEC-comic-controls.md`, `verification/comic-controls-local.json`, `verification/comic-controls-live.json`.
+
+Chưa hiệu chuẩn trên iPhone vật lý. Những mục phía dưới là lịch sử release trước.
+
+---
+
 # Phông heading do editor quản lý — production 31/10/2026
 
 Production **dpl_3ezjCMmz8U4dArMgeHqckcs3bmJr**, runtime source **39a65ef181d05a1ae4cf903a99b6377bb7054442**, https://truyen-ky-man-luc.vercel.app đã xác minh READY; **185 hash** runtime/test/migration quan trọng khớp source. GitHub private.

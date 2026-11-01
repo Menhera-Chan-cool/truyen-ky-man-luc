@@ -9,6 +9,8 @@
 
 VI và EN có bản ảnh, nháp, phiên bản và trạng thái xuất bản riêng. TT cũ trước migration 006 được giữ ở VI; EN không tự lấy ảnh VI. Rê chuột vào VI/EN trên PC hoặc chạm trên điện thoại để chọn Novel hay TT/Comic. Mỗi lựa chọn mở một bản của cùng chương. Vị trí TT được nhớ riêng theo ngôn ngữ; cài đặt đọc vẫn lưu trên thiết bị. Thao tác lật trang/giãn ảnh không sửa file gốc. Không có OCR hay TTS ảnh.
 
+Công cụ đọc TT/Comic: UI hiện khi mở tab mới, tự ẩn sau 10 giây. Nhấp đúp hoặc chạm đúp ảnh/vùng trống để bật–tắt; cuộn và quay lại tab không gọi UI trở lại. PC rê chuột vào từng cụm để hiện riêng cụm đó; bàn phím vẫn thấy cụm đang focus. Mobile tự vừa chiều rộng, không có Stretch/zoom %. Trạng thái ẩn được giữ khi đổi chương, đổi VI/EN hoặc tải lại trong cùng tab.
+
 Trong lúc biên tập, trình duyệt giữ bản khôi phục theo tài khoản, ngôn ngữ và chương. Sau khi tải lại, bấm **Khôi phục thay đổi** để xem lại rồi **Lưu nháp** khi muốn ghi lên server. Bản khôi phục giữ số phiên bản cũ để server vẫn phát hiện xung đột. Các cửa sổ có bản khôi phục riêng; có thể xóa từng bản rõ ràng. Giữ ảnh nguồn và lưu nháp chung thường xuyên: xóa dữ liệu trình duyệt hoặc hệ điều hành đóng ứng dụng trước khi kịp ghi có thể làm mất thay đổi mới nhất.
 
 Khi lưu ảnh gặp lỗi, thử lại hoặc khôi phục sau tải lại sẽ dùng các ảnh đã tải thành công. Hai tác vụ tải chạy song song và vẫn giữ thứ tự trang. Editor dùng ảnh xem nhanh WebP tải theo vùng nhìn; mở ảnh lớn vẫn xem bản gốc. File gốc được giữ nguyên byte và kiểm tra checksum.

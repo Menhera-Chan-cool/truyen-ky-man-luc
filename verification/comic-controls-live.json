@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-11-01T02:07:00.547597+00:00",
+  "baseUrl": "https://truyen-ky-man-luc.vercel.app",
+  "unitTests": 139,
+  "unitFiles": 38,
+  "typecheck": true,
+  "productionBuild": true,
+  "chromiumDesktopMobile": {
+    "passed": 16,
+    "skippedDesktopOnlyOnMobile": 2
+  },
+  "webkitPhone": {
+    "passed": 7,
+    "skippedDesktopOnly": 2
+  },
+  "checks": [
+    "10-second expiry",
+    "no pointer/scroll/focus wake",
+    "independent hover and keyboard regions",
+    "double gesture and canceled-touch compatibility event regression",
+    "horizontal double gesture does not turn page",
+    "hidden next/Back/reload",
+    "VI/EN edition menu and outside dismissal",
+    "modal pauses idle",
+    "mobile hides stretch/zoom and preserves desktop preferences",
+    "auto-scroll stops in background",
+    "desktop/phone loaded-image visual inspection"
+  ],
+  "reference": "https://comix.to/title/xkr97-the-graymark/11252059-chapter-102",
+  "interact": "Verified short sequential Node/Playwright calls with known scrapeId and explicit interact_stop. No plugin configuration or secrets changed.",
+  "writesToBookData": false,
+  "physicalIPhoneChecked": false,
+  "deploymentId": "dpl_kThn8dDu38veuq6QH5FkuEMctm4p",
+  "runtimeSourceCommit": "e1cc31e5b6c6de017e32d5a22910d2f7f97a340e",
+  "criticalSourceHashesMatched": 188,
+  "sourceListingTruncated": true,
+  "criticalSourceFilesMissing": [],
+  "productionState": "READY",
+  "githubVisibility": "PRIVATE",
+  "timerHarness": "Freeze fake clock before navigation so cold network time is excluded from the 9-second/10-second boundary. Final full browser reruns passed."
+}
