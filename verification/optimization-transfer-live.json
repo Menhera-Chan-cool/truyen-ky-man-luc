@@ -1,0 +1,28 @@
+{
+  "checkedAt": "2026-11-01T02:32:12.716Z",
+  "base": "https://truyen-ky-man-luc.vercel.app",
+  "routes": {
+    "/vi": {
+      "cssBytes": 57968,
+      "stylesheets": 1
+    },
+    "/vi/read/chapter-1": {
+      "cssBytes": 72221,
+      "stylesheets": 2
+    },
+    "/vi/comic/chapter-1": {
+      "cssBytes": 76729,
+      "stylesheets": 2
+    },
+    "/admin": {
+      "cssBytes": 57968,
+      "stylesheets": 1
+    }
+  },
+  "readingVariant": {
+    "status": 307,
+    "contentType": "image/webp",
+    "bytes": 2246060,
+    "originalBytes": 3593544
+  }
+}

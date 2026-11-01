@@ -1,3 +1,20 @@
+# Bốn tối ưu từ follow-up audit — production 01/11/2026
+
+Production **dpl_88oCJhbjc2r6UxAjokuJmxnzwe3Y**, runtime source **cde80583f8523ef6844cb43990c0aa5103ebc4f5**, https://truyen-ky-man-luc.vercel.app READY. **189 hash** mã quan trọng khớp source Vercel; API listing bị cắt chỉ phần báo cáo, không thiếu tệp quan trọng. GitHub private. Commit sau chỉ ghi kết quả kiểm chứng, không đổi runtime.
+
+- Hai ảnh TT chương 1: **7.058.084 → 4.307.066 byte (giảm khoảng 39%)** bằng WebP lossless nguyên độ phân giải; SHA256 nguồn không đổi và raw RGBA sau giải mã giống toàn bộ. Bản đọc riêng dùng cùng quyền của nguồn; thiếu derivative thì dùng nguồn, lỗi hạ tầng giữ 503. Zoom PC trên 100% dùng nguồn. Backfill không overwrite và không đổi dữ liệu phiên bản.
+- Preload chủ động theo byte/mạng: tối đa hai trang/8 MiB bình thường, một trang/1 MiB khi chậm; Data Saver/2G tắt. Nạp nhiều hơn vẫn trong 8 MiB. Dùng byte nguồn làm upper bound; bỏ URL đã tải/đang chờ. Đây không phải hạn mức tổng lưu lượng của native lazy loading hoặc ảnh người đọc đang xem.
+- Deadline đọc/lưu/xuất bản 15 giây, đăng ký ảnh 45 giây, upload 120 giây. Không tự retry ghi; mất response hoặc JSON bị cắt thì đọc head để xác nhận đúng nội dung/revision. Phân biệt revision biên tập và draftRevision nội dung khi xác nhận publish, dựa trên hợp đồng RPC thật. Upload SDK không có signal theo từng upload; checkpoint xác nhận trường hợp upload hoàn tất muộn trước khi truyền lại cùng đường dẫn bất biến.
+- Đo live CSS giải nén ở cold HTML stylesheet: trang sách/admin **284.393 → 57.968 byte**, Novel **72.221**, TT **76.729**. Phông tùy chọn chỉ theo Reader; CSS TT/editor theo công cụ; PDF viewer dùng dynamic import với CSS riêng. Không xem số này là byte mạng nén, INP hay FPS. Không thêm dependency/schema/analytics.
+- **150 unit / 38 file**, typecheck/build đạt. Local: 31 nhóm TT integration, 21 UI, 4 WebKit comic UI và 10 font/layout. Production: **31 nhóm TT Chromium/WebKit, 23 UI Chromium desktop/mobile, 10 font/layout VI–EN** đạt. Ba ca UI chỉ áp dụng PC được bỏ qua trên phone. Hai nhánh save/publish bị cố ý cắt response sau server commit, client xác nhận lại thành công; requestfailed tương ứng là lỗi được tiêm. Không page error. Fixture dọn xong; hash sách Novel công khai không đổi.
+- Hai lỗi trong kiểm chứng đã được xử lý: dùng localhost thay 127.0.0.1 khi chạy verifier local để đúng Origin của Next; publish tăng head revision nhưng giữ revision nội dung, nên bước xác nhận cần draftRevision. Không nới kiểm tra Origin hoặc đổi RPC.
+
+Xem `SPEC-optimization-followup.md`, `COMIC_PUBLISHING.md`, `verification/optimization-followup-live.json`, `verification/optimization-transfer-live.json`, `verification/optimization-reading-images.json`.
+
+Chưa đo FPS trên iPhone vật lý hoặc tải nhiều người kéo dài. Những mục phía dưới là lịch sử release trước.
+
+---
+
 # UI đọc TT/Comic — production 01/11/2026
 
 Production **dpl_kThn8dDu38veuq6QH5FkuEMctm4p**, runtime source **e1cc31e5b6c6de017e32d5a22910d2f7f97a340e**, https://truyen-ky-man-luc.vercel.app đã xác minh READY; **188 hash** mã runtime/test/migration quan trọng khớp source. GitHub private. Commit theo sau chỉ cập nhật harness kiểm thử, hướng dẫn và bằng chứng; không thay mã chạy ứng dụng.
