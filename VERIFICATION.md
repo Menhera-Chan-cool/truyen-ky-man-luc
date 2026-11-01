@@ -1,3 +1,18 @@
+# Chuẩn bị đầy đủ trang TT theo ý định chuyển chương — production 01/11/2026
+
+Production **dpl_HANyCkfRMgQzrgD14wxvQNApShFd**, runtime **d0d95e89d064f9f9c3616ae80de30123a0032db3**, https://truyen-ky-man-luc.vercel.app READY. **206 hash source quan trọng** khớp Vercel; GitHub private. Commit sau chỉ cập nhật bằng chứng.
+
+- Warm cũ chỉ lấy metadata/ảnh đầu; bấm chuyển vẫn phải tải trang RSC. Thử public router.prefetch mặc định chỉ chuẩn bị một phần và chưa qua bài chặn request sau click. Bản cuối dùng Link prefetch=true được Next.js hỗ trợ, chỉ bật sau pointer/focus intent và dùng chung ngân sách tối đa hai đích với warm ảnh. Data Saver/2G tắt prefetch cả tại intent và props Link khi mạng đổi. Không bật cache server, đổi schema hay thêm dependency.
+- Hai mũi tên giữ class/kích thước/icon/tooltip, dùng liên kết điều hướng native. Disabled dùng aria-disabled, tabindex=-1, chặn Enter/click; giữ pending lock, lưu vị trí và lịch sử. Footer dùng cùng trạng thái. Các selector trong e2e và verifier đã đổi sang aria-label; script verifier đã kiểm tra cú pháp, không chạy lại luồng ghi private.
+- **183 unit /45 file**, typecheck/build đạt. Local/live có **32 ca browser đạt**: 14 Chromium desktop, 12 Chromium phone và 6 WebKit phone; 4 ca desktop-only bỏ qua trên phone. Bao gồm chuẩn bị route, Data Saver/2G, dedup intent, disabled/Tab/Enter, UI tự ẩn, hover/focus, Back/reload, settings, progress và nạp ảnh ổn định.
+- Live, sau khi dữ liệu trang đã chuẩn bị: **1 prefetch /0 request RSC hoặc document mới sau click**, page boot giữ nguyên, pageErrors=0. Mẫu thời gian từ click tới ready: desktop **89 ms**, Chromium phone **78 ms**, WebKit phone **305 ms**. Đây là từng mẫu cache ấm, không phải cam kết cho mọi lần bấm, không chứng minh ảnh không tải mạng thêm và không phải FPS máy thật.
+- Một số stream Chrome mobile không báo kết thúc transport đúng lúc. Verifier cuối quan sát props RSC đã đến qua bản sao stream rồi vẫn chặn toàn bộ request trang sau click. Hai lỗi ERR_NO_BUFFER_SPACE xuất hiện trên máy test trước khi app tải; chạy riêng đã đạt, không đổi Windows/network config. Production chạy từng nhóm trình duyệt nối tiếp và đạt toàn bộ.
+- Chi tiết: `verification/comic-chapter-prefetch-local.json`, `verification/comic-chapter-prefetch-live.json`. Screenshot thanh chương desktop/mobile đã được xem; kiểu dáng giữ nguyên. Tài liệu tương ứng phiên bản cài đặt đã đọc; [Next Link prefetch](https://nextjs.org/docs/app/api-reference/components/link#prefetch).
+
+Chưa đo FPS trên điện thoại vật lý hoặc độ trễ mạng thực tế. Chạm ngay khi chưa chuẩn bị xong vẫn phải chờ server; không thêm cơ chế đoán/nạp chương tự động trên điện thoại.
+
+---
+
 # TT không tạo lại hàng đợi ảnh khi thông tin mạng không đổi — production 01/11/2026
 
 Production **dpl_8pLPNyZyPRwqnHTdWErrY68n9rWG**, runtime **25ac75f99e8d3ddc866a54cfead2d7745eaaf9b6**, https://truyen-ky-man-luc.vercel.app READY. **205 hash source quan trọng** khớp Vercel; GitHub private. Commit tiếp theo chỉ cập nhật bằng chứng.

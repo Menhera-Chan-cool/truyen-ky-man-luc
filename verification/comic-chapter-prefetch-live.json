@@ -1,0 +1,39 @@
+{
+  "deployment": "dpl_HANyCkfRMgQzrgD14wxvQNApShFd",
+  "commit": "d0d95e89d064f9f9c3616ae80de30123a0032db3",
+  "criticalMatched": 206,
+  "mismatched": [],
+  "checkedAt": "2026-11-01T14:59:57.283Z",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "unitTests": 183,
+  "unitFiles": 45,
+  "typecheck": true,
+  "productionBuild": true,
+  "live": {
+    "desktopPassed": 14,
+    "chromiumPhonePassed": 12,
+    "webkitPhonePassed": 6,
+    "skipped": 4,
+    "prefetchRequestsPerPreparedRoute": 1,
+    "afterClickRscOrDocumentRequests": 0,
+    "preparedNavigationMs": {
+      "desktop": 89,
+      "chromiumPhone": 78,
+      "webkitPhone": 305
+    },
+    "pageBootPreserved": true,
+    "pageErrorsInPreparedRouteCases": 0,
+    "dataSaverAnd2GGuardsPassed": true,
+    "repeatedIntentMetadataDestinations": 2,
+    "disabledEnterAndTabOrderPassed": true,
+    "autoHideKeyboardHistorySettingsAndScrollPassed": true
+  },
+  "limits": [
+    "Individual prepared-cache lab samples, not a general latency or physical-device FPS guarantee.",
+    "The test observes delivered RSC component props; a cloned stream is only instrumentation and does not replace the application response.",
+    "Blocking only the destination RSC/document request proves route cache reuse, not zero image-network traffic.",
+    "Immediate touch navigation before preparation completes still depends on server and network.",
+    "No authenticated preview/member/write integration was rerun because this change only prepares public routes."
+  ],
+  "docs": "https://nextjs.org/docs/app/api-reference/components/link#prefetch"
+}
