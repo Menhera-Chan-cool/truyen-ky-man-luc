@@ -29,7 +29,7 @@ test("settings pause idle timer and double gestures never advance horizontal pag
 
 test("keyboard reveals only focused controls while globally hidden",async({page,isMobile})=>{
  test.skip(isMobile,"Keyboard hover regions are desktop-only");await open(page);await page.clock.fastForward(10100);
- await page.getByRole("button",{name:"Chương sau",exact:true}).focus();
+ await page.getByLabel("Chương sau",{exact:true}).focus();
  await expect(page.locator(".cc-chapter-widget")).toHaveCSS("opacity","1");await expect(page.locator(".cc-tools")).toHaveCSS("opacity","1");await expect(page.locator(".cc-zoom")).toHaveCSS("opacity","0");await expect(page.locator(".comic-reader")).toHaveAttribute("data-chrome","false");
 });
 

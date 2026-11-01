@@ -168,6 +168,10 @@
   width: 14px;
   height: 14px;
 }
+.cc-chapter-widget .icon-button[aria-disabled="true"] {
+  opacity: 0.38;
+  pointer-events: none;
+}
 .cc-chapter-label {
   flex: 1;
   height: 34px;

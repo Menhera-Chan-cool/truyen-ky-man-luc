@@ -151,6 +151,7 @@ export default function ComicReader({
     at = book.chapters.findIndex((c) => c.id === chapterId),
     title = book.chapters[at].title;
   const router=useRouter(),[navigating,startNavigation]=useTransition(),navigationLock=useRef(false);
+  const [prefetched,setPrefetched]=useState<string[]>([]);
   const warmed=useRef(new Set<string>()),warming=useRef(new Map<string,()=>void>());
   useEffect(()=>()=>{for(const cancel of warming.current.values())cancel();warming.current.clear();},[]);
   function warmChapter(id:string){
@@ -158,6 +159,7 @@ export default function ComicReader({
     const connection=(navigator as Navigator&{connection?:{saveData?:boolean;effectiveType?:string}}).connection;
     if(connection?.saveData||["slow-2g","2g"].includes(connection?.effectiveType??""))return;
     warmed.current.add(id);
+    setPrefetched(ids=>[...ids,id]);
     let active=true,cancelImages=()=>{};
     const timer=setTimeout(()=>{active=false;},5000);
     warming.current.set(id,()=>{clearTimeout(timer);active=false;cancelImages();});
@@ -431,6 +433,7 @@ export default function ComicReader({
     };
     update();network?.addEventListener("change",update);return()=>network?.removeEventListener("change",update);
   },[]);
+  const chapterPrefetchAllowed=!!connection&&!connection.saveData&&!["slow-2g","2g"].includes(connection.effectiveType??"");
   const preloadIndices=selectComicPreloads(pages,page,prefs.preload,connection??{saveData:true});
   const preloadKey=ready&&connection&&prefs.mode!=="vertical"
     ?JSON.stringify(preloadIndices.map(n=>comicReadingUrl(urls[pages[n].id]??pages[n].path??"",zoom>100)).filter(u=>!!u&&!u.startsWith("blob:")))
@@ -581,6 +584,20 @@ export default function ComicReader({
     chapterId === "preface"
       ? L("Lời tựa", "Preface")
       : `${L("Chương", "Chapter")} ${chapterId.replace("chapter-", "")}`;
+  function chapterControl(chapter:{id:string}|undefined,forward:boolean){
+    const disabled=!chapter||navigating,Icon=forward?ChevronRight:ChevronLeft;
+    const name=forward?L("Chương sau","Next chapter"):L("Chương trước","Previous chapter");
+    return <Link
+      href={`/${locale}/comic/${chapter?.id??chapterId}`}
+      prefetch={chapterPrefetchAllowed&&!disabled&&!!chapter&&prefetched.includes(chapter.id)}
+      className="icon-button" aria-label={name} data-tooltip={name}
+      aria-disabled={disabled} tabIndex={disabled?-1:0}
+      onPointerEnter={e=>{if(chapter&&e.pointerType!=="touch")warmChapter(chapter.id);}}
+      onFocus={()=>{if(chapter)warmChapter(chapter.id);}}
+      onClick={e=>{if(disabled)e.preventDefault();}}
+      onNavigate={e=>{e.preventDefault();if(!disabled&&chapter)navigateChapter(chapter.id);}}
+    ><Icon size={19} strokeWidth={1.6}/></Link>;
+  }
   const shown =
     prefs.mode === "vertical"
       ? pages.map((p, n) => ({ p, n }))
@@ -800,13 +817,13 @@ export default function ComicReader({
                 </p>
                 <div>
                   {previous && (
-                    <Link prefetch={false} href={`/${locale}/comic/${previous.id}`} onMouseEnter={()=>warmChapter(previous.id)} onFocus={()=>warmChapter(previous.id)} onNavigate={e=>{e.preventDefault();navigateChapter(previous.id);}}>
+                    <Link prefetch={chapterPrefetchAllowed&&prefetched.includes(previous.id)} href={`/${locale}/comic/${previous.id}`} onMouseEnter={()=>warmChapter(previous.id)} onFocus={()=>warmChapter(previous.id)} onNavigate={e=>{e.preventDefault();navigateChapter(previous.id);}}>
                       <ChevronLeft size={16} />
                       {L("Chương trước", "Previous chapter")}
                     </Link>
                   )}
                   {next && (
-                    <Link prefetch={false} href={`/${locale}/comic/${next.id}`} onMouseEnter={()=>warmChapter(next.id)} onFocus={()=>warmChapter(next.id)} onNavigate={e=>{e.preventDefault();navigateChapter(next.id);}}>
+                    <Link prefetch={chapterPrefetchAllowed&&prefetched.includes(next.id)} href={`/${locale}/comic/${next.id}`} onMouseEnter={()=>warmChapter(next.id)} onFocus={()=>warmChapter(next.id)} onNavigate={e=>{e.preventDefault();navigateChapter(next.id);}}>
                       {L("Chương sau", "Next chapter")}
                       <ChevronRight size={16} />
                     </Link>
@@ -840,16 +857,7 @@ export default function ComicReader({
       )}
       <div className="cc-right-controls">
       <div className="cc-chapter-widget cc-chrome">
-        <IconButton
-          icon={ChevronLeft}
-          label={L("Chương trước", "Previous chapter")}
-          disabled={!previous||navigating}
-          onPointerEnter={e=>{if(previous&&e.pointerType!=="touch")warmChapter(previous.id);}}
-          onFocus={()=>{if(previous)warmChapter(previous.id);}}
-          onClick={() => {
-            if (previous) navigateChapter(previous.id);
-          }}
-        />
+        {chapterControl(previous,false)}
         <button
           className="cc-chapter-label"
           onClick={() => open("chapters")}
@@ -857,16 +865,7 @@ export default function ComicReader({
         >
           {label}
         </button>
-        <IconButton
-          icon={ChevronRight}
-          label={L("Chương sau", "Next chapter")}
-          disabled={!next||navigating}
-          onPointerEnter={e=>{if(next&&e.pointerType!=="touch")warmChapter(next.id);}}
-          onFocus={()=>{if(next)warmChapter(next.id);}}
-          onClick={() => {
-            if (next) navigateChapter(next.id);
-          }}
-        />
+        {chapterControl(next,true)}
       </div>
       <nav
         className="cc-tools cc-chrome"

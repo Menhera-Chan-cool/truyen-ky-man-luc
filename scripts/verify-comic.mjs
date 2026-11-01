@@ -152,7 +152,7 @@ try {
     await expect.poll(()=>publicPage.locator(".cc-page img").evaluateAll(images=>images.filter(i=>i.complete&&i.naturalWidth>0).length)).toBeGreaterThan(0);
     const boot=await publicPage.evaluate(()=>window.__comicBoot=crypto.randomUUID());
     await publicPage.evaluate(()=>window.dispatchEvent(new Event("focus")));
-    await publicPage.getByRole("button",{name:"Chương trước",exact:true}).click();
+    await publicPage.getByLabel("Chương trước",{exact:true}).click();
     await expect(publicPage).not.toHaveURL(new RegExp(id));
     assert.equal(await publicPage.evaluate(()=>window.__comicBoot),boot,"Chapter navigation must preserve the document");
     await publicPage.goBack();await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-pages","2");

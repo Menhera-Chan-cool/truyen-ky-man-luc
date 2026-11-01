@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-11-01T14:50:08.595Z",
+  "unitTests": 183,
+  "unitFiles": 45,
+  "typecheck": true,
+  "productionBuild": true,
+  "browserPassed": {
+    "chromium": 26,
+    "webkitPhone": 6
+  },
+  "skipped": 4,
+  "cacheNavigation": {
+    "desktopMs": 89,
+    "chromiumPhoneMs": 95,
+    "webkitPhoneMs": 356,
+    "afterClickServerRequests": 0,
+    "hardReload": false
+  },
+  "scope": [
+    "Full public Next Link prefetch only after pointer/focus intent, at most two chapter destinations.",
+    "Data Saver and 2G guards at both warm intent and rendered Link prefetch state.",
+    "Native links keep existing icon styling, disabled state, focus, labels and navigation lock.",
+    "Footer and toolbar share the warm budget; private preview never enables speculative routes."
+  ],
+  "tests": [
+    "Completed route data was observed in a clone of the RSC response stream; navigation then blocked any new RSC/document request and retained the page boot token.",
+    "Data Saver and 2G suppress metadata/route warming; returning to 4G permits it; repeated focus stays at two metadata lookups.",
+    "Disabled previous link has tabindex=-1 and does not navigate on Enter.",
+    "Auto-hide, independent regions, keyboard focus, settings, double gestures, Back/reload, progress and image preload stability regressions."
+  ],
+  "investigation": [
+    "Existing warm prepared the first image but no page RSC; router.prefetch default prepared a partial route and still required a server request at navigation. The final implementation uses documented Link prefetch=true.",
+    "Some Chromium mobile RSC streams did not emit transport completion in time despite usable data. The final test observes delivered component props and still requires zero post-click server requests.",
+    "Two host ERR_NO_BUFFER_SPACE failures occurred before app load; isolated retries passed. No Windows/network settings were changed."
+  ],
+  "limitations": [
+    "These are individual prepared-cache lab samples, not a general latency/FPS guarantee.",
+    "On touch devices, a tap before prefetch completes can still wait for the server.",
+    "No schema, content, original media or permissions were changed."
+  ],
+  "docs": "node_modules/next/dist/docs/01-app/03-api-reference/02-components/link.md"
+}
