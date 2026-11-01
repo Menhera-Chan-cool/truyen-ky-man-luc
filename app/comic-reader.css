@@ -247,6 +247,18 @@
   opacity: 0;
   pointer-events: none;
 }
+.comic-reader[data-ui-ready="false"] .cc-chrome { transition: none; }
+.cc-right-controls { display: contents; }
+.comic-reader[data-chrome="false"] .cc-chrome:has(:focus-visible),
+.comic-reader[data-chrome="false"] .cc-right-controls:has(:focus-visible) .cc-chrome,
+.comic-reader[data-chrome="false"] .cc-topbar:has([data-edition-open="true"]) { opacity: 1; pointer-events: auto; }
+@media (hover:hover) and (pointer:fine) {
+  .comic-reader[data-ui-ready="true"][data-chrome="false"] .cc-chrome { pointer-events: auto; }
+  .comic-reader[data-chrome="false"] .cc-topbar:hover,
+  .comic-reader[data-chrome="false"] .cc-zoom:hover,
+  .comic-reader[data-chrome="false"] .cc-progress-region:hover,
+  .comic-reader[data-chrome="false"] .cc-right-controls:has(.cc-chrome:hover) .cc-chrome { opacity: 1; }
+}
 .cc-wake {
   position: absolute;
   z-index: 21;
@@ -266,6 +278,14 @@
   background: #293235;
   color: #5de4f4;
 }
+.cc-wake { opacity: 0; width: 1px; height: 1px; clip-path: inset(50%); pointer-events: none; }
+.cc-wake:focus-visible { opacity: 1; width: 44px; height: 44px; clip-path: none; pointer-events: auto; }
+.cc-progress-region { position: absolute; z-index: 5; pointer-events: none; }
+.cc-progress-region-left { left: 0; top: 0; bottom: 0; width: 20px; }
+.cc-progress-region-right { right: 0; top: 0; bottom: 0; width: 20px; }
+.cc-progress-region-top { left: 0; top: 0; right: 0; height: 20px; }
+.cc-progress-region-bottom { left: 0; bottom: 0; right: 0; height: 20px; }
+@media (hover:none) and (pointer:coarse) { .cc-zoom { display: none; } }
 .cc-reading-progress {
   position: absolute;
   z-index: 4;
@@ -903,6 +923,7 @@
   }
 }
 @media (max-width: 759px) {
+  .cc-zoom { display: none; }
   .cc-topbar {
     top: 9px;
     left: 10px;

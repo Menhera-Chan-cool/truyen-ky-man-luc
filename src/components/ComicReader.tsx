@@ -33,6 +33,7 @@ import {
 } from "lucide-react";
 import { IconButton, LanguageLinks } from "./Ui";
 import {preloadComicImages} from "../lib/comic-preload";
+import {useComicControls} from "./useComicControls";
 import {
   ComicModal,
   ComicSettingsDialog,
@@ -170,12 +171,11 @@ export default function ComicReader({
     [retry, setRetry] = useState(0),
     [page, setPage] = useState(0),
     [panel, setPanel] = useState<"settings" | "chapters" | "help" | null>(null),
-    [chrome, setChrome] = useState(true),
     [auto, setAuto] = useState(false),
     [ratio, setRatio] = useState(0),
     [summaries, setSummaries] = useState<ComicSummary[]>([]),
     [message, setMessage] = useState(""),
-    [size, setSize] = useState({ width: 1440, height: 900 }),
+    [size, setSize] = useState({ width: 1440, height: 900, mobile:false }),
     [full, setFull] = useState(false);
   const root = useRef<HTMLDivElement>(null),
     stage = useRef<HTMLDivElement>(null),
@@ -185,17 +185,18 @@ export default function ComicReader({
     initial = useRef<Position | undefined>(undefined),
     prefsRef = useRef(prefs),
     panelRef = useRef(panel),
-    chromeRef = useRef(true),
     autoRef = useRef(false),
     saveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined),
-    idle = useRef<ReturnType<typeof setTimeout> | undefined>(undefined),
-    activity = useRef(0),
     scrollFrame = useRef(0),
     pendingLayout = useRef(0),
     gesture = useRef<{ id: number; x: number; y: number; time: number } | null>(
       null,
     ),
-    ignoreClick = useRef(0);
+    ignoreClick = useRef(0),
+    lastTap=useRef<{x:number;y:number;time:number}|null>(null),
+    touchDoubleUntil=useRef(0),
+    edgeClick=useRef<ReturnType<typeof setTimeout>|undefined>(undefined);
+  const controls=useComicControls(!!panel),mobile=size.mobile,zoom=mobile?100:prefs.zoom,stretch=mobile?true:prefs.stretch;
   const pages = draft?.pages ?? [],
     urls = useComicUrls(pages);
   current.current = page;
@@ -204,25 +205,6 @@ export default function ComicReader({
   const stopAuto = useCallback(() => {
     autoRef.current = false;
     setAuto(false);
-  }, []);
-  const wake = useCallback(() => {
-    const generation = ++activity.current;
-    chromeRef.current = true;
-    setChrome(true);
-    clearTimeout(idle.current);
-    if (document.hidden) return;
-    idle.current = setTimeout(() => {
-      if (generation !== activity.current) return;
-      if (
-        panelRef.current ||
-        root.current?.querySelector(
-          '.cc-chrome:hover,.cc-chrome :focus-visible,[data-edition-open="true"]',
-        )
-      )
-        return;
-      chromeRef.current = false;
-      setChrome(false);
-    }, 3000);
   }, []);
   useEffect(() => {
     let active = true;
@@ -278,7 +260,7 @@ export default function ComicReader({
     return () => {
       active = false;
       clearTimeout(saveTimer.current);
-      clearTimeout(idle.current);
+      clearTimeout(edgeClick.current);
       cancelAnimationFrame(scrollFrame.current);
       cancelAnimationFrame(pendingLayout.current);
     };
@@ -286,12 +268,14 @@ export default function ComicReader({
   useLayoutEffect(() => {
     const el = stage.current;
     if (!el) return;
+    const touch=matchMedia("(hover:none) and (pointer:coarse)");
     const measure = () =>
-      setSize({ width: el.clientWidth, height: el.clientHeight });
+      setSize({ width: el.clientWidth, height: el.clientHeight, mobile:el.clientWidth<760||touch.matches });
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
-    return () => observer.disconnect();
+    touch.addEventListener("change",measure);
+    return () => {observer.disconnect();touch.removeEventListener("change",measure);};
   }, []);
   const capture = useCallback((): Position | undefined => {
     const p = pages[current.current],
@@ -379,39 +363,27 @@ export default function ComicReader({
       if (document.hidden) {
         stopAuto();
         persistRef.current();
-        clearTimeout(idle.current);
-      } else wake();
+      }
     };
     const blur = () => {
       stopAuto();
       persistRef.current();
-      clearTimeout(idle.current);
     };
-    const resume = () => wake();
     const full = () => setFull(!!document.fullscreenElement);
     document.addEventListener("visibilitychange", visible);
     document.addEventListener("freeze", blur);
     window.addEventListener("blur", blur);
-    window.addEventListener("focus", resume);
     window.addEventListener("pagehide", blur);
-    window.addEventListener("pageshow", resume);
     document.addEventListener("fullscreenchange", full);
-    wake();
     return () => {
       persistRef.current();
       document.removeEventListener("visibilitychange", visible);
       document.removeEventListener("freeze", blur);
       window.removeEventListener("blur", blur);
-      window.removeEventListener("focus", resume);
       window.removeEventListener("pagehide", blur);
-      window.removeEventListener("pageshow", resume);
       document.removeEventListener("fullscreenchange", full);
-      clearTimeout(idle.current);
     };
-  }, [stopAuto, wake]);
-  useEffect(() => {
-    wake();
-  }, [panel, wake]);
+  }, [stopAuto]);
   useEffect(() => {
     if (!auto || prefs.mode !== "vertical" || panel) return;
     let frame = 0,
@@ -456,7 +428,7 @@ export default function ComicReader({
     const next = Math.max(0, Math.min(pages.length - 1, n));
     current.current = next;
     setPage(next);
-    wake();
+    controls.activity();
     const s = stage.current;
     if (!s) return;
     if (prefs.mode === "vertical") {
@@ -502,12 +474,11 @@ export default function ComicReader({
     }
   }
   function open(value: typeof panel) {
-    wake();
     panelRef.current = value;
     setPanel(value);
   }
   function toggleAuto() {
-    wake();
+    controls.activity();
     if (autoRef.current) {
       stopAuto();
       return;
@@ -520,7 +491,6 @@ export default function ComicReader({
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       if (e.isComposing || e.altKey || e.ctrlKey || e.metaKey) return;
-      wake();
       if (panelRef.current) return;
       const target = e.target as HTMLElement;
       if (target.closest("input,textarea,select,[contenteditable]")) return;
@@ -598,17 +568,16 @@ export default function ComicReader({
   const filter = `grayscale(${prefs.grayscale ? 1 : 0}) brightness(${1 - prefs.dim / 100})`;
   function imageClick(e: MouseEvent<HTMLImageElement>) {
     if (panel || performance.now() < ignoreClick.current) return;
-    wake();
-    if (prefs.mode !== "single" || prefs.zoom > 100) return;
+    clearTimeout(edgeClick.current);
+    if(e.detail>1)return;
+    if (prefs.mode !== "single" || zoom > 100) return;
     const r = e.currentTarget.getBoundingClientRect(),
       x = e.clientX - r.left;
-    if (x < r.width * 0.28)
-      go(current.current + (prefs.direction === "rtl" ? 1 : -1));
-    else if (x > r.width * 0.72)
-      go(current.current + (prefs.direction === "rtl" ? -1 : 1));
+    const direction=x<r.width*.28?(prefs.direction==="rtl"?1:-1):x>r.width*.72?(prefs.direction==="rtl"?-1:1):0;
+    if(direction)edgeClick.current=setTimeout(()=>go(current.current+direction),350);
   }
   async function fullscreen() {
-    wake();
+    controls.activity();
     try {
       if (document.fullscreenElement) await document.exitFullscreen();
       else if (document.documentElement.requestFullscreen)
@@ -634,15 +603,12 @@ export default function ComicReader({
       data-page={page + 1}
       data-pages={pages.length}
       data-effective-mode={prefs.mode}
-      data-chrome={chrome || !!panel}
+      data-chrome={controls.ready && controls.visible}
+      data-ui-ready={controls.ready}
       data-auto={auto}
       data-grayscale={prefs.grayscale}
       aria-busy={navigating}
-      onPointerMove={(e) => {
-        if (e.pointerType !== "touch") wake();
-      }}
-      onMouseMove={wake}
-      onFocusCapture={wake}
+      onFocusCapture={controls.activity}
     >
       <header className="cc-topbar cc-chrome">
         <LanguageLinks locale={locale} chapterId={chapterId} comic onOpen={stopAuto}/>
@@ -653,7 +619,7 @@ export default function ComicReader({
         className="cc-stage"
         style={{
           touchAction:
-            prefs.zoom > 100 ? "pan-x pan-y pinch-zoom" : "pan-y pinch-zoom",
+            zoom > 100 ? "pan-x pan-y pinch-zoom" : "pan-y pinch-zoom",
         }}
         onScroll={() => {
           clearTimeout(saveTimer.current);
@@ -674,24 +640,23 @@ export default function ComicReader({
         }}
         onWheel={() => {
           stopAuto();
-          wake();
+          clearTimeout(edgeClick.current);lastTap.current=null;
         }}
         onTouchStart={() => {
           stopAuto();
-          wake();
         }}
         onPointerDown={(e) => {
           stopAuto();
-          wake();
+          if(e.pointerType==="touch")touchDoubleUntil.current=performance.now()+600;
           if (!e.isPrimary) {
             gesture.current = null;
+            lastTap.current=null;clearTimeout(edgeClick.current);
             return;
           }
           if (
-            prefs.mode === "single" &&
             e.pointerType === "touch" &&
             !panel &&
-            prefs.zoom <= 100
+            zoom <= 100
           )
             gesture.current = {
               id: e.pointerId,
@@ -711,6 +676,7 @@ export default function ComicReader({
         }}
         onPointerCancel={() => {
           gesture.current = null;
+          lastTap.current=null;clearTimeout(edgeClick.current);
           ignoreClick.current = performance.now() + 500;
         }}
         onPointerUp={(e) => {
@@ -720,22 +686,27 @@ export default function ComicReader({
           const dx = e.clientX - g.x,
             dy = e.clientY - g.y,
             ms = Math.max(1, e.timeStamp - g.time);
-          if (
+          if (prefs.mode==="single"&&(
             (Math.abs(dx) >= 24 ||
               (Math.abs(dx) >= 14 && Math.abs(dx) / ms > 0.25)) &&
             Math.abs(dx) > Math.abs(dy) * 1.35
-          ) {
+          )) {
             e.preventDefault();
+            lastTap.current=null;clearTimeout(edgeClick.current);
             ignoreClick.current = performance.now() + 500;
             go(
               current.current +
                 (dx < 0 ? 1 : -1) * (prefs.direction === "rtl" ? -1 : 1),
             );
+          }else if(Math.abs(dx)<10&&Math.abs(dy)<10&&ms<500&&!(e.target as Element).closest("button,a,input,select,textarea")){
+            const tap=lastTap.current,now=performance.now();
+            if(tap&&now-tap.time<350&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<24){e.preventDefault();clearTimeout(edgeClick.current);lastTap.current=null;touchDoubleUntil.current=now+600;ignoreClick.current=now+600;controls.toggle();}
+            else lastTap.current={x:e.clientX,y:e.clientY,time:now};
+          }else{
+            lastTap.current=null;
           }
         }}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) wake();
-        }}
+        onDoubleClick={e=>{if((e.target as Element).closest("button,a,input,select,textarea")||performance.now()<touchDoubleUntil.current)return;e.preventDefault();clearTimeout(edgeClick.current);stopAuto();controls.toggle();}}
         onContextMenu={stopAuto}
       >
         {!ready ? (
@@ -795,9 +766,9 @@ export default function ComicReader({
                     index={n}
                     src={urls[p.id] ?? p.path}
                     width={
-                      prefs.stretch
-                        ? (size.width * prefs.zoom) / 100
-                        : Math.min(p.width, (size.width * prefs.zoom) / 100)
+                      stretch
+                        ? (size.width * zoom) / 100
+                        : Math.min(p.width, (size.width * zoom) / 100)
                     }
                     filter={filter}
                     locale={locale}
@@ -838,6 +809,7 @@ export default function ComicReader({
         )}
       </div>
       {prefs.progress !== "none" && (
+        <div className={`cc-progress-region cc-chrome cc-progress-region-${prefs.progress}`} onWheel={e=>{stopAuto();stage.current?.scrollBy({top:e.deltaY,left:e.deltaX});}}>
         <div
           className={`cc-reading-progress cc-progress-${prefs.progress}`}
           role="progressbar"
@@ -864,7 +836,9 @@ export default function ComicReader({
             }
           />
         </div>
+        </div>
       )}
+      <div className="cc-right-controls">
       <div className="cc-chapter-widget cc-chrome">
         <IconButton
           icon={ChevronLeft}
@@ -951,6 +925,7 @@ export default function ComicReader({
           onClick={() => open("help")}
         />
       </nav>
+      </div>
       <div className="cc-zoom cc-chrome">
         <IconButton
           icon={ArrowLeftRight}
@@ -980,12 +955,11 @@ export default function ComicReader({
           />
         </div>
       </div>
-      {!chrome && !panel && (
+      {controls.ready&&!controls.visible && !panel && (
         <button
           className="cc-wake"
           aria-label={L("Hiện công cụ đọc", "Show reader controls")}
-          onClick={wake}
-          onFocus={wake}
+          onClick={()=>{controls.show();requestAnimationFrame(()=>root.current?.querySelector<HTMLButtonElement>(".cc-tools button")?.focus({preventScroll:true}));}}
         >
           <MoreHorizontal size={18} />
         </button>
@@ -1022,8 +996,8 @@ export default function ComicReader({
           <div className="cc-modal-body">
             <p>
               {L(
-                "Di chuột hoặc chạm giữa ảnh/vùng trống để hiện công cụ. Công cụ tự ẩn khi bạn ngừng thao tác; quay lại tab sẽ hiện lại.",
-                "Move the pointer or tap the image center/blank area to reveal controls. Idle controls hide; returning to the tab reveals them.",
+                "Nhấp đúp hoặc chạm đúp ảnh/vùng trống để bật–tắt toàn bộ công cụ. Công cụ tự ẩn sau 10 giây; cuộn và quay lại tab không gọi UI trở lại. PC có thể rê chuột vào từng cụm để hiện riêng cụm đó.",
+                "Double-click or double-tap the image/blank area to toggle all controls. They hide after 10 seconds; scrolling or returning to the tab does not reveal them. On desktop, hover a control group to reveal only that group.",
               )}
             </p>
             <p>
@@ -1034,14 +1008,14 @@ export default function ComicReader({
             </p>
             <p>
               {L(
-                "Chế độ ngang: vuốt nhẹ hoặc chạm hai mép ảnh để chuyển trang. Phóng to hơn 100% thì vuốt để dịch ảnh.",
-                "Horizontal reading: swipe gently or tap image edges to turn pages. Above 100% zoom, swipe to pan the image.",
+                "Chế độ ngang: vuốt nhẹ hoặc chạm hai mép ảnh để chuyển trang. Điện thoại vừa chiều rộng ảnh và hỗ trợ pinch zoom của trình duyệt.",
+                "Horizontal reading: swipe gently or tap image edges to turn pages. Mobile fits images to the viewport and supports native pinch zoom.",
               )}
             </p>
             <p>
               {L(
-                "Stretch cho phép ảnh phóng lớn hơn kích thước gốc. Tự cuộn dừng khi rời tab hoặc khi bạn cuộn/chạm vùng đọc.",
-                "Stretch allows images to exceed their original size. Auto scroll stops when you leave the tab or manually scroll/touch the reading area.",
+                "Stretch và zoom % chỉ có trên PC. Trạng thái ẩn được giữ khi đổi chương trong cùng tab. Tự cuộn dừng khi rời tab hoặc khi bạn cuộn/chạm vùng đọc.",
+                "Stretch and percentage zoom are desktop-only. Hidden controls stay hidden across chapters in the same tab. Auto-scroll stops when you leave the tab or manually scroll/touch the reading area.",
               )}
             </p>
             <p className="cc-help-local">

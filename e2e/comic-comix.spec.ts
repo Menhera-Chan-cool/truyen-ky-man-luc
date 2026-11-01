@@ -9,47 +9,6 @@ test("chapter intent survives navigation, Back and reload without WebKit abort e
   await expect.poll(()=>page.evaluate(()=>(window as any).__comicBoot)).toBe(boot);
   await page.goBack();await page.reload();await expect(page.locator(".comic-reader")).toHaveAttribute("data-ready","true");expect(errors).toEqual([]);
 });
-test("tools recover from idle and returning to a long-inactive tab", async ({
-  page,
-}) => {
-  await page.goto("/vi/comic/chapter-1");
-  await expect(page.locator(".comic-reader")).toHaveAttribute(
-    "data-ready",
-    "true",
-  );
-  await page.mouse.move(100, 25);
-  await page.mouse.move(300, 250);
-  await expect(page.locator(".comic-reader")).toHaveAttribute(
-    "data-chrome",
-    "false",
-    { timeout: 6000 },
-  );
-  await page.mouse.move(330, 270);
-  await expect(page.locator(".comic-reader")).toHaveAttribute(
-    "data-chrome",
-    "true",
-  );
-  await expect
-    .poll(() =>
-      page.locator(".cc-tools").evaluate((el) => getComputedStyle(el).opacity),
-    )
-    .toBe("1");
-  await expect(page.locator(".comic-reader")).toHaveAttribute(
-    "data-chrome",
-    "false",
-    { timeout: 6000 },
-  );
-  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
-  await expect(page.locator(".comic-reader")).toHaveAttribute(
-    "data-chrome",
-    "true",
-  );
-  await expect
-    .poll(() =>
-      page.locator(".cc-tools").evaluate((el) => getComputedStyle(el).opacity),
-    )
-    .toBe("1");
-});
 test("Comix settings are centered, chapter label is one line and page-list furniture is absent", async ({
   page,
 }) => {
@@ -80,7 +39,7 @@ test("Comix settings are centered, chapter label is one line and page-list furni
   await expect(dialog).toHaveCount(0);
 });
 test("auto scroll stops on leaving the tab and stretch/filters persist", async ({
-  page,
+  page,isMobile,
 }) => {
   await page.goto("/vi/comic/chapter-1");
   await expect(page.locator(".comic-reader")).toHaveAttribute(
@@ -114,12 +73,10 @@ test("auto scroll stops on leaving the tab and stretch/filters persist", async (
     .getByRole("button", { name: "Ảnh thang xám", exact: true })
     .click();
   await page.keyboard.press("Escape");
-  await page.getByRole("button", { name: "Stretch: bật", exact: true }).click();
+  if(!isMobile)await page.getByRole("button", { name: "Stretch: bật", exact: true }).click();
   await page.waitForTimeout(250);
   await page.reload();
-  await expect(
-    page.getByRole("button", { name: "Stretch: tắt", exact: true }),
-  ).toBeVisible();
+  if(isMobile)await expect(page.locator(".cc-zoom")).toBeHidden();else await expect(page.getByRole("button", { name: "Stretch: tắt", exact: true })).toBeVisible();
   await expect(page.locator(".comic-reader")).toHaveAttribute(
     "data-grayscale",
     "true",

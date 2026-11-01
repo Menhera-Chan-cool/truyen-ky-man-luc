@@ -151,9 +151,11 @@ try {
     assert.equal((await publicPage.content()).includes("PRIVATE DEVICE DRAFT"),false);
     phase=name+" reader lifecycle";
     await publicPage.mouse.move(200,300);
-    await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-chrome","false",{timeout:7000});
+    await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-chrome","false",{timeout:12000});
     await publicPage.evaluate(()=>window.dispatchEvent(new Event("focus")));
-    await expect.poll(()=>publicPage.locator(".cc-tools").evaluate(el=>getComputedStyle(el).opacity)).toBe("1");
+    await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-chrome","false");
+    await publicPage.locator(".cc-stage").dblclick({position:{x:180,y:300}});
+    await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-chrome","true");
     await publicPage.getByRole("button",{name:"Bắt đầu tự cuộn",exact:true}).click();
     await expect(publicPage.locator(".comic-reader")).toHaveAttribute("data-auto","true");
     await expect.poll(()=>publicPage.locator(".cc-stage").evaluate(el=>el.scrollTop)).toBeGreaterThan(0);

@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-11-01T02:02:27.763252+00:00",
+  "baseUrl": "http://127.0.0.1:3003",
+  "unitTests": 139,
+  "unitFiles": 38,
+  "typecheck": true,
+  "productionBuild": true,
+  "chromiumDesktopMobile": {
+    "passed": 16,
+    "skippedDesktopOnlyOnMobile": 2
+  },
+  "webkitPhone": {
+    "passed": 7,
+    "skippedDesktopOnly": 2
+  },
+  "checks": [
+    "10-second expiry",
+    "no pointer/scroll/focus wake",
+    "independent hover and keyboard regions",
+    "double gesture and canceled-touch compatibility event regression",
+    "horizontal double gesture does not turn page",
+    "hidden next/Back/reload",
+    "VI/EN edition menu and outside dismissal",
+    "modal pauses idle",
+    "mobile hides stretch/zoom and preserves desktop preferences",
+    "auto-scroll stops in background",
+    "desktop/phone loaded-image visual inspection"
+  ],
+  "reference": "https://comix.to/title/xkr97-the-graymark/11252059-chapter-102",
+  "interact": "Verified short sequential Node/Playwright calls with known scrapeId and explicit interact_stop. No plugin configuration or secrets changed.",
+  "writesToBookData": false,
+  "physicalIPhoneChecked": false
+}
