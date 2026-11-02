@@ -1,3 +1,18 @@
+# Đồng bộ heading VI/EN — production 02/11/2026
+
+Production **dpl_GVdvT2ERta5h5HK8ochyjGCpCyXm**, runtime **81225de382d4f0e548e5ee26a199495e07ba0248**, https://truyen-ky-man-luc.vercel.app READY. **209 hash source quan trọng** khớp Vercel; GitHub private. Commit sau chỉ ghi bằng chứng.
+
+- Một số nhãn Critique/Notes chỉ là đoạn chữ đậm; ch4/5/6 còn gộp nhãn và phần thân bằng br, ch1 có br lồng trong strong. cleanHtml nhận diện các nhãn riêng dòng Critique, Notes, Lời bình/Lời bàn, Chú thích/Chú giải thành h3, tách dòng nhãn khỏi văn bản mà giữ định dạng/ID. Không chuyển câu văn, danh sách, trích dẫn hay đoạn có ảnh thành heading.
+- Dùng cùng đường chuẩn hóa cho đọc công khai, API nạp phiên bản editor, mount Tiptap, dán HTML, xem trước, nhập/lưu và offline. Tiptap chuẩn hóa một lần lúc mount; không parse lại theo mỗi phím và không tự gọi onChange/lưu. Hỗ trợ font cho h1–h6. Body tiếp tục dùng phông đọc riêng.
+- Metadata nháp/công khai VI và EN đã cùng chọn TP Han Zi, book revision6; không đổi lựa chọn hoặc ghi lại nội dung trong Supabase. Đối chiếu baseline43 phiên bản và dữ liệu mới nhất41 phiên bản: toàn bộ chữ không kể whitespace phân cách, ID, href và src được giữ nguyên, chuẩn hóa idempotent. Bảy head chương VI có cập nhật riêng trong lúc làm; giữ nguyên các cập nhật đó. API public thật sau deploy khớp cả40 bản truyện mới nhất (20VI/20EN), có77 nhãn mục hiện có; không thêm mục mà bản gốc không có.
+- Critique có đủ8 ký tự, hai i; HarfBuzz không bỏ glyph khi bật/tắt ligature. Nét t+i của font chạm ở cỡ nhỏ; tracking calc(.04em + 2px) tách nét mà hạn chế giãn tiêu đề lớn. Ở20px Chromium, ước lượng ink gap từ-2.265625px thành0.546875px; WebKit3.0100002px. Đã xem screenshot thật. Kiểm cmap98 ký tự dùng trong tiêu đề/nhãn VI/EN không thiếu glyph.
+- **189 unit/47 file**, typecheck và production build đạt. **33 ca local** (11PC/11Android/11WebKit), **15 ca live** (5mỗi profile) đạt; bao gồm heading cũ/tách đoạn, font heading và body, đổi Book/Ebook, giữ vị trí, lật trang, chú thích và mocked TTS. Mount component editor thật không tạo implicit save. Không thử ghi vào editor production bằng tài khoản owner.
+- Không kiểm/sửa chính tả tiếng Việt theo yêu cầu mới nhất. Không đổi câu chữ, file nguồn, font binary, schema hoặc quyền. Xem `verification/heading-consistency-local.json`, `verification/heading-consistency-live.json` và `HEADING_FONTS.md`.
+
+Chưa thử trên điện thoại vật lý; dùng Chromium Pixel7 và WebKit iPhone13. Lưu phần đang sửa trước khi tải lại editor; bản offline cần cập nhật để nhận mã mới.
+
+---
+
 # Menu iPhone và lật sách Android — production 02/11/2026
 
 Production **dpl_366FGM8ULavCWVBkJZDaxiEBsqJE**, runtime **7c1be660c373378f6f2d9c4ba0ed5484f7583f72**, https://truyen-ky-man-luc.vercel.app READY. **206 hash source quan trọng** khớp Vercel; GitHub private. Commit sau chỉ ghi bằng chứng.

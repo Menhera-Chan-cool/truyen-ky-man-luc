@@ -1,0 +1,49 @@
+{
+  "deployment": "dpl_GVdvT2ERta5h5HK8ochyjGCpCyXm",
+  "commit": "81225de382d4f0e548e5ee26a199495e07ba0248",
+  "criticalMatched": 209,
+  "mismatched": [],
+  "checkedAt": "2026-11-02T16:17:38.983Z",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-muow89il5-anh-tun.vercel.app",
+  "state": "READY",
+  "unitTests": 189,
+  "unitFiles": 47,
+  "typecheck": true,
+  "productionBuild": true,
+  "local": {
+    "desktop": 11,
+    "androidChromium": 11,
+    "iphoneWebKit": 11,
+    "failed": 0
+  },
+  "live": {
+    "desktop": 5,
+    "androidChromium": 5,
+    "iphoneWebKit": 5,
+    "failed": 0
+  },
+  "publishedData": {
+    "anonymousHttpStatus": 200,
+    "viStories": 20,
+    "enStories": 20,
+    "comparedEditions": 40,
+    "textAnchorsImagesPreserved": true,
+    "matchingViEnHeadingFont": true,
+    "existingSectionHeadings": {
+      "vi": 38,
+      "en": 39
+    }
+  },
+  "fontCoverage": {
+    "titleAndLabelCharacters": 98,
+    "missingGlyphs": 0
+  },
+  "databaseWrites": 0,
+  "spellingEdits": 0,
+  "limitations": [
+    "Browser device models; no physical iPhone or Android test",
+    "No owner-authenticated production editor save/publication test; real editor mount verified without an implicit save",
+    "Existing editor tabs and offline bundles need refresh/update"
+  ]
+}
