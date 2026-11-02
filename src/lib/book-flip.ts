@@ -61,6 +61,7 @@ export class BookFlip {
   constructor(
     private paper: HTMLElement,
     private double: boolean,
+    private onComplete?: () => void,
   ) {
     this.size = `${paper.clientWidth}:${paper.clientHeight}`;
     this.observer = new ResizeObserver(() => {
@@ -436,7 +437,7 @@ export class BookFlip {
         showCover: false,
         drawShadow: true,
         maxShadowOpacity: 0.3,
-        flippingTime: 450,
+        flippingTime: matchMedia("(pointer:coarse)").matches ? 320 : 450,
         startPage: pending.direction > 0 ? 0 : oldFaces.length,
         useMouseEvents: false,
         showPageCorners: false,
@@ -478,6 +479,7 @@ export class BookFlip {
     if (this.pending) this.reset(true);
   }
   private reset(rewarm: boolean) {
+    const wasPending=!!this.pending;
     clearTimeout(this.timer);
     cancelAnimationFrame(this.finishFrame);
     cancelAnimationFrame(this.dragFrame);
@@ -495,6 +497,7 @@ export class BookFlip {
       this.host?.remove();this.host=null;this.frame=null;this.ready=false;this.loaded=false;this.releaseRuntime=null;
       delete this.paper.dataset.flipReady;if(rewarm)this.warm();
     }
+    if(wasPending)queueMicrotask(()=>{if(!this.disposed)this.onComplete?.();});
   }
   dispose() {
     this.disposed = true;

@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-11-02T12:41:24.401Z",
+  "unitTests": 183,
+  "unitFiles": 45,
+  "typecheck": true,
+  "productionBuild": true,
+  "inputs": {
+    "iphoneScreenshot": "codex-clipboard-104c049b-d51c-40a4-980b-c3cce5bde28d.png",
+    "androidVideo": "aaa.mp4",
+    "videoDurationSeconds": 60.68,
+    "originalMediaUnchanged": true
+  },
+  "changes": [
+    "Intrinsic popover width/height with a flex column avoids WebKit grid stretching; existing locale/edition targets preserved.",
+    "Touch pointer-down no longer destroys an active book animation; pending turns drain after completion and coalesce their visual transition.",
+    "Adjacent chapter requests wait for the active sheet, retain subsequent taps for the destination, and preserve Back position.",
+    "Net-zero queued turns cancel an unnecessary overlay; visual direction follows the final rendered-page delta.",
+    "Edge taps accept up to 14px finger wobble without duplicate turns; center selection/vertical behavior retained; coarse-pointer automatic flip duration is 320ms, mouse remains 450ms."
+  ],
+  "redEvidence": {
+    "popoverHeightWithCompatibilityFixture": 778,
+    "phonePointerDownInterruptedSheet": true,
+    "chapterRequestInterruptedFold": true,
+    "netZeroOverlayExceeded1000ms": true,
+    "edgeWobble10pxLostTap": true
+  },
+  "local": {
+    "androidPassed": 15,
+    "webkitPassed": 14,
+    "desktopPassed": 6,
+    "skipped": 7,
+    "popoverWidth": 150,
+    "phonePortraitHeight": 100,
+    "phoneLandscapeHeight": 88,
+    "queueBurstFourTapsFinalFolio": 5,
+    "chapterAfterRequestTapDestinationFolio": 2,
+    "backRestoresFolio": 2,
+    "edgeWobbleBoundaryPassed": true
+  },
+  "limits": [
+    "Modern WebKit's natural sizing was already compact; the sizing regression additionally models automatic height and retained opposing insets reported by affected WebKit versions.",
+    "Video inspection is not a physical-device FPS benchmark; post-fix tests use browser device models.",
+    "One rotation setup closed the menu by design; the fixture now sets viewport before page load."
+  ],
+  "reference": "https://bugs.webkit.org/show_bug.cgi?id=270334"
+}
