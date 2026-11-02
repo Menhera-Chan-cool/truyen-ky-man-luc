@@ -1,3 +1,19 @@
+# Menu iPhone và lật sách Android — production 02/11/2026
+
+Production **dpl_366FGM8ULavCWVBkJZDaxiEBsqJE**, runtime **7c1be660c373378f6f2d9c4ba0ed5484f7583f72**, https://truyen-ky-man-luc.vercel.app READY. **206 hash source quan trọng** khớp Vercel; GitHub private. Commit sau chỉ ghi bằng chứng.
+
+- Đã xem ảnh iPhone và video Android aaa.mp4 dài 60,68s, trích frame bằng runtime FFmpeg tách biệt có sẵn trong work; không sửa/đưa file nguồn vào repo. Video thể hiện lượt lật mới thường đến khi tờ trước còn chuyển động, và có chuyển chương khi đang chạm nhanh.
+- Menu VI/EN dùng intrinsic width/height và flex column thay grid, giữ các hàng sát nhau, giới hạn trong viewport. Modern WebKit mặc định đã gọn; compatibility fixture mô phỏng auto-height/opposing insets cho kết quả RED **778px**, sau sửa **100px portrait /88px landscape**, width150px cho VI lẫn EN. Tương ứng nhóm [WebKit grid/popover issue 270334](https://bugs.webkit.org/show_bug.cgi?id=270334); không khẳng định đã chạy đúng phiên bản iOS của người dùng.
+- Touch pointer-down không còn hủy ngay tờ đang lật. Engine báo hoàn tất qua callback/microtask có guard dispose, reader drain queue sau motion; các lần chạm nhanh được gộp phần hình ảnh nhưng giữ bước trang. Chương trước/sau trên coarse pointer chờ tờ hiện tại xong; các chạm sau yêu cầu chương được giữ cho chương đích. Blur/resize/Escape/settings/jump hủy ý định cũ như phù hợp. Không có polling/RAF loop mới lúc idle.
+- Chạm tiến rồi lùi quay về trang đang hiển thị không tạo overlay vô ích chờ watchdog; chiều lật dựa trên đích cuối so với trang render. Edge tap nhận wobble tới14px, tách khỏi preview-drag và không chạy thêm tap sau swipe đã commit. Vùng giữa/chọn chữ/vuốt dọc giữ ngưỡng cũ. Automatic flip coarse pointer320ms, mouse450ms; drag release220ms giữ nguyên.
+- RED trước sửa: pointer-down phá sheet; chapter URL đổi giữa fold; net-zero giữ overlay quá1000ms; wobble10px bị mất lượt. GREEN: 4 taps tới folio5; chapter request kèm tap tới chapter2 folio2, Back trả chapter1 folio2; net-zero không overlay thừa; wobble10/13/14px tiến/lùi không mất/nhân đôi.
+- **183 unit /45 file**, typecheck/build đạt. Local: **35 ca đạt, 7 skip** (Android15, WebKit14, PC6), gồm native CDP swipe, cancel/vertical/selection/second finger/reduced motion ở mobile gesture suite. Live: **26 ca đạt, 4 phone-only case skip trên PC** (Android10, WebKit10, PC6), animation pageErrors=0, cả VI/EN navigation và dọc/ngang đạt. Fixture đổi viewport trước page load để không tự đóng menu bởi resize trong lúc đo. Screenshot menu và sheet đã xem.
+- Xem `verification/mobile-reader-fixes-local.json`, `verification/mobile-reader-fixes-live.json`. Không sửa nội dung, ảnh/EPUB/DOCX gốc, schema, quyền hoặc bản xuất bản trong Supabase.
+
+Chưa điều khiển iPhone/Android vật lý sau sửa hoặc đo FPS thực tế; kiểm tra dùng browser device models và compatibility fixture. Cần tải lại tab đang mở để nhận mã mới.
+
+---
+
 # Chuẩn bị đầy đủ trang TT theo ý định chuyển chương — production 01/11/2026
 
 Production **dpl_HANyCkfRMgQzrgD14wxvQNApShFd**, runtime **d0d95e89d064f9f9c3616ae80de30123a0032db3**, https://truyen-ky-man-luc.vercel.app READY. **206 hash source quan trọng** khớp Vercel; GitHub private. Commit sau chỉ cập nhật bằng chứng.

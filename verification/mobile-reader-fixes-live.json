@@ -1,0 +1,68 @@
+{
+  "deployment": "dpl_366FGM8ULavCWVBkJZDaxiEBsqJE",
+  "commit": "7c1be660c373378f6f2d9c4ba0ed5484f7583f72",
+  "criticalMatched": 206,
+  "mismatched": [],
+  "checkedAt": "2026-11-02T12:53:10.086Z",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "unitTests": 183,
+  "unitFiles": 45,
+  "typecheck": true,
+  "productionBuild": true,
+  "local": {
+    "androidPassed": 15,
+    "webkitPassed": 14,
+    "desktopPassed": 6,
+    "skipped": 7
+  },
+  "live": {
+    "androidPassed": 10,
+    "webkitPassed": 10,
+    "desktopPassed": 6,
+    "skipped": 4,
+    "pageErrorsInAnimationCases": 0,
+    "popoverWidth": 150,
+    "portraitHeight": 100,
+    "landscapeHeight": 88,
+    "viAndEnNavigationPassed": true,
+    "rapidFourTapsFinalFolio": 5,
+    "chapterRequestThenTapSettlesAtDestinationFolio": 2,
+    "backRestoresOriginalFolio": 2,
+    "oppositeQueuedTurnsLeaveNoStaleOverlay": true,
+    "edgeWobbleCases": [
+      {
+        "dx": -10,
+        "dy": 0
+      },
+      {
+        "dx": 0,
+        "dy": 13
+      },
+      {
+        "dx": -14,
+        "dy": 0
+      },
+      {
+        "dx": 10,
+        "dy": 0
+      }
+    ],
+    "edgeWobbleNoLostOrDoubleTurns": true
+  },
+  "media": {
+    "input": "aaa.mp4",
+    "durationSeconds": 60.68,
+    "analyzedLocally": true,
+    "sourceUnchanged": true
+  },
+  "limitations": [
+    "Android Pixel 7 Chromium and iPhone 13 WebKit are browser device models, not physical-device FPS measurements.",
+    "Affected older WebKit sizing is modeled with auto height and retained opposing insets; natural modern WebKit sizing is also exercised by the navigation flow.",
+    "Phone-only cases are intentionally skipped on desktop; local gesture cases also skip mouse-only/native-CDP cases where not applicable.",
+    "No book content, source media, settings schema, database permissions or publication state was changed."
+  ],
+  "references": [
+    "https://bugs.webkit.org/show_bug.cgi?id=270334",
+    "https://developer.mozilla.org/en-US/docs/Web/API/Popover_API/Using"
+  ]
+}
