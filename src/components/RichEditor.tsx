@@ -86,6 +86,7 @@ export default function RichEditor({
     [uploading, setUploading] = useState(false);
   const [previewDevice, setPreviewDevice] = useState("mobile");
   const input = useRef<HTMLInputElement>(null);
+  const [initialContent] = useState(() => cleanHtml(html));
   const L = (vi: string, en: string) => tx(locale, vi, en);
   const editor = useEditor({
     extensions: [
@@ -98,10 +99,11 @@ export default function RichEditor({
       NoteIds,
       AnchorSpan,
     ],
-    content: html,
+    content: initialContent,
     immediatelyRender: false,
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
     editorProps: {
+      transformPastedHTML: cleanHtml,
       attributes: { "aria-label": L("Nội dung chương", "Chapter content") },
     },
   });

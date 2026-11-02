@@ -1,8 +1,10 @@
-[data-heading-font]:not([data-heading-font="default"]) :is(h1,h2,h3,h4),
+[data-heading-font]:not([data-heading-font="default"]) :is(h1,h2,h3,h4,h5,h6),
 [data-heading-font]:not([data-heading-font="default"]) .book-chapter-heading::before {
   font-family: var(--heading-font-family);
   font-weight: 400;
   font-synthesis: none;
+  /* Keep small decorative t/i strokes from touching without widening large titles excessively. */
+  letter-spacing: calc(.04em + 2px);
 }
 .heading-font-settings { grid-column: 1 / -1; min-width: 0; padding-bottom: 24px; border-bottom: 1px solid #cfc4b2; }
 .heading-font-actions { display: flex; align-items: start; flex-wrap: wrap; gap: 16px; }

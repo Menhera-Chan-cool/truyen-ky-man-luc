@@ -61,7 +61,10 @@ export async function GET(request: Request) {
         .eq("id", version)
         .single();
       if (error) throw new Error(error.message);
-      return Response.json(data, { headers: { "Cache-Control": "no-store" } });
+      return Response.json(
+        { ...data, html: cleanHtml(data.html) },
+        { headers: { "Cache-Control": "no-store" } },
+      );
     }
     const before = Number(url.searchParams.get("before") ?? 2147483647);
     if (!Number.isInteger(before) || before < 1 || before > 2147483647)

@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-11-02T16:14:00Z",
+  "scope": "Consistent VI/EN heading faces and visible second i in Critique; Vietnamese spelling excluded by user",
+  "unitTests": 189,
+  "unitFiles": 47,
+  "typecheck": true,
+  "productionBuild": true,
+  "browserTests": {"desktop": 11, "androidChromium": 11, "iphoneWebKit": 11, "failed": 0},
+  "flows": ["Legacy section labels and merged Word paragraphs", "Selected font vs body font", "Book/Ebook switching and text position", "Page turns and chapter boundaries", "Footnotes and mocked speech"],
+  "editor": "Mounted the real Tiptap editor; legacy labels normalized without onChange firing or an implicit save",
+  "dataAudit": {"baselineVersions": 43, "latestVersions": 41, "publishedStoryEditions": 40, "nonWhitespaceTextUnchanged": true, "anchorsAndImagesUnchanged": true, "idempotent": true, "viEnPublishedFontMatches": true},
+  "database": {"contentWritesByThisTask": 0, "baselineVersionHtmlUnchanged": true, "bookMetadataUnchanged": true, "concurrentEditionUpdates": "Seven VI edition heads changed separately during verification; no heads or content were overwritten"},
+  "critiqueAt20px": {"characters": 8, "iCount": 2, "letterSpacingPx": 2.8, "desktopInkGapPx": 0.546875, "webkitInkGapPx": 3.010000228881836},
+  "limits": ["Browser device models, not physical phones", "No spelling edits", "No owner-authenticated production editor write test"]
+}

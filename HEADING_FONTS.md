@@ -1,6 +1,10 @@
 # Phông heading dùng chung
 
-Vào **Biên tập → Thông tin sách → Phông heading**. Owner và editor có cùng quyền thêm/xóa/chọn phông. Chọn riêng cho VI và EN, **Lưu bản nháp** hoặc **Xuất bản thông tin sách**. Phông áp dụng cho tiêu đề chương và h1–h4 trong nội dung Novel, xem trước và đối chiếu; phông thân bài, chữ trong ảnh/PDF và nội dung chương được giữ nguyên.
+Vào **Biên tập → Thông tin sách → Phông heading**. Owner và editor có cùng quyền thêm/xóa/chọn phông. Chọn riêng cho VI và EN, **Lưu bản nháp** hoặc **Xuất bản thông tin sách**. Phông áp dụng cho tiêu đề chương và h1–h6 trong nội dung Novel, xem trước và đối chiếu; phông thân bài và chữ trong ảnh/PDF được giữ nguyên.
+
+Các nhãn riêng dòng **Critique, Notes, Lời bình/Lời bàn, Chú thích/Chú giải** tự được nhận diện thành heading khi mở, dán hoặc nhập nội dung. Nhãn được nhận diện cả khi file Word gộp nhãn và đoạn sau bằng xuống dòng; chỉ nhãn dùng font heading, đoạn sau giữ font thân bài. Câu văn thông thường, danh sách và trích dẫn không bị chuyển thành heading. Với nhãn khác, dùng nút **H₂** trong editor.
+
+Chuẩn hóa này chạy khi đọc/biên tập, không tự lưu, tạo revision hoặc xuất bản lại chương cũ. Các chữ và đích chú thích được giữ nguyên. Khoảng cách chữ của phông heading tùy chọn giúp tách các nét sát nhau như `t` và chữ `i` thứ hai trong **Critique**. Sau khi cập nhật web, tải lại editor; với bản tải ngoại tuyến, cập nhật gói để nhận mã mới.
 
 - **1. Mặc định (hiện tại)** giữ kiểu heading cũ và luôn có sẵn.
 - **2. FZ Thư Pháp Tiểu Tự** là file người dùng cung cấp; bản gốc 393.520 byte, SHA256 `1c66e4ca4489c9fcd7bf526d63d10aabb9d320b47a903d206c18d8f0b706194e`. Metadata bản quyền Thai Hieu được giữ nguyên. File nguồn trên thiết bị không bị sửa; bản dùng chung nằm trong bucket riêng của Supabase.
