@@ -29,6 +29,7 @@ export default function BookDetail({
     [storageMessage, setStorageMessage] = useState(""),
     [back, setBack] = useState(false),
     [menu, setMenu] = useState(false),
+    [closing, setClosing] = useState(false),
     [lastBy, setLastBy] = useState<Partial<Record<Locale, string>>>({});
   const meta = book.meta[locale];
   useEffect(() => {
@@ -144,9 +145,17 @@ export default function BookDetail({
                 <button
                   type="button"
                   className="primary-button read-button"
-                  aria-expanded={menu}
+                  aria-expanded={menu && !closing}
                   aria-controls="read-options"
-                  onClick={() => setMenu(!menu)}
+                  onClick={() => {
+                    if (!menu) return setMenu(true);
+                    if (closing) return;
+                    setClosing(true);
+                    setTimeout(() => {
+                      setMenu(false);
+                      setClosing(false);
+                    }, 250);
+                  }}
                 >
                   <BookOpen size={19} />
                   {last
@@ -155,7 +164,10 @@ export default function BookDetail({
                   <ArrowRight size={18} />
                 </button>
                 {menu && (
-                  <div className="read-options" id="read-options">
+                  <div
+                    className={`read-options ${closing ? "closing" : ""}`}
+                    id="read-options"
+                  >
                     {(
                       [
                         ["vi", "read", "Tiếng Việt"],
