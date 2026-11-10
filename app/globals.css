@@ -3304,3 +3304,5 @@ dialog::backdrop {
 @media (prefers-reduced-motion:reduce){.read-options .primary-button{animation:none;opacity:1}}
 .read-options.closing .primary-button{animation:read-option-out .25s ease-in forwards;animation-delay:0s}
 @keyframes read-option-out{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-8px)}}
+.read-options .primary-button{background:#6b1a16;color:#fffaf0}
+.read-options .primary-button:not(:disabled):hover{background:#531411}
