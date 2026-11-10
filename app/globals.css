@@ -3306,3 +3306,4 @@ dialog::backdrop {
 @keyframes read-option-out{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-8px)}}
 .read-options .primary-button{background:#6b1a16;color:#fffaf0}
 .read-options .primary-button:not(:disabled):hover{background:#531411}
+.chapter-title,.prose :is(h1,h2,h3,h4,h5,h6),.book-chapter-heading::before{font-weight:700}

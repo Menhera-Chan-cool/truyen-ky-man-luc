@@ -19,3 +19,9 @@
 .heading-font-row small { color: #6b6051; }
 .heading-font-settings button { min-height: 44px; }
 @media(max-width:759px) { .heading-font-choices { grid-template-columns: minmax(0,1fr); gap: 16px; } .heading-font-settings select { font-size: 16px; } }
+[data-heading-font]:not([data-heading-font="default"]) .chapter-title,
+[data-heading-font]:not([data-heading-font="default"]) .prose :is(h1,h2,h3,h4,h5,h6),
+[data-heading-font]:not([data-heading-font="default"]) .book-chapter-heading::before {
+  -webkit-text-stroke: .05em currentColor;
+  paint-order: stroke fill;
+}
