@@ -107,9 +107,15 @@ test("persists reader settings and progress on the device", async ({
   await page.reload();
   await expect(page.locator(".prose")).toHaveCSS("font-size", "24px");
   await page.goto("/en");
+  await page
+    .getByRole("button", { name: "Continue reading", exact: true })
+    .click();
   await expect(
-    page.getByRole("link", { name: "Continue reading", exact: true }),
+    page.getByRole("link", { name: "English", exact: true }),
   ).toHaveAttribute("href", "/en/read/chapter-3");
+  await expect(
+    page.getByRole("link", { name: "Comic", exact: true }),
+  ).toHaveAttribute("href", "/en/comic/chapter-3");
 });
 test("protects the editor and rejects anonymous API writes", async ({
   page,

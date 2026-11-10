@@ -27,7 +27,9 @@ export default function BookDetail({
     [dark, setDark] = useState(initialDark),
     [appearanceBusy, setAppearanceBusy] = useState(false),
     [storageMessage, setStorageMessage] = useState(""),
-    [back, setBack] = useState(false);
+    [back, setBack] = useState(false),
+    [menu, setMenu] = useState(false),
+    [lastBy, setLastBy] = useState<Partial<Record<Locale, string>>>({});
   const meta = book.meta[locale];
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -40,12 +42,15 @@ export default function BookDetail({
           );
       })
       .catch(() => {});
-    readProgress(locale)
-      .then((p) => {
-        if (p && book.chapters.some((c) => c.id === p.chapterId))
-          setLast(p.chapterId);
-      })
-      .catch(() => {});
+    for (const lang of ["vi", "en"] as const)
+      readProgress(lang)
+        .then((p) => {
+          if (p && book.chapters.some((c) => c.id === p.chapterId)) {
+            setLastBy((m) => ({ ...m, [lang]: p.chapterId }));
+            if (lang === locale) setLast(p.chapterId);
+          }
+        })
+        .catch(() => {});
   }, [locale, book.chapters]);
   const start =
     book.chapters.find((c) => c.id === "chapter-1" && c[locale]) ??
@@ -135,16 +140,48 @@ export default function BookDetail({
             <div className="title-rule" aria-hidden="true" />
             <p className="book-summary">{meta.summary}</p>
             {start ? (
-              <a
-                className="primary-button read-button"
-                href={`/${locale}/read/${last ?? start.id}`}
-              >
-                <BookOpen size={19} />
-                {last
-                  ? tx(locale, "Đọc tiếp", "Continue reading")
-                  : tx(locale, "Bắt đầu đọc", "Start reading")}
-                <ArrowRight size={18} />
-              </a>
+              <div className="read-choice">
+                <button
+                  type="button"
+                  className="primary-button read-button"
+                  aria-expanded={menu}
+                  aria-controls="read-options"
+                  onClick={() => setMenu(!menu)}
+                >
+                  <BookOpen size={19} />
+                  {last
+                    ? tx(locale, "Đọc tiếp", "Continue reading")
+                    : tx(locale, "Bắt đầu đọc", "Start reading")}
+                  <ArrowRight size={18} />
+                </button>
+                {menu && (
+                  <div className="read-options" id="read-options">
+                    {(
+                      [
+                        ["vi", "read", "Tiếng Việt"],
+                        ["en", "read", "English"],
+                        ["vi", "comic", "Truyện tranh"],
+                        ["en", "comic", "Comic"],
+                      ] as const
+                    ).map(([lang, kind, label], index) => {
+                      const first =
+                        book.chapters.find((c) => c.id === "chapter-1" && c[lang]) ??
+                        book.chapters.find((c) => c[lang]) ??
+                        start;
+                      return (
+                        <a
+                          key={label}
+                          className="primary-button"
+                          style={{ "--i": index } as React.CSSProperties}
+                          href={`/${lang}/${kind}/${lastBy[lang] ?? first.id}`}
+                        >
+                          {label}
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             ) : (
               <p>
                 {tx(
