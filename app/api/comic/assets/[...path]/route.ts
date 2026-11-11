@@ -19,6 +19,10 @@ export async function GET(request:Request,{params}:{params:Promise<{path:string[
   let {data,error:signError}=await publicRead(signal=>serviceClient(readFetch(signal)).storage.from("comic-assets").createSignedUrl(object,60));
   if(view==="read"&&missingStorageObject(signError))({data,error:signError}=await publicRead(signal=>serviceClient(readFetch(signal)).storage.from("comic-assets").createSignedUrl(path,60)));
   if(signError||!data) return missingStorageObject(signError)?missing():unavailable();
-  return new Response(null,{status:307,headers:{Location:data.signedUrl,"Cache-Control":"private, no-store"}});
+  if(!published) return new Response(null,{status:307,headers:{Location:data.signedUrl,"Cache-Control":"private, no-store"}});
+  // Published files are immutable (UUID paths), so serve the bytes through Vercel's CDN instead of a fresh uncacheable signed URL per view.
+  const upstream=await fetch(data.signedUrl);
+  if(!upstream.ok||!upstream.body) return unavailable();
+  return new Response(upstream.body,{headers:{"Content-Type":upstream.headers.get("Content-Type")??"image/webp","Cache-Control":"public, max-age=604800, s-maxage=604800, immutable"}});
   }catch{return unavailable();}
 }
