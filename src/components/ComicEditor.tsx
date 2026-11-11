@@ -32,6 +32,7 @@ import { IconButton,LanguageLinks } from "./Ui";
 import NetworkNotice from "./NetworkNotice";
 import {
   sampleComic,
+  chapterNumber,
   naturalComicOrder,
   moveComicPage,
   type ComicDraft,
@@ -427,7 +428,7 @@ export default function ComicEditor({
                 <span>
                   {c.id === "preface"
                     ? "—"
-                    : c.id.replace("chapter-", "").padStart(2, "0")}
+                    : String(chapterNumber(book.chapters, c.id)).padStart(2, "0")}
                 </span>
                 <span>{c.title}</span>
                 {c.id === chapterId && <BookImage size={15} />}

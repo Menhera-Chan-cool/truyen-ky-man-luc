@@ -41,6 +41,7 @@ import {
   ComicChaptersDialog,
 } from "./ComicDialogs";
 import {
+  chapterNumber,
   defaultComicSettings,
   normalizeComicSettings,
   sampleComic,
@@ -583,7 +584,7 @@ export default function ComicReader({
   const label =
     chapterId === "preface"
       ? L("Lời tựa", "Preface")
-      : `${L("Chương", "Chapter")} ${chapterId.replace("chapter-", "")}`;
+      : `${L("Chương", "Chapter")} ${chapterNumber(book.chapters, chapterId)}`;
   function chapterControl(chapter:{id:string}|undefined,forward:boolean){
     const disabled=!chapter||navigating,Icon=forward?ChevronRight:ChevronLeft;
     const name=forward?L("Chương sau","Next chapter"):L("Chương trước","Previous chapter");

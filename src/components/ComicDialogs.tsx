@@ -31,7 +31,7 @@ import {
   Check,
   SlidersHorizontal,
 } from "lucide-react";
-import { type ComicSettings } from "../lib/comic";
+import { chapterNumber, type ComicSettings } from "../lib/comic";
 import type { ComicSummary } from "../lib/comic-db";
 import type { ComicBookIndex } from "./ComicReader";
 export function ComicModal({
@@ -494,7 +494,7 @@ export function ComicChaptersDialog({
             <span>
               {c.id === "preface"
                 ? L("Lời tựa", "Preface")
-                : `${L("Chương", "Chapter")} ${c.id.replace("chapter-", "")}`}
+                : `${L("Chương", "Chapter")} ${chapterNumber(book.chapters, c.id)}`}
             </span>
             <small>
               {c.title.replace(/^(?:Chương|Chapter)\s*\d+\s*:\s*/i, "")}

@@ -47,6 +47,8 @@ export const defaultComicSettings: ComicSettings = {
   dim: 0,
   onlyWithImages: false,
 };
+export const chapterNumber = (chapters: { id: string }[], id: string) =>
+  chapters.filter((c) => c.id !== "preface").findIndex((c) => c.id === id) + 1;
 const names = new Intl.Collator("vi", { numeric: true, sensitivity: "base" });
 export function naturalComicOrder<T extends { name: string }>(pages: T[]): T[] {
   return [...pages].sort((a, b) => names.compare(a.name, b.name));
