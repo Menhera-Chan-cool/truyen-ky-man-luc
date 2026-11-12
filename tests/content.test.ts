@@ -12,7 +12,6 @@ import {
   chapterNumber,
   safeArchivePath,
   stripTitle,
-  translationUrl,
   validateImport,
   resolveAnchor,
 } from "../src/lib/content";
@@ -62,11 +61,6 @@ describe("bilingual content and import boundaries", () => {
         true,
       ),
     ).toHaveLength(1);
-  });
-  it("only sends the selected text when opening an explicit translation URL", () => {
-    const url = new URL(translationUrl("Xin chào & goodbye", "vi"));
-    expect(url.searchParams.get("text")).toBe("Xin chào & goodbye");
-    expect(url.searchParams.get("tl")).toBe("en");
   });
   it("does not attach a note to a different edition revision", () => {
     expect(

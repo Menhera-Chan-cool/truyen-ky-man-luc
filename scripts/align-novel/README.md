@@ -24,7 +24,7 @@ The trusted private repository needs `NOVEL_ALIGNMENT_SUPABASE_URL` (variable) a
 Verification:
 
 ```powershell
-npx vitest run tests/novel --maxWorkers=2
+npx vitest run tests/novel-alignment.test.ts tests/novel-alignment-db.test.ts tests/novel-worker-input.test.ts tests/novel-lookup.test.ts tests/novel-api.test.ts tests/novel-remote.test.ts tests/offline-alignment.test.ts --maxWorkers=2
 ../../work/novel-alignment-runtime/Scripts/python.exe -m unittest discover -s scripts/align-novel -p 'test_*.py'
 npm run typecheck
 ```

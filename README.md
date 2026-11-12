@@ -68,7 +68,13 @@ Owner/editor nhập → xem trước → ghép chương → lưu nháp → xuấ
 
 Có Literata, Lora, Merriweather, Georgia, Be Vietnam Pro, Inter, Roboto, OpenDyslexic và JetBrains Mono. Các phông bổ sung tự host, chỉ tải file phông khi trình duyệt cần sử dụng. Tooltip dùng chung hỗ trợ hover/focus, Escape và reduced motion. Màu tùy biến hiển thị swatch/mã HEX trong bảng nền tối; native controls theo độ sáng màu nền đã chọn.
 
-Tiến độ, cài đặt, tô màu, đánh dấu và ghi chú lưu trong IndexedDB trên thiết bị. Đổi VI/EN giữ ID chương và vị trí riêng của từng bản. Không tự dịch sách; phần chưa có bản dịch hiển thị thông báo. Nút dịch đoạn chọn chỉ mở Google Translate sau khi người đọc bấm.
+Tiến độ, cài đặt, tô màu, đánh dấu và ghi chú lưu trong IndexedDB trên thiết bị. Đổi VI/EN giữ ID chương và vị trí riêng của từng bản. Không tự dịch sách; phần chưa có bản dịch hiển thị thông báo. Bôi đen từ, cụm từ hoặc câu rồi chọn **Tra VI↔EN / Look up VI↔EN** để xem phần tương ứng trong bản Novel còn lại ngay tại chỗ, không gửi sang Google Translate.
+
+Tra cứu dùng hai bản đã xuất bản của cùng chương, tối đa 2.000 ký tự và 5 nhóm câu. Kết quả là chữ gốc của bản đối ứng, có phần tô sáng và ngữ cảnh; không tạo bản dịch mới. Khi chưa đủ căn cứ, bảng ghi rõ chưa chắc chắn hoặc chỉ đưa câu để đối chiếu. **Mở đối chiếu** mở hai cột tại phần đang tra; đóng bảng giữ vị trí đọc. PDF không hỗ trợ tra theo văn bản Novel. Nội dung đã đổi sẽ yêu cầu tải lại thay vì dùng kết quả của phiên bản cũ.
+
+Dữ liệu đối ứng được chuẩn bị bằng mô hình chạy trên GitHub Actions trong repo private, mỗi giờ vào phút 17, tối đa 3 chương/lượt. Xuất bản lại tự xếp hàng theo đúng cặp VI/EN; có thể phải đợi một hoặc nhiều lượt xử lý. Khi không có việc, workflow bỏ qua cài Python/tải mô hình. Editor xem trạng thái và yêu cầu xử lý lại trong phần **Đối ứng VI↔EN** của chương. Lưu nháp không kích hoạt tác vụ và tác vụ không sửa nội dung sách. Xem [hướng dẫn worker](scripts/align-novel/README.md) để vận hành, giới hạn và giấy phép mô hình.
+
+Tải ngoại tuyến bao gồm dữ liệu tra đã sẵn sàng, có kiểm checksum và phiên bản; cập nhật tái sử dụng dữ liệu không đổi. Lỗi tải giữ nguyên gói hoàn chỉnh trước đó. Khi mất mạng, kết quả ghi rõ đang dùng dữ liệu trên thiết bị; chương chưa tải dữ liệu sẽ báo cần cập nhật khi có mạng. Xóa gói tải không xóa ghi chú hay tiến độ.
 
 Trong Cài đặt trình đọc → **Dữ liệu đọc trên thiết bị**, dùng **Xuất bản sao JSON** để giữ bản sao trước khi đổi máy hoặc xóa dữ liệu trình duyệt. Nhập file (tối đa 10 MB) sẽ hiện số ghi chú/vị trí trước khi bạn bấm Khôi phục. Ghi chú được gộp, giữ riêng các bản khác nội dung; tùy chọn khôi phục cài đặt/tiến độ sẽ thay các giá trị tương ứng. File chỉ được xử lý trên thiết bị, không tải lên server. Đây là thao tác sao lưu thủ công, không phải đồng bộ tài khoản.
 

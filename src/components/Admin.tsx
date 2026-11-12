@@ -34,6 +34,7 @@ const RichEditor = lazy(() => import("./RichEditor"));
 const ImportPanel = lazy(() => import("./ImportPanel"));
 const ComicEditor = lazy(() => import("./ComicEditor"));
 const HeadingFonts = lazy(() => import("./HeadingFonts"));
+const NovelAlignmentStatus=lazy(()=>import('./NovelAlignmentStatus'));
 import dynamic from "next/dynamic";
 const PdfViewer=dynamic(()=>import("./PdfViewer"));
 import {
@@ -878,6 +879,7 @@ export default function Admin({ locale, comicChapter,initialChapter }: { locale:
                           )}
                         </p>
                       )}
+                      <ModuleBoundary locale={locale}><NovelAlignmentStatus key={selected+':'+state.editions.filter(e=>e.chapter_id===selected).map(e=>e.published_id).join(':')} chapterId={selected} locale={locale}/></ModuleBoundary>
                       <DraftReview
                         locale={locale}
                         id={selected}

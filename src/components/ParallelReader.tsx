@@ -9,24 +9,29 @@ import type { Book, Chapter, Locale, ReaderSettings } from "../lib/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import HeadingFontFaces,{headingFontStyle} from "./HeadingFontFaces";
 import {headingFontId} from "../lib/heading-fonts";
+import {rangeFromOffsets} from "../lib/reader";
+import type {ComparisonFocus} from "../lib/novel-lookup";
 function EditionView({
   chapter,
   language,
   settings,
   fontFamily,
   headingFont,
+  focus,
 }: {
   chapter: Chapter;
   language: Locale;
   settings: ReaderSettings;
   fontFamily: string;
   headingFont?: string;
+  focus?: ComparisonFocus[Locale];
 }) {
   const root = useRef<HTMLElement>(null),
     scroll = useRef<HTMLDivElement>(null),
     edition = chapter[language];
   const context = `${chapter.id}:${language}:${edition?.revision}`;
   const [noteReturn, setNoteReturn] = useState<{context:string;top:number;left:number;source:HTMLAnchorElement}|null>(null);
+  const [staleFocus,setStaleFocus]=useState(false);
   useEffect(() => {
     setNoteReturn(null);
     if (!root.current || !edition) return;
@@ -49,9 +54,29 @@ function EditionView({
     }
     if (scroll.current) scroll.current.scrollTop = 0;
   }, [chapter.id, edition, language]);
+  useEffect(()=>{
+    if(!focus||!root.current||!edition){setStaleFocus(false);return;}
+    if(focus.revision!==edition.revision||root.current.textContent?.slice(focus.start,focus.end)!==focus.text){setStaleFocus(true);return;}
+    setStaleFocus(false);let cancelled=false;const highlighted:HTMLElement[]=[];
+    const key='novel-lookup-'+language;
+    const highlights=(CSS as typeof CSS&{highlights?:Map<string,unknown>}).highlights;
+    void document.fonts.ready.then(()=>{
+      if(cancelled||!root.current||!scroll.current)return;
+      const range=rangeFromOffsets(root.current,focus.start,focus.end);if(!range)return;
+      scroll.current.scrollTop+=range.getBoundingClientRect().top-scroll.current.getBoundingClientRect().top-16;
+      for(const node of [range.startContainer,range.endContainer]){
+        const el=node.parentElement?.closest<HTMLElement>('p,li,blockquote');
+        if(el){el.classList.add('lookup-context');highlighted.push(el);}
+      }
+      const HighlightClass=(window as Window&{Highlight?:new(...ranges:Range[])=>unknown}).Highlight;
+      if(HighlightClass&&highlights)highlights.set(key,new HighlightClass(range));
+    });
+    return()=>{cancelled=true;highlights?.delete(key);for(const el of highlighted)el.classList.remove('lookup-context');};
+  },[chapter.id,edition,language,focus]);
   return (
     <section className="parallel-edition" lang={language}>
       <h3>{language === "vi" ? "Tiếng Việt" : "English"}</h3>
+      {staleFocus&&<p role="status">{language==='vi'?'Đoạn đối chiếu đã thay đổi phiên bản.':'The comparison passage has changed version.'}</p>}
       {!edition ? (
         <p className="missing-translation">
           {language === "vi"
@@ -122,6 +147,7 @@ export default function ParallelReader({
   onClose,
   onRead,
   offlineBook,
+  focus,
   fontFamily = '"Literata Variable", Georgia, serif',
 }: {
   locale: Locale;
@@ -131,6 +157,7 @@ export default function ParallelReader({
   onRead: (l: Locale, id: string) => void;
   offlineBook?: Book;
   fontFamily?: string;
+  focus?: ComparisonFocus;
 }) {
   const L = (vi: string, en: string) => (locale === "vi" ? vi : en),
     [book, setBook] = useState<Book | null>(offlineBook ?? null),
@@ -239,6 +266,7 @@ export default function ParallelReader({
                       settings={settings}
                       fontFamily={fontFamily}
                       headingFont={book.meta[language].headingFont}
+                      focus={selected===chapterId?focus?.[language]:undefined}
                     />
                   ))}
                 </div>

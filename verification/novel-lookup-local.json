@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-11-12T07:03:00Z",
+  "baseURL": "http://localhost:3003",
+  "artifactSource": "Supabase current published pairs, no local model fixture override",
+  "vitest": {"passed": 213, "files": 52},
+  "python": {"passed": 7},
+  "typecheck": "passed",
+  "productionBuild": "passed",
+  "lookupBrowserCases": {"desktop": 7, "androidChromium": 7, "iPhoneWebKit": 7},
+  "readerRegression": {"desktopPassed": 20, "desktopTouchOnlySkipped": 1},
+  "covered": ["VI to EN", "EN to VI", "missing counterpart", "malformed request", "unauthenticated admin denied", "exact reading position", "comparison focus", "Book mode", "late response after close/chapter change", "complete offline download", "unchanged artifact reuse", "failed update preserves old snapshot", "offline lookup", "download deletion preserves notes/settings/progress"],
+  "database": {"bookHash": "e58da29549c53783b2f88ff5036c14aa", "editionsHash": "d3f3479acfac125f94e572e329f7e4d3", "versions": 105, "baselineMatches": true, "readyChapters": 20, "anonJobAccess": false, "anonWorkerAccess": false},
+  "github": {"visibility": "PRIVATE", "realWorkerRun": 43164579793, "idleRun": 43168367966, "bothConclusions": "success", "schedule": "17 * * * *", "scheduledEventObserved": false},
+  "limits": ["No physical phone testing", "Automatic counterpart suggestions can be uncertain", "Development span-overlap probes are not semantic accuracy"]
+}

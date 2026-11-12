@@ -7,6 +7,8 @@ import type {
   Locale,
 } from "./types";
 import { normalizeSettings } from "./reader";
+import {OFFLINE_KEY,type OfflineBook} from './offline-book';
+import type {AlignmentArtifact} from './novel-lookup';
 import { mergeBackupNotes, type ReaderBackup } from "./reader-backup";
 import {
   mergeRecent,
@@ -83,6 +85,25 @@ export async function deletePreference(key: string) {
 }
 export async function preferenceKeys() {
   return (await connection()).getAllKeys("preferences");
+}
+export async function saveOfflineSnapshot(saved:OfflineBook,artifacts:Record<string,AlignmentArtifact>){
+  const tx=(await connection()).transaction('preferences','readwrite');
+  try{
+    const previous=await tx.store.get(OFFLINE_KEY) as OfflineBook|undefined;
+    const keep=new Set(Object.values(saved.alignmentKeys??{}));
+    for(const [key,value]of Object.entries(artifacts)){
+      if(!/^offline-novel-alignment:v1:[a-f0-9]{64}$/.test(key))throw Error('Invalid offline alignment key');
+      await tx.store.put(value,key);
+    }
+    for(const key of Object.values(previous?.alignmentKeys??{}))if(/^offline-novel-alignment:v1:[a-f0-9]{64}$/.test(key)&&!keep.has(key))await tx.store.delete(key);
+    await tx.store.put(saved,OFFLINE_KEY);await tx.done;
+  }catch(e){try{tx.abort();}catch{}await tx.done.catch(()=>{});throw e;}
+}
+export async function deleteOfflineSnapshot(){
+  const tx=(await connection()).transaction('preferences','readwrite');
+  const saved=await tx.store.get(OFFLINE_KEY) as OfflineBook|undefined;
+  for(const key of Object.values(saved?.alignmentKeys??{}))if(/^offline-novel-alignment:v1:[a-f0-9]{64}$/.test(key))await tx.store.delete(key);
+  await tx.store.delete(OFFLINE_KEY);await tx.done;
 }
 export async function readRecent() {
   return parseRecent((await readPreference("recent:v1")) ?? []);

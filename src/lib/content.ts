@@ -76,15 +76,6 @@ export function validateImport<
   }
   return items;
 }
-export function translationUrl(text: string, locale: string): string {
-  const params = new URLSearchParams({
-    sl: locale,
-    tl: locale === "vi" ? "en" : "vi",
-    text: text.slice(0, 5000),
-    op: "translate",
-  });
-  return `https://translate.google.com/?${params}`;
-}
 export function resolveAnchor(
   anchor: { revision: number; start: number; end: number; text: string },
   revision: number,

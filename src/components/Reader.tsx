@@ -65,7 +65,6 @@ import {headingFontId} from "../lib/heading-fonts";
 import {
   tx,
   resolveAnchor,
-  translationUrl,
   missingChapterTitle,
 } from "../lib/content";
 import {
@@ -107,6 +106,9 @@ import {
 import Soundscape from "./Soundscape";
 import dynamic from "next/dynamic";
 const PdfViewer=dynamic(()=>import("./PdfViewer"));
+import {loadNovelLookup} from '../lib/reader-modules';
+const NovelLookup=dynamic(loadNovelLookup);
+import type {LookupRequest,ComparisonFocus} from "../lib/novel-lookup";
 import { useSpeech } from "./useSpeech";
 import {voiceMatchesLocale} from "../lib/speech-voices";
 import type { ReaderBackup } from "../lib/reader-backup";
@@ -209,6 +211,7 @@ export default function Reader({
       | "guide"
       | "recent"
       | "parallel"
+      | "lookup"
       | null
     >(null),
     [voiceQuery, setVoiceQuery] = useState(""),
@@ -222,6 +225,8 @@ export default function Reader({
       alt: string;
     } | null>(null),
     [imageOpen, setImageOpen] = useState(false);
+  const [lookupRequest,setLookupRequest]=useState<LookupRequest|null>(null);
+  const [comparisonFocus,setComparisonFocus]=useState<ComparisonFocus>();
   const [page, setPage] = useState(0),
     [pages, setPages] = useState(1),
     [viewportWidth, setViewportWidth] = useState(780),
@@ -352,6 +357,7 @@ export default function Reader({
   const contextKey = `${locale}:${chapterId}:${revision}`,
     activeContext = useRef(contextKey);
   activeContext.current = contextKey;
+  useEffect(()=>{setLookupRequest(null);setComparisonFocus(undefined);setPanel(p=>p==='lookup'?null:p);},[chapterId,locale,revision]);
   const captureRef = useRef<() => number | undefined>(() => undefined);
   const revealRef = useRef<(offset: number, center?: boolean) => void>(
     () => {},
@@ -1353,6 +1359,7 @@ export default function Reader({
     else speech.speak(isPdf ? pdfText : undefined, undefined, isPdf);
   }
   function togglePanel(value: typeof panel) {
+    if(value==='parallel')setComparisonFocus(undefined);
     if (value === "tools") {
       setPageInput(String(pageRef.current * jumpStride + 1));
       setPageError("");
@@ -3132,6 +3139,9 @@ export default function Reader({
       {panel === "guide" && (
         <ReaderGuide locale={locale} onClose={closePanel} />
       )}
+      {panel === "lookup" && lookupRequest?.chapterId===chapterId && lookupRequest.locale===locale && lookupRequest.revision===revision && (
+        <NovelLookup request={lookupRequest} book={book} offline={offline} onClose={closePanel} onCompare={(focus)=>{setComparisonFocus(focus);setPanel('parallel');}}/>
+      )}
       {panel === "parallel" && (
         <ParallelReader
           locale={locale}
@@ -3139,6 +3149,7 @@ export default function Reader({
           settings={settings}
           offlineBook={offline ? book : undefined}
           fontFamily={fontFamily}
+          focus={comparisonFocus}
           onClose={closePanel}
           onRead={(language, id) => {
             closePanel();
@@ -3538,14 +3549,17 @@ export default function Reader({
               <Copy size={15} />
               {L("Sao chép", "Copy")}
             </button>
-            <a
-              href={translationUrl(selection.text, locale)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <button disabled={isPdf} onClick={()=>{
+              if(selection.text.length>2000){notify(L('Hãy chọn tối đa 2.000 ký tự để tra.','Select up to 2,000 characters to look up.'));return;}
+              setLookupRequest({chapterId,locale,revision,start:selection.start,end:selection.end,text:selection.text});
+              if(speech.playing&&!speech.paused)speech.pause();
+              setAuto(false);touchTurns.current=[];queuedChapter.current=null;physicalFlip.current?.cancel();
+              if(mobile||bookLayout)setSidebar(false);
+              setPanel('lookup');setSelection(null);window.getSelection()?.removeAllRanges();
+            }}>
               <Languages size={15} />
-              {L("Dịch nghĩa", "Translate")}
-            </a>
+              {L('Tra VI↔EN','Look up VI↔EN')}
+            </button>
             <button onClick={() => setQuote(selection.text)}>
               <Quote size={15} />
               {L("Trích dẫn", "Quote")}

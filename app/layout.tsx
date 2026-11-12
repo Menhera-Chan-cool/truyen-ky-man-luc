@@ -8,6 +8,7 @@ import "@fontsource/be-vietnam-pro/600.css";
 import "./globals.css";
 import "./edition-switch.css";
 import "./heading-fonts.css";
+import "./novel-lookup.css";
 import { savedReaderSettings } from "../src/lib/server";
 import { readerPalette, themes } from "../src/lib/reader";
 export const metadata: Metadata = {

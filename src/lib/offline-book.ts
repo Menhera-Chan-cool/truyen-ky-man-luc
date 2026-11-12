@@ -111,4 +111,5 @@ export type OfflineBook = {
   assets: string[];
   downloadedAt: string;
   bytes: number;
+  alignmentKeys?: Record<string,string>;
 };

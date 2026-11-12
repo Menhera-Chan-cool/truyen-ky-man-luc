@@ -1,5 +1,7 @@
 "use client";
-import { readPreference, writePreference, deletePreference } from "./db";
+import { readPreference, saveOfflineSnapshot, deleteOfflineSnapshot } from "./db";
+import {downloadOfflineAlignments} from './offline-alignment';
+import {loadNovelLookup} from './reader-modules';
 import {
   validateOfflineBook,
   bookAssetPaths,
@@ -77,7 +79,7 @@ function message(
   });
 }
 export async function downloadOfflineBook(
-  onProgress: (v: { done: number; total: number; bytes: number }) => void,
+  onProgress: (v: { done: number; total: number; bytes: number;phase?:'lookup' }) => void,
   signal: AbortSignal,
 ) {
   const worker = await workerReady();
@@ -96,6 +98,7 @@ export async function downloadOfflineBook(
     await Promise.all([
       import("../components/OfflineReader"),
       import("pdfjs-dist"),
+      loadNovelLookup(),
     ]);
     signal.throwIfAborted();
     const html = await (
@@ -145,14 +148,17 @@ export async function downloadOfflineBook(
       signal,
     );
     signal.throwIfAborted();
+    const alignment=await downloadOfflineAlignments(book,signal,(done,total,bytes)=>onProgress({done,total,bytes:(result.bytes??0)+bytes,phase:'lookup'}),200*1024*1024-(result.bytes??0));
+    signal.throwIfAborted();
     const saved: OfflineBook = {
       book,
       cacheName,
       assets,
       downloadedAt: new Date().toISOString(),
-      bytes: result.bytes ?? 0,
+      bytes: (result.bytes ?? 0)+alignment.bytes,
+      alignmentKeys:alignment.keys,
     };
-    await writePreference(OFFLINE_KEY, saved);
+    await saveOfflineSnapshot(saved,alignment.artifacts);
     await message(worker, { type: "offline-updated" });
     for (const key of await caches.keys())
       if (key.startsWith(OFFLINE_CACHE_PREFIX) && key !== cacheName)
@@ -168,7 +174,7 @@ export async function downloadOfflineBook(
   }
 }
 export async function removeOfflineBook() {
-  await deletePreference(OFFLINE_KEY);
+  await deleteOfflineSnapshot();
   for (const name of await caches.keys())
     if (
       name.startsWith(OFFLINE_CACHE_PREFIX) ||

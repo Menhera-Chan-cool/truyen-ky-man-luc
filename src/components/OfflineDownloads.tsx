@@ -12,7 +12,7 @@ export default function OfflineDownloads({ locale }: { locale: Locale }) {
     [saved, setSaved] = useState<OfflineBook>(),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
-    [progress, setProgress] = useState({ done: 0, total: 0, bytes: 0 }),
+    [progress, setProgress] = useState<{done:number;total:number;bytes:number;phase?:'lookup'}>({ done: 0, total: 0, bytes: 0 }),
     controller = useRef<AbortController | null>(null);
   useEffect(() => {
     const load = () => {
@@ -44,6 +44,7 @@ export default function OfflineDownloads({ locale }: { locale: Locale }) {
               locale === "vi" ? "vi-VN" : "en-US",
             )}{" "}
             · {(saved.bytes / 1024 / 1024).toFixed(1)} MB
+            {saved.alignmentKeys&&<> · {L('Tra ngoại tuyến','Offline lookup')}: {Object.keys(saved.alignmentKeys).length} {L('chương','chapters')}</>}
           </p>
           <a className="secondary-button" href={"/offline?locale=" + locale}>
             {L("Đọc bản đã tải", "Read downloaded book")}
@@ -121,7 +122,7 @@ export default function OfflineDownloads({ locale }: { locale: Locale }) {
       </div>
       {busy && (
         <p role="status">
-          {L("Đang tải", "Downloading")} {progress.done}/{progress.total || "…"}{" "}
+          {progress.phase==='lookup'?L('Đang tải dữ liệu tra','Downloading lookup data'):L("Đang tải", "Downloading")} {progress.done}/{progress.total || "…"}{" "}
           · {(progress.bytes / 1024 / 1024).toFixed(1)} MB
         </p>
       )}

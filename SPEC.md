@@ -24,7 +24,7 @@ Xây content/access trước, hoàn thiện reading/editing, rồi kiểm chứn
 - Owner/editor đều sửa/xuất bản/thu hồi. Chỉ owner quản lý membership. Không có signup công khai hoặc owner mặc định; bootstrap bằng lệnh server và liên kết một lần, không tự gửi email.
 - Bản nháp và bản công khai tách biệt. Save/publish kiểm tra revision; nhập hoặc xuất bản nhiều chương dùng transaction. Lịch sử có phân trang metadata; chỉ lấy body khi xem/khôi phục, tránh tải toàn bộ bản dài một lúc.
 - Trình đọc có mục lục/tìm chương, trước/sau, tiến độ, cuộn/trang đơn/trang đôi, font/cỡ/giãn dòng/chiều rộng/căn lề, tám chủ đề, màu riêng, toàn màn hình.
-- Tô màu/ghi chú cho chữ và ảnh, tìm/lọc, sao chép, trích dẫn PNG; đọc đoạn chọn/từ đây, chọn giọng/tốc độ, tự cuộn, âm thanh nền và file âm thanh cục bộ. Dịch đoạn chọn mở Google Translate khi bấm.
+- Tô màu/ghi chú cho chữ và ảnh, tìm/lọc, sao chép, trích dẫn PNG; đọc đoạn chọn/từ đây, chọn giọng/tốc độ, tự cuộn, âm thanh nền và file âm thanh cục bộ. Tra VI↔EN lấy đối ứng tự động từ hai bản Novel đã có theo vị trí và phiên bản, kèm ngữ cảnh/nhãn chưa chắc chắn; xem SPEC-text-anchors.md, SPEC-auto-alignment.md, SPEC-alignment-publishing.md và SPEC-lookup-ui.md.
 - Tiến độ/cài đặt/ghi chú dùng IndexedDB, riêng từng bản. Ghi chú cũ không tự bám vào văn bản mới nếu revision hoặc nội dung neo thay đổi.
 - Thiếu bản dịch hiển thị thông báo và nút sang bản còn lại. Dừng TTS khi đổi chương/ngôn ngữ. Điện thoại biến trang đôi thành trang đơn; các nút điện thoại có vùng bấm tối thiểu 40px.
 

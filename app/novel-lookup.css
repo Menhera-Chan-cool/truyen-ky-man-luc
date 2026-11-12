@@ -1,0 +1,19 @@
+.novel-lookup .reader-panel { width: min(460px,calc(100vw - 24px)); }
+.novel-lookup .lookup-direction { font-size: 12px; opacity: .75; margin: 0 0 8px; }
+.novel-lookup .lookup-source { margin: 0 0 22px; font: 18px/1.7 "Literata Variable",Georgia,serif; overflow-wrap: anywhere; }
+.novel-lookup .lookup-confidence { color: var(--reader-accent); font-size: 12px; line-height: 1.65; }
+.novel-lookup .lookup-terms { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 12px 0 20px; font: 500 25px/1.5 "Literata Variable",Georgia,serif; }
+.novel-lookup .lookup-passage { margin: 20px 0; }
+.novel-lookup .lookup-passage + .lookup-passage { padding-top: 16px; border-top: 1px solid color-mix(in srgb,var(--reader-fg) 20%,transparent); }
+.novel-lookup .lookup-passage p { font: 17px/1.85 "Literata Variable",Georgia,serif; overflow-wrap: anywhere; }
+.novel-lookup mark { background: color-mix(in srgb,var(--reader-accent) 25%,var(--reader-bg)); color: var(--reader-fg); }
+::highlight(novel-lookup-vi), ::highlight(novel-lookup-en) { background: color-mix(in srgb,var(--reader-accent) 25%,var(--reader-bg)); color: var(--reader-fg); }
+.parallel-edition .lookup-context { background: color-mix(in srgb,var(--reader-accent) 8%,var(--reader-bg)); }
+.novel-lookup button { min-height: 44px; }
+.novel-lookup .panel-heading { position: sticky; top: 0; z-index: 1; background: inherit; padding: 8px 0; }
+.novel-alignment-status { margin-top: 20px; padding-top: 16px; border-top: 1px solid #cfc4b2; }
+.novel-alignment-status p { margin: 0 0 10px; font-size: 13px; }
+@media(max-width:759px) {
+  .novel-lookup .reader-panel { top: auto; bottom: 0; right: 0; width: 100%; max-height: 72dvh; padding-bottom: max(24px,env(safe-area-inset-bottom)); border-radius: 14px 14px 0 0; }
+  .novel-lookup .lookup-passage p { font-size: 18px; }
+}
