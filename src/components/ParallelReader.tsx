@@ -25,7 +25,10 @@ function EditionView({
   const root = useRef<HTMLElement>(null),
     scroll = useRef<HTMLDivElement>(null),
     edition = chapter[language];
+  const context = `${chapter.id}:${language}:${edition?.revision}`;
+  const [noteReturn, setNoteReturn] = useState<{context:string;top:number;left:number;source:HTMLAnchorElement}|null>(null);
   useEffect(() => {
+    setNoteReturn(null);
     if (!root.current || !edition) return;
     decorateFootnotes(root.current, language, chapter.id);
     const prefix = `parallel-${language}-${chapter.id}-`,
@@ -84,11 +87,13 @@ function EditionView({
                 const target = root.current?.querySelector<HTMLElement>(
                   "#" + CSS.escape(decodeURIComponent(link.hash.slice(1))),
                 );
-                if (target && scroll.current)
+                if (target && scroll.current) {
+                  if (link.matches('.footnote-ref')) setNoteReturn({context,top:scroll.current.scrollTop,left:scroll.current.scrollLeft,source:link});
                   scroll.current.scrollTop +=
                     target.getBoundingClientRect().top -
                     scroll.current.getBoundingClientRect().top -
                     8;
+                }
               } catch {
                 /* Do not navigate the main reader for a broken comparison fragment. */
               }
@@ -96,6 +101,16 @@ function EditionView({
             dangerouslySetInnerHTML={{ __html: cleanHtml(edition.html) }}
           />
         </div>
+      )}
+      {noteReturn?.context === context && (
+        <button className="footnote-return" onClick={() => {
+          scroll.current?.scrollTo({top:noteReturn.top,left:noteReturn.left,behavior:"instant"});
+          noteReturn.source.focus({preventScroll:true});
+          setNoteReturn(null);
+        }}>
+          <ChevronLeft size={18} aria-hidden="true" />
+          {language === "vi" ? "Quay lại chỗ đang đọc" : "Back to reading"}
+        </button>
       )}
     </section>
   );

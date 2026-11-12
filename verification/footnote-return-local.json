@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-11-12T02:24:00Z",
+  "baseCommit": "f009b9e4c551047f06376d4ed8275dd64ddb4f4a",
+  "unitTests": 190,
+  "unitFiles": 47,
+  "typecheck": true,
+  "productionBuild": true,
+  "browserTests": {"desktop":14,"androidChromium":8,"iphoneWebKit":8,"failed":0,"desktopTouchOnlySkipped":1},
+  "verified": ["Exact scrollTop/scrollLeft, reference screen coordinates and page transform on return in VI/EN Scroll, Paged Ebook and Book", "Browser Back/Forward and repeated same-fragment jumps", "Original text line screen position after font-size change", "Independent comparison-column return positions", "Downloaded-book route using a public IndexedDB snapshot fixture", "Touch popup closure preserves exact reading position", "Book touch gestures, notes and mocked speech remain usable"],
+  "storage": "Small chapter/locale/revision-scoped browser history state; no server or schema changes",
+  "limits": ["No physical phone test", "Offline history was tested with an IndexedDB public-book fixture; full network-off download lifecycle not rerun", "Exact old pixel coordinates apply to unchanged layout; layout changes restore the original text line"]
+}

@@ -134,6 +134,16 @@ type Selection = {
 type HighlightWindow = Window & {
   Highlight?: new (...ranges: Range[]) => unknown;
 };
+type FragmentPosition = {
+  context: string;
+  offset: number;
+  top: number;
+  left: number;
+  page: number;
+  layout: string;
+  lineTop?: number;
+  reference: number;
+};
 function paperEdge(rect: DOMRect | undefined, x: number, y: number) {
   if (
     !rect ||
@@ -332,6 +342,7 @@ export default function Reader({
   const pendingNote = useRef<Annotation | null>(null),
     restoringBackup = useRef(false);
   const lastFragment = useRef("");
+  const [footnoteReturn, setFootnoteReturn] = useState<FragmentPosition | null>(null);
   const sidebarList = useRef<HTMLDivElement>(null);
   const pendingSearch = useRef<SearchMatch | null>(null);
   const [pendingListening, setPendingListening] =
@@ -716,6 +727,33 @@ export default function Reader({
     }
     return true;
   }
+  function fragmentLayout() {
+    return [lastLayout.current, paged, bookLayout, fontFamily, settings.fontSize,
+      settings.lineHeight, settings.width, settings.align].join("|");
+  }
+  function restoreFragmentPosition(saved: FragmentPosition) {
+    setAuto(false);
+    touchTurns.current = [];
+    queuedChapter.current = null;
+    physicalFlip.current?.cancel();
+    revealOffset(saved.offset);
+    const scroll = scrollRef.current, root = contentRef.current;
+    // Keep exact pixels until layout changes; then restore the original text line.
+    if (scroll && saved.layout === fragmentLayout() && Number.isFinite(saved.top) && Number.isFinite(saved.left)) {
+      if (paged && Number.isSafeInteger(saved.page)) {
+        pageRef.current = Math.max(0, Math.min(pages - 1, saved.page));
+        setPage(pageRef.current);
+        reflowPage.current = { page: pageRef.current, pages };
+      }
+      scroll.scrollTo({ top: saved.top, left: saved.left, behavior: "instant" });
+    } else if (scroll && root && !paged && Number.isFinite(saved.lineTop)) {
+      const rect = rangeFromOffsets(root, saved.offset, saved.offset + 1)?.getBoundingClientRect();
+      if (rect) scroll.scrollTop += rect.top - scroll.getBoundingClientRect().top - saved.lineTop!;
+    }
+    const target = root?.querySelectorAll<HTMLElement>(".footnote-ref")[saved.reference] ??
+      (root && rangeFromOffsets(root, saved.offset, saved.offset + 1)?.startContainer.parentElement);
+    if (target) focusReadingTarget(target);
+  }
   const position = book.chapters.findIndex((c) => c.id === chapterId);
   const previous = book.chapters[position - 1],
     next = book.chapters[position + 1];
@@ -978,32 +1016,21 @@ export default function Reader({
     setPage((p) => Math.min(p, Math.max(0, pages - 1)));
   }, [pages]);
   useEffect(() => {
-    const apply = () => {
-      if (
-        !ready ||
-        !restored.current ||
-        location.pathname !== `/${locale}/read/${chapterId}`
-      )
-        return;
+    const apply = (event?: Event) => {
+      if (!ready || !restored.current) return;
+      const url = new URL(location.href);
+      const atChapter = offline
+        ? url.pathname === "/offline" && url.searchParams.get("chapter") === chapterId && (url.searchParams.get("locale") ?? "vi") === locale
+        : url.pathname === `/${locale}/read/${chapterId}`;
+      if (!atChapter) return;
       const key = contextKey + location.hash;
-      if (lastFragment.current === key) return;
+      if (lastFragment.current === key && event?.type !== "popstate") return;
       lastFragment.current = key;
-      if (location.hash) revealFragment(location.hash);
-      else {
-        const saved = window.history.state?.bookReaderAnchor;
-        if (
-          saved?.context === contextKey &&
-          Number.isSafeInteger(saved.offset)
-        ) {
-          revealOffset(saved.offset);
-          const root = contentRef.current;
-          const target =
-            root &&
-            rangeFromOffsets(root, saved.offset, saved.offset + 1)
-              ?.startContainer.parentElement;
-          if (target) focusReadingTarget(target);
-        }
-      }
+      const state = window.history.state, saved = state?.bookReaderAnchor;
+      setFootnoteReturn(state?.bookFootnoteReturn?.context === contextKey ? state.bookFootnoteReturn : null);
+      if (saved?.context === contextKey && Number.isSafeInteger(saved.offset))
+        restoreFragmentPosition(saved);
+      else if (location.hash) revealFragment(location.hash);
     };
     apply();
     window.addEventListener("popstate", apply);
@@ -1012,7 +1039,7 @@ export default function Reader({
       window.removeEventListener("popstate", apply);
       window.removeEventListener("hashchange", apply);
     };
-  }, [chapterId, locale, revision, ready, layoutVersion, paged]);
+  }, [chapterId, locale, revision, ready, layoutVersion, paged, bookLayout, settings, personalFamily, offline]);
   useEffect(() => {
     if (!message) return;
     const timer = setTimeout(() => setMessage(""), 5500);
@@ -1836,18 +1863,29 @@ export default function Reader({
         ) {
           event.preventDefault();
           rememberPlace();
+          setAuto(false);
+          touchTurns.current = [];
+          queuedChapter.current = null;
+          physicalFlip.current?.cancel();
+          const offset = captureAnchor() ?? 0, scroll = scrollRef.current!, root = contentRef.current!;
+          const rect = rangeFromOffsets(root, offset, offset + 1)?.getBoundingClientRect();
+          const saved: FragmentPosition = {
+            context: contextKey, offset, top: scroll.scrollTop, left: scroll.scrollLeft,
+            page: pageRef.current, layout: fragmentLayout(),
+            lineTop: rect ? rect.top - scroll.getBoundingClientRect().top : undefined,
+            reference: [...root.querySelectorAll(".footnote-ref")].indexOf(link),
+          };
+          const returnTo = link.matches('.footnote-ref') ? saved : null;
           window.history.replaceState(
             {
               ...window.history.state,
-              bookReaderAnchor: {
-                context: contextKey,
-                offset: captureAnchor(),
-              },
+              bookReaderAnchor: saved,
             },
             "",
           );
-          if (url.hash !== location.hash)
-            window.history.pushState(null, "", url.href);
+          if (url.hash !== location.hash || returnTo)
+            window.history.pushState({ ...window.history.state, bookReaderAnchor: null, bookFootnoteReturn: returnTo }, "", url.href);
+          setFootnoteReturn(returnTo);
           lastFragment.current = restored.current ? contextKey + url.hash : "";
           setSelection(null);
           window.getSelection()?.removeAllRanges();
@@ -2895,6 +2933,12 @@ export default function Reader({
             )}
           </div>
         </div>
+        {ready && footnoteReturn?.context === contextKey && (
+          <button className="footnote-return" onClick={() => { setFootnoteReturn(null); window.history.back(); }}>
+            <ChevronLeft size={18} aria-hidden="true" />
+            {L("Quay lại chỗ đang đọc", "Back to reading")}
+          </button>
+        )}
         {bookControlsHidden && (
           <button
             className="book-controls-wake"
