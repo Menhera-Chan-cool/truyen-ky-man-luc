@@ -1,0 +1,48 @@
+{
+  "deployment": "dpl_Dk719q7vYf2ZwtEQPeBssmuN3VpB",
+  "commit": "3de84c50c829dfe077e81270a45283db8bc61d80",
+  "criticalMatched": 210,
+  "mismatched": [],
+  "checkedAt": "2026-11-12T02:32:06.468Z",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-mvv36tjsb-anh-tun.vercel.app",
+  "state": "READY",
+  "unitTests": 190,
+  "unitFiles": 47,
+  "typecheck": true,
+  "productionBuild": true,
+  "localBrowserPassed": {
+    "desktop": 14,
+    "androidChromium": 8,
+    "iphoneWebKit": 8
+  },
+  "functionalProduction": {
+    "deployment": "dpl_DbMqoWEN8BqcfGCjTfEmrLRQbGra",
+    "commit": "5ce7b969d42aa7e3d4a227444c0763f45e2f6bed",
+    "desktopPassed": 9,
+    "readerAndParallelReaderUnchangedInFinalSource": true
+  },
+  "finalProduction": {
+    "desktopScrollAndOpaqueHoverPassed": 2,
+    "androidPassed": 3,
+    "iphoneWebKitPassed": 3,
+    "failed": 0
+  },
+  "behavior": [
+    "Exact scrollTop/scrollLeft, line coordinates and page transform on unchanged layout",
+    "VI and EN Scroll, Paged Ebook, Book",
+    "Browser Back/Forward; repeated identical hash",
+    "Original text line after font-size change",
+    "Separate comparison-column return position",
+    "Downloaded-book route fixture",
+    "Touch note popup closes without moving reading position"
+  ],
+  "databaseWrites": 0,
+  "contentEdits": 0,
+  "limitations": [
+    "No physical phone testing",
+    "Offline history checked with public-book IndexedDB fixture; full download/offline lifecycle not rerun",
+    "Layout changes restore the original text line rather than an obsolete page or pixel value",
+    "Open tabs need reload; offline bundle needs update"
+  ]
+}

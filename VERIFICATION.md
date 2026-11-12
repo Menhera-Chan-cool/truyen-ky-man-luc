@@ -1,3 +1,18 @@
+# Quay lại đúng vị trí sau chú thích — production 12/11/2026
+
+Production **dpl_Dk719q7vYf2ZwtEQPeBssmuN3VpB**, runtime **3de84c50c829dfe077e81270a45283db8bc61d80**, https://truyen-ky-man-luc.vercel.app READY. **210 hash source quan trọng** khớp Vercel. Source trên GitHub private; commit tiếp chỉ ghi bằng chứng.
+
+- Thêm nút **Quay lại chỗ đang đọc / Back to reading** sau khi nhảy đến chú thích bằng chuột/bàn phím. Lưu scrollTop/scrollLeft, trang, offset dòng và tham chiếu nguồn vào history, theo đúng chương/ngôn ngữ/revision. Cùng bố cục trả chính xác pixel/trang cũ; nếu đổi cỡ chữ hoặc bố cục, tìm lại dòng gốc và độ lệch dọc. Focus trở về tham chiếu nguồn với preventScroll. Dừng tự cuộn, xóa lệnh lật đang chờ khi nhảy/khôi phục.
+- Dùng chung nút và Browser Back/Forward, kể cả URL đã có hash hoặc nhảy lại cùng hash. Giữ state của Next.js; nút tiêu thụ ngay lượt bấm để tránh Back hai lần. Khôi phục ưu tiên vị trí đã ghi thay vì tự căn theo đích hash. Đường `/offline?locale=...&chapter=...` kiểm tra đúng context trước khi khôi phục.
+- Hai cột đối chiếu VI/EN có vị trí và nút riêng, không làm cuộn cột bên cạnh. Mobile tiếp tục popup chú thích; đóng popup giữ nguyên chỗ, không tự nhảy cuối chương. Nút theo màu nền/mực hiện tại, 44px, có nhãn rõ và nền hover đục; đã xem screenshot.
+- RED: production chưa có nút; đường offline giữ chỗ chú thích khi Back; hover kế thừa nền trong suốt. GREEN: exact scrollTop/scrollLeft, tọa độ tham chiếu và transform trang khớp trước/sau ở 6 tổ hợp VI/EN × Scroll/Paged Ebook/Book, nhiều lượt Back/Forward, cùng hash, đổi cỡ chữ, từng cột và offline fixture; alpha nền hover255.
+- **190 unit/47 file**, typecheck và production build đạt. **30 ca local đạt** (PC14, Android8, WebKit8; 1 touch-only skip trên PC). Logic Reader của bản xuất bản đầu đã qua **9 ca live PC**; sau bổ sung hover, mã Reader/ParallelReader giữ cùng hash, **2 ca PC và6 ca phone** qua trên URL cuối. Xem `verification/footnote-return-local.json`, `verification/footnote-return-live.json`.
+- Không sửa nội dung sách, file nguồn, schema, quyền hoặc dependency. Bản trước công việc là production dpl_88qLPKojgk8qf5pz1MEihqrkbkfM / f009b9e; giữ các cập nhật đã xuất bản đó.
+
+Chưa thử trên điện thoại vật lý. Offline dùng snapshot IndexedDB công khai để kiểm đường khôi phục, không chạy lại toàn bộ vòng tải/mất mạng. Tải lại tab để nhận mã mới; bản tải ngoại tuyến cần cập nhật.
+
+---
+
 # Đồng bộ heading VI/EN — production 02/11/2026
 
 Production **dpl_GVdvT2ERta5h5HK8ochyjGCpCyXm**, runtime **81225de382d4f0e548e5ee26a199495e07ba0248**, https://truyen-ky-man-luc.vercel.app READY. **209 hash source quan trọng** khớp Vercel; GitHub private. Commit sau chỉ ghi bằng chứng.
