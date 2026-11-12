@@ -674,6 +674,9 @@ svg {
   box-shadow: 0 3px 16px #0002;
   font: 500 13px/1.4 "Be Vietnam Pro", sans-serif;
 }
+button.footnote-return:hover {
+  background: color-mix(in srgb, var(--reader-bg) 92%, var(--reader-fg));
+}
 .reader-document {
   width: calc(100% - 90px);
   margin: 0 auto;

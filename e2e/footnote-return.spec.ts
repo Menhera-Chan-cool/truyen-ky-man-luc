@@ -28,7 +28,11 @@ for(const locale of ['vi','en'])for(const layout of ['scroll','paged','book']){
   await ref.click();await expect(page).toHaveURL(/#reader-footnote-/);
   const back=page.getByRole('button',{name:L('Quay lại chỗ đang đọc','Back to reading'),exact:true});
   await expect(back).toBeVisible();
-  if(locale==='vi'&&layout==='scroll')await page.screenshot({path:testInfo.outputPath('return-button.png')});
+  if(locale==='vi'&&layout==='scroll'){
+   await back.hover();
+   expect(await back.evaluate(el=>{const c=document.createElement('canvas'),ctx=c.getContext('2d')!;c.width=c.height=1;ctx.fillStyle=getComputedStyle(el).backgroundColor;ctx.fillRect(0,0,1,1);return ctx.getImageData(0,0,1,1).data[3];})).toBe(255);
+   await page.screenshot({path:testInfo.outputPath('return-button.png')});
+  }
   await back.click();await expect(page).toHaveURL(url);
   await expect.poll(()=>position(page,index)).toEqual(before);await expect(back).toHaveCount(0);
   await ref.click();await expect(back).toBeVisible();await page.goBack();await expect(page).toHaveURL(url);

@@ -5,6 +5,7 @@
   "unitFiles": 47,
   "typecheck": true,
   "productionBuild": true,
+  "hover": "Opaque return-button background confirmed by canvas alpha=255 on the built page; inherited transparent hover reproduced before fix",
   "browserTests": {"desktop":14,"androidChromium":8,"iphoneWebKit":8,"failed":0,"desktopTouchOnlySkipped":1},
   "verified": ["Exact scrollTop/scrollLeft, reference screen coordinates and page transform on return in VI/EN Scroll, Paged Ebook and Book", "Browser Back/Forward and repeated same-fragment jumps", "Original text line screen position after font-size change", "Independent comparison-column return positions", "Downloaded-book route using a public IndexedDB snapshot fixture", "Touch popup closure preserves exact reading position", "Book touch gestures, notes and mocked speech remain usable"],
   "storage": "Small chapter/locale/revision-scoped browser history state; no server or schema changes",
