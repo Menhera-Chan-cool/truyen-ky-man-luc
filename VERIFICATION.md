@@ -1,3 +1,19 @@
+# Tra cứu trong hai bản Novel VI↔EN — production 12/11/2026
+
+Production **dpl_EftdZJc6CRFhVrJbvU6DLfyDnf2x**, runtime **9de747a56007c3491a1602a3bd1e4d384a32579c**, https://truyen-ky-man-luc.vercel.app READY. **244 hash source quan trọng** khớp deployment. GitHub private; commit sau chỉ ghi bằng chứng.
+
+- Bôi đen từ/cụm/câu → **Tra VI↔EN / Look up VI↔EN** để xem trích đoạn từ bản đối ứng đã xuất bản. Tô đúng vùng từ/cụm, có ngữ cảnh và nhãn chưa chắc chắn; không mở Google, không tạo bản dịch mới. Mở đối chiếu đưa cả hai cột tới vùng tương ứng; đóng giữ nguyên chỗ đọc. Lazy-load, timeout/hủy request cũ, tối đa2.000 ký tự/5nhóm câu. PDF/TT không dùng pipeline này; lời tựa VI thiếu EN báo rõ.
+- Chuỗi chuẩn khớp DOM Reader, giữ UTF-16/Unicode/br/chú thích và phân vùng truyện/lời bình/notes. E5-small ghép câu/nhóm, mBERT liên kết từ, Underthesea giữ từ VI nhiều âm tiết. Model/dependency pin và license lưu trong scripts/align-novel; runtime/cache tách ngoài repo.20chương ≈5,9MB, batchCPU2threads429,81s.120probe phát triển đo overlap span, không phải độ chính xác ngữ nghĩa hay holdout độc lập.
+- Migration20261112043121 thêm job/lease/run và bucket riêng có RLS; trigger chỉ enqueue khi published pair đổi. Worker kiểm UUID/hash/revision cả hai phía, không công bố kết quả cũ; editor có trạng thái/thử lại. Khách không đọc job hoặc gọi worker. Hash book/editions và105versions khớp baseline; không sửa chính tả, nội dung, nháp hoặc nguồn.
+- GitHub Actions mỗi giờ phút17, tối đa3chương/lượt. Run43164579793 đã chạy model và lưu kết quả thật; run43172363849 của commit runtime thành công, bỏ qua Python/install/model khi không có việc. Chưa quan sát sự kiện schedule tự phát; không hứa tức thì hoặc chi phí bằng0 ngoài quota.
+- Ngoại tuyến tải thêm artifact có checksum/đúng phiên bản, dùng lại bản không đổi, commit snapshot+artifact cùng transaction. Lỗi cập nhật giữ gói cũ; xóa gói giữ ghi chú/cài đặt/tiến độ. Đã thử full download → lỗi cập nhật → mất mạng → tra → xóa trên cả3profile, kể cả ResourceTiming buffer ban đầu bằng0.
+- **213Vitest/52file**, **7Python**, typecheck/build đạt. Local **21ca lookup +20ca hồi quy** đạt,1touch-only skip ở PC. Live **21ca lookup** (7mỗi PC/AndroidChromium/iPhoneWebKit) và1ca quay lại chú thích trong đối chiếu đạt. Late response sau đóng/đổi chương không mở lại bảng; Ebook/Sách, thiếu bản đối ứng và anonymous admin denial đã thử. Đã xem screenshot PC/WebKit thật của deployment.
+-40API probes trên20chương×2chiều trả quote khớp nguyên văn public và bounds hợp lệ, không pending/stale/missing. p95đầu-cuối từ máy kiểm thử **1735ms**, payload lớn nhất927byte trong bộ probe này; không phải benchmark mạng/điện thoại đại diện hoặc mục tiêu200ms đã đạt. Xem verification/novel-lookup-local.json và verification/novel-lookup-live.json.
+
+Chưa thử điện thoại vật lý hoặc ghi bằng owner trong editor production. Gợi ý tự động có thể chưa chắc chắn, nhất là thơ/lược dịch. Tải lại tab; bản ngoại tuyến cần cập nhật để nhận tính năng/dữ liệu mới.
+
+---
+
 # Quay lại đúng vị trí sau chú thích — production 12/11/2026
 
 Production **dpl_Dk719q7vYf2ZwtEQPeBssmuN3VpB**, runtime **3de84c50c829dfe077e81270a45283db8bc61d80**, https://truyen-ky-man-luc.vercel.app READY. **210 hash source quan trọng** khớp Vercel. Source trên GitHub private; commit tiếp chỉ ghi bằng chứng.

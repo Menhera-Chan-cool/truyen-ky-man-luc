@@ -1,0 +1,324 @@
+{
+  "checkedAt": "2026-11-12T07:11:26.730Z",
+  "deploymentId": "dpl_EftdZJc6CRFhVrJbvU6DLfyDnf2x",
+  "baseURL": "https://truyen-ky-man-luc.vercel.app",
+  "immutableURL": "https://truyen-ky-man-d4c7pkwg5-anh-tun.vercel.app",
+  "runtimeSourceCommit": "9de747a56007c3491a1602a3bd1e4d384a32579c",
+  "state": "READY",
+  "criticalSourceHashes": {
+    "matched": 244,
+    "mismatches": []
+  },
+  "lookupBrowserCases": {
+    "desktop": 7,
+    "androidChromium": 7,
+    "iPhoneWebKit": 7
+  },
+  "readerRegression": {
+    "desktopComparisonFootnoteReturn": 1
+  },
+  "grounding": {
+    "checkedAt": "2026-11-12T07:06:44.976Z",
+    "base": "https://truyen-ky-man-luc.vercel.app",
+    "cases": 40,
+    "exactQuotes": true,
+    "p95ms": 1735,
+    "maxBytes": 927,
+    "rows": [
+      {
+        "id": "chapter-1",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 1518,
+        "bytes": 927
+      },
+      {
+        "id": "chapter-1",
+        "locale": "en",
+        "status": "uncertain",
+        "ms": 299,
+        "bytes": 927
+      },
+      {
+        "id": "chapter-2",
+        "locale": "vi",
+        "status": "match",
+        "ms": 1025,
+        "bytes": 601
+      },
+      {
+        "id": "chapter-2",
+        "locale": "en",
+        "status": "match",
+        "ms": 416,
+        "bytes": 601
+      },
+      {
+        "id": "chapter-3",
+        "locale": "vi",
+        "status": "match",
+        "ms": 1324,
+        "bytes": 458
+      },
+      {
+        "id": "chapter-3",
+        "locale": "en",
+        "status": "match",
+        "ms": 255,
+        "bytes": 458
+      },
+      {
+        "id": "chapter-4",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 1757,
+        "bytes": 401
+      },
+      {
+        "id": "chapter-4",
+        "locale": "en",
+        "status": "uncertain",
+        "ms": 273,
+        "bytes": 402
+      },
+      {
+        "id": "chapter-5",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 1700,
+        "bytes": 501
+      },
+      {
+        "id": "chapter-5",
+        "locale": "en",
+        "status": "match",
+        "ms": 491,
+        "bytes": 497
+      },
+      {
+        "id": "chapter-6",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 903,
+        "bytes": 372
+      },
+      {
+        "id": "chapter-6",
+        "locale": "en",
+        "status": "context-only",
+        "ms": 273,
+        "bytes": 354
+      },
+      {
+        "id": "chapter-7",
+        "locale": "vi",
+        "status": "context-only",
+        "ms": 1549,
+        "bytes": 442
+      },
+      {
+        "id": "chapter-7",
+        "locale": "en",
+        "status": "uncertain",
+        "ms": 263,
+        "bytes": 460
+      },
+      {
+        "id": "chapter-8",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 946,
+        "bytes": 382
+      },
+      {
+        "id": "chapter-8",
+        "locale": "en",
+        "status": "match",
+        "ms": 263,
+        "bytes": 379
+      },
+      {
+        "id": "chapter-9",
+        "locale": "vi",
+        "status": "match",
+        "ms": 2046,
+        "bytes": 563
+      },
+      {
+        "id": "chapter-9",
+        "locale": "en",
+        "status": "match",
+        "ms": 522,
+        "bytes": 563
+      },
+      {
+        "id": "chapter-10",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 1322,
+        "bytes": 445
+      },
+      {
+        "id": "chapter-10",
+        "locale": "en",
+        "status": "uncertain",
+        "ms": 246,
+        "bytes": 446
+      },
+      {
+        "id": "chapter-13",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 1202,
+        "bytes": 329
+      },
+      {
+        "id": "chapter-13",
+        "locale": "en",
+        "status": "match",
+        "ms": 1408,
+        "bytes": 326
+      },
+      {
+        "id": "chapter-14",
+        "locale": "vi",
+        "status": "match",
+        "ms": 1735,
+        "bytes": 383
+      },
+      {
+        "id": "chapter-14",
+        "locale": "en",
+        "status": "context-only",
+        "ms": 255,
+        "bytes": 371
+      },
+      {
+        "id": "chapter-15",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 934,
+        "bytes": 481
+      },
+      {
+        "id": "chapter-15",
+        "locale": "en",
+        "status": "context-only",
+        "ms": 498,
+        "bytes": 465
+      },
+      {
+        "id": "chapter-16",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 812,
+        "bytes": 631
+      },
+      {
+        "id": "chapter-16",
+        "locale": "en",
+        "status": "match",
+        "ms": 251,
+        "bytes": 628
+      },
+      {
+        "id": "chapter-11",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 692,
+        "bytes": 606
+      },
+      {
+        "id": "chapter-11",
+        "locale": "en",
+        "status": "context-only",
+        "ms": 269,
+        "bytes": 589
+      },
+      {
+        "id": "chapter-12",
+        "locale": "vi",
+        "status": "context-only",
+        "ms": 1494,
+        "bytes": 304
+      },
+      {
+        "id": "chapter-12",
+        "locale": "en",
+        "status": "match",
+        "ms": 781,
+        "bytes": 317
+      },
+      {
+        "id": "chapter-17",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 1185,
+        "bytes": 612
+      },
+      {
+        "id": "chapter-17",
+        "locale": "en",
+        "status": "context-only",
+        "ms": 248,
+        "bytes": 595
+      },
+      {
+        "id": "chapter-18",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 1309,
+        "bytes": 773
+      },
+      {
+        "id": "chapter-18",
+        "locale": "en",
+        "status": "match",
+        "ms": 813,
+        "bytes": 770
+      },
+      {
+        "id": "chapter-19",
+        "locale": "vi",
+        "status": "match",
+        "ms": 1073,
+        "bytes": 459
+      },
+      {
+        "id": "chapter-19",
+        "locale": "en",
+        "status": "context-only",
+        "ms": 291,
+        "bytes": 446
+      },
+      {
+        "id": "chapter-20",
+        "locale": "vi",
+        "status": "uncertain",
+        "ms": 840,
+        "bytes": 533
+      },
+      {
+        "id": "chapter-20",
+        "locale": "en",
+        "status": "context-only",
+        "ms": 279,
+        "bytes": 516
+      }
+    ]
+  },
+  "github": {
+    "visibility": "PRIVATE",
+    "realModelRun": 43164579793,
+    "latestIdleRun": 43172363849,
+    "conclusion": "success",
+    "schedule": "17 * * * *",
+    "scheduledEventObserved": false
+  },
+  "limits": [
+    "No physical phone testing",
+    "Development probes are not independent semantic accuracy",
+    "Scheduled jobs may be delayed; at most three chapters per run",
+    "No authenticated production editor write test; permissions and publication lifecycle covered by integration tests"
+  ]
+}
