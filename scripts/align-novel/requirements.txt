@@ -1,0 +1,5 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.15.0+cpu
+transformers==5.19.0
+underthesea==9.5.0
+underthesea-core==3.3.2

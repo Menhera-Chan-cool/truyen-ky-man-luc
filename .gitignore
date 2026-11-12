@@ -9,3 +9,7 @@ playwright-report/
 .*invitation.txt
 .impeccable/review/
 supabase/.temp/
+__pycache__/
+*.pyc
+.alignment-work/
+.alignment-cache/

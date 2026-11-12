@@ -1,0 +1,11 @@
+import {execFileSync} from 'node:child_process';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url);require('@next/env').loadEnvConfig(process.cwd(),false,{info(){},error(){}});
+const repo='Menhera-Chan-cool/truyen-ky-man-luc';
+const info=JSON.parse(execFileSync('gh',['repo','view',repo,'--json','visibility'],{encoding:'utf8'}));
+if(info.visibility!=='PRIVATE')throw Error('Alignment credentials require the intended private repository');
+const key=process.env.SUPABASE_SERVICE_ROLE_KEY,url=process.env.NEXT_PUBLIC_SUPABASE_URL;
+if(!key||!url)throw Error('Server configuration is missing');
+execFileSync('gh',['secret','set','NOVEL_ALIGNMENT_SERVICE_ROLE_KEY','--repo',repo],{input:key,stdio:['pipe','pipe','pipe']});
+execFileSync('gh',['variable','set','NOVEL_ALIGNMENT_SUPABASE_URL','--repo',repo,'--body',url],{stdio:['ignore','pipe','pipe']});
+console.log('Configured the private repository worker secret and project URL.');
