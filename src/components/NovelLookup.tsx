@@ -54,18 +54,19 @@ export default function NovelLookup({request,onClose,onCompare,book,offline=fals
     const points=[s.start,...(p.target.breaks??[]).filter(b=>b>s.start&&b<s.end),s.end];
     return points.slice(0,-1).map((a,i)=>p.target.text.slice(a-p.target.start,points[i+1]-p.target.start)).join(' ').replace(/\s+/g,' ');
   }))??[];
+  const sourceCuts=[...new Set([request.start,...(Array.isArray(result?.sourceBreaks)?result.sourceBreaks:[]).filter(b=>Number.isSafeInteger(b)&&b>request.start&&b<request.end),request.end])].sort((a,b)=>a-b);
   return <div className="novel-lookup"><Panel title={L('Tra trong hai bản Novel','Look up in both Novel editions')} onClose={onClose} closeLabel={L('Đóng','Close')}>
     <p className="lookup-direction">{request.locale.toUpperCase()} → {request.locale==='vi'?'EN':'VI'}</p>
-    <blockquote className="lookup-source">{request.text}</blockquote>
+    <blockquote className="lookup-source">{sourceCuts.slice(0,-1).map((a,i)=><span key={a}>{request.text.slice(a-request.start,sourceCuts[i+1]-request.start)}{i<sourceCuts.length-2&&<br/>}</span>)}</blockquote>
     {!result&&!error&&<p role="status">{L('Đang tìm phần tương ứng…','Finding the corresponding passage…')}</p>}
-    {error&&<div role="alert"><p>{error==='selection'?L('Hãy chọn đoạn ngắn hơn, tối đa 2.000 ký tự và 5 nhóm câu.','Choose a shorter passage, up to 2,000 characters and 5 sentence groups.'):L('Chưa tải được kết quả. Hãy thử lại.','Could not load the result. Please try again.')}</p><button className="secondary-button" onClick={()=>setAttempt(a=>a+1)}>{L('Thử lại','Retry')}</button></div>}
+    {error&&<div role="alert"><p>{error==='selection'?L('Hãy chọn đoạn ngắn hơn, tối đa 2.000 ký tự.','Choose a shorter passage, up to 2,000 characters.'):L('Chưa tải được kết quả. Hãy thử lại.','Could not load the result. Please try again.')}</p><button className="secondary-button" onClick={()=>setAttempt(a=>a+1)}>{L('Thử lại','Retry')}</button></div>}
     {result&&<>
       {downloaded&&<p className="tiny muted">{L('Dùng dữ liệu đã tải trên thiết bị','Using data downloaded on this device')}</p>}
       {offline&&result.status==='pending'&&<p>{L('Chưa tải dữ liệu tra của chương này. Hãy cập nhật bản tải khi có mạng.','Lookup data for this chapter has not been downloaded. Update the download when online.')}</p>}
       {message&&<p role="status">{message}</p>}
       {result.passages.length>0&&<>
         <p className="lookup-confidence">{result.status==='uncertain'?L('Chưa chắc chắn · gợi ý tự động','Uncertain · automatic suggestion'):L('Gợi ý đối ứng trong sách','Suggested counterpart in the book')}</p>
-        {terms.join(' ').length<=120&&terms.length>0&&<p className="lookup-terms">{[...new Set(terms)].map((t,i)=><span key={i}>{t}</span>)}</p>}
+        {terms.length===1&&terms[0].length<=200&&<p className="lookup-terms">{terms[0]}</p>}
         {result.passages.map((p,i)=><div className="lookup-passage" key={i} lang={result.targetLocale}><p>{marked(p)}</p></div>)}
         <button className="secondary-button" onClick={compare}><BookOpen size={16}/>{L('Mở đối chiếu','Open comparison')}</button>
       </>}

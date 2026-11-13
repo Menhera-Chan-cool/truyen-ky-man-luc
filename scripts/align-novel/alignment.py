@@ -19,7 +19,7 @@ def vietnamese_word_spans(units):
         for a,b in found:
             start,end=reader_span(unit,starts[a],ends[b-1]);result.add((start,end))
     return [{'start':a,'end':b} for a,b in sorted(result)]
-def align_candidates(source,target):
+def align_candidates(source,target,minimum=.78):
     if not len(source) or not len(target):return []
     source=np.asarray(source);target=np.asarray(target);result={}
     for reverse in [False,True]:
@@ -32,13 +32,13 @@ def align_candidates(source,target):
                 values=merged@vector
                 for j,score in enumerate(values):candidates.append((float(score)-.015*(size-1),float(score),j,size))
             candidates.sort(reverse=True);_,score,j,size=candidates[0]
-            if score<.78:continue
+            if score<minimum:continue
             alternatives=[s for _,s,k,z in candidates[1:] if k+z<=j or k>=j+size]
             a,b=([j+x for x in range(size)],[i]) if reverse else ([i],[j+x for x in range(size)])
             key=(tuple(a),tuple(b));result[key]={'vi':a,'en':b,'score':score,'margin':score-max(alternatives,default=0)}
     return sorted(result.values(),key=lambda p:(p['vi'][0],p['en'][0]))
 
-def align_sequences(source,target):
+def align_sequences(source,target,minimum=.80):
     n,m=len(source),len(target)
     if not n or not m:return []
     source=np.asarray(source,dtype=np.float32);target=np.asarray(target,dtype=np.float32)
@@ -56,8 +56,8 @@ def align_sequences(source,target):
             for a in range(1,min(3,n-i)+1):
                 for b in range(1,min(3,m-j)+1):
                     score=float(scores[a,b][i,j])
-                    if score<.80:continue
-                    candidate=value+score-.80-.015*(a+b-2)
+                    if score<minimum:continue
+                    candidate=value+score-minimum-.015*(a+b-2)
                     if candidate>dp[i+a,j+b]:dp[i+a,j+b]=candidate;back[i+a,j+b]=[a,b]
     result=[];i,j=n,m
     while i or j:

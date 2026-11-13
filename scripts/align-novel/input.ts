@@ -2,7 +2,7 @@ import {createHash} from 'node:crypto';
 import {extractAlignmentText,alignmentCodec} from '../../src/lib/novel-text';
 import type {Locale} from '../../src/lib/types';
 
-export const algorithm='e5-mbert-uts95-1';
+export const algorithm='labse-context-mbert-1';
 type PublishedEdition={versionId:string;revision:number;html:string};
 function edition(value:PublishedEdition,locale:Locale){
  if(!value||!/^[-0-9a-f]{36}$/i.test(value.versionId)||!Number.isSafeInteger(value.revision)||value.revision<1||typeof value.html!=='string'||Buffer.byteLength(value.html)>2097152)throw Error('Invalid published alignment input');

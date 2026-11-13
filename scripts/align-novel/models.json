@@ -1,4 +1,4 @@
 {
-  "sentence": {"id":"intfloat/multilingual-e5-small","revision":"614241f622f53c4eeff9890bdc4f31cfecc418b3","license":"MIT"},
+  "sentence": {"id":"sentence-transformers/LaBSE","revision":"836121a0533e5664b21c7aacc5d22951f2b8b25b","license":"Apache-2.0","pooling":"cls-dense-tanh-normalize"},
   "word": {"id":"google-bert/bert-base-multilingual-cased","revision":"3f076fdb1ab68d5b2880cb87a0886f315b8146f8","license":"Apache-2.0"}
 }

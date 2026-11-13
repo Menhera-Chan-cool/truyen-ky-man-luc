@@ -8,5 +8,5 @@ if __name__ == '__main__':
     models=json.loads(pathlib.Path(__file__).with_name('models.json').read_text())
     for name,model in models.items():
         print('Downloading pinned '+name+' model',flush=True)
-        path=snapshot_download(model['id'],revision=model['revision'],allow_patterns=['config.json','model.safetensors','tokenizer.json','tokenizer_config.json','special_tokens_map.json','vocab.txt','sentencepiece.bpe.model'])
+        path=snapshot_download(model['id'],revision=model['revision'],allow_patterns=['config.json','model.safetensors','tokenizer.json','tokenizer_config.json','special_tokens_map.json','vocab.txt','sentencepiece.bpe.model','2_Dense/config.json','2_Dense/model.safetensors'])
         print(json.dumps({'model':name,'path':path}),flush=True)

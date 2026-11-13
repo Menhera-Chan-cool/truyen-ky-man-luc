@@ -6,6 +6,7 @@ import {parseArgs} from 'node:util';
 import nextEnv from '@next/env';
 import {createClient} from '@supabase/supabase-js';
 import {makeAlignmentInput,matchesAlignmentInput,algorithm} from './input';
+import {makeContextInput} from './context-input';
 import {validateAlignmentArtifact,alignmentCodec,type AlignmentArtifact} from '../../src/lib/novel-lookup';
 
 nextEnv.loadEnvConfig(process.cwd(),false,{info(){},error(){}});
@@ -24,7 +25,7 @@ function validateJob(value:unknown):Job{
  return j;
 }
 async function python(args:string[]){
- const env={...process.env};delete env.SUPABASE_SERVICE_ROLE_KEY;delete env.NOVEL_ALIGNMENT_SERVICE_ROLE_KEY;
+ const env={...process.env};delete env.SUPABASE_SERVICE_ROLE_KEY;delete env.NOVEL_ALIGNMENT_SERVICE_ROLE_KEY;delete env.VILAO_API_KEY;delete env.GEMINI_API_KEY;
  await new Promise<void>((resolve,reject)=>{
   const child=spawn(values.python!,args,{stdio:'inherit',env,windowsHide:true});
   const timer=setTimeout(()=>{child.kill();reject(Error('Alignment processing timed out'));},600000);
@@ -41,7 +42,7 @@ for(let count=0;count<max;count++){
  const next=count===0&&first?first:await rpc('claim_novel_alignment_job');if(!next)break;
  const job=validateJob(next);
  try{
-  const input=makeAlignmentInput(job.chapterId,job.editions);
+  const input=makeContextInput(makeAlignmentInput(job.chapterId,job.editions));
   const current=await rpc('get_public_novel_alignment',{p_chapter:job.chapterId});
   if(current?.vi?.versionId!==input.editions.vi.versionId||current?.en?.versionId!==input.editions.en.versionId){await rpc('finish_novel_alignment_job',{p_job:job.id,p_lease:job.lease_id,p_path:null,p_hash:null,p_bytes:null,p_error:'Published pair changed'});continue;}
   let prepared:{artifact:AlignmentArtifact;bytes:Buffer}|undefined;

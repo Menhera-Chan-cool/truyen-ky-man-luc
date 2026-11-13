@@ -42,10 +42,10 @@ jobs:
         run: |
           npm ci
           python -m pip install -r scripts/align-novel/requirements.txt
-      - name: Align up to three published chapters
+      - name: Align one published chapter
         if: steps.queue.outputs.has_job == 'true'
         env:
           NOVEL_ALIGNMENT_SUPABASE_URL: ${{ vars.NOVEL_ALIGNMENT_SUPABASE_URL }}
           NOVEL_ALIGNMENT_SERVICE_ROLE_KEY: ${{ secrets.NOVEL_ALIGNMENT_SERVICE_ROLE_KEY }}
           HF_HUB_DISABLE_TELEMETRY: '1'
-        run: npx tsx scripts/align-novel/worker.ts --first-job .alignment-work/first-job.json --max 3
+        run: npx tsx scripts/align-novel/worker.ts --first-job .alignment-work/first-job.json --max 1

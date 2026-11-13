@@ -27,7 +27,7 @@ for(const [chapter,kind,vi,en]of pairs){
   const result=lookupArtifact(artifact,{chapterId:chapter,locale,revision:artifact.editions[locale].revision,start,end:start+quote.length,text:quote});
   const gt={start:at,end:at+expected.length};
   const overlap=(s:TextSpan)=>Math.max(0,Math.min(s.end,gt.end)-Math.max(s.start,gt.start));
-  const spans=kind==='sentence'?result.passages.map(p=>p.target):result.passages.flatMap(p=>p.highlights);
+  const spans=result.passages.flatMap(p=>p.highlights);
   const hit=spans.reduce((n,s)=>n+overlap(s),0),total=spans.reduce((n,s)=>n+s.end-s.start,0);
   const precision=total?hit/total:0,recall=hit/expected.length,f1=precision+recall?2*precision*recall/(precision+recall):0;
   rows.push({chapter,kind,locale,quote,expected,status:result.status,predicted:spans.map(s=>targetText.slice(s.start,s.end)),context:result.passages.map(p=>p.target.text),precision,recall,f1,hit:f1>=.5});

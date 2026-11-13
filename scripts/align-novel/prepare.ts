@@ -5,6 +5,7 @@ import nextEnv from "@next/env";
 import {createClient} from "@supabase/supabase-js";
 import {extractAlignmentText} from "../../src/lib/novel-text";
 import type {Book} from "../../src/lib/types";
+import {makeContextInput} from './context-input';
 
 const [directory,...selected]=process.argv.slice(2);
 if(!directory)throw Error("Usage: tsx scripts/align-novel/prepare.ts OUTPUT_DIR [chapter-1 chapter-18]");
@@ -26,6 +27,7 @@ for(const chapter of book.chapters){
   const extracted=extractAlignmentText(edition.html,locale);
   return [locale,{...extracted,revision:edition.revision,versionId:version.id,hash:createHash("sha256").update(extracted.text).digest("hex")}];
  }));
- await fs.writeFile(path.join(directory,chapter.id+".input.json"),JSON.stringify({chapterId:chapter.id,editions}));
+ const contextual=makeContextInput({chapterId:chapter.id,editions} as Parameters<typeof makeContextInput>[0]);
+ await fs.writeFile(path.join(directory,chapter.id+".input.json"),JSON.stringify(contextual));
  console.log(JSON.stringify({chapter:chapter.id,sentences:Object.fromEntries(Object.entries(editions).map(([l,e])=>[l,e.sentences.length]))}));
 }
