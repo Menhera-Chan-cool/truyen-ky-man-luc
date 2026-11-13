@@ -7,6 +7,7 @@ export type AlignmentArtifact = {
   editions:Record<Locale,{revision:number;versionId:string;hash:string;text:string;words?:TextSpan[];breaks?:number[]}>;
   groups:{id:string;section:string;vi:TextSpan;en:TextSpan;score:number;margin:number;primary?:Record<Locale,boolean>;
     parts?:Record<Locale,TextSpan[]>;
+    tracks?:Record<Locale,TextSpan&{id:string}>;
     kind?:'lexical';
     links:{vi:[number,number];en:[number,number];score:number}[]}[];
   notePairs?:{vi:TextSpan;en:TextSpan;score:number;margin:number}[];
@@ -42,6 +43,7 @@ export function validateAlignmentArtifact(value:unknown):AlignmentArtifact {
   for(const g of [...a.groups,...(a.refinedGroups??[])]){
     if(!g||!valid(g.vi,a.editions.vi.text)||!valid(g.en,a.editions.en.text)||!Number.isFinite(g.score)||!Number.isFinite(g.margin)||!Array.isArray(g.links)||g.links.length>100000)invalid();
     if(g.parts)for(const l of ['vi','en']as const){const parts=g.parts[l];if(!Array.isArray(parts)||!parts.length||parts.length>1000||parts.some((p,i)=>!valid(p,a.editions[l].text)||p.start<g[l].start||p.end>g[l].end||(i>0&&p.start<parts[i-1].end)))invalid();}
+    if(g.tracks)for(const l of ['vi','en']as const){const t=g.tracks[l];if(!valid(t,a.editions[l].text)||typeof t.id!=='string'||!t.id.length||t.id.length>100||t.start>g[l].start||t.end<g[l].end)invalid();}
     for(const link of g.links){
       if(!link||!Number.isFinite(link.score)||link.score<0||link.score>1.001)invalid();
       for(const l of ["vi","en"] as const){
@@ -169,7 +171,11 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
   const structural=structureLookup(artifact,request);if(structural)return structural;
   const note=notePair(artifact,request);
   const rank=(g:AlignmentArtifact['groups'][number])=>g.score-.03*Math.log1p(g[locale].end-g[locale].start)-(g.primary?.[locale]===false ? .1 : 0);
-  const candidates=(artifact.refinementVersion===1?artifact.refinedGroups??artifact.groups:artifact.groups).filter(g=>(g.parts?.[locale]??[g[locale]]).some(p=>p.start<request.end&&p.end>request.start)).flatMap(g=>{
+  const allGroups=artifact.refinementVersion===1?artifact.refinedGroups??artifact.groups:artifact.groups;
+  const preferredTracks=new Map<string,string>();
+  for(const g of allGroups)if(g.tracks&&g.primary?.[locale]===true&&!preferredTracks.has(g.tracks[locale].id))preferredTracks.set(g.tracks[locale].id,g.tracks[targetLocale].id);
+  const candidates=allGroups.filter(g=>!g.tracks||!preferredTracks.has(g.tracks[locale].id)||preferredTracks.get(g.tracks[locale].id)===g.tracks[targetLocale].id)
+   .filter(g=>(g.parts?.[locale]??[g[locale]]).some(p=>p.start<request.end&&p.end>request.start)).flatMap(g=>{
     if(!note)return [g];
     return note.targets.flatMap(scope=>{
     const from={start:Math.max(g[locale].start,note.source.start),end:Math.min(g[locale].end,note.source.end)},to={start:Math.max(g[targetLocale].start,scope.start),end:Math.min(g[targetLocale].end,scope.end)};
@@ -230,7 +236,7 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
     const sourceBlock=shortBlock(source,request);
     if(artifact.refinementVersion===1&&g.section!=='notes'&&sourceBlock&&!nameSelection(request.text)&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>2){
       const whole=analysisText(source.text.slice(sourceBlock.start,sourceBlock.end),false).replace(/^[\s"“”‘’«»'\-–—]+|[\s"“”‘’«»',.;:!?]+$/gu,'');
-      if(request.text.replace(/^[\s"“”‘’«»'\-–—]+|[\s"“”‘’«»',.;:!?]+$/gu,'')===whole)highlights=mergeSpans(highlights.map(s=>shortBlock(target,s)??s),target.text);
+      if(request.text.replace(/^[\s"“”‘’«»'\-–—]+|[\s"“”‘’«»',.;:!?]+$/gu,'')===whole)highlights=mergeSpans(highlights.map(s=>{const expanded=shortBlock(target,s)??s,t=g.tracks?.[targetLocale];return t?{start:Math.max(t.start,expanded.start),end:Math.min(t.end,expanded.end)}:expanded;}),target.text);
     }
     if(highlights.length&&!sentences.spans.length&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1&&!onlyFunctionWords(request.text,locale)&&highlights.every(s=>onlyFunctionWords(target.text.slice(s.start,s.end),targetLocale)))highlights=[];
     hasWords ||= highlights.length>0;

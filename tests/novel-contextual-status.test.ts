@@ -35,6 +35,11 @@ it('shows the local pending job while the existing e5 run stays available withou
  expect(response.headers.get('Cache-Control')).toBe('no-store');
 });
 
+it('prefers the book recipe while prior LaBSE results remain available',async()=>{
+ m.rows=[old,local,{...local,algorithm:'labse-book-mbert-2',state:'running',updated_at:'book-time'}];
+ expect(await (await GET(request())).json()).toEqual({state:'running',available:true,updatedAt:'book-time'});
+});
+
 it('falls back to e5 before migration and excludes other chapters, published versions, codecs and recipes',async()=>{
  m.rows=[old,{...local,vi_version:'vi-draft'},{...local,en_version:'en-stale'},{...local,chapter_id:'chapter-2'},
   {...local,codec:'other-codec'},{...local,algorithm:'semantic-align-1'},{...local,algorithm:'unapproved'}];

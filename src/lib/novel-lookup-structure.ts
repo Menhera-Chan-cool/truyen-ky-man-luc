@@ -35,7 +35,7 @@ export function notePair(a:AlignmentArtifact,r:LookupRequest){
  if(a.notePairs===undefined)return undefined;
  const locale=r.locale==='vi'?'en':'vi',source=alignmentStructure(a,r.locale).notes.find(n=>r.start>=n.start&&r.end<=n.end);
  if(!source)return undefined;
- const minimum=a.algorithm==='labse-context-mbert-1'?.5:.74;
+ const minimum=['labse-context-mbert-1','labse-book-mbert-2'].includes(a.algorithm)?.5:.74;
  const matches=a.notePairs?.filter(p=>p[r.locale].start<=source.start&&p[r.locale].end>=source.end&&p.score>=minimum).sort((x,y)=>y.score-x.score)??[];
  const right=alignmentStructure(a,locale),baseTargets=right.notes.filter(n=>matches.some(m=>n.start>=m[locale].start&&n.end<=m[locale].end));
  const targets=[...baseTargets];for(const n of baseTargets){const ref=right.notes.find(m=>m.id===n.reference);if(ref&&!targets.includes(ref))targets.push(ref);}

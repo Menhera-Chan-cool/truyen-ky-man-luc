@@ -2,9 +2,10 @@ import argparse,datetime,gc,json,os,pathlib,sys,time
 import numpy as np
 from alignment import softmax_links,reader_span,vietnamese_word_spans
 from context_alignment import align_contexts,add_caption_aliases,split_reader_units,mask_references,slice16,u16
+from book_glossary import build_glossary,apply_glossary
 import regex
 
-ALGORITHM='labse-context-mbert-1'
+ALGORITHM='labse-book-mbert-2'
 
 def labse_encode(texts,tokenizer,model,dense):
     import torch
@@ -117,10 +118,14 @@ def main():
                   'groups':groups,'refinementVersion':1,'notePairs':item['notePairs']}
         artifact['editions']['vi']['words']=vietnamese_word_spans(split_reader_units(item['editions']['vi']['sentences'],item['editions']['vi'].get('breaks',[])))
         artifact['editions']['en']['words']=english_words(item['editions']['en'])
+        glossary=build_glossary(artifact,item['structures'])
         aliases=add_caption_aliases(artifact,item['structures'])
+        applied=apply_glossary(artifact,glossary)
+        artifact['glossary']={'schema':1,'sourceVersions':glossary['sourceVersions'],**glossary['stats'],**applied}
+        (output/(item['chapterId']+'.glossary.json')).write_text(json.dumps(glossary,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
         destination=output/(item['chapterId']+'.json');temporary=destination.with_suffix('.tmp')
         temporary.write_text(json.dumps(artifact,ensure_ascii=False,separators=(',',':')),encoding='utf-8');temporary.replace(destination)
         print(json.dumps({'chapter':item['chapterId'],'completed':True,'groups':len(artifact['groups']),**aliases,
-                          'secondsTotal':round(time.perf_counter()-started,2)}),flush=True)
+                          'glossary':artifact['glossary'],'secondsTotal':round(time.perf_counter()-started,2)}),flush=True)
 
 if __name__=='__main__':main()

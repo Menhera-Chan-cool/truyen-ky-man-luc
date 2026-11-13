@@ -62,7 +62,7 @@ it('preserves UTF16 mappings, decomposed text and both repeated verse occurrence
  for(const u of result.units.vi){expect(u.text.length).toBe(u.quote.length);expect(u.starts).toHaveLength(u.text.length);expect(u.ends).toHaveLength(u.text.length);expect(input.editions.vi.text.slice(u.start,u.end)).toBe(u.quote);}
 });
 
-it.each([['labse-context-mbert-1',true],['e5-mbert-uts95-1',false]] as const)('calibrates note scoping for %s while retaining the stricter direct-label guard',(algorithm,accepted)=>{
+it.each([['labse-context-mbert-1',true],['labse-book-mbert-2',true],['e5-mbert-uts95-1',false]] as const)('calibrates note scoping for %s while retaining the stricter direct-label guard',(algorithm,accepted)=>{
  const input=fixture('<p>Chú thích:</p><p>(9) Hàn Dũ: Một nhà văn.</p>','<p>Notes</p><p>(8) Han Yu: A writer.</p>');
  const context=makeContextInput(input),vi=context.structures.vi.notes[0],en=context.structures.en.notes[0];
  const artifact:AlignmentArtifact={...input,schema:1,codec:input.editions.vi.codec,algorithm,createdAt:'',groups:[],notePairs:[{vi,en,score:.65,margin:.05}]};

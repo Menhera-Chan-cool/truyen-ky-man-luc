@@ -1,0 +1,5383 @@
+{
+  "scope": "21 lexical probes: 12 prior cases plus reverse directions of 9 positive cases; paired contexts supplied independently. Not sentence retrieval, whole-book accuracy, training, or an independent layer-selection test.",
+  "settings": {
+    "threads": 2,
+    "device": "cpu",
+    "precision": "float32",
+    "layersDeclaredBeforeRun": [
+      8,
+      12,
+      16,
+      20,
+      24
+    ],
+    "windowTokens": 192,
+    "overlap": 32,
+    "softmaxThreshold": 0.001,
+    "maxLinksPerSourceSubtokenPerWindow": 3
+  },
+  "models": {
+    "xlmr-large": {
+      "id": "FacebookAI/xlm-roberta-large",
+      "revision": "c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "path": "D:\\codex\\2026-10-22\\p\\work\\alignment-model-study\\cache\\hub\\models--FacebookAI--xlm-roberta-large\\snapshots\\c23d21b0620b635a76227c604d44e43a9f0ee389",
+      "weightBytes": 2244817354,
+      "sha256": "2dfa19f172412917cab174da04b46e2134811b723666965fd0aabd97caa6e23b",
+      "downloadSeconds": 145.62778770000295
+    },
+    "mbert": {
+      "id": "google-bert/bert-base-multilingual-cased",
+      "revision": "3f076fdb1ab68d5b2880cb87a0886f315b8146f8"
+    }
+  },
+  "variants": {
+    "mbert-layer8": {
+      "summary": {
+        "precision": 0.7222222222222222,
+        "recall": 0.6378968253968255,
+        "f1": 0.6588319088319089,
+        "positiveCases": 18,
+        "exactPositiveCases": 7,
+        "negativeCases": 3,
+        "negativeNonempty": 3,
+        "original9MacroF1": 0.5854700854700855,
+        "cosineMnn": {
+          "precision": 0.7222222222222222,
+          "recall": 0.6378968253968255,
+          "f1": 0.6588319088319089,
+          "exactPositiveCases": 7,
+          "negativeNonempty": 2
+        }
+      },
+      "rows": [
+        {
+          "id": "ch2-critique-alas-user-case",
+          "query": "Alas!",
+          "expectedStatus": "match",
+          "expected": "Than ôi",
+          "predictedWords": [
+            "Than",
+            "ôi"
+          ],
+          "predictedWordIds": [
+            0,
+            1
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "ôi"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Than",
+              "ôi"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            30,
+            137
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case",
+          "query": "Hegemon Xiang",
+          "expectedStatus": "match",
+          "expected": "Hạng vương",
+          "predictedWords": [
+            "Hạng"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hạng"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Hạng"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            53,
+            82
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case",
+          "query": "Gu Yaya",
+          "expectedStatus": "match",
+          "expected": "Cổ áp Nha",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            35,
+            105
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note",
+          "query": "Hàn Dũ",
+          "expectedStatus": "match",
+          "expected": "Han Yu",
+          "predictedWords": [
+            "Han",
+            "Yu"
+          ],
+          "predictedWordIds": [
+            4,
+            5
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Han",
+              "Yu"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Han",
+              "Yu"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            29,
+            89
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note",
+          "query": "Hồng Phất",
+          "expectedStatus": "match",
+          "expected": "Hongfu",
+          "predictedWords": [
+            "Li",
+            "Hongfu"
+          ],
+          "predictedWordIds": [
+            1,
+            4
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Li",
+              "Hongfu"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Li",
+              "Hongfu"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            34,
+            191
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term",
+          "query": "tranh",
+          "expectedStatus": "match",
+          "expected": "zither",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            10,
+            21
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case",
+          "query": "Ôm tranh nhẹ bấm một đôi bài.",
+          "expectedStatus": "match",
+          "expected": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "predictedWords": [
+            "Tipsy",
+            "clasp",
+            "the",
+            "silver",
+            "zither"
+          ],
+          "predictedWordIds": [
+            0,
+            2,
+            3,
+            4,
+            5
+          ],
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Tipsy",
+              "clasp",
+              "the",
+              "silver",
+              "zither"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Tipsy",
+              "clasp",
+              "the",
+              "silver",
+              "zither"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            10,
+            21
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case",
+          "query": "Cố nhân tìm cố nhân",
+          "expectedStatus": "match",
+          "expected": "An old friend comes seeking an old friend",
+          "predictedWords": [
+            "An",
+            "friend",
+            "seeking",
+            "old",
+            "friend"
+          ],
+          "predictedWordIds": [
+            0,
+            2,
+            4,
+            6,
+            7
+          ],
+          "precision": 1.0,
+          "recall": 0.625,
+          "f1": 0.7692307692307693,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "An",
+              "friend",
+              "seeking",
+              "old",
+              "friend"
+            ],
+            "precision": 1.0,
+            "recall": 0.625,
+            "f1": 0.7692307692307693,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "An",
+              "friend",
+              "seeking",
+              "old",
+              "friend"
+            ],
+            "precision": 1.0,
+            "recall": 0.625,
+            "f1": 0.7692307692307693,
+            "exact": false
+          },
+          "subtokens": [
+            36,
+            61
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap",
+          "query": "Tây Thi",
+          "expectedStatus": "match",
+          "expected": "Xi Shi",
+          "predictedWords": [
+            "Xi",
+            "Fuchai"
+          ],
+          "predictedWordIds": [
+            1,
+            18
+          ],
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Xi",
+              "Fuchai"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Xi",
+              "Fuchai"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            18,
+            28
+          ]
+        },
+        {
+          "id": "ch1-note33-suicides-omitted",
+          "query": "Cữu và Tư Mã Hân đều tự tử chết.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "Cao",
+            "Cao",
+            "Qiu"
+          ],
+          "predictedWordIds": [
+            1,
+            45,
+            46
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Cao",
+              "Cao",
+              "Qiu"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Cao",
+              "Cao",
+              "Qiu"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            36,
+            108
+          ]
+        },
+        {
+          "id": "ch2-zhangtai-note6-header-context",
+          "query": "Zhangtai willow",
+          "expectedStatus": "context-only",
+          "expected": null,
+          "predictedWords": [
+            "Xem"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Xem"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "exact": true
+          },
+          "subtokens": [
+            16,
+            13
+          ]
+        },
+        {
+          "id": "ch7-foreign-original-title-contamination",
+          "query": "Tản Viên từ phán sự lục.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "Dao",
+            "nghiep",
+            "oan"
+          ],
+          "predictedWordIds": [
+            2,
+            4,
+            5
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Dao",
+              "nghiep",
+              "oan"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Dao",
+              "nghiep"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            12,
+            27
+          ]
+        },
+        {
+          "id": "ch2-critique-alas-user-case-reverse",
+          "query": "Than ôi",
+          "expectedStatus": "match",
+          "expected": "Alas!",
+          "predictedWords": [
+            "Alas"
+          ],
+          "predictedWordIds": [
+            0
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Alas"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Alas"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            31,
+            30
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case-reverse",
+          "query": "Hạng vương",
+          "expectedStatus": "match",
+          "expected": "Hegemon Xiang",
+          "predictedWords": [
+            "Xiang"
+          ],
+          "predictedWordIds": [
+            12
+          ],
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Xiang"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Xiang"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            43,
+            53
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case-reverse",
+          "query": "Cổ áp Nha",
+          "expectedStatus": "match",
+          "expected": "Gu Yaya",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            75,
+            35
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note-reverse",
+          "query": "Han Yu",
+          "expectedStatus": "match",
+          "expected": "Hàn Dũ",
+          "predictedWords": [
+            "Hàn Dũ"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            32,
+            29
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note-reverse",
+          "query": "Hongfu",
+          "expectedStatus": "match",
+          "expected": "Hồng Phất",
+          "predictedWords": [
+            "Hồng Phất"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            41,
+            34
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term-reverse",
+          "query": "zither",
+          "expectedStatus": "match",
+          "expected": "tranh",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            20,
+            10
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case-reverse",
+          "query": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "expectedStatus": "match",
+          "expected": "Ôm tranh nhẹ bấm một đôi bài.",
+          "predictedWords": [
+            "Ôm",
+            "nhẹ",
+            "bấm",
+            "một",
+            "đôi",
+            "bài"
+          ],
+          "predictedWordIds": [
+            0,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "precision": 1.0,
+          "recall": 0.8571428571428571,
+          "f1": 0.923076923076923,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Ôm",
+              "nhẹ",
+              "bấm",
+              "một",
+              "đôi",
+              "bài"
+            ],
+            "precision": 1.0,
+            "recall": 0.8571428571428571,
+            "f1": 0.923076923076923,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Ôm",
+              "nhẹ",
+              "bấm",
+              "một",
+              "đôi",
+              "bài"
+            ],
+            "precision": 1.0,
+            "recall": 0.8571428571428571,
+            "f1": 0.923076923076923,
+            "exact": false
+          },
+          "subtokens": [
+            21,
+            10
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case-reverse",
+          "query": "An old friend comes seeking an old friend",
+          "expectedStatus": "match",
+          "expected": "Cố nhân tìm cố nhân",
+          "predictedWords": [
+            "Cố nhân",
+            "tìm",
+            "cố nhân"
+          ],
+          "predictedWordIds": [
+            0,
+            1,
+            2
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Cố nhân",
+              "tìm",
+              "cố nhân"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Cố nhân",
+              "tìm",
+              "cố nhân"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            35,
+            36
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap-reverse",
+          "query": "Xi Shi",
+          "expectedStatus": "match",
+          "expected": "Tây Thi",
+          "predictedWords": [
+            "Tây Thi"
+          ],
+          "predictedWordIds": [
+            2
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Tây Thi"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Tây Thi"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            26,
+            18
+          ]
+        }
+      ],
+      "loadSeconds": 1.15710350000154,
+      "inferenceSeconds": 2.6181593000001158,
+      "cpuSeconds": 5.125,
+      "timeSharedAcrossLayers": false,
+      "tokenizerBackend": "WordPiece"
+    },
+    "xlmr-large-layer8": {
+      "summary": {
+        "precision": 0.28703703703703703,
+        "recall": 0.2662037037037037,
+        "f1": 0.23641975308641974,
+        "positiveCases": 18,
+        "exactPositiveCases": 1,
+        "negativeCases": 3,
+        "negativeNonempty": 1,
+        "original9MacroF1": 0.1987654320987654,
+        "cosineMnn": {
+          "precision": 0.3055555555555556,
+          "recall": 0.21064814814814814,
+          "f1": 0.23271604938271606,
+          "exactPositiveCases": 2,
+          "negativeNonempty": 1
+        }
+      },
+      "rows": [
+        {
+          "id": "ch2-critique-alas-user-case",
+          "query": "Alas!",
+          "expectedStatus": "match",
+          "expected": "Than ôi",
+          "predictedWords": [
+            "ôi"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "ôi"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "ôi"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            32,
+            133
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case",
+          "query": "Hegemon Xiang",
+          "expectedStatus": "match",
+          "expected": "Hạng vương",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            58,
+            78
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case",
+          "query": "Gu Yaya",
+          "expectedStatus": "match",
+          "expected": "Cổ áp Nha",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            38,
+            88
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note",
+          "query": "Hàn Dũ",
+          "expectedStatus": "match",
+          "expected": "Han Yu",
+          "predictedWords": [
+            "Changli",
+            "Liuzhi",
+            "Han"
+          ],
+          "predictedWordIds": [
+            1,
+            3,
+            4
+          ],
+          "precision": 0.3333333333333333,
+          "recall": 0.5,
+          "f1": 0.4,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Han"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Changli",
+              "Han"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            26,
+            98
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note",
+          "query": "Hồng Phất",
+          "expectedStatus": "match",
+          "expected": "Hongfu",
+          "predictedWords": [
+            "Jing",
+            "Hongfu",
+            "Hongfu"
+          ],
+          "predictedWordIds": [
+            2,
+            4,
+            5
+          ],
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hongfu"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Jing",
+              "Hongfu"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            34,
+            192
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term",
+          "query": "tranh",
+          "expectedStatus": "match",
+          "expected": "zither",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            9,
+            19
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case",
+          "query": "Ôm tranh nhẹ bấm một đôi bài.",
+          "expectedStatus": "match",
+          "expected": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            11,
+            19
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case",
+          "query": "Cố nhân tìm cố nhân",
+          "expectedStatus": "match",
+          "expected": "An old friend comes seeking an old friend",
+          "predictedWords": [
+            "seeking"
+          ],
+          "predictedWordIds": [
+            4
+          ],
+          "precision": 1.0,
+          "recall": 0.125,
+          "f1": 0.2222222222222222,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "seeking"
+            ],
+            "precision": 1.0,
+            "recall": 0.125,
+            "f1": 0.2222222222222222,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "seeking"
+            ],
+            "precision": 1.0,
+            "recall": 0.125,
+            "f1": 0.2222222222222222,
+            "exact": false
+          },
+          "subtokens": [
+            28,
+            57
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap",
+          "query": "Tây Thi",
+          "expectedStatus": "match",
+          "expected": "Xi Shi",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            16,
+            29
+          ]
+        },
+        {
+          "id": "ch1-note33-suicides-omitted",
+          "query": "Cữu và Tư Mã Hân đều tự tử chết.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "Qiu",
+            "Qiu",
+            "instructing"
+          ],
+          "predictedWordIds": [
+            2,
+            11,
+            15
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Qiu"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Qiu",
+              "and"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            36,
+            113
+          ]
+        },
+        {
+          "id": "ch2-zhangtai-note6-header-context",
+          "query": "Zhangtai willow",
+          "expectedStatus": "context-only",
+          "expected": null,
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0,
+          "f1": 0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "exact": true
+          },
+          "subtokens": [
+            14,
+            8
+          ]
+        },
+        {
+          "id": "ch7-foreign-original-title-contamination",
+          "query": "Tản Viên từ phán sự lục.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0,
+          "f1": 0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "exact": true
+          },
+          "subtokens": [
+            12,
+            22
+          ]
+        },
+        {
+          "id": "ch2-critique-alas-user-case-reverse",
+          "query": "Than ôi",
+          "expectedStatus": "match",
+          "expected": "Alas!",
+          "predictedWords": [
+            "bound"
+          ],
+          "predictedWordIds": [
+            4
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "bound"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "bound"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            30,
+            32
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case-reverse",
+          "query": "Hạng vương",
+          "expectedStatus": "match",
+          "expected": "Hegemon Xiang",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            41,
+            58
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case-reverse",
+          "query": "Cổ áp Nha",
+          "expectedStatus": "match",
+          "expected": "Gu Yaya",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            63,
+            38
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note-reverse",
+          "query": "Han Yu",
+          "expectedStatus": "match",
+          "expected": "Hàn Dũ",
+          "predictedWords": [
+            "Hàn Dũ",
+            "Hàn"
+          ],
+          "predictedWordIds": [
+            1,
+            13
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            35,
+            26
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note-reverse",
+          "query": "Hongfu",
+          "expectedStatus": "match",
+          "expected": "Hồng Phất",
+          "predictedWords": [
+            "Hồng Phất"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            40,
+            34
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term-reverse",
+          "query": "zither",
+          "expectedStatus": "match",
+          "expected": "tranh",
+          "predictedWords": [
+            "bát phục"
+          ],
+          "predictedWordIds": [
+            3
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "bát phục"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "bát phục"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            18,
+            9
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case-reverse",
+          "query": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "expectedStatus": "match",
+          "expected": "Ôm tranh nhẹ bấm một đôi bài.",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            19,
+            11
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case-reverse",
+          "query": "An old friend comes seeking an old friend",
+          "expectedStatus": "match",
+          "expected": "Cố nhân tìm cố nhân",
+          "predictedWords": [
+            "Cố nhân",
+            "tìm"
+          ],
+          "predictedWordIds": [
+            0,
+            1
+          ],
+          "precision": 1.0,
+          "recall": 0.6666666666666666,
+          "f1": 0.8,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Cố nhân",
+              "tìm"
+            ],
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Cố nhân",
+              "tìm"
+            ],
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8,
+            "exact": false
+          },
+          "subtokens": [
+            33,
+            28
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap-reverse",
+          "query": "Xi Shi",
+          "expectedStatus": "match",
+          "expected": "Tây Thi",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            29,
+            16
+          ]
+        }
+      ],
+      "loadSeconds": 3.293552000002819,
+      "inferenceSeconds": 8.979842099986854,
+      "cpuSeconds": 17.421875,
+      "timeSharedAcrossLayers": true,
+      "tokenizerBackend": "Unigram"
+    },
+    "xlmr-large-layer12": {
+      "summary": {
+        "precision": 0.44722222222222224,
+        "recall": 0.3880952380952381,
+        "f1": 0.38295346628679966,
+        "positiveCases": 18,
+        "exactPositiveCases": 4,
+        "negativeCases": 3,
+        "negativeNonempty": 2,
+        "original9MacroF1": 0.25356125356125353,
+        "cosineMnn": {
+          "precision": 0.4722222222222222,
+          "recall": 0.38115079365079363,
+          "f1": 0.388327721661055,
+          "exactPositiveCases": 4,
+          "negativeNonempty": 3
+        }
+      },
+      "rows": [
+        {
+          "id": "ch2-critique-alas-user-case",
+          "query": "Alas!",
+          "expectedStatus": "match",
+          "expected": "Than ôi",
+          "predictedWords": [
+            "Than",
+            "nghĩa tức là",
+            "lợn",
+            "thẹn"
+          ],
+          "predictedWordIds": [
+            0,
+            48,
+            66,
+            87
+          ],
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "lợn"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Than",
+              "lợn"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            32,
+            133
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case",
+          "query": "Hegemon Xiang",
+          "expectedStatus": "match",
+          "expected": "Hạng vương",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            58,
+            78
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case",
+          "query": "Gu Yaya",
+          "expectedStatus": "match",
+          "expected": "Cổ áp Nha",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            38,
+            88
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note",
+          "query": "Hàn Dũ",
+          "expectedStatus": "match",
+          "expected": "Han Yu",
+          "predictedWords": [
+            "Han",
+            "Yu"
+          ],
+          "predictedWordIds": [
+            4,
+            5
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Han",
+              "Yu"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Han",
+              "Yu"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            26,
+            98
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note",
+          "query": "Hồng Phất",
+          "expectedStatus": "match",
+          "expected": "Hongfu",
+          "predictedWords": [
+            "Jing's",
+            "knocked"
+          ],
+          "predictedWordIds": [
+            77,
+            80
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Jing's"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Jing's"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            34,
+            192
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term",
+          "query": "tranh",
+          "expectedStatus": "match",
+          "expected": "zither",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            9,
+            19
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case",
+          "query": "Ôm tranh nhẹ bấm một đôi bài.",
+          "expectedStatus": "match",
+          "expected": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "predictedWords": [
+            "Tipsy",
+            "clasp"
+          ],
+          "predictedWordIds": [
+            0,
+            2
+          ],
+          "precision": 1.0,
+          "recall": 0.2,
+          "f1": 0.33333333333333337,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Tipsy",
+              "clasp"
+            ],
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.33333333333333337,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Tipsy",
+              "clasp"
+            ],
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.33333333333333337,
+            "exact": false
+          },
+          "subtokens": [
+            11,
+            19
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case",
+          "query": "Cố nhân tìm cố nhân",
+          "expectedStatus": "match",
+          "expected": "An old friend comes seeking an old friend",
+          "predictedWords": [
+            "An",
+            "friend",
+            "seeking",
+            "old",
+            "forsaking"
+          ],
+          "predictedWordIds": [
+            0,
+            2,
+            4,
+            6,
+            43
+          ],
+          "precision": 0.8,
+          "recall": 0.5,
+          "f1": 0.6153846153846154,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "friend",
+              "seeking",
+              "old"
+            ],
+            "precision": 1.0,
+            "recall": 0.375,
+            "f1": 0.5454545454545454,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "friend",
+              "seeking",
+              "old"
+            ],
+            "precision": 1.0,
+            "recall": 0.375,
+            "f1": 0.5454545454545454,
+            "exact": false
+          },
+          "subtokens": [
+            28,
+            57
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap",
+          "query": "Tây Thi",
+          "expectedStatus": "match",
+          "expected": "Xi Shi",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            16,
+            29
+          ]
+        },
+        {
+          "id": "ch1-note33-suicides-omitted",
+          "query": "Cữu và Tư Mã Hân đều tự tử chết.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0,
+          "f1": 0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Cao"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            36,
+            113
+          ]
+        },
+        {
+          "id": "ch2-zhangtai-note6-header-context",
+          "query": "Zhangtai willow",
+          "expectedStatus": "context-only",
+          "expected": null,
+          "predictedWords": [
+            "chuyện"
+          ],
+          "predictedWordIds": [
+            5
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "chuyện"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "chuyện"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            14,
+            8
+          ]
+        },
+        {
+          "id": "ch7-foreign-original-title-contamination",
+          "query": "Tản Viên từ phán sự lục.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "Dao"
+          ],
+          "predictedWordIds": [
+            12
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Dao"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Dao"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            12,
+            22
+          ]
+        },
+        {
+          "id": "ch2-critique-alas-user-case-reverse",
+          "query": "Than ôi",
+          "expectedStatus": "match",
+          "expected": "Alas!",
+          "predictedWords": [
+            "Alas",
+            "bound"
+          ],
+          "predictedWordIds": [
+            0,
+            4
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Alas",
+              "bound"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Alas",
+              "bound"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            30,
+            32
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case-reverse",
+          "query": "Hạng vương",
+          "expectedStatus": "match",
+          "expected": "Hegemon Xiang",
+          "predictedWords": [
+            "Hegemon",
+            "Bang's"
+          ],
+          "predictedWordIds": [
+            11,
+            15
+          ],
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hegemon",
+              "Bang's"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Hegemon",
+              "Bang's"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            41,
+            58
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case-reverse",
+          "query": "Cổ áp Nha",
+          "expectedStatus": "match",
+          "expected": "Gu Yaya",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            63,
+            38
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note-reverse",
+          "query": "Han Yu",
+          "expectedStatus": "match",
+          "expected": "Hàn Dũ",
+          "predictedWords": [
+            "Hàn Dũ"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            35,
+            26
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note-reverse",
+          "query": "Hongfu",
+          "expectedStatus": "match",
+          "expected": "Hồng Phất",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            40,
+            34
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term-reverse",
+          "query": "zither",
+          "expectedStatus": "match",
+          "expected": "tranh",
+          "predictedWords": [
+            "bát phục"
+          ],
+          "predictedWordIds": [
+            3
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "bát phục"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            18,
+            9
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case-reverse",
+          "query": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "expectedStatus": "match",
+          "expected": "Ôm tranh nhẹ bấm một đôi bài.",
+          "predictedWords": [
+            "Ôm",
+            "một"
+          ],
+          "predictedWordIds": [
+            0,
+            4
+          ],
+          "precision": 1.0,
+          "recall": 0.2857142857142857,
+          "f1": 0.4444444444444445,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Ôm",
+              "một"
+            ],
+            "precision": 1.0,
+            "recall": 0.2857142857142857,
+            "f1": 0.4444444444444445,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Ôm",
+              "một"
+            ],
+            "precision": 1.0,
+            "recall": 0.2857142857142857,
+            "f1": 0.4444444444444445,
+            "exact": false
+          },
+          "subtokens": [
+            19,
+            11
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case-reverse",
+          "query": "An old friend comes seeking an old friend",
+          "expectedStatus": "match",
+          "expected": "Cố nhân tìm cố nhân",
+          "predictedWords": [
+            "Cố nhân",
+            "tìm",
+            "cố nhân"
+          ],
+          "predictedWordIds": [
+            0,
+            1,
+            2
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Cố nhân",
+              "tìm",
+              "cố nhân"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Cố nhân",
+              "tìm",
+              "cố nhân"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            33,
+            28
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap-reverse",
+          "query": "Xi Shi",
+          "expectedStatus": "match",
+          "expected": "Tây Thi",
+          "predictedWords": [
+            "Tây Thi"
+          ],
+          "predictedWordIds": [
+            2
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            29,
+            16
+          ]
+        }
+      ],
+      "loadSeconds": 3.293552000002819,
+      "inferenceSeconds": 8.979842099986854,
+      "cpuSeconds": 17.421875,
+      "timeSharedAcrossLayers": true,
+      "tokenizerBackend": "Unigram"
+    },
+    "xlmr-large-layer16": {
+      "summary": {
+        "precision": 0.5462962962962963,
+        "recall": 0.5890873015873015,
+        "f1": 0.51001221001221,
+        "positiveCases": 18,
+        "exactPositiveCases": 4,
+        "negativeCases": 3,
+        "negativeNonempty": 3,
+        "original9MacroF1": 0.39780219780219783,
+        "cosineMnn": {
+          "precision": 0.6111111111111112,
+          "recall": 0.5200396825396826,
+          "f1": 0.5179573512906847,
+          "exactPositiveCases": 5,
+          "negativeNonempty": 2
+        }
+      },
+      "rows": [
+        {
+          "id": "ch2-critique-alas-user-case",
+          "query": "Alas!",
+          "expectedStatus": "match",
+          "expected": "Than ôi",
+          "predictedWords": [
+            "Than",
+            "nghĩa tức là",
+            "thẹn",
+            "thẹn"
+          ],
+          "predictedWordIds": [
+            0,
+            48,
+            81,
+            87
+          ],
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Than"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Than",
+              "thẹn"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            32,
+            133
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case",
+          "query": "Hegemon Xiang",
+          "expectedStatus": "match",
+          "expected": "Hạng vương",
+          "predictedWords": [
+            "Hạng",
+            "vương bắt",
+            "Triệu Vương"
+          ],
+          "predictedWordIds": [
+            1,
+            2,
+            22
+          ],
+          "precision": 0.6666666666666666,
+          "recall": 1.0,
+          "f1": 0.8,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hạng",
+              "vương bắt"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Triệu Vương"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            58,
+            78
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case",
+          "query": "Gu Yaya",
+          "expectedStatus": "match",
+          "expected": "Cổ áp Nha",
+          "predictedWords": [
+            "của",
+            "lại",
+            "đi"
+          ],
+          "predictedWordIds": [
+            8,
+            48,
+            52
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "lại"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            38,
+            88
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note",
+          "query": "Hàn Dũ",
+          "expectedStatus": "match",
+          "expected": "Han Yu",
+          "predictedWords": [
+            "Han",
+            "Yu",
+            "ennobled",
+            "Liuzhi",
+            "aside"
+          ],
+          "predictedWordIds": [
+            4,
+            5,
+            22,
+            33,
+            63
+          ],
+          "precision": 0.4,
+          "recall": 1.0,
+          "f1": 0.5714285714285715,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Han",
+              "Yu"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Han",
+              "Yu"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            26,
+            98
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note",
+          "query": "Hồng Phất",
+          "expectedStatus": "match",
+          "expected": "Hongfu",
+          "predictedWords": [
+            "Li",
+            "Hongfu",
+            "Hongfu",
+            "Jing's",
+            "knocked",
+            "at"
+          ],
+          "predictedWordIds": [
+            1,
+            4,
+            5,
+            77,
+            80,
+            81
+          ],
+          "precision": 0.16666666666666666,
+          "recall": 1.0,
+          "f1": 0.2857142857142857,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Li",
+              "Hongfu"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Hongfu",
+              "Hongfu"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            34,
+            192
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term",
+          "query": "tranh",
+          "expectedStatus": "match",
+          "expected": "zither",
+          "predictedWords": [
+            "clasp"
+          ],
+          "predictedWordIds": [
+            2
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "clasp"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "clasp"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            9,
+            19
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case",
+          "query": "Ôm tranh nhẹ bấm một đôi bài.",
+          "expectedStatus": "match",
+          "expected": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "predictedWords": [
+            "Tipsy",
+            "clasp",
+            "and"
+          ],
+          "predictedWordIds": [
+            0,
+            2,
+            7
+          ],
+          "precision": 1.0,
+          "recall": 0.3,
+          "f1": 0.4615384615384615,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Tipsy",
+              "clasp"
+            ],
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.33333333333333337,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Tipsy",
+              "clasp"
+            ],
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.33333333333333337,
+            "exact": false
+          },
+          "subtokens": [
+            11,
+            19
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case",
+          "query": "Cố nhân tìm cố nhân",
+          "expectedStatus": "match",
+          "expected": "An old friend comes seeking an old friend",
+          "predictedWords": [
+            "An",
+            "seeking",
+            "old",
+            "be",
+            "forsaking"
+          ],
+          "predictedWordIds": [
+            0,
+            4,
+            6,
+            29,
+            43
+          ],
+          "precision": 0.6,
+          "recall": 0.375,
+          "f1": 0.4615384615384615,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "An",
+              "seeking",
+              "old"
+            ],
+            "precision": 1.0,
+            "recall": 0.375,
+            "f1": 0.5454545454545454,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "An",
+              "seeking",
+              "old"
+            ],
+            "precision": 1.0,
+            "recall": 0.375,
+            "f1": 0.5454545454545454,
+            "exact": false
+          },
+          "subtokens": [
+            28,
+            57
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap",
+          "query": "Tây Thi",
+          "expectedStatus": "match",
+          "expected": "Xi Shi",
+          "predictedWords": [
+            "Shi"
+          ],
+          "predictedWordIds": [
+            2
+          ],
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Shi"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Shi"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            16,
+            29
+          ]
+        },
+        {
+          "id": "ch1-note33-suicides-omitted",
+          "query": "Cữu và Tư Mã Hân đều tự tử chết.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "Cao",
+            "Qiu",
+            "Xiang",
+            "him",
+            "refuse",
+            "repeatedly",
+            "defeated",
+            "treasures",
+            "plundered"
+          ],
+          "predictedWordIds": [
+            1,
+            2,
+            8,
+            16,
+            21,
+            27,
+            65,
+            69,
+            73
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Cao",
+              "Xiang",
+              "him",
+              "refuse",
+              "plundered"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Cao",
+              "Xiang",
+              "plundered"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            36,
+            113
+          ]
+        },
+        {
+          "id": "ch2-zhangtai-note6-header-context",
+          "query": "Zhangtai willow",
+          "expectedStatus": "context-only",
+          "expected": null,
+          "predictedWords": [
+            "chú thích",
+            "chuyện"
+          ],
+          "predictedWordIds": [
+            2,
+            5
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "chú thích"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "chuyện"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            14,
+            8
+          ]
+        },
+        {
+          "id": "ch7-foreign-original-title-contamination",
+          "query": "Tản Viên từ phán sự lục.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "Dao",
+            "ky"
+          ],
+          "predictedWordIds": [
+            2,
+            6
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "ky"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "exact": true
+          },
+          "subtokens": [
+            12,
+            22
+          ]
+        },
+        {
+          "id": "ch2-critique-alas-user-case-reverse",
+          "query": "Than ôi",
+          "expectedStatus": "match",
+          "expected": "Alas!",
+          "predictedWords": [
+            "Alas",
+            "bound"
+          ],
+          "predictedWordIds": [
+            0,
+            4
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Alas",
+              "bound"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Alas",
+              "bound"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            30,
+            32
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case-reverse",
+          "query": "Hạng vương",
+          "expectedStatus": "match",
+          "expected": "Hegemon Xiang",
+          "predictedWords": [
+            "Hegemon",
+            "Liu",
+            "Bang's",
+            "alive"
+          ],
+          "predictedWordIds": [
+            11,
+            14,
+            15,
+            23
+          ],
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hegemon"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Hegemon",
+              "Liu"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            41,
+            58
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case-reverse",
+          "query": "Cổ áp Nha",
+          "expectedStatus": "match",
+          "expected": "Gu Yaya",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            63,
+            38
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note-reverse",
+          "query": "Han Yu",
+          "expectedStatus": "match",
+          "expected": "Hàn Dũ",
+          "predictedWords": [
+            "Hàn Dũ"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            35,
+            26
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note-reverse",
+          "query": "Hongfu",
+          "expectedStatus": "match",
+          "expected": "Hồng Phất",
+          "predictedWords": [
+            "Hồng Phất"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            40,
+            34
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term-reverse",
+          "query": "zither",
+          "expectedStatus": "match",
+          "expected": "tranh",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            18,
+            9
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case-reverse",
+          "query": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "expectedStatus": "match",
+          "expected": "Ôm tranh nhẹ bấm một đôi bài.",
+          "predictedWords": [
+            "Ôm",
+            "bấm",
+            "một"
+          ],
+          "predictedWordIds": [
+            0,
+            3,
+            4
+          ],
+          "precision": 1.0,
+          "recall": 0.42857142857142855,
+          "f1": 0.6,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Ôm",
+              "bấm"
+            ],
+            "precision": 1.0,
+            "recall": 0.2857142857142857,
+            "f1": 0.4444444444444445,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Ôm",
+              "bấm"
+            ],
+            "precision": 1.0,
+            "recall": 0.2857142857142857,
+            "f1": 0.4444444444444445,
+            "exact": false
+          },
+          "subtokens": [
+            19,
+            11
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case-reverse",
+          "query": "An old friend comes seeking an old friend",
+          "expectedStatus": "match",
+          "expected": "Cố nhân tìm cố nhân",
+          "predictedWords": [
+            "Cố nhân",
+            "tìm",
+            "cố nhân"
+          ],
+          "predictedWordIds": [
+            0,
+            1,
+            2
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Cố nhân",
+              "tìm",
+              "cố nhân"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Cố nhân",
+              "tìm",
+              "cố nhân"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            33,
+            28
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap-reverse",
+          "query": "Xi Shi",
+          "expectedStatus": "match",
+          "expected": "Tây Thi",
+          "predictedWords": [
+            "Tây Thi"
+          ],
+          "predictedWordIds": [
+            2
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Tây Thi"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Tây Thi"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            29,
+            16
+          ]
+        }
+      ],
+      "loadSeconds": 3.293552000002819,
+      "inferenceSeconds": 8.979842099986854,
+      "cpuSeconds": 17.421875,
+      "timeSharedAcrossLayers": true,
+      "tokenizerBackend": "Unigram"
+    },
+    "xlmr-large-layer20": {
+      "summary": {
+        "precision": 0.5037037037037037,
+        "recall": 0.6007936507936509,
+        "f1": 0.5218253968253967,
+        "positiveCases": 18,
+        "exactPositiveCases": 4,
+        "negativeCases": 3,
+        "negativeNonempty": 3,
+        "original9MacroF1": 0.43253968253968256,
+        "cosineMnn": {
+          "precision": 0.6388888888888888,
+          "recall": 0.533531746031746,
+          "f1": 0.5522403522403523,
+          "exactPositiveCases": 6,
+          "negativeNonempty": 3
+        }
+      },
+      "rows": [
+        {
+          "id": "ch2-critique-alas-user-case",
+          "query": "Alas!",
+          "expectedStatus": "match",
+          "expected": "Than ôi",
+          "predictedWords": [
+            "Than",
+            "lợn",
+            "thẹn",
+            "thẹn"
+          ],
+          "predictedWordIds": [
+            0,
+            66,
+            81,
+            87
+          ],
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Than"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Than",
+              "thẹn"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            32,
+            133
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case",
+          "query": "Hegemon Xiang",
+          "expectedStatus": "match",
+          "expected": "Hạng vương",
+          "predictedWords": [
+            "Hạng",
+            "vương bắt",
+            "Hán",
+            "Cao Tổ"
+          ],
+          "predictedWordIds": [
+            1,
+            2,
+            31,
+            32
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hạng",
+              "vương bắt"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hạng",
+              "vương bắt"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            58,
+            78
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case",
+          "query": "Gu Yaya",
+          "expectedStatus": "match",
+          "expected": "Cổ áp Nha",
+          "predictedWords": [
+            "Lưu Vô Song",
+            "Gặp loạn",
+            "lại",
+            "đi"
+          ],
+          "predictedWordIds": [
+            3,
+            10,
+            48,
+            52
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Lưu Vô Song",
+              "lại"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            38,
+            88
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note",
+          "query": "Hàn Dũ",
+          "expectedStatus": "match",
+          "expected": "Han Yu",
+          "predictedWords": [
+            "Han",
+            "Yu",
+            "ennobled",
+            "Liuzhi",
+            "affection"
+          ],
+          "predictedWordIds": [
+            4,
+            5,
+            22,
+            33,
+            57
+          ],
+          "precision": 0.4,
+          "recall": 1.0,
+          "f1": 0.5714285714285715,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Han",
+              "Yu"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Han",
+              "Yu"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            26,
+            98
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note",
+          "query": "Hồng Phất",
+          "expectedStatus": "match",
+          "expected": "Hongfu",
+          "predictedWords": [
+            "Li",
+            "Jing",
+            "Jing's",
+            "knocked",
+            "at"
+          ],
+          "predictedWordIds": [
+            1,
+            2,
+            77,
+            80,
+            81
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Li"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Li",
+              "Jing",
+              "knocked"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            34,
+            192
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term",
+          "query": "tranh",
+          "expectedStatus": "match",
+          "expected": "zither",
+          "predictedWords": [
+            "clasp"
+          ],
+          "predictedWordIds": [
+            2
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "clasp"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            9,
+            19
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case",
+          "query": "Ôm tranh nhẹ bấm một đôi bài.",
+          "expectedStatus": "match",
+          "expected": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "predictedWords": [
+            "Tipsy",
+            "clasp",
+            "silver",
+            "plucking",
+            "and",
+            "strumming"
+          ],
+          "predictedWordIds": [
+            0,
+            2,
+            4,
+            6,
+            7,
+            8
+          ],
+          "precision": 1.0,
+          "recall": 0.6,
+          "f1": 0.7499999999999999,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Tipsy",
+              "clasp",
+              "strumming"
+            ],
+            "precision": 1.0,
+            "recall": 0.3,
+            "f1": 0.4615384615384615,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Tipsy",
+              "clasp",
+              "strumming"
+            ],
+            "precision": 1.0,
+            "recall": 0.3,
+            "f1": 0.4615384615384615,
+            "exact": false
+          },
+          "subtokens": [
+            11,
+            19
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case",
+          "query": "Cố nhân tìm cố nhân",
+          "expectedStatus": "match",
+          "expected": "An old friend comes seeking an old friend",
+          "predictedWords": [
+            "An",
+            "friend",
+            "seeking",
+            "friend",
+            "be",
+            "forsaking"
+          ],
+          "predictedWordIds": [
+            0,
+            2,
+            4,
+            7,
+            29,
+            43
+          ],
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "f1": 0.5714285714285715,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "An",
+              "friend",
+              "seeking",
+              "forsaking"
+            ],
+            "precision": 0.75,
+            "recall": 0.375,
+            "f1": 0.5,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "An",
+              "friend",
+              "seeking"
+            ],
+            "precision": 1.0,
+            "recall": 0.375,
+            "f1": 0.5454545454545454,
+            "exact": false
+          },
+          "subtokens": [
+            28,
+            57
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap",
+          "query": "Tây Thi",
+          "expectedStatus": "match",
+          "expected": "Xi Shi",
+          "predictedWords": [
+            "Xi",
+            "Shi"
+          ],
+          "predictedWordIds": [
+            1,
+            2
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Shi"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Shi"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            16,
+            29
+          ]
+        },
+        {
+          "id": "ch1-note33-suicides-omitted",
+          "query": "Cữu và Tư Mã Hân đều tự tử chết.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "Cao",
+            "Qiu",
+            "Xiang",
+            "ordered",
+            "him",
+            "refuse",
+            "repeatedly",
+            "defeated",
+            "treasures",
+            "plundered"
+          ],
+          "predictedWordIds": [
+            1,
+            2,
+            8,
+            9,
+            16,
+            21,
+            27,
+            65,
+            69,
+            73
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Cao",
+              "Qiu",
+              "ordered",
+              "refuse",
+              "plundered"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Cao",
+              "Xiang",
+              "refuse"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            36,
+            113
+          ]
+        },
+        {
+          "id": "ch2-zhangtai-note6-header-context",
+          "query": "Zhangtai willow",
+          "expectedStatus": "context-only",
+          "expected": null,
+          "predictedWords": [
+            "chuyện"
+          ],
+          "predictedWordIds": [
+            5
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "chuyện"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "chuyện"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            14,
+            8
+          ]
+        },
+        {
+          "id": "ch7-foreign-original-title-contamination",
+          "query": "Tản Viên từ phán sự lục.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "Dao",
+            "oan"
+          ],
+          "predictedWordIds": [
+            2,
+            5
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Dao",
+              "oan"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Dao",
+              "oan"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            12,
+            22
+          ]
+        },
+        {
+          "id": "ch2-critique-alas-user-case-reverse",
+          "query": "Than ôi",
+          "expectedStatus": "match",
+          "expected": "Alas!",
+          "predictedWords": [
+            "Alas",
+            "bound"
+          ],
+          "predictedWordIds": [
+            0,
+            4
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Alas",
+              "bound"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Alas",
+              "bound"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            30,
+            32
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case-reverse",
+          "query": "Hạng vương",
+          "expectedStatus": "match",
+          "expected": "Hegemon Xiang",
+          "predictedWords": [
+            "Hegemon",
+            "Liu",
+            "Bang's",
+            "alive"
+          ],
+          "predictedWordIds": [
+            11,
+            14,
+            15,
+            23
+          ],
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hegemon"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Hegemon",
+              "Liu"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            41,
+            58
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case-reverse",
+          "query": "Cổ áp Nha",
+          "expectedStatus": "match",
+          "expected": "Gu Yaya",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            63,
+            38
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note-reverse",
+          "query": "Han Yu",
+          "expectedStatus": "match",
+          "expected": "Hàn Dũ",
+          "predictedWords": [
+            "Hàn Dũ",
+            "Hàn"
+          ],
+          "predictedWordIds": [
+            1,
+            13
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            35,
+            26
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note-reverse",
+          "query": "Hongfu",
+          "expectedStatus": "match",
+          "expected": "Hồng Phất",
+          "predictedWords": [
+            "Hồng Phất"
+          ],
+          "predictedWordIds": [
+            1
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            40,
+            34
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term-reverse",
+          "query": "zither",
+          "expectedStatus": "match",
+          "expected": "tranh",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            18,
+            9
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case-reverse",
+          "query": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "expectedStatus": "match",
+          "expected": "Ôm tranh nhẹ bấm một đôi bài.",
+          "predictedWords": [
+            "Ôm",
+            "nhẹ",
+            "bấm",
+            "một",
+            "bài"
+          ],
+          "predictedWordIds": [
+            0,
+            2,
+            3,
+            4,
+            6
+          ],
+          "precision": 1.0,
+          "recall": 0.7142857142857143,
+          "f1": 0.8333333333333333,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Ôm",
+              "bấm",
+              "bài"
+            ],
+            "precision": 1.0,
+            "recall": 0.42857142857142855,
+            "f1": 0.6,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Ôm",
+              "bấm",
+              "bài"
+            ],
+            "precision": 1.0,
+            "recall": 0.42857142857142855,
+            "f1": 0.6,
+            "exact": false
+          },
+          "subtokens": [
+            19,
+            11
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case-reverse",
+          "query": "An old friend comes seeking an old friend",
+          "expectedStatus": "match",
+          "expected": "Cố nhân tìm cố nhân",
+          "predictedWords": [
+            "Cố nhân",
+            "tìm",
+            "cố nhân"
+          ],
+          "predictedWordIds": [
+            0,
+            1,
+            2
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Cố nhân",
+              "tìm",
+              "cố nhân"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Cố nhân",
+              "tìm",
+              "cố nhân"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            33,
+            28
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap-reverse",
+          "query": "Xi Shi",
+          "expectedStatus": "match",
+          "expected": "Tây Thi",
+          "predictedWords": [
+            "Tây Thi"
+          ],
+          "predictedWordIds": [
+            2
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "displayFiltered": {
+            "words": [
+              "Tây Thi"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [
+              "Tây Thi"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            29,
+            16
+          ]
+        }
+      ],
+      "loadSeconds": 3.293552000002819,
+      "inferenceSeconds": 8.979842099986854,
+      "cpuSeconds": 17.421875,
+      "timeSharedAcrossLayers": true,
+      "tokenizerBackend": "Unigram"
+    },
+    "xlmr-large-layer24": {
+      "summary": {
+        "precision": 0.3591787841787842,
+        "recall": 0.7726190476190475,
+        "f1": 0.45710215710215707,
+        "positiveCases": 18,
+        "exactPositiveCases": 0,
+        "negativeCases": 3,
+        "negativeNonempty": 3,
+        "original9MacroF1": 0.36155202821869487,
+        "cosineMnn": {
+          "precision": 0.2777777777777778,
+          "recall": 0.1738095238095238,
+          "f1": 0.2,
+          "exactPositiveCases": 1,
+          "negativeNonempty": 2
+        }
+      },
+      "rows": [
+        {
+          "id": "ch2-critique-alas-user-case",
+          "query": "Alas!",
+          "expectedStatus": "match",
+          "expected": "Than ôi",
+          "predictedWords": [
+            "quả",
+            "hàm oan",
+            "Trọng Quỳ",
+            "lợn",
+            "thẹn",
+            "thẹn"
+          ],
+          "predictedWordIds": [
+            17,
+            60,
+            61,
+            66,
+            81,
+            87
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "lợn",
+              "thẹn",
+              "thẹn"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "lợn"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            32,
+            133
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case",
+          "query": "Hegemon Xiang",
+          "expectedStatus": "match",
+          "expected": "Hạng vương",
+          "predictedWords": [
+            "Hạng",
+            "vương bắt",
+            "Lưu Bang",
+            "Lưu bang",
+            "Triệu Vương",
+            "Cao Tổ",
+            "Triệu Vương"
+          ],
+          "predictedWordIds": [
+            1,
+            2,
+            4,
+            8,
+            22,
+            32,
+            43
+          ],
+          "precision": 0.2857142857142857,
+          "recall": 1.0,
+          "f1": 0.4444444444444445,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "vương bắt",
+              "Lưu Bang"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "vương bắt"
+            ],
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "subtokens": [
+            58,
+            78
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case",
+          "query": "Gu Yaya",
+          "expectedStatus": "match",
+          "expected": "Cổ áp Nha",
+          "predictedWords": [
+            "Đường",
+            "Lưu Vô Song",
+            "Vương Tiên Khách",
+            "Cổ áp Nha",
+            "đi"
+          ],
+          "predictedWordIds": [
+            2,
+            3,
+            9,
+            20,
+            52
+          ],
+          "precision": 0.2,
+          "recall": 1.0,
+          "f1": 0.33333333333333337,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Lưu Vô Song"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            38,
+            88
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note",
+          "query": "Hàn Dũ",
+          "expectedStatus": "match",
+          "expected": "Han Yu",
+          "predictedWords": [
+            "Changli",
+            "Han",
+            "Yu",
+            "of",
+            "ennobled",
+            "Han",
+            "Han"
+          ],
+          "predictedWordIds": [
+            1,
+            4,
+            5,
+            10,
+            22,
+            35,
+            51
+          ],
+          "precision": 0.2857142857142857,
+          "recall": 1.0,
+          "f1": 0.4444444444444445,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "ennobled"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Han",
+              "ennobled"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            26,
+            98
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note",
+          "query": "Hồng Phất",
+          "expectedStatus": "match",
+          "expected": "Hongfu",
+          "predictedWords": [
+            "9",
+            "Chuchen",
+            "well",
+            "knocked",
+            "of",
+            "The"
+          ],
+          "predictedWordIds": [
+            0,
+            13,
+            28,
+            80,
+            111,
+            127
+          ],
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "9",
+              "Chuchen",
+              "well",
+              "The"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            34,
+            192
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term",
+          "query": "tranh",
+          "expectedStatus": "match",
+          "expected": "zither",
+          "predictedWords": [],
+          "predictedWordIds": [],
+          "precision": 0,
+          "recall": 0.0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            9,
+            19
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case",
+          "query": "Ôm tranh nhẹ bấm một đôi bài.",
+          "expectedStatus": "match",
+          "expected": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "predictedWords": [
+            "Tipsy",
+            "I",
+            "the",
+            "silver",
+            "plucking",
+            "and",
+            "strumming",
+            "anew"
+          ],
+          "predictedWordIds": [
+            0,
+            1,
+            3,
+            4,
+            6,
+            7,
+            8,
+            9
+          ],
+          "precision": 1.0,
+          "recall": 0.8,
+          "f1": 0.888888888888889,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Tipsy",
+              "I",
+              "silver",
+              "and"
+            ],
+            "precision": 1.0,
+            "recall": 0.4,
+            "f1": 0.5714285714285715,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Tipsy",
+              "and"
+            ],
+            "precision": 1.0,
+            "recall": 0.2,
+            "f1": 0.33333333333333337,
+            "exact": false
+          },
+          "subtokens": [
+            11,
+            19
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case",
+          "query": "Cố nhân tìm cố nhân",
+          "expectedStatus": "match",
+          "expected": "An old friend comes seeking an old friend",
+          "predictedWords": [
+            "An",
+            "old",
+            "comes",
+            "seeking",
+            "an",
+            "old",
+            "When",
+            "sorrow",
+            "to",
+            "no",
+            "then",
+            "for",
+            "forsaking"
+          ],
+          "predictedWordIds": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            17,
+            19,
+            25,
+            30,
+            34,
+            42,
+            43
+          ],
+          "precision": 0.46153846153846156,
+          "recall": 0.75,
+          "f1": 0.5714285714285714,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "seeking",
+              "no",
+              "forsaking"
+            ],
+            "precision": 0.3333333333333333,
+            "recall": 0.125,
+            "f1": 0.18181818181818182,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            28,
+            57
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap",
+          "query": "Tây Thi",
+          "expectedStatus": "match",
+          "expected": "Xi Shi",
+          "predictedWords": [
+            "Xi",
+            "Shi",
+            "Spring",
+            "period",
+            "Wu"
+          ],
+          "predictedWordIds": [
+            1,
+            2,
+            8,
+            11,
+            20
+          ],
+          "precision": 0.4,
+          "recall": 1.0,
+          "f1": 0.5714285714285715,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Xi",
+              "Shi",
+              "Wu"
+            ],
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Shi",
+              "Wu"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "subtokens": [
+            16,
+            29
+          ]
+        },
+        {
+          "id": "ch1-note33-suicides-omitted",
+          "query": "Cữu và Tư Mã Hân đều tự tử chết.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "33",
+            "Grand",
+            "King",
+            "Xiang",
+            "Chenggao",
+            "stand",
+            "and",
+            "refuse",
+            "battle",
+            "Han",
+            "repeatedly",
+            "they",
+            "resorted",
+            "insults",
+            "for",
+            "defeated",
+            "and",
+            "all",
+            "treasures",
+            "Chu",
+            "plundered"
+          ],
+          "predictedWordIds": [
+            0,
+            3,
+            7,
+            8,
+            14,
+            18,
+            20,
+            21,
+            22,
+            25,
+            27,
+            32,
+            33,
+            36,
+            40,
+            65,
+            66,
+            67,
+            69,
+            71,
+            73
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Xiang",
+              "Chenggao",
+              "and",
+              "battle",
+              "resorted",
+              "plundered"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "and",
+              "battle"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            36,
+            113
+          ]
+        },
+        {
+          "id": "ch2-zhangtai-note6-header-context",
+          "query": "Zhangtai willow",
+          "expectedStatus": "context-only",
+          "expected": null,
+          "predictedWords": [
+            "chú thích"
+          ],
+          "predictedWordIds": [
+            2
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [],
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "exact": true
+          },
+          "subtokens": [
+            14,
+            8
+          ]
+        },
+        {
+          "id": "ch7-foreign-original-title-contamination",
+          "query": "Tản Viên từ phán sự lục.",
+          "expectedStatus": "unavailable",
+          "expected": null,
+          "predictedWords": [
+            "Thi",
+            "oan",
+            "ky",
+            "Dao"
+          ],
+          "predictedWordIds": [
+            3,
+            5,
+            6,
+            12
+          ],
+          "precision": 0.0,
+          "recall": 0,
+          "f1": 0,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Thi",
+              "oan",
+              "ky"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Thi",
+              "oan"
+            ],
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            12,
+            22
+          ]
+        },
+        {
+          "id": "ch2-critique-alas-user-case-reverse",
+          "query": "Than ôi",
+          "expectedStatus": "match",
+          "expected": "Alas!",
+          "predictedWords": [
+            "Alas",
+            "bound"
+          ],
+          "predictedWordIds": [
+            0,
+            4
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "bound"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "bound"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            30,
+            32
+          ]
+        },
+        {
+          "id": "ch1-xiang-note40-user-case-reverse",
+          "query": "Hạng vương",
+          "expectedStatus": "match",
+          "expected": "Hegemon Xiang",
+          "predictedWords": [
+            "favoring",
+            "Hegemon",
+            "Bang's",
+            "Taigong",
+            "to",
+            "alive",
+            "Liu"
+          ],
+          "predictedWordIds": [
+            8,
+            11,
+            15,
+            17,
+            20,
+            23,
+            24
+          ],
+          "precision": 0.14285714285714285,
+          "recall": 0.5,
+          "f1": 0.22222222222222224,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hegemon",
+              "Bang's"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            41,
+            58
+          ]
+        },
+        {
+          "id": "ch2-yaya-note5-heading-user-case-reverse",
+          "query": "Cổ áp Nha",
+          "expectedStatus": "match",
+          "expected": "Gu Yaya",
+          "predictedWords": [
+            "Gu",
+            "Yaya",
+            "Tang",
+            "Wang",
+            "she",
+            "and"
+          ],
+          "predictedWordIds": [
+            1,
+            2,
+            5,
+            13,
+            19,
+            22
+          ],
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Gu",
+              "and"
+            ],
+            "precision": 0.5,
+            "recall": 0.5,
+            "f1": 0.5,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            63,
+            38
+          ]
+        },
+        {
+          "id": "ch3-hanyu-shifted-note-reverse",
+          "query": "Han Yu",
+          "expectedStatus": "match",
+          "expected": "Hàn Dũ",
+          "predictedWords": [
+            "Hàn Dũ",
+            "Lê bá",
+            "Hàn"
+          ],
+          "predictedWordIds": [
+            1,
+            12,
+            13
+          ],
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hàn Dũ",
+              "Lê bá"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "Hàn Dũ"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "subtokens": [
+            35,
+            26
+          ]
+        },
+        {
+          "id": "ch3-hongfu-shifted-note-reverse",
+          "query": "Hongfu",
+          "expectedStatus": "match",
+          "expected": "Hồng Phất",
+          "predictedWords": [
+            "Hồng Phất",
+            "trần",
+            "Trần hầu thiếp",
+            "Dương Tố đời"
+          ],
+          "predictedWordIds": [
+            1,
+            3,
+            9,
+            11
+          ],
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Hồng Phất"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            40,
+            34
+          ]
+        },
+        {
+          "id": "ch3-poem2-zither-term-reverse",
+          "query": "zither",
+          "expectedStatus": "match",
+          "expected": "tranh",
+          "predictedWords": [
+            "ngân tranh",
+            "bát phục"
+          ],
+          "predictedWordIds": [
+            2,
+            3
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "ngân tranh",
+              "bát phục"
+            ],
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "bát phục"
+            ],
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            18,
+            9
+          ]
+        },
+        {
+          "id": "ch3-poem2-line2-vietnamese-user-case-reverse",
+          "query": "Tipsy, I clasp the silver zither, plucking and strumming anew.",
+          "expectedStatus": "match",
+          "expected": "Ôm tranh nhẹ bấm một đôi bài.",
+          "predictedWords": [
+            "Ôm",
+            "tranh",
+            "nhẹ",
+            "bấm",
+            "một",
+            "bài"
+          ],
+          "predictedWordIds": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            6
+          ],
+          "precision": 1.0,
+          "recall": 0.8571428571428571,
+          "f1": 0.923076923076923,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Ôm",
+              "nhẹ",
+              "bấm",
+              "một",
+              "bài"
+            ],
+            "precision": 1.0,
+            "recall": 0.7142857142857143,
+            "f1": 0.8333333333333333,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [
+              "bấm",
+              "một",
+              "bài"
+            ],
+            "precision": 1.0,
+            "recall": 0.42857142857142855,
+            "f1": 0.6,
+            "exact": false
+          },
+          "subtokens": [
+            19,
+            11
+          ]
+        },
+        {
+          "id": "ch4-oldfriend-first-clause-user-case-reverse",
+          "query": "An old friend comes seeking an old friend",
+          "expectedStatus": "match",
+          "expected": "Cố nhân tìm cố nhân",
+          "predictedWords": [
+            "Cố nhân",
+            "tìm",
+            "cố nhân",
+            "không",
+            "cố nhân",
+            "bạc tình",
+            "như vậy",
+            "mạn",
+            "Ô Tôn",
+            "đừng",
+            "phiền hận"
+          ],
+          "predictedWordIds": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            7,
+            8,
+            10,
+            11,
+            15,
+            16
+          ],
+          "precision": 0.2727272727272727,
+          "recall": 1.0,
+          "f1": 0.42857142857142855,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Cố nhân",
+              "tìm",
+              "cố nhân",
+              "cố nhân"
+            ],
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571,
+            "exact": false
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            33,
+            28
+          ]
+        },
+        {
+          "id": "ch5-xishi-note-swap-reverse",
+          "query": "Xi Shi",
+          "expectedStatus": "match",
+          "expected": "Tây Thi",
+          "predictedWords": [
+            "Tây Thi",
+            "Phù Sai nước"
+          ],
+          "predictedWordIds": [
+            2,
+            6
+          ],
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6666666666666666,
+          "exact": false,
+          "displayFiltered": {
+            "words": [
+              "Tây Thi"
+            ],
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true
+          },
+          "cosineMnn": {
+            "words": [],
+            "precision": 0,
+            "recall": 0.0,
+            "f1": 0,
+            "exact": false
+          },
+          "subtokens": [
+            29,
+            16
+          ]
+        }
+      ],
+      "loadSeconds": 3.293552000002819,
+      "inferenceSeconds": 8.979842099986854,
+      "cpuSeconds": 17.421875,
+      "timeSharedAcrossLayers": true,
+      "tokenizerBackend": "Unigram"
+    }
+  },
+  "casesSha256": "80131699fb5f8af7341c23cb0292324ec03f99f558a4426a711ff7799e6c7fd5"
+}

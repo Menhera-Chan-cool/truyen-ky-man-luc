@@ -60,17 +60,17 @@ function EditionView({
     setStaleFocus(false);let cancelled=false;const highlighted:HTMLElement[]=[];
     const key='novel-lookup-'+language;
     const highlights=(CSS as typeof CSS&{highlights?:Map<string,unknown>}).highlights;
-    void document.fonts.ready.then(()=>{
-      if(cancelled||!root.current||!scroll.current)return;
-      const range=rangeFromOffsets(root.current,focus.start,focus.end);if(!range)return;
-      scroll.current.scrollTop+=range.getBoundingClientRect().top-scroll.current.getBoundingClientRect().top-16;
-      for(const node of [range.startContainer,range.endContainer]){
-        const el=node.parentElement?.closest<HTMLElement>('p,li,blockquote');
-        if(el){el.classList.add('lookup-context');highlighted.push(el);}
-      }
-      const HighlightClass=(window as Window&{Highlight?:new(...ranges:Range[])=>unknown}).Highlight;
-      if(HighlightClass&&highlights)highlights.set(key,new HighlightClass(range));
-    });
+    const range=rangeFromOffsets(root.current,focus.start,focus.end);if(!range)return;
+    for(const node of [range.startContainer,range.endContainer]){
+      const el=node.parentElement?.closest<HTMLElement>('p,li,blockquote');
+      if(el&&!highlighted.includes(el)){el.classList.add('lookup-context');highlighted.push(el);}
+    }
+    const HighlightClass=(window as Window&{Highlight?:new(...ranges:Range[])=>unknown}).Highlight;
+    if(HighlightClass&&highlights)highlights.set(key,new HighlightClass(range));
+    const align=()=>{if(!cancelled&&scroll.current)scroll.current.scrollTop+=range.getBoundingClientRect().top-scroll.current.getBoundingClientRect().top-16;};
+    align();
+    // Font loading may stall; show the focus now and correct its position after reflow.
+    void document.fonts.ready.then(align);
     return()=>{cancelled=true;highlights?.delete(key);for(const el of highlighted)el.classList.remove('lookup-context');};
   },[chapter.id,edition,language,focus]);
   return (

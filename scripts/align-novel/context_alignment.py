@@ -3,6 +3,7 @@ import bisect,re,unicodedata
 import numpy as np
 import regex
 from alignment import align_sequences,align_candidates
+from poetry_tracks import detect_tracks,pair_tracks
 
 def u16(text):return len(text.encode('utf-16-le'))//2
 def slice16(text,start,end):return text.encode('utf-16-le')[start*2:end*2].decode('utf-16-le')
@@ -78,6 +79,7 @@ def _context_units(item,locale):
         if len(raw['starts'])!=size or len(raw['ends'])!=size or any(not raw['start']<=a<b<=raw['end'] for a,b in zip(raw['starts'],raw['ends'])) or any(values!=sorted(values) for values in [raw['starts'],raw['ends']]):raise ValueError('Invalid Reader offset map')
         if any(overlap(raw,p) for p in excluded):continue
         unit={**raw,'text':mask_references(raw['text'])}
+        unit['semanticText']=reference_context(item,locale,raw['text'],notes.get(str(raw.get('noteId'))))
         if not any(c.isalnum() for c in unit['text']):continue
         if unit['section']=='notes':
             note=notes.get(str(unit.get('noteId')))
@@ -85,24 +87,56 @@ def _context_units(item,locale):
         result.append(unit)
     return sorted(result,key=lambda u:u['start'])
 
+
+def reference_context(item,locale,text,note=None):
+    """Resolve only local references, with independent traversal and text budgets."""
+    notes={str(n['id']):n for n in item['structures'][locale].get('notes',[])}
+    visited={str(note['id'])} if note else set();parts=[];remaining=2048
+    def visit(value,owner,depth):
+        nonlocal remaining
+        if depth>=3 or remaining<=0:return
+        references=re.findall(r'\((\d{1,3})\)',value)
+        if owner and owner.get('reference') is not None:references.append(str(owner['reference']))
+        for key in dict.fromkeys(references):
+            if key in visited or key not in notes or remaining<=0:continue
+            visited.add(key);target=notes[key]
+            if not 0<=target['start']<target['end']<=u16(item['editions'][locale]['text']):raise ValueError('Invalid referenced note scope')
+            body=slice16(item['editions'][locale]['text'],target['start'],target['end'])
+            addition=mask_references(body).strip()[:remaining]
+            if addition:parts.append(addition);remaining-=len(addition)
+            visit(body,target,depth+1)
+    visit(text,note,0)
+    return mask_references(text).strip()+ ('\n'+'\n'.join(parts) if parts else '')
+
 def align_contexts(item,encode):
     if 'units' not in item or 'structures' not in item:raise ValueError('Context units and structures are required')
     units={l:_context_units(item,l) for l in ['vi','en']};groups=[];note_pairs=[]
     def fine(left,right,section):
         if not left or not right:return
-        vectors=_normalized(encode([u['text'].strip() for u in left+right]))
+        vectors=_normalized(encode([u.get('semanticText',u['text']).strip() for u in left+right]))
         if len(vectors)!=len(left)+len(right):raise ValueError('Sentence vector count mismatch')
         for pair in _pairs(vectors[:len(left)],vectors[len(left):],.5 if section=='notes' else .35,section=='story'):
             groups.append({'section':section,'score':pair['score'],'margin':pair['margin'],'primary':pair['primary'],
                            'viInput':join_units([left[i] for i in pair['vi']]),'enInput':join_units([right[i] for i in pair['en']])})
     for section in ['story','critique']:
-        fine([u for u in units['vi'] if u['section']==section],[u for u in units['en'] if u['section']==section],section)
+        selected={l:[u for u in units[l] if u['section']==section] for l in ['vi','en']}
+        if section=='story':
+            tracks={l:detect_tracks(selected[l],item['editions'][l]) for l in ['vi','en']}
+            pairs,_,_=pair_tracks(tracks['vi'],tracks['en'],encode,_normalized)
+            for pair in pairs:
+                groups.append({'section':section,'score':pair['score'],'margin':pair['margin'],'primary':pair['primary'],'tracks':pair['tracks'],
+                               'viInput':join_units(pair['viUnits']),'enInput':join_units(pair['enUnits'])})
+            # Reserve matched verse, including its rejected lines; unmatched DOM layouts retain the fallback.
+            for l in ['vi','en']:
+                confirmed=[pair['tracks'][l] for pair in pairs]
+                selected[l]=[u for u in selected[l] if not any(contains(t,u) for t in confirmed)]
+        fine(selected['vi'],selected['en'],section)
     notes={};texts={}
     for l in ['vi','en']:
         notes[l]=[];texts[l]=[]
         for note in item['structures'][l].get('notes',[]):
             if not 0<=note['start']<note['end']<=u16(item['editions'][l]['text']):raise ValueError('Invalid full note scope')
-            text=mask_references(slice16(item['editions'][l]['text'],note['start'],note['end'])).strip()
+            text=reference_context(item,l,slice16(item['editions'][l]['text'],note['start'],note['end']),note)
             if any(c.isalnum() for c in text):notes[l].append(note);texts[l].append(text)
     if notes['vi'] and notes['en']:
         vectors=_normalized(encode(texts['vi']+texts['en']));left,right=vectors[:len(notes['vi'])],vectors[len(notes['vi']):]
