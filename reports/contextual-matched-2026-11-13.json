@@ -1,0 +1,3323 @@
+{
+  "generatedAt": "2026-11-13T09:03:48.137Z",
+  "recipe": "labse-context-mbert-1",
+  "chapters": 20,
+  "elapsedSeconds": 2.04,
+  "definitions": {
+    "eligibleUnits": "Unique exact-span prepared context units; structural headings/original-title spans and standalone Roman controls excluded. Equal text at different offsets counts separately.",
+    "pairedUnits": "Entire original UTF16 unit span contained in the union of active non-lexical groups.parts[locale]. Alias-only groups never count as unit pairs; groups without parts do not contribute.",
+    "eligibleWords": "Unique exact spans from artifact.editions[locale].words containing a Unicode letter and wholly within ONE eligible context unit. No word lookup calls are made.",
+    "anyRawLinkWords": "Eligible words overlapping the union of raw source-side link spans from all active groups, including lexical aliases; no confidence threshold. Partial/unlinked partition uses raw overlap.",
+    "fullLetterWords": "Every Unicode letter/mark UTF16 code unit inside an eligible word is covered by raw link-span union. Spaces/punctuation ignored; combining marks included; astral letters count two UTF16 units.",
+    "letterCodeUnitCoveragePct": "100*coveredLetterCodeUnits/eligibleLetterCodeUnits, separately from fully covered words/eligibleWords.",
+    "unitPercentageDenominator": "eligibleUnits; paired unit percent is source pairing coverage, not semantic accuracy.",
+    "wordPercentageDenominator": "eligibleWords; full/partial/unlinked are disjoint and sum to eligibleWords. Raw punctuation-only overlap is partial and recorded by linkedButNoLetterWords.",
+    "uiStrictMatchPct": "100*uiStatuses.match/uiQueriedUnits. Only full original unit quotes<=2000 UTF16 units are queried; errors and stale/pending/missing remain in denominator and never pass.",
+    "uiHighlightStatusPct": "100*(match+uncertain)/uiQueriedUnits; this is UI status coverage, not word confidence or correctness.",
+    "uiContextStatusPct": "100*(match+uncertain+context-only)/uiQueriedUnits; this includes context-only answers and is not strict matching.",
+    "exclusions": "uiTooLongUnits are listed separately, excluded only from UI query denominators. Input and artifact source revision/version/hash/text/breaks must agree, and all40 source files are rehashed after reporting.",
+    "limitation": "Entirely automatic structural/link inventory and full-unit UI statuses. These percentages are NOT semantic accuracy, translation quality, or a manual every-word review."
+  },
+  "totals": {
+    "vi": {
+      "counts": {
+        "preparedUnitRecords": 9563,
+        "excludedStructuralUnitRecords": 0,
+        "duplicateUnitSpans": 0,
+        "eligibleUnits": 9563,
+        "pairedUnits": 7835,
+        "groupsWithoutParts": 0,
+        "wordSpanRecords": 52427,
+        "duplicateWordSpans": 0,
+        "eligibleWords": 52381,
+        "anyRawLinkWords": 36187,
+        "fullLetterWords": 27815,
+        "partialWords": 8372,
+        "unlinkedWords": 16194,
+        "letterCoveredWords": 36187,
+        "linkedButNoLetterWords": 0,
+        "eligibleLetterCodeUnits": 220298,
+        "coveredLetterCodeUnits": 131617,
+        "uiQueriedUnits": 9563,
+        "uiTooLongUnits": 0,
+        "uiErrors": 0,
+        "rawLinkRecords": 60414,
+        "lexicalAliasGroups": 130
+      },
+      "uiStatuses": {
+        "match": 404,
+        "uncertain": 7334,
+        "context-only": 552,
+        "unavailable": 1273,
+        "stale": 0,
+        "pending": 0,
+        "missing": 0
+      },
+      "percentages": {
+        "pairedUnitPct": 81.93,
+        "wordAnyRawLinkPct": 69.08,
+        "wordFullyCoveredLettersPct": 53.1,
+        "wordPartialPct": 15.98,
+        "wordUnlinkedPct": 30.92,
+        "letterCodeUnitCoveragePct": 59.74,
+        "uiStrictMatchPct": 4.22,
+        "uiHighlightStatusPct": 80.92,
+        "uiContextStatusPct": 86.69
+      }
+    },
+    "en": {
+      "counts": {
+        "preparedUnitRecords": 9988,
+        "excludedStructuralUnitRecords": 0,
+        "duplicateUnitSpans": 0,
+        "eligibleUnits": 9988,
+        "pairedUnits": 8550,
+        "groupsWithoutParts": 0,
+        "wordSpanRecords": 77805,
+        "duplicateWordSpans": 0,
+        "eligibleWords": 76592,
+        "anyRawLinkWords": 42374,
+        "fullLetterWords": 37047,
+        "partialWords": 5327,
+        "unlinkedWords": 34218,
+        "letterCoveredWords": 42370,
+        "linkedButNoLetterWords": 4,
+        "eligibleLetterCodeUnits": 326616,
+        "coveredLetterCodeUnits": 174289,
+        "uiQueriedUnits": 9988,
+        "uiTooLongUnits": 0,
+        "uiErrors": 0,
+        "rawLinkRecords": 60414,
+        "lexicalAliasGroups": 130
+      },
+      "uiStatuses": {
+        "match": 437,
+        "uncertain": 7814,
+        "context-only": 899,
+        "unavailable": 838,
+        "stale": 0,
+        "pending": 0,
+        "missing": 0
+      },
+      "percentages": {
+        "pairedUnitPct": 85.6,
+        "wordAnyRawLinkPct": 55.32,
+        "wordFullyCoveredLettersPct": 48.37,
+        "wordPartialPct": 6.96,
+        "wordUnlinkedPct": 44.68,
+        "letterCodeUnitCoveragePct": 53.36,
+        "uiStrictMatchPct": 4.38,
+        "uiHighlightStatusPct": 82.61,
+        "uiContextStatusPct": 91.61
+      }
+    },
+    "overall": {
+      "counts": {
+        "preparedUnitRecords": 19551,
+        "excludedStructuralUnitRecords": 0,
+        "duplicateUnitSpans": 0,
+        "eligibleUnits": 19551,
+        "pairedUnits": 16385,
+        "groupsWithoutParts": 0,
+        "wordSpanRecords": 130232,
+        "duplicateWordSpans": 0,
+        "eligibleWords": 128973,
+        "anyRawLinkWords": 78561,
+        "fullLetterWords": 64862,
+        "partialWords": 13699,
+        "unlinkedWords": 50412,
+        "letterCoveredWords": 78557,
+        "linkedButNoLetterWords": 4,
+        "eligibleLetterCodeUnits": 546914,
+        "coveredLetterCodeUnits": 305906,
+        "uiQueriedUnits": 19551,
+        "uiTooLongUnits": 0,
+        "uiErrors": 0,
+        "rawLinkRecords": 120828,
+        "lexicalAliasGroups": 260
+      },
+      "uiStatuses": {
+        "match": 841,
+        "uncertain": 15148,
+        "context-only": 1451,
+        "unavailable": 2111,
+        "stale": 0,
+        "pending": 0,
+        "missing": 0
+      },
+      "percentages": {
+        "pairedUnitPct": 83.81,
+        "wordAnyRawLinkPct": 60.91,
+        "wordFullyCoveredLettersPct": 50.29,
+        "wordPartialPct": 10.62,
+        "wordUnlinkedPct": 39.09,
+        "letterCodeUnitCoveragePct": 55.93,
+        "uiStrictMatchPct": 4.3,
+        "uiHighlightStatusPct": 81.78,
+        "uiContextStatusPct": 89.2
+      }
+    }
+  },
+  "byChapter": [
+    {
+      "chapterId": "chapter-1",
+      "displayOrder": 1,
+      "titleVi": "Chương 1: Câu Chuyện Ở Đền Hạng Vương",
+      "titleEn": "Chapter 1: The Tale at the Shrine of King Xiang",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 547,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 547,
+            "pairedUnits": 471,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2972,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2967,
+            "anyRawLinkWords": 2172,
+            "fullLetterWords": 1760,
+            "partialWords": 412,
+            "unlinkedWords": 795,
+            "letterCoveredWords": 2172,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 12563,
+            "coveredLetterCodeUnits": 8362,
+            "uiQueriedUnits": 547,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3682,
+            "lexicalAliasGroups": 24
+          },
+          "uiStatuses": {
+            "match": 22,
+            "uncertain": 441,
+            "context-only": 53,
+            "unavailable": 31,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 86.11,
+            "wordAnyRawLinkPct": 73.21,
+            "wordFullyCoveredLettersPct": 59.32,
+            "wordPartialPct": 13.89,
+            "wordUnlinkedPct": 26.79,
+            "letterCodeUnitCoveragePct": 66.56,
+            "uiStrictMatchPct": 4.02,
+            "uiHighlightStatusPct": 84.64,
+            "uiContextStatusPct": 94.33
+          },
+          "source": {
+            "revision": 4,
+            "versionId": "41cb4252-13fd-4fde-ba3b-9d013027c987",
+            "canonicalTextSha256": "efafe58ba32d6352455ec580f33f7e0f691fb7fea0ca5b781a93d28210dc9457"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 583,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 583,
+            "pairedUnits": 494,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 4420,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4327,
+            "anyRawLinkWords": 2574,
+            "fullLetterWords": 2209,
+            "partialWords": 365,
+            "unlinkedWords": 1753,
+            "letterCoveredWords": 2574,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 19891,
+            "coveredLetterCodeUnits": 11347,
+            "uiQueriedUnits": 583,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3682,
+            "lexicalAliasGroups": 24
+          },
+          "uiStatuses": {
+            "match": 22,
+            "uncertain": 454,
+            "context-only": 82,
+            "unavailable": 25,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 84.73,
+            "wordAnyRawLinkPct": 59.49,
+            "wordFullyCoveredLettersPct": 51.05,
+            "wordPartialPct": 8.44,
+            "wordUnlinkedPct": 40.51,
+            "letterCodeUnitCoveragePct": 57.05,
+            "uiStrictMatchPct": 3.77,
+            "uiHighlightStatusPct": 81.65,
+            "uiContextStatusPct": 95.71
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "887fa07a-a0d7-4b21-8660-5f6b2fa25224",
+            "canonicalTextSha256": "7d6c3b48ec49dbd23f9f72c9dad7d319cbb4d67201fc68f93663691f9df6ba95"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1130,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1130,
+          "pairedUnits": 965,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 7392,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 7294,
+          "anyRawLinkWords": 4746,
+          "fullLetterWords": 3969,
+          "partialWords": 777,
+          "unlinkedWords": 2548,
+          "letterCoveredWords": 4746,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 32454,
+          "coveredLetterCodeUnits": 19709,
+          "uiQueriedUnits": 1130,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 7364,
+          "lexicalAliasGroups": 48
+        },
+        "uiStatuses": {
+          "match": 44,
+          "uncertain": 895,
+          "context-only": 135,
+          "unavailable": 56,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 85.4,
+          "wordAnyRawLinkPct": 65.07,
+          "wordFullyCoveredLettersPct": 54.41,
+          "wordPartialPct": 10.65,
+          "wordUnlinkedPct": 34.93,
+          "letterCodeUnitCoveragePct": 60.73,
+          "uiStrictMatchPct": 3.89,
+          "uiHighlightStatusPct": 83.1,
+          "uiContextStatusPct": 95.04
+        }
+      },
+      "artifactSha256": "52258882c4cde46a52d71f4f646ae75a075bfa77e1e6821db36aa25e6307430a",
+      "inputSha256": "21d88531de936ba6433030f03d0476885a9bba8aecc7755c21e69faaa56021d4"
+    },
+    {
+      "chapterId": "chapter-2",
+      "displayOrder": 2,
+      "titleVi": "Chương 2: Chuyện Người Nghĩa Phụ Ở Khoái Châu",
+      "titleEn": "Chapter 2: The Tale of the Virtuous Wife of Khoai Chau",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 516,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 516,
+            "pairedUnits": 430,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2722,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2722,
+            "anyRawLinkWords": 1904,
+            "fullLetterWords": 1438,
+            "partialWords": 466,
+            "unlinkedWords": 818,
+            "letterCoveredWords": 1904,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 11602,
+            "coveredLetterCodeUnits": 6828,
+            "uiQueriedUnits": 516,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3208,
+            "lexicalAliasGroups": 2
+          },
+          "uiStatuses": {
+            "match": 26,
+            "uncertain": 402,
+            "context-only": 13,
+            "unavailable": 75,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 83.33,
+            "wordAnyRawLinkPct": 69.95,
+            "wordFullyCoveredLettersPct": 52.83,
+            "wordPartialPct": 17.12,
+            "wordUnlinkedPct": 30.05,
+            "letterCodeUnitCoveragePct": 58.85,
+            "uiStrictMatchPct": 5.04,
+            "uiHighlightStatusPct": 82.95,
+            "uiContextStatusPct": 85.47
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "22dc90ee-c0fb-45a6-bd6b-485d3704ba10",
+            "canonicalTextSha256": "16fd08d5afd5dd956eb08afd05984c41b19d39034574b10937f6672dfc2314ac"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 546,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 546,
+            "pairedUnits": 475,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 4139,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4105,
+            "anyRawLinkWords": 2230,
+            "fullLetterWords": 1987,
+            "partialWords": 243,
+            "unlinkedWords": 1875,
+            "letterCoveredWords": 2230,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 16977,
+            "coveredLetterCodeUnits": 9003,
+            "uiQueriedUnits": 546,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3208,
+            "lexicalAliasGroups": 2
+          },
+          "uiStatuses": {
+            "match": 29,
+            "uncertain": 433,
+            "context-only": 39,
+            "unavailable": 45,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 87,
+            "wordAnyRawLinkPct": 54.32,
+            "wordFullyCoveredLettersPct": 48.4,
+            "wordPartialPct": 5.92,
+            "wordUnlinkedPct": 45.68,
+            "letterCodeUnitCoveragePct": 53.03,
+            "uiStrictMatchPct": 5.31,
+            "uiHighlightStatusPct": 84.62,
+            "uiContextStatusPct": 91.76
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "312ccc63-79bf-449f-8b31-9c0b37eb57c2",
+            "canonicalTextSha256": "e7f4ca737681c1c046ecf9c4e2238fdb8d82ca43725e215520dbf316754c1ed6"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1062,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1062,
+          "pairedUnits": 905,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 6861,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 6827,
+          "anyRawLinkWords": 4134,
+          "fullLetterWords": 3425,
+          "partialWords": 709,
+          "unlinkedWords": 2693,
+          "letterCoveredWords": 4134,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 28579,
+          "coveredLetterCodeUnits": 15831,
+          "uiQueriedUnits": 1062,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 6416,
+          "lexicalAliasGroups": 4
+        },
+        "uiStatuses": {
+          "match": 55,
+          "uncertain": 835,
+          "context-only": 52,
+          "unavailable": 120,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 85.22,
+          "wordAnyRawLinkPct": 60.55,
+          "wordFullyCoveredLettersPct": 50.17,
+          "wordPartialPct": 10.39,
+          "wordUnlinkedPct": 39.45,
+          "letterCodeUnitCoveragePct": 55.39,
+          "uiStrictMatchPct": 5.18,
+          "uiHighlightStatusPct": 83.8,
+          "uiContextStatusPct": 88.7
+        }
+      },
+      "artifactSha256": "76e915e4eec49e23512ff118d64f9a586a29171175664c651f588b7c66f61de0",
+      "inputSha256": "cdfd09a32a47a3ab72b4bb0a43b53d49113bae3dcbcd9773664b8ff869b35663"
+    },
+    {
+      "chapterId": "chapter-3",
+      "displayOrder": 3,
+      "titleVi": "Chương 3: Chuyện Cây Gạo",
+      "titleEn": "Chapter 3: The Tale of the Silk-Cotton Tree",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 385,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 385,
+            "pairedUnits": 337,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2274,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2269,
+            "anyRawLinkWords": 1564,
+            "fullLetterWords": 1209,
+            "partialWords": 355,
+            "unlinkedWords": 705,
+            "letterCoveredWords": 1564,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 9185,
+            "coveredLetterCodeUnits": 5512,
+            "uiQueriedUnits": 385,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2535,
+            "lexicalAliasGroups": 6
+          },
+          "uiStatuses": {
+            "match": 14,
+            "uncertain": 319,
+            "context-only": 15,
+            "unavailable": 37,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 87.53,
+            "wordAnyRawLinkPct": 68.93,
+            "wordFullyCoveredLettersPct": 53.28,
+            "wordPartialPct": 15.65,
+            "wordUnlinkedPct": 31.07,
+            "letterCodeUnitCoveragePct": 60.01,
+            "uiStrictMatchPct": 3.64,
+            "uiHighlightStatusPct": 86.49,
+            "uiContextStatusPct": 90.39
+          },
+          "source": {
+            "revision": 4,
+            "versionId": "621a62fb-d679-4e63-9cc5-b26ae4d250d8",
+            "canonicalTextSha256": "d8865799750e9d87aa95a779dbc3990365780dd1c200ec5341b135a896e255dd"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 417,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 417,
+            "pairedUnits": 361,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3242,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3203,
+            "anyRawLinkWords": 1814,
+            "fullLetterWords": 1609,
+            "partialWords": 205,
+            "unlinkedWords": 1389,
+            "letterCoveredWords": 1814,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 13071,
+            "coveredLetterCodeUnits": 7206,
+            "uiQueriedUnits": 417,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2535,
+            "lexicalAliasGroups": 6
+          },
+          "uiStatuses": {
+            "match": 15,
+            "uncertain": 333,
+            "context-only": 33,
+            "unavailable": 36,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 86.57,
+            "wordAnyRawLinkPct": 56.63,
+            "wordFullyCoveredLettersPct": 50.23,
+            "wordPartialPct": 6.4,
+            "wordUnlinkedPct": 43.37,
+            "letterCodeUnitCoveragePct": 55.13,
+            "uiStrictMatchPct": 3.6,
+            "uiHighlightStatusPct": 83.45,
+            "uiContextStatusPct": 91.37
+          },
+          "source": {
+            "revision": 1,
+            "versionId": "06bf15b8-b400-4988-b999-8969d5821018",
+            "canonicalTextSha256": "30a9f012cdb9b2f9236f7acafd08218169443f8958d2e8a63f684881a7e4baf2"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 802,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 802,
+          "pairedUnits": 698,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 5516,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 5472,
+          "anyRawLinkWords": 3378,
+          "fullLetterWords": 2818,
+          "partialWords": 560,
+          "unlinkedWords": 2094,
+          "letterCoveredWords": 3378,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 22256,
+          "coveredLetterCodeUnits": 12718,
+          "uiQueriedUnits": 802,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 5070,
+          "lexicalAliasGroups": 12
+        },
+        "uiStatuses": {
+          "match": 29,
+          "uncertain": 652,
+          "context-only": 48,
+          "unavailable": 73,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 87.03,
+          "wordAnyRawLinkPct": 61.73,
+          "wordFullyCoveredLettersPct": 51.5,
+          "wordPartialPct": 10.23,
+          "wordUnlinkedPct": 38.27,
+          "letterCodeUnitCoveragePct": 57.14,
+          "uiStrictMatchPct": 3.62,
+          "uiHighlightStatusPct": 84.91,
+          "uiContextStatusPct": 90.9
+        }
+      },
+      "artifactSha256": "8bad4b625c9aa23052530ca1815401aa3572a4388fc9c60f5d2512962f41b69d",
+      "inputSha256": "1ed0fcc90064e2250c2a2affcf512098ea1c5fe1ca32deea25222a37317747a3"
+    },
+    {
+      "chapterId": "chapter-4",
+      "displayOrder": 4,
+      "titleVi": "Chương 4: Chuyện Gã Trà Đồng Giáng Sinh",
+      "titleEn": "Chapter 4: The Tale of the Tea Boy’s Descent into the Mortal World",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 441,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 441,
+            "pairedUnits": 414,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2660,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2656,
+            "anyRawLinkWords": 1979,
+            "fullLetterWords": 1585,
+            "partialWords": 394,
+            "unlinkedWords": 677,
+            "letterCoveredWords": 1979,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 10751,
+            "coveredLetterCodeUnits": 7141,
+            "uiQueriedUnits": 441,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3166,
+            "lexicalAliasGroups": 2
+          },
+          "uiStatuses": {
+            "match": 20,
+            "uncertain": 390,
+            "context-only": 18,
+            "unavailable": 13,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 93.88,
+            "wordAnyRawLinkPct": 74.51,
+            "wordFullyCoveredLettersPct": 59.68,
+            "wordPartialPct": 14.83,
+            "wordUnlinkedPct": 25.49,
+            "letterCodeUnitCoveragePct": 66.42,
+            "uiStrictMatchPct": 4.54,
+            "uiHighlightStatusPct": 92.97,
+            "uiContextStatusPct": 97.05
+          },
+          "source": {
+            "revision": 1,
+            "versionId": "911695a1-6938-4297-adbd-420da07edf32",
+            "canonicalTextSha256": "52425683577234f7d872bb33ab13ba793110b091224dce59a76bbbe73f659876"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 504,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 504,
+            "pairedUnits": 445,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3898,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3844,
+            "anyRawLinkWords": 2295,
+            "fullLetterWords": 2051,
+            "partialWords": 244,
+            "unlinkedWords": 1549,
+            "letterCoveredWords": 2294,
+            "linkedButNoLetterWords": 1,
+            "eligibleLetterCodeUnits": 16439,
+            "coveredLetterCodeUnits": 9515,
+            "uiQueriedUnits": 504,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3166,
+            "lexicalAliasGroups": 2
+          },
+          "uiStatuses": {
+            "match": 21,
+            "uncertain": 412,
+            "context-only": 32,
+            "unavailable": 39,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 88.29,
+            "wordAnyRawLinkPct": 59.7,
+            "wordFullyCoveredLettersPct": 53.36,
+            "wordPartialPct": 6.35,
+            "wordUnlinkedPct": 40.3,
+            "letterCodeUnitCoveragePct": 57.88,
+            "uiStrictMatchPct": 4.17,
+            "uiHighlightStatusPct": 85.91,
+            "uiContextStatusPct": 92.26
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "453ca26b-96b1-4ec5-8b25-22d8c15e2eab",
+            "canonicalTextSha256": "10d4e053260ba1e8b010ba3257085f8b4ea7554f9f4b8aecf8f659cfd99f91d1"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 945,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 945,
+          "pairedUnits": 859,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 6558,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 6500,
+          "anyRawLinkWords": 4274,
+          "fullLetterWords": 3636,
+          "partialWords": 638,
+          "unlinkedWords": 2226,
+          "letterCoveredWords": 4273,
+          "linkedButNoLetterWords": 1,
+          "eligibleLetterCodeUnits": 27190,
+          "coveredLetterCodeUnits": 16656,
+          "uiQueriedUnits": 945,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 6332,
+          "lexicalAliasGroups": 4
+        },
+        "uiStatuses": {
+          "match": 41,
+          "uncertain": 802,
+          "context-only": 50,
+          "unavailable": 52,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 90.9,
+          "wordAnyRawLinkPct": 65.75,
+          "wordFullyCoveredLettersPct": 55.94,
+          "wordPartialPct": 9.82,
+          "wordUnlinkedPct": 34.25,
+          "letterCodeUnitCoveragePct": 61.26,
+          "uiStrictMatchPct": 4.34,
+          "uiHighlightStatusPct": 89.21,
+          "uiContextStatusPct": 94.5
+        }
+      },
+      "artifactSha256": "0775e59752f2ca985c76a82ba47d11367121c5173fb5029a3af60f8e5b0a5604",
+      "inputSha256": "12544a662b2ce045b7f7a92051a2e6202a5416c44a98b6e3a89380e003cd32d9"
+    },
+    {
+      "chapterId": "chapter-5",
+      "displayOrder": 5,
+      "titleVi": "Chương 5: Chuyện Kỳ Ngộ Ở Trại Tây",
+      "titleEn": "Chapter 5: The Strange Encounter at the Western Estate",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 687,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 687,
+            "pairedUnits": 530,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3540,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3540,
+            "anyRawLinkWords": 2278,
+            "fullLetterWords": 1705,
+            "partialWords": 573,
+            "unlinkedWords": 1262,
+            "letterCoveredWords": 2278,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 15099,
+            "coveredLetterCodeUnits": 8044,
+            "uiQueriedUnits": 687,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3891,
+            "lexicalAliasGroups": 3
+          },
+          "uiStatuses": {
+            "match": 19,
+            "uncertain": 501,
+            "context-only": 25,
+            "unavailable": 142,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 77.15,
+            "wordAnyRawLinkPct": 64.35,
+            "wordFullyCoveredLettersPct": 48.16,
+            "wordPartialPct": 16.19,
+            "wordUnlinkedPct": 35.65,
+            "letterCodeUnitCoveragePct": 53.28,
+            "uiStrictMatchPct": 2.77,
+            "uiHighlightStatusPct": 75.69,
+            "uiContextStatusPct": 79.33
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "6c8c5e9d-2351-42cf-9639-7fb13444577e",
+            "canonicalTextSha256": "367f7c5230ec311930573c0676d9fd04bb7c8b59ef3332372cb72c7cf2d59570"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 693,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 693,
+            "pairedUnits": 586,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 5006,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4945,
+            "anyRawLinkWords": 2657,
+            "fullLetterWords": 2285,
+            "partialWords": 372,
+            "unlinkedWords": 2288,
+            "letterCoveredWords": 2657,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 20723,
+            "coveredLetterCodeUnits": 10602,
+            "uiQueriedUnits": 693,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3891,
+            "lexicalAliasGroups": 3
+          },
+          "uiStatuses": {
+            "match": 21,
+            "uncertain": 539,
+            "context-only": 55,
+            "unavailable": 78,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 84.56,
+            "wordAnyRawLinkPct": 53.73,
+            "wordFullyCoveredLettersPct": 46.21,
+            "wordPartialPct": 7.52,
+            "wordUnlinkedPct": 46.27,
+            "letterCodeUnitCoveragePct": 51.16,
+            "uiStrictMatchPct": 3.03,
+            "uiHighlightStatusPct": 80.81,
+            "uiContextStatusPct": 88.74
+          },
+          "source": {
+            "revision": 1,
+            "versionId": "82889462-4d20-4777-b99e-e00fe08864ef",
+            "canonicalTextSha256": "a56a6027f767c7c8de81924be3007fcfd856aaf27e7e9ae17adc149e795b5623"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1380,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1380,
+          "pairedUnits": 1116,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 8546,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 8485,
+          "anyRawLinkWords": 4935,
+          "fullLetterWords": 3990,
+          "partialWords": 945,
+          "unlinkedWords": 3550,
+          "letterCoveredWords": 4935,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 35822,
+          "coveredLetterCodeUnits": 18646,
+          "uiQueriedUnits": 1380,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 7782,
+          "lexicalAliasGroups": 6
+        },
+        "uiStatuses": {
+          "match": 40,
+          "uncertain": 1040,
+          "context-only": 80,
+          "unavailable": 220,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 80.87,
+          "wordAnyRawLinkPct": 58.16,
+          "wordFullyCoveredLettersPct": 47.02,
+          "wordPartialPct": 11.14,
+          "wordUnlinkedPct": 41.84,
+          "letterCodeUnitCoveragePct": 52.05,
+          "uiStrictMatchPct": 2.9,
+          "uiHighlightStatusPct": 78.26,
+          "uiContextStatusPct": 84.06
+        }
+      },
+      "artifactSha256": "261382175b6141e4d69027a9b21e6b37185700466ec24cf05c98a8db8e9c20fa",
+      "inputSha256": "5bdba70072e77e0d119cbaff1b50fad6b2034cf03229dd4202f94bc4d669b4d5"
+    },
+    {
+      "chapterId": "chapter-6",
+      "displayOrder": 6,
+      "titleVi": "Chương 6: Chuyện Đối Tụng Ở Long Cung",
+      "titleEn": "Chapter 6: The Lawsuit at the Dragon Palace",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 462,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 462,
+            "pairedUnits": 410,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2698,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2698,
+            "anyRawLinkWords": 2000,
+            "fullLetterWords": 1520,
+            "partialWords": 480,
+            "unlinkedWords": 698,
+            "letterCoveredWords": 2000,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 11072,
+            "coveredLetterCodeUnits": 7154,
+            "uiQueriedUnits": 462,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3193,
+            "lexicalAliasGroups": 2
+          },
+          "uiStatuses": {
+            "match": 12,
+            "uncertain": 392,
+            "context-only": 21,
+            "unavailable": 37,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 88.74,
+            "wordAnyRawLinkPct": 74.13,
+            "wordFullyCoveredLettersPct": 56.34,
+            "wordPartialPct": 17.79,
+            "wordUnlinkedPct": 25.87,
+            "letterCodeUnitCoveragePct": 64.61,
+            "uiStrictMatchPct": 2.6,
+            "uiHighlightStatusPct": 87.45,
+            "uiContextStatusPct": 91.99
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "7cd6e19c-c8c0-4b23-9bb6-88d58ad169ac",
+            "canonicalTextSha256": "acea8ca1f03e7fa53337c415ef6e7f0acaac8bae4e25875968150d7cb4ec65ca"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 498,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 498,
+            "pairedUnits": 450,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 4082,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4036,
+            "anyRawLinkWords": 2292,
+            "fullLetterWords": 1972,
+            "partialWords": 320,
+            "unlinkedWords": 1744,
+            "letterCoveredWords": 2292,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 17299,
+            "coveredLetterCodeUnits": 9413,
+            "uiQueriedUnits": 498,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3193,
+            "lexicalAliasGroups": 2
+          },
+          "uiStatuses": {
+            "match": 14,
+            "uncertain": 425,
+            "context-only": 25,
+            "unavailable": 34,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 90.36,
+            "wordAnyRawLinkPct": 56.79,
+            "wordFullyCoveredLettersPct": 48.86,
+            "wordPartialPct": 7.93,
+            "wordUnlinkedPct": 43.21,
+            "letterCodeUnitCoveragePct": 54.41,
+            "uiStrictMatchPct": 2.81,
+            "uiHighlightStatusPct": 88.15,
+            "uiContextStatusPct": 93.17
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "e663be7b-4b0d-4aeb-a605-4cb43ec06b88",
+            "canonicalTextSha256": "fb0beecbfc82c07be32c0dfb778e3a0ac97083af94e4a048e3309ab0dfe4c172"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 960,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 960,
+          "pairedUnits": 860,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 6780,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 6734,
+          "anyRawLinkWords": 4292,
+          "fullLetterWords": 3492,
+          "partialWords": 800,
+          "unlinkedWords": 2442,
+          "letterCoveredWords": 4292,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 28371,
+          "coveredLetterCodeUnits": 16567,
+          "uiQueriedUnits": 960,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 6386,
+          "lexicalAliasGroups": 4
+        },
+        "uiStatuses": {
+          "match": 26,
+          "uncertain": 817,
+          "context-only": 46,
+          "unavailable": 71,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 89.58,
+          "wordAnyRawLinkPct": 63.74,
+          "wordFullyCoveredLettersPct": 51.86,
+          "wordPartialPct": 11.88,
+          "wordUnlinkedPct": 36.26,
+          "letterCodeUnitCoveragePct": 58.39,
+          "uiStrictMatchPct": 2.71,
+          "uiHighlightStatusPct": 87.81,
+          "uiContextStatusPct": 92.6
+        }
+      },
+      "artifactSha256": "367c80ad68e3d89b1c5638b783ce7daa459d5637ccdb9b16e653a8beade6c488",
+      "inputSha256": "176026f398bebaea88469d72c6eb0240efc5473340e4ff577b845db1fc5520a8"
+    },
+    {
+      "chapterId": "chapter-7",
+      "displayOrder": 7,
+      "titleVi": "Chương 7: Chuyện Nghiệp Oan Của Đào Thị",
+      "titleEn": "Chapter 7: The Tale of Dao Thi’s Karmic Retribution",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 620,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 620,
+            "pairedUnits": 478,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3231,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3221,
+            "anyRawLinkWords": 2190,
+            "fullLetterWords": 1680,
+            "partialWords": 510,
+            "unlinkedWords": 1031,
+            "letterCoveredWords": 2190,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 13723,
+            "coveredLetterCodeUnits": 7855,
+            "uiQueriedUnits": 620,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3743,
+            "lexicalAliasGroups": 6
+          },
+          "uiStatuses": {
+            "match": 37,
+            "uncertain": 438,
+            "context-only": 13,
+            "unavailable": 132,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 77.1,
+            "wordAnyRawLinkPct": 67.99,
+            "wordFullyCoveredLettersPct": 52.16,
+            "wordPartialPct": 15.83,
+            "wordUnlinkedPct": 32.01,
+            "letterCodeUnitCoveragePct": 57.24,
+            "uiStrictMatchPct": 5.97,
+            "uiHighlightStatusPct": 76.61,
+            "uiContextStatusPct": 78.71
+          },
+          "source": {
+            "revision": 1,
+            "versionId": "c0798673-6d05-44ef-a620-889faea2904a",
+            "canonicalTextSha256": "4095ea7afec301806b5a2a776985c39ba36fe431d89d49c683dc85370b5de869"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 641,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 641,
+            "pairedUnits": 542,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 4692,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4631,
+            "anyRawLinkWords": 2585,
+            "fullLetterWords": 2225,
+            "partialWords": 360,
+            "unlinkedWords": 2046,
+            "letterCoveredWords": 2585,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 19821,
+            "coveredLetterCodeUnits": 10688,
+            "uiQueriedUnits": 641,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3743,
+            "lexicalAliasGroups": 6
+          },
+          "uiStatuses": {
+            "match": 37,
+            "uncertain": 485,
+            "context-only": 52,
+            "unavailable": 67,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 84.56,
+            "wordAnyRawLinkPct": 55.82,
+            "wordFullyCoveredLettersPct": 48.05,
+            "wordPartialPct": 7.77,
+            "wordUnlinkedPct": 44.18,
+            "letterCodeUnitCoveragePct": 53.92,
+            "uiStrictMatchPct": 5.77,
+            "uiHighlightStatusPct": 81.44,
+            "uiContextStatusPct": 89.55
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "ccf8694d-324c-4cf1-86ee-d2d37d546bd8",
+            "canonicalTextSha256": "020fb06da861da5a3cc299a4f91a27e678ac324c1c22c4ef7138d99a8cebb931"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1261,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1261,
+          "pairedUnits": 1020,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 7923,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 7852,
+          "anyRawLinkWords": 4775,
+          "fullLetterWords": 3905,
+          "partialWords": 870,
+          "unlinkedWords": 3077,
+          "letterCoveredWords": 4775,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 33544,
+          "coveredLetterCodeUnits": 18543,
+          "uiQueriedUnits": 1261,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 7486,
+          "lexicalAliasGroups": 12
+        },
+        "uiStatuses": {
+          "match": 74,
+          "uncertain": 923,
+          "context-only": 65,
+          "unavailable": 199,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 80.89,
+          "wordAnyRawLinkPct": 60.81,
+          "wordFullyCoveredLettersPct": 49.73,
+          "wordPartialPct": 11.08,
+          "wordUnlinkedPct": 39.19,
+          "letterCodeUnitCoveragePct": 55.28,
+          "uiStrictMatchPct": 5.87,
+          "uiHighlightStatusPct": 79.06,
+          "uiContextStatusPct": 84.22
+        }
+      },
+      "artifactSha256": "aa3aff41d42a26503952e2def819bbca4dfa6bf84e867ccfc5930f6bb8b2996a",
+      "inputSha256": "a49efaadf9b20555fa88219b54eb1b7d89212e51c636bcc106c4af37604702f0"
+    },
+    {
+      "chapterId": "chapter-8",
+      "displayOrder": 8,
+      "titleVi": "Chương 8: Chuyện Chức Phán Sự Đền Tản Viên",
+      "titleEn": "Chapter 8: The Tale of the Judge of Tan Vien Shrine",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 282,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 282,
+            "pairedUnits": 268,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 1661,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 1661,
+            "anyRawLinkWords": 1283,
+            "fullLetterWords": 1006,
+            "partialWords": 277,
+            "unlinkedWords": 378,
+            "letterCoveredWords": 1283,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 6633,
+            "coveredLetterCodeUnits": 4554,
+            "uiQueriedUnits": 282,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2103,
+            "lexicalAliasGroups": 0
+          },
+          "uiStatuses": {
+            "match": 10,
+            "uncertain": 257,
+            "context-only": 4,
+            "unavailable": 11,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 95.04,
+            "wordAnyRawLinkPct": 77.24,
+            "wordFullyCoveredLettersPct": 60.57,
+            "wordPartialPct": 16.68,
+            "wordUnlinkedPct": 22.76,
+            "letterCodeUnitCoveragePct": 68.66,
+            "uiStrictMatchPct": 3.55,
+            "uiHighlightStatusPct": 94.68,
+            "uiContextStatusPct": 96.1
+          },
+          "source": {
+            "revision": 1,
+            "versionId": "0573155b-2941-4dac-945d-b9d15e5db628",
+            "canonicalTextSha256": "8a0f8d5e8dd62af5ad5832e19bc2d3fb51720bc377c04d1d7c718d93ac7f4364"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 320,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 320,
+            "pairedUnits": 292,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2489,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2463,
+            "anyRawLinkWords": 1528,
+            "fullLetterWords": 1365,
+            "partialWords": 163,
+            "unlinkedWords": 935,
+            "letterCoveredWords": 1528,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 10116,
+            "coveredLetterCodeUnits": 6172,
+            "uiQueriedUnits": 320,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2103,
+            "lexicalAliasGroups": 0
+          },
+          "uiStatuses": {
+            "match": 11,
+            "uncertain": 276,
+            "context-only": 9,
+            "unavailable": 24,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 91.25,
+            "wordAnyRawLinkPct": 62.04,
+            "wordFullyCoveredLettersPct": 55.42,
+            "wordPartialPct": 6.62,
+            "wordUnlinkedPct": 37.96,
+            "letterCodeUnitCoveragePct": 61.01,
+            "uiStrictMatchPct": 3.44,
+            "uiHighlightStatusPct": 89.69,
+            "uiContextStatusPct": 92.5
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "198b2d4d-50b5-4c47-8fe0-58034c7ff832",
+            "canonicalTextSha256": "09674a3e21e29d83bf70c183210e01cd857bca46b9613a011a0618b9ef69a7dd"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 602,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 602,
+          "pairedUnits": 560,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 4150,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 4124,
+          "anyRawLinkWords": 2811,
+          "fullLetterWords": 2371,
+          "partialWords": 440,
+          "unlinkedWords": 1313,
+          "letterCoveredWords": 2811,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 16749,
+          "coveredLetterCodeUnits": 10726,
+          "uiQueriedUnits": 602,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 4206,
+          "lexicalAliasGroups": 0
+        },
+        "uiStatuses": {
+          "match": 21,
+          "uncertain": 533,
+          "context-only": 13,
+          "unavailable": 35,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 93.02,
+          "wordAnyRawLinkPct": 68.16,
+          "wordFullyCoveredLettersPct": 57.49,
+          "wordPartialPct": 10.67,
+          "wordUnlinkedPct": 31.84,
+          "letterCodeUnitCoveragePct": 64.04,
+          "uiStrictMatchPct": 3.49,
+          "uiHighlightStatusPct": 92.03,
+          "uiContextStatusPct": 94.19
+        }
+      },
+      "artifactSha256": "1438fbc245d9b522f4ed5bf92a1c75d4327743a7f874319515d850d14849b9c4",
+      "inputSha256": "f0a230fe32899869926d436a764913ac16aafaf1b98dfc08aab2a6e30c8557c9"
+    },
+    {
+      "chapterId": "chapter-9",
+      "displayOrder": 9,
+      "titleVi": "Chương 9: Chuyện Từ Thức Lấy Vợ Tiên",
+      "titleEn": "Chapter 9: The Tale of Tu Thuc, Who Wed an Immortal",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 565,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 565,
+            "pairedUnits": 460,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3265,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3251,
+            "anyRawLinkWords": 2224,
+            "fullLetterWords": 1698,
+            "partialWords": 526,
+            "unlinkedWords": 1027,
+            "letterCoveredWords": 2224,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 13808,
+            "coveredLetterCodeUnits": 8035,
+            "uiQueriedUnits": 565,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3724,
+            "lexicalAliasGroups": 8
+          },
+          "uiStatuses": {
+            "match": 21,
+            "uncertain": 437,
+            "context-only": 33,
+            "unavailable": 74,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 81.42,
+            "wordAnyRawLinkPct": 68.41,
+            "wordFullyCoveredLettersPct": 52.23,
+            "wordPartialPct": 16.18,
+            "wordUnlinkedPct": 31.59,
+            "letterCodeUnitCoveragePct": 58.19,
+            "uiStrictMatchPct": 3.72,
+            "uiHighlightStatusPct": 81.06,
+            "uiContextStatusPct": 86.9
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "fa0730bd-8f92-4815-808a-8b122191ed65",
+            "canonicalTextSha256": "c8cb0be3318a826e2a11047a0bcd3118ee2b1f8643c5ea7ccd4bb24076a1eec4"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 589,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 589,
+            "pairedUnits": 514,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 4795,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4686,
+            "anyRawLinkWords": 2604,
+            "fullLetterWords": 2279,
+            "partialWords": 325,
+            "unlinkedWords": 2082,
+            "letterCoveredWords": 2604,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 20088,
+            "coveredLetterCodeUnits": 10648,
+            "uiQueriedUnits": 589,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3724,
+            "lexicalAliasGroups": 8
+          },
+          "uiStatuses": {
+            "match": 25,
+            "uncertain": 474,
+            "context-only": 51,
+            "unavailable": 39,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 87.27,
+            "wordAnyRawLinkPct": 55.57,
+            "wordFullyCoveredLettersPct": 48.63,
+            "wordPartialPct": 6.94,
+            "wordUnlinkedPct": 44.43,
+            "letterCodeUnitCoveragePct": 53.01,
+            "uiStrictMatchPct": 4.24,
+            "uiHighlightStatusPct": 84.72,
+            "uiContextStatusPct": 93.38
+          },
+          "source": {
+            "revision": 1,
+            "versionId": "7804ddb3-75ff-4255-a464-2221b7bdba91",
+            "canonicalTextSha256": "ab35f49bdfc658d853886d92e7682601870bbc19df930e827bddd4bc9ce2ec8b"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1154,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1154,
+          "pairedUnits": 974,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 8060,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 7937,
+          "anyRawLinkWords": 4828,
+          "fullLetterWords": 3977,
+          "partialWords": 851,
+          "unlinkedWords": 3109,
+          "letterCoveredWords": 4828,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 33896,
+          "coveredLetterCodeUnits": 18683,
+          "uiQueriedUnits": 1154,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 7448,
+          "lexicalAliasGroups": 16
+        },
+        "uiStatuses": {
+          "match": 46,
+          "uncertain": 911,
+          "context-only": 84,
+          "unavailable": 113,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 84.4,
+          "wordAnyRawLinkPct": 60.83,
+          "wordFullyCoveredLettersPct": 50.11,
+          "wordPartialPct": 10.72,
+          "wordUnlinkedPct": 39.17,
+          "letterCodeUnitCoveragePct": 55.12,
+          "uiStrictMatchPct": 3.99,
+          "uiHighlightStatusPct": 82.93,
+          "uiContextStatusPct": 90.21
+        }
+      },
+      "artifactSha256": "d7b0d5c39070c39c2adaef59975f37077648eea142ddca1eb1b806375ca09d9f",
+      "inputSha256": "ac8432252a578ab7c832f9c3af152e1b95b1f2f2fac3f76dd1944c4822292aa1"
+    },
+    {
+      "chapterId": "chapter-10",
+      "displayOrder": 10,
+      "titleVi": "Chương 10: Chuyện Phạm Tử Hư Lên Chơi Thiên Tào",
+      "titleEn": "Chapter 10: The Tale of Pham Tu Hu’s Journey to the Celestial Court",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 315,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 315,
+            "pairedUnits": 285,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2044,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2040,
+            "anyRawLinkWords": 1503,
+            "fullLetterWords": 1159,
+            "partialWords": 344,
+            "unlinkedWords": 537,
+            "letterCoveredWords": 1503,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 8324,
+            "coveredLetterCodeUnits": 5449,
+            "uiQueriedUnits": 315,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2470,
+            "lexicalAliasGroups": 7
+          },
+          "uiStatuses": {
+            "match": 17,
+            "uncertain": 262,
+            "context-only": 20,
+            "unavailable": 16,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 90.48,
+            "wordAnyRawLinkPct": 73.68,
+            "wordFullyCoveredLettersPct": 56.81,
+            "wordPartialPct": 16.86,
+            "wordUnlinkedPct": 26.32,
+            "letterCodeUnitCoveragePct": 65.46,
+            "uiStrictMatchPct": 5.4,
+            "uiHighlightStatusPct": 88.57,
+            "uiContextStatusPct": 94.92
+          },
+          "source": {
+            "revision": 1,
+            "versionId": "7fac5125-5885-4847-9ba1-20c2dbce62c7",
+            "canonicalTextSha256": "785630578b11ef5057c9317821670ee5ec6a582a58c72ba30bea1113bdd6dd45"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 374,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 374,
+            "pairedUnits": 332,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3066,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3013,
+            "anyRawLinkWords": 1747,
+            "fullLetterWords": 1549,
+            "partialWords": 198,
+            "unlinkedWords": 1266,
+            "letterCoveredWords": 1747,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 13202,
+            "coveredLetterCodeUnits": 7462,
+            "uiQueriedUnits": 374,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2470,
+            "lexicalAliasGroups": 7
+          },
+          "uiStatuses": {
+            "match": 18,
+            "uncertain": 304,
+            "context-only": 33,
+            "unavailable": 19,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 88.77,
+            "wordAnyRawLinkPct": 57.98,
+            "wordFullyCoveredLettersPct": 51.41,
+            "wordPartialPct": 6.57,
+            "wordUnlinkedPct": 42.02,
+            "letterCodeUnitCoveragePct": 56.52,
+            "uiStrictMatchPct": 4.81,
+            "uiHighlightStatusPct": 86.1,
+            "uiContextStatusPct": 94.92
+          },
+          "source": {
+            "revision": 1,
+            "versionId": "fe26c2f1-05d7-4e39-89c1-6f4b5d41ca48",
+            "canonicalTextSha256": "8861a3d3e603e8e650efc21b71392dab0c353c9df4dd7e68688fa7b50564b010"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 689,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 689,
+          "pairedUnits": 617,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 5110,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 5053,
+          "anyRawLinkWords": 3250,
+          "fullLetterWords": 2708,
+          "partialWords": 542,
+          "unlinkedWords": 1803,
+          "letterCoveredWords": 3250,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 21526,
+          "coveredLetterCodeUnits": 12911,
+          "uiQueriedUnits": 689,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 4940,
+          "lexicalAliasGroups": 14
+        },
+        "uiStatuses": {
+          "match": 35,
+          "uncertain": 566,
+          "context-only": 53,
+          "unavailable": 35,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 89.55,
+          "wordAnyRawLinkPct": 64.32,
+          "wordFullyCoveredLettersPct": 53.59,
+          "wordPartialPct": 10.73,
+          "wordUnlinkedPct": 35.68,
+          "letterCodeUnitCoveragePct": 59.98,
+          "uiStrictMatchPct": 5.08,
+          "uiHighlightStatusPct": 87.23,
+          "uiContextStatusPct": 94.92
+        }
+      },
+      "artifactSha256": "ba5e882c377b7f41824c37f547b249c02df908be2840fb3db63683e8cf65be87",
+      "inputSha256": "319b1fb08652ccab6387bc36f3c5defe86f6c2459097ce97d44d4825a96eed86"
+    },
+    {
+      "chapterId": "chapter-13",
+      "displayOrder": 11,
+      "titleVi": "Chương 11: Chuyện Yêu Quái Ở Xương Giang",
+      "titleEn": "Chapter 11: The Tale of the Demon of Xuong Giang",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 475,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 475,
+            "pairedUnits": 399,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2770,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2770,
+            "anyRawLinkWords": 1958,
+            "fullLetterWords": 1505,
+            "partialWords": 453,
+            "unlinkedWords": 812,
+            "letterCoveredWords": 1958,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 11186,
+            "coveredLetterCodeUnits": 6901,
+            "uiQueriedUnits": 475,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3158,
+            "lexicalAliasGroups": 1
+          },
+          "uiStatuses": {
+            "match": 29,
+            "uncertain": 363,
+            "context-only": 43,
+            "unavailable": 40,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 84,
+            "wordAnyRawLinkPct": 70.69,
+            "wordFullyCoveredLettersPct": 54.33,
+            "wordPartialPct": 16.35,
+            "wordUnlinkedPct": 29.31,
+            "letterCodeUnitCoveragePct": 61.69,
+            "uiStrictMatchPct": 6.11,
+            "uiHighlightStatusPct": 82.53,
+            "uiContextStatusPct": 91.58
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "85b9e454-e922-426a-b741-0c0af9832328",
+            "canonicalTextSha256": "1cd797bc1a7f534d67005044e78489b8cba208bd3e11802b17b54ca3a0a9eea3"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 537,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 537,
+            "pairedUnits": 440,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 4306,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4237,
+            "anyRawLinkWords": 2243,
+            "fullLetterWords": 1980,
+            "partialWords": 263,
+            "unlinkedWords": 1994,
+            "letterCoveredWords": 2243,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 17886,
+            "coveredLetterCodeUnits": 9246,
+            "uiQueriedUnits": 537,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3158,
+            "lexicalAliasGroups": 1
+          },
+          "uiStatuses": {
+            "match": 31,
+            "uncertain": 395,
+            "context-only": 66,
+            "unavailable": 45,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 81.94,
+            "wordAnyRawLinkPct": 52.94,
+            "wordFullyCoveredLettersPct": 46.73,
+            "wordPartialPct": 6.21,
+            "wordUnlinkedPct": 47.06,
+            "letterCodeUnitCoveragePct": 51.69,
+            "uiStrictMatchPct": 5.77,
+            "uiHighlightStatusPct": 79.33,
+            "uiContextStatusPct": 91.62
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "80561ea1-ccbe-491b-ba68-a7419da36ef4",
+            "canonicalTextSha256": "397f347b7838559e5e2171f0988f2d6ac2137bbbd0c193c2e1247fc59bf73843"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1012,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1012,
+          "pairedUnits": 839,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 7076,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 7007,
+          "anyRawLinkWords": 4201,
+          "fullLetterWords": 3485,
+          "partialWords": 716,
+          "unlinkedWords": 2806,
+          "letterCoveredWords": 4201,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 29072,
+          "coveredLetterCodeUnits": 16147,
+          "uiQueriedUnits": 1012,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 6316,
+          "lexicalAliasGroups": 2
+        },
+        "uiStatuses": {
+          "match": 60,
+          "uncertain": 758,
+          "context-only": 109,
+          "unavailable": 85,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 82.91,
+          "wordAnyRawLinkPct": 59.95,
+          "wordFullyCoveredLettersPct": 49.74,
+          "wordPartialPct": 10.22,
+          "wordUnlinkedPct": 40.05,
+          "letterCodeUnitCoveragePct": 55.54,
+          "uiStrictMatchPct": 5.93,
+          "uiHighlightStatusPct": 80.83,
+          "uiContextStatusPct": 91.6
+        }
+      },
+      "artifactSha256": "ef0cee8a3df5c6d5cd3c12d754ee223e064410627abe175e265beb30227cef98",
+      "inputSha256": "4cb56433fe688325ac410e8793939d6f9f4d3fa7a5d302fb2a59d233488d1c93"
+    },
+    {
+      "chapterId": "chapter-14",
+      "displayOrder": 12,
+      "titleVi": "Chương 12: Chuyện Đối Đáp Của Người Tiều Phu Ở Núi Na",
+      "titleEn": "Chapter 12: The Dialogue of the Woodcutter of Mount Na",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 677,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 677,
+            "pairedUnits": 464,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3367,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3367,
+            "anyRawLinkWords": 1998,
+            "fullLetterWords": 1527,
+            "partialWords": 471,
+            "unlinkedWords": 1369,
+            "letterCoveredWords": 1998,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 14480,
+            "coveredLetterCodeUnits": 7554,
+            "uiQueriedUnits": 677,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3527,
+            "lexicalAliasGroups": 13
+          },
+          "uiStatuses": {
+            "match": 10,
+            "uncertain": 449,
+            "context-only": 85,
+            "unavailable": 133,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 68.54,
+            "wordAnyRawLinkPct": 59.34,
+            "wordFullyCoveredLettersPct": 45.35,
+            "wordPartialPct": 13.99,
+            "wordUnlinkedPct": 40.66,
+            "letterCodeUnitCoveragePct": 52.17,
+            "uiStrictMatchPct": 1.48,
+            "uiHighlightStatusPct": 67.8,
+            "uiContextStatusPct": 80.35
+          },
+          "source": {
+            "revision": 6,
+            "versionId": "a89430af-01b5-4f41-a126-1d4f6238dad0",
+            "canonicalTextSha256": "4ef48991672402b942338081af3a0c79f37675a0e0b0b04bb8e7b4bf689bdc98"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 603,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 603,
+            "pairedUnits": 472,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 4854,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4741,
+            "anyRawLinkWords": 2366,
+            "fullLetterWords": 2066,
+            "partialWords": 300,
+            "unlinkedWords": 2375,
+            "letterCoveredWords": 2366,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 20306,
+            "coveredLetterCodeUnits": 9635,
+            "uiQueriedUnits": 603,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3527,
+            "lexicalAliasGroups": 13
+          },
+          "uiStatuses": {
+            "match": 10,
+            "uncertain": 432,
+            "context-only": 85,
+            "unavailable": 76,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 78.28,
+            "wordAnyRawLinkPct": 49.91,
+            "wordFullyCoveredLettersPct": 43.58,
+            "wordPartialPct": 6.33,
+            "wordUnlinkedPct": 50.09,
+            "letterCodeUnitCoveragePct": 47.45,
+            "uiStrictMatchPct": 1.66,
+            "uiHighlightStatusPct": 73.3,
+            "uiContextStatusPct": 87.4
+          },
+          "source": {
+            "revision": 5,
+            "versionId": "3a6a6d0c-7fe3-47b9-9c2f-5cd99d4557a0",
+            "canonicalTextSha256": "120663d21f70f11094f7789dfd0475085a6233d5fa4a8cdfe54e08847477a135"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1280,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1280,
+          "pairedUnits": 936,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 8221,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 8108,
+          "anyRawLinkWords": 4364,
+          "fullLetterWords": 3593,
+          "partialWords": 771,
+          "unlinkedWords": 3744,
+          "letterCoveredWords": 4364,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 34786,
+          "coveredLetterCodeUnits": 17189,
+          "uiQueriedUnits": 1280,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 7054,
+          "lexicalAliasGroups": 26
+        },
+        "uiStatuses": {
+          "match": 20,
+          "uncertain": 881,
+          "context-only": 170,
+          "unavailable": 209,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 73.13,
+          "wordAnyRawLinkPct": 53.82,
+          "wordFullyCoveredLettersPct": 44.31,
+          "wordPartialPct": 9.51,
+          "wordUnlinkedPct": 46.18,
+          "letterCodeUnitCoveragePct": 49.41,
+          "uiStrictMatchPct": 1.56,
+          "uiHighlightStatusPct": 70.39,
+          "uiContextStatusPct": 83.67
+        }
+      },
+      "artifactSha256": "dbb9abc6b2326926a46f3e7971ffbccaafca4be49bddbe2e6e9a7dfd123f20e7",
+      "inputSha256": "e19e0cca030cc25278a7e283a8aa2eb1e461fd88963ddb2a6e60a7e8c6356730"
+    },
+    {
+      "chapterId": "chapter-15",
+      "displayOrder": 13,
+      "titleVi": "Chương 13: Chuyện Cái Chùa Hoang Ở Huyện Đông Triều",
+      "titleEn": "Chapter 13: The Tale of the Abandoned Temple in Dong Trieu District",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 299,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 299,
+            "pairedUnits": 270,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 1739,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 1739,
+            "anyRawLinkWords": 1307,
+            "fullLetterWords": 1016,
+            "partialWords": 291,
+            "unlinkedWords": 432,
+            "letterCoveredWords": 1307,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 7096,
+            "coveredLetterCodeUnits": 4706,
+            "uiQueriedUnits": 299,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2095,
+            "lexicalAliasGroups": 4
+          },
+          "uiStatuses": {
+            "match": 15,
+            "uncertain": 253,
+            "context-only": 7,
+            "unavailable": 24,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 90.3,
+            "wordAnyRawLinkPct": 75.16,
+            "wordFullyCoveredLettersPct": 58.42,
+            "wordPartialPct": 16.73,
+            "wordUnlinkedPct": 24.84,
+            "letterCodeUnitCoveragePct": 66.32,
+            "uiStrictMatchPct": 5.02,
+            "uiHighlightStatusPct": 89.63,
+            "uiContextStatusPct": 91.97
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "5b5d48a0-040c-471c-8992-bf5bcab24649",
+            "canonicalTextSha256": "9f3800f0d053e8b4f18591563a56c2cd7012f76e16aabc93d1b9839a51fe028e"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 311,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 311,
+            "pairedUnits": 286,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2539,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2515,
+            "anyRawLinkWords": 1483,
+            "fullLetterWords": 1284,
+            "partialWords": 199,
+            "unlinkedWords": 1032,
+            "letterCoveredWords": 1483,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 10753,
+            "coveredLetterCodeUnits": 6156,
+            "uiQueriedUnits": 311,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2095,
+            "lexicalAliasGroups": 4
+          },
+          "uiStatuses": {
+            "match": 18,
+            "uncertain": 261,
+            "context-only": 12,
+            "unavailable": 20,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 91.96,
+            "wordAnyRawLinkPct": 58.97,
+            "wordFullyCoveredLettersPct": 51.05,
+            "wordPartialPct": 7.91,
+            "wordUnlinkedPct": 41.03,
+            "letterCodeUnitCoveragePct": 57.25,
+            "uiStrictMatchPct": 5.79,
+            "uiHighlightStatusPct": 89.71,
+            "uiContextStatusPct": 93.57
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "14adc3d5-381e-421c-bf22-a235e62d1a0d",
+            "canonicalTextSha256": "2ab97953fb23e9002dd6ac8c86a3127a4a03ada390bb4c9a19d573f2ed272e09"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 610,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 610,
+          "pairedUnits": 556,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 4278,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 4254,
+          "anyRawLinkWords": 2790,
+          "fullLetterWords": 2300,
+          "partialWords": 490,
+          "unlinkedWords": 1464,
+          "letterCoveredWords": 2790,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 17849,
+          "coveredLetterCodeUnits": 10862,
+          "uiQueriedUnits": 610,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 4190,
+          "lexicalAliasGroups": 8
+        },
+        "uiStatuses": {
+          "match": 33,
+          "uncertain": 514,
+          "context-only": 19,
+          "unavailable": 44,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 91.15,
+          "wordAnyRawLinkPct": 65.59,
+          "wordFullyCoveredLettersPct": 54.07,
+          "wordPartialPct": 11.52,
+          "wordUnlinkedPct": 34.41,
+          "letterCodeUnitCoveragePct": 60.85,
+          "uiStrictMatchPct": 5.41,
+          "uiHighlightStatusPct": 89.67,
+          "uiContextStatusPct": 92.79
+        }
+      },
+      "artifactSha256": "5cc9707a953ab35fec2782f11204ed679f9aa0e018abc6be428ff894a167c543",
+      "inputSha256": "5fb80404d87483aa1f3f6de2635f4952ecbfba0dc50871a8d92d6a332878375a"
+    },
+    {
+      "chapterId": "chapter-16",
+      "displayOrder": 14,
+      "titleVi": "Chương 14: Chuyện Nàng Thúy Tiêu",
+      "titleEn": "Chapter 14: The Tale of Thuy Tieu",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 597,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 597,
+            "pairedUnits": 445,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3300,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3300,
+            "anyRawLinkWords": 2123,
+            "fullLetterWords": 1592,
+            "partialWords": 531,
+            "unlinkedWords": 1177,
+            "letterCoveredWords": 2123,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 14003,
+            "coveredLetterCodeUnits": 7669,
+            "uiQueriedUnits": 597,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3575,
+            "lexicalAliasGroups": 12
+          },
+          "uiStatuses": {
+            "match": 23,
+            "uncertain": 414,
+            "context-only": 36,
+            "unavailable": 124,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 74.54,
+            "wordAnyRawLinkPct": 64.33,
+            "wordFullyCoveredLettersPct": 48.24,
+            "wordPartialPct": 16.09,
+            "wordUnlinkedPct": 35.67,
+            "letterCodeUnitCoveragePct": 54.77,
+            "uiStrictMatchPct": 3.85,
+            "uiHighlightStatusPct": 73.2,
+            "uiContextStatusPct": 79.23
+          },
+          "source": {
+            "revision": 4,
+            "versionId": "b9937d00-7d07-4abc-acfd-34150ba40f6d",
+            "canonicalTextSha256": "bfb227dafef2cb83a84d98480af6ff8fa753b1baae2066d40aeeb46daa9d6c9a"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 617,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 617,
+            "pairedUnits": 493,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 4785,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4710,
+            "anyRawLinkWords": 2459,
+            "fullLetterWords": 2191,
+            "partialWords": 268,
+            "unlinkedWords": 2251,
+            "letterCoveredWords": 2457,
+            "linkedButNoLetterWords": 2,
+            "eligibleLetterCodeUnits": 19357,
+            "coveredLetterCodeUnits": 9720,
+            "uiQueriedUnits": 617,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3575,
+            "lexicalAliasGroups": 12
+          },
+          "uiStatuses": {
+            "match": 27,
+            "uncertain": 457,
+            "context-only": 58,
+            "unavailable": 75,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 79.9,
+            "wordAnyRawLinkPct": 52.21,
+            "wordFullyCoveredLettersPct": 46.52,
+            "wordPartialPct": 5.69,
+            "wordUnlinkedPct": 47.79,
+            "letterCodeUnitCoveragePct": 50.21,
+            "uiStrictMatchPct": 4.38,
+            "uiHighlightStatusPct": 78.44,
+            "uiContextStatusPct": 87.84
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "523d2a8b-66f4-451b-b5c3-621d104e51ca",
+            "canonicalTextSha256": "1a854d13fd231c929f1abd564517c5729bf0962974738cd046893038c49c1847"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1214,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1214,
+          "pairedUnits": 938,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 8085,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 8010,
+          "anyRawLinkWords": 4582,
+          "fullLetterWords": 3783,
+          "partialWords": 799,
+          "unlinkedWords": 3428,
+          "letterCoveredWords": 4580,
+          "linkedButNoLetterWords": 2,
+          "eligibleLetterCodeUnits": 33360,
+          "coveredLetterCodeUnits": 17389,
+          "uiQueriedUnits": 1214,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 7150,
+          "lexicalAliasGroups": 24
+        },
+        "uiStatuses": {
+          "match": 50,
+          "uncertain": 871,
+          "context-only": 94,
+          "unavailable": 199,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 77.27,
+          "wordAnyRawLinkPct": 57.2,
+          "wordFullyCoveredLettersPct": 47.23,
+          "wordPartialPct": 9.98,
+          "wordUnlinkedPct": 42.8,
+          "letterCodeUnitCoveragePct": 52.13,
+          "uiStrictMatchPct": 4.12,
+          "uiHighlightStatusPct": 75.86,
+          "uiContextStatusPct": 83.61
+        }
+      },
+      "artifactSha256": "d30a8ae89fc7ad1ec9215d5ff6279b94b2b29bba01ecf6a60b13d43841eecd2e",
+      "inputSha256": "87f66c1c6eadfaec60130ef7eacdeca24e1ac01ebff51f7f52cc8550ec2dd07c"
+    },
+    {
+      "chapterId": "chapter-11",
+      "displayOrder": 15,
+      "titleVi": "Chương 15: Chuyện Bữa Tiệc Đêm Ở Đà Giang",
+      "titleEn": "Chapter 15: The Night Banquet on the Da River",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 336,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 336,
+            "pairedUnits": 266,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 1934,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 1930,
+            "anyRawLinkWords": 1237,
+            "fullLetterWords": 951,
+            "partialWords": 286,
+            "unlinkedWords": 693,
+            "letterCoveredWords": 1237,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 8075,
+            "coveredLetterCodeUnits": 4490,
+            "uiQueriedUnits": 336,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2032,
+            "lexicalAliasGroups": 5
+          },
+          "uiStatuses": {
+            "match": 4,
+            "uncertain": 258,
+            "context-only": 22,
+            "unavailable": 52,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 79.17,
+            "wordAnyRawLinkPct": 64.09,
+            "wordFullyCoveredLettersPct": 49.27,
+            "wordPartialPct": 14.82,
+            "wordUnlinkedPct": 35.91,
+            "letterCodeUnitCoveragePct": 55.6,
+            "uiStrictMatchPct": 1.19,
+            "uiHighlightStatusPct": 77.98,
+            "uiContextStatusPct": 84.52
+          },
+          "source": {
+            "revision": 4,
+            "versionId": "8ab1e4ad-9a1c-41f5-a668-bac73e81d0b1",
+            "canonicalTextSha256": "30739b153f52d4b25255207a49df1c1f48f912652cd93a65b50172ab25db8e97"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 362,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 362,
+            "pairedUnits": 295,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3019,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2946,
+            "anyRawLinkWords": 1449,
+            "fullLetterWords": 1260,
+            "partialWords": 189,
+            "unlinkedWords": 1497,
+            "letterCoveredWords": 1449,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 12365,
+            "coveredLetterCodeUnits": 5700,
+            "uiQueriedUnits": 362,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2032,
+            "lexicalAliasGroups": 5
+          },
+          "uiStatuses": {
+            "match": 7,
+            "uncertain": 271,
+            "context-only": 48,
+            "unavailable": 36,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 81.49,
+            "wordAnyRawLinkPct": 49.19,
+            "wordFullyCoveredLettersPct": 42.77,
+            "wordPartialPct": 6.42,
+            "wordUnlinkedPct": 50.81,
+            "letterCodeUnitCoveragePct": 46.1,
+            "uiStrictMatchPct": 1.93,
+            "uiHighlightStatusPct": 76.8,
+            "uiContextStatusPct": 90.06
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "cb143c68-21c8-4786-a36b-6c31532ef315",
+            "canonicalTextSha256": "3f1f8a73e28cc7d7d178f6b71600bb0fca43ec466954aeca529e6a5b9792b550"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 698,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 698,
+          "pairedUnits": 561,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 4953,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 4876,
+          "anyRawLinkWords": 2686,
+          "fullLetterWords": 2211,
+          "partialWords": 475,
+          "unlinkedWords": 2190,
+          "letterCoveredWords": 2686,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 20440,
+          "coveredLetterCodeUnits": 10190,
+          "uiQueriedUnits": 698,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 4064,
+          "lexicalAliasGroups": 10
+        },
+        "uiStatuses": {
+          "match": 11,
+          "uncertain": 529,
+          "context-only": 70,
+          "unavailable": 88,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 80.37,
+          "wordAnyRawLinkPct": 55.09,
+          "wordFullyCoveredLettersPct": 45.34,
+          "wordPartialPct": 9.74,
+          "wordUnlinkedPct": 44.91,
+          "letterCodeUnitCoveragePct": 49.85,
+          "uiStrictMatchPct": 1.58,
+          "uiHighlightStatusPct": 77.36,
+          "uiContextStatusPct": 87.39
+        }
+      },
+      "artifactSha256": "c263e0bebdb35ce8fa9a465ed2086f338a9fd093af871a188e2d1aa6fea7bb09",
+      "inputSha256": "f6cba493f557d05d375c8593fa9409fe595d105925f45adf7e7b9b5c17d50dfb"
+    },
+    {
+      "chapterId": "chapter-12",
+      "displayOrder": 16,
+      "titleVi": "Chương 16: Chuyện Người Con Gái Nam Xương",
+      "titleEn": "Chapter 16: The Tale of the Woman of Nam Xuong",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 388,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 388,
+            "pairedUnits": 347,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2156,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2156,
+            "anyRawLinkWords": 1613,
+            "fullLetterWords": 1260,
+            "partialWords": 353,
+            "unlinkedWords": 543,
+            "letterCoveredWords": 1613,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 8758,
+            "coveredLetterCodeUnits": 5769,
+            "uiQueriedUnits": 388,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2668,
+            "lexicalAliasGroups": 2
+          },
+          "uiStatuses": {
+            "match": 21,
+            "uncertain": 321,
+            "context-only": 17,
+            "unavailable": 29,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 89.43,
+            "wordAnyRawLinkPct": 74.81,
+            "wordFullyCoveredLettersPct": 58.44,
+            "wordPartialPct": 16.37,
+            "wordUnlinkedPct": 25.19,
+            "letterCodeUnitCoveragePct": 65.87,
+            "uiStrictMatchPct": 5.41,
+            "uiHighlightStatusPct": 88.14,
+            "uiContextStatusPct": 92.53
+          },
+          "source": {
+            "revision": 4,
+            "versionId": "667990a6-cd62-4947-971a-89a6e5a7faca",
+            "canonicalTextSha256": "8079fb71103ca885d9ca2e74fd767e5b27635cdffcc8ac44e5caf79525a070f0"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 435,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 435,
+            "pairedUnits": 393,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3237,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3200,
+            "anyRawLinkWords": 1896,
+            "fullLetterWords": 1566,
+            "partialWords": 330,
+            "unlinkedWords": 1304,
+            "letterCoveredWords": 1896,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 14321,
+            "coveredLetterCodeUnits": 8053,
+            "uiQueriedUnits": 435,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2668,
+            "lexicalAliasGroups": 2
+          },
+          "uiStatuses": {
+            "match": 23,
+            "uncertain": 357,
+            "context-only": 34,
+            "unavailable": 21,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 90.34,
+            "wordAnyRawLinkPct": 59.25,
+            "wordFullyCoveredLettersPct": 48.94,
+            "wordPartialPct": 10.31,
+            "wordUnlinkedPct": 40.75,
+            "letterCodeUnitCoveragePct": 56.23,
+            "uiStrictMatchPct": 5.29,
+            "uiHighlightStatusPct": 87.36,
+            "uiContextStatusPct": 95.17
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "30a3f221-2fe0-4b81-8298-6e547f454b58",
+            "canonicalTextSha256": "8a9a2d561016741c55a28bf6e4a9b1be2db97f5e7046d62a7dce5d62ed58d9c0"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 823,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 823,
+          "pairedUnits": 740,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 5393,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 5356,
+          "anyRawLinkWords": 3509,
+          "fullLetterWords": 2826,
+          "partialWords": 683,
+          "unlinkedWords": 1847,
+          "letterCoveredWords": 3509,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 23079,
+          "coveredLetterCodeUnits": 13822,
+          "uiQueriedUnits": 823,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 5336,
+          "lexicalAliasGroups": 4
+        },
+        "uiStatuses": {
+          "match": 44,
+          "uncertain": 678,
+          "context-only": 51,
+          "unavailable": 50,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 89.91,
+          "wordAnyRawLinkPct": 65.52,
+          "wordFullyCoveredLettersPct": 52.76,
+          "wordPartialPct": 12.75,
+          "wordUnlinkedPct": 34.48,
+          "letterCodeUnitCoveragePct": 59.89,
+          "uiStrictMatchPct": 5.35,
+          "uiHighlightStatusPct": 87.73,
+          "uiContextStatusPct": 93.92
+        }
+      },
+      "artifactSha256": "20125e96968cc62841f3a65eb84ef51b249dc87986e6ae99a7e7f1f983fb8dfc",
+      "inputSha256": "404faf7389adafc278d40a5df9da02e60630f178649a9d6ccf5553a50b9b8d15"
+    },
+    {
+      "chapterId": "chapter-17",
+      "displayOrder": 17,
+      "titleVi": "Chương 17: Chuyện Lý Tướng Quân",
+      "titleEn": "Chapter 17: The Tale of General Ly",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 394,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 394,
+            "pairedUnits": 325,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2123,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2123,
+            "anyRawLinkWords": 1512,
+            "fullLetterWords": 1166,
+            "partialWords": 346,
+            "unlinkedWords": 611,
+            "letterCoveredWords": 1512,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 8994,
+            "coveredLetterCodeUnits": 5508,
+            "uiQueriedUnits": 394,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2482,
+            "lexicalAliasGroups": 4
+          },
+          "uiStatuses": {
+            "match": 18,
+            "uncertain": 302,
+            "context-only": 12,
+            "unavailable": 62,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 82.49,
+            "wordAnyRawLinkPct": 71.22,
+            "wordFullyCoveredLettersPct": 54.92,
+            "wordPartialPct": 16.3,
+            "wordUnlinkedPct": 28.78,
+            "letterCodeUnitCoveragePct": 61.24,
+            "uiStrictMatchPct": 4.57,
+            "uiHighlightStatusPct": 81.22,
+            "uiContextStatusPct": 84.26
+          },
+          "source": {
+            "revision": 1,
+            "versionId": "a0c2b523-8889-406c-8507-64ca6dd342ac",
+            "canonicalTextSha256": "55c51c4b743867249d7ed6e98380bfab7040606a74712cbbee28d76bc07891d6"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 407,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 407,
+            "pairedUnits": 351,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3190,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3169,
+            "anyRawLinkWords": 1734,
+            "fullLetterWords": 1497,
+            "partialWords": 237,
+            "unlinkedWords": 1435,
+            "letterCoveredWords": 1733,
+            "linkedButNoLetterWords": 1,
+            "eligibleLetterCodeUnits": 13603,
+            "coveredLetterCodeUnits": 7103,
+            "uiQueriedUnits": 407,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2482,
+            "lexicalAliasGroups": 4
+          },
+          "uiStatuses": {
+            "match": 19,
+            "uncertain": 321,
+            "context-only": 27,
+            "unavailable": 40,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 86.24,
+            "wordAnyRawLinkPct": 54.72,
+            "wordFullyCoveredLettersPct": 47.24,
+            "wordPartialPct": 7.48,
+            "wordUnlinkedPct": 45.28,
+            "letterCodeUnitCoveragePct": 52.22,
+            "uiStrictMatchPct": 4.67,
+            "uiHighlightStatusPct": 83.54,
+            "uiContextStatusPct": 90.17
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "08226961-c0e2-4ff5-b969-3292d7296cf8",
+            "canonicalTextSha256": "738385609da26385822c5275d36c640e9ed69988e80d66a77d109aa0e273414d"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 801,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 801,
+          "pairedUnits": 676,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 5313,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 5292,
+          "anyRawLinkWords": 3246,
+          "fullLetterWords": 2663,
+          "partialWords": 583,
+          "unlinkedWords": 2046,
+          "letterCoveredWords": 3245,
+          "linkedButNoLetterWords": 1,
+          "eligibleLetterCodeUnits": 22597,
+          "coveredLetterCodeUnits": 12611,
+          "uiQueriedUnits": 801,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 4964,
+          "lexicalAliasGroups": 8
+        },
+        "uiStatuses": {
+          "match": 37,
+          "uncertain": 623,
+          "context-only": 39,
+          "unavailable": 102,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 84.39,
+          "wordAnyRawLinkPct": 61.34,
+          "wordFullyCoveredLettersPct": 50.32,
+          "wordPartialPct": 11.02,
+          "wordUnlinkedPct": 38.66,
+          "letterCodeUnitCoveragePct": 55.81,
+          "uiStrictMatchPct": 4.62,
+          "uiHighlightStatusPct": 82.4,
+          "uiContextStatusPct": 87.27
+        }
+      },
+      "artifactSha256": "c80a49d8c34841bd878a955b1792a85ef664b780eedf7b8e60bd1803a24517c9",
+      "inputSha256": "c4c8fd455e98436229b2062212efef69bc6f08eab256b77f3bcc4c715a0667c6"
+    },
+    {
+      "chapterId": "chapter-18",
+      "displayOrder": 18,
+      "titleVi": "Chương 18: Chuyện Lệ Nương",
+      "titleEn": "Chapter 18: The Tale of Le Nuong",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 640,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 640,
+            "pairedUnits": 461,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2937,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2937,
+            "anyRawLinkWords": 1905,
+            "fullLetterWords": 1437,
+            "partialWords": 468,
+            "unlinkedWords": 1032,
+            "letterCoveredWords": 1905,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 13387,
+            "coveredLetterCodeUnits": 7320,
+            "uiQueriedUnits": 640,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3292,
+            "lexicalAliasGroups": 16
+          },
+          "uiStatuses": {
+            "match": 42,
+            "uncertain": 411,
+            "context-only": 29,
+            "unavailable": 158,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 72.03,
+            "wordAnyRawLinkPct": 64.86,
+            "wordFullyCoveredLettersPct": 48.93,
+            "wordPartialPct": 15.93,
+            "wordUnlinkedPct": 35.14,
+            "letterCodeUnitCoveragePct": 54.68,
+            "uiStrictMatchPct": 6.56,
+            "uiHighlightStatusPct": 70.78,
+            "uiContextStatusPct": 75.31
+          },
+          "source": {
+            "revision": 4,
+            "versionId": "d77847a5-3ece-4de6-bcc7-02bbae35fe32",
+            "canonicalTextSha256": "95e6558b4e9f806f0d4082b7eceab3119a127fd50263f37f00c401792be75596"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 554,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 554,
+            "pairedUnits": 487,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 4248,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 4166,
+            "anyRawLinkWords": 2312,
+            "fullLetterWords": 2044,
+            "partialWords": 268,
+            "unlinkedWords": 1854,
+            "letterCoveredWords": 2312,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 17546,
+            "coveredLetterCodeUnits": 9485,
+            "uiQueriedUnits": 554,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 3292,
+            "lexicalAliasGroups": 16
+          },
+          "uiStatuses": {
+            "match": 45,
+            "uncertain": 418,
+            "context-only": 50,
+            "unavailable": 41,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 87.91,
+            "wordAnyRawLinkPct": 55.5,
+            "wordFullyCoveredLettersPct": 49.06,
+            "wordPartialPct": 6.43,
+            "wordUnlinkedPct": 44.5,
+            "letterCodeUnitCoveragePct": 54.06,
+            "uiStrictMatchPct": 8.12,
+            "uiHighlightStatusPct": 83.57,
+            "uiContextStatusPct": 92.6
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "3103dd4c-43dd-493d-a9a3-7dee0f0c97c0",
+            "canonicalTextSha256": "0c4d73b43ba4b400f45e13703ad6c921020c10a1325905041488617c1203119d"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1194,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1194,
+          "pairedUnits": 948,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 7185,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 7103,
+          "anyRawLinkWords": 4217,
+          "fullLetterWords": 3481,
+          "partialWords": 736,
+          "unlinkedWords": 2886,
+          "letterCoveredWords": 4217,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 30933,
+          "coveredLetterCodeUnits": 16805,
+          "uiQueriedUnits": 1194,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 6584,
+          "lexicalAliasGroups": 32
+        },
+        "uiStatuses": {
+          "match": 87,
+          "uncertain": 829,
+          "context-only": 79,
+          "unavailable": 199,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 79.4,
+          "wordAnyRawLinkPct": 59.37,
+          "wordFullyCoveredLettersPct": 49.01,
+          "wordPartialPct": 10.36,
+          "wordUnlinkedPct": 40.63,
+          "letterCodeUnitCoveragePct": 54.33,
+          "uiStrictMatchPct": 7.29,
+          "uiHighlightStatusPct": 76.72,
+          "uiContextStatusPct": 83.33
+        }
+      },
+      "artifactSha256": "0cf9fc5d5615c4e2c252b4219b2d0cde4eb20ee6f82ee391230c8c84b4d299d0",
+      "inputSha256": "7c5dc0de2e68ece2accfecc3676b214136be93ae3eb7d103d82d781b5060fcd1"
+    },
+    {
+      "chapterId": "chapter-19",
+      "displayOrder": 19,
+      "titleVi": "Chương 19: Cuộc Nói Chuyện Thơ Ở Kim Hoa",
+      "titleEn": "Chapter 19: A Discourse on Poetry at Kim Hoa",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 509,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 509,
+            "pairedUnits": 400,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2526,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2526,
+            "anyRawLinkWords": 1663,
+            "fullLetterWords": 1229,
+            "partialWords": 434,
+            "unlinkedWords": 863,
+            "letterCoveredWords": 1663,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 11425,
+            "coveredLetterCodeUnits": 6344,
+            "uiQueriedUnits": 509,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2967,
+            "lexicalAliasGroups": 7
+          },
+          "uiStatuses": {
+            "match": 33,
+            "uncertain": 363,
+            "context-only": 57,
+            "unavailable": 56,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 78.59,
+            "wordAnyRawLinkPct": 65.84,
+            "wordFullyCoveredLettersPct": 48.65,
+            "wordPartialPct": 17.18,
+            "wordUnlinkedPct": 34.16,
+            "letterCodeUnitCoveragePct": 55.53,
+            "uiStrictMatchPct": 6.48,
+            "uiHighlightStatusPct": 77.8,
+            "uiContextStatusPct": 89
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "bb7f7301-7605-4f11-b12f-a0cd06847597",
+            "canonicalTextSha256": "4a6479d01f2eda0c81b41ae632c138fce988ab06bb1414b24c248093d5499296"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 506,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 506,
+            "pairedUnits": 415,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3947,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3849,
+            "anyRawLinkWords": 2022,
+            "fullLetterWords": 1781,
+            "partialWords": 241,
+            "unlinkedWords": 1827,
+            "letterCoveredWords": 2022,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 16737,
+            "coveredLetterCodeUnits": 8519,
+            "uiQueriedUnits": 506,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2967,
+            "lexicalAliasGroups": 7
+          },
+          "uiStatuses": {
+            "match": 34,
+            "uncertain": 358,
+            "context-only": 65,
+            "unavailable": 49,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 82.02,
+            "wordAnyRawLinkPct": 52.53,
+            "wordFullyCoveredLettersPct": 46.27,
+            "wordPartialPct": 6.26,
+            "wordUnlinkedPct": 47.47,
+            "letterCodeUnitCoveragePct": 50.9,
+            "uiStrictMatchPct": 6.72,
+            "uiHighlightStatusPct": 77.47,
+            "uiContextStatusPct": 90.32
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "0d589c03-966a-4988-ad65-2ae426f2907a",
+            "canonicalTextSha256": "a383f9affd6703e391a0448ee45ce3d12324df25ed5638fd111f1c01fb16021b"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 1015,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 1015,
+          "pairedUnits": 815,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 6473,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 6375,
+          "anyRawLinkWords": 3685,
+          "fullLetterWords": 3010,
+          "partialWords": 675,
+          "unlinkedWords": 2690,
+          "letterCoveredWords": 3685,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 28162,
+          "coveredLetterCodeUnits": 14863,
+          "uiQueriedUnits": 1015,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 5934,
+          "lexicalAliasGroups": 14
+        },
+        "uiStatuses": {
+          "match": 67,
+          "uncertain": 721,
+          "context-only": 122,
+          "unavailable": 105,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 80.3,
+          "wordAnyRawLinkPct": 57.8,
+          "wordFullyCoveredLettersPct": 47.22,
+          "wordPartialPct": 10.59,
+          "wordUnlinkedPct": 42.2,
+          "letterCodeUnitCoveragePct": 52.78,
+          "uiStrictMatchPct": 6.6,
+          "uiHighlightStatusPct": 77.64,
+          "uiContextStatusPct": 89.66
+        }
+      },
+      "artifactSha256": "3aad32781403d6fb6c17d503dc497eb233d76b329942dd8b0ebc1b6c27f110d9",
+      "inputSha256": "ca662d4b6b5ea70f7e999c03460a36b556cda354356b41f7a500a28c1fafa7a1"
+    },
+    {
+      "chapterId": "chapter-20",
+      "displayOrder": 20,
+      "titleVi": "Chương 20: Chuyện Tướng Dạ Xoa",
+      "titleEn": "Chapter 20: The Tale of the Yaksha General",
+      "locales": {
+        "vi": {
+          "counts": {
+            "preparedUnitRecords": 428,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 428,
+            "pairedUnits": 375,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 2508,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 2508,
+            "anyRawLinkWords": 1774,
+            "fullLetterWords": 1372,
+            "partialWords": 402,
+            "unlinkedWords": 734,
+            "letterCoveredWords": 1774,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 10134,
+            "coveredLetterCodeUnits": 6422,
+            "uiQueriedUnits": 428,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2903,
+            "lexicalAliasGroups": 6
+          },
+          "uiStatuses": {
+            "match": 11,
+            "uncertain": 361,
+            "context-only": 29,
+            "unavailable": 27,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 87.62,
+            "wordAnyRawLinkPct": 70.73,
+            "wordFullyCoveredLettersPct": 54.7,
+            "wordPartialPct": 16.03,
+            "wordUnlinkedPct": 29.27,
+            "letterCodeUnitCoveragePct": 63.37,
+            "uiStrictMatchPct": 2.57,
+            "uiHighlightStatusPct": 86.92,
+            "uiContextStatusPct": 93.69
+          },
+          "source": {
+            "revision": 2,
+            "versionId": "913d1d28-8dca-4613-8779-4780d1b6bdea",
+            "canonicalTextSha256": "4a2b4c9341a698a5723cc1d0e4d1bdd4a0b1bc09fe904c7e0da741f1630920b8"
+          }
+        },
+        "en": {
+          "counts": {
+            "preparedUnitRecords": 491,
+            "excludedStructuralUnitRecords": 0,
+            "duplicateUnitSpans": 0,
+            "eligibleUnits": 491,
+            "pairedUnits": 427,
+            "groupsWithoutParts": 0,
+            "wordSpanRecords": 3851,
+            "duplicateWordSpans": 0,
+            "eligibleWords": 3806,
+            "anyRawLinkWords": 2084,
+            "fullLetterWords": 1847,
+            "partialWords": 237,
+            "unlinkedWords": 1722,
+            "letterCoveredWords": 2084,
+            "linkedButNoLetterWords": 0,
+            "eligibleLetterCodeUnits": 16115,
+            "coveredLetterCodeUnits": 8616,
+            "uiQueriedUnits": 491,
+            "uiTooLongUnits": 0,
+            "uiErrors": 0,
+            "rawLinkRecords": 2903,
+            "lexicalAliasGroups": 6
+          },
+          "uiStatuses": {
+            "match": 10,
+            "uncertain": 409,
+            "context-only": 43,
+            "unavailable": 29,
+            "stale": 0,
+            "pending": 0,
+            "missing": 0
+          },
+          "percentages": {
+            "pairedUnitPct": 86.97,
+            "wordAnyRawLinkPct": 54.76,
+            "wordFullyCoveredLettersPct": 48.53,
+            "wordPartialPct": 6.23,
+            "wordUnlinkedPct": 45.24,
+            "letterCodeUnitCoveragePct": 53.47,
+            "uiStrictMatchPct": 2.04,
+            "uiHighlightStatusPct": 85.34,
+            "uiContextStatusPct": 94.09
+          },
+          "source": {
+            "revision": 3,
+            "versionId": "27406fca-9034-449b-8f39-6ad60c42fc66",
+            "canonicalTextSha256": "934d340fbf9d5a8c9957531723641aad89e811974bfc2b47fe9c5575db14bae6"
+          }
+        }
+      },
+      "combined": {
+        "counts": {
+          "preparedUnitRecords": 919,
+          "excludedStructuralUnitRecords": 0,
+          "duplicateUnitSpans": 0,
+          "eligibleUnits": 919,
+          "pairedUnits": 802,
+          "groupsWithoutParts": 0,
+          "wordSpanRecords": 6359,
+          "duplicateWordSpans": 0,
+          "eligibleWords": 6314,
+          "anyRawLinkWords": 3858,
+          "fullLetterWords": 3219,
+          "partialWords": 639,
+          "unlinkedWords": 2456,
+          "letterCoveredWords": 3858,
+          "linkedButNoLetterWords": 0,
+          "eligibleLetterCodeUnits": 26249,
+          "coveredLetterCodeUnits": 15038,
+          "uiQueriedUnits": 919,
+          "uiTooLongUnits": 0,
+          "uiErrors": 0,
+          "rawLinkRecords": 5806,
+          "lexicalAliasGroups": 12
+        },
+        "uiStatuses": {
+          "match": 21,
+          "uncertain": 770,
+          "context-only": 72,
+          "unavailable": 56,
+          "stale": 0,
+          "pending": 0,
+          "missing": 0
+        },
+        "percentages": {
+          "pairedUnitPct": 87.27,
+          "wordAnyRawLinkPct": 61.1,
+          "wordFullyCoveredLettersPct": 50.98,
+          "wordPartialPct": 10.12,
+          "wordUnlinkedPct": 38.9,
+          "letterCodeUnitCoveragePct": 57.29,
+          "uiStrictMatchPct": 2.29,
+          "uiHighlightStatusPct": 86.07,
+          "uiContextStatusPct": 93.91
+        }
+      },
+      "artifactSha256": "b7a2d5bff96d3e44963326c613f1d24f9833c3f09f4ded3d877ffcae873002bc",
+      "inputSha256": "346d06bdefdea35de12a6f66c4fabd0020b335b1cd55e43d208c204a46a7b28c"
+    }
+  ]
+}
