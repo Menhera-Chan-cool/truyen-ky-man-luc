@@ -1,0 +1,15 @@
+.git/
+.next/
+.vercel/
+node_modules/
+.env*
+.alignment-cache/
+.alignment-work/
+.impeccable/
+test-results/
+playwright-report/
+verification/
+reports/
+tasks/
+**/__pycache__/
+*.tsbuildinfo
