@@ -21,7 +21,7 @@ npx tsx scripts/align-novel/evaluate.ts ../../work/novel-alignment-ready ../../w
 
 The evaluator reports character-span precision/recall/F1 on 120 directional probes; `hits` means F1≥0.5, **not human-verified semantic accuracy**. The probes used during development are not a new independent held-out test. Poetry, omissions and idioms can remain uncertain; UI must show context and automatic-suggestion labels.
 
-Production: migration 20261112043121_novel_alignment.sql adds private jobs/runs/storage; 20261113082758_contextual_novel_alignment.sql selects LaBSE; 20261113131339_book_specific_novel_alignment.sql selects the book recipe; 20261114014446_poetry_novel_alignment.sql selects the poetry recipe. Prior ready results stay available until replacements exist. These migrations do not rewrite book content. `worker.ts` binds both immutable source versions and canonical hashes, verifies prepared results, uploads content-addressed JSON, then finishes with the job lease. An obsolete result cannot replace the active pair.
+Production: migration 20261112043121_novel_alignment.sql adds private jobs/runs/storage; 20261113082758_contextual_novel_alignment.sql selects LaBSE; 20261113131339_book_specific_novel_alignment.sql selects the book recipe; 20261114071828_poetry_novel_alignment.sql selects the poetry recipe. Prior ready results stay available until replacements exist. These migrations do not rewrite book content. `worker.ts` binds both immutable source versions and canonical hashes, verifies prepared results, uploads content-addressed JSON, then finishes with the job lease. An obsolete result cannot replace the active pair.
 
 ## Isolated adaptation
 

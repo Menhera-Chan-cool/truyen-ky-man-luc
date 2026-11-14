@@ -1,6 +1,6 @@
 {
   "recipe": "labse-poetry-mbert-3",
-  "delivery": "local verified; production release pending",
+  "delivery": "production READY, public artifacts and reader flows verified",
   "artifacts": [
     {
       "chapter": "chapter-1",
@@ -9755,5 +9755,21 @@
     "typecheck": true,
     "productionBuild": true,
     "physicalPhone": false
+  },
+  "release": {
+    "deploymentId": "dpl_FYAKhiSnRf8gUVKzTZx9yFdpvTac",
+    "immutableUrl": "https://truyen-ky-man-26wthbyxe-anh-tun.vercel.app",
+    "url": "https://truyen-ky-man-luc.vercel.app",
+    "runtimeSourceCommit": "879630a749c16142860856e7bfba32b7d6293a41",
+    "algorithm": "labse-poetry-mbert-3",
+    "readyState": "READY",
+    "checkedAt": "2026-11-14T11:57:30.836Z",
+    "region": "sin1",
+    "publicArtifacts": 20,
+    "publicArtifactBytes": 9505089,
+    "liveScreenshots": 15,
+    "liveBrowserTests": 15,
+    "workflowState": "active",
+    "migrationVersion": "20261114071828"
   }
 }

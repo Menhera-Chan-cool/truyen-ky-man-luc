@@ -1,0 +1,252 @@
+{
+  "release": {
+    "deploymentId": "dpl_FYAKhiSnRf8gUVKzTZx9yFdpvTac",
+    "immutableUrl": "https://truyen-ky-man-26wthbyxe-anh-tun.vercel.app",
+    "url": "https://truyen-ky-man-luc.vercel.app",
+    "runtimeSourceCommit": "879630a749c16142860856e7bfba32b7d6293a41",
+    "algorithm": "labse-poetry-mbert-3",
+    "readyState": "READY",
+    "checkedAt": "2026-11-14T11:57:30.836Z",
+    "region": "sin1",
+    "publicArtifacts": 20,
+    "publicArtifactBytes": 9505089,
+    "liveScreenshots": 15,
+    "liveBrowserTests": 15,
+    "workflowState": "active",
+    "migrationVersion": "20261114071828"
+  },
+  "live": {
+    "base": "https://truyen-ky-man-luc.vercel.app",
+    "verifiedAt": "2026-11-14T11:54:55.716Z",
+    "algorithm": "labse-poetry-mbert-3",
+    "artifacts": [
+      {
+        "chapter": "chapter-1",
+        "sha256": "61cfcbec3ac298220f6a4445a0588083274950d5f4338e9f4e747fc01fc54630",
+        "bytes": 577714,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-2",
+        "sha256": "1e994a66cf817311d7053e4ccc6998b37478a50089cec36de91b589acfc6b901",
+        "bytes": 479113,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-3",
+        "sha256": "8407416338c1aab9d6965860623a45262006cfa533327c5c3e73d67116e35937",
+        "bytes": 406991,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-4",
+        "sha256": "dd3ccf175fd103f0a996c91d62c3b22ffb469a52d06e74ae8f110149426035ae",
+        "bytes": 490287,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-5",
+        "sha256": "9cdfd2bfaee8fbe1f329d8b8fde6b7dc828b842f7cacc1da1cfddf95954a353e",
+        "bytes": 591893,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-6",
+        "sha256": "ba56578431d49f72b6097e24b7804ad9ebc0381ebcf89eda3bcda43ff62229f7",
+        "bytes": 498448,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-7",
+        "sha256": "f9e6c9d89bd3a99b7d05b1cfc8fd04059c9f28c560ec883a6bdd05d359b964af",
+        "bytes": 605802,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-8",
+        "sha256": "38f56f43aa0748e23f12d15dce971074646a980aa30939c1e5bced31df8f0326",
+        "bytes": 310510,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-9",
+        "sha256": "3a9e20e0be6f2ae67d0cd79e3055835c5b5e801262290087e9cd90ad58426ce7",
+        "bytes": 597898,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-10",
+        "sha256": "b7520cf7cb918645bcdcf576601928fbc014e4c4793931082918145fd82ea1b7",
+        "bytes": 373984,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-11",
+        "sha256": "6a0c20102c865f73c354b0f507882f1ff820896bdd84d300248616a00ef01a3c",
+        "bytes": 338246,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-12",
+        "sha256": "210e766fd190651f095adeb83ddff72e5588e6c71b14b332cdd6e084d4193427",
+        "bytes": 406391,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-13",
+        "sha256": "cca2e4ac4092bf81955eac268208fcd00709d3785f5969def0d0a92b5aba9848",
+        "bytes": 518938,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-14",
+        "sha256": "3011b2ab340691d7a842257b770b4c87a6c47dbddcabcd126b694f834ad425cf",
+        "bytes": 593930,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-15",
+        "sha256": "953e8808a92c0e5267a3dde8d50516f0bbb8a9b73b7f6d618c67d10030f0441e",
+        "bytes": 316802,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-16",
+        "sha256": "f8c1af768d3ba488de73930b242021c99db33c71f43c18f14e5a495619fba723",
+        "bytes": 577693,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-17",
+        "sha256": "37344c49f87a9778b2612e184027f85985868edd436d2a426283dc8fb2b19c5a",
+        "bytes": 373125,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-18",
+        "sha256": "f5cde93c795448e090a67acd5377d34079bfa30612fcd686b78686effe36d4e4",
+        "bytes": 483139,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-19",
+        "sha256": "4e022fa6494a8c28ebacff0afa278e27d37119efb6f113975c07e652b383a03c",
+        "bytes": 498482,
+        "algorithm": "labse-poetry-mbert-3"
+      },
+      {
+        "chapter": "chapter-20",
+        "sha256": "ecd5ff39078e152135bc30e13972b618c7da7bbeb88353a5f07b3214adaa95c1",
+        "bytes": 465703,
+        "algorithm": "labse-poetry-mbert-3"
+      }
+    ],
+    "totalBytes": 9505089,
+    "screenshotCases": [
+      {
+        "id": "screenshot-01",
+        "status": "uncertain",
+        "correctPoem": true,
+        "highlighted": true
+      },
+      {
+        "id": "screenshot-02",
+        "status": "uncertain",
+        "correctPoem": true,
+        "highlighted": true
+      },
+      {
+        "id": "screenshot-03",
+        "status": "uncertain",
+        "correctPoem": true,
+        "highlighted": true
+      },
+      {
+        "id": "screenshot-04",
+        "status": "uncertain",
+        "correctPoem": true,
+        "highlighted": true
+      },
+      {
+        "id": "screenshot-05",
+        "status": "uncertain",
+        "correctPoem": true,
+        "highlighted": true
+      },
+      {
+        "id": "screenshot-06",
+        "status": "uncertain",
+        "correctPoem": true,
+        "highlighted": true
+      },
+      {
+        "id": "screenshot-07",
+        "status": "uncertain",
+        "correctPoem": true,
+        "highlighted": true
+      },
+      {
+        "id": "screenshot-08",
+        "status": "uncertain",
+        "correctPoem": true,
+        "highlighted": true
+      },
+      {
+        "id": "screenshot-09",
+        "status": "uncertain",
+        "correctPoem": true,
+        "highlighted": true
+      },
+      {
+        "id": "screenshot-10",
+        "status": "context-only",
+        "correctPoem": true,
+        "highlighted": false
+      },
+      {
+        "id": "screenshot-11",
+        "status": "context-only",
+        "correctPoem": true,
+        "highlighted": false
+      },
+      {
+        "id": "screenshot-12",
+        "status": "context-only",
+        "correctPoem": true,
+        "highlighted": false
+      },
+      {
+        "id": "screenshot-13",
+        "status": "context-only",
+        "correctPoem": true,
+        "highlighted": false
+      },
+      {
+        "id": "screenshot-14",
+        "status": "context-only",
+        "correctPoem": true,
+        "highlighted": false
+      },
+      {
+        "id": "screenshot-15",
+        "status": "context-only",
+        "correctPoem": true,
+        "highlighted": false
+      }
+    ]
+  },
+  "privileges": {
+    "anonQueue": false,
+    "anonClaim": false,
+    "editorClaim": false,
+    "anonRead": true
+  },
+  "local": {
+    "vitest": 306,
+    "python": 79,
+    "browser": 51,
+    "typecheck": true,
+    "build": true
+  },
+  "unchangedPublishedEditions": 40
+}

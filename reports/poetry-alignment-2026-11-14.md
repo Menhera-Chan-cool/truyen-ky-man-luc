@@ -1,6 +1,6 @@
 # Poetry alignment — 2026-11-14
 
-Local đã kiểm chứng; production đang chờ phát hành. Recipe `labse-poetry-mbert-3`, giữ LaBSE/mBERT gốc đã pin. Không dùng model fine-tune bị từ chối, không gọi LLM/Vilao khi tra.
+Đã phát hành production và kiểm chứng trên web. Recipe `labse-poetry-mbert-3`, giữ LaBSE/mBERT gốc đã pin. Không dùng model fine-tune bị từ chối, không gọi LLM/Vilao khi tra.
 
 ## Thay đổi
 
@@ -41,3 +41,7 @@ Không tăng các nhãn bằng cách hạ ngưỡng .82/.015 hoặc tự lấp l
 306 Vitest,79 Python, typecheck, production build và51 browser tests trên desktop/Android/WebKit qua. Không có thử điện thoại vật lý.40 version/hash/text xuất bản giữ nguyên.20 artifacts, 9,505,089 byte; 86 cặp metadata bài, 280 ánh xạ dòng và 25 cặp chỉ có ngữ cảnh.
 
 `reports/poetry-alignment-2026-11-14.json` lưu dự đoán, định nghĩa và checksum; `reports/poetry-coverage-2026-11-14.md` có đủ40 hàng chương/ngôn ngữ. Mô hình/dữ liệu work giữ ngoài Git/browser. Migration mới giữ các run cũ đến khi run mới sẵn sàng. Chỉ phát hành online trong phạm vi này.
+
+## Production đã xác minh
+
+Source `879630a749c16142860856e7bfba32b7d6293a41`, deployment `dpl_FYAKhiSnRf8gUVKzTZx9yFdpvTac`, https://truyen-ky-man-luc.vercel.app.20 file tải qua đường đọc công khai khớp SHA256/kích thước local (9505089 byte).15 yêu cầu từ ảnh ở đúng bài;9 có tô đối ứng và6 chỉ ngữ cảnh.15 browser tests production trên desktop/Android/WebKit qua. Workflow hourly đang active;40 bản nội dung xuất bản không đổi.
