@@ -41,3 +41,10 @@ test('separates prose words inside an idiom without borrowing the preceding clau
  await expect(page.locator('.lookup-passage')).toContainText('lời hoa ý gấm');
  await expect(page.locator('.lookup-passage mark')).toHaveText('lời hoa');await expect(page.locator('.lookup-terms')).toHaveText('lời hoa');
 });
+
+test('keeps the complete sentence across several counterpart clauses in both directions',async({page})=>{
+ const en="Though Nhi Khanh was still young, once she entered the Phung household she conducted herself with great tact toward her husband's kin.";
+ const vi='Nhị Khanh tuy hãy còn nhỏ, nhưng sau khi về nhà họ Phùng, khéo biết cư xử với họ hàng,';
+ await lookup(page,'en',2,en);await expect(page.locator('.lookup-passage')).toHaveText(vi);await expect(page.locator('.lookup-passage mark')).toHaveText(vi);
+ await lookup(page,'vi',2,vi);await expect(page.locator('.lookup-passage')).toHaveText(en);await expect(page.locator('.lookup-passage mark')).toHaveText(en);
+});

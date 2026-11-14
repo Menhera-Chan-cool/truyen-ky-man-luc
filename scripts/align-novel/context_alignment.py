@@ -152,8 +152,10 @@ def align_contexts(item,encode):
             note_pairs.append({**bounds,'score':round(pair['score'],5),'margin':round(pair['margin'],5)})
             selected={l:[u for u in units[l] if u['section']=='notes' and str(u['noteId']) in {str(n['id']) for n in chosen[l]}] for l in ['vi','en']}
             fine(selected['vi'],selected['en'],'notes')
-    from prose_alignment import repair_prose_groups
-    return repair_prose_groups(item,groups,units,encode),note_pairs
+    from prose_alignment import repair_prose_groups,add_clause_pairs
+    groups=repair_prose_groups(item,groups,units,encode)
+    add_clause_pairs(groups,encode,item['editions'])
+    return groups,note_pairs
 
 _word_pattern=regex.compile(r"[\p{L}\p{M}]+(?:['’][\p{L}\p{M}]+)*")
 _stop={'a','an','the','of','and','to','in','at','on','for'}

@@ -38,14 +38,14 @@ def align_candidates(source,target,minimum=.78):
             key=(tuple(a),tuple(b));result[key]={'vi':a,'en':b,'score':score,'margin':score-max(alternatives,default=0)}
     return sorted(result.values(),key=lambda p:(p['vi'][0],p['en'][0]))
 
-def align_sequences(source,target,minimum=.80):
+def align_sequences(source,target,minimum=.80,windows=None):
     n,m=len(source),len(target)
     if not n or not m:return []
     source=np.asarray(source,dtype=np.float32);target=np.asarray(target,dtype=np.float32)
     def merged(values,size):
         result=np.stack([values[i:i+size].sum(0) for i in range(len(values)-size+1)])
         return result/np.maximum(np.linalg.norm(result,axis=1,keepdims=True),1e-9)
-    scores={(a,b):merged(source,a)@merged(target,b).T for a in range(1,min(3,n)+1) for b in range(1,min(3,m)+1)}
+    scores={(a,b):(windows[0][a] if windows else merged(source,a))@(windows[1][b] if windows else merged(target,b)).T for a in range(1,min(3,n)+1) for b in range(1,min(3,m)+1)}
     dp=np.full((n+1,m+1),-np.inf);dp[0,0]=0
     back=np.zeros((n+1,m+1,2),dtype=np.int8)
     for i in range(n+1):

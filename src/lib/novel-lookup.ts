@@ -7,6 +7,7 @@ export type TextSpan = {start:number;end:number};
 export type PoetryCorrespondence=Record<Locale,TextSpan[]>&{score:number;evidence:'direct-window'|'surrounding-window'};
 export type PoetryTrack=TextSpan&{id:string;lines:TextSpan[];title?:TextSpan;flattened?:boolean};
 export type PoetryPair=Record<Locale,PoetryTrack>&{score:number;margin:number;primary:Record<Locale,boolean>;correspondences:PoetryCorrespondence[];contextOnly?:boolean};
+export type ClausePair=Record<Locale,TextSpan[]>&{score:number;margin:number};
 export type AlignmentArtifact = {
   schema:1;codec:string;algorithm:string;chapterId:string;createdAt:string;
   editions:Record<Locale,{revision:number;versionId:string;hash:string;text:string;words?:TextSpan[];breaks?:number[]}>;
@@ -15,6 +16,7 @@ export type AlignmentArtifact = {
     tracks?:Record<Locale,TextSpan&{id:string}>;
     poetryLines? : Record<Locale,TextSpan[]>&{score:number;poemScore:number;evidence:'direct-window'|'surrounding-window';correspondences:PoetryCorrespondence[]};
     kind?:'lexical';
+    clausePairs?:ClausePair[];
     links:{vi:[number,number];en:[number,number];score:number}[]}[];
   notePairs?:{vi:TextSpan;en:TextSpan;score:number;margin:number}[];
   poems?:PoetryPair[];
@@ -52,6 +54,18 @@ export function validateAlignmentArtifact(value:unknown):AlignmentArtifact {
     if(!g||!valid(g.vi,a.editions.vi.text)||!valid(g.en,a.editions.en.text)||!Number.isFinite(g.score)||!Number.isFinite(g.margin)||!Array.isArray(g.links)||g.links.length>100000)invalid();
     if(g.parts)for(const l of ['vi','en']as const){const parts=g.parts[l];if(!Array.isArray(parts)||!parts.length||parts.length>1000||parts.some((p,i)=>!valid(p,a.editions[l].text)||p.start<g[l].start||p.end>g[l].end||(i>0&&p.start<parts[i-1].end)))invalid();}
     if(g.tracks)for(const l of ['vi','en']as const){const t=g.tracks[l];if(!valid(t,a.editions[l].text)||typeof t.id!=='string'||!t.id.length||t.id.length>100||t.start>g[l].start||t.end<g[l].end)invalid();}
+    if(g.clausePairs){
+      if(!Array.isArray(g.clausePairs)||g.clausePairs.length>64)invalid();
+      for(const [pairIndex,p] of g.clausePairs.entries()){
+        if(!Number.isFinite(p.score)||p.score<0||p.score>1.001||!Number.isFinite(p.margin))invalid();
+        for(const l of ['vi','en']as const)if(!Array.isArray(p[l])||!p[l].length||p[l].length>96||p[l].some((s,i)=>!valid(s,a.editions[l].text)||s.start<g[l].start||s.end>g[l].end||(i>0&&s.start<p[l][i-1].end)||(g.parts&&!g.parts[l].some(q=>q.start<=s.start&&q.end>=s.end))))invalid();
+        for(const q of g.clausePairs.slice(0,pairIndex)){
+          const bounds=(p:ClausePair,l:Locale)=>({start:p[l][0].start,end:p[l].at(-1)!.end}),nested=(x:TextSpan,y:TextSpan)=>x.start<=y.start&&x.end>=y.end&&(x.start<y.start||x.end>y.end);
+          const pv=bounds(p,'vi'),pe=bounds(p,'en'),qv=bounds(q,'vi'),qe=bounds(q,'en');
+          if((pv.start<qv.end&&qv.start<pv.end)||(pe.start<qe.end&&qe.start<pe.end))if(!((nested(pv,qv)&&nested(pe,qe))||(nested(qv,pv)&&nested(qe,pe))))invalid();
+        }
+      }
+    }
     for(const link of g.links){
       if(!link||!Number.isFinite(link.score)||link.score<0||link.score>1.001)invalid();
       for(const l of ["vi","en"] as const){
@@ -132,7 +146,7 @@ export function alignmentUnits(edition:AlignmentArtifact['editions'][Locale],bou
   }
   return units;
 }
-function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['groups'][number],request:LookupRequest,targetLocale:Locale){
+function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['groups'][number],request:LookupRequest,targetLocale:Locale):{covered:TextSpan[];spans:TextSpan[];unmatched?:TextSpan[]}{
   const source=artifact.editions[request.locale],target=artifact.editions[targetLocale];
   const within=(span:TextSpan,l:Locale)=>!g.parts||g.parts[l].some(p=>span.start>=p.start&&span.end<=p.end);
   const notes=g.section==='notes',sourceUnits=alignmentUnits(source,g[request.locale],request.locale,notes,artifact.refinementVersion===1).filter(p=>within(p,request.locale)),targets=alignmentUnits(target,g[targetLocale],targetLocale,notes,artifact.refinementVersion===1).filter(p=>within(p,targetLocale));
@@ -140,27 +154,48 @@ function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['gr
   if(g.parts){let at=Math.max(request.start,g[request.locale].start),end=Math.min(request.end,g[request.locale].end);for(const p of g.parts[request.locale]){if(p.end<=at)continue;if(p.start>=end)break;if(/\p{L}/u.test(source.text.slice(at,Math.min(p.start,end))))return {covered,spans};at=Math.max(at,p.end);}if(/\p{L}/u.test(source.text.slice(at,end)))return {covered,spans};}
   if(g.kind==='lexical'||nameSelection(request.text))return {covered,spans};
   if((request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)<=1&&((source.text.slice(g[request.locale].start,g[request.locale].end).match(/[\p{L}\p{M}]+/gu)?.length??0)>1||(target.text.slice(g[targetLocale].start,g[targetLocale].end).match(/[\p{L}\p{M}]+/gu)?.length??0)>3))return {covered,spans};
-  const selection=wordSpan(source.text,request.start,request.end,g[request.locale]);
+  const selection={start:request.start,end:request.end};
   const includes=(unit:TextSpan)=>{
     const text=analysisText(source.text.slice(unit.start,unit.end),notes),first=text.search(/[\p{L}\p{N}]/u),last=[...text.matchAll(/[\p{L}\p{M}\p{N}]/gu)].at(-1)!;
     return selection.start<=unit.start+first&&selection.end>=unit.start+last.index+last[0].length;
   };
-  if(sourceUnits.length&&sourceUnits.every(includes)&&(targets.length===1||(sourceUnits.length===1&&targets.length<=3)))return {covered:sourceUnits,spans:targets};
+  const selected=sourceUnits.filter(includes);
+  if(g.clausePairs&&selected.length){
+    if(!g.clausePairs.length)return {covered,spans,unmatched:selected};
+    const pairs=g.clausePairs.filter(p=>p.score>=.5&&p.margin>=.03&&p[request.locale].every(s=>s.start>=g[request.locale].start&&s.end<=g[request.locale].end&&within(s,request.locale)&&includes(s))&&p[targetLocale].every(s=>s.start>=g[targetLocale].start&&s.end<=g[targetLocale].end&&within(s,targetLocale)));
+    covered.push(...pairs.flatMap(p=>p[request.locale]));spans.push(...pairs.flatMap(p=>p[targetLocale]));
+  }
+  if(!g.clausePairs&&sourceUnits.length&&sourceUnits.every(includes)&&(targets.length===1||(sourceUnits.length===1&&targets.length<=3)))return {covered:sourceUnits,spans:targets};
   for(const unit of sourceUnits){
-    if(!includes(unit))continue;
-    const votes=targets.map(span=>{
-      const words=new Map<string,number>();
+    if(!includes(unit)||covered.some(p=>p.start<=unit.start&&p.end>=unit.end))continue;
+    const votes=targets.map((span,index)=>{
+      const words=new Map<string,number>(),outside=new Map<string,number>();
       for(const link of g.links){
         const from=link[request.locale],to=link[targetLocale];
-        if(from[0]<unit.start||from[1]>unit.end||to[0]<span.start||to[1]>span.end||!/\p{L}/u.test(source.text.slice(...from))||!/\p{L}/u.test(target.text.slice(...to)))continue;
-        const word=wordSpan(source.text,...from,unit,source.words),key=word.start+':'+word.end;
-        words.set(key,Math.max(words.get(key)??0,link.score*source.text.slice(word.start,word.end).replace(/[^\p{L}\p{M}\p{N}]/gu,'').length));
+        if(link.score<.03||to[0]<span.start||to[1]>span.end||!/\p{L}/u.test(source.text.slice(...from))||!/\p{L}/u.test(target.text.slice(...to)))continue;
+        const word=wordSpan(source.text,...from,g[request.locale],source.words),key=word.start+':'+word.end;
+        if(onlyFunctionWords(source.text.slice(word.start,word.end),request.locale))continue;
+        const values=from[0]>=unit.start&&from[1]<=unit.end?words:(from[1]<=request.start||from[0]>=request.end)?outside:undefined;
+        if(values)values.set(key,Math.max(values.get(key)??0,link.score*source.text.slice(word.start,word.end).replace(/[^\p{L}\p{M}\p{N}]/gu,'').length));
       }
-      return {span,weight:[...words.values()].reduce((a,b)=>a+b,0)};
-    }).sort((a,b)=>b.weight-a.weight);
+      const reserved=g.clausePairs?.some(p=>p.score>=.5&&p.margin>=.03&&!p[request.locale].some(s=>s.start<request.end&&s.end>request.start)&&p[targetLocale].some(s=>s.start<span.end&&s.end>span.start));
+      return {span,index,weight:reserved?0:[...words.values()].reduce((a,b)=>a+b,0),outside:[...outside.values()].reduce((a,b)=>a+b,0)};
+    });
+    if(artifact.refinementVersion===1){
+      const chosen=votes.filter(v=>v.weight>0&&v.weight>v.outside*1.35);
+      const content=[...analysisText(source.text.slice(unit.start,unit.end),notes).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].filter(m=>!onlyFunctionWords(m[0],request.locale));
+      const anchored=(m:RegExpMatchArray)=>g.links.some(l=>l.score>=.03&&l[request.locale][0]<unit.start+m.index!+m[0].length&&l[request.locale][1]>unit.start+m.index!&&chosen.some(v=>l[targetLocale][0]>=v.span.start&&l[targetLocale][1]<=v.span.end));
+      const essential=content.filter(m=>/^(?:\d+|not|never|no|không|chưa|chẳng|đừng)$/iu.test(m[0]));
+      if(!chosen.length||chosen.some((v,i)=>i>0&&v.index!==chosen[i-1].index+1)||content.filter(anchored).length<=content.length/2||essential.some(m=>!anchored(m)))return {covered:[],spans:[],unmatched:selected};
+      covered.push(unit);spans.push(...chosen.map(v=>v.span));continue;
+    }
+    votes.sort((a,b)=>b.weight-a.weight);
     const best=votes[0];
-    if(best&&((best.weight>0&&best.weight>(votes[1]?.weight??0)*1.35)||(sourceUnits.length===1&&targets.length===1))){covered.push(unit);spans.push(best.span);}
+    if(best&&((best.weight>0&&best.weight>(votes[1]?.weight??0)*1.35)||(sourceUnits.length===1&&targets.length===1))){
+      covered.push(unit);spans.push(best.span);
+    }
   }
+  if(artifact.refinementVersion===1&&selected.some(s=>!covered.some(p=>p.start<=s.start&&p.end>=s.end)))return {covered:[],spans:[],unmatched:selected};
   return {covered,spans};
 }
 const functionWords:Record<Locale,Set<string>>={
@@ -253,11 +288,14 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
   }
   let uncertain=remaining.some(s=>source.text.slice(s.start,s.end).trim()),hasWords=false,incompleteWords=false;
   const passages:LookupPassage[]=[];
+  const contexts:TextSpan[]=[];
+  const unmatchedSource:TextSpan[]=[];
   for(const g of groups){
     const supported=!!poem||g.kind==='lexical'||(g.score>=.5&&g.margin>=.015);
     const content=[...analysisText(source.text.slice(g[locale].start,g[locale].end),g.section==='notes').matchAll(/[\p{L}\p{M}\p{N}]/gu)],last=content.at(-1);
     const whole=(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1&&!!last&&request.start<=g[locale].start+content[0].index&&request.end>=g[locale].start+last.index+last[0].length;
-    let spans:TextSpan[]=[];const coveredWords:TextSpan[]=[];const sentences=supported||whole?wholeSentenceTargets(artifact,g,request,targetLocale):{covered:[],spans:[]};
+    let spans:TextSpan[]=[];const coveredWords:TextSpan[]=[];const sentences:ReturnType<typeof wholeSentenceTargets>=supported||whole?wholeSentenceTargets(artifact,g,request,targetLocale):{covered:[],spans:[]};
+    if(sentences.unmatched?.length){incompleteWords=true;unmatchedSource.push(...sentences.unmatched.map(s=>({start:Math.max(s.start,request.start),end:Math.min(s.end,request.end)})));}
     const targetSpans=targetWords(g,locale,source,target,!poem&&g.kind!=='lexical');
     const sourceSpans=targetWords(g,targetLocale,target,source,!poem&&g.kind!=='lexical');
     const named=properNameSpan(request.text,target.text,g[targetLocale]);
@@ -293,10 +331,11 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     }
     let highlights=mergeSpans(nameTargets(spans,request,target.text,g[targetLocale],targetLocale),target.text);
     const inferredTitle=titledNames.some(t=>locale==='en'?t.en.test(request.text)&&highlights.some(s=>t.vi.test(target.text.slice(s.start,s.end))):t.vi.test(request.text)&&highlights.some(s=>t.en.test(target.text.slice(s.start,s.end))));
-    if(!named&&!inferredTitle&&!sentences.spans.length&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1){
+    if(!named&&!inferredTitle&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1){
       const from=Math.max(request.start,g[locale].start),end=Math.min(request.end,g[locale].end);
       const selected=[...source.text.slice(from,end).matchAll(/[\p{L}\p{M}]+/gu)].map(m=>({start:from+m.index,end:from+m.index+m[0].length}));
-      if(selected.some(w=>/\p{L}/u.test(source.text.slice(w.start,w.end))&&!onlyFunctionWords(source.text.slice(w.start,w.end),locale)&&!coveredWords.some(s=>s.start<=w.start&&s.end>=w.end)))incompleteWords=true;
+      const missing=selected.filter(w=>/\p{L}/u.test(source.text.slice(w.start,w.end))&&!onlyFunctionWords(source.text.slice(w.start,w.end),locale)&&![...coveredWords,...sentences.covered].some(s=>s.start<=w.start&&s.end>=w.end));
+      if(missing.length){incompleteWords=true;unmatchedSource.push(...missing);}
     }
     const sourceBlock=shortBlock(source,request);
     if(artifact.refinementVersion===1&&g.section!=='notes'&&sourceBlock&&!nameSelection(request.text)&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>2){
@@ -310,9 +349,10 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     hasWords ||= highlights.length>0;
     uncertain ||= g.score<.82||g.margin<.015;
     const bounds=sentences.spans.length&&highlights.length?{start:Math.min(...highlights.map(s=>s.start)),end:Math.max(...highlights.map(s=>s.end))}:g[targetLocale];
+    contexts.push(g[targetLocale]);
     passages.push({source:{...g[locale],text:source.text.slice(g[locale].start,g[locale].end)},target:{...bounds,text:target.text.slice(bounds.start,bounds.end),breaks:target.breaks?.filter(p=>p>bounds.start&&p<bounds.end)},highlights});
   }
-  if(incompleteWords){hasWords=false;for(const p of passages)p.highlights=[];}
+  if(incompleteWords){hasWords=false;for(const [i,p] of passages.entries()){const b=contexts[i];p.highlights=[];p.target={...b,text:target.text.slice(b.start,b.end),breaks:target.breaks?.filter(x=>x>b.start&&x<b.end)};}}
   const joined:LookupPassage[]=[];
   for(const p of passages){
     const previous=joined.at(-1);
@@ -324,5 +364,5 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     }else joined.push(p);
   }
   if(!hasWords&&poem)return poetryContext(artifact,request,poem);
-  return {status:hasWords?(uncertain?"uncertain":"match"):"context-only",targetLocale,targetRevision:target.revision,sourceBreaks:source.breaks?.filter(b=>b>request.start&&b<request.end),passages:joined};
+  return {status:hasWords?(uncertain?"uncertain":"match"):"context-only",targetLocale,targetRevision:target.revision,sourceBreaks:source.breaks?.filter(b=>b>request.start&&b<request.end),passages:joined,...(unmatchedSource.length?{unmatchedSource}:{})};
 }

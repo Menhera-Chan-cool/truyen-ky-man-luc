@@ -18,7 +18,8 @@ function coverage(a:AlignmentArtifact,r:LookupRequest,result:LookupResult):Looku
   const matched=groups(a).filter(g=>g[r.locale].start===p.source.start&&g[r.locale].end===p.source.end);
   return matched.length?matched.flatMap(g=>g.parts?.[r.locale]??[g[r.locale]]):[p.source];
  });
- const unmatchedSource=missing(a.editions[r.locale].text,r,covered);
+ const unmatchedSource=[...(result.unmatchedSource??[]),...missing(a.editions[r.locale].text,r,covered)]
+  .map(s=>({start:Math.max(r.start,s.start),end:Math.min(r.end,s.end)})).filter((s,i,all)=>s.end>s.start&&!all.slice(0,i).some(p=>p.start===s.start&&p.end===s.end));
  if(!unmatchedSource.length)return result;
  return {...result,status:result.passages.length?'context-only':result.status,unmatchedSource,passages:result.passages.map(p=>({...p,highlights:[]}))};
 }

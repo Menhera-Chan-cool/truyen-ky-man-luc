@@ -1,5 +1,6 @@
 """Repair weak prose clauses inside existing paragraph candidates, never across poetry."""
 import bisect
+import re
 import numpy as np
 
 
@@ -63,3 +64,57 @@ def repair_prose_groups(item,contexts,units,encode):
         elif all(remaining.values()):
             result.append({**group,**{l+'Input':join_units([by_span[l][p['start'],p['end']] for p in remaining[l]]) for l in remaining}})
     return result+accepted
+
+
+def add_clause_pairs(contexts,encode,editions=None):
+    from context_alignment import slice16,_normalized,mask_references
+    from alignment import align_sequences
+    prepared=[];texts=set()
+    for g in contexts:
+        if g['section'] not in ['story','critique'] or 'tracks' in g:continue
+        atoms={}
+        for l in ['vi','en']:
+            inp=g[l+'Input'];parts=inp['parts'];values=[]
+            if len(parts)>32 or parts[-1]['end']-parts[0]['start']>1024:break
+            if any(b['start']-a['end']>3 and (editions is None or any(c.isalnum() for c in mask_references(slice16(editions[l]['text'],a['end'],b['start'])))) for a,b in zip(parts,parts[1:])):break
+            for p in parts:
+                indices=[i for i,(a,b) in enumerate(zip(inp['starts'],inp['ends'])) if p['start']<=a<b<=p['end']]
+                if not indices:break
+                text=slice16(inp['text'],indices[0],indices[-1]+1).strip()
+                if l=='en' and values and not re.search(r'[.!?…]["”’]*$',values[-1]['text']):
+                    values[-1]['text']+=' '+text;values[-1]['parts'].append(p)
+                else:values.append({'text':text,'parts':[p]})
+            else:
+                atoms[l]=values;continue
+            break
+        if len(atoms)!=2 or not all(atoms.values()) or (len(atoms['vi'])==len(atoms['en'])==1):continue
+        windows={l:{n:[' '.join(u['text'] for u in units[i:i+n]) for i in range(len(units)-n+1)] for n in range(1,min(3,len(units))+1)} for l,units in atoms.items()}
+        texts.update(t for w in windows.values() for values in w.values() for t in values);prepared.append((g,atoms,windows))
+    if not texts:return
+    ordered=sorted(texts);vectors=_normalized(encode(ordered))
+    if len(vectors)!=len(ordered):raise ValueError('Clause vector count mismatch')
+    memo=dict(zip(ordered,vectors))
+    for g,atoms,text_windows in prepared:
+        windows=[{n:np.stack([memo[t] for t in values]) for n,values in text_windows[l].items()} for l in ['vi','en']]
+        pairs=align_sequences(windows[0][1],windows[1][1],minimum=.5,windows=windows)
+        g['clausePairs']=[]
+        def confidence(i,j,a,b,score,margin):
+            alternatives=[float(v@windows[1][b][j]) for n,vs in windows[0].items() for at,v in enumerate(vs) if (at,n)!=(i,a)]
+            alternatives += [float(v@windows[0][a][i]) for n,vs in windows[1].items() for at,v in enumerate(vs) if (at,n)!=(j,b)]
+            return min(margin,score-max(alternatives,default=0))
+        def mapping(i,j,a,b,score,margin):
+            return {'vi':[p for atom in atoms['vi'][i:i+a] for p in atom['parts']],'en':[p for atom in atoms['en'][j:j+b] for p in atom['parts']],'score':score,'margin':margin}
+        for pair in pairs:
+            i,j=pair['vi'][0],pair['en'][0];a,b=len(pair['vi']),len(pair['en'])
+            margin=confidence(i,j,a,b,pair['score'],pair['margin'])
+            if margin<.03:continue
+            g['clausePairs'].append(mapping(i,j,a,b,pair['score'],margin))
+            if b<2 or a<2:continue
+            finer=[]
+            for at in range(j,j+b):
+                candidates=[(float(v@windows[1][1][at]),start,n) for n,vs in windows[0].items() for start,v in enumerate(vs) if i<=start and start+n<=i+a and n<a]
+                if not candidates:continue
+                score,start,n=max(candidates);gap=confidence(start,at,n,1,score,score)
+                if score>=.5 and gap>=.03:finer.append(mapping(start,at,n,1,score,gap))
+            for fine in finer:
+                if not any(other is not fine and fine['vi'][0]['start']<other['vi'][-1]['end'] and other['vi'][0]['start']<fine['vi'][-1]['end'] for other in finer):g['clausePairs'].append(fine)
