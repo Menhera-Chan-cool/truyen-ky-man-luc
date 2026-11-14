@@ -590,5 +590,31 @@ class PoetryTests(unittest.TestCase):
         self.assertEqual([len(t['units']) for t in left if t['start']<1000],[6,6])
 
 
+    def test_unrelated_short_poem_cannot_split_a_supported_whole_counterpart(self):
+        import re
+        from poetry_tracks import pair_tracks
+        from context_alignment import _normalized
+        def track(prefix,count,start):
+            units=[test_alignment.ContextAlignmentTests.unit(f'{prefix} line {i}.',start+i*40) for i in range(count)]
+            return {'id':prefix,'start':start,'end':units[-1]['end'],'units':units,'hinted':True,'evidence':'verse-block'}
+        main=track('Source',16,0);english=track('English',8,0);noise=track('Noise',4,2000)
+        def encode(texts):
+            result=[]
+            for text in texts:
+                source={int(i) for i in re.findall(r'Source line (\d+)',text)}
+                en={int(i) for i in re.findall(r'English line (\d+)',text)}
+                if len(source)==16:v=[.6,0.,.8]
+                elif source:v=[0.,0.,1.] if max(source)<8 else [1.,0.,0.]
+                elif en==set(range(4,8)):v=[.1,.99**.5,0.]
+                elif en==set(range(4)):v=[.8,.6,0.]
+                elif en:v=[1.,0.,0.]
+                else:v=[0.,1.,0.]
+                result.append(v)
+            return np.array(result)
+        _,_,before=pair_tracks([main],[english],encode,_normalized)
+        _,_,after=pair_tracks([main,noise],[english],encode,_normalized)
+        self.assertEqual([(t['start'],t['end']) for t in after],[(t['start'],t['end']) for t in before])
+        self.assertEqual(len(after[0]['units']),8)
+
 if __name__ == '__main__':
     unittest.main()

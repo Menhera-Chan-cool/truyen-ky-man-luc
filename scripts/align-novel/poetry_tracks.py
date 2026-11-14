@@ -140,7 +140,15 @@ def pair_tracks(left, right, encode, normalize, poem_pairs=None):
             replacement = None;best_plan=None
             if track.get('flattened'):
                 result.append(track);continue
-            for target in other:
+            whole_scores=[(t,_similarity(vector(track),vector(t))) for t in other]
+            whole_scores=[(t,s) for t,s in whole_scores if not both_named or bool(track.get('titleText'))==bool(t.get('titleText')) or s>=.75]
+            best_whole=max((score for _,score in whole_scores),default=-1)
+            same=max((score for t,score in whole_scores if len(t['units'])==len(track['units'])),default=-1)
+            # A supported whole counterpart takes priority over unrelated partition sizes.
+            if not track.get('renderingBreaks') and same>=.5 and same>=best_whole-.03:
+                result.append(track);continue
+            for target,whole_candidate in whole_scores:
+                if whole_candidate<best_whole-.03:continue
                 if both_named and bool(track.get('titleText'))!=bool(target.get('titleText')) and _similarity(vector(track),vector(target))<.75:continue
                 width=len(target['units']);n=len(track['units']);count=n//width
                 named=bool(track.get('title') or track.get('evidence')=='named-poem')
