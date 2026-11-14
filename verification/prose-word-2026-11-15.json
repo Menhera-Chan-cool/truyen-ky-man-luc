@@ -1,0 +1,244 @@
+{
+  "checkedAt": "2026-11-14T17:03:14.441Z",
+  "runtimeSourceCommit": "cbb06108a43a20e6753601032e85817f2bdeecf1",
+  "alignmentWorkerSourceCommit": "cbb06108a43a20e6753601032e85817f2bdeecf1",
+  "deploymentId": "dpl_DdxFD5hcXLAMZqkcemFde51iKN8V",
+  "url": "https://truyen-ky-man-luc.vercel.app",
+  "immutableUrl": "https://truyen-ky-man-muct437lg-anh-tun.vercel.app",
+  "readyState": "READY",
+  "recipe": "labse-poetry-mbert-3",
+  "models": {
+    "sentence": {
+      "id": "sentence-transformers/LaBSE",
+      "revision": "836121a0533e5664b21c7aacc5d22951f2b8b25b",
+      "license": "Apache-2.0",
+      "pooling": "cls-dense-tanh-normalize"
+    },
+    "word": {
+      "id": "google-bert/bert-base-multilingual-cased",
+      "revision": "3f076fdb1ab68d5b2880cb87a0886f315b8146f8",
+      "license": "Apache-2.0"
+    }
+  },
+  "tests": {
+    "vitest": 328,
+    "python": 87,
+    "localBrowser": 57,
+    "productionBrowser": 18,
+    "typecheck": true,
+    "build": true
+  },
+  "sourceEditionsUnchanged": 40,
+  "poetryMetadataPreserved": true,
+  "notePairsPreserved": true,
+  "artifacts": [
+    {
+      "chapter": 1,
+      "sha256": "febc524643788d6bfebdaadc2fd1cbc6a035e56c2e3ca60efc553893a0dfc595",
+      "bytes": 557405
+    },
+    {
+      "chapter": 2,
+      "sha256": "b875eb33476465cf5380533a997f14a63316bca531ed5a46083f76188cb02a1f",
+      "bytes": 423203
+    },
+    {
+      "chapter": 3,
+      "sha256": "c3f62d31680f555fc6ca5a14b7dc12d1f2d454b9a136767d04f355cd7f751b13",
+      "bytes": 353661
+    },
+    {
+      "chapter": 4,
+      "sha256": "8d9b8996203e3ebe2bcc665de849123222acec37c3cd0fc90a9c892062cc6d21",
+      "bytes": 430585
+    },
+    {
+      "chapter": 5,
+      "sha256": "35f7fc64a43b18ebcf43191bf4aedf6e0fecc38301b7fad329d9ec04c6e21c63",
+      "bytes": 586062
+    },
+    {
+      "chapter": 6,
+      "sha256": "3d0b4c9ed3775bf3faf360cfc9ffb3639d9b448f41533e9982bb3421c3901b33",
+      "bytes": 456597
+    },
+    {
+      "chapter": 7,
+      "sha256": "d339cef52cd1e52c01e89a9a897a2f36dd0783613d97942100b00956a5504121",
+      "bytes": 550160
+    },
+    {
+      "chapter": 8,
+      "sha256": "dc73a09f2c7f74e4b8515ce5c25b617067977f4c0456ec88b0eaf049064b1873",
+      "bytes": 273218
+    },
+    {
+      "chapter": 9,
+      "sha256": "fa2dc0a3b372c1a6b0518a67ff650a4127d4dce1bd8da397f34b0a5bbffb6ba9",
+      "bytes": 557377
+    },
+    {
+      "chapter": 10,
+      "sha256": "69c1609870056f7da44f358f630ccaf811352e6925ace52e2c97afd8ef89176d",
+      "bytes": 341780
+    },
+    {
+      "chapter": 11,
+      "sha256": "21e1cc35bc1fa72ee08fa15573380f168f27e80cbecfe0750036b360212e92fe",
+      "bytes": 313851
+    },
+    {
+      "chapter": 12,
+      "sha256": "15ef9c0b69c942fcae7ad2addf89a1dff1e773a3aab494695b81a818bdd89b42",
+      "bytes": 356650
+    },
+    {
+      "chapter": 13,
+      "sha256": "798345aaa5b95b35e5f7cfe983dc9a34f41fd21563e167ab68176f3d75459f74",
+      "bytes": 492519
+    },
+    {
+      "chapter": 14,
+      "sha256": "2a8d3245febf8d9ced11e814829ce513e2a2766df74f1acd40ffa32fe44d2bee",
+      "bytes": 559313
+    },
+    {
+      "chapter": 15,
+      "sha256": "5856afbcb564df7a496b93495103d6b0053e1f210e5e982d57674bdbf483f630",
+      "bytes": 289176
+    },
+    {
+      "chapter": 16,
+      "sha256": "2e46f01d97511bdf37584d670d810de1bfb3f984192129bd7384f09d8fd6148c",
+      "bytes": 543224
+    },
+    {
+      "chapter": 17,
+      "sha256": "a3485cfa42e9ee650e0e0055f7e8e9f73251296b493089d46be351259f193589",
+      "bytes": 336779
+    },
+    {
+      "chapter": 18,
+      "sha256": "62ca42fc6a2e1f4b6632b54403bda6a969f6ef7acdcf62fd05628ea3e5f21143",
+      "bytes": 450114
+    },
+    {
+      "chapter": 19,
+      "sha256": "7b30252bd02d039161576720e1f83d21ec2be0ca50475b5e5f6a8ac015932664",
+      "bytes": 466052
+    },
+    {
+      "chapter": 20,
+      "sha256": "6912190c98c5b6e6bff3a9cdecb9867f9e75093296fb13bacbd8b8478f2f39f1",
+      "bytes": 407148
+    }
+  ],
+  "probes": [
+    {
+      "quote": "flowers",
+      "locale": "en",
+      "expected": "hoa",
+      "status": "uncertain",
+      "terms": [
+        "hoa"
+      ]
+    },
+    {
+      "quote": "brocade",
+      "locale": "en",
+      "expected": "gấm",
+      "status": "uncertain",
+      "terms": [
+        "gấm"
+      ]
+    },
+    {
+      "quote": "wonderfully",
+      "locale": "en",
+      "expected": "diệu tuyệt",
+      "status": "uncertain",
+      "terms": [
+        "diệu tuyệt"
+      ]
+    },
+    {
+      "quote": "words like flowers",
+      "locale": "en",
+      "expected": "lời hoa",
+      "status": "uncertain",
+      "terms": [
+        "lời hoa"
+      ]
+    },
+    {
+      "quote": "hoa",
+      "locale": "vi",
+      "expected": "flowers",
+      "status": "uncertain",
+      "terms": [
+        "flowers"
+      ]
+    }
+  ],
+  "poetryQa": {
+    "cases": 87,
+    "contextAvailable": 87,
+    "correctPoemContext": 86,
+    "correctContextOnly": 15,
+    "withHighlights": 72,
+    "highlightsInCorrectPoem": 72,
+    "outsidePoemHighlights": 0,
+    "outsidePoemContexts": 1,
+    "exactObservedTargetMatches": 68,
+    "unavailable": 0,
+    "errors": 0,
+    "meanObservedSpanF1": 0.8215619478344577,
+    "statuses": {
+      "uncertain": 71,
+      "context-only": 16
+    }
+  },
+  "evaluation": {
+    "before": {
+      "word": {
+        "cases": 40,
+        "hits": 33,
+        "meanF1": 0.8229166666666666,
+        "coverage": 0.85
+      },
+      "phrase": {
+        "cases": 40,
+        "hits": 16,
+        "meanF1": 0.3348630894277039,
+        "coverage": 0.45
+      },
+      "sentence": {
+        "cases": 40,
+        "hits": 37,
+        "meanF1": 0.9016502354786308,
+        "coverage": 0.925
+      }
+    },
+    "after": {
+      "word": {
+        "cases": 40,
+        "hits": 32,
+        "meanF1": 0.7979166666666666,
+        "coverage": 0.825
+      },
+      "phrase": {
+        "cases": 40,
+        "hits": 18,
+        "meanF1": 0.37984065642946196,
+        "coverage": 0.475
+      },
+      "sentence": {
+        "cases": 40,
+        "hits": 38,
+        "meanF1": 0.9032941538355856,
+        "coverage": 0.95
+      }
+    }
+  },
+  "workflowState": "active"
+}

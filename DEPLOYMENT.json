@@ -1,17 +1,17 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_FYAKhiSnRf8gUVKzTZx9yFdpvTac",
-  "immutableUrl": "https://truyen-ky-man-26wthbyxe-anh-tun.vercel.app",
+  "deploymentId": "dpl_DdxFD5hcXLAMZqkcemFde51iKN8V",
+  "immutableUrl": "https://truyen-ky-man-muct437lg-anh-tun.vercel.app",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "runtimeSourceCommit": "879630a749c16142860856e7bfba32b7d6293a41",
+  "runtimeSourceCommit": "cbb06108a43a20e6753601032e85817f2bdeecf1",
   "algorithm": "labse-poetry-mbert-3",
   "readyState": "READY",
-  "checkedAt": "2026-11-14T12:25:35.507Z",
+  "checkedAt": "2026-11-14T17:03:14.441Z",
   "region": "sin1",
   "publicArtifacts": 20,
-  "publicArtifactBytes": 9537171,
+  "publicArtifactBytes": 8744874,
   "liveScreenshots": 15,
-  "liveBrowserTests": 15,
+  "liveBrowserTests": 18,
   "workflowState": "active",
   "migrationVersion": "20261114071828",
   "state": "READY",
@@ -25,13 +25,13 @@
     "branch": "main"
   },
   "verification": {
-    "local": "verification/poetry-release-2026-11-14.json",
+    "local": "verification/prose-word-2026-11-15.json",
     "publicArtifacts": 20,
     "unchangedPublishedEditions": 40,
-    "vitest": 306,
-    "python": 80,
-    "localBrowser": 51,
-    "liveBrowser": 15
+    "vitest": 328,
+    "python": 87,
+    "localBrowser": 57,
+    "liveBrowser": 18
   },
   "limitations": [
     "No physical phone testing",
@@ -39,8 +39,8 @@
     "Some ambiguous/flattened verse remains context-only"
   ],
   "previousDeployment": {
-    "deploymentId": "dpl_2mY1ckGZkozZM587SAXw2PYFsGDE",
-    "sourceCommit": "c179fc0270ffce9f5a39eb53618b2376675dc83d"
+    "deploymentId": "dpl_EeN8yy3RdFCLUM1jqBZZRVUsah5F",
+    "sourceCommit": "62124730aa08b7889963a27b94e23bffc6673929"
   },
-  "alignmentWorkerSourceCommit": "bda1c7e298e4bbc892db873affdca1ad4780deec"
+  "alignmentWorkerSourceCommit": "cbb06108a43a20e6753601032e85817f2bdeecf1"
 }
