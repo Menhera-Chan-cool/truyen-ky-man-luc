@@ -29,3 +29,23 @@ test('shows comparison highlights while a font is still loading',async({page})=>
  await page.getByRole('button',{name:'Mở đối chiếu',exact:true}).click();
  for(const l of ['vi','en'])await expect(page.locator(`.parallel-edition[lang=${l}] .lookup-context`).first()).toBeVisible();
 });
+
+test('keeps dialogue around repeated poetry and reports unsupported connecting clauses',async({page})=>{
+ await page.goto('/en/read/chapter-1');await expect(page.locator('.reader-shell')).toHaveAttribute('data-ready','true');
+ await page.locator('.chapter-content').evaluate(root=>{
+  const text=root.textContent!,start=text.indexOf('"That poem you composed'),end=text.indexOf('Now, as for',start);
+  if(start<0||end<=start)throw Error('Expected mixed dialogue absent');
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),range=document.createRange();let node:Node|null,at=0,found=false;
+  while((node=walker.nextNode())){const size=node.textContent?.length??0;if(!found&&start<at+size){range.setStart(node,start-at);found=true;}if(found&&end<=at+size){range.setEnd(node,end-at);break;}at+=size;}
+  range.startContainer.parentElement?.scrollIntoView({block:'center'});const selection=getSelection()!;selection.removeAllRanges();selection.addRange(range);document.dispatchEvent(new Event('selectionchange'));
+ });
+ await page.getByRole('button',{name:'Look up VI↔EN',exact:true}).click();
+ const passage=page.locator('.lookup-passage');await expect(passage).toHaveCount(1);
+ await expect(passage).toContainText('Bài thơ ông đề lúc ban ngày');
+ await expect(passage).toContainText('kể cũng là đúng');
+ await expect(passage).toContainText('há chẳng phải là chê bai quá lời ư?');
+ await expect(page.locator('.novel-lookup')).toContainText('Part of the selection has no reliable counterpart.');
+ await expect(passage.locator('mark')).toHaveCount(0);
+ await page.getByRole('button',{name:'Open comparison',exact:true}).click();
+ await expect(page.locator('.parallel-edition[lang=vi] .lookup-context').first()).toContainText('Bài thơ ông đề lúc ban ngày');
+});

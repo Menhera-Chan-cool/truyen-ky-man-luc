@@ -1,6 +1,7 @@
 import type {Locale} from "./types";
 import {notePair,structureLookup} from './novel-lookup-structure';
 import {poetryLookup,poetryScope,poetryContext} from './novel-poetry-lookup';
+import {selectionLookup} from './novel-lookup-selection';
 export const alignmentCodec = "reader-dom-1";
 export type TextSpan = {start:number;end:number};
 export type PoetryCorrespondence=Record<Locale,TextSpan[]>&{score:number;evidence:'direct-window'|'surrounding-window'};
@@ -25,7 +26,7 @@ export type LookupRequest = {chapterId:string;locale:Locale;revision:number;star
 export type LookupPassage = {source:TextSpan&{text:string};target:TextSpan&{text:string;breaks?:number[]};highlights:TextSpan[]};
 export type ComparisonFocus = Record<Locale,TextSpan&{text:string;revision:number}>;
 export type LookupResult = {status:"match"|"uncertain"|"context-only"|"unavailable"|"stale"|"pending"|"missing";
-  targetLocale:Locale;targetRevision?:number;sourceBreaks?:number[];passages:LookupPassage[]};
+  targetLocale:Locale;targetRevision?:number;sourceBreaks?:number[];unmatchedSource?:TextSpan[];passages:LookupPassage[]};
 
 export function validateLookupRequest(value:unknown):LookupRequest {
   const r=value as LookupRequest;
@@ -187,6 +188,11 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
   const empty=(status:LookupResult["status"]):LookupResult=>({status,targetLocale,passages:[]});
   if(artifact.chapterId!==request.chapterId||source.revision!==request.revision||request.start<0||request.end<=request.start||request.end>source.text.length||source.text.slice(request.start,request.end)!==request.text)return empty("stale");
   if(request.end-request.start>2000)throw RangeError("Selection too long");
+  return selectionLookup(artifact,request,lookupSingle);
+}
+function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
+  const locale=request.locale,targetLocale=locale==='vi'?'en':'vi',source=artifact.editions[locale],target=artifact.editions[targetLocale];
+  const empty=(status:LookupResult['status']):LookupResult=>({status,targetLocale,passages:[]});
   const structural=structureLookup(artifact,request);if(structural)return structural;
   const poetry=poetryLookup(artifact,request);if(poetry)return poetry;
   const poem=poetryScope(artifact,request);
