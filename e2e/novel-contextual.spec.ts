@@ -29,3 +29,15 @@ test('shows the full paired note instead of inventing a missing caption counterp
 test('matches the note by content despite different VI and EN note numbers',async({page})=>{
  await lookup(page,'vi',3,'Hàn Dũ','Hàn Dũ là một');await expect(page.locator('.lookup-passage mark')).toHaveText('Han Yu');
 });
+
+test('separates prose words inside an idiom without borrowing the preceding clause',async({page})=>{
+ for(const [source,target,after] of [['flowers','hoa','With words like flowers'],['brocade','gấm','With words like flowers'],['wonderfully','diệu tuyệt','What passes in the spring chamber']]){
+  await lookup(page,'en',5,source,after);
+  await expect(page.locator('.lookup-passage mark')).toHaveText(target);
+  await expect(page.locator('.lookup-terms')).toHaveText(target);
+ }
+ await lookup(page,'vi',5,'hoa','lời hoa ý gấm');await expect(page.locator('.lookup-passage mark')).toHaveText('flowers');
+ await lookup(page,'en',5,'words like flowers','With words like flowers');
+ await expect(page.locator('.lookup-passage')).toContainText('lời hoa ý gấm');
+ await expect(page.locator('.lookup-passage mark')).toHaveText('lời hoa');await expect(page.locator('.lookup-terms')).toHaveText('lời hoa');
+});

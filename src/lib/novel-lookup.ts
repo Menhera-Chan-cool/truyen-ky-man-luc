@@ -82,6 +82,20 @@ function wordSpan(text:string,start:number,end:number,bounds:TextSpan,words?:Tex
   const right=text.slice(end,bounds.end).match(/^[\p{L}\p{M}\p{N}’'-]+/u)?.[0].length??0;
   return {start:start-left,end:end+right};
 }
+function targetWords(g:AlignmentArtifact['groups'][number],locale:Locale,source:AlignmentArtifact['editions'][Locale],target:AlignmentArtifact['editions'][Locale],split:boolean){
+  const other=locale==='vi'?'en':'vi',same=(a:TextSpan,b:TextSpan)=>a.start===b.start&&a.end===b.end;
+  const entries=g.links.map(link=>({link,sw:wordSpan(source.text,...link[locale],g[locale],source.words),raw:wordSpan(target.text,...link[other],g[other]),tw:wordSpan(target.text,...link[other],g[other],target.words)}));
+  const compounds=new Map<string,typeof entries>();
+  for(const e of entries){const key=e.tw.start+':'+e.tw.end,list=compounds.get(key)??[];list.push(e);compounds.set(key,list);}
+  const complete=(span:TextSpan,list:typeof entries)=>[...target.text.slice(span.start,span.end).matchAll(/[\p{L}\p{M}\p{N}]/gu)].every(m=>list.some(e=>e.link[other][0]<=span.start+m.index&&e.link[other][1]>=span.start+m.index+m[0].length));
+  return new Map(entries.map(e=>{
+    if(!split||same(e.raw,e.tw)||nameSelection(target.text.slice(e.tw.start,e.tw.end)))return [e.link,e.tw];
+    const peers=compounds.get(e.tw.start+':'+e.tw.end)!,own=peers.filter(p=>same(p.sw,e.sw)&&same(p.raw,e.raw)&&p.link.score>=.03);
+    // Segmentation is a hint: separate a compound only when different source words fully support disjoint written words.
+    const independent=peers.some(p=>!same(p.sw,e.sw)&&(p.raw.end<=e.raw.start||p.raw.start>=e.raw.end)&&!onlyFunctionWords(source.text.slice(p.sw.start,p.sw.end),locale)&&complete(p.raw,peers.filter(q=>same(q.sw,p.sw)&&same(q.raw,p.raw)&&q.link.score>=.03)));
+    return [e.link,own.length&&complete(e.raw,own)&&independent?e.raw:e.tw];
+  }));
+}
 function mergeSpans(spans:TextSpan[],text:string){
   const merged:TextSpan[]=[];
   for(const span of spans.sort((a,b)=>a.start-b.start||a.end-b.end)){
@@ -151,7 +165,7 @@ function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['gr
 }
 const functionWords:Record<Locale,Set<string>>={
   en:new Set('a an the of to for from by with in on at as and or but'.split(' ')),
-  vi:new Set('của và hoặc nhưng các những thì mà ở với bởi vì cho từ tại đã đang sẽ'.split(' ')),
+  vi:new Set('của và hoặc nhưng các những thì mà là ở với bởi vì cho từ tại đã đang sẽ'.split(' ')),
 };
 function onlyFunctionWords(text:string,locale:Locale){
   const words=text.toLocaleLowerCase(locale).match(/[\p{L}\p{M}]+/gu)??[];
@@ -240,26 +254,38 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
   let uncertain=remaining.some(s=>source.text.slice(s.start,s.end).trim()),hasWords=false,incompleteWords=false;
   const passages:LookupPassage[]=[];
   for(const g of groups){
-    let spans:TextSpan[]=[];const coveredWords:TextSpan[]=[];const sentences=wholeSentenceTargets(artifact,g,request,targetLocale);
+    const supported=!!poem||g.kind==='lexical'||(g.score>=.5&&g.margin>=.015);
+    const content=[...analysisText(source.text.slice(g[locale].start,g[locale].end),g.section==='notes').matchAll(/[\p{L}\p{M}\p{N}]/gu)],last=content.at(-1);
+    const whole=(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1&&!!last&&request.start<=g[locale].start+content[0].index&&request.end>=g[locale].start+last.index+last[0].length;
+    let spans:TextSpan[]=[];const coveredWords:TextSpan[]=[];const sentences=supported||whole?wholeSentenceTargets(artifact,g,request,targetLocale):{covered:[],spans:[]};
+    const targetSpans=targetWords(g,locale,source,target,!poem&&g.kind!=='lexical');
+    const sourceSpans=targetWords(g,targetLocale,target,source,!poem&&g.kind!=='lexical');
     const named=properNameSpan(request.text,target.text,g[targetLocale]);
     if(named)spans=[named];
     else {
       spans.push(...sentences.spans);
       const words=new Map<string,Map<string,{span:TextSpan;score:number}>>();
-      for(const link of g.links){
+      for(const link of supported?g.links:[]){
         const from=link[locale],to=link[targetLocale];
         if(from[0]>=request.end||from[1]<=request.start||!/[\p{L}\p{N}]/u.test(target.text.slice(...to)))continue;
         if(sentences.covered.some(s=>from[0]>=s.start&&from[1]<=s.end))continue;
-        const sw=wordSpan(source.text,...from,g[locale],source.words),tw=wordSpan(target.text,...to,g[targetLocale],target.words);
-        coveredWords.push(sw);
+        const sw=sourceSpans.get(link)!,tw=targetSpans.get(link)!;
         if(sw.start<request.start||sw.end>request.end)uncertain=true;
         const key=sw.start+":"+sw.end,tk=tw.start+":"+tw.end,map=words.get(key)??new Map();
         if(!map.has(tk)||map.get(tk)!.score<link.score)map.set(tk,{span:tw,score:link.score});
         words.set(key,map);
       }
-      for(const map of words.values()){
+      const competing=new Map<string,number>();
+      if(!poem&&g.kind!=='lexical')for(const link of g.links){
+        const from=link[locale];if(from[0]<request.end&&from[1]>request.start)continue;
+        const sw=sourceSpans.get(link)!;if(onlyFunctionWords(source.text.slice(sw.start,sw.end),locale))continue;
+        const tw=targetSpans.get(link)!,key=tw.start+':'+tw.end;
+        competing.set(key,Math.max(competing.get(key)??0,link.score));
+      }
+      for(const [sourceKey,map] of words){
         const ranked=[...map.values()].sort((a,b)=>b.score-a.score);
-        const keep=ranked.filter(c=>c.score>=ranked[0].score*.8&&c.score>=.03);
+        const keep=ranked.filter(c=>c.score>=ranked[0].score*.8&&c.score>=.03&&c.score*1.35>=(competing.get(c.span.start+':'+c.span.end)??0));
+        if(keep.length){const [start,end]=sourceKey.split(':').map(Number);coveredWords.push({start,end});}
         if(keep.length>1)uncertain=true;
         if(keep.some(c=>c.score<.15))uncertain=true;
         spans.push(...keep.map(c=>c.span));
@@ -269,7 +295,7 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     const inferredTitle=titledNames.some(t=>locale==='en'?t.en.test(request.text)&&highlights.some(s=>t.vi.test(target.text.slice(s.start,s.end))):t.vi.test(request.text)&&highlights.some(s=>t.en.test(target.text.slice(s.start,s.end))));
     if(!named&&!inferredTitle&&!sentences.spans.length&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1){
       const from=Math.max(request.start,g[locale].start),end=Math.min(request.end,g[locale].end);
-      const selected=source.words?.filter(w=>w.start<end&&w.end>from)??[...source.text.slice(from,end).matchAll(/[\p{L}\p{M}]+/gu)].map(m=>({start:from+m.index,end:from+m.index+m[0].length}));
+      const selected=[...source.text.slice(from,end).matchAll(/[\p{L}\p{M}]+/gu)].map(m=>({start:from+m.index,end:from+m.index+m[0].length}));
       if(selected.some(w=>/\p{L}/u.test(source.text.slice(w.start,w.end))&&!onlyFunctionWords(source.text.slice(w.start,w.end),locale)&&!coveredWords.some(s=>s.start<=w.start&&s.end>=w.end)))incompleteWords=true;
     }
     const sourceBlock=shortBlock(source,request);
@@ -278,6 +304,9 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
       if(request.text.replace(/^[\s"“”‘’«»'\-–—]+|[\s"“”‘’«»',.;:!?]+$/gu,'')===whole)highlights=mergeSpans(highlights.map(s=>{const expanded=shortBlock(target,s)??s,t=g.tracks?.[targetLocale];return t?{start:Math.max(t.start,expanded.start),end:Math.min(t.end,expanded.end)}:expanded;}),target.text);
     }
     if(highlights.length&&!sentences.spans.length&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1&&!onlyFunctionWords(request.text,locale)&&highlights.every(s=>onlyFunctionWords(target.text.slice(s.start,s.end),targetLocale)))highlights=[];
+    if(!poem&&!named&&!sentences.spans.length&&highlights.length>1&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1&&!onlyFunctionWords(request.text,locale)){
+      highlights=highlights.filter(s=>!onlyFunctionWords(target.text.slice(s.start,s.end),targetLocale));uncertain ||= highlights.length>1;
+    }
     hasWords ||= highlights.length>0;
     uncertain ||= g.score<.82||g.margin<.015;
     const bounds=sentences.spans.length&&highlights.length?{start:Math.min(...highlights.map(s=>s.start)),end:Math.max(...highlights.map(s=>s.end))}:g[targetLocale];
