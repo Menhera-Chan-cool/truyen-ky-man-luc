@@ -1,0 +1,490 @@
+{
+  "evaluationOnly": true,
+  "cases": [
+    {
+      "id": "screenshot-01",
+      "chapterId": "chapter-1",
+      "source": {
+        "start": 520,
+        "end": 586,
+        "text": "Crushed in defeat, Heaven doomed you to the marsh on the left (5);"
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 303,
+          "end": 336,
+          "text": "Nhất bại hữu thiên vong Trạch Tả,"
+        },
+        {
+          "start": 566,
+          "end": 603,
+          "text": "Thua chạy giời xui đường Trạch Tả (5)"
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 172,
+          "end": 429,
+          "text": "Bách nhị sơn hà khởi chiến phong,Huề tương tử đệ nhập Quan Trung.Yên tiêu Hàm Cốc châu cung lãnh,Tuyết tán Hồng Môn ngọc đẩu không.Nhất bại hữu thiên vong Trạch Tả,Trùng lai vô địa đáo Giang Đông.Kinh doanh ngũ tải thành hà sự?Tiêu đắc khu khu táng Lỗ công."
+        },
+        {
+          "start": 429,
+          "end": 700,
+          "text": "Nom nước trăm hai (2) nổi bụng hồng,Đem đoàn tử đệ đến Quan TrungKhói tan Hàm Cốc cung châu lạnh, (3)Tuyết rã Hồng Môn đấu ngọc không (4)Thua chạy giời xui đường Trạch Tả (5)Quay về đất lấp nẻo Giang Đông (6)Năm năm lăn lộn hoài công cốcCòn được vùi trong mả Lỗ công (7)."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-02",
+      "chapterId": "chapter-1",
+      "source": {
+        "start": 520,
+        "end": 581,
+        "text": "Crushed in defeat, Heaven doomed you to the marsh on the left"
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 303,
+          "end": 336,
+          "text": "Nhất bại hữu thiên vong Trạch Tả,"
+        },
+        {
+          "start": 566,
+          "end": 603,
+          "text": "Thua chạy giời xui đường Trạch Tả (5)"
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 172,
+          "end": 429,
+          "text": "Bách nhị sơn hà khởi chiến phong,Huề tương tử đệ nhập Quan Trung.Yên tiêu Hàm Cốc châu cung lãnh,Tuyết tán Hồng Môn ngọc đẩu không.Nhất bại hữu thiên vong Trạch Tả,Trùng lai vô địa đáo Giang Đông.Kinh doanh ngũ tải thành hà sự?Tiêu đắc khu khu táng Lỗ công."
+        },
+        {
+          "start": 429,
+          "end": 700,
+          "text": "Nom nước trăm hai (2) nổi bụng hồng,Đem đoàn tử đệ đến Quan TrungKhói tan Hàm Cốc cung châu lạnh, (3)Tuyết rã Hồng Môn đấu ngọc không (4)Thua chạy giời xui đường Trạch Tả (5)Quay về đất lấp nẻo Giang Đông (6)Năm năm lăn lộn hoài công cốcCòn được vùi trong mả Lỗ công (7)."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-03",
+      "chapterId": "chapter-1",
+      "source": {
+        "start": 1405,
+        "end": 1466,
+        "text": "Crushed in defeat, Heaven doomed you to the marsh on the left"
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 303,
+          "end": 336,
+          "text": "Nhất bại hữu thiên vong Trạch Tả,"
+        },
+        {
+          "start": 566,
+          "end": 603,
+          "text": "Thua chạy giời xui đường Trạch Tả (5)"
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 172,
+          "end": 429,
+          "text": "Bách nhị sơn hà khởi chiến phong,Huề tương tử đệ nhập Quan Trung.Yên tiêu Hàm Cốc châu cung lãnh,Tuyết tán Hồng Môn ngọc đẩu không.Nhất bại hữu thiên vong Trạch Tả,Trùng lai vô địa đáo Giang Đông.Kinh doanh ngũ tải thành hà sự?Tiêu đắc khu khu táng Lỗ công."
+        },
+        {
+          "start": 429,
+          "end": 700,
+          "text": "Nom nước trăm hai (2) nổi bụng hồng,Đem đoàn tử đệ đến Quan TrungKhói tan Hàm Cốc cung châu lạnh, (3)Tuyết rã Hồng Môn đấu ngọc không (4)Thua chạy giời xui đường Trạch Tả (5)Quay về đất lấp nẻo Giang Đông (6)Năm năm lăn lộn hoài công cốcCòn được vùi trong mả Lỗ công (7)."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-04",
+      "chapterId": "chapter-1",
+      "source": {
+        "start": 647,
+        "end": 704,
+        "text": "Five long years of toil and struggle—what did it achieve?"
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 368,
+          "end": 399,
+          "text": "Kinh doanh ngũ tải thành hà sự?"
+        },
+        {
+          "start": 637,
+          "end": 666,
+          "text": "Năm năm lăn lộn hoài công cốc"
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 172,
+          "end": 429,
+          "text": "Bách nhị sơn hà khởi chiến phong,Huề tương tử đệ nhập Quan Trung.Yên tiêu Hàm Cốc châu cung lãnh,Tuyết tán Hồng Môn ngọc đẩu không.Nhất bại hữu thiên vong Trạch Tả,Trùng lai vô địa đáo Giang Đông.Kinh doanh ngũ tải thành hà sự?Tiêu đắc khu khu táng Lỗ công."
+        },
+        {
+          "start": 429,
+          "end": 700,
+          "text": "Nom nước trăm hai (2) nổi bụng hồng,Đem đoàn tử đệ đến Quan TrungKhói tan Hàm Cốc cung châu lạnh, (3)Tuyết rã Hồng Môn đấu ngọc không (4)Thua chạy giời xui đường Trạch Tả (5)Quay về đất lấp nẻo Giang Đông (6)Năm năm lăn lộn hoài công cốcCòn được vùi trong mả Lỗ công (7)."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-05",
+      "chapterId": "chapter-1",
+      "source": {
+        "start": 4762,
+        "end": 4804,
+        "text": "Whether they can sweep back is yet untold."
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 3649,
+          "end": 3680,
+          "text": "Cuốn đất quay về chửa biết đâu."
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 3617,
+          "end": 3680,
+          "text": "Giang đông tử đệ nhiều tay giỏi,Cuốn đất quay về chửa biết đâu."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-06",
+      "chapterId": "chapter-3",
+      "source": {
+        "start": 4602,
+        "end": 4664,
+        "text": "Tipsy, I clasp the silver zither, plucking and strumming anew."
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 3403,
+          "end": 3439,
+          "text": "Túy bão ngân tranh bát phục khiêu..."
+        },
+        {
+          "start": 3668,
+          "end": 3697,
+          "text": "Ôm tranh nhẹ bấm một đôi bài."
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 3372,
+          "end": 3641,
+          "text": "Giai kỳ nhẫn phụ thử lương tiêuTúy bão ngân tranh bát phục khiêu...Ngọc yến nhiệm dung trâm trụy kế,Kim thuyền kỳ phạ thúc tiêm yêu.Yên thư đường ngạc hồng do thấp,Hãn thối mai trang bạch vị tiêu.Tảo vãn kết thành loan phượng hữu,Phong thần nguyệt tịch nhiệm chiêu yêu."
+        },
+        {
+          "start": 3641,
+          "end": 3902,
+          "text": "Đêm đẹp này đâu nỡ bỏ hoài,Ôm tranh nhẹ bấm một đôi bài.Đầu cài én ngọc (3) hình nghiêng chếch,Lưng thắt ve vàng (4) dáng ỏe oai.Đường (5) lúc nở rồi hồng đượm ướt,Mai khi rã hết trắng chưa phai.Phượng loan sớm kết nên đôi lứa,Gió sớm giăng khuya thỏa cợt cười."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-07",
+      "chapterId": "chapter-3",
+      "source": {
+        "start": 4664,
+        "end": 4728,
+        "text": "The jade swallow (3) in my hair is left to slip from my chignon;"
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 3439,
+          "end": 3472,
+          "text": "Ngọc yến nhiệm dung trâm trụy kế,"
+        },
+        {
+          "start": 3697,
+          "end": 3736,
+          "text": "Đầu cài én ngọc (3) hình nghiêng chếch,"
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 3372,
+          "end": 3641,
+          "text": "Giai kỳ nhẫn phụ thử lương tiêuTúy bão ngân tranh bát phục khiêu...Ngọc yến nhiệm dung trâm trụy kế,Kim thuyền kỳ phạ thúc tiêm yêu.Yên thư đường ngạc hồng do thấp,Hãn thối mai trang bạch vị tiêu.Tảo vãn kết thành loan phượng hữu,Phong thần nguyệt tịch nhiệm chiêu yêu."
+        },
+        {
+          "start": 3641,
+          "end": 3902,
+          "text": "Đêm đẹp này đâu nỡ bỏ hoài,Ôm tranh nhẹ bấm một đôi bài.Đầu cài én ngọc (3) hình nghiêng chếch,Lưng thắt ve vàng (4) dáng ỏe oai.Đường (5) lúc nở rồi hồng đượm ướt,Mai khi rã hết trắng chưa phai.Phượng loan sớm kết nên đôi lứa,Gió sớm giăng khuya thỏa cợt cười."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-08",
+      "chapterId": "chapter-6",
+      "source": {
+        "start": 1176,
+        "end": 1222,
+        "text": "And leaves this old heart's longing unallayed."
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 825,
+          "end": 858,
+          "text": "Lão ngã tình hoài chúc vọng thâm."
+        },
+        {
+          "start": 953,
+          "end": 985,
+          "text": "Cho ta thương nhớ ngẩn ngơ lòng."
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 792,
+          "end": 920,
+          "text": "Giai nhân tiếu sáp bích dao trâm,Lão ngã tình hoài chúc vọng thâm.Lưu đãi động phòng hoa chúc dạ,Thủy tinh cung lý kết đồng tâm."
+        },
+        {
+          "start": 920,
+          "end": 1048,
+          "text": "Người đẹp đầu cài trâm bích ngọc,Cho ta thương nhớ ngẩn ngơ lòng.Vật này dành để đêm hoa chúc,Trong thủy tinh cung kết dải đồng."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-09",
+      "chapterId": "chapter-7",
+      "source": {
+        "start": 2423,
+        "end": 2479,
+        "text": "Whoever is pure and still turns the false into the true."
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 1675,
+          "end": 1717,
+          "text": "Nhân năng thanh tịnh, tức ngụy thành chân."
+        },
+        {
+          "start": 2614,
+          "end": 2654,
+          "text": "Người mà thanh tĩnh, hóa giả thành chân."
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 1631,
+          "end": 2569,
+          "text": "Cái văn: Phật bản từ bi, kỳ danh viết giác,\nNhân năng thanh tịnh, tức ngụy thành chân.\nNăng tu pháp giới tân lương,\nTiện thị tùng lâm tông chủ.\nKính duy Phật Tích am sơn chủ Đào Thị\nDanh đào nhạc tịch,\nĐính lễ Phạm vương.\nĐào khẩu liễu yêu, trạo thiệt tế tài án duyệt Lương Châu kỷ khúc,\nTừ vân tuệ nhật, đài đầu gian dĩ quy y Đâu suất chư thiên.\nQuần phao tương thủy tằng tằng,\nMấn lạc Sở vãn đoạn đoạn.\nMộng lý vô đoan xúc cảnh, bán chẩm du tiên,\nPhong tiền hà xứ liêu nhân, sổ xoang đoản địch.\nCa viện bất như tăng viện tĩnh,\nNạp y tuyệt thắng vũ y lương.\nThủy cúc Tào khê, do phân khuy kính ảnh,\nDạ tuyên bối diệp, thượng tác nhiễu lương thanh.\nTuy vân thiền định vong cơ,\nPhả nại cuồng tâm bị tửu.\nTúc bất hướng Tầm Dương tống khách,\nThân khước lai Hàng Quận tham thiền.\nNgũ Lăng nhi phao cẩm triền đầu, tuy tùy vị dĩ,\nTam sinh khách kết Liên hoa xã, chiêu dẫn hà tần.\nY! chung tàn trà yết vô dư sự,\nHảo hướng sơn phòng nhất đả miên."
+        },
+        {
+          "start": 2581,
+          "end": 3580,
+          "text": "Phật vốn từ bi, gọi tên là Giác,\nNgười mà thanh tĩnh, hóa giả thành chân.\nMuốn lên tông chủ trong rừng thiền,\nHãy gắng tu trì trong cõi phép.\nKính nghĩ am chủ ở núi Phật Tích là Đào Thị,\nSổ ca nhạc rút tên ra khỏi.\nCửa Phạm vương (5) núp bóng tìm vào,\nMiệng đào lưng liễu, uốn lưỡi vừa véo von mấy khúc Lương Châu (6).\nNhật sáng mây lành, nghển đầu đã tựa nương dưới trời Đâu Suất (7),\nQuần ném dòng Tương lớp lớp.\nTóc rơi mây Sở từng từng,\nTrong mơ xúc cảnh bâng khuâng, du tiên nửa gối,\nTrước gió ghẹo người réo rắt, đoản địch vừa xong.\nPhòng tăng vắng vẻ khác phòng ca,\náo đạo nhẹ nhàng hơn áo múa.\nKhe Tào múc nước (8), chợt ngờ mặt phấn trong gương,\nLá bối (9) tụng kinh, còn thoảng âm vang trước nóc (10).\nMùi thiền dẫu bén,\nLòng tục chưa phai.\nBến Tầm Dương (11) không đến gẩy tỳ bà,\nChùa Hàng Quận (12) lại vào nghiền kinh kệ.\nGấm triền đầu phấp phới, theo đuổi chưa thôi (13),\nHội Liên Hoa dập dìu, đón mời sao khéo (14).\nÔi! chuông tàn trà cạn ngồi chi nữa?\nBuồng núi vào tìm một giấc say."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-10",
+      "chapterId": "chapter-7",
+      "source": {
+        "start": 6323,
+        "end": 6447,
+        "text": "And come home with the sunset glow.Swirling in trailing masses as the breezes roll,They roam at ease and fly to every shore."
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 4901,
+          "end": 4965,
+          "text": "Mộ đới lạc hà quy.\nái đại nhân phong quyển,\nDu dương đáo xứ phi."
+        },
+        {
+          "start": 5053,
+          "end": 5089,
+          "text": "Ráng chiều mưa sớm bốn phương đi về."
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 4836,
+          "end": 5012,
+          "text": "Dao đễ nùng hoàn đạm,\nThiên biên thấp vị hy.\nHiểu tùy sơ vũ khứ,\nMộ đới lạc hà quy.\nái đại nhân phong quyển,\nDu dương đáo xứ phi.\nTăng dung đồng diệc lãn,\nThùy vị yểm nham phi."
+        },
+        {
+          "start": 5021,
+          "end": 5150,
+          "text": "Bên trời đậm nhạt không thường,\nRáng chiều mưa sớm bốn phương đi về.\nSư lười tiểu cũng lười ghê,\nSiêng năng khép cửa bồ đề ấy ai?"
+        }
+      ]
+    },
+    {
+      "id": "screenshot-11",
+      "chapterId": "chapter-7",
+      "source": {
+        "start": 6358,
+        "end": 6406,
+        "text": "Swirling in trailing masses as the breezes roll,"
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 4920,
+          "end": 4944,
+          "text": "ái đại nhân phong quyển,"
+        },
+        {
+          "start": 5053,
+          "end": 5089,
+          "text": "Ráng chiều mưa sớm bốn phương đi về."
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 4836,
+          "end": 5012,
+          "text": "Dao đễ nùng hoàn đạm,\nThiên biên thấp vị hy.\nHiểu tùy sơ vũ khứ,\nMộ đới lạc hà quy.\nái đại nhân phong quyển,\nDu dương đáo xứ phi.\nTăng dung đồng diệc lãn,\nThùy vị yểm nham phi."
+        },
+        {
+          "start": 5021,
+          "end": 5150,
+          "text": "Bên trời đậm nhạt không thường,\nRáng chiều mưa sớm bốn phương đi về.\nSư lười tiểu cũng lười ghê,\nSiêng năng khép cửa bồ đề ấy ai?"
+        }
+      ]
+    },
+    {
+      "id": "screenshot-12",
+      "chapterId": "chapter-7",
+      "source": {
+        "start": 6406,
+        "end": 6447,
+        "text": "They roam at ease and fly to every shore."
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 4945,
+          "end": 4965,
+          "text": "Du dương đáo xứ phi."
+        },
+        {
+          "start": 5053,
+          "end": 5089,
+          "text": "Ráng chiều mưa sớm bốn phương đi về."
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 4836,
+          "end": 5012,
+          "text": "Dao đễ nùng hoàn đạm,\nThiên biên thấp vị hy.\nHiểu tùy sơ vũ khứ,\nMộ đới lạc hà quy.\nái đại nhân phong quyển,\nDu dương đáo xứ phi.\nTăng dung đồng diệc lãn,\nThùy vị yểm nham phi."
+        },
+        {
+          "start": 5021,
+          "end": 5150,
+          "text": "Bên trời đậm nhạt không thường,\nRáng chiều mưa sớm bốn phương đi về.\nSư lười tiểu cũng lười ghê,\nSiêng năng khép cửa bồ đề ấy ai?"
+        }
+      ]
+    },
+    {
+      "id": "screenshot-13",
+      "chapterId": "chapter-7",
+      "source": {
+        "start": 6590,
+        "end": 6639,
+        "text": "Pattering and rattling as it pours its heart out."
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 5183,
+          "end": 5204,
+          "text": "Tiêu tiêu tác ý minh."
+        },
+        {
+          "start": 5352,
+          "end": 5377,
+          "text": "Rào rào một trận mưa rơi,"
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 5158,
+          "end": 5343,
+          "text": "Nhất vũ thiên nham mính,\nTiêu tiêu tác ý minh.\nChâu cơ đôi địa sắc,\nTinh đẩu lạc thiên thanh.\nLựu đoạt toàn lưu cấp,\nLương hồi khách mộng thanh.\nSơn phòng vô cá sự,\nNhập dạ kỷ tàn canh."
+        },
+        {
+          "start": 5352,
+          "end": 5477,
+          "text": "Rào rào một trận mưa rơi,\nĐầu non ngọc rụng, lưng trời sao sa.\nNước xô hơi lạnh vào nhà,\nBuồng sâu quạnh vắng đêm tà tà canh."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-14",
+      "chapterId": "chapter-7",
+      "source": {
+        "start": 6682,
+        "end": 6723,
+        "text": "And stars tumble echoing from mid-heaven."
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 5226,
+          "end": 5251,
+          "text": "Tinh đẩu lạc thiên thanh."
+        },
+        {
+          "start": 5378,
+          "end": 5414,
+          "text": "Đầu non ngọc rụng, lưng trời sao sa."
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 5158,
+          "end": 5343,
+          "text": "Nhất vũ thiên nham mính,\nTiêu tiêu tác ý minh.\nChâu cơ đôi địa sắc,\nTinh đẩu lạc thiên thanh.\nLựu đoạt toàn lưu cấp,\nLương hồi khách mộng thanh.\nSơn phòng vô cá sự,\nNhập dạ kỷ tàn canh."
+        },
+        {
+          "start": 5352,
+          "end": 5477,
+          "text": "Rào rào một trận mưa rơi,\nĐầu non ngọc rụng, lưng trời sao sa.\nNước xô hơi lạnh vào nhà,\nBuồng sâu quạnh vắng đêm tà tà canh."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-15",
+      "chapterId": "chapter-7",
+      "source": {
+        "start": 6723,
+        "end": 6769,
+        "text": "Swirling currents rush swiftly from the eaves,"
+      },
+      "expectedTargetSelections": [
+        {
+          "start": 5252,
+          "end": 5274,
+          "text": "Lựu đoạt toàn lưu cấp,"
+        },
+        {
+          "start": 5415,
+          "end": 5440,
+          "text": "Nước xô hơi lạnh vào nhà,"
+        }
+      ],
+      "allowedTargetPoems": [
+        {
+          "start": 5158,
+          "end": 5343,
+          "text": "Nhất vũ thiên nham mính,\nTiêu tiêu tác ý minh.\nChâu cơ đôi địa sắc,\nTinh đẩu lạc thiên thanh.\nLựu đoạt toàn lưu cấp,\nLương hồi khách mộng thanh.\nSơn phòng vô cá sự,\nNhập dạ kỷ tàn canh."
+        },
+        {
+          "start": 5352,
+          "end": 5477,
+          "text": "Rào rào một trận mưa rơi,\nĐầu non ngọc rụng, lưng trời sao sa.\nNước xô hơi lạnh vào nhà,\nBuồng sâu quạnh vắng đêm tà tà canh."
+        }
+      ]
+    }
+  ]
+}

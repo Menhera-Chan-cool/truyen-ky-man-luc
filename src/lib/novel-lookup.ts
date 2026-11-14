@@ -1,16 +1,23 @@
 import type {Locale} from "./types";
 import {notePair,structureLookup} from './novel-lookup-structure';
+import {poetryLookup,poetryScope,poetryContext} from './novel-poetry-lookup';
 export const alignmentCodec = "reader-dom-1";
 export type TextSpan = {start:number;end:number};
+export type PoetryCorrespondence=Record<Locale,TextSpan[]>&{score:number;evidence:'direct-window'|'surrounding-window'};
+export type PoetryTrack=TextSpan&{id:string;lines:TextSpan[];title?:TextSpan;flattened?:boolean};
+export type PoetryPair=Record<Locale,PoetryTrack>&{score:number;margin:number;primary:Record<Locale,boolean>;correspondences:PoetryCorrespondence[];contextOnly?:boolean};
 export type AlignmentArtifact = {
   schema:1;codec:string;algorithm:string;chapterId:string;createdAt:string;
   editions:Record<Locale,{revision:number;versionId:string;hash:string;text:string;words?:TextSpan[];breaks?:number[]}>;
   groups:{id:string;section:string;vi:TextSpan;en:TextSpan;score:number;margin:number;primary?:Record<Locale,boolean>;
     parts?:Record<Locale,TextSpan[]>;
     tracks?:Record<Locale,TextSpan&{id:string}>;
+    poetryLines? : Record<Locale,TextSpan[]>&{score:number;poemScore:number;evidence:'direct-window'|'surrounding-window';correspondences:PoetryCorrespondence[]};
     kind?:'lexical';
     links:{vi:[number,number];en:[number,number];score:number}[]}[];
   notePairs?:{vi:TextSpan;en:TextSpan;score:number;margin:number}[];
+  poems?:PoetryPair[];
+  poetryScopes?:Record<Locale,TextSpan[]>;
   refinementVersion?:1;
   refinedGroups?:AlignmentArtifact['groups'];
 };
@@ -53,6 +60,18 @@ export function validateAlignmentArtifact(value:unknown):AlignmentArtifact {
     }
   }
   if(a.notePairs&&(!Array.isArray(a.notePairs)||a.notePairs.length>10000||a.notePairs.some(p=>!valid(p.vi,a.editions.vi.text)||!valid(p.en,a.editions.en.text)||!Number.isFinite(p.score)||!Number.isFinite(p.margin))))invalid();
+  if(a.poetryScopes)for(const l of ['vi','en']as const)if(!Array.isArray(a.poetryScopes[l])||a.poetryScopes[l].length>2048||a.poetryScopes[l].some(p=>!valid(p,a.editions[l].text)))invalid();
+  if(a.poems){
+    if(!Array.isArray(a.poems)||a.poems.length>512)invalid();
+    for(const p of a.poems){
+      if(!Number.isFinite(p.score)||p.score<.5||p.score>1.001||!Number.isFinite(p.margin)||!p.primary||!Array.isArray(p.correspondences)||p.correspondences.length>2048||(p.contextOnly!==undefined&&typeof p.contextOnly!=='boolean'))invalid();
+      for(const l of ['vi','en']as const){const t=p[l];if(!valid(t,a.editions[l].text)||typeof t.id!=='string'||!t.id.length||t.id.length>100||typeof p.primary[l]!=='boolean'||!Array.isArray(t.lines)||!t.lines.length||t.lines.length>1024||t.lines.some((s,i)=>!valid(s,a.editions[l].text)||s.start<t.start||s.end>t.end||(i>0&&s.start<t.lines[i-1].end))||(t.title&&(!valid(t.title,a.editions[l].text)||t.title.end>t.start)))invalid();}
+      for(const c of p.correspondences){
+        if(!Number.isFinite(c.score)||c.score<0||c.score>1.001||!['direct-window','surrounding-window'].includes(c.evidence))invalid();
+        for(const l of ['vi','en']as const)if(!Array.isArray(c[l])||!c[l].length||c[l].length>32||c[l].some(s=>!p[l].lines.some(line=>line.start===s.start&&line.end===s.end)))invalid();
+      }
+    }
+  }
   return a;
 }
 function wordSpan(text:string,start:number,end:number,bounds:TextSpan,words?:TextSpan[]):TextSpan {
@@ -169,13 +188,26 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
   if(artifact.chapterId!==request.chapterId||source.revision!==request.revision||request.start<0||request.end<=request.start||request.end>source.text.length||source.text.slice(request.start,request.end)!==request.text)return empty("stale");
   if(request.end-request.start>2000)throw RangeError("Selection too long");
   const structural=structureLookup(artifact,request);if(structural)return structural;
+  const poetry=poetryLookup(artifact,request);if(poetry)return poetry;
+  const poem=poetryScope(artifact,request);
+  if(poem&&!poem.trustedWordScope)return poetryContext(artifact,request,poem);
+  if(!poem&&artifact.poetryScopes?.[locale].some(p=>p.start<=request.start&&p.end>=request.end))return empty('unavailable');
   const note=notePair(artifact,request);
   const rank=(g:AlignmentArtifact['groups'][number])=>g.score-.03*Math.log1p(g[locale].end-g[locale].start)-(g.primary?.[locale]===false ? .1 : 0);
   const allGroups=artifact.refinementVersion===1?artifact.refinedGroups??artifact.groups:artifact.groups;
   const preferredTracks=new Map<string,string>();
   for(const g of allGroups)if(g.tracks&&g.primary?.[locale]===true&&!preferredTracks.has(g.tracks[locale].id))preferredTracks.set(g.tracks[locale].id,g.tracks[targetLocale].id);
   const candidates=allGroups.filter(g=>!g.tracks||!preferredTracks.has(g.tracks[locale].id)||preferredTracks.get(g.tracks[locale].id)===g.tracks[targetLocale].id)
-   .filter(g=>(g.parts?.[locale]??[g[locale]]).some(p=>p.start<request.end&&p.end>request.start)).flatMap(g=>{
+   .filter(g=>(g.parts?.[locale]??[g[locale]]).some(p=>p.start<request.end&&p.end>request.start)).flatMap(original=>{
+    let g=original;
+    if(poem){
+      const from={start:Math.max(g[locale].start,poem.source.start),end:Math.min(g[locale].end,poem.source.end)},to={start:Math.max(g[targetLocale].start,poem.target.start),end:Math.min(g[targetLocale].end,poem.target.end)};
+      if(from.end<=from.start||to.end<=to.start)return [];
+      const clipped={...g, [locale]:from,[targetLocale]:to,links:g.links.filter(l=>l[locale][0]>=from.start&&l[locale][1]<=from.end&&l[targetLocale][0]>=to.start&&l[targetLocale][1]<=to.end)};
+      const parts=Object.fromEntries(([locale,targetLocale]as const).map(l=>[l,(g.parts?.[l]??[g[l]]).map(p=>({start:Math.max(p.start,clipped[l].start),end:Math.min(p.end,clipped[l].end)})).filter(p=>p.end>p.start)])) as Record<Locale,TextSpan[]>;
+      if(!parts.vi.length||!parts.en.length)return [];
+      g={...clipped,parts};
+    }
     if(!note)return [g];
     return note.targets.flatMap(scope=>{
     const from={start:Math.max(g[locale].start,note.source.start),end:Math.min(g[locale].end,note.source.end)},to={start:Math.max(g[targetLocale].start,scope.start),end:Math.min(g[targetLocale].end,scope.end)};
@@ -195,6 +227,7 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
   groups.sort((a,b)=>a[locale].start-b[locale].start);
   if(groups.length>32)throw RangeError("Select a shorter passage");
   if(!groups.length){
+    if(poem)return poetryContext(artifact,request,poem);
     if(note?.target)return {status:'context-only',targetLocale,targetRevision:target.revision,passages:[{source:{...note.source,text:source.text.slice(note.source.start,note.source.end)},target:{...note.target,text:target.text.slice(note.target.start,note.target.end),breaks:target.breaks?.filter(b=>b>note.target!.start&&b<note.target!.end)},highlights:[]}]};
     return empty("unavailable");
   }
@@ -255,5 +288,6 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
       previous.highlights=mergeSpans([...previous.highlights,...p.highlights],target.text);
     }else joined.push(p);
   }
+  if(!hasWords&&poem)return poetryContext(artifact,request,poem);
   return {status:hasWords?(uncertain?"uncertain":"match"):"context-only",targetLocale,targetRevision:target.revision,sourceBreaks:source.breaks?.filter(b=>b>request.start&&b<request.end),passages:joined};
 }

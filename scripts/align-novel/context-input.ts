@@ -2,13 +2,15 @@ import type {makeAlignmentInput} from './input';
 import type {Locale} from '../../src/lib/types';
 import {alignmentUnits,type AlignmentArtifact,type TextSpan} from '../../src/lib/novel-lookup';
 import {alignmentStructure} from '../../src/lib/novel-lookup-structure';
+import type {PoetryHint} from '../../src/lib/novel-poetry-structure';
 
 export type ContextUnit=TextSpan&{section:'story'|'critique'|'notes';noteId?:string;text:string;quote:string;starts:number[];ends:number[]};
-export type ContextInput=ReturnType<typeof makeAlignmentInput>&{units:Record<Locale,ContextUnit[]>;structures:Record<Locale,ReturnType<typeof alignmentStructure>>};
+export type ContextInput=ReturnType<typeof makeAlignmentInput>&{units:Record<Locale,ContextUnit[]>;structures:Record<Locale,ReturnType<typeof alignmentStructure>&{poems:PoetryHint[]}>};
 
 export function makeContextInput(input:ReturnType<typeof makeAlignmentInput>):ContextInput{
  const artifact:AlignmentArtifact={...input,schema:1,codec:input.editions.vi.codec,algorithm:'context-input',createdAt:'',groups:[]};
- const structures={vi:alignmentStructure(artifact,'vi'),en:alignmentStructure(artifact,'en')};
+ const structure=(locale:Locale)=>{const s=alignmentStructure(artifact,locale);return {...s,poems:(input.editions[locale].poems??[]).filter(p=>![...s.notes,...s.originals,...s.headings.map(h=>h.span)].some(n=>p.start<n.end&&p.end>n.start))};};
+ const structures={vi:structure('vi'),en:structure('en')};
  const prepare=(locale:Locale):ContextUnit[]=>{
   const e=input.editions[locale],s=structures[locale];
   const noteStart=Math.min(e.text.length,...s.notes.map(n=>n.start),...s.headings.filter(h=>h.kind==='notes').map(h=>h.span.start));

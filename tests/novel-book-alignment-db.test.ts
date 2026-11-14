@@ -42,5 +42,18 @@ it('keeps the current LaBSE run serving while switching jobs to the book recipe 
   expect((await visible()).run.algorithm).toBe('labse-book-mbert-2');
   await db.exec('reset role');
   expect((await db.query('select * from public.novel_alignment_runs')).rows).toHaveLength(2);
+  await db.exec(await readFile('supabase/migrations/20261114014446_poetry_novel_alignment.sql','utf8'));
+  await db.exec('set role service_role');
+  await db.query("select public.queue_novel_alignment('chapter-1')");
+  const poetry=(await db.query<{j:any}>('select public.claim_novel_alignment_job() j')).rows[0].j;
+  expect(poetry.algorithm).toBe('labse-poetry-mbert-3');
+  expect((await visible()).run.algorithm).toBe('labse-book-mbert-2');
+  const poetryFile=poetry.id+'/'+('c'.repeat(64))+'.json';
+  await db.query("insert into storage.objects(bucket_id,name) values('novel-alignments',$1)",[poetryFile]);
+  await db.query('select public.finish_novel_alignment_job($1,$2,$3,$4,123,null)',[poetry.id,poetry.lease_id,poetryFile,'c'.repeat(64)]);
+  await db.exec('reset role;set role anon');
+  expect((await visible()).run.algorithm).toBe('labse-poetry-mbert-3');
+  await db.exec('reset role');
+  expect((await db.query('select * from public.novel_alignment_runs')).rows).toHaveLength(3);
  }finally{await db.close();}
 },20000);

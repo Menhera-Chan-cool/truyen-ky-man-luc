@@ -2,6 +2,7 @@ import {parse, HTMLElement, type Node} from "node-html-parser";
 import {cleanHtml} from "./sanitize";
 import type {Locale} from "./types";
 import {alignmentCodec} from "./novel-lookup";
+import {poetryHints,type PoetryBlock} from './novel-poetry-structure';
 
 export {alignmentCodec};
 export type AlignmentSection = "story" | "critique" | "notes";
@@ -18,6 +19,7 @@ export type AlignmentSentence = {
 export function extractAlignmentText(html: string, locale: Locale) {
   let text = "";
   const breaks=new Set<number>();
+  const poetryBlocks:PoetryBlock[]=[],emphasis:{start:number;end:number}[]=[],bold:{start:number;end:number}[]=[],brs:number[]=[];
   const groups: {section:AlignmentSection;text:string;starts:number[];ends:number[]}[] = [];
   let group = {section:"story" as AlignmentSection,text:"",starts:[] as number[],ends:[] as number[]};
   groups.push(group);
@@ -40,8 +42,10 @@ export function extractAlignmentText(html: string, locale: Locale) {
     }
     if (!(node instanceof HTMLElement)) return;
     const tag = node.rawTagName?.toLowerCase() ?? "";
+    const at=text.length,style=node.getAttribute('style')??'';
     const block = /^(p|div|section|li|blockquote|figcaption|td|th|h[1-6])$/.test(tag);
     if (block || tag === "br") boundary();
+    if(tag==='br')brs.push(at);
     if (/^h[1-6]$/.test(tag)) {
       const label = node.textContent.trim();
       const section:AlignmentSection|undefined = /^(lời\s+(bình|bàn)|critique)\s*[:：]?$/iu.test(label) ? "critique"
@@ -51,6 +55,13 @@ export function extractAlignmentText(html: string, locale: Locale) {
       }
     }
     for (const child of node.childNodes) walk(child,skip);
+    const span={start:at,end:text.length};
+    if(span.end>span.start){
+      if(/^(em|i)$/.test(tag)||/font-style\s*:\s*italic/iu.test(style))emphasis.push(span);
+      if(/^(strong|b|h[1-6])$/.test(tag)||/font-weight\s*:\s*(?:bold|[6-9]00)/iu.test(style))bold.push(span);
+      if(block&&!node.querySelector('p,div,section,li,blockquote,figcaption,td,th,h1,h2,h3,h4,h5,h6'))
+        poetryBlocks.push({...span,tag,emphasis:emphasis.filter(p=>p.start>=at&&p.end<=text.length),bold:bold.filter(p=>p.start>=at&&p.end<=text.length),brs:brs.filter(p=>p>=at&&p<text.length)});
+    }
     if (block) boundary();
   }
   const root = parse(cleanHtml(html));
@@ -67,5 +78,5 @@ export function extractAlignmentText(html: string, locale: Locale) {
       sentences.push({section:g.section,start,end,quote:text.slice(start,end),text:input.slice(from,to),starts,ends});
     }
   }
-  return {codec:alignmentCodec,text,sentences,breaks:[...breaks].filter(p=>p>0&&p<text.length).sort((a,b)=>a-b)};
+  return {codec:alignmentCodec,text,sentences,breaks:[...breaks].filter(p=>p>0&&p<text.length).sort((a,b)=>a-b),poems:poetryHints(text,poetryBlocks,locale)};
 }

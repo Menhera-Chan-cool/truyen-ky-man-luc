@@ -3,7 +3,7 @@ import bisect,re,unicodedata
 import numpy as np
 import regex
 from alignment import align_sequences,align_candidates
-from poetry_tracks import detect_tracks,pair_tracks
+from poetry_tracks import detect_tracks,pair_tracks,quote_aliases
 
 def u16(text):return len(text.encode('utf-16-le'))//2
 def slice16(text,start,end):return text.encode('utf-16-le')[start*2:end*2].decode('utf-16-le')
@@ -73,13 +73,17 @@ def _context_units(item,locale):
     excluded=[heading['span'] for heading in structure.get('headings',[])]+list(structure.get('originals',[]))
     if structure.get('original'):excluded.append(structure['original'])
     notes={str(n['id']):n for n in structure.get('notes',[])};result=[]
-    for raw in item['units'][locale]:
+    poems=structure.get('poems',[])
+    excluded += [p['title'] for p in poems if p.get('title')]
+    cuts=[value for p in poems for line in p['lines'] for value in [line['start'],line['end']]]
+    cuts += [value for p in poems if p.get('title') for value in [p['title']['start'],p['title']['end']]]
+    for raw in split_reader_units(item['units'][locale],cuts) if cuts else item['units'][locale]:
         if raw.get('section') not in ['story','critique','notes'] or not 0<=raw['start']<raw['end']<=u16(edition['text']):raise ValueError('Invalid context unit')
         size=u16(raw['text'])
         if len(raw['starts'])!=size or len(raw['ends'])!=size or any(not raw['start']<=a<b<=raw['end'] for a,b in zip(raw['starts'],raw['ends'])) or any(values!=sorted(values) for values in [raw['starts'],raw['ends']]):raise ValueError('Invalid Reader offset map')
         if any(overlap(raw,p) for p in excluded):continue
         unit={**raw,'text':mask_references(raw['text'])}
-        unit['semanticText']=reference_context(item,locale,raw['text'],notes.get(str(raw.get('noteId'))))
+        unit['semanticText']=reference_context(item,locale,raw['text'],notes.get(str(raw.get('noteId'))),slice16(edition['text'],raw['start'],raw['end']))
         if not any(c.isalnum() for c in unit['text']):continue
         if unit['section']=='notes':
             note=notes.get(str(unit.get('noteId')))
@@ -88,7 +92,7 @@ def _context_units(item,locale):
     return sorted(result,key=lambda u:u['start'])
 
 
-def reference_context(item,locale,text,note=None):
+def reference_context(item,locale,text,note=None,reference_text=None):
     """Resolve only local references, with independent traversal and text budgets."""
     notes={str(n['id']):n for n in item['structures'][locale].get('notes',[])}
     visited={str(note['id'])} if note else set();parts=[];remaining=2048
@@ -105,12 +109,12 @@ def reference_context(item,locale,text,note=None):
             addition=mask_references(body).strip()[:remaining]
             if addition:parts.append(addition);remaining-=len(addition)
             visit(body,target,depth+1)
-    visit(text,note,0)
+    visit(text if reference_text is None else reference_text,note,0)
     return mask_references(text).strip()+ ('\n'+'\n'.join(parts) if parts else '')
 
 def align_contexts(item,encode):
     if 'units' not in item or 'structures' not in item:raise ValueError('Context units and structures are required')
-    units={l:_context_units(item,l) for l in ['vi','en']};groups=[];note_pairs=[]
+    units={l:_context_units(item,l) for l in ['vi','en']};groups=[];note_pairs=[];item['poemPairs']=[]
     def fine(left,right,section):
         if not left or not right:return
         vectors=_normalized(encode([u.get('semanticText',u['text']).strip() for u in left+right]))
@@ -120,16 +124,18 @@ def align_contexts(item,encode):
                            'viInput':join_units([left[i] for i in pair['vi']]),'enInput':join_units([right[i] for i in pair['en']])})
     for section in ['story','critique']:
         selected={l:[u for u in units[l] if u['section']==section] for l in ['vi','en']}
-        if section=='story':
-            tracks={l:detect_tracks(selected[l],item['editions'][l]) for l in ['vi','en']}
-            pairs,_,_=pair_tracks(tracks['vi'],tracks['en'],encode,_normalized)
-            for pair in pairs:
-                groups.append({'section':section,'score':pair['score'],'margin':pair['margin'],'primary':pair['primary'],'tracks':pair['tracks'],
-                               'viInput':join_units(pair['viUnits']),'enInput':join_units(pair['enUnits'])})
-            # Reserve matched verse, including its rejected lines; unmatched DOM layouts retain the fallback.
-            for l in ['vi','en']:
-                confirmed=[pair['tracks'][l] for pair in pairs]
-                selected[l]=[u for u in selected[l] if not any(contains(t,u) for t in confirmed)]
+        tracks={l:detect_tracks(selected[l],item['editions'][l],item['structures'][l].get('poems'),
+                               lambda text,bounds,l=l:reference_context(item,l,text,reference_text=slice16(item['editions'][l]['text'],bounds['start'],bounds['end']))) for l in ['vi','en']}
+        whole=[];pairs,left,right=pair_tracks(tracks['vi'],tracks['en'],encode,_normalized,whole)
+        whole.extend(quote_aliases({'vi':left,'en':right},whole,encode,_normalized))
+        item['poemPairs'].extend(whole)
+        for pair in pairs:
+            groups.append({'section':section,'score':pair['score'],'margin':pair['margin'],'primary':pair['primary'],'tracks':pair['tracks'],'poetryLines':pair['poetryLines'],
+                           'viInput':join_units(pair['viUnits']),'enInput':join_units(pair['enUnits'])})
+        # A confirmed poem cannot vote for prose even when individual lines are uncertain.
+        for l in ['vi','en']:
+            protected=[p[l] for p in whole]+list(item['structures'][l].get('poems',[]))
+            selected[l]=[u for u in selected[l] if not any(contains(p,u) for p in protected)]
         fine(selected['vi'],selected['en'],section)
     notes={};texts={}
     for l in ['vi','en']:

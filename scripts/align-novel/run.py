@@ -5,7 +5,7 @@ from context_alignment import align_contexts,add_caption_aliases,split_reader_un
 from book_glossary import build_glossary,apply_glossary
 import regex
 
-ALGORITHM='labse-book-mbert-2'
+ALGORITHM='labse-poetry-mbert-3'
 
 def labse_encode(texts,tokenizer,model,dense):
     import torch
@@ -115,7 +115,8 @@ def main():
         artifact={'schema':1,'codec':item['editions']['vi']['codec'],'algorithm':ALGORITHM,'models':models,
                   'chapterId':item['chapterId'],'createdAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),
                   'editions':{l:{k:v for k,v in edition.items() if k!='sentences'} for l,edition in item['editions'].items()},
-                  'groups':groups,'refinementVersion':1,'notePairs':item['notePairs']}
+                  'groups':groups,'refinementVersion':1,'notePairs':item['notePairs'],'poems':item.get('poemPairs',[]),
+                  'poetryScopes':{l:[scope for p in item['structures'][l].get('poems',[]) for scope in ([{'start':p['start'],'end':p['end']}]+([p['title']] if p.get('title') else []))] for l in ['vi','en']}}
         artifact['editions']['vi']['words']=vietnamese_word_spans(split_reader_units(item['editions']['vi']['sentences'],item['editions']['vi'].get('breaks',[])))
         artifact['editions']['en']['words']=english_words(item['editions']['en'])
         glossary=build_glossary(artifact,item['structures'])
