@@ -72,8 +72,8 @@
     },
     {
       "chapter": "chapter-5",
-      "sha256": "9cdfd2bfaee8fbe1f329d8b8fde6b7dc828b842f7cacc1da1cfddf95954a353e",
-      "bytes": 591893,
+      "sha256": "7956ee524e829f904d7c880613ba7b742f8672a8a628e7883181b088a1dddba5",
+      "bytes": 632309,
       "versions": {
         "vi": {
           "versionId": "6c8c5e9d-2351-42cf-9639-7fb13444577e",
@@ -85,7 +85,8 @@
           "revision": 1,
           "hash": "a56a6027f767c7c8de81924be3007fcfd856aaf27e7e9ae17adc149e795b5623"
         }
-      }
+      },
+      "algorithm": "labse-poetry-mbert-3"
     },
     {
       "chapter": "chapter-6",
@@ -106,8 +107,8 @@
     },
     {
       "chapter": "chapter-7",
-      "sha256": "f9e6c9d89bd3a99b7d05b1cfc8fd04059c9f28c560ec883a6bdd05d359b964af",
-      "bytes": 605802,
+      "sha256": "e09b5ca586ca29ce089d2f2781d9798606009450b0a56f79d132f1b29e338ff8",
+      "bytes": 597468,
       "versions": {
         "vi": {
           "versionId": "c0798673-6d05-44ef-a620-889faea2904a",
@@ -119,7 +120,8 @@
           "revision": 2,
           "hash": "020fb06da861da5a3cc299a4f91a27e678ac324c1c22c4ef7138d99a8cebb931"
         }
-      }
+      },
+      "algorithm": "labse-poetry-mbert-3"
     },
     {
       "chapter": "chapter-8",
@@ -349,7 +351,7 @@
   "contextOnlyPairs": 25,
   "qa": {
     "summary": {
-      "checkedAt": "2026-11-14T07:11:18.554Z",
+      "checkedAt": "2026-11-14T12:24:32.991Z",
       "artifactDirectory": "D:\\codex\\2026-10-22\\p\\work\\poetry-audit-20261114\\ready-release",
       "scopePolicy": "Whole poem bounds check contexts; exact selected counterpart spans check highlights separately. Reverse permits only listed observed renderings, never their concatenation.",
       "wholeBook": {
@@ -359,21 +361,20 @@
       },
       "all": {
         "cases": 87,
-        "contextAvailable": 86,
-        "correctPoemContext": 85,
-        "correctContextOnly": 14,
+        "contextAvailable": 87,
+        "correctPoemContext": 86,
+        "correctContextOnly": 15,
         "withHighlights": 71,
         "highlightsInCorrectPoem": 71,
         "outsidePoemHighlights": 0,
         "outsidePoemContexts": 1,
-        "exactObservedTargetMatches": 66,
-        "unavailable": 1,
+        "exactObservedTargetMatches": 67,
+        "unavailable": 0,
         "errors": 0,
-        "meanObservedSpanF1": 0.8058594165864205,
+        "meanObservedSpanF1": 0.8100676949608945,
         "statuses": {
           "uncertain": 71,
-          "context-only": 15,
-          "unavailable": 1
+          "context-only": 16
         }
       },
       "regressionVI": {
@@ -385,10 +386,10 @@
         "highlightsInCorrectPoem": 31,
         "outsidePoemHighlights": 0,
         "outsidePoemContexts": 0,
-        "exactObservedTargetMatches": 27,
+        "exactObservedTargetMatches": 28,
         "unavailable": 0,
         "errors": 0,
-        "meanObservedSpanF1": 0.8414025592940234,
+        "meanObservedSpanF1": 0.8515725653656688,
         "statuses": {
           "uncertain": 31,
           "context-only": 5
@@ -396,21 +397,20 @@
       },
       "regressionEN": {
         "cases": 36,
-        "contextAvailable": 35,
-        "correctPoemContext": 34,
-        "correctContextOnly": 3,
+        "contextAvailable": 36,
+        "correctPoemContext": 35,
+        "correctContextOnly": 4,
         "withHighlights": 31,
         "highlightsInCorrectPoem": 31,
         "outsidePoemHighlights": 0,
         "outsidePoemContexts": 1,
         "exactObservedTargetMatches": 30,
-        "unavailable": 1,
+        "unavailable": 0,
         "errors": 0,
         "meanObservedSpanF1": 0.856091030789826,
         "statuses": {
           "uncertain": 31,
-          "context-only": 4,
-          "unavailable": 1
+          "context-only": 5
         }
       },
       "screenshots": {
@@ -591,21 +591,20 @@
         },
         "cases": {
           "cases": 6,
-          "contextAvailable": 5,
-          "correctPoemContext": 5,
-          "correctContextOnly": 1,
+          "contextAvailable": 6,
+          "correctPoemContext": 6,
+          "correctContextOnly": 2,
           "withHighlights": 4,
           "highlightsInCorrectPoem": 4,
           "outsidePoemHighlights": 0,
           "outsidePoemContexts": 0,
           "exactObservedTargetMatches": 4,
-          "unavailable": 1,
+          "unavailable": 0,
           "errors": 0,
           "meanObservedSpanF1": 0.6666666666666666,
           "statuses": {
             "uncertain": 4,
-            "context-only": 1,
-            "unavailable": 1
+            "context-only": 2
           }
         },
         "proseControls": []
@@ -644,10 +643,10 @@
         "category": "observed-standalone-verse",
         "algorithm": "labse-poetry-mbert-3",
         "sourceBindingVerified": true,
-        "serializedPoemPairs": 18,
+        "serializedPoemPairs": 15,
         "declaredPoetryScopes": {
-          "vi": 26,
-          "en": 13
+          "vi": 46,
+          "en": 23
         },
         "cases": {
           "cases": 13,
@@ -658,10 +657,10 @@
           "highlightsInCorrectPoem": 6,
           "outsidePoemHighlights": 0,
           "outsidePoemContexts": 0,
-          "exactObservedTargetMatches": 4,
+          "exactObservedTargetMatches": 5,
           "unavailable": 0,
           "errors": 0,
-          "meanObservedSpanF1": 0.4077343421605717,
+          "meanObservedSpanF1": 0.43589743589743585,
           "statuses": {
             "uncertain": 6,
             "context-only": 7
@@ -2570,9 +2569,9 @@
         "predicted": [],
         "contexts": [
           {
-            "start": 8915,
+            "start": 7931,
             "end": 9964,
-            "text": "Dew drips on the lush blossom, and its crimson heart unfurls, Dispelling all the bitter sorrows of springs gone by. In song I sway with the supple waist of Xiaoman (10), With rouge and powder I beguile you with a bosom like Xi Shi's (11). Counting on my fingers since we met, the stars have not yet come full circle, Yet mountains and rivers fill your eyes, and the wanderer wakes from his dream. Tears fall upon the letter the fish has carried from your native village, And my soul melts away as your horse takes the road to the plum-blossom post station. At the long pavilion the carriage wheels rumble at dawn once more, Bringing me, sick with grief, to pour your parting cup beside the road. In the western garden the yellow plums weep beneath the darkening rain, At the southern shore the green grass grieves above the cold waves. Yellow plums and green grass quietly wound the spirit; I remain while you go home, and our shadows part awhile. With all solemnity I sing this song for you, For at the hour of parting, one heart must surely break.",
+            "text": "East of the imperial city, grass and trees grow thick and wild, A few ruined rooms stand at the bend of Khuc Giang. With silver comb and emerald tint, I tend my morning toilette, And in my misty chamber, by cloud-veiled windows, I pine alone. Since the age of sixteen I have guarded my fragrant beauty, And never let the butterfly envoys or bee matchmakers through. All day long I keep company with the red apricots on the bank, Glimpsing spring, yet too shy to turn toward the crowd of youths. Whose son is this young lord who comes with books beneath his arm, So broad in learning, so rich in talent, so versed in classics and histories? In one hasty glance across the top of the wall, My heart gave its pledge before any match was sanctioned. So I planted this humble flower to face the sun, And bade the Lord of Spring let it bloom in all its glory. The catkins greet the wind awhile, their fragrance forlorn, Their shadows, first touched by warmth, linger amid the tender green. Dew drips on the lush blossom, and its crimson heart unfurls, Dispelling all the bitter sorrows of springs gone by. In song I sway with the supple waist of Xiaoman (10), With rouge and powder I beguile you with a bosom like Xi Shi's (11). Counting on my fingers since we met, the stars have not yet come full circle, Yet mountains and rivers fill your eyes, and the wanderer wakes from his dream. Tears fall upon the letter the fish has carried from your native village, And my soul melts away as your horse takes the road to the plum-blossom post station. At the long pavilion the carriage wheels rumble at dawn once more, Bringing me, sick with grief, to pour your parting cup beside the road. In the western garden the yellow plums weep beneath the darkening rain, At the southern shore the green grass grieves above the cold waves. Yellow plums and green grass quietly wound the spirit; I remain while you go home, and our shadows part awhile. With all solemnity I sing this song for you, For at the hour of parting, one heart must surely break.",
             "breaks": []
           }
         ]
@@ -2582,14 +2581,14 @@
         "chapter": "chapter-5",
         "group": "regression",
         "direction": "en→vi",
-        "status": "unavailable",
+        "status": "context-only",
         "source": {
           "start": 7931,
           "end": 8046,
           "text": "East of the imperial city, grass and trees grow thick and wild, A few ruined rooms stand at the bend of Khuc Giang."
         },
-        "contextAvailable": false,
-        "correctPoemContext": false,
+        "contextAvailable": true,
+        "correctPoemContext": true,
         "hasHighlights": false,
         "highlightsInCorrectPoem": false,
         "outsidePoemHighlight": false,
@@ -2615,9 +2614,48 @@
             "text": "Để thành nọ mé bên đông,Mấy gian nhà cũ giữa vùng trại hoang.Phấn son ngày tháng điểm trang,Quạnh hiu gác khói hiên sương lạnh lùng.Vừa tuần đôi tám xuân dung,Tin ong sứ điệp chưa thông nẻo nào.Bên hoa hôm sớm tiêu dao,Đường xuân thẹn chửa dám chào hỏi ai.Nho sinh bỗng có một người,Văn chương kinh sử tót vời làu thông.Trong tường ngấp nghé xa trông,Tuy duyên chưa buộc mà lòng đã trao.Tình yêu chẳng dễ ngăn rào,Đời hoa thôi đã gửi vào chúa xuân.Cành xanh lá biếc thanh tân,Múa may theo ngọn gió xuân dập dìu.Lòng hoa khi giọt sương gieo,Sầu xuân đã nhẹ nhàng tiêu, nhẹ nhàng.Miệt mài trong cuộc truy hoan,Tây Thi (10) ngực nở, Tiểu Man (11) lưng mềm.Năm tròn chăn gối vừa êm,Non sông giục khách trạnh niềm gia hương.Tin nhà gửi đến đau thương,Càng đau thương lúc buông cương dặm ngoài.Bon bon xe ruổi trời mai,Lòng em khô héo tiễn người đường xa.Bến Nam cỏ áy bóng tà,Vườn tây một rặng mai già khóc mưa.Cỏ cây rầu rĩ tiêu sơ,Chàng về thiếp luống ngẩn ngơ tâm hồn.Vì chàng hát khúc nỉ non,Biệt ly để nặng nỗi buồn cho ai."
           }
         ],
-        "poemMetadataMatches": 0,
+        "poemMetadataMatches": 2,
         "predicted": [],
-        "contexts": []
+        "contexts": [
+          {
+            "start": 6967,
+            "end": 7990,
+            "text": "Để thành nọ mé bên đông,Mấy gian nhà cũ giữa vùng trại hoang.Phấn son ngày tháng điểm trang,Quạnh hiu gác khói hiên sương lạnh lùng.Vừa tuần đôi tám xuân dung,Tin ong sứ điệp chưa thông nẻo nào.Bên hoa hôm sớm tiêu dao,Đường xuân thẹn chửa dám chào hỏi ai.Nho sinh bỗng có một người,Văn chương kinh sử tót vời làu thông.Trong tường ngấp nghé xa trông,Tuy duyên chưa buộc mà lòng đã trao.Tình yêu chẳng dễ ngăn rào,Đời hoa thôi đã gửi vào chúa xuân.Cành xanh lá biếc thanh tân,Múa may theo ngọn gió xuân dập dìu.Lòng hoa khi giọt sương gieo,Sầu xuân đã nhẹ nhàng tiêu, nhẹ nhàng.Miệt mài trong cuộc truy hoan,Tây Thi (10) ngực nở, Tiểu Man (11) lưng mềm.Năm tròn chăn gối vừa êm,Non sông giục khách trạnh niềm gia hương.Tin nhà gửi đến đau thương,Càng đau thương lúc buông cương dặm ngoài.Bon bon xe ruổi trời mai,Lòng em khô héo tiễn người đường xa.Bến Nam cỏ áy bóng tà,Vườn tây một rặng mai già khóc mưa.Cỏ cây rầu rĩ tiêu sơ,Chàng về thiếp luống ngẩn ngơ tâm hồn.Vì chàng hát khúc nỉ non,Biệt ly để nặng nỗi buồn cho ai.",
+            "breaks": [
+              6991,
+              7028,
+              7059,
+              7099,
+              7126,
+              7161,
+              7186,
+              7223,
+              7250,
+              7287,
+              7318,
+              7354,
+              7381,
+              7415,
+              7443,
+              7478,
+              7507,
+              7545,
+              7575,
+              7620,
+              7645,
+              7686,
+              7713,
+              7755,
+              7780,
+              7816,
+              7838,
+              7873,
+              7895,
+              7933,
+              7958
+            ]
+          }
+        ]
       },
       {
         "id": "ch6-bridal-quatrain",
@@ -3226,10 +3264,10 @@
         "highlightsInCorrectPoem": true,
         "outsidePoemHighlight": false,
         "outsidePoemContext": false,
-        "exactObservedTargetMatch": false,
+        "exactObservedTargetMatch": true,
         "precision": 1,
-        "recall": 0.464,
-        "f1": 0.6338797814207651,
+        "recall": 1,
+        "f1": 1,
         "bestExpectedTarget": {
           "start": 6549,
           "end": 6924,
@@ -3242,23 +3280,27 @@
             "text": "A sudden shower darkens a thousand crags,Pattering and rattling as it pours its heart out.Bright jewels lie heaped across the ground,And stars tumble echoing from mid-heaven.Swirling currents rush swiftly from the eaves,Driving a chill inside that clears the traveler's dreams.In the quiet mountain chamber there is naught to do,As night draws on and the watches slowly wane."
           }
         ],
-        "poemMetadataMatches": 2,
+        "poemMetadataMatches": 1,
         "predicted": [
           {
             "start": 6549,
-            "end": 6723,
-            "text": "A sudden shower darkens a thousand crags,Pattering and rattling as it pours its heart out.Bright jewels lie heaped across the ground,And stars tumble echoing from mid-heaven."
+            "end": 6924,
+            "text": "A sudden shower darkens a thousand crags,Pattering and rattling as it pours its heart out.Bright jewels lie heaped across the ground,And stars tumble echoing from mid-heaven.Swirling currents rush swiftly from the eaves,Driving a chill inside that clears the traveler's dreams.In the quiet mountain chamber there is naught to do,As night draws on and the watches slowly wane."
           }
         ],
         "contexts": [
           {
             "start": 6549,
-            "end": 6723,
-            "text": "A sudden shower darkens a thousand crags,Pattering and rattling as it pours its heart out.Bright jewels lie heaped across the ground,And stars tumble echoing from mid-heaven.",
+            "end": 6924,
+            "text": "A sudden shower darkens a thousand crags,Pattering and rattling as it pours its heart out.Bright jewels lie heaped across the ground,And stars tumble echoing from mid-heaven.Swirling currents rush swiftly from the eaves,Driving a chill inside that clears the traveler's dreams.In the quiet mountain chamber there is naught to do,As night draws on and the watches slowly wane.",
             "breaks": [
               6590,
               6639,
-              6682
+              6682,
+              6723,
+              6769,
+              6826,
+              6878
             ]
           }
         ]
@@ -3301,7 +3343,7 @@
             "text": "Rào rào một trận mưa rơi,\nĐầu non ngọc rụng, lưng trời sao sa.\nNước xô hơi lạnh vào nhà,\nBuồng sâu quạnh vắng đêm tà tà canh."
           }
         ],
-        "poemMetadataMatches": 2,
+        "poemMetadataMatches": 1,
         "predicted": [
           {
             "start": 5352,
@@ -3310,19 +3352,6 @@
           }
         ],
         "contexts": [
-          {
-            "start": 5352,
-            "end": 5477,
-            "text": "Rào rào một trận mưa rơi,\nĐầu non ngọc rụng, lưng trời sao sa.\nNước xô hơi lạnh vào nhà,\nBuồng sâu quạnh vắng đêm tà tà canh.",
-            "breaks": [
-              5377,
-              5378,
-              5414,
-              5415,
-              5440,
-              5441
-            ]
-          },
           {
             "start": 5352,
             "end": 5477,
@@ -9771,5 +9800,132 @@
     "liveBrowserTests": 15,
     "workflowState": "active",
     "migrationVersion": "20261114071828"
+  },
+  "wholeIdentityFix": {
+    "workerSourceCommit": "bda1c7e298e4bbc892db873affdca1ad4780deec",
+    "verifiedAt": "2026-11-14T12:25:35.507Z",
+    "pythonTests": 80,
+    "changedChapters": [
+      5,
+      7
+    ],
+    "all20Reviewed": true,
+    "live": {
+      "base": "https://truyen-ky-man-luc.vercel.app",
+      "verifiedAt": "2026-11-14T12:23:28.071Z",
+      "algorithm": "labse-poetry-mbert-3",
+      "artifacts": [
+        {
+          "chapter": "chapter-5",
+          "sha256": "7956ee524e829f904d7c880613ba7b742f8672a8a628e7883181b088a1dddba5",
+          "bytes": 632309,
+          "algorithm": "labse-poetry-mbert-3"
+        },
+        {
+          "chapter": "chapter-7",
+          "sha256": "e09b5ca586ca29ce089d2f2781d9798606009450b0a56f79d132f1b29e338ff8",
+          "bytes": 597468,
+          "algorithm": "labse-poetry-mbert-3"
+        }
+      ],
+      "totalBytes": 1229777,
+      "screenshotCases": [
+        {
+          "id": "screenshot-01",
+          "status": "uncertain",
+          "correctPoem": true,
+          "highlighted": true
+        },
+        {
+          "id": "screenshot-02",
+          "status": "uncertain",
+          "correctPoem": true,
+          "highlighted": true
+        },
+        {
+          "id": "screenshot-03",
+          "status": "uncertain",
+          "correctPoem": true,
+          "highlighted": true
+        },
+        {
+          "id": "screenshot-04",
+          "status": "uncertain",
+          "correctPoem": true,
+          "highlighted": true
+        },
+        {
+          "id": "screenshot-05",
+          "status": "uncertain",
+          "correctPoem": true,
+          "highlighted": true
+        },
+        {
+          "id": "screenshot-06",
+          "status": "uncertain",
+          "correctPoem": true,
+          "highlighted": true
+        },
+        {
+          "id": "screenshot-07",
+          "status": "uncertain",
+          "correctPoem": true,
+          "highlighted": true
+        },
+        {
+          "id": "screenshot-08",
+          "status": "uncertain",
+          "correctPoem": true,
+          "highlighted": true
+        },
+        {
+          "id": "screenshot-09",
+          "status": "uncertain",
+          "correctPoem": true,
+          "highlighted": true
+        },
+        {
+          "id": "screenshot-10",
+          "status": "context-only",
+          "correctPoem": true,
+          "highlighted": false
+        },
+        {
+          "id": "screenshot-11",
+          "status": "context-only",
+          "correctPoem": true,
+          "highlighted": false
+        },
+        {
+          "id": "screenshot-12",
+          "status": "context-only",
+          "correctPoem": true,
+          "highlighted": false
+        },
+        {
+          "id": "screenshot-13",
+          "status": "context-only",
+          "correctPoem": true,
+          "highlighted": false
+        },
+        {
+          "id": "screenshot-14",
+          "status": "context-only",
+          "correctPoem": true,
+          "highlighted": false
+        },
+        {
+          "id": "screenshot-15",
+          "status": "context-only",
+          "correctPoem": true,
+          "highlighted": false
+        }
+      ]
+    },
+    "chapter5": {
+      "verifiedAt": "2026-11-14T12:23:30.970Z",
+      "status": "context-only",
+      "openingCoupletPresent": true
+    }
   }
 }

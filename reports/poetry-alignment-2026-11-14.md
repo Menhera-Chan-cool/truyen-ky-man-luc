@@ -45,3 +45,9 @@ Không tăng các nhãn bằng cách hạ ngưỡng .82/.015 hoặc tự lấp l
 ## Production đã xác minh
 
 Source `879630a749c16142860856e7bfba32b7d6293a41`, deployment `dpl_FYAKhiSnRf8gUVKzTZx9yFdpvTac`, https://truyen-ky-man-luc.vercel.app.20 file tải qua đường đọc công khai khớp SHA256/kích thước local (9505089 byte).15 yêu cầu từ ảnh ở đúng bài;9 có tô đối ứng và6 chỉ ngữ cảnh.15 browser tests production trên desktop/Android/WebKit qua. Workflow hourly đang active;40 bản nội dung xuất bản không đổi.
+
+## Cập nhật giữ nguyên toàn bài
+
+Đã sửa nguyên tắc chọn phạm vi toàn bài trước khi chia bản thể hiện. Một bài ngắn không liên quan không được làm thay đổi bài đã có đối ứng toàn vẹn. Kiểm thử thêm/bớt bài nhiễu đã tái hiện lỗi và qua sau sửa.80 Python tests qua; rà lại20 chương chỉ có5 và7 thay đổi dữ liệu.
+
+87/87 yêu cầu có kết quả/ngữ cảnh,67 span tô trùng đối ứng quan sát,0 highlight ngoài bài; một ngữ cảnh thơ gộp chương2 vẫn gồm hai bản thể hiện. Ca chương5 trước đây unavailable đã trả đúng ngữ cảnh qua APIproduction và giữ nguyên32dòng tiếngAnh. Chưa coi kết quả context-only là tra từ chính xác. Hai file cập nhật đã tải công khai và khớp checksum;15 trường hợp ảnh vẫn ở đúng bài. Số unavailable=1 ở bảng phát hành ban đầu bên trên được thay bằng0 trong đợt này.

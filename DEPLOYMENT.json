@@ -6,10 +6,10 @@
   "runtimeSourceCommit": "879630a749c16142860856e7bfba32b7d6293a41",
   "algorithm": "labse-poetry-mbert-3",
   "readyState": "READY",
-  "checkedAt": "2026-11-14T11:57:30.836Z",
+  "checkedAt": "2026-11-14T12:25:35.507Z",
   "region": "sin1",
   "publicArtifacts": 20,
-  "publicArtifactBytes": 9505089,
+  "publicArtifactBytes": 9537171,
   "liveScreenshots": 15,
   "liveBrowserTests": 15,
   "workflowState": "active",
@@ -29,17 +29,18 @@
     "publicArtifacts": 20,
     "unchangedPublishedEditions": 40,
     "vitest": 306,
-    "python": 79,
+    "python": 80,
     "localBrowser": 51,
     "liveBrowser": 15
   },
   "limitations": [
     "No physical phone testing",
     "Representative poetry probes are not whole-book word-level semantic accuracy",
-    "Some ambiguous/flattened verse remains context-only; one chapter5 probe remains unavailable"
+    "Some ambiguous/flattened verse remains context-only"
   ],
   "previousDeployment": {
     "deploymentId": "dpl_2mY1ckGZkozZM587SAXw2PYFsGDE",
     "sourceCommit": "c179fc0270ffce9f5a39eb53618b2376675dc83d"
-  }
+  },
+  "alignmentWorkerSourceCommit": "bda1c7e298e4bbc892db873affdca1ad4780deec"
 }
