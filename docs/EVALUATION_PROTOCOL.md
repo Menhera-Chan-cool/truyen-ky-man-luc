@@ -395,6 +395,17 @@ One more consumer-only rule in `src/lib/novel-lookup.ts`, for a selection of exa
 
 Not fixed: "thỏ" (no small pair holds it), "bears" (the Vietnamese word "săn gấu" is one word for the segmenter, so the pair's other word already covers all of it) and the two of "bỏ dở"/"unfinished". Tests: 373, typecheck clean, alignment e2e 60 of 60. The font test `heading-fonts.test.ts` failed once in two full runs at 5.2 s, the same PGlite startup cost as `rpc-grants`; it now has the same 30 s timeout.
 
+### Follow-up: "bears" (2026-11-15)
+
+The rule above left "bears" → "bắt thỏ" because the segmenter reads "săn gấu" as one word, so the link of "hunting" took the whole word, "gấu" included, and nothing was left of the pair. When the whole words leave nothing, the raw link pieces ("săn") now decide. Using the pieces first made two correct answers wider ("trà" → "trà lắm", "rắn" → "rắn độc"), so they are only the fallback and no earlier answer changes.
+
+| Set | Before | After |
+| --- | --- | --- |
+| Lexical A (dev), word hits / wrong / strict | 31 / 4 / 29 | 32 / 3 / 30 ("bears" = "gấu") |
+| Both audits, probes, dev and tuned sentences, chapter 2, blind lexical B, blind sentences | | identical outputs |
+
+Left in lexical A: "thỏ" (no small pair holds it; the possible fix, dropping a link whose target another word holds by a strong pair, would make it an abstention rather than "hares"), and "bỏ dở" / "unfinished" (no phrase pair and no link for "dở"; it needs the chapter re-aligned). Tests 374, typecheck clean, e2e 60 of 60.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

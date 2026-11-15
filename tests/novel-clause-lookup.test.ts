@@ -277,3 +277,10 @@ it('answers a lone word from the words of a small strong phrase pair that its cr
  expect(run(.88)).toEqual(['bears']);
  expect(run(.5)).toEqual(['hares']);
 });
+it('lets the raw link pieces decide only when the whole words leave nothing of the pair for the selected word',()=>{
+ const en='He goes hunting bears and chasing hares.',vi='Chàng săn gấu bắt thỏ.',a=plain(vi,en,{vi:[vi],en:[en]},[['săn','hunting'],['bắt','chasing'],['thỏ','bears']]);
+ // the segmenter reads "săn gấu" as one word, so the whole word "săn gấu" is taken by the link of "hunting"
+ a.editions.vi.words=['Chàng','săn gấu','bắt','thỏ'].map(w=>span(vi,w));
+ a.groups[0].phrasePairs=[{vi:span(vi,'săn gấu'),en:span(en,'hunting bears'),score:.88,margin:.19,from:'en'}];
+ expect(query(a,'en',span(en,'bears')).passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end)))).toEqual(['gấu']);
+});

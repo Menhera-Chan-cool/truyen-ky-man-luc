@@ -390,12 +390,16 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         let keep=ranked.filter(c=>c.score>=ranked[0].score*.8&&c.score>=.03&&c.score*1.35>=(competing.get(c.span.start+':'+c.span.end)??0));
         const [wordStart,wordEnd]=sourceKey.split(':').map(Number);
         // A link whose target lies wholly outside the target of a small strong phrase pair that holds its source word is crossed ("gấu thỏ" against "bears … hares", linked the other way round):
-        // the words of the pair that no other word of its window takes are this word's.
+        // the words of the pair that no other word of its window takes are this word's; what another word takes is its raw link piece ("săn"), not the whole word the segmenter made of it ("săn gấu").
         const pickStart=Math.max(wordStart,request.start),pickEnd=Math.min(wordEnd,request.end);
         const holder=keep.length&&!poem&&g.kind!=='lexical'&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)===1?g.phrasePairs?.filter(p=>p[locale].start<=wordStart&&p[locale].end>=wordEnd&&(p[locale].start<request.start||p[locale].end>request.end)&&(source.text.slice(p[locale].start,p[locale].end).match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=3&&p.score>=.65&&p.margin>=.15&&keep.every(c=>c.span.end<=p[targetLocale].start||c.span.start>=p[targetLocale].end)).sort((a,b)=>(a[locale].end-a[locale].start)-(b[locale].end-b[locale].start)||b.score-a.score)[0]:undefined;
         if(holder){
-          const t=holder[targetLocale],taken=g.links.filter(l=>l[locale][0]>=holder[locale].start&&l[locale][1]<=holder[locale].end&&!(l[locale][0]<pickEnd&&l[locale][1]>pickStart)&&l.score>=.3).map(l=>targetSpans.get(l)!).filter(s=>s.start>=t.start&&s.end<=t.end);
-          const rest=[...target.text.slice(t.start,t.end).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:t.start+m.index,end:t.start+m.index+m[0].length})).filter(w=>!taken.some(s=>s.start<w.end&&s.end>w.start)&&!onlyFunctionWords(target.text.slice(w.start,w.end),targetLocale));
+          const t=holder[targetLocale],others=g.links.filter(l=>l[locale][0]>=holder[locale].start&&l[locale][1]<=holder[locale].end&&!(l[locale][0]<pickEnd&&l[locale][1]>pickStart)&&l.score>=.3);
+          const words=[...target.text.slice(t.start,t.end).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:t.start+m.index,end:t.start+m.index+m[0].length})).filter(w=>!onlyFunctionWords(target.text.slice(w.start,w.end),targetLocale));
+          const left=(taken:TextSpan[])=>words.filter(w=>!taken.some(s=>s.start<w.end&&s.end>w.start));
+          const whole=others.map(l=>targetSpans.get(l)!).filter(s=>s.start>=t.start&&s.end<=t.end);
+          // Only when the whole words leave nothing do the raw pieces decide, so no earlier answer widens.
+          const rest=left(whole).length?left(whole):left(others.map(l=>({start:l[targetLocale][0],end:l[targetLocale][1]})).filter(s=>s.start>=t.start&&s.end<=t.end));
           if(rest.length&&rest.length<=2&&/^\s*$/.test(target.text.slice(rest[0].end,rest.at(-1)!.start))){keep=[{span:{start:rest[0].start,end:rest.at(-1)!.end},score:holder.score}];uncertain=true;}
         }
         // A weak link to a content word that sits beside the kept target across "and"/"or"/a comma, and that no other word claims, completes a coordinated pair ("sáng sủa" = "bright and clear").
