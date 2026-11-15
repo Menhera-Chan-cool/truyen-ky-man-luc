@@ -268,6 +268,18 @@ A second step extends a phrase answer at an edge where selected words had no lin
 
 On my labels the strict rate over the 172 answered audit lookups went from 123 (71.5%) before the join to 134 (77.9%) now (words 41 of 51, phrases 31 of 55, sentences 62 of 66). Most of what is still not strict is not mechanical: 17 of 24 non-strict phrases have no confident phrase pair for the exact window, a few labels of mine are wider than the selection, and 5 answers are wrong words in lists. Only 11 of the 100 cases the reviewer judged changed their output; if all 11 were judged right the reviewer-standard estimate would be about 83%, so a second, short check of those 11 plus controls decides whether the figure reached 80%.
 
+## Provisional second check: my own re-judgement of the 20 changed or control cases (not independent)
+
+The second sheet (`docs/verification/human-check-sheet-2.html`: the 11 cases whose highlight changed plus 9 unchanged controls) has not yet been returned by a person. Until it is, I judged the same 20 cases by the reviewer's standard (a complete, contiguous phrase, not missing or adding an important part), strictly: `docs/verification/claude-recheck-2-2026-11-15.csv`. **This is my own judgement of my own work, not a check.**
+
+| The 11 changed cases | Before (reviewer) | Now (my re-judgement) |
+| --- | ---: | ---: |
+| Right | 0 | 5 (`a2-62`, `a2-69`, `a1-14`, `a1-89`, `a2-38`) |
+| Partly | 10 | 5 (`a1-44` still adds "đương kêu cầu", `a1-51` lacks "and clear", `a2-117` lacks "escape being put", `a1-56` lacks "It is only that", `a1-9` still in two pieces) |
+| Wrong | 1 | 1 (`a1-15`, a stray piece "cúng tế") |
+
+The 9 controls stay right. Re-estimated over the 172 answered lookups with the first check's weights: right 76% (95% interval 65–86), partly 21%, wrong 3%, not wrong 97% — **below the 80% asked for**. Fixing the five remaining partly cases would give about 82% on this sample, but they are cases already seen, so that would show only that known cases were fixed; a figure to quote needs a fresh random sample checked by a person. `python scripts/align-novel/human_check_compare2.py SECOND.csv` recomputes the estimate from the person's answers.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
