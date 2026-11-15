@@ -324,6 +324,20 @@ Fixing the cases a person had flagged only shows that those cases were fixed, so
 
 The page is a private hosted page (https://claude.ai/artifact/QGThac8xVS7kGMkvZq6fwc) that saves each answer to its own database (`answers/a3-<id>`); `docs/verification/human-check-artifact-template-3.html` is its template and `docs/verification/human-check-key-3.json` the key (population counts per kind, kind and chapter of each card). `python scripts/align-novel/human_check_compare3.py ANSWERS.csv` weights each kind's right/partly/wrong rate by the kind's share of the 98 answered lookups and bootstraps the interval. With 60 answers the 95% interval is about ±10 points, so I report the interval and not only the point: 80% counts as reached only if the interval does not make it doubtful.
 
+### Result of the third human check
+
+The reviewer judged 59 of the 60 cards (`docs/verification/human-check-result-3-2026-11-15.csv`; the page's database holds the same 59 answers; card 30, "Phong Châu" → "Phong Chau", was left blank). By the reviewer's standard on lookups where the system highlights:
+
+| Kind | Right | Partly | Wrong |
+| --- | ---: | ---: | ---: |
+| Sentences (37 answered in the audit) | 20 of 20 | 0 | 0 |
+| Phrases (32) | 16 of 20 | 2 | 2 |
+| Words (29) | 18 of 19 | 1 | 0 |
+
+Weighted by the audit's answered counts: **right 91.9% (95% interval 85–98), partly 4.8%, wrong 3.3%, not wrong 96.7%**. The 80% asked for is reached, and the interval's lower end is above it. What this covers: lookups the system answers (98 of 120, 82%; the first two audits answered 71%), on a seeded random sample no one had looked at when the rules were written; it says nothing about the 18% of lookups where the system shows context only, and four of the five non-right answers are phrases.
+
+The five non-right answers: `a3-116` "gone beyond" → "ước sự … làm" (two stray pieces, wrong; the reviewer's note: "làm điều quá đáng"), `a3-8` "returned just" → "lại đâu đóng đấy" (marked wrong although the highlight is the idiom the reviewer's note names; the selection cuts the English phrase in the middle, so I count it as the reviewer's call), `a3-41` "together" → "nhau" (the reviewer: "cùng nhau"), `a3-32` "Minh Tong of the Tran" → "Minh Tông nhà" (missing "Trần"), `a3-45` "told everyone" → "cho mọi" (missing "người"). The last three each miss one word at an edge of the answer (the first for `a3-41`, the last for `a3-32` and `a3-45`), the kind of case the edge extension was built for; they are the next candidates if more is wanted.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
