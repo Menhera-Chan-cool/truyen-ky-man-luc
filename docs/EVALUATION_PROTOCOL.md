@@ -580,6 +580,22 @@ Prior 0.2 moves one strict hit up and one down; prior 0.5 gains one probe phrase
 
 Same design as the third and fourth (`docs/verification/audit-120e-2026-11-16.json`): seeded audit 20261127, no sentence of the first four audits, run on source `0c8df52` (Unihan names, projection from outside anchors, sentence completion and gap closure); 100 of the 120 lookups were answered (33 words, 31 phrases, 36 sentences; the fourth audit answered 89 and the third 98: the projection and the name rules answer more); the sheet holds 20 answered lookups per kind in shuffled order. Page: https://claude.ai/artifact/CJRkDCcndGhiCnd9mtJUN1, template `docs/verification/human-check-artifact-template-5.html`, key `docs/verification/human-check-key-5.json`; evaluate with `python scripts/align-novel/human_check_compare3.py ANSWERS.csv docs/verification/human-check-key-5.json`. Reference figures: third check 92.0% (85–98), fourth 89.2% (82–95), pooled 90.6% (85–95) of answered lookups. The new rules answer lookups the system used to leave empty, so a similar right rate with a larger answered share is an improvement; a lower rate would be the price of the extra answers and would be reported as such.
 
+### Result of the fifth human check (2026-11-16)
+
+Returned complete: 60 of 60 cards answered (`docs/verification/human-check-result-5-2026-11-16.csv`), scored with `human_check_compare3.py` against `human-check-key-5.json`; the same script re-run on the third and fourth CSVs gives 92.0% and 89.2% again, so the scoring is the one used before.
+
+| Kind | Right | Partly | Wrong |
+| --- | --- | --- | --- |
+| Sentences (20) | 20 | 0 | 0 |
+| Phrases (20) | 19 | 1 | 0 |
+| Words (20) | 18 | 2 | 0 |
+
+Estimate over the audit's answered lookups, weighted by kind: **right 95.2% (95% interval 89–100), partly 4.9% (0–11), wrong 0.0%**. For comparison, third check 92.0% (85–98, 2 wrong), fourth 89.2% (82–95, 2 wrong); pooled third and fourth 90.6% (85–95), reproduced by the same pooling (summed populations, answers concatenated); pooled third, fourth and fifth (180 cards) **92.2% (89–95), partly 5.7%, wrong 2.1% (1–4)**; fourth and fifth alone 92.1% (87–96).
+
+What this does and does not show. The point estimate is the highest of the three and no card was judged wrong, with a larger answered share of the audit (100 of 120, against 98 and 89), so more lookups are answered and the answered ones are not worse. It is not a proven gain over the third check: the intervals overlap (89–100 against 85–98 and 82–95), the samples are different random draws, and it is one reviewer who finished the three sheets in a few minutes each. The sheet was run on source `0c8df52`, so it measures the Unihan names, the projection from outside anchors, the sentence completion and the gap closure, and not the interior-gap rule of part 4 (which changed no highlight of audits 1 and 2). The reviewer's target set earlier (strict right at least 80%) holds in all three sheets.
+
+The three cards judged "partly" (the reviewer left no notes; what the audit file shows, `audit-120e-2026-11-16.json`): a5-74 phrase "clots of fresh", a fragment of "clots of fresh blood" in the sentence, highlighted as "hòn máu tươi"; a5-106 word "bút" in "ham nghề nghiên bút", highlighted as "brush" (the English reads "the brush and the inkstone"); a5-119 word "shelter" in "we have nowhere to shelter", highlighted as "cấp dưỡng" while the passage's "lui không có chốn nào tựa nương" is the nearer counterpart. All three carry the `uncertain` status. I do not know why the reviewer chose "partly" for each; the first two look like selections that are only part of a larger unit, the third like a neighbouring phrase, which are the classes of the earlier checks.
+
 ## Goal list, part 4: unlinked words between linked ones no longer block a phrase (2026-11-16)
 
 **What the gap was.** A selected phrase is abstained ("uncertain") when too many of its content words have no link. The test counted every unlinked content word, including those that stand *between* two linked ones. A phrase whose pieces join into one highlight (the projection and join rules of part 1 and the 2026-11-15 joining step) does not lose those interior words: the highlight covers them. Counting them made the lookup abstain on phrases whose counterpart it had in fact found.
