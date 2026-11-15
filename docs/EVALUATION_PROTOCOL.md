@@ -200,6 +200,23 @@ The blind sentence set was evaluated once for this change (its earlier runs belo
 
 **Not fixed, and why.** The three wrong words in the audit ("serpents" → "chim", "very" → "rất", "chưa" → "had") stay. A LaBSE check on single words cannot veto them: right answers scored 0.36–0.80 and wrong ones 0.55–0.99 against their selection; when mBERT and the LaBSE best window disagree, the mBERT answer is the right one in 10 of 12 cases. A looser phrase gate does not buy coverage either: over 201 labelled lookups the current gate emits 122 at 95% precision, the loosest gate 171 at 91%, and on the random audit alone the loosened gate is about 85%. A rule against scattered highlights rests on one case and was not added.
 
+## Second random audit, after the gap-context and closure fix (labelled by Claude, not by a human)
+
+A fresh seeded sample (seed 20261121, same design: 20 chapters × 2 sentences, 2 phrases, 2 words, language random, prose only), redrawn so that no sentence is shared with the first audit, was run on the deployed lookup (source `bc00536`). Same procedure: the true counterpart was written before the highlights were read, verdicts by span F1 ≥ 0.5, four cases adjudicated by reading (26 partial; 74, 88 and 117 right but incomplete). Cases and verdicts: `docs/verification/audit-120b-2026-11-15.json`. Same caveat: the labeller is a language model.
+
+| 120 random lookups | answered | hit | incomplete | partial | wrong | abstain: right context | abstain: no context | hit of answered (95% CI) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Audit 1, before the fix | 85 (71%) | 78 | 1 | 3 | 3 | 29 | 6 | 92% (84–96) |
+| Audit 1 rerun after the fix (dev: its cases were read) | 87 (73%) | 80 | 1 | 3 | 3 | 30 | 3 | 92% |
+| **Audit 2, fresh, after the fix** | 85 (71%) | 79 | 3 | 1 | 2 | 32 | 3 | **93% (85–97)** |
+| ↳ words | 25 | 22 | 1 | 0 | 2 | 12 | 3 | 88% (70–96) |
+| ↳ phrases | 28 | 25 | 2 | 1 | 0 | 12 | 0 | 89% (73–96) |
+| ↳ sentences | 32 | 32 | 0 | 0 | 0 | 8 | 0 | 100% (89–100) |
+| ↳ from Vietnamese | 44 | 41 | 2 | 0 | 1 | 15 | 1 | 93% (82–98) |
+| ↳ from English | 41 | 38 | 1 | 1 | 1 | 17 | 2 | 93% (81–97) |
+
+Reading. Answered share and hit rate are the same as in audit 1 (71%, 92–93%); what moved is the context: abstentions with no or wrong context fell from 6 to 3 of 120, and the English-to-Vietnamese gap of the first audit (88% against 96%) did not reproduce (93% against 93%), so it was within noise. Not wrong of answered is 83 of 85 (98%, CI 92–99) here and 167 of 172 (97%, CI 93–99) over both audits after the fix; hit of answered is 159 of 172 (92%, CI 87–96) over both. Which of these two is the "98%" target is the user's call; the first is not met and the second is close to the lower end of its interval. The two wrong answers are words in lists or with several candidates ("leather" → "dùi" in the list "dây da … dùi lửa …", "phía" → "the"); the three abstentions without context are a classical-Chinese verse passage with no returned text, a word whose clause is not in the returned passage, and a passage unrelated to the selection. The sample of 120 per audit has intervals of about ±6 points; no claim of 95% or 98% is supportable without a human-checked sample of around 400.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
