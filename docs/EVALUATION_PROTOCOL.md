@@ -280,6 +280,20 @@ The second sheet (`docs/verification/human-check-sheet-2.html`: the 11 cases who
 
 The 9 controls stay right. Re-estimated over the 172 answered lookups with the first check's weights: right 76% (95% interval 65–86), partly 21%, wrong 3%, not wrong 97% — **below the 80% asked for**. Fixing the five remaining partly cases would give about 82% on this sample, but they are cases already seen, so that would show only that known cases were fixed; a figure to quote needs a fresh random sample checked by a person. `python scripts/align-novel/human_check_compare2.py SECOND.csv` recomputes the estimate from the person's answers.
 
+## Second human check, returned (2026-11-15)
+
+The reviewer filled in the second sheet through the hosted page (`docs/verification/human-check-result-2-2026-11-15.csv`; the same 20 answers are in the page's database). All 20 were answered: 17 right, 3 partly, 0 wrong.
+
+| The 11 changed cases | Before (reviewer, sheet 1) | Now (reviewer, sheet 2) |
+| --- | ---: | ---: |
+| Right | 0 | 8 |
+| Partly | 10 | 3 (`a1-51`, `a1-9`, `a2-62`) |
+| Wrong | 1 | 0 (`a1-15` is right) |
+
+All 9 unchanged controls stayed right. Against my own re-judgement the reviewer was more lenient in four cases (`a1-44`, `a2-117`, `a1-56`, `a1-15`) and stricter in one (`a2-62`, which I had judged right); my provisional figure was 76%.
+
+Re-estimated over the 172 answered audit lookups, with the second sheet's answers replacing the first's: **right 77.8% (95% interval 67–87), partly 19.9%, wrong 2.3%, not wrong 97.7%** (first check: 67% right). The point estimate is below the 80% asked for, and the interval includes it. Two cautions: the 11 changed cases were picked because they changed, and the 9 controls and the other 80 first-check answers are re-used from the first check, so this is the first check corrected where the output changed, not a fresh sample. The 10 hits still judged partly are 8 phrases, 1 sentence and 1 word (`a1-51`, `a2-2`, `a2-62`, `a1-85`, `a1-111`, `a2-99`, `a1-63`, `a1-9`, `a2-87`, `a1-76`). A figure to quote for 80% needs a fresh random sample judged by a person, after those phrase cases are looked at.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
