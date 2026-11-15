@@ -318,6 +318,12 @@ Of the ten, three are fixed: `a1-51` ("…bright and clear"), `a1-9` ("They may 
 
 Unit tests 370, typecheck clean, alignment e2e 60 of 60. These are dev numbers for the audits, because those cases were looked at; the figure for the new rules comes from the third human sheet, drawn from a fresh sample (seed 20261123, 20 chapters × 2 sentences, 2 phrases, 2 words, none of the earlier sentences).
 
+## Third human check: a fresh sample (2026-11-15)
+
+Fixing the cases a person had flagged only shows that those cases were fixed, so the next figure comes from lookups nobody has looked at. A third seeded audit (seed 20261123, 20 chapters × 2 sentences, 2 phrases, 2 words, direction random, prose only, none of the sentences of the first two audits) was run on the deployed code (`docs/verification/audit-120c-2026-11-15.json`): 98 of the 120 lookups were answered (29 words, 32 phrases, 37 sentences). The sheet holds 20 answered lookups of each kind, drawn at random and shuffled, so a person who stops half way has still judged a random sample. I did not label this sample: the person is the only judge.
+
+The page is a private hosted page (https://claude.ai/artifact/QGThac8xVS7kGMkvZq6fwc) that saves each answer to its own database (`answers/a3-<id>`); `docs/verification/human-check-artifact-template-3.html` is its template and `docs/verification/human-check-key-3.json` the key (population counts per kind, kind and chapter of each card). `python scripts/align-novel/human_check_compare3.py ANSWERS.csv` weights each kind's right/partly/wrong rate by the kind's share of the 98 answered lookups and bootstraps the interval. With 60 answers the 95% interval is about ±10 points, so I report the interval and not only the point: 80% counts as reached only if the interval does not make it doubtful.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
