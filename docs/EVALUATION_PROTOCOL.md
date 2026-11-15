@@ -100,6 +100,21 @@ Changes: the stored phrase pairs now keep score ≥ 0.65 and margin ≥ 0.15 (wa
 
 What is left is mostly not the table: a gold pair sometimes scores below its rivals in LaBSE ("văn chương thông thái" ↔ "accomplished in letters" 0.36 against 0.57 for a wrong window), and mBERT links swap items in parallel lists ("gấu"/"thỏ" ↔ "bears"/"hares") where no strong phrase pair exists. Both are encoder limits, the subject of step 4. The only independent figures are set B's: words 29 of 40 (72.5%) and phrases 30 of 40 (75%) with 2 and 0 wrong, far from 95%; set A is dev, so its gain (words 29 → 30, phrases 25 → 27 of 40) is not evidence.
 
+## Step 4 (encoder), locally cached models only: no gain, nothing changed in the product
+
+Models already on disk: LaBSE (pinned), multilingual-e5-small, mBERT, awesome-align, xlm-align-base, XLM-R large. The word and phrase windows of the dev lexical sets (set A and the dev probes) were scored by each encoder, restricted to the finest pair that holds both gold spans, and the best counterpart window was checked against the gold (F1 ≥ 0.5). Set B was not used.
+
+| Window scorer | Set A words | Set A phrases | All A (66 lookups) |
+| --- | ---: | ---: | ---: |
+| LaBSE | 26 / 33 | 31 / 33 | 57 |
+| multilingual-e5-small | 14 / 33 | 19 / 33 | 33 |
+| LaBSE + E5, equal weights | 26 / 33 | 31 / 33 | 57 |
+| LaBSE 0.25 + E5 0.75 | 24 / 33 | 29 / 33 | 53 |
+
+E5-small is much weaker on these short windows and fusing it adds nothing, so there is no encoder to adopt among the cached models. Over set A plus the dev probes (132 lookups) the LaBSE best window is right 114 times (86%); the current gate (score ≥ 0.65, margin ≥ 0.15, mutual best) emits 90 of them with 87 right (96.7%), while a looser gate (0.5 / 0.10) would emit 108 with 102 right (94.4%). Taking the largest window within 0.04 of the best one ("wine" → "Heavy with wine") helped the best-window check on dev (phrases 53 → 55 of 62) but changed no answered lookup on set A or the probes while rewriting 21,751 stored pairs, so it was dropped.
+
+What would move the numbers is outside what is cached: a stronger multilingual sentence encoder (a new download), fine-tuning on in-book pairs split by chapter, or human-labelled pairs. Each needs explicit permission.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
