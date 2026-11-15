@@ -106,3 +106,53 @@ class SentenceHierarchyTests(unittest.TestCase):
                 for l in ['vi','en']:
                     if x[l][0]<y[l][1] and y[l][0]<x[l][1]:
                         self.assertTrue(all((x[k][0]<=y[k][0] and y[k][1]<=x[k][1] and x[k]!=y[k]) for k in ['vi','en']) or all((y[k][0]<=x[k][0] and x[k][1]<=y[k][1] and x[k]!=y[k]) for k in ['vi','en']))
+
+
+class PhrasePairTests(unittest.TestCase):
+    def setUp(self):
+        self.vi='thổi kèn dệt chiếu. rồi nghỉ.';self.en='flute players and mat weavers. then rest.'
+        def words(text):
+            import re
+            return [{'start':m.start(),'end':m.end()} for m in re.finditer(r'\w+',text)]
+        vw=[w for w in words(self.vi)];ew=words(self.en)
+        # Vietnamese segmented words: "thổi kèn" and "dệt chiếu" are one word each
+        vw=[{'start':0,'end':8},{'start':9,'end':18}]+[w for w in vw if w['start']>=19]
+        self.editions={'vi':{'text':self.vi,'words':vw},'en':{'text':self.en,'words':ew}}
+        self.group={'id':'0','section':'story','score':.9,'vi':{'start':0,'end':len(self.vi)},'en':{'start':0,'end':len(self.en)},
+                    'clausePairs':[{'vi':[{'start':0,'end':18}],'en':[{'start':0,'end':29}],'score':.8,'margin':.2}]}
+
+    def run_phrases(self,vectors):
+        from prose_alignment import add_phrase_pairs
+        add_phrase_pairs([self.group],lambda texts:np.stack([vectors.get(t,np.zeros(4)) for t in texts]),self.editions)
+        return self.group.get('phrasePairs',[])
+
+    def test_pairs_a_phrase_only_with_its_mutual_best_window_inside_the_same_pair(self):
+        v=np.array([1.,0,0,0]);pairs=self.run_phrases({'flute players and mat weavers':v,'thổi kèn dệt chiếu':v,'mat weavers':np.array([.5,.866,0,0]),'dệt chiếu':np.array([.5,.866,0,0])})
+        top=pairs[0];self.assertEqual((top['en'],top['vi']),({'start':0,'end':29},{'start':0,'end':18}))
+        self.assertEqual({p['from'] for p in pairs if p['en']==top['en']},{'en','vi'})
+        self.assertTrue(all(p['score']>=.5 and p['margin']>=.08 for p in pairs))
+
+    def test_a_window_never_crosses_a_sentence_end_or_leaves_its_pair(self):
+        v=np.array([1.,0,0,0]);pairs=self.run_phrases({'mat weavers then rest':v,'thổi kèn dệt chiếu rồi nghỉ':v})
+        self.assertEqual(pairs,[])
+
+    def test_unreliable_scores_produce_nothing(self):
+        self.assertEqual(self.run_phrases({'flute players':np.array([1.,0,0,0]),'thổi kèn':np.array([.3,.954,0,0])}),[])
+
+
+class EdgeResidualTests(unittest.TestCase):
+    def pairs(self,vectors):
+        from prose_alignment import add_clause_pairs
+        def units(texts):
+            at=0;result=[]
+            for t in texts:result.append(unit(t,at));at+=len(t)+1
+            return join_units(result)
+        g={'section':'story','viInput':units(['a.','b.']),'enInput':units(['X.','Y.'])}
+        add_clause_pairs([g],lambda texts:np.stack([vectors.get(t,vector()) for t in texts]),None)
+        return g.get('clausePairs',[])
+
+    def test_a_weak_pair_next_to_a_confident_one_is_kept_flagged_and_a_weaker_one_is_not(self):
+        base={'a.':vector(0,1),'X.':vector(0,1),'b.':vector(.45,0,0,.893)}
+        kept=self.pairs({**base,'Y.':vector(1)})
+        self.assertEqual([bool(p.get('residual')) for p in kept],[False,True])
+        self.assertEqual(len(self.pairs({**base,'b.':vector(.3,0,0,.954),'Y.':vector(1)})),1)

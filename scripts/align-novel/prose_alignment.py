@@ -170,9 +170,7 @@ def _decide(task,atoms,scores,limits,pairs):
     if not found:return found
     anchors=sorted(found,key=lambda f:f['window'][0]);cuts=[(0,0)]+[(f['window'][0]+f['window'][1],f['window'][2]+f['window'][3]) for f in anchors]
     starts=[(f['window'][0],f['window'][2]) for f in anchors]+[(size['vi'],size['en'])]
-    # Under an accepted parent the paragraph edge is a boundary too; at the top level only a gap between two confident pairs counts.
-    gaps=list(zip(cuts,starts))[1:-1] if task['root'] else list(zip(cuts,starts))
-    for (i0,j0),(i1,j1) in gaps:
+    for (i0,j0),(i1,j1) in zip(cuts,starts):
         a,b=i1-i0,j1-j0
         if not (1<=a<=limits[0] and 1<=b<=limits[1]) or (a,b)==(size['vi'],size['en']):continue
         score=float(scores[a,b][i0,j0])
@@ -217,3 +215,84 @@ def add_clause_pairs(contexts,encode,editions=None):
             pairs=align_sequences(windows[0][1],windows[1][1],minimum=.5,windows=windows,limit=CLAUSE_WINDOW)
             for f in _decide(task,atoms,scores,limits,pairs):
                 if _admit(g,units,f['ranges'],f['score'],f['margin'],f.get('residual',False)):tasks.append({'g':g,'units':units,**f['ranges'],'root':False})
+
+
+PHRASE_SIZES={'en':(2,6),'vi':(1,6)};PHRASE_FLOOR=.5;PHRASE_MARGIN=.08;PHRASE_PER_PAIR=60;PHRASE_PER_GROUP=512;PHRASE_WORDS={'en':40,'vi':50}
+
+
+def _phrase_windows(edition,span,locale):
+    """Contiguous word windows of one side of a pair: they may cross commas, never a sentence end, a break or a note marker."""
+    words=edition['words'];data=edition['_bytes'];starts=edition['_starts']
+    from bisect import bisect_left
+    lo=bisect_left(starts,span['start']);inside=[]
+    for w in words[lo:]:
+        if w['start']>=span['end']:break
+        if w['end']>span['end']:continue
+        before=data[max(w['start']-1,0)*2:w['start']*2].decode('utf-16-le');after=data[w['end']*2:(w['end']+1)*2].decode('utf-16-le')
+        if before=='(' and after==')':continue   # the digits of a note marker are not a word
+        inside.append(w)
+    if not inside or len(inside)>PHRASE_WORDS[locale]:return []
+    result=[]
+    low,high=PHRASE_SIZES[locale]
+    for i in range(len(inside)):
+        for n in range(low,high+1):
+            if i+n>len(inside):break
+            a,b=inside[i],inside[i+n-1]
+            raw=data[a['start']*2:b['end']*2].decode('utf-16-le')
+            if re.search(r'[.!?;:…\n]|\(\d{1,3}\)',raw):break
+            result.append({'start':a['start'],'end':b['end'],'first':i,'last':i+n-1,'text':' '.join(raw.split())})
+    return result
+
+
+def _finest_pairs(g):
+    pairs=g.get('clausePairs')
+    if pairs is None:
+        whole={l:g[l] if l in g else {'start':g[l+'Input']['starts'][0],'end':g[l+'Input']['ends'][-1]} for l in ['vi','en']}
+        return [{l:{'start':whole[l]['start'],'end':whole[l]['end']} for l in ['vi','en']}] if g.get('section')=='story' and 'tracks' not in g and g.get('score',0)>=.5 else []
+    bounds=[{l:{'start':p[l][0]['start'],'end':p[l][-1]['end']} for l in ['vi','en']} for p in pairs]
+    def inside(a,b):return all(b[l]['start']<=a[l]['start'] and a[l]['end']<=b[l]['end'] for l in ['vi','en']) and a!=b
+    return [b for b in bounds if not any(inside(c,b) for c in bounds)]
+
+
+def add_phrase_pairs(groups,encode,editions):
+    """Phrase pairs inside the finest trusted pairs: for each word window the best counterpart window of the same pair,
+    kept only when it clearly beats every disjoint window and the counterpart's own best window overlaps the query."""
+    from context_alignment import mask_references,_normalized
+    prepared={}
+    for l in ['vi','en']:
+        e=editions[l];prepared[l]={'words':sorted(e['words'],key=lambda w:w['start']),'_bytes':e['text'].encode('utf-16-le')}
+        prepared[l]['_starts']=[w['start'] for w in prepared[l]['words']]
+    work=[];texts=set()
+    for g in groups:
+        if g.get('kind')=='lexical' or 'tracks' in g or g.get('section') not in ['story','critique']:continue
+        for pair in _finest_pairs(g):
+            win={l:_phrase_windows(prepared[l],pair[l],l) for l in ['vi','en']}
+            if not win['vi'] or not win['en']:continue
+            for l in win:
+                for w in win[l]:w['text']=' '.join(mask_references(w['text']).split())
+            texts.update(w['text'] for l in win for w in win[l]);work.append((g,win))
+    if not texts:return
+    ordered=sorted(texts);vectors=_normalized(encode(ordered))
+    if len(vectors)!=len(ordered):raise ValueError('Phrase vector count mismatch')
+    memo=dict(zip(ordered,vectors))
+    for g,win in work:
+        vi,en=win['vi'],win['en']
+        S=np.stack([memo[w['text']] for w in en])@np.stack([memo[w['text']] for w in vi]).T
+        def overlap(items):
+            first=np.array([w['first'] for w in items]);last=np.array([w['last'] for w in items])
+            return (first[:,None]<=last[None,:])&(first[None,:]<=last[:,None])
+        ove,ovv=overlap(en),overlap(vi);found=[]
+        for source,target,matrix,ovs,ovt,side in [(en,vi,S,ove,ovv,'en'),(vi,en,S.T,ovv,ove,'vi')]:
+            for i,w in enumerate(source):
+                j=int(matrix[i].argmax());score=float(matrix[i,j])
+                if score<PHRASE_FLOOR:continue
+                rest=matrix[i][~ovt[j]];margin=score-(float(rest.max()) if rest.size else 0.)
+                back=int(matrix[:,j].argmax())
+                if margin<PHRASE_MARGIN or not ovs[i,back] or score<float(matrix[back,j])-.03:continue
+                found.append({'vi':{'start':(w if side=='vi' else target[j])['start'],'end':(w if side=='vi' else target[j])['end']},
+                              'en':{'start':(w if side=='en' else target[j])['start'],'end':(w if side=='en' else target[j])['end']},
+                              'score':score,'margin':margin,'from':side})
+        found.sort(key=lambda f:-f['score'])
+        if found:g.setdefault('phrasePairs',[]).extend(found[:PHRASE_PER_PAIR])
+    for g,_ in work:
+        if 'phrasePairs' in g:g['phrasePairs']=sorted(g['phrasePairs'],key=lambda f:-f['score'])[:PHRASE_PER_GROUP]

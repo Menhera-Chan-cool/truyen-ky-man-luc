@@ -141,3 +141,41 @@ it('treats a note marker as no evidence by itself and ignores it inside a select
  const whole=query(a,'en',span(en,en));
  expect(whole.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual([vi]);
 });
+function phraseFixture(){
+ const en='Even flute-players and mat-weavers (14) can achieve success;',vi='thổi kèn, dệt chiếu (14) cũng đủ để thành công;';
+ const a=plain(vi,en,{vi:[vi],en:[en]},[]),e=span(en,'flute-players and mat-weavers'),v=span(vi,'thổi kèn, dệt chiếu');
+ a.groups[0].phrasePairs=[{en:e,vi:v,score:.6,margin:.1,from:'en'},{en:e,vi:v,score:.6,margin:.1,from:'vi'}];
+ return {a,en,vi,e,v};
+}
+it('answers an exact phrase from its phrase pair as an uncertain suggestion, ignoring edge punctuation and a note marker',()=>{
+ const {a,e,v,en}=phraseFixture();
+ for(const s of [e,{start:e.start,end:e.end+' (14)'.length},{start:e.start-1,end:e.end}]){
+  const r=query(a,'en',s);expect(r.status).toBe('uncertain');expect(r.passages.flatMap(p=>p.highlights)).toEqual([v]);
+ }
+ expect(en.slice(e.start,e.end)).toBe('flute-players and mat-weavers');
+});
+it('uses the phrase pair of the direction that was asked and nothing for a selection inside its window',()=>{
+ const {a,e,v}=phraseFixture();
+ const reverse=query(a,'vi',v);expect(reverse.passages.flatMap(p=>p.highlights)).toEqual([e]);
+ a.groups[0].phrasePairs=a.groups[0].phrasePairs!.filter(p=>p.from==='en');
+ expect(query(a,'vi',v).passages.flatMap(p=>p.highlights)).not.toEqual([e]);
+ const inside=query(a,'en',span(a.editions.en.text,'mat-weavers'));
+ expect(inside.passages.flatMap(p=>p.highlights)).not.toEqual([v]);
+});
+it('abstains when two phrase pairs give different counterparts for the same window',()=>{
+ const {a,e,v}=phraseFixture(),other=span(a.editions.vi.text,'dệt chiếu');
+ a.groups[0].phrasePairs!.push({en:e,vi:other,score:.59,margin:.1,from:'en'});
+ expect(query(a,'en',e).passages.flatMap(p=>p.highlights)).not.toEqual([v]);
+});
+it('rejects phrase pairs that leave their group or carry a bad score',()=>{
+ const {a}=phraseFixture();expect(()=>validateAlignmentArtifact(a)).not.toThrow();
+ const outside=phraseFixture().a;outside.groups[0].phrasePairs![0].vi={start:0,end:outside.editions.vi.text.length+1};
+ expect(()=>validateAlignmentArtifact(outside)).toThrow();
+ const bad=phraseFixture().a;bad.groups[0].phrasePairs![0].score=Number.NaN;expect(()=>validateAlignmentArtifact(bad)).toThrow();
+});
+it('keeps good word links instead of a longer phrase pair that would widen them',()=>{
+ const en='With words like flowers and thoughts like brocade.',vi='Lời hoa ý gấm.',a=plain(vi,en,{vi:[vi],en:[en]},[['Lời','words'],['hoa','flowers'],['gấm','brocade']]);
+ const q=span(en,'words like flowers');
+ a.groups[0].phrasePairs=[{en:q,vi:span(vi,'Lời hoa ý gấm'),score:.7,margin:.2,from:'en'}];
+ const r=query(a,'en',q);expect(r.passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end)))).not.toContain('Lời hoa ý gấm');
+});

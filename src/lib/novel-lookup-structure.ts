@@ -1,4 +1,4 @@
-import type {AlignmentArtifact,LookupRequest,LookupResult,TextSpan} from './novel-lookup';
+import type {AlignmentArtifact,LookupPassage,LookupRequest,LookupResult,TextSpan} from './novel-lookup';
 import type {Locale} from './types';
 type Note=TextSpan&{id:string;label?:TextSpan;reference?:string};
 type Structure={headings:{kind:'critique'|'notes';span:TextSpan}[];original?:TextSpan;originals:TextSpan[];notes:Note[]};
@@ -72,4 +72,18 @@ export function structureLookup(a:AlignmentArtifact,r:LookupRequest):LookupResul
   }
   if((pair.target.reference||!pair.target.label)&&!(a.refinedGroups??a.groups).some(g=>g.kind==='lexical'&&g[r.locale].start<=r.start&&g[r.locale].end>=r.end))return answer(pair.source,pair.target,false);
  }
+}
+
+// An allusion or annotated phrase with no counterpart of its own can still show the paired explanation as context:
+// the selection ends right before a body marker (n), and that note has a confirmed note pair. Never a highlight.
+export function annotatedNote(a:AlignmentArtifact,r:LookupRequest):LookupPassage|undefined{
+ const left=alignmentStructure(a,r.locale),text=a.editions[r.locale].text;
+ if(!left.notes.length||left.notes.some(n=>r.start>=n.start&&r.end<=n.end))return undefined;
+ const id=/^[\s"”’)\]…,.;:!?]{0,6}\((\d{1,3})\)/u.exec(text.slice(r.end,r.end+16))?.[1]??/\((\d{1,3})\)\s*$/u.exec(r.text)?.[1];
+ const note=id?left.notes.find(n=>n.id===id):undefined;
+ if(!note)return undefined;
+ const target=notePair(a,{...r,start:note.start,end:note.end,text:text.slice(note.start,note.end)})?.target;
+ if(!target)return undefined;
+ const other=r.locale==='vi'?'en':'vi',t=a.editions[other];
+ return {source:{start:note.start,end:note.end,text:text.slice(note.start,note.end)},target:{start:target.start,end:target.end,text:t.text.slice(target.start,target.end),breaks:t.breaks?.filter(b=>b>target.start&&b<target.end)},highlights:[]};
 }

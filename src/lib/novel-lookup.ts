@@ -1,5 +1,5 @@
 import type {Locale} from "./types";
-import {notePair,structureLookup} from './novel-lookup-structure';
+import {annotatedNote,notePair,structureLookup} from './novel-lookup-structure';
 import {poetryLookup,poetryScope,poetryContext} from './novel-poetry-lookup';
 import {selectionLookup} from './novel-lookup-selection';
 export const alignmentCodec = "reader-dom-1";
@@ -7,6 +7,7 @@ export type TextSpan = {start:number;end:number};
 export type PoetryCorrespondence=Record<Locale,TextSpan[]>&{score:number;evidence:'direct-window'|'surrounding-window'};
 export type PoetryTrack=TextSpan&{id:string;lines:TextSpan[];title?:TextSpan;flattened?:boolean};
 export type PoetryPair=Record<Locale,PoetryTrack>&{score:number;margin:number;primary:Record<Locale,boolean>;correspondences:PoetryCorrespondence[];contextOnly?:boolean};
+export type PhrasePair=Record<Locale,TextSpan>&{score:number;margin:number;from:Locale};
 export type ClausePair=Record<Locale,TextSpan[]>&{score:number;margin:number;residual?:boolean};
 // A residual pair was inferred by elimination inside a confirmed parent pair, so it carries a lower score floor.
 const trusted=(p:ClausePair)=>(p.score>=.5||(p.residual===true&&p.score>=.4))&&p.margin>=.03;
@@ -19,6 +20,7 @@ export type AlignmentArtifact = {
     poetryLines? : Record<Locale,TextSpan[]>&{score:number;poemScore:number;evidence:'direct-window'|'surrounding-window';correspondences:PoetryCorrespondence[]};
     kind?:'lexical';
     clausePairs?:ClausePair[];
+    phrasePairs?:PhrasePair[];
     links:{vi:[number,number];en:[number,number];score:number}[]}[];
   notePairs?:{vi:TextSpan;en:TextSpan;score:number;margin:number}[];
   poems?:PoetryPair[];
@@ -67,6 +69,10 @@ export function validateAlignmentArtifact(value:unknown):AlignmentArtifact {
           if((pv.start<qv.end&&qv.start<pv.end)||(pe.start<qe.end&&qe.start<pe.end))if(!((nested(pv,qv)&&nested(pe,qe))||(nested(qv,pv)&&nested(qe,pe))))invalid();
         }
       }
+    }
+    if(g.phrasePairs){
+      if(!Array.isArray(g.phrasePairs)||g.phrasePairs.length>512)invalid();
+      for(const p of g.phrasePairs)if(!p||!Number.isFinite(p.score)||p.score<0||p.score>1.001||!Number.isFinite(p.margin)||!['vi','en'].includes(p.from)||(['vi','en'] as const).some(l=>!valid(p[l],a.editions[l].text)||p[l].start<g[l].start||p[l].end>g[l].end))invalid();
     }
     for(const link of g.links){
       if(!link||!Number.isFinite(link.score)||link.score<0||link.score>1.001)invalid();
@@ -147,6 +153,19 @@ export function alignmentUnits(edition:AlignmentArtifact['editions'][Locale],bou
     if(end>start&&/[\p{L}\p{N}]/u.test(value.slice(leading,value.length-trailing))&&!/^(?:[IVXLCDM]{1,8}|\d{1,3})[.:]?$/u.test(value.slice(leading,value.length-trailing)))units.push({start,end});
   }
   return units;
+}
+// A phrase pair is only used for a selection that is exactly its source window (edge punctuation and note markers aside).
+function phraseTarget(g:AlignmentArtifact['groups'][number],request:LookupRequest,text:string,locale:Locale,targetLocale:Locale):{source:TextSpan;target:TextSpan}|null{
+  if(!g.phrasePairs?.length)return null;
+  let start=request.start,end=request.end;
+  const edge=/[\s"“”‘’«»'\-–—,.;:!?()\[\]…]/u;
+  while(start<end&&edge.test(text[start]))start++;
+  for(let before=-1;before!==end;){before=end;const marker=/\(\d{1,3}\)$/u.exec(text.slice(start,end));if(marker)end-=marker[0].length;while(end>start&&edge.test(text[end-1]))end--;}
+  if(end<=start)return null;
+  const found=g.phrasePairs.filter(p=>p.from===locale&&p[locale].start===start&&p[locale].end===end&&p.score>=.5&&p.margin>=.08).sort((a,b)=>b.score-a.score);
+  const best=found[0];
+  if(!best||found.some(p=>(p[targetLocale].start!==best[targetLocale].start||p[targetLocale].end!==best[targetLocale].end)&&p.score>best.score-.03))return null;
+  return {source:{start,end},target:{...best[targetLocale]}};
 }
 function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['groups'][number],request:LookupRequest,targetLocale:Locale):{covered:TextSpan[];spans:TextSpan[];unmatched?:TextSpan[];grounded?:TextSpan[]}{
   const source=artifact.editions[request.locale],target=artifact.editions[targetLocale];
@@ -257,7 +276,12 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
   const empty=(status:LookupResult["status"]):LookupResult=>({status,targetLocale,passages:[]});
   if(artifact.chapterId!==request.chapterId||source.revision!==request.revision||request.start<0||request.end<=request.start||request.end>source.text.length||source.text.slice(request.start,request.end)!==request.text)return empty("stale");
   if(request.end-request.start>2000)throw RangeError("Selection too long");
-  return selectionLookup(artifact,request,lookupSingle);
+  const result=selectionLookup(artifact,request,lookupSingle);
+  if(result.status==='context-only'||result.status==='unavailable'||!result.passages.length){
+    const note=annotatedNote(artifact,request);
+    if(note)return {...result,status:'context-only',targetRevision:target.revision,passages:[...result.passages,note]};
+  }
+  return result;
 }
 function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
   const locale=request.locale,targetLocale=locale==='vi'?'en':'vi',source=artifact.editions[locale],target=artifact.editions[targetLocale];
@@ -315,10 +339,12 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     const content=[...analysisText(source.text.slice(g[locale].start,g[locale].end),g.section==='notes').matchAll(/[\p{L}\p{M}\p{N}]/gu)],last=content.at(-1);
     const whole=(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1&&!!last&&request.start<=g[locale].start+content[0].index&&request.end>=g[locale].start+last.index+last[0].length;
     let spans:TextSpan[]=[];const coveredWords:TextSpan[]=[];const sentences:ReturnType<typeof wholeSentenceTargets>=supported||whole?wholeSentenceTargets(artifact,g,request,targetLocale):{covered:[],spans:[]};
+    const named=properNameSpan(request.text,target.text,g[targetLocale]);
+    const found=!named&&!poem&&g.kind!=='lexical'?phraseTarget(g,request,source.text,locale,targetLocale):null;
+    const already:{incomplete:boolean;unmatched:number}={incomplete:incompleteWords,unmatched:unmatchedSource.length};
     if(sentences.unmatched?.length){incompleteWords=true;unmatchedSource.push(...sentences.unmatched.map(s=>({start:Math.max(s.start,request.start),end:Math.min(s.end,request.end)})));}
     const targetSpans=targetWords(g,locale,source,target,!poem&&g.kind!=='lexical');
     const sourceSpans=targetWords(g,targetLocale,target,source,!poem&&g.kind!=='lexical');
-    const named=properNameSpan(request.text,target.text,g[targetLocale]);
     if(named)spans=[named];
     else {
       spans.push(...sentences.spans);
@@ -364,6 +390,10 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         if(!sentences.unmatched?.length&&highlights.length&&oneSentence&&!essential&&missing.length*3<=content.length)uncertain=true;
         else{incompleteWords=true;unmatchedSource.push(...missing);looseWords=missing.some(w=>!sentences.unmatched?.some(u=>u.start<=w.start&&u.end>=w.end));}
       }
+    }
+    // A phrase pair answers only when word evidence could not: empty, or incomplete for this selection. It never narrows or widens good word links.
+    if(found&&!sentences.unmatched?.some(u=>u.start<found.source.start||u.end>found.source.end)&&(!highlights.length||(incompleteWords&&!already.incomplete))){
+      incompleteWords=already.incomplete;unmatchedSource.length=already.unmatched;sentences.unmatched=undefined;looseWords=false;highlights=[found.target];uncertain=true;
     }
     const sourceBlock=shortBlock(source,request);
     if(artifact.refinementVersion===1&&g.section!=='notes'&&sourceBlock&&!nameSelection(request.text)&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>2){

@@ -28,7 +28,7 @@ async function python(args:string[]){
  const env={...process.env};delete env.SUPABASE_SERVICE_ROLE_KEY;delete env.NOVEL_ALIGNMENT_SERVICE_ROLE_KEY;delete env.VILAO_API_KEY;delete env.GEMINI_API_KEY;
  await new Promise<void>((resolve,reject)=>{
   const child=spawn(values.python!,args,{stdio:'inherit',env,windowsHide:true});
-  const timer=setTimeout(()=>{child.kill();reject(Error('Alignment processing timed out'));},600000);
+  const timer=setTimeout(()=>{child.kill();reject(Error('Alignment processing timed out'));},1500000);
   child.once('error',e=>{clearTimeout(timer);reject(e);});child.once('close',code=>{clearTimeout(timer);code===0?resolve():reject(Error('Alignment processing failed'));});
  });
 }

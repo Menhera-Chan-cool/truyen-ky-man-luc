@@ -2,6 +2,7 @@ import argparse,datetime,gc,json,os,pathlib,sys,time
 import numpy as np
 from alignment import softmax_links,reader_span,vietnamese_word_spans
 from context_alignment import align_contexts,add_caption_aliases,split_reader_units,mask_references,slice16,u16
+from prose_alignment import add_phrase_pairs
 from book_glossary import build_glossary,apply_glossary,merge_book_names
 import regex
 
@@ -93,6 +94,9 @@ def main():
         return np.stack([memo[text] for text in texts])
     for item in inputs:
         item['contexts'],item['notePairs']=align_contexts(item,encode)
+        # Words are fixed here so phrase pairs and the artifact use the same spans.
+        item['words']={'vi':vietnamese_word_spans(split_reader_units(item['editions']['vi']['sentences'],item['editions']['vi'].get('breaks',[]))),'en':english_words(item['editions']['en'])}
+        add_phrase_pairs(item['contexts'],encode,{l:{**item['editions'][l],'words':item['words'][l]} for l in ['vi','en']})
         print(json.dumps({'chapter':item['chapterId'],'sentenceGroups':len(item['contexts']),'notePairs':len(item['notePairs']),
                           'seconds':round(time.perf_counter()-started,2)}),flush=True)
     del encode,memo,dense,model,tokenizer;gc.collect()
@@ -118,8 +122,8 @@ def main():
                   'editions':{l:{k:v for k,v in edition.items() if k!='sentences'} for l,edition in item['editions'].items()},
                   'groups':groups,'refinementVersion':1,'notePairs':item['notePairs'],'poems':item.get('poemPairs',[]),
                   'poetryScopes':{l:[scope for p in item['structures'][l].get('poems',[]) for scope in ([{'start':p['start'],'end':p['end']}]+([p['title']] if p.get('title') else []))] for l in ['vi','en']}}
-        artifact['editions']['vi']['words']=vietnamese_word_spans(split_reader_units(item['editions']['vi']['sentences'],item['editions']['vi'].get('breaks',[])))
-        artifact['editions']['en']['words']=english_words(item['editions']['en'])
+        artifact['editions']['vi']['words']=item['words']['vi']
+        artifact['editions']['en']['words']=item['words']['en']
         glossary=build_glossary(artifact,item['structures'])
         aliases=add_caption_aliases(artifact,item['structures'])
         built.append((item,artifact,glossary,aliases))

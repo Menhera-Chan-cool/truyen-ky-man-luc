@@ -99,3 +99,18 @@ it('retains both target notes when one source note corresponds to a translated n
  const source=vi[0],request={...source,locale:'vi' as const,chapterId:a.chapterId,revision:1,text:a.editions.vi.text.slice(source.start,source.end)};
  expect(notePair(a,request)?.baseTargets).toEqual(en);expect(notePair(a,request)?.target).toBeUndefined();
 });
+function annotated(){
+ const a=fixture(['Thổi kèn, dệt chiếu (14) cũng đủ.','Chú thích','(14) Điển cố: nghề hèn hạ.'],['Even flute-players and mat-weavers (14) can succeed.','Notes','(14) Allusion: humble trades.']);
+ a.notePairs=alignmentStructure(a,'vi').notes.map(n=>({vi:{start:n.start,end:n.end},en:alignmentStructure(a,'en').notes.find(m=>m.id===n.id)!,score:.9,margin:.2}));
+ return a;
+}
+it('shows the paired note as context for an allusion right before its marker, never as a highlight',()=>{
+ const a=annotated(),r=query(a,'vi','dệt chiếu');
+ expect(r.status).toBe('context-only');expect(r.passages.at(-1)!.target.text).toContain('Allusion');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);
+ expect(query(a,'en','mat-weavers (14)').passages.at(-1)!.target.text).toContain('Điển cố');
+});
+it('gives no note context when the selection is not at a marker or the note pair is unconfirmed',()=>{
+ const a=annotated();expect(query(a,'vi','cũng đủ').passages.some(p=>/Allusion/.test(p.target.text))).toBe(false);
+ a.notePairs=a.notePairs!.map(p=>({...p,score:.3}));
+ expect(query(a,'vi','dệt chiếu').passages.some(p=>/Allusion/.test(p.target.text))).toBe(false);
+});
