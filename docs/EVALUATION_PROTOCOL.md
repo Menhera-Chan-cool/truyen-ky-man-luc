@@ -469,6 +469,24 @@ The three "partly" are about the shape of the pair, not a wrong word: "Lưng th�
 
 Limits. Nothing wrong among 23 changed occurrences bounds the wrong rate at about 13% at 95% confidence (rule of three), which is a weak bound; the set is the whole dictionary of this book, not a sample, and it holds few terms with a second sense. A highlight that already overlaps the counterpart is left as it is, so partial answers stay partial ("Kim tiên" → "Immortal" for "Golden Immortal", "Ban Cơ" → "Ban Ji" for "Ban Ji and Lady Cai"); widening them to the whole counterpart is an open improvement, not made. The only change to the product in this step is that `noteTermsOf` is exported for the script; behaviour is unchanged, so nothing was deployed.
 
+### Chinese names through Unihan: Sino-Vietnamese against pinyin (2026-11-15)
+
+**Source** (downloaded with the user's permission): `Unihan.zip` (8.3 MB, unicode.org, Unicode 18.0.0), file `Unihan_Readings.txt`; the Vietnamese reading (`kVietnamese`) and the Mandarin reading (`kMandarin`) of the same character give a map from each Sino-Vietnamese syllable to its pinyin syllables: 3,114 readings, 54 KB (14 KB gzipped), `src/data/sino-pinyin.json`, built by `scripts/align-novel/build_sino_pinyin.py`; notice and licence in `docs/UNIHAN-NOTICE.md`. Unihan's `kVietnamese` is partial: of the book's 70 headword pairs, 11 match through the map (of about 20 Chinese-name pairs); readings such as "hoành", "dị", "hy", and "Bái" for 沛 (Fengpei) are absent. Against 1,384 mismatched pairs it gave 0 false matches.
+
+**Rule.** A capitalised name the lookup left without a highlight is highlighted when exactly one capitalised name of the context fits every syllable through the map: Vietnamese to English ("Chương Hàm" = "Zhang Han": the candidate's letters equal the concatenation of one pinyin reading per syllable) and English to Vietnamese ("Zhang Han" segmented into pinyin syllables, each read as one of the Vietnamese syllables). Not applied in a note or a caption paired with one (the paired note is shown as it is; an e2e test protects that, and it failed on all three runs until this was added), and, like the two rules before it, only when nothing is highlighted yet.
+
+**Anchors (606).** Name spelled differently: answered 74.2% → 83.1%, hit of all 55.1% → 63.1% by the marker-position gold; the 20 anchors newly answered are all correct names by eye ("Bành Thành" = "Pengcheng", "Xiaoman" = "Tiểu Man", "Bối Khâu" = "Beiqiu"), the gold mislabels five of them.
+
+**Stress set** (`scripts/align-novel/name-rule-eval.ts`): every capitalised name of the story text, not at the start of a sentence, first occurrence per chapter, both directions: 2,162 selections, 1,673 answered before the rule and 1,725 after; the rule changed 52, all abstentions before. I wrote down the counterpart I expected from the source sentence and the returned context alone for 38 of them before reading the highlight: 37 agree exactly. The other 14 were not visible in the shortened context and were checked after the highlight was shown: all 14 are right (for example "Dự" = "Yu" in "lưu Dự" / "Liu Yu"). One of the 52 is wrong: "Jiang" in "a Jiang of Qi" got "Giang" (of "Giang Nam"), because the right name, "Khương", is not in the Unihan map and "Giang" fits "jiang" as well. 51 of 52 right (98.1%); about 32 of the 52 are single-syllable names, the riskier kind, and 31 of them are right. The labels are mine, not a human's.
+
+| Set | Before | After |
+| --- | --- | --- |
+| Lexical A, probes, dev and tuned sentences, chapter 2, both audits, blind lexical B, blind sentences | | identical outputs |
+| Anchors 606, hit of all | 56.1% (name, other spelling 55.1%) | 60.1% (63.1%) |
+| Capitalised names answered, 2,162 | 1,673 | 1,725 |
+
+Tests 378, typecheck clean. The alignment e2e: 60 of 60 on the final code in 4 of 5 runs; the fifth failed the first two desktop tests at `data-ready` of the reader shell (the same pair that flaked before, a page-load wait unrelated to lookups). `admin-scripts.test.ts` (child processes) failed once at 5.1 s under load and now has the 30 s timeout the other load-sensitive tests have. The data adds 54 KB to the lookup module.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

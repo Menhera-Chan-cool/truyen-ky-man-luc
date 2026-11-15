@@ -317,3 +317,15 @@ it('answers a footnoted term with the headword of its note in the other edition,
  expect(run(vi,'He came to Xunyang (1) and left Xunyang again.\n(1) Xunyang: a place.')).toEqual([]);
  expect(run(vi,'He came to a city (1) and went back.\n(1) Xunyang: a place.')).toEqual([]);
 });
+it('answers a Chinese name left without a highlight through the Sino-Vietnamese and pinyin readings of the same characters, in both directions, when exactly one name of the context fits every syllable',()=>{
+ const vi='Chàng gặp Chương Hàm rồi về.';
+ const ask=(l:'vi'|'en',a:string,b:string,sel:string)=>{
+  const [v,e]=[a,b],art=plain(v,e,{vi:[v],en:[e]},[['Chàng','He']]),text=l==='vi'?e:v,q=query(art,l,span(l==='vi'?v:e,sel));
+  return q.passages.flatMap(p=>p.highlights.map(h=>text.slice(h.start,h.end)));
+ };
+ expect(ask('vi',vi,'He met Zhang Han and went back.','Chương Hàm')).toEqual(['Zhang Han']);
+ expect(ask('en',vi,'He met Zhang Han and went back.','Zhang Han')).toEqual(['Chương Hàm']);
+ expect(ask('vi',vi,'He met Zhang Han and later Zhang Han again.','Chương Hàm')).toEqual([]);
+ expect(ask('vi',vi,'He met Zhang Hao and went back.','Chương Hàm')).toEqual([]);
+ expect(ask('en','Chàng gặp Vương ế rồi về.','He met Wang Yi and went back.','Wang Yi')).toEqual(['Vương ế']);
+});

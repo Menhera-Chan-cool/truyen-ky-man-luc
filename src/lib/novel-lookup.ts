@@ -2,6 +2,7 @@ import type {Locale} from "./types";
 import {annotatedNote,notePair,structureLookup} from './novel-lookup-structure';
 import {poetryLookup,poetryScope,poetryContext} from './novel-poetry-lookup';
 import {selectionLookup} from './novel-lookup-selection';
+import {viSyllables,viMatchesPinyin,pinyinSegments,vietnameseReadings} from './sino-names';
 export const alignmentCodec = "reader-dom-1";
 export type TextSpan = {start:number;end:number};
 export type PoetryCorrespondence=Record<Locale,TextSpan[]>&{score:number;evidence:'direct-window'|'surrounding-window'};
@@ -277,8 +278,10 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
   if(artifact.chapterId!==request.chapterId||source.revision!==request.revision||request.start<0||request.end<=request.start||request.end>source.text.length||source.text.slice(request.start,request.end)!==request.text)return empty("stale");
   if(request.end-request.start>2000)throw RangeError("Selection too long");
   const result=selectionLookup(artifact,request,lookupSingle);
-  const noted=noteTermAnswer(artifact,result,request);if(noted)return noted;
-  const same=sameNameAnswer(result,request,target.text);if(same)return same;
+  // The name rules answer story text; inside a note or a caption paired with one, the paired note is shown as it is.
+  if(!notePair(artifact,request)){
+    const named=noteTermAnswer(artifact,result,request)??sameNameAnswer(result,request,target.text)??sinoNameAnswer(result,request,target.text);if(named)return named;
+  }
   if(result.status==='context-only'||result.status==='unavailable'||!result.passages.length){
     const note=annotatedNote(artifact,request);
     if(note)return {...result,status:'context-only',targetRevision:target.revision,passages:[...result.passages,note]};
@@ -337,6 +340,34 @@ function sameNameAnswer(result:LookupResult,request:LookupRequest,targetText:str
   });
   if(found.length!==1)return null;
   return {...result,status:'uncertain',passages:result.passages.map((p,i)=>i===found[0].passage?{...p,highlights:[found[0].span]}:p)};
+}
+// A Chinese name the system left without a highlight: "Chương Hàm" and "Zhang Han" read the same characters (Sino-Vietnamese and pinyin). The highlight goes to the one capitalised name of the context
+// whose syllables correspond, one by one, through the Unihan readings; with two candidates, or one that does not fit every syllable, nothing is highlighted.
+function sinoNameAnswer(result:LookupResult,request:LookupRequest,targetText:string):LookupResult|null{
+  const name=request.text.trim();
+  if(result.status!=='context-only'||!result.passages.length||result.passages.some(p=>p.highlights.length)||!/^\p{Lu}/u.test(name)||/[.!?;:…\n]/u.test(name)||(name.match(/[\p{L}\p{M}'’]+/gu)?.length??0)>4)return null;
+  const found=new Map<string,{passage:number;span:TextSpan}>(),add=(passage:number,start:number,end:number)=>found.set(start+':'+end,{passage,span:{start,end}});
+  const segments=request.locale==='en'?pinyinSegments(name):[],syllables=request.locale==='vi'?viSyllables(name):[];
+  if(request.locale==='en'&&!segments.length)return null;
+  result.passages.forEach((p,passage)=>{
+    const text=targetText.slice(p.target.start,p.target.end),at=p.target.start;
+    if(request.locale==='vi'){
+      const tokens=[...text.matchAll(/\p{Lu}[\p{L}\p{M}'’]*/gu)].map(m=>({start:m.index!,end:m.index!+m[0].length}));
+      for(let i=0;i<tokens.length;i++)for(let j=i;j<Math.min(i+4,tokens.length);j++){
+        if(j>i&&text.slice(tokens[j-1].end,tokens[j].start)!==' ')break;
+        if(viMatchesPinyin(syllables,text.slice(tokens[i].start,tokens[j].end)))add(passage,at+tokens[i].start,at+tokens[j].end);
+      }
+    }else{
+      const tokens=[...text.matchAll(/[\p{L}\p{M}]+/gu)].map(m=>({start:m.index!,end:m.index!+m[0].length,word:m[0].normalize('NFC').toLowerCase()}));
+      for(const seg of segments)for(let i=0;i+seg.length<=tokens.length;i++){
+        if(!/\p{Lu}/u.test(text[tokens[i].start])||seg.some((s,k)=>(k>0&&text.slice(tokens[i+k-1].end,tokens[i+k].start)!==' ')||!vietnameseReadings(s).has(tokens[i+k].word)))continue;
+        add(passage,at+tokens[i].start,at+tokens[i+seg.length-1].end);
+      }
+    }
+  });
+  if(found.size!==1)return null;
+  const only=[...found.values()][0];
+  return {...result,status:'uncertain',passages:result.passages.map((p,i)=>i===only.passage?{...p,highlights:[only.span]}:p)};
 }
 // A selection in text no group holds lies between two groups of one section; their target text around that point is its context:
 // the text between them nobody claims, or, when they touch, both of them.

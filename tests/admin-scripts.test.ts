@@ -1,9 +1,11 @@
-import { test, expect } from "vitest";
+import { test, expect, vi } from "vitest";
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, rmdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+// Each script is started in a child process; the 5 s default timeout fails when the whole suite competes for the CPU.
+vi.setConfig({ testTimeout: 30000 });
 
 for (const [script, expected] of [
   ["setup-owner.ts", "Usage: npm run setup:owner"],
