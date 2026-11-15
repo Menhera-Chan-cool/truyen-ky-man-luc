@@ -1,0 +1,203 @@
+{
+ "a1-44": {
+  "n": 1,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "mũ trụ đương kêu cầu ở trước sân"
+  ]
+ },
+ "a2-62": {
+  "n": 2,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "glanced at Ho and smiled"
+  ]
+ },
+ "a2-69": {
+  "n": 3,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "cast myself into the river"
+  ]
+ },
+ "a1-6": {
+  "n": 4,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "nhân chọn ngày mối lái, định kỳ cưới hỏi"
+  ]
+ },
+ "a2-65": {
+  "n": 5,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "dog"
+  ]
+ },
+ "a1-51": {
+  "n": 6,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "the summit, the sky was bright and clear"
+  ]
+ },
+ "a2-117": {
+  "n": 7,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "incomplete",
+  "myCounterpart": [
+   "escape being put to the sword"
+  ]
+ },
+ "a1-14": {
+  "n": 8,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "the sorrow in my heart"
+  ]
+ },
+ "a1-89": {
+  "n": 9,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "who could have guessed"
+  ]
+ },
+ "a1-56": {
+  "n": 10,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "partial",
+  "myCounterpart": [
+   "It is only that the appointed hour has not yet come"
+  ]
+ },
+ "a2-36": {
+  "n": 11,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "He raised a ritual altar right there upon the mountain, hung lamps on all four sides, and drew talismans and seals with a vermilion brush"
+  ]
+ },
+ "a1-9": {
+  "n": 12,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "They may let you win at first"
+  ]
+ },
+ "a2-38": {
+  "n": 13,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "gõ vào chậu"
+  ]
+ },
+ "a2-0": {
+  "n": 14,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Hạng vương nói:",
+   "Không phải như thế"
+  ]
+ },
+ "a1-15": {
+  "n": 15,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "partial",
+  "myCounterpart": [
+   "quát to lên rằng"
+  ]
+ },
+ "a2-73": {
+  "n": 16,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "At first I had to speak nonsense so that she would think nothing of my words; only then could I put my art to use"
+  ]
+ },
+ "a2-46": {
+  "n": 17,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "ngăn trở"
+  ]
+ },
+ "a1-12": {
+  "n": 18,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Đạo nhân cho là đôi trai gái lẳng lơ đêm trăng dắt nhau đi chơi"
+  ]
+ },
+ "a2-24": {
+  "n": 19,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "The lady surnamed Kim: here stands the kim tien, the golden-coin flower"
+  ]
+ },
+ "a2-29": {
+  "n": 20,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "rào"
+  ]
+ }
+}

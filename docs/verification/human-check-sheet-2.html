@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kiểm tra đối chiếu Việt–Anh (lần 2)</title>
+<style>
+:root{--bg:#fafaf7;--fg:#1d1d1b;--mut:#6b6b66;--card:#fff;--line:#dedcd3;--acc:#1f5f8b;--hl:#ffe08a;--sel:#cfe6f7;--ok:#2d7a3e}
+@media (prefers-color-scheme:dark){:root{--bg:#161614;--fg:#ecebe6;--mut:#a3a29a;--card:#201f1d;--line:#38362f;--acc:#7fb8e0;--hl:#6b5a14;--sel:#1f4560;--ok:#7bc88a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:0 16px 80px}
+header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0;z-index:2}
+h1{font-size:1.15rem;margin:0 0 4px}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:.9rem;color:var(--mut)}
+progress{flex:1;min-width:120px;height:10px}
+button{font:inherit;padding:8px 14px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;cursor:pointer}
+button.primary{background:var(--acc);color:#fff;border-color:var(--acc)}
+.how{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:14px 0;font-size:.95rem}
+.how ol{margin:6px 0 0 18px;padding:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:16px 0}
+.card.done{border-color:var(--ok)}
+.tag{font-size:.8rem;color:var(--mut);margin-bottom:6px}
+.lbl{font-size:.8rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 2px}
+.sel{background:var(--sel);padding:0 2px;border-radius:3px}
+.sys{background:var(--hl);padding:0 2px;border-radius:3px}
+.txt{white-space:pre-wrap;overflow-wrap:anywhere}
+.passage{border-left:3px solid var(--line);padding-left:10px;margin:6px 0}
+fieldset{border:0;padding:0;margin:12px 0 0}
+legend{font-weight:600;padding:0;margin-bottom:4px}
+label.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border:1px solid var(--line);border-radius:8px;margin:6px 0;cursor:pointer}
+label.opt input{margin-top:4px;width:18px;height:18px}
+details{margin-top:10px;font-size:.92rem}
+summary{cursor:pointer;color:var(--acc)}
+textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--fg);margin-top:8px}
+.foot{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}
+.hint{color:var(--mut);font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Kiểm tra lần 2 · <span id="count">0</span>/20 ca</h1>
+  <div class="bar"><progress id="bar" max="20" value="0"></progress>
+  <label><input type="checkbox" id="todo"> chỉ hiện ca chưa làm</label>
+  <button class="primary" id="export">Tải kết quả (CSV)</button></div>
+</header>
+<section class="how">
+  <strong>Kiểm lần 2: chỉ 20 ca (khoảng 10 phút)</strong><p class="hint">Đây là những ca hệ thống vừa sửa cách tô sáng, cộng vài ca giữ nguyên để đối chứng. Cách làm giống lần trước.</p>
+  <ol>
+    <li>Đọc phần được chọn (nền xanh) trong câu gốc.</li>
+    <li>Đọc đoạn bản kia mà hệ thống trả về. Phần nền vàng là chỗ hệ thống tô sáng.</li>
+    <li>Chọn một đáp án. Nếu cần, bấm “Xem đáp án tôi ghi” <em>sau khi</em> bạn đã chọn.</li>
+  </ol>
+  <p class="hint">Không có đáp án “đúng” hay “sai” cho bạn; chỉ cần nói thật điều bạn thấy. Có thể dừng và quay lại sau: kết quả được giữ trong trình duyệt này. Xong thì bấm “Tải kết quả (CSV)” và gửi file đó lại.</p>
+  <label>Tên người kiểm (tùy chọn): <input id="who" style="font:inherit;padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg)"></label>
+</section>
+<div id="cards"></div>
+<div class="foot"><button class="primary" id="export2">Tải kết quả (CSV)</button><button id="copy">Sao chép kết quả</button><button id="reset">Xóa hết để làm lại</button></div>
+</main>
+<script type="application/json" id="data">[{"n": 1, "key": "a1-44", "kind": "phrase", "from": "en", "to": "vi", "sel": "helmet already in the courtyard", "sent": "When he arrived, he saw the man in the helmet already in the courtyard, pleading his cause.", "s0": 39, "e0": 70, "answered": true, "passages": [{"text": "Bèn sai dẫn Tử Văn vào trong cửa điện. Tử Văn vào đến nơi, đã thấy người đội mũ trụ đương kêu cầu ở trước sân.", "before": false, "after": false, "hl": [[77, 109]]}], "mine": ["mũ trụ đương kêu cầu ở trước sân"], "mineNote": ""}, {"n": 2, "key": "a2-62", "kind": "phrase", "from": "vi", "to": "en", "sel": "đưa mắt cho Hồ rồi mỉm", "sent": "Viên đưa mắt cho Hồ rồi mỉm cười.", "s0": 5, "e0": 27, "answered": true, "passages": [{"text": "Vien glanced at Ho and smiled.", "before": false, "after": false, "hl": [[5, 29]]}], "mine": ["glanced at Ho and smiled"], "mineNote": ""}, {"n": 3, "key": "a2-69", "kind": "phrase", "from": "vi", "to": "en", "sel": "gieo mình xuống sông", "sent": "Nàng nói:- Tôi ngày trước không may bị người vu báng, phải gieo mình xuống sông tự tử.", "s0": 59, "e0": 79, "answered": true, "passages": [{"text": "In former days, I suffered unmerited slander and cast myself into the river to end my life. The immortals of the underwater palace, taking pity on my innocence, parted the waters so that I might escape death. Had it not been for them, my bones would long since lie buried in the bellies of fish—how could I ever have hoped to meet you here?", "before": false, "after": false, "hl": [[49, 75]]}], "mine": ["cast myself into the river"], "mineNote": ""}, {"n": 4, "key": "a1-6", "kind": "sentence", "from": "en", "to": "vi", "sel": "A day was chosen to send the go-between, and a date was set for the wedding.", "sent": "A day was chosen to send the go-between, and a date was set for the wedding.", "s0": 0, "e0": 76, "answered": true, "passages": [{"text": "nhân chọn ngày mối lái, định kỳ cưới hỏi.", "before": false, "after": false, "hl": [[0, 41]]}], "mine": ["nhân chọn ngày mối lái, định kỳ cưới hỏi"], "mineNote": ""}, {"n": 5, "key": "a2-65", "kind": "word", "from": "vi", "to": "en", "sel": "chó", "sent": "Hồ nói:- Hiện nay thánh hóa chưa khắp, bờ cõi chưa yên: Bồng Nga (14) là con chó dại, cắn càn ở Nam phương, Lý Anh (15) là con hổ đói gầm thét ở tây bắc.", "s0": 77, "e0": 80, "answered": true, "passages": [{"text": "His Majesty's sagely rule has not yet reached every corner of the realm, and the borders are not yet at peace. Bong Nga (14) is a mad dog snapping wildly in the south. Li Ying (15) is a starving tiger roaring in the northwest. The reckless Ngo Be (16) has been put down, but the furtive Duong Lang (17) is still at large. Why not draw the bow of the sage and unsheathe the sword of the S", "before": false, "after": true, "hl": [[134, 137]]}], "mine": ["dog"], "mineNote": ""}, {"n": 6, "key": "a1-51", "kind": "phrase", "from": "vi", "to": "en", "sel": "ngọn núi thì bầu trời sáng sủa", "sent": "Lên đến ngọn núi thì bầu trời sáng sủa.", "s0": 8, "e0": 38, "answered": true, "passages": [{"text": "When he reached the summit, the sky was bright and clear.", "before": false, "after": false, "hl": [[16, 46]]}], "mine": ["the summit, the sky was bright and clear"], "mineNote": ""}, {"n": 7, "key": "a2-117", "kind": "phrase", "from": "vi", "to": "en", "sel": "khỏi tru lục", "sent": "Thượng đế không dong, hình phạt tất đến, lũ người định trốn đi đàng nào để khỏi tru lục.", "s0": 75, "e0": 87, "answered": true, "passages": [{"text": "will you flee to escape being put to the sword?", "before": false, "after": false, "hl": [[34, 46]]}], "mine": ["escape being put to the sword"], "mineNote": ""}, {"n": 8, "key": "a1-14", "kind": "phrase", "from": "vi", "to": "en", "sel": "tình u uất ở trong lòng", "sent": "Đêm nay nên thăm qua cảnh cũ, để được khuây giải chút tình u uất ở trong lòng, vậy em có đi theo ta không?", "s0": 54, "e0": 77, "answered": true, "passages": [{"text": "Tonight I ought to visit that old haunt and ease a little of the sorrow in my heart.", "before": false, "after": false, "hl": [[65, 83]]}], "mine": ["the sorrow in my heart"], "mineNote": ""}, {"n": 9, "key": "a1-89", "kind": "word", "from": "vi", "to": "en", "sel": "ai ngờ", "sent": "Trong lúc ấy còn nghe có tiếng nói rằng:- Vẫn tưởng kiếm cho no bụng, ai ngờ phải đến nát thân.", "s0": 70, "e0": 76, "answered": true, "passages": [{"text": "We only meant to fill our bellies, and who could have guessed we would be smashed to pieces instead? Yet the whole scheme was hatched by that old water god. He was the ringleader, yet he got away unharmed, while we who followed him must pay for it. It is a bitter thing indeed.", "before": false, "after": false, "hl": [[39, 61]]}], "mine": ["who could have guessed"], "mineNote": ""}, {"n": 10, "key": "a1-56", "kind": "phrase", "from": "vi", "to": "en", "sel": "thời gian chưa đến mà thôi", "sent": "Chỉ bởi rằng thời gian chưa đến mà thôi.", "s0": 13, "e0": 39, "answered": true, "passages": [{"text": "It is only that the appointed hour has not yet come.", "before": false, "after": false, "hl": [[30, 51]]}], "mine": ["It is only that the appointed hour has not yet come"], "mineNote": ""}, {"n": 11, "key": "a2-36", "kind": "sentence", "from": "vi", "to": "en", "sel": "Bèn dựng một đàn tràng ngay ở trên núi, treo đèn bốn mặt và lấy bút son vẽ bùa dấu.", "sent": "Bèn dựng một đàn tràng ngay ở trên núi, treo đèn bốn mặt và lấy bút son vẽ bùa dấu.", "s0": 0, "e0": 83, "answered": true, "passages": [{"text": "He raised a ritual altar right there upon the mountain, hung lamps on all four sides, and drew talismans and seals with a vermilion brush.", "before": false, "after": false, "hl": [[0, 138]]}], "mine": ["He raised a ritual altar right there upon the mountain, hung lamps on all four sides, and drew talismans and seals with a vermilion brush"], "mineNote": ""}, {"n": 12, "key": "a1-9", "kind": "phrase", "from": "vi", "to": "en", "sel": "ban đầu tuy họ thả", "sent": "Nhị Khanh vẫn răn bảo rằng:- Những người lái buôn phần nhiều là giảo quyệt, đừng nên chơi thân với họ; ban đầu tuy họ thả cho mình được, nhưng rồi họ sẽ vét hết của mình cho mà xem.", "s0": 103, "e0": 121, "answered": true, "passages": [{"text": "They may let you win at first,", "before": false, "after": false, "hl": [[0, 4], [17, 29]]}], "mine": ["They may let you win at first"], "mineNote": ""}, {"n": 13, "key": "a2-38", "kind": "phrase", "from": "en", "to": "vi", "sel": "shall strike the basin", "sent": "When I find the one I seek, I shall strike the basin so that you will know.", "s0": 30, "e0": 52, "answered": true, "passages": [{"text": "Nhược Chân sợ hãi thất sắc, vội chạy theo hỏi; ban đầu thầy tu không chịu nói, chỉ bảo vừa rồi bàng hoàng nói nhảm chứ không thấy có gì lạ, xin bất tất phải nghi ngờ. Nhưng Nhược Chân cứ cố khẩn nài, thầy tu mới bảo là nhà ông chứa đầy khí yêu quái, nếu không là nghiệp báo kiếp trước thì tất là oan gia kiếp này; người ta đã ở trong nhà ông, chỉ năm tháng nữa thì cả nhà không còn sống sót một mống. Nhược Chân kêu xin cứu cho, thầy tu nói: Tôi vốn có con mắt xem người rất sành. Xin cho tôi xem tất cả người trong nhà, hễ tôi thấy đúng người nào thì gõ vào chậu để cho ông biết. Nếu tiết lộ ra một lời thì tai vạ xảy ra ngay lập tức.", "before": false, "after": false, "hl": [[552, 563]]}], "mine": ["gõ vào chậu"], "mineNote": ""}, {"n": 14, "key": "a2-0", "kind": "sentence", "from": "en", "to": "vi", "sel": "King Xiang said:\"That is not so.", "sent": "King Xiang said:\"That is not so.", "s0": 0, "e0": 32, "answered": true, "passages": [{"text": "Hạng vương nói:", "before": false, "after": false, "hl": [[0, 15]]}, {"text": "Không phải như thế.", "before": false, "after": false, "hl": [[0, 19]]}], "mine": ["Hạng vương nói:", "Không phải như thế"], "mineNote": ""}, {"n": 15, "key": "a1-15", "kind": "phrase", "from": "en", "to": "vi", "sel": "cried out in a great", "sent": "Then he cried out in a great voice:\"Lustful fiends, long have you run rampant!", "s0": 8, "e0": 28, "answered": true, "passages": [{"text": "Rồi đạo nhân vời họp người làng, lập một đàn tràng cúng tế, viết ba đạo bùa, một đạo đóng vào cây gạo, một đạo thả chìm xuống sông, còn một đạo đốt ở giữa trời, đoạn quát to lên rằng:", "before": false, "after": false, "hl": [[51, 58], [174, 182]]}], "mine": ["quát to lên rằng"], "mineNote": ""}, {"n": 16, "key": "a2-73", "kind": "sentence", "from": "vi", "to": "en", "sel": "Ban đầu tôi phải nói lăng nhăng để nàng coi thường lời tôi, rồi tôi mới có thể trổ tài ra được.", "sent": "Ban đầu tôi phải nói lăng nhăng để nàng coi thường lời tôi, rồi tôi mới có thể trổ tài ra được.", "s0": 0, "e0": 95, "answered": true, "passages": [{"text": "At first I had to speak nonsense so that she would think nothing of my words; only then could I put my art to use.", "before": false, "after": false, "hl": [[0, 114]]}], "mine": ["At first I had to speak nonsense so that she would think nothing of my words; only then could I put my art to use"], "mineNote": ""}, {"n": 17, "key": "a2-46", "kind": "word", "from": "en", "to": "vi", "sel": "obstacles", "sent": "I did mean to lodge a complaint, but obstacles rose up on every side.", "s0": 37, "e0": 46, "answered": true, "passages": [{"text": "Rễ ác mọc lan, khó lòng lay động. Tôi đã định thưa kiện, nhưng mà có nhiều nỗi ngăn trở. Những đền miếu gần quanh, vì tham của đút, đều bênh vực cho nó cả. Khư khư một chút lòng thành thực, không làm thế nào để thông đạt được lên cho nên đành tạm ẩn nhẫn mà ngồi xó một nơi.", "before": false, "after": false, "hl": [[75, 87]]}], "mine": ["ngăn trở"], "mineNote": ""}, {"n": 18, "key": "a1-12", "kind": "sentence", "from": "en", "to": "vi", "sel": "The Taoist took them for a wanton pair out roaming by moonlight.", "sent": "The Taoist took them for a wanton pair out roaming by moonlight.", "s0": 0, "e0": 64, "answered": true, "passages": [{"text": "Đạo nhân cho là đôi trai gái lẳng lơ đêm trăng dắt nhau đi chơi,", "before": false, "after": false, "hl": [[0, 64]]}], "mine": ["Đạo nhân cho là đôi trai gái lẳng lơ đêm trăng dắt nhau đi chơi"], "mineNote": ""}, {"n": 19, "key": "a2-24", "kind": "sentence", "from": "vi", "to": "en", "sel": "Chị ả họ Kim, thì đây hoa Kim tiền.", "sent": "Chị ả họ Kim, thì đây hoa Kim tiền.", "s0": 0, "e0": 35, "answered": true, "passages": [{"text": "The lady surnamed Kim: here stands the kim tien, the golden-coin flower.", "before": false, "after": false, "hl": [[0, 72]]}], "mine": ["The lady surnamed Kim: here stands the kim tien, the golden-coin flower"], "mineNote": ""}, {"n": 20, "key": "a2-29", "kind": "word", "from": "en", "to": "vi", "sel": "fences", "sent": "Upon reaching the Western Estate, they passed through several fences and skirted a length of wall.", "s0": 62, "e0": 68, "answered": true, "passages": [{"text": "Khi đến trại Tây, qua mấy lần rào, quanh một đoạn tường, đi ước mấy chục trượng thì đến một cái ao sen; hết ao lại là khu vườn, cây cối xanh tươi, mùi hoa thơm ngát, nhưng ở dưới bóng đêm lờ mờ, không nhận rõ được hoa gì, cây gì cả, chỉ thấy mùi hương lúc lúc thoảng tới.", "before": false, "after": false, "hl": [[30, 33]]}], "mine": ["rào"], "mineNote": ""}]</script>
+<script>
+const CARDS=JSON.parse(document.getElementById('data').textContent);
+const LANG={vi:'tiếng Việt',en:'tiếng Anh'};
+const KIND={word:'một từ',phrase:'một cụm từ',sentence:'cả câu'};
+const OPTS={
+  answered:[['right','Đúng','Phần tô sáng chính là bản dịch của phần đã chọn.'],['partly','Đúng nhưng thiếu hoặc thừa','Đúng ý nhưng tô thiếu một phần quan trọng hoặc tô thừa nhiều.'],['wrong','Sai','Tô sáng chỗ không phải bản dịch của phần đã chọn.'],['unsure','Không chắc','']],
+  abstained:[['has','Đoạn có chứa bản dịch tương ứng','Hệ thống không tô sáng, nhưng đoạn bên dưới có chỗ dịch phần đã chọn.'],['hasnot','Đoạn không chứa nó','Bản dịch của phần đã chọn nằm ở nơi khác.'],['none','Phần này không có bản dịch tương ứng','Bản kia lược bỏ hoặc diễn đạt khác hẳn.'],['unsure','Không chắc','']]
+};
+const KEY='human-check-v2';let state={};try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}};
+function el(tag,attrs,...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs||{})){if(k==='class')e.className=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else e.setAttribute(k,v)}for(const kid of kids.flat())e.append(kid);return e}
+function marked(text,ranges,cls){const out=[];let at=0;for(const[a,b]of ranges.slice().sort((x,y)=>x[0]-y[0])){if(a>at)out.push(text.slice(at,a));out.push(el('span',{class:cls},text.slice(a,b)));at=b}if(at<text.length)out.push(text.slice(at));return out}
+function render(){
+  const root=document.getElementById('cards');root.replaceChildren();
+  for(const c of CARDS){
+    const s=state[c.key]||{};const done=!!s.answer;
+    if(document.getElementById('todo').checked&&done)continue;
+    const opts=OPTS[c.answered?'answered':'abstained'];
+    const card=el('section',{class:'card'+(done?' done':''),id:'c'+c.n});
+    card.append(el('div',{class:'tag'},`Ca ${c.n} · chọn ${KIND[c.kind]} trong ${LANG[c.from]} → tìm bản ${LANG[c.to]}`));
+    card.append(el('div',{class:'lbl'},`Câu gốc (${LANG[c.from]})`),el('div',{class:'txt'},marked(c.sent,[[c.s0,c.e0]],'sel')));
+    card.append(el('div',{class:'lbl'},c.answered?`Hệ thống tô sáng trong bản ${LANG[c.to]}`:`Hệ thống không tô sáng; đoạn bản ${LANG[c.to]} nó trả về`));
+    if(!c.passages.length)card.append(el('div',{class:'txt hint'},'(Hệ thống không trả về đoạn nào.)'));
+    for(const p of c.passages)card.append(el('div',{class:'passage txt'},p.before?'… ':'',marked(p.text,p.hl,'sys'),p.after?' …':''));
+    const fs=el('fieldset',{},el('legend',{},c.answered?'Phần tô sáng có đúng không?':'Đoạn trả về có chứa bản dịch của phần đã chọn không?'));
+    for(const[v,label,help]of opts){
+      const inp=el('input',{type:'radio',name:'q'+c.n,value:v});if(s.answer===v)inp.checked=true;
+      inp.addEventListener('change',()=>{state[c.key]={...(state[c.key]||{}),answer:v};save();card.classList.add('done');progress()});
+      fs.append(el('label',{class:'opt'},inp,el('span',{},el('strong',{},label),help?el('div',{class:'hint'},help):'')));
+    }
+    card.append(fs);
+    const note=el('textarea',{rows:'2',placeholder:'Ghi chú (tùy chọn)'});note.value=s.note||'';note.addEventListener('input',()=>{state[c.key]={...(state[c.key]||{}),note:note.value};save()});
+    card.append(note);
+    const mine=c.mine.length?el('div',{class:'txt'},c.mine.join(' … ')):el('div',{class:'hint'},c.mineNote==='NONE'?'Tôi ghi: bản kia không có chỗ tương ứng.':'Tôi ghi: có bản dịch tương ứng nhưng hệ thống không trả đoạn chứa nó.');
+    card.append(el('details',{},el('summary',{},'Xem đáp án tôi ghi'),el('div',{class:'lbl'},`Bản dịch tương ứng theo tôi (${LANG[c.to]})`),mine));
+    root.append(card);
+  }
+  progress();
+}
+function progress(){const n=CARDS.filter(c=>state[c.key]&&state[c.key].answer).length;document.getElementById('count').textContent=n;document.getElementById('bar').value=n}
+function rows(){const who=document.getElementById('who').value;return CARDS.map(c=>({key:c.key,ca:c.n,kind:c.kind,from:c.from,answered:c.answered?'yes':'no',answer:(state[c.key]||{}).answer||'',note:((state[c.key]||{}).note||'').replace(/\s+/g,' '),reviewer:who}))}
+function csv(){const cols=['key','ca','kind','from','answered','answer','note','reviewer'];const q=v=>'"'+String(v).replace(/"/g,'""')+'"';return '﻿'+[cols.join(',')].concat(rows().map(r=>cols.map(k=>q(r[k])).join(','))).join('\r\n')}
+function download(){const blob=new Blob([csv()],{type:'text/csv;charset=utf-8'});const a=el('a',{href:URL.createObjectURL(blob),download:'ket-qua-kiem-tra-lan-2.csv'});document.body.append(a);a.click();a.remove()}
+document.getElementById('export').addEventListener('click',download);document.getElementById('export2').addEventListener('click',download);
+document.getElementById('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(csv());alert('Đã sao chép. Dán vào tin nhắn hoặc email để gửi lại.')}catch(e){alert('Không sao chép được; hãy dùng nút Tải kết quả.')}});
+document.getElementById('reset').addEventListener('click',()=>{if(confirm('Xóa toàn bộ câu trả lời?')){state={};save();render()}});
+document.getElementById('todo').addEventListener('change',render);
+render();
+</script>
+</body>
+</html>
