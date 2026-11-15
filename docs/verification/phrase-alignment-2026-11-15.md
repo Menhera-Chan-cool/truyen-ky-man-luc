@@ -68,3 +68,18 @@ Glossary (all 20 chapters, same artifacts): accepted 117 → 167 (+50, all same-
 | Audit is small and not independent | Cannot be fixed by code. 27 more pairs were read, still by the model. | open |
 
 Local checks for this pass: vitest 349, Python 106, typecheck clean, probes unchanged (word 32/40, phrase 21/40, sentence 39/40), chapter-2 regression 8/8, poetry QA metrics identical to the released run, browser 60/60. The data was published again through the worker (all 20 chapters `ready`); the web deployment `dpl_AWeuSL8MMQAarWRFs2VXkaVyJvD5` is unchanged because no web code changed. Post-deploy verification was again skipped by instruction.
+
+## Third pass: phrases, allusions, the score floor (source `2b75f11`, data and web)
+
+| Limit | What changed | Result |
+| --- | --- | --- |
+| Phrase recall | `add_phrase_pairs` aligns word windows inside the finest trusted pair: EN 2–6 words, VI 1–6 words, windows may cross commas but never a sentence end, a break or a note marker. A window's best counterpart is kept only when score ≥ 0.5, it leads every disjoint window by ≥ 0.08 and the counterpart's own best window overlaps the query. The lookup uses a pair only for a selection that is exactly its source window and **only when word links give nothing** (empty or incomplete); it never narrows or widens good word links. | 75,329 phrase pairs in 1,767 groups, about 1 MB per artifact. Probes: word 33/40, phrase 23/40 (was 21), sentence 39/40; 16 probes better than 496602b, none worse. |
+| Allusions | A selection right before a body note marker `(n)` that has no counterpart of its own also shows the confirmed paired note as context, never as a highlight. | Covered by tests; no probe measures it. |
+| Score floor | A weak pair next to a confident one now pairs by elimination at the flagged 0.4 floor at the top level as well as inside a parent. A global lower DP floor was tried first and rejected: it changed 130 groups and dropped good pairs. | +58 pairs; all read as correct by the same model reading. 4,009 clause pairs, 275 flagged `residual`. |
+
+What was **not** fixed: the pinned LaBSE model still scores faithful archaic text near 0.5 (the floor is mitigated only next to confident neighbours); about 7 of the remaining 17 phrase misses are cut by a group boundary (the other half sits in the neighbouring group) and need boundary repair with a new word-link stage; the spot reads are by the model, not a person. A 30-pair read of phrase pairs found about a third to be fragmentary windows, which is why the thresholds were tightened and why the lookup is fallback-only.
+
+The worker now builds phrase pairs in its LaBSE stage, so a republished chapter keeps them; its Python timeout is 25 minutes and the workflow timeout 35. Local checks: vitest 356, Python 110, typecheck clean, production build passed, browser 60/60, chapter-2 regression 8/8, poetry metrics identical to the released run.
+
+Release: data re-published through the worker (20 chapters `ready`, 19,411,300 bytes); web `dpl_EnyHCr5LdcB1AXXmv5HywkHSQycv` aliased to https://truyen-ky-man-luc.vercel.app (previous `dpl_AWeuSL8MMQAarWRFs2VXkaVyJvD5`). **Post-deploy verification was skipped by instruction.**
+
