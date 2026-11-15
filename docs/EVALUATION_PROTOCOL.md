@@ -487,6 +487,33 @@ Limits. Nothing wrong among 23 changed occurrences bounds the wrong rate at abou
 
 Tests 378, typecheck clean. The alignment e2e: 60 of 60 on the final code in 4 of 5 runs; the fifth failed the first two desktop tests at `data-ready` of the reader shell (the same pair that flaked before, a page-load wait unrelated to lookups). `admin-scripts.test.ts` (child processes) failed once at 5.1 s under load and now has the 30 s timeout the other load-sensitive tests have. The data adds 54 KB to the lookup module.
 
+## Goal list, part 1: Unihan test, two-way phrase pairs at a lower floor, projection from outside anchors (2026-11-15)
+
+**1. Unihan.** Already shipped (above). New test: "Hoài Âm" reads as *huai yin* and matches "Huaiyin" in both directions.
+
+**2. Two-way phrase pairs below the 0.65 floor: tried, not adopted.** The stored pairs already require the other direction to agree (its best window must overlap the query and score within 0.03), so "two-way agreement" means lowering the floor and the margin. I rebuilt the phrase table from the cached vectors at floor 0.45 / margin 0, at floor 0.55 / margin 0.10 with per-pair caps of 400 instead of 60 (data 21 MB against 19 MB), and swept the consumer thresholds (floor 0.65 to 0.45, margin 0.15 to 0):
+
+| Floor / margin | Probes phrase hits | Lexical A hits (word / phrase) | Lexical B hits (word / phrase) |
+| --- | ---: | --- | --- |
+| 0.65 / 0.15 (now) | 26 | 32 / 29 | 29 / 32 |
+| 0.60 / 0.10 | 26 | 32 / 29 | |
+| 0.55 / 0.10 | 27 | 32 / 29 | 29 / 32 |
+| 0.50 / 0.10 and lower | 27 | 32 / 29 | 29 / 32 |
+
+One more probe phrase at best, nothing on lexical A or B, so a data republish is not worth it. The reason is visible on "đánh úp" / "a surprise attack": the pair is missing because the encoder does not rank that window above its neighbours ("attack and win Le Nuong back" scores higher), not because a threshold cuts it. Of the 13 abstained probe phrases, the debug trace shows two kinds: no selected word has any link at all (7 cases), or only function words and one word do.
+
+**3. Projection from outside anchors: adopted** (`novel-lookup.ts`, no data change). Inside the selection there is nothing to run a dynamic programme on in those cases, so the counterpart is projected from the words beside the phrase: when a multi-word phrase of one sentence has too few linked words to answer, its counterpart is the stretch of the other edition between the targets of the nearest linked word on each side, minus the words another word's link claims and minus the function and discourse words at the ends ("then", "so", "rồi"...). Conditions: only function words between each anchor and the phrase (an unlinked content word there makes the nearest anchor blocking), no sentence punctuation, anchor link score ≥ .5, the whole gap at most max(6, 3 × content words + 2) words, at most 2 × content + 2 words in the answer, no exact phrase pair (that one has priority), not a name, poem or sentence selection, a missing negation needs a negation in the projected words, and existing highlights must lie inside it. A first version without the adjacency and gap limits answered 11 more lexical and probe cases with 3 wrong ones ("hay chữ" = "former ages", "kẻ tửu lại" = "upon His Majesty", "satire and mockery" = "Quan Thừa"); the limits removed all three.
+
+| Set | Before | After |
+| --- | --- | --- |
+| Lexical A (dev), word hits / phrase hits | 32 / 29 | 33 / 29 ("làm mê" = "bewitched"); answered-not-hit 3 / 3 unchanged |
+| Probes (dev), word / phrase / sentence hits | 35 / 26 / 39 | 35 / 27 / 39 ("a surprise attack" = "đánh úp") |
+| Both audits (dev) | three abstentions | three right answers: "vớt thây" = "recover" (of "recover her body"), "Chả ngờ đâu sấm chớp bỗng chốc" = "No one could have foreseen the thunder and lightning that suddenly" (of "...broke out"), "hãy thử" = "let Us" (of "let Us see"); no other answer changed |
+| Lexical B and blind sentences (second and repeated use, only to check for harm) | | identical outputs |
+| Dev and tuned sentences, chapter 2 | | identical outputs |
+
+Five more correct answers on the dev sets, no wrong answer added. Tests 380 (new: projection and its negative case; "Hoài Âm"), e2e 60 of 60 on three runs.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

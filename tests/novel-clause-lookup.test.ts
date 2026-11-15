@@ -329,3 +329,16 @@ it('answers a Chinese name left without a highlight through the Sino-Vietnamese 
  expect(ask('vi',vi,'He met Zhang Hao and went back.','Chương Hàm')).toEqual([]);
  expect(ask('en','Chàng gặp Vương ế rồi về.','He met Wang Yi and went back.','Wang Yi')).toEqual(['Vương ế']);
 });
+it('reads "Hoài Âm" as huai yin so that it matches "Huaiyin"',()=>{
+ const vi='Chàng gặp Hoài Âm rồi về.',en='He met Huaiyin and went back.',a=plain(vi,en,{vi:[vi],en:[en]},[['Chàng','He']]);
+ expect(query(a,'vi',span(vi,'Hoài Âm')).passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)))).toEqual(['Huaiyin']);
+ expect(query(a,'en',span(en,'Huaiyin')).passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end)))).toEqual(['Hoài Âm']);
+});
+it('projects a phrase with no link of its own onto the words between the targets of its linked neighbours, only when nothing but function words stands between them and the phrase',()=>{
+ const run=(vi:string)=>{
+  const en='Sinh hoped to borrow the royal army for a surprise attack and win back.',a=plain(vi,en,{vi:[vi],en:[en]},[['Sinh','Sinh'],['quân','army'],['cướp','win']]);
+  return query(a,'vi',span(vi,'đánh úp')).passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)));
+ };
+ expect(run('Sinh muốn nhờ thế quân, đánh úp mà cướp lại.')).toEqual(['surprise attack']);
+ expect(run('Sinh muốn nhờ thế quân, đánh úp rất mà cướp lại.')).toEqual([]);
+});

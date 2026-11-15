@@ -562,7 +562,46 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
             for(let n=0;n<Math.min(3,lead);n++){const first=highlights[0],text=target.text.slice(Math.max(g[targetLocale].start,first.start-60),first.start),m=before.exec(text);if(!m)break;const start=first.start-(text.length-m.index);if(!free(start,first.start,f=>f.end===prevEnd)||start<g[targetLocale].start)break;first.start=start;}
           }
         }
-        else{incompleteWords=true;unmatchedSource.push(...missing);looseWords=missing.some(w=>!sentences.unmatched?.some(u=>u.start<=w.start&&u.end>=w.end));}
+        else{
+          // A phrase of one sentence whose own words hold too few links is projected from the words beside it: its counterpart lies between the targets of the nearest linked word on each side,
+          // where no other word's link stands, without the function words at the ends. A missing negation needs a negation in the projected words.
+          const projected=!found&&!sentences.unmatched?.length&&oneSentence&&!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&content.length>=1?(()=>{
+            const nearest=(side:'left'|'right')=>{
+              let best:{tw:TextSpan;at:number;clear:boolean}|null=null;
+              for(const l of g.links){
+                const f=l[locale];if(l.score<.5||(side==='left'?f[1]>request.start:f[0]<request.end))continue;
+                const sw=sourceSpans.get(l)!,tw=targetSpans.get(l)!;
+                if(onlyFunctionWords(source.text.slice(sw.start,sw.end),locale)||!/\p{L}/u.test(target.text.slice(tw.start,tw.end))||onlyFunctionWords(target.text.slice(tw.start,tw.end),targetLocale))continue;
+                const between=side==='left'?source.text.slice(sw.end,request.start):source.text.slice(request.end,sw.start);
+                if(/[.!?;:…\n]|\(\d{1,3}\)/u.test(between))continue;
+                const at=side==='left'?sw.end:-sw.start;if(!best||at>best.at)best={tw,at,clear:!(between.match(/[\p{L}\p{M}\p{N}]+/gu)??[]).some(w=>!onlyFunctionWords(w,locale))};
+              }
+              // The nearest linked word must have only function words between it and the phrase: an unlinked content word there shares the gap, and the projection would be a guess.
+              return best&&!best.clear?'blocked' as const:best?.tw??null;
+            };
+            const left=nearest('left'),right=nearest('right'),gb=g[targetLocale];
+            if(left==='blocked'||right==='blocked')return null;
+            const lo=left?left.end:gb.start,hi=right?right.start:gb.end;
+            if(!left&&!right)return null;
+            if(left&&right&&left.end>right.start)return null;
+            if((target.text.slice(lo,hi).match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)>Math.max(6,3*content.length+2))return null;
+            const gap=[...target.text.slice(lo,hi).matchAll(/[\p{L}\p{M}\p{N}]+(?:['’-][\p{L}\p{M}\p{N}]+)*/gu)].map(m=>({start:lo+m.index,end:lo+m.index+m[0].length}));
+            const free=gap.map(w=>!claimedByOthers.some(c=>c.start<w.end&&c.end>w.start));
+            let run:TextSpan[]=[],bestRun:TextSpan[]=[];
+            gap.forEach((w,i)=>{if(free[i]&&!/[.!?;:…\n]|\(\d{1,3}\)/u.test(i>0&&run.length?target.text.slice(run.at(-1)!.end,w.start):'')){run.push(w);}else{if(run.length>bestRun.length)bestRun=run;run=free[i]?[w]:[];}});
+            if(run.length>bestRun.length)bestRun=run;
+            const isFn=(w:TextSpan)=>onlyFunctionWords(target.text.slice(w.start,w.end),targetLocale)||/^(?:then|so|thus|yet|also|now|rồi|bèn|liền|cũng|còn|bỗng|lại)$/iu.test(target.text.slice(w.start,w.end));
+            while(bestRun.length&&isFn(bestRun[0]))bestRun=bestRun.slice(1);
+            while(bestRun.length&&isFn(bestRun.at(-1)!))bestRun=bestRun.slice(0,-1);
+            if(!bestRun.length||bestRun.length>Math.max(2*content.length+2,4))return null;
+            const span={start:bestRun[0].start,end:bestRun.at(-1)!.end};
+            if(essential&&!/\b(?:not|no|never|without|none|nor|nothing|cannot|n't|không|chưa|chẳng|đừng|chả)\b|n’t/iu.test(target.text.slice(span.start,span.end)))return null;
+            if(highlights.some(h=>h.start<span.start||h.end>span.end))return null;
+            return span;
+          })():null;
+          if(projected){highlights=[projected];uncertain=true;}
+          else{incompleteWords=true;unmatchedSource.push(...missing);looseWords=missing.some(w=>!sentences.unmatched?.some(u=>u.start<=w.start&&u.end>=w.end));}
+        }
       }
     }
     // A phrase pair answers only when word evidence could not: empty, or incomplete for this selection. It never narrows or widens good word links.
