@@ -417,6 +417,25 @@ Left in lexical A: "thỏ" (no small pair holds it; the possible fix, dropping a
 
 Left in lexical A: "bỏ dở" / "unfinished" (no phrase pair and no link for "dở"; it needs the chapter re-aligned). Tests 375, typecheck clean, e2e 60 of 60.
 
+## Step 5: footnote anchors, the measure fixed and what it shows (2026-11-15)
+
+**The old figure.** "Anchors 41.7% / link accuracy 56.4%" (mBERT layer 8, `heldout/models.py words`) took the 60 gold sentence pairs that carry a footnote marker "(n)" on both sides, the last *syllable* before the marker in Vietnamese (`\w+` splits at spaces: "Phong Bái" became "Bái") and the last word before the marker in English, and counted a hit when any raw token link of that syllable reached that English word; precision was the share of those links that did. It measured the raw model links only, on 60 cases, and a two-syllable name against a one-word name could not reach full marks by construction.
+
+**The fixed measure** (`scripts/align-novel/anchor-eval.ts`): every footnote marker of the prose that occurs once in each edition (the same number n marks the same term), 303 anchors, looked up in both directions through the real lookup on the published data (606 lookups). The selection is the last whole word before the marker; a hit is a highlight that overlaps one of the last three words before the other edition's marker (the "window"; the last word alone gives a hit rate of about 40%, because a term often ends on a different word in the two editions). The gold is the marker position, not a labelled counterpart, so it is exact for names and noisy for common words ("thấy" before "(13)" against "under the Jin").
+
+| Kind of anchor | n | Answered | Hit of all | Hit of answered |
+| --- | ---: | ---: | ---: | ---: |
+| Name with the same letters ignoring accents ("Hàm Tử" / "Ham Tu") | 120 | 93.3% | **92.5%** | **99.1%** |
+| Name spelled differently ("Hoài Âm" / "Huaiyin", "Mẫn" / "Min") | 225 | 72.0% | 52.4% | 72.8% |
+| Common word | 261 | 60.5% | 42.5% | 70.3% |
+| All | 606 | 71.3% | 56.1% | 78.7% |
+
+By status (answered only): "match" 42 answers, 97.6% hits; "uncertain" 390 answers, 76.7% hits.
+
+**What changed in the product.** One rule: a capitalised name the system left without a highlight is highlighted when the same name ignoring accents stands exactly once, capitalised, in the context it returned. It answered 6 more anchors (all hits: "Lãng"/"Lang", "Hán"/"Han", "Đường"/"Duong", "Hồ"/"Ho", "Lư"/"Lu"), changed no output on lexical A, the probes, the dev and tuned sentences, chapter 2, both audits, nor on the blind lexical and sentence sets; tests 376, e2e 60 of 60. Before the rule the same-letters names stood at 109 of 125 hits.
+
+**Reading.** The >95% asked for is met where identity can decide it: names with the same letters are answered right 99.1% of the time they are answered, and the 7.5% left are abstentions inside poem chapters or with two candidate spellings in the context. It is not met, and cannot be by rules of this kind, for names spelled differently (a Sino-Vietnamese reading against a pinyin spelling needs a dictionary; the book glossary only keeps edition-bound names and holds the model-only pairs back as provisional) and it cannot be judged for common words, where the marker position is a poor gold. Pairs learnt from the notes themselves (the headword of note n in each edition) are the next source of a name dictionary; that is a data change, tested by learning names on some chapters and judging them on others, and was not done.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

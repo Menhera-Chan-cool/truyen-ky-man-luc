@@ -277,11 +277,32 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
   if(artifact.chapterId!==request.chapterId||source.revision!==request.revision||request.start<0||request.end<=request.start||request.end>source.text.length||source.text.slice(request.start,request.end)!==request.text)return empty("stale");
   if(request.end-request.start>2000)throw RangeError("Selection too long");
   const result=selectionLookup(artifact,request,lookupSingle);
+  const same=sameNameAnswer(result,request,target.text);if(same)return same;
   if(result.status==='context-only'||result.status==='unavailable'||!result.passages.length){
     const note=annotatedNote(artifact,request);
     if(note)return {...result,status:'context-only',targetRevision:target.revision,passages:[...result.passages,note]};
   }
   return result;
+}
+// A capitalised name the system left without a highlight is highlighted when the same name, ignoring accents ("Hàm Tử" = "Ham Tu"), stands once, capitalised, in the context it returned.
+function sameNameAnswer(result:LookupResult,request:LookupRequest,targetText:string):LookupResult|null{
+  const name=request.text.trim();
+  if(result.status!=='context-only'||!result.passages.length||result.passages.some(p=>p.highlights.length)||!/^\p{Lu}/u.test(name)||/[.!?;:…\n]/u.test(name)||(name.match(/[\p{L}\p{M}]+/gu)?.length??0)>4)return null;
+  const fold=(text:string)=>{const out:string[]=[],at:number[]=[],len:number[]=[];
+    for(let i=0;i<text.length;){const ch=String.fromCodePoint(text.codePointAt(i)!),f=ch.normalize('NFD').replace(/\p{M}/gu,'').replace(/đ/g,'d').replace(/Đ/g,'D');for(const c of f){out.push(c);at.push(i);len.push(ch.length);}i+=ch.length;}
+    return {text:out.join('').toLowerCase(),at,len};};
+  const wanted=fold(name).text;if(wanted.replace(/[^a-z0-9]/g,'').length<2)return null;
+  const found:{passage:number;span:TextSpan}[]=[];
+  result.passages.forEach((p,passage)=>{
+    const f=fold(targetText.slice(p.target.start,p.target.end));
+    for(let from=f.text.indexOf(wanted);from>=0;from=f.text.indexOf(wanted,from+1)){
+      const to=from+wanted.length,start=p.target.start+f.at[from],end=p.target.start+f.at[to-1]+f.len[to-1];
+      if(/[a-z0-9]/.test(f.text[from-1]??'')||/[a-z0-9]/.test(f.text[to]??'')||!/\p{Lu}/u.test(targetText[start]))continue;
+      found.push({passage,span:{start,end}});
+    }
+  });
+  if(found.length!==1)return null;
+  return {...result,status:'uncertain',passages:result.passages.map((p,i)=>i===found[0].passage?{...p,highlights:[found[0].span]}:p)};
 }
 // A selection in text no group holds lies between two groups of one section; their target text around that point is its context:
 // the text between them nobody claims, or, when they touch, both of them.

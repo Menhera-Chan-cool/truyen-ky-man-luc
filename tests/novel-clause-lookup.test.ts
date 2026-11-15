@@ -293,3 +293,14 @@ it('withdraws the highlight of a lone word whose target belongs to a strong pair
  expect(run('hares')).toEqual([]);
  expect(run('bears')).toEqual(['bears']);
 });
+it('highlights a lone capitalised name left without an answer when the same name ignoring accents stands once, capitalised, in the returned context',()=>{
+ const run=(en:string)=>{
+  const vi='Chàng tới Lãng rồi về.',a=plain(vi,en,{vi:[vi],en:[en]},[['Chàng','He']]);
+  const r=query(a,'vi',span(vi,'Lãng'));
+  return {status:r.status,hl:r.passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)))};
+ };
+ expect(run('He came to Lang and went back.')).toEqual({status:'uncertain',hl:['Lang']});
+ expect(run('He came to Lang and left Lang again.').hl).toEqual([]);
+ expect(run('He came to lang and went back.').hl).toEqual([]);
+ expect(run('He came to Langdon and went back.').hl).toEqual([]);
+});
