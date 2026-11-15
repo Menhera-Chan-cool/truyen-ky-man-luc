@@ -16,6 +16,8 @@ Phông heading dùng chung: vào **Thông tin sách → Phông heading** để c
 
 Yêu cầu Node.js 22 trở lên (đã kiểm tra bằng Node 24).
 
+**Đừng chạy dev server hoặc test trình duyệt với `.env.local` thật**: mỗi lần chạy tải phông, ảnh bìa và cả quyển sách từ Supabase production (khoảng 250 MB/lần; từng làm egress gói miễn phí vượt 200%). Với test cục bộ hãy đặt `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` và `SUPABASE_SERVICE_ROLE_KEY` rỗng; `npm run test:e2e` đã tự làm vậy.
+
 ```powershell
 npm install
 $env:NEXT_TELEMETRY_DISABLED='1'

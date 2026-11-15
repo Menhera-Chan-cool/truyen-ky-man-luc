@@ -1,4 +1,4 @@
-import {test,expect,type Page} from '@playwright/test';
+import {test,expect,type Page} from './no-egress';
 test.skip(process.env.CONTEXTUAL_PREVIEW!=='1','Requires locally generated contextual alignment artifacts');
 test.setTimeout(60000);
 async function lookup(page:Page,locale:'vi'|'en',chapter:number,quote:string,after=''){

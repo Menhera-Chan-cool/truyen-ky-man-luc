@@ -1,4 +1,4 @@
-import {test,expect,type Page} from '@playwright/test';
+import {test,expect,type Page} from './no-egress';
 async function select(page:Page,source:string){
  await page.locator('.chapter-content').evaluate((root,quote)=>{
   const start=root.textContent!.indexOf(quote);if(start<0)throw Error('Selection missing');

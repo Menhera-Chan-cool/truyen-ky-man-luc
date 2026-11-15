@@ -24,6 +24,7 @@ export default defineConfig({
         url: "http://127.0.0.1:3000/vi",
         reuseExistingServer: true,
         timeout: 120000,
-        env: { NEXT_TELEMETRY_DISABLED: "1" },
+        // Empty values override .env.local, so local runs use the bundled book and never fetch fonts, covers or the book from the real project (that burned its egress quota).
+        env: { NEXT_TELEMETRY_DISABLED: "1", NEXT_PUBLIC_SUPABASE_URL: "", NEXT_PUBLIC_SUPABASE_ANON_KEY: "", SUPABASE_SERVICE_ROLE_KEY: "" },
       },
 });

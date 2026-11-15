@@ -1,4 +1,4 @@
-import {test,expect} from '@playwright/test';
+import {test,expect} from './no-egress';
 import fixture from '../tests/fixtures/poetry-screenshots.json' with {type:'json'};
 test.skip(process.env.CONTEXTUAL_PREVIEW!=='1','Requires generated poetry artifacts');
 for(const id of ['screenshot-01','screenshot-06','screenshot-08','screenshot-10','screenshot-13']){

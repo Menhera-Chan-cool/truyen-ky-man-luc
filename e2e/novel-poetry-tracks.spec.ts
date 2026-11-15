@@ -1,4 +1,4 @@
-import {test,expect} from '@playwright/test';
+import {test,expect} from './no-egress';
 test.skip(process.env.CONTEXTUAL_PREVIEW!=='1','Requires generated book-specific artifacts');
 test('keeps the complete poetry couplet within one Vietnamese rendering',async({page})=>{
  await page.goto('/en/read/chapter-1');await expect(page.locator('.reader-shell')).toHaveAttribute('data-ready','true');
