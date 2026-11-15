@@ -1,17 +1,15 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_DdxFD5hcXLAMZqkcemFde51iKN8V",
-  "immutableUrl": "https://truyen-ky-man-muct437lg-anh-tun.vercel.app",
+  "deploymentId": "dpl_AWeuSL8MMQAarWRFs2VXkaVyJvD5",
+  "immutableUrl": "https://truyen-ky-man-oepldkupp-anh-tun.vercel.app",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "runtimeSourceCommit": "cbb06108a43a20e6753601032e85817f2bdeecf1",
+  "runtimeSourceCommit": "d4d33381ab51c8d6a048d56f40b4ff91a0183a09",
   "algorithm": "labse-poetry-mbert-3",
   "readyState": "READY",
-  "checkedAt": "2026-11-14T17:03:14.441Z",
+  "checkedAt": "2026-11-15T03:11:34.654Z",
   "region": "sin1",
   "publicArtifacts": 20,
-  "publicArtifactBytes": 8744874,
-  "liveScreenshots": 15,
-  "liveBrowserTests": 18,
+  "publicArtifactBytes": 9424596,
   "workflowState": "active",
   "migrationVersion": "20261114071828",
   "state": "READY",
@@ -25,22 +23,24 @@
     "branch": "main"
   },
   "verification": {
-    "local": "verification/prose-word-2026-11-15.json",
-    "publicArtifacts": 20,
-    "unchangedPublishedEditions": 40,
-    "vitest": 328,
-    "python": 87,
-    "localBrowser": 57,
-    "liveBrowser": 18
+    "local": "docs/verification/phrase-alignment-2026-11-15.md",
+    "vitest": 346,
+    "python": 101,
+    "localBrowser": 60,
+    "build": "passed",
+    "postDeploy": "skipped by user instruction; no production API, browser or download checks were run for this release",
+    "publishedByWorker": "20 chapters reported ready by the alignment worker (not a lookup verification)"
   },
   "limitations": [
     "No physical phone testing",
+    "No post-deploy verification of this release",
     "Representative poetry probes are not whole-book word-level semantic accuracy",
-    "Some ambiguous/flattened verse remains context-only"
+    "Some ambiguous/flattened verse remains context-only",
+    "The 120 development probes are not an independent held-out set"
   ],
   "previousDeployment": {
-    "deploymentId": "dpl_EeN8yy3RdFCLUM1jqBZZRVUsah5F",
-    "sourceCommit": "62124730aa08b7889963a27b94e23bffc6673929"
+    "deploymentId": "dpl_CiM32z9puvhqnDPk891st6tsaWS9",
+    "sourceCommit": "496602b902d457c474b48d1a578c55a96ff41ae8"
   },
-  "alignmentWorkerSourceCommit": "cbb06108a43a20e6753601032e85817f2bdeecf1"
+  "alignmentWorkerSourceCommit": "d4d33381ab51c8d6a048d56f40b4ff91a0183a09"
 }
