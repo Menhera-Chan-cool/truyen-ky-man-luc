@@ -1,0 +1,136 @@
+<title>Phiếu kiểm đối chiếu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one narrow column of review cards, a sticky bar with progress; the selection in blue, the system's highlight in yellow. */
+:root{--bg:#f6f6f2;--card:#ffffff;--fg:#1b1d1c;--mut:#62665f;--line:#d9dbd2;--acc:#1d5c8a;--acc-fg:#ffffff;--sel:#cfe4f4;--hl:#fde08a;--ok:#2b7a46;--warn:#9a5b00;--ff:Inter,system-ui,"Segoe UI",Roboto,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141615;--card:#1e211f;--fg:#ecece7;--mut:#a4a89f;--line:#373b36;--acc:#7db4dc;--acc-fg:#0d1a24;--sel:#1f4560;--hl:#6b5a14;--ok:#7cc994;--warn:#e0a84e;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141615;--card:#1e211f;--fg:#ecece7;--mut:#a4a89f;--line:#373b36;--acc:#7db4dc;--acc-fg:#0d1a24;--sel:#1f4560;--hl:#6b5a14;--ok:#7cc994;--warn:#e0a84e;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--ff);padding-block:0 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+main{max-width:720px;margin:0 auto;min-width:0}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0}
+h1{font-size:1.15rem;margin:0 0 6px;text-wrap:balance}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--mut);font-size:.9rem}
+progress{flex:1;min-width:120px;height:10px;accent-color:var(--acc)}
+button{font:inherit;padding:10px 14px;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;cursor:pointer;min-height:44px}
+button.primary{background:var(--acc);color:var(--acc-fg);border-color:var(--acc)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.how,.card,.tools{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0}
+.how p,.how ol{margin:6px 0 0}.how ol{padding-left:20px}
+.status{font-size:.9rem;color:var(--mut);margin:8px 0 0;min-height:1.4em}
+.status.warn{color:var(--warn)}
+.card.done{border-color:var(--ok)}
+.tag{font-size:.82rem;color:var(--mut)}
+.lbl{font-size:.78rem;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;margin:12px 0 2px}
+.txt{white-space:pre-wrap;overflow-wrap:anywhere}
+.sel{background:var(--sel);padding:0 2px;border-radius:3px}
+.sys{background:var(--hl);padding:0 2px;border-radius:3px}
+.passage{border-left:3px solid var(--line);padding-left:10px;margin:6px 0}
+fieldset{border:0;padding:0;margin:14px 0 0;min-width:0}
+legend{font-weight:600;padding:0;margin-bottom:4px}
+label.opt{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:8px;margin:6px 0;cursor:pointer}
+label.opt input{margin-top:4px;width:20px;height:20px;flex:none}
+.hint{color:var(--mut);font-size:.9rem}
+textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--bg);color:var(--fg);margin-top:8px}
+input[type=text]{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);max-width:100%}
+details{margin-top:10px;font-size:.95rem}summary{cursor:pointer;color:var(--acc);padding:6px 0}
+.tools{display:flex;gap:10px;flex-wrap:wrap}
+#csvbox{width:100%;height:9rem;font:.8rem/1.4 ui-monospace,Consolas,monospace}
+</style>
+<main>
+<header>
+  <h1>Kiểm tra lần 5 · <span id="count">0</span>/__COUNT__ ca</h1>
+  <div class="bar"><progress id="bar" max="__COUNT__" value="0"></progress><label><input type="checkbox" id="todo"> chỉ hiện ca chưa làm</label></div>
+  <p class="status" id="status" role="status">Đang kết nối nơi lưu…</p>
+</header>
+<section class="how">
+  <strong>__COUNT__ ca, khoảng 20 phút</strong>
+  <p class="hint">Đây là mẫu ngẫu nhiên mới, rút sau khi sửa, từ những lần tra cứu hệ thống có tô sáng. Thứ tự đã xáo trộn: dừng ở ca nào thì các ca đã làm vẫn là một mẫu ngẫu nhiên, nên cứ làm được bao nhiêu hay bấy nhiêu.</p>
+  <ol>
+    <li>Đọc phần được chọn (nền xanh) trong câu gốc.</li>
+    <li>Đọc đoạn bản kia mà hệ thống trả về; nền vàng là chỗ nó tô sáng.</li>
+    <li>Chọn một đáp án. Thiếu hay thừa một chữ quan trọng thì chọn “Đúng nhưng thiếu hoặc thừa”.</li>
+  </ol>
+  <p class="hint">Cứ nói thật điều bạn thấy; không có đáp án “đúng” để chiều theo. Câu trả lời tự lưu, dừng giữa chừng quay lại sau vẫn còn.</p>
+  <p><label>Tên người kiểm (tùy chọn): <input type="text" id="who" autocomplete="off"></label></p>
+</section>
+<div id="cards"></div>
+<section class="tools" aria-label="Xuất kết quả">
+  <button class="primary" id="save" hidden>Lưu file CSV</button>
+  <button id="copy">Sao chép kết quả</button>
+  <button id="reset">Xóa trả lời trên máy này</button>
+  <textarea id="csvbox" readonly hidden aria-label="Kết quả dạng CSV"></textarea>
+</section>
+</main>
+<script type="application/json" id="data">/*DATA*/[]</script>
+<script>
+const CARDS=JSON.parse(document.getElementById('data').textContent);
+const LANG={vi:'tiếng Việt',en:'tiếng Anh'},KIND={word:'một từ',phrase:'một cụm từ',sentence:'cả câu'};
+const OPTS={
+  answered:[['right','Đúng','Phần tô sáng chính là bản dịch của phần đã chọn.'],['partly','Đúng nhưng thiếu hoặc thừa','Đúng ý nhưng tô thiếu một phần quan trọng hoặc tô thừa nhiều.'],['wrong','Sai','Tô sáng chỗ không phải bản dịch của phần đã chọn.'],['unsure','Không chắc','']],
+  abstained:[['has','Đoạn có chứa bản dịch tương ứng','Hệ thống không tô sáng, nhưng đoạn bên dưới có chỗ dịch phần đã chọn.'],['hasnot','Đoạn không chứa nó','Bản dịch của phần đã chọn nằm ở nơi khác.'],['none','Phần này không có bản dịch tương ứng','Bản kia lược bỏ hoặc diễn đạt khác hẳn.'],['unsure','Không chắc','']]
+};
+const LS='kiem-tra-lan-5';let state={};try{state=JSON.parse(localStorage.getItem(LS)||'{}')}catch(e){}
+const keep=()=>{try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}};
+let db=null,downloads=null;const $=id=>document.getElementById(id);
+function el(tag,attrs,...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs||{})){if(k==='class')e.className=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else e.setAttribute(k,v)}for(const kid of kids.flat())e.append(kid);return e}
+function marked(text,ranges,cls){const out=[];let at=0;for(const[a,b]of ranges.slice().sort((x,y)=>x[0]-y[0])){if(a>at)out.push(text.slice(at,a));out.push(el('span',{class:cls},text.slice(a,b)));at=b}if(at<text.length)out.push(text.slice(at));return out}
+function status(text,warn){const s=$('status');s.textContent=text;s.className='status'+(warn?' warn':'')}
+const nodes={};
+for(const c of CARDS){
+  const opts=OPTS[c.answered?'answered':'abstained'],card=el('section',{class:'card',id:'c'+c.n}),radios={};
+  card.append(el('div',{class:'tag'},`Ca ${c.n} · chọn ${KIND[c.kind]} trong ${LANG[c.from]} → tìm bản ${LANG[c.to]}`),el('div',{class:'lbl'},`Câu gốc (${LANG[c.from]})`),el('div',{class:'txt'},marked(c.sent,[[c.s0,c.e0]],'sel')));
+  card.append(el('div',{class:'lbl'},c.answered?`Hệ thống tô sáng trong bản ${LANG[c.to]}`:`Hệ thống không tô sáng; đoạn bản ${LANG[c.to]} nó trả về`));
+  if(!c.passages.length)card.append(el('div',{class:'txt hint'},'(Hệ thống không trả về đoạn nào.)'));
+  for(const p of c.passages)card.append(el('div',{class:'passage txt'},p.before?'… ':'',marked(p.text,p.hl,'sys'),p.after?' …':''));
+  const fs=el('fieldset',{},el('legend',{},c.answered?'Phần tô sáng có đúng không?':'Đoạn trả về có chứa bản dịch của phần đã chọn không?'));
+  for(const[v,label,help]of opts){
+    const inp=el('input',{type:'radio',name:'q'+c.n,value:v,id:`q${c.n}-${v}`});radios[v]=inp;
+    inp.addEventListener('change',()=>{set(c.key,{answer:v});});
+    fs.append(el('label',{class:'opt',for:`q${c.n}-${v}`},inp,el('span',{},el('strong',{},label),help?el('div',{class:'hint'},help):'')));
+  }
+  const note=el('textarea',{rows:'2',id:'n'+c.n,placeholder:'Ghi chú (tùy chọn)'});let t=0;
+  note.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(()=>set(c.key,{note:note.value}),600)});
+  card.append(fs,note);
+  nodes[c.key]={card,radios,note};$('cards').append(card);
+}
+function paint(key){const s=state[key]||{},n=nodes[key];if(!n)return;if(s.answer&&n.radios[s.answer])n.radios[s.answer].checked=true;if(document.activeElement!==n.note&&n.note.value!==(s.note||''))n.note.value=s.note||'';n.card.classList.toggle('done',!!s.answer);progress()}
+function progress(){const n=CARDS.filter(c=>state[c.key]&&state[c.key].answer).length;$('count').textContent=n;$('bar').value=n;if($('todo').checked)for(const c of CARDS)nodes[c.key].card.hidden=!!(state[c.key]&&state[c.key].answer)}
+const queue=new Map();
+function set(key,patch){state[key]={...(state[key]||{}),...patch,at:new Date().toISOString()};keep();paint(key);if(!db)return;const q=queue.get(key)||{busy:false,again:false};queue.set(key,q);if(q.busy){q.again=true;return}flush(key,q)}
+async function flush(key,q){
+  q.busy=true;
+  do{q.again=false;const v=state[key];
+    try{await db.doc('answers/'+key).set({answer:v.answer||'',note:v.note||'',reviewer:$('who').value||'',at:v.at});status('Đã lưu.')}
+    catch(e){status(e&&e.code==='invalid_argument'?'Bạn chỉ xem được trang này, chưa ghi được. Cần quyền Contributor trở lên.':'Chưa lưu được lên máy chủ; câu trả lời vẫn giữ trên máy này.',true)}
+  }while(q.again);
+  q.busy=false;
+}
+for(const c of CARDS)paint(c.key);
+$('todo').addEventListener('change',()=>{for(const c of CARDS)nodes[c.key].card.hidden=$('todo').checked&&!!(state[c.key]&&state[c.key].answer)});
+function csv(){const cols=['key','ca','kind','from','answered','answer','note','reviewer'],q=v=>'"'+String(v).replace(/"/g,'""')+'"',who=$('who').value;
+  const rows=CARDS.map(c=>({key:c.key,ca:c.n,kind:c.kind,from:c.from,answered:c.answered?'yes':'no',answer:(state[c.key]||{}).answer||'',note:((state[c.key]||{}).note||'').replace(/\s+/g,' '),reviewer:who}));
+  return '﻿'+[cols.join(',')].concat(rows.map(r=>cols.map(k=>q(r[k])).join(','))).join('\r\n')}
+$('copy').addEventListener('click',async()=>{const text=csv(),box=$('csvbox');try{await navigator.clipboard.writeText(text);status('Đã sao chép kết quả.')}catch(e){box.hidden=false;box.value=text;box.focus();box.select();status('Không sao chép tự động được: văn bản đã được chọn sẵn, hãy bấm giữ và chọn Sao chép.',true)}});
+$('save').addEventListener('click',async()=>{try{await downloads.save({filename:'ket-qua-kiem-tra-lan-5.csv',data:csv()});status('Đã lưu file.')}catch(e){if(!e||e.code!=='declined')status('Không lưu file được trên thiết bị này; hãy dùng nút Sao chép.',true)}});
+$('reset').addEventListener('click',()=>{if($('reset').dataset.sure!=='1'){$('reset').dataset.sure='1';$('reset').textContent='Bấm lần nữa để xóa';setTimeout(()=>{$('reset').dataset.sure='';$('reset').textContent='Xóa trả lời trên máy này'},4000);return}
+  state={};keep();for(const c of CARDS){const n=nodes[c.key];for(const r of Object.values(n.radios))r.checked=false;n.note.value='';paint(c.key)}$('reset').dataset.sure='';$('reset').textContent='Xóa trả lời trên máy này';status('Đã xóa trên máy này (dữ liệu đã lưu chung vẫn còn).')});
+async function boot(){
+  if(typeof claude==='undefined'||!claude.use){status('Trang chạy ngoài khung xem: câu trả lời chỉ giữ trên máy này. Dùng Sao chép khi xong.',true);return}
+  try{downloads=await claude.use('downloads')}catch(e){}
+  if(downloads)$('save').hidden=false;
+  try{db=await claude.use('db')}catch(e){}
+  if(!db){status('Chưa nối được nơi lưu chung (có thể bạn chưa đăng nhập). Câu trả lời giữ trên máy này; dùng Sao chép khi xong.',true);return}
+  const timer=setTimeout(()=>status('Chưa nối được máy chủ; câu trả lời vẫn giữ trên máy này.',true),10000);
+  db.collection('answers').onSnapshot(snap=>{
+    if(!snap.metadata.fromCache)clearTimeout(timer);
+    for(const d of snap.docs){const v=d.data(),k=d.id,q=queue.get(k);if(!nodes[k]||!v||(q&&q.busy))continue;
+      const cur=state[k]||{};if(!cur.at||(v.at||'')>cur.at){state[k]={answer:v.answer||'',note:v.note||'',at:v.at||''};paint(k)}}
+    keep();status('Đã nối nơi lưu chung; câu trả lời tự lưu.');
+    // answers given before the store answered are written once
+    for(const c of CARDS){const s=state[c.key];if(s&&s.answer&&!snap.docs.some(d=>d.id===c.key))set(c.key,{})}
+  },e=>{clearTimeout(timer);status('Mất kết nối nơi lưu chung ('+((e&&e.code)||'lỗi')+'); câu trả lời vẫn giữ trên máy này.',true)});
+}
+status('Đang kết nối nơi lưu…');boot();
+</script>

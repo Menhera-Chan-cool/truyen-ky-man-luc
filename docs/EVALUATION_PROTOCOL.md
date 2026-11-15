@@ -555,6 +555,10 @@ On the encoder row of the table the >98% is met by the region-consistent figure 
 
 The two rules fire in about 1% of the sentence lookups of these sets, and every change I read is an improvement. Tests 382, e2e 60 of 60 on three runs. The unit test of the sentence completion fails on the old code; the one of the gap closure passes on the old code in its fixture (the fixture's sentence mapping already joins the passages), so it documents the behaviour and does not guard it; the measured sets are the evidence. Neither rule has been checked by a human: a fresh sheet would show whether the sentence figure of the reviewer moves.
 
+## Fifth human check: a fresh sample after the goal-list changes (2026-11-16)
+
+Same design as the third and fourth (`docs/verification/audit-120e-2026-11-16.json`): seeded audit 20261127, no sentence of the first four audits, run on source `0c8df52` (Unihan names, projection from outside anchors, sentence completion and gap closure); 100 of the 120 lookups were answered (33 words, 31 phrases, 36 sentences; the fourth audit answered 89 and the third 98: the projection and the name rules answer more); the sheet holds 20 answered lookups per kind in shuffled order. Page: https://claude.ai/artifact/CJRkDCcndGhiCnd9mtJUN1, template `docs/verification/human-check-artifact-template-5.html`, key `docs/verification/human-check-key-5.json`; evaluate with `python scripts/align-novel/human_check_compare3.py ANSWERS.csv docs/verification/human-check-key-5.json`. Reference figures: third check 92.0% (85–98), fourth 89.2% (82–95), pooled 90.6% (85–95) of answered lookups. The new rules answer lookups the system used to leave empty, so a similar right rate with a larger answered share is an improvement; a lower rate would be the price of the extra answers and would be reported as such.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

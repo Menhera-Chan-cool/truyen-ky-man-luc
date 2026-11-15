@@ -1,0 +1,369 @@
+{
+ "population": {
+  "sentence": 36,
+  "phrase": 31,
+  "word": 33
+ },
+ "cards": {
+  "a5-48": {
+   "n": 1,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 9
+  },
+  "a5-79": {
+   "n": 2,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 14
+  },
+  "a5-74": {
+   "n": 3,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13
+  },
+  "a5-119": {
+   "n": 4,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20
+  },
+  "a5-52": {
+   "n": 5,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 9
+  },
+  "a5-19": {
+   "n": 6,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 4
+  },
+  "a5-107": {
+   "n": 7,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 18
+  },
+  "a5-44": {
+   "n": 8,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 8
+  },
+  "a5-25": {
+   "n": 9,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 5
+  },
+  "a5-92": {
+   "n": 10,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 16
+  },
+  "a5-67": {
+   "n": 11,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 12
+  },
+  "a5-30": {
+   "n": 12,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 6
+  },
+  "a5-21": {
+   "n": 13,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4
+  },
+  "a5-1": {
+   "n": 14,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 1
+  },
+  "a5-20": {
+   "n": 15,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4
+  },
+  "a5-59": {
+   "n": 16,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 10
+  },
+  "a5-81": {
+   "n": 17,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14
+  },
+  "a5-27": {
+   "n": 18,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 5
+  },
+  "a5-75": {
+   "n": 19,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13
+  },
+  "a5-9": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 2
+  },
+  "a5-80": {
+   "n": 21,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 14
+  },
+  "a5-116": {
+   "n": 22,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20
+  },
+  "a5-36": {
+   "n": 23,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 7
+  },
+  "a5-65": {
+   "n": 24,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11
+  },
+  "a5-34": {
+   "n": 25,
+   "kind": "word",
+   "from": "en",
+   "chapter": 6
+  },
+  "a5-106": {
+   "n": 26,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 18
+  },
+  "a5-5": {
+   "n": 27,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 1
+  },
+  "a5-16": {
+   "n": 28,
+   "kind": "word",
+   "from": "en",
+   "chapter": 3
+  },
+  "a5-32": {
+   "n": 29,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 6
+  },
+  "a5-91": {
+   "n": 30,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 16
+  },
+  "a5-23": {
+   "n": 31,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 4
+  },
+  "a5-3": {
+   "n": 32,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 1
+  },
+  "a5-15": {
+   "n": 33,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 3
+  },
+  "a5-118": {
+   "n": 34,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 20
+  },
+  "a5-8": {
+   "n": 35,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 2
+  },
+  "a5-49": {
+   "n": 36,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 9
+  },
+  "a5-55": {
+   "n": 37,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 10
+  },
+  "a5-88": {
+   "n": 38,
+   "kind": "word",
+   "from": "en",
+   "chapter": 15
+  },
+  "a5-46": {
+   "n": 39,
+   "kind": "word",
+   "from": "en",
+   "chapter": 8
+  },
+  "a5-33": {
+   "n": 40,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 6
+  },
+  "a5-85": {
+   "n": 41,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 15
+  },
+  "a5-68": {
+   "n": 42,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 12
+  },
+  "a5-108": {
+   "n": 43,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 19
+  },
+  "a5-96": {
+   "n": 44,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 17
+  },
+  "a5-54": {
+   "n": 45,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 10
+  },
+  "a5-76": {
+   "n": 46,
+   "kind": "word",
+   "from": "en",
+   "chapter": 13
+  },
+  "a5-61": {
+   "n": 47,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 11
+  },
+  "a5-62": {
+   "n": 48,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11
+  },
+  "a5-112": {
+   "n": 49,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 19
+  },
+  "a5-114": {
+   "n": 50,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 20
+  },
+  "a5-77": {
+   "n": 51,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 13
+  },
+  "a5-99": {
+   "n": 52,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 17
+  },
+  "a5-110": {
+   "n": 53,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 19
+  },
+  "a5-4": {
+   "n": 54,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 1
+  },
+  "a5-24": {
+   "n": 55,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 5
+  },
+  "a5-115": {
+   "n": 56,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 20
+  },
+  "a5-89": {
+   "n": 57,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 15
+  },
+  "a5-109": {
+   "n": 58,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 19
+  },
+  "a5-11": {
+   "n": 59,
+   "kind": "word",
+   "from": "en",
+   "chapter": 2
+  },
+  "a5-83": {
+   "n": 60,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 14
+  }
+ }
+}
