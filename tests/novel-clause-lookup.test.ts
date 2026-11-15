@@ -70,3 +70,44 @@ it('cannot use a broader group sentence map to escape a paired note scope',()=>{
  a.groups=[{id:'notes',section:'notes',score:.95,margin:.1,vi:{start:0,end:vi.length},en:{start:0,end:en.length},links:[],clausePairs:[{vi:[span(vi,'(2) Người khác.')],en:[e],score:.9,margin:.1}]}];
  const r=query(a,'en',e);expect(r.passages.every(p=>p.target.end<=v.end)).toBe(true);expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);
 });
+it('trusts a flagged residual pair at its lower floor but never an unflagged pair at that score',()=>{
+ const a=fixture(),pair=a.groups[0].clausePairs![0],whole={start:pair.en[0].start,end:pair.en.at(-1)!.end},expected=a.editions.vi.text.slice(pair.vi[0].start,pair.vi.at(-1)!.end);
+ a.groups[0].clausePairs=[{...pair,score:.45,margin:.1,residual:true}];
+ expect(query(a,'en',whole).passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual([expected]);
+ a.groups[0].clausePairs=[{...pair,score:.45,margin:.1}];
+ expect(query(a,'en',whole).passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).not.toEqual([expected]);
+ a.groups[0].clausePairs=[{...pair,score:.35,margin:.1,residual:true}];
+ expect(query(a,'en',whole).passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).not.toEqual([expected]);
+});
+it('rejects a residual flag that is not a boolean',()=>{
+ const a=fixture();(a.groups[0].clausePairs![0] as {residual?:unknown}).residual='yes';
+ expect(()=>validateAlignmentArtifact(a)).toThrow();
+});
+function sentences():AlignmentArtifact{
+ const vi='Vi một, vi hai. Vi ba, vi bốn. Vi năm, vi sáu.',en='En one, en two. En three, en four. En five, en six.';
+ const v=['Vi một,','vi hai.','Vi ba,','vi bốn.','Vi năm,','vi sáu.'].map(q=>span(vi,q)),e=['En one,','en two.','En three,','en four.','En five,','en six.'].map(q=>span(en,q));
+ const a=fixture();a.editions.vi.text=vi;a.editions.en.text=en;
+ a.groups=[{id:'0',section:'story',score:.9,margin:.1,vi:{start:0,end:vi.length},en:{start:0,end:en.length},parts:{vi:v,en:e},links:[],clausePairs:[{vi:v.slice(0,2),en:e.slice(0,2),score:.8,margin:.2},{vi:v.slice(4),en:e.slice(4),score:.8,margin:.2}]}];
+ return a;
+}
+it('keeps the context at the gap between trusted pairs when a middle sentence has no counterpart yet',()=>{
+ const a=sentences(),r=query(a,'en',{start:0,end:a.groups[0].parts!.en[3].end});
+ expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);
+ const context=r.passages.map(p=>p.target.text).join(' ');
+ expect(context).toContain('Vi một');expect(context).toContain('vi bốn');expect(context).not.toContain('Vi năm');
+ expect(r.unmatchedSource?.length).toBeGreaterThan(0);
+});
+it('falls back to the whole group when no trusted pair bounds the unresolved sentence',()=>{
+ const a=sentences();a.groups[0].clausePairs=[];const r=query(a,'en',{start:0,end:a.groups[0].parts!.en[3].end});
+ expect(r.passages.map(p=>p.target.text).join(' ')).toContain('vi sáu');
+});
+it('keeps an uncertain highlight when most content of a phrase inside one sentence is anchored',()=>{
+ const vi='Xoay thế thiên hạ ở trí chứ không phải ở sức.',en='Turning the realm depends on wisdom not brute strength.',a=fixture();
+ a.editions.vi.text=vi;a.editions.en.text=en;delete a.groups[0].clausePairs;
+ const links=[['không phải','not'],['sức','brute'],['sức','strength'],['Xoay','Turning'],['thế thiên hạ','realm']].map(([v,e])=>({vi:[span(vi,v).start,span(vi,v).end] as [number,number],en:[span(en,e).start,span(en,e).end] as [number,number],score:.9}));
+ a.groups=[{id:'0',section:'story',score:.9,margin:.1,vi:{start:0,end:vi.length},en:{start:0,end:en.length},parts:{vi:[{start:0,end:vi.length}],en:[{start:0,end:en.length}]},links}];
+ const r=query(a,'en',span(en,'wisdom not brute strength'));
+ expect(r.status).toBe('uncertain');expect(r.passages.flatMap(p=>p.highlights)).not.toEqual([]);
+ const mostlyMissing=query(a,'en',span(en,'depends on wisdom not brute'));
+ expect(mostlyMissing.passages.flatMap(p=>p.highlights).length===0||mostlyMissing.status!=='match').toBe(true);
+});

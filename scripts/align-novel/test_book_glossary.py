@@ -196,6 +196,35 @@ class BookGlossaryTests(unittest.TestCase):
         b['groups'].pop()
         self.assertEqual(apply_glossary(b, g)['groupsAdded'], 0)
 
+    def caption_fixture(self, rows, notes, margin=.2):
+        a = fixture(rows)
+        for i in notes:
+            a['groups'][i].update(section='notes', margin=margin)
+        structures = {l: {'notes': [{**a['groups'][i][l], 'id': str(i), 'label': dict(a['groups'][i][l])} for i in notes]}
+                      for l in ['vi', 'en']}
+        return a, structures
+
+    def test_a_confirmed_note_caption_adds_one_context_beside_a_body_context(self):
+        a, structures = self.caption_fixture([('Lâm Sơn đi xa.', 'Lam Son went far.'), ('Lâm Sơn', 'Lam Son')], [1])
+        g = build_glossary(a, structures)
+        entry = next(e for e in g['accepted'] if e['vi'] == 'Lâm Sơn')
+        self.assertEqual((entry['support'], entry['captionSupport']), (2, 1))
+        self.assertEqual(apply_glossary(a, g)['linksAdded'] >= 1, True)
+
+    def test_captions_never_stand_alone_or_when_the_note_pair_is_weak(self):
+        a, structures = self.caption_fixture([('Lâm Sơn', 'Lam Son'), ('Lâm Sơn', 'Lam Son')], [0, 1])
+        self.assertEqual(build_glossary(a, structures)['accepted'], [])
+        b, structures = self.caption_fixture([('Lâm Sơn đi xa.', 'Lam Son went far.'), ('Lâm Sơn', 'Lam Son')], [1], margin=.01)
+        g = build_glossary(b, structures)
+        self.assertEqual(g['accepted'], [])
+        self.assertIn('insufficient-independent-support', next(e for e in g['candidates'] if e['vi'] == 'Lâm Sơn')['reasons'])
+
+    def test_a_caption_does_not_resolve_an_ambiguous_name(self):
+        a, structures = self.caption_fixture([('Lâm Sơn đi xa.', 'Lam Son went far.'), ('Lâm Sơn', 'Lam Son'),
+                                              ('Lam Sơn về.', 'Lam Son returned.')], [1])
+        g = build_glossary(a, structures)
+        self.assertEqual([e for e in g['accepted'] if e['en'] == 'Lam Son'], [])
+
 
 if __name__ == '__main__':
     unittest.main()

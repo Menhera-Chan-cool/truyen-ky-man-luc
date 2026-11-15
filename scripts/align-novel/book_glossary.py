@@ -106,6 +106,9 @@ def build_glossary(artifact, structures=None):
               for l in ['vi', 'en']}
     observations = {}
 
+    def labelled(left, right):
+        return any(any(_contains(label, v['span']) for label in labels[l]) for l, v in [('vi', left), ('en', right)])
+
     def observe(left, right, group, method):
         if any(_normal(v['text']) in _STOP or len(_fold(v['text'])) < 3 for v in [left, right]):
             return
@@ -113,9 +116,11 @@ def build_glossary(artifact, structures=None):
         record = observations.setdefault(key, {'vi': left['text'], 'en': right['text'], 'evidence': []})
         evidence = {'vi': list(left['span']), 'en': list(right['span']), 'groupId': str(group['id']),
                     'observed': {'vi': left['text'], 'en': right['text']},
-                    'method': method, 'caption': any(any(_contains(label, v['span']) for label in labels[l])
-                                                  for l, v in [('vi', left), ('en', right)])
+                    'method': method, 'caption': labelled(left, right)
                     or (group.get('section') == 'notes' and any(l not in structures for l in ['vi', 'en'])),
+                    # A structure-confirmed note label inside a confident note pair is one more place the book names the entity.
+                    'labelled': labelled(left, right) and group.get('section') == 'notes'
+                    and group.get('score', 0) >= .5 and group.get('margin', 0) >= .03,
                     'context': hashlib.sha256(repr(_context_key(artifact, group)).encode()).hexdigest()}
         if not any(e['vi'] == evidence['vi'] and e['en'] == evidence['en'] for e in record['evidence']):
             record['evidence'].append(evidence)
@@ -176,14 +181,18 @@ def build_glossary(artifact, structures=None):
             seen_vi.add(tuple(evidence['vi'])); seen_en.add(tuple(evidence['en']))
         reasons = []
         is_name = any(e['method'] == 'same-fold-name' for e in record['evidence'])
-        if len(seen_contexts) < 2:
+        # Same-fold names may add confirmed note captions as extra contexts, but never stand on captions alone.
+        captions = {e['context'] for e in record['evidence'] if is_name and e['caption'] and e['labelled']
+                    and e['method'] == 'same-fold-name'} - seen_contexts if seen_contexts else set()
+        support = len(seen_contexts) + len(captions)
+        if support < 2:
             reasons.append('insufficient-independent-support')
         # Repetition of the same model's links cannot independently prove a translation.
         if not is_name:
             reasons.append('requires-semantic-validation')
         if any(len(partners[l][key[i]]) > 1 for i, l in enumerate(['vi', 'en'])):
             reasons.append('ambiguous')
-        record.update(support=len(seen_contexts), reasons=reasons)
+        record.update(support=support, reasons=reasons, **({'captionSupport': len(captions)} if captions else {}))
         (candidates if reasons else accepted).append(record)
     return {'schema': 1, 'chapterId': artifact['chapterId'], 'sourceVersions': binding,
             'accepted': accepted, 'candidates': candidates, 'labels': labels,

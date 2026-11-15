@@ -7,7 +7,9 @@ export type TextSpan = {start:number;end:number};
 export type PoetryCorrespondence=Record<Locale,TextSpan[]>&{score:number;evidence:'direct-window'|'surrounding-window'};
 export type PoetryTrack=TextSpan&{id:string;lines:TextSpan[];title?:TextSpan;flattened?:boolean};
 export type PoetryPair=Record<Locale,PoetryTrack>&{score:number;margin:number;primary:Record<Locale,boolean>;correspondences:PoetryCorrespondence[];contextOnly?:boolean};
-export type ClausePair=Record<Locale,TextSpan[]>&{score:number;margin:number};
+export type ClausePair=Record<Locale,TextSpan[]>&{score:number;margin:number;residual?:boolean};
+// A residual pair was inferred by elimination inside a confirmed parent pair, so it carries a lower score floor.
+const trusted=(p:ClausePair)=>(p.score>=.5||(p.residual===true&&p.score>=.4))&&p.margin>=.03;
 export type AlignmentArtifact = {
   schema:1;codec:string;algorithm:string;chapterId:string;createdAt:string;
   editions:Record<Locale,{revision:number;versionId:string;hash:string;text:string;words?:TextSpan[];breaks?:number[]}>;
@@ -57,7 +59,7 @@ export function validateAlignmentArtifact(value:unknown):AlignmentArtifact {
     if(g.clausePairs){
       if(!Array.isArray(g.clausePairs)||g.clausePairs.length>64)invalid();
       for(const [pairIndex,p] of g.clausePairs.entries()){
-        if(!Number.isFinite(p.score)||p.score<0||p.score>1.001||!Number.isFinite(p.margin))invalid();
+        if(!Number.isFinite(p.score)||p.score<0||p.score>1.001||!Number.isFinite(p.margin)||(p.residual!==undefined&&typeof p.residual!=='boolean'))invalid();
         for(const l of ['vi','en']as const)if(!Array.isArray(p[l])||!p[l].length||p[l].length>96||p[l].some((s,i)=>!valid(s,a.editions[l].text)||s.start<g[l].start||s.end>g[l].end||(i>0&&s.start<p[l][i-1].end)||(g.parts&&!g.parts[l].some(q=>q.start<=s.start&&q.end>=s.end))))invalid();
         for(const q of g.clausePairs.slice(0,pairIndex)){
           const bounds=(p:ClausePair,l:Locale)=>({start:p[l][0].start,end:p[l].at(-1)!.end}),nested=(x:TextSpan,y:TextSpan)=>x.start<=y.start&&x.end>=y.end&&(x.start<y.start||x.end>y.end);
@@ -146,7 +148,7 @@ export function alignmentUnits(edition:AlignmentArtifact['editions'][Locale],bou
   }
   return units;
 }
-function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['groups'][number],request:LookupRequest,targetLocale:Locale):{covered:TextSpan[];spans:TextSpan[];unmatched?:TextSpan[]}{
+function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['groups'][number],request:LookupRequest,targetLocale:Locale):{covered:TextSpan[];spans:TextSpan[];unmatched?:TextSpan[];grounded?:TextSpan[]}{
   const source=artifact.editions[request.locale],target=artifact.editions[targetLocale];
   const within=(span:TextSpan,l:Locale)=>!g.parts||g.parts[l].some(p=>span.start>=p.start&&span.end<=p.end);
   const notes=g.section==='notes',sourceUnits=alignmentUnits(source,g[request.locale],request.locale,notes,artifact.refinementVersion===1).filter(p=>within(p,request.locale)),targets=alignmentUnits(target,g[targetLocale],targetLocale,notes,artifact.refinementVersion===1).filter(p=>within(p,targetLocale));
@@ -162,7 +164,7 @@ function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['gr
   const selected=sourceUnits.filter(includes);
   if(g.clausePairs&&selected.length){
     if(!g.clausePairs.length)return {covered,spans,unmatched:selected};
-    const pairs=g.clausePairs.filter(p=>p.score>=.5&&p.margin>=.03&&p[request.locale].every(s=>s.start>=g[request.locale].start&&s.end<=g[request.locale].end&&within(s,request.locale)&&includes(s))&&p[targetLocale].every(s=>s.start>=g[targetLocale].start&&s.end<=g[targetLocale].end&&within(s,targetLocale)));
+    const pairs=g.clausePairs.filter(p=>trusted(p)&&p[request.locale].every(s=>s.start>=g[request.locale].start&&s.end<=g[request.locale].end&&within(s,request.locale)&&includes(s))&&p[targetLocale].every(s=>s.start>=g[targetLocale].start&&s.end<=g[targetLocale].end&&within(s,targetLocale)));
     covered.push(...pairs.flatMap(p=>p[request.locale]));spans.push(...pairs.flatMap(p=>p[targetLocale]));
   }
   if(!g.clausePairs&&sourceUnits.length&&sourceUnits.every(includes)&&(targets.length===1||(sourceUnits.length===1&&targets.length<=3)))return {covered:sourceUnits,spans:targets};
@@ -178,7 +180,7 @@ function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['gr
         const values=from[0]>=unit.start&&from[1]<=unit.end?words:(from[1]<=request.start||from[0]>=request.end)?outside:undefined;
         if(values)values.set(key,Math.max(values.get(key)??0,link.score*source.text.slice(word.start,word.end).replace(/[^\p{L}\p{M}\p{N}]/gu,'').length));
       }
-      const reserved=g.clausePairs?.some(p=>p.score>=.5&&p.margin>=.03&&!p[request.locale].some(s=>s.start<request.end&&s.end>request.start)&&p[targetLocale].some(s=>s.start<span.end&&s.end>span.start));
+      const reserved=g.clausePairs?.some(p=>trusted(p)&&!p[request.locale].some(s=>s.start<request.end&&s.end>request.start)&&p[targetLocale].some(s=>s.start<span.end&&s.end>span.start));
       return {span,index,weight:reserved?0:[...words.values()].reduce((a,b)=>a+b,0),outside:[...outside.values()].reduce((a,b)=>a+b,0)};
     });
     if(artifact.refinementVersion===1){
@@ -186,7 +188,7 @@ function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['gr
       const content=[...analysisText(source.text.slice(unit.start,unit.end),notes).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].filter(m=>!onlyFunctionWords(m[0],request.locale));
       const anchored=(m:RegExpMatchArray)=>g.links.some(l=>l.score>=.03&&l[request.locale][0]<unit.start+m.index!+m[0].length&&l[request.locale][1]>unit.start+m.index!&&chosen.some(v=>l[targetLocale][0]>=v.span.start&&l[targetLocale][1]<=v.span.end));
       const essential=content.filter(m=>/^(?:\d+|not|never|no|không|chưa|chẳng|đừng)$/iu.test(m[0]));
-      if(!chosen.length||chosen.some((v,i)=>i>0&&v.index!==chosen[i-1].index+1)||content.filter(anchored).length<=content.length/2||essential.some(m=>!anchored(m)))return {covered:[],spans:[],unmatched:selected};
+      if(!chosen.length||chosen.some((v,i)=>i>0&&v.index!==chosen[i-1].index+1)||content.filter(anchored).length<=content.length/2||essential.some(m=>!anchored(m)))continue;
       covered.push(unit);spans.push(...chosen.map(v=>v.span));continue;
     }
     votes.sort((a,b)=>b.weight-a.weight);
@@ -195,7 +197,9 @@ function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['gr
       covered.push(unit);spans.push(best.span);
     }
   }
-  if(artifact.refinementVersion===1&&selected.some(s=>!covered.some(p=>p.start<=s.start&&p.end>=s.end)))return {covered:[],spans:[],unmatched:selected};
+  // Resolved sentences are kept apart from unresolved ones: the headline stays empty, but the grounded part narrows the context.
+  const unresolved=selected.filter(s=>!covered.some(p=>p.start<=s.start&&p.end>=s.end));
+  if(artifact.refinementVersion===1&&unresolved.length)return {covered,spans:[],unmatched:unresolved,grounded:spans};
   return {covered,spans};
 }
 const functionWords:Record<Locale,Set<string>>={
@@ -217,6 +221,22 @@ function nameSelection(text:string){
   const hasTitle=titledNames.some(t=>t.vi.test(text)||t.en.test(text));
   if(hasTitle){const rank=/^(?:hegemon|king|emperor|duke|bá|vương|vua|hoàng|đế|quốc|công|of)$/iu;return words.some(w=>/^\p{Lu}/u.test(w)&&!rank.test(w))&&words.every(w=>/^\p{Lu}/u.test(w)||rank.test(w));}
   return /^\p{Lu}/u.test(words[0]!)&&/^\p{Lu}/u.test(words.at(-1)!)&&words.filter(w=>/^\p{Lu}/u.test(w)).length>=2;
+}
+// Smallest target stretch that can hold the unresolved source: the gap between the nearest trusted pairs on each side
+// (translation order inside a paragraph is monotone), plus whatever resolved sentences already ground. Whole group otherwise.
+function groundedContext(g:AlignmentArtifact['groups'][number],locale:Locale,targetLocale:Locale,unmatched:TextSpan[],grounded:TextSpan[]):TextSpan{
+ const whole=g[targetLocale],bounds=(spans:TextSpan[])=>({start:spans[0].start,end:spans.at(-1)!.end});
+ const pairs=(g.clausePairs??[]).filter(trusted).map(p=>({from:bounds(p[locale]),to:bounds(p[targetLocale])}));
+ if(!pairs.length||!unmatched.length)return whole;
+ let start=Infinity,end=-Infinity;
+ for(const u of unmatched){
+  const before=pairs.filter(p=>p.from.end<=u.start),after=pairs.filter(p=>p.from.start>=u.end);
+  const a=before.length?Math.max(...before.map(p=>p.to.end)):whole.start,b=after.length?Math.min(...after.map(p=>p.to.start)):whole.end;
+  if(b<=a)return whole;
+  start=Math.min(start,a);end=Math.max(end,b);
+ }
+ for(const s of grounded){start=Math.min(start,s.start);end=Math.max(end,s.end);}
+ return {start:Math.max(start,whole.start),end:Math.min(end,whole.end)};
 }
 function nameTargets(spans:TextSpan[],request:LookupRequest,target:string,bounds:TextSpan,targetLocale:Locale){
  if(!nameSelection(request.text))return spans;
@@ -331,11 +351,19 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     }
     let highlights=mergeSpans(nameTargets(spans,request,target.text,g[targetLocale],targetLocale),target.text);
     const inferredTitle=titledNames.some(t=>locale==='en'?t.en.test(request.text)&&highlights.some(s=>t.vi.test(target.text.slice(s.start,s.end))):t.vi.test(request.text)&&highlights.some(s=>t.en.test(target.text.slice(s.start,s.end))));
+    let looseWords=false;
     if(!named&&!inferredTitle&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1){
       const from=Math.max(request.start,g[locale].start),end=Math.min(request.end,g[locale].end);
       const selected=[...source.text.slice(from,end).matchAll(/[\p{L}\p{M}]+/gu)].map(m=>({start:from+m.index,end:from+m.index+m[0].length}));
       const missing=selected.filter(w=>/\p{L}/u.test(source.text.slice(w.start,w.end))&&!onlyFunctionWords(source.text.slice(w.start,w.end),locale)&&![...coveredWords,...sentences.covered].some(s=>s.start<=w.start&&s.end>=w.end));
-      if(missing.length){incompleteWords=true;unmatchedSource.push(...missing);}
+      if(missing.length){
+        // A phrase inside one sentence whose content is mostly anchored keeps its highlight as an uncertain suggestion; a lone unlinked word does not erase it.
+        const wordsOf=(w:TextSpan)=>source.text.slice(w.start,w.end),content=selected.filter(w=>/\p{L}/u.test(wordsOf(w))&&!onlyFunctionWords(wordsOf(w),locale));
+        const essential=missing.some(w=>/^(?:not|never|no|không|chưa|chẳng|đừng)$/iu.test(wordsOf(w)));
+        const oneSentence=alignmentUnits(source,g[locale],locale,g.section==='notes').filter(u=>u.start<request.end&&u.end>request.start).length<=1;
+        if(!sentences.unmatched?.length&&highlights.length&&oneSentence&&!essential&&missing.length*3<=content.length)uncertain=true;
+        else{incompleteWords=true;unmatchedSource.push(...missing);looseWords=missing.some(w=>!sentences.unmatched?.some(u=>u.start<=w.start&&u.end>=w.end));}
+      }
     }
     const sourceBlock=shortBlock(source,request);
     if(artifact.refinementVersion===1&&g.section!=='notes'&&sourceBlock&&!nameSelection(request.text)&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>2){
@@ -349,7 +377,7 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     hasWords ||= highlights.length>0;
     uncertain ||= g.score<.82||g.margin<.015;
     const bounds=sentences.spans.length&&highlights.length?{start:Math.min(...highlights.map(s=>s.start)),end:Math.max(...highlights.map(s=>s.end))}:g[targetLocale];
-    contexts.push(g[targetLocale]);
+    contexts.push(sentences.unmatched?.length&&!looseWords?groundedContext(g,locale,targetLocale,sentences.unmatched,sentences.grounded??[]):g[targetLocale]);
     passages.push({source:{...g[locale],text:source.text.slice(g[locale].start,g[locale].end)},target:{...bounds,text:target.text.slice(bounds.start,bounds.end),breaks:target.breaks?.filter(p=>p>bounds.start&&p<bounds.end)},highlights});
   }
   if(incompleteWords){hasWords=false;for(const [i,p] of passages.entries()){const b=contexts[i];p.highlights=[];p.target={...b,text:target.text.slice(b.start,b.end),breaks:target.breaks?.filter(x=>x>b.start&&x<b.end)};}}
