@@ -155,6 +155,14 @@ export function alignmentUnits(edition:AlignmentArtifact['editions'][Locale],bou
   }
   return units;
 }
+// How many whole sentences [start,end) holds; 0 when it begins or ends inside a sentence.
+function wholeSentences(text:string,start:number,end:number,locale:Locale):number{
+  const body=analysisText(text.slice(start,end),false).trim();
+  if(!/\p{L}/u.test(body))return 0;
+  const startsAt=start<=0||/(^|[.!?…\n]["”’)\]]*\s*["“‘«']*)$/u.test(text.slice(Math.max(0,start-8),start));
+  const endsAt=/[.!?…]["”’)\]]*$/u.test(body)||/^["”’)\]]*\s*(?:\n|$)/u.test(text.slice(end,end+8));
+  return startsAt&&endsAt?[...new Intl.Segmenter(locale,{granularity:'sentence'}).segment(body)].filter(s=>/\p{L}/u.test(s.segment)).length:0;
+}
 // A phrase pair is only used for a selection that is exactly its source window (edge punctuation and note markers aside).
 function phraseTarget(g:AlignmentArtifact['groups'][number],request:LookupRequest,text:string,locale:Locale,targetLocale:Locale):{source:TextSpan;target:TextSpan}|null{
   if(!g.phrasePairs?.length)return null;
@@ -272,12 +280,29 @@ function shortBlock(edition:AlignmentArtifact['editions'][Locale],span:TextSpan)
  const start=Math.max(0,...(edition.breaks??[]).filter(b=>b<=span.start)),end=(edition.breaks??[]).find(b=>b>=span.end)??edition.text.length;
  return end-start<=160?{start,end}:undefined;
 }
+// Whole sentences whose one counterpart passage is exactly as many whole sentences, with no other group or clause of the pairing claiming it: the sentences correspond even though a clause of them
+// was never paired or stands in no group, and the lookup that dropped its highlights for that reason keeps the counterpart highlighted, uncertain.
+function absorbSentences(a:AlignmentArtifact,request:LookupRequest,result:LookupResult):LookupResult{
+  const l=request.locale,o=l==='vi'?'en':'vi',overlaps=(s:TextSpan,t:TextSpan)=>s.start<t.end&&s.end>t.start;
+  if(result.status!=='context-only'||!result.unmatchedSource?.length||result.passages.length!==1||notePair(a,request))return result;
+  if(a.poems?.some(p=>overlaps(p[l],request))||a.poetryScopes?.[l].some(p=>overlaps(p,request)))return result;
+  const p=result.passages[0],k=wholeSentences(a.editions[l].text,request.start,request.end,l);
+  if(!k||k!==wholeSentences(a.editions[o].text,p.target.start,p.target.end,o))return result;
+  const all=a.refinementVersion===1?a.refinedGroups??a.groups:a.groups,own=all.filter(g=>(g.parts?.[l]??[g[l]]).some(s=>overlaps(s,request)));
+  if(!own.length||own.some(g=>(g.section!=='story'&&g.section!=='critique')||g.tracks||g.kind==='lexical'||g.score<.5||g.margin<.015))return result;
+  if(all.some(g=>!own.includes(g)&&overlaps(g[o],p.target)))return result;
+  const inside=(s:TextSpan)=>s.start>=request.start&&s.end<=request.end;
+  const rival=(g:typeof own[number])=>g.clausePairs?.length?g.clausePairs.some(c=>trusted(c)&&!c[l].some(s=>overlaps(s,request))&&c[o].some(s=>overlaps(s,p.target))):!inside(g[l]);
+  if(own.some(rival))return result;
+  const text=a.editions[o].text.slice(p.target.start,p.target.end),{unmatchedSource:_,...rest}=result;
+  return {...rest,status:'uncertain',passages:[{...p,highlights:[{start:p.target.start+text.length-text.trimStart().length,end:p.target.end-(text.length-text.trimEnd().length)}]}]};
+}
 export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
   const locale=request.locale,targetLocale=locale==="vi"?"en":"vi",source=artifact.editions[locale],target=artifact.editions[targetLocale];
   const empty=(status:LookupResult["status"]):LookupResult=>({status,targetLocale,passages:[]});
   if(artifact.chapterId!==request.chapterId||source.revision!==request.revision||request.start<0||request.end<=request.start||request.end>source.text.length||source.text.slice(request.start,request.end)!==request.text)return empty("stale");
   if(request.end-request.start>2000)throw RangeError("Selection too long");
-  const result=selectionLookup(artifact,request,lookupSingle);
+  const result=absorbSentences(artifact,request,selectionLookup(artifact,request,lookupSingle));
   // The name rules answer story text; inside a note or a caption paired with one, the paired note is shown as it is.
   if(!notePair(artifact,request)){
     const named=noteTermAnswer(artifact,result,request)??sameNameAnswer(result,request,target.text)??sinoNameAnswer(result,request,target.text);if(named)return named;

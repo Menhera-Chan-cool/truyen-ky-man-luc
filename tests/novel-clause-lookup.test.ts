@@ -90,12 +90,22 @@ function sentences():AlignmentArtifact{
  a.groups=[{id:'0',section:'story',score:.9,margin:.1,vi:{start:0,end:vi.length},en:{start:0,end:en.length},parts:{vi:v,en:e},links:[],clausePairs:[{vi:v.slice(0,2),en:e.slice(0,2),score:.8,margin:.2},{vi:v.slice(4),en:e.slice(4),score:.8,margin:.2}]}];
  return a;
 }
-it('keeps the context at the gap between trusted pairs when a middle sentence has no counterpart yet',()=>{
+it('closes the gap between trusted pairs with an uncertain highlight when the sentence counts agree',()=>{
  const a=sentences(),r=query(a,'en',{start:0,end:a.groups[0].parts!.en[3].end});
- expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);
  const context=r.passages.map(p=>p.target.text).join(' ');
  expect(context).toContain('Vi một');expect(context).toContain('vi bốn');expect(context).not.toContain('Vi năm');
- expect(r.unmatchedSource?.length).toBeGreaterThan(0);
+ expect(r.status).toBe('uncertain');expect(r.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual([context.trim()]);
+ expect(r.unmatchedSource).toBeUndefined();
+});
+it('keeps the context only when the selection ends inside a sentence of the gap',()=>{
+ const a=sentences(),r=query(a,'en',{start:0,end:a.groups[0].parts!.en[2].end});
+ expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);expect(r.unmatchedSource?.length).toBeGreaterThan(0);
+});
+it('keeps the context only when the counterpart passage holds more sentences than the selection',()=>{
+ const a=sentences(),vi='Vi một, vi hai. Vi ba. Vi bốn. Vi năm, vi sáu.',v=['Vi một,','vi hai.','Vi ba.','Vi bốn.','Vi năm,','vi sáu.'].map(q=>span(vi,q)),g=a.groups[0];
+ a.editions.vi.text=vi;a.groups[0]={...g,vi:{start:0,end:vi.length},parts:{vi:v,en:g.parts!.en},clausePairs:[{vi:v.slice(0,2),en:g.parts!.en.slice(0,2),score:.8,margin:.2},{vi:v.slice(4),en:g.parts!.en.slice(4),score:.8,margin:.2}]};
+ const r=query(a,'en',{start:0,end:g.parts!.en[3].end});
+ expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);expect(r.unmatchedSource?.length).toBeGreaterThan(0);
 });
 it('falls back to the whole group when no trusted pair bounds the unresolved sentence',()=>{
  const a=sentences();a.groups[0].clausePairs=[];const r=query(a,'en',{start:0,end:a.groups[0].parts!.en[3].end});
@@ -193,8 +203,15 @@ function gapFixture(){
  const a=fixture();a.editions.vi.text=vi;a.editions.en.text=en;a.groups=[group('a','Lan còn nhỏ.','Lan was young.'),group('b','Nàng ở nhà.','She stayed home.')];
  return a;
 }
-it('returns the target text between the neighbouring groups as context when part of the selection lies in no group',()=>{
+it('highlights the target text between the neighbouring groups, uncertain, when it holds as many sentences as the part of the selection that lies in no group',()=>{
  const a=gapFixture(),r=query(a,'vi',{start:a.editions.vi.text.indexOf('Chồng'),end:a.editions.vi.text.length});
+ expect(r.status).toBe('uncertain');expect(r.unmatchedSource).toBeUndefined();
+ expect(r.passages.flatMap(p=>p.highlights.map(h=>a.editions.en.text.slice(h.start,h.end)))).toEqual(['Her husband went far away. She stayed home.']);
+});
+it('returns the target text between the neighbouring groups as context when it holds more sentences than the part of the selection that lies in no group',()=>{
+ const a=gapFixture(),en='Lan was young. Her husband went far away. He never wrote. She stayed home.',[first,second]=a.groups;
+ a.editions.en.text=en;a.groups=[{...first,en:span(en,'Lan was young.'),parts:{vi:first.parts!.vi,en:[span(en,'Lan was young.')]}},{...second,en:span(en,'She stayed home.'),parts:{vi:second.parts!.vi,en:[span(en,'She stayed home.')]}}];
+ const r=query(a,'vi',{start:a.editions.vi.text.indexOf('Chồng'),end:a.editions.vi.text.length});
  expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);
  expect(r.unmatchedSource?.map(s=>a.editions.vi.text.slice(s.start,s.end).trim())).toContain('Chồng nàng đi xa lắm.');
  expect(r.passages.some(p=>p.target.text.includes('Her husband went far away.'))).toBe(true);
