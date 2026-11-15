@@ -580,6 +580,28 @@ Prior 0.2 moves one strict hit up and one down; prior 0.5 gains one probe phrase
 
 Same design as the third and fourth (`docs/verification/audit-120e-2026-11-16.json`): seeded audit 20261127, no sentence of the first four audits, run on source `0c8df52` (Unihan names, projection from outside anchors, sentence completion and gap closure); 100 of the 120 lookups were answered (33 words, 31 phrases, 36 sentences; the fourth audit answered 89 and the third 98: the projection and the name rules answer more); the sheet holds 20 answered lookups per kind in shuffled order. Page: https://claude.ai/artifact/CJRkDCcndGhiCnd9mtJUN1, template `docs/verification/human-check-artifact-template-5.html`, key `docs/verification/human-check-key-5.json`; evaluate with `python scripts/align-novel/human_check_compare3.py ANSWERS.csv docs/verification/human-check-key-5.json`. Reference figures: third check 92.0% (85–98), fourth 89.2% (82–95), pooled 90.6% (85–95) of answered lookups. The new rules answer lookups the system used to leave empty, so a similar right rate with a larger answered share is an improvement; a lower rate would be the price of the extra answers and would be reported as such.
 
+## Goal list, part 4: unlinked words between linked ones no longer block a phrase (2026-11-16)
+
+**What the gap was.** A selected phrase is abstained ("uncertain") when too many of its content words have no link. The test counted every unlinked content word, including those that stand *between* two linked ones. A phrase whose pieces join into one highlight (the projection and join rules of part 1 and the 2026-11-15 joining step) does not lose those interior words: the highlight covers them. Counting them made the lookup abstain on phrases whose counterpart it had in fact found.
+
+**The rule.** The abstention test now counts `edgeMissing`, the unlinked content words at the *ends* of the phrase, when the phrase has one highlight (`highlights.length === 1`); several highlights keep the old count. When the edge count is smaller than the full count, the span projection (`project()`, now a function so both branches share it) extends the highlight over the interior; if it finds nothing, the old highlight stays and the lookup still answers "uncertain". The projection itself is unchanged: it stays blocked when a content word stands between an anchor and the phrase, when the gap is larger than max(6, 3 × content words + 2), and when the span would need a negation it does not have.
+
+**Measured on the same data (`phr10`), before → after.**
+
+| Set | Before | After |
+| --- | --- | --- |
+| Sentences: dev 120, tuned 110, blind 102 | 96 / 82 / 85 hits | identical rows (0 changed) |
+| Lexical A phrases (dev) | 29 hits, 3 answered-but-not-hit | **31** hits, 4 answered-but-not-hit |
+| Lexical B phrases (blind, used repeatedly) | 32 hits, 1 | **34** hits, 1 |
+| Lexical A and B words | 33 / 29 | 33 / 29 (unchanged) |
+| Probes word / phrase / sentence | 35 / 27 / 39 | 35 / **28** / 39 |
+| Audits 1 and 2 (seeded, 40 sentences, 40 phrases, 40 words each) | | no highlight changed |
+| Chapter-2 regression list | | identical |
+
+Net: five more phrase hits over the three phrase sets and one new wrong answer. The three lexical A rows that changed, read one by one: "train men in the arts of war" → "giảng võ" (hit), "burn incense and pay homage to the Buddha" → "dâng hương lễ Phật" (hit), and **"lovely waters and wondrous peaks" → "núi rất đẹp" (wrong: the gold is "nước tú non kỳ")**; the wrong one carries the `uncertain` status, as every answer of this rule does, and it was an empty `context-only` answer before. That is the price of the rule: of the three phrases it newly answers in lexical A, two are right and one is not. Words and sentences do not move, which is the expected footprint of a rule that only touches phrases with interior gaps. Lexical B is not independent (it has been used repeatedly); the lexical A, probe and B gains agree in direction and size, and the lexical A figure is the dev one. The 100 answered lookups of the fifth sheet were run on source `0c8df52`, before this rule, so that sheet does not measure it; the audits above show no changed highlight, so the rule is not expected to move that sheet either.
+
+**Tests.** New unit test (`tests/novel-clause-lookup.test.ts`, 48 in that file): "does not count unlinked words between two linked ones against a phrase whose pieces join into one highlight, but still abstains when they stand at its ends"; it fails on the previous `novel-lookup.ts` and passes on the new one. Full suite 383 of 383 twice, `tsc` clean. e2e (alignment config, 60 tests): 60 of 60 in four of five runs; the fifth failed one test, the first desktop `en` lookup, at `expect(.reader-shell).toHaveAttribute('data-ready','true')` (5 s), before any selection or lookup, which is the cold-start flake already noted for the first desktop tests, not the lookup rule.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

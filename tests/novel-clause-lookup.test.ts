@@ -360,3 +360,11 @@ it('joins two passages across the short stretch of the other edition that lies b
  // the highlight runs across the stretch the pairing left out, not just over the two groups
  expect(query(a,'vi',{start:0,end:vi.length}).passages.map(p=>p.highlights.map(h=>en.slice(h.start,h.end)))).toEqual([[en]]);
 });
+it('does not count unlinked words between two linked ones against a phrase whose pieces join into one highlight, but still abstains when they stand at its ends',()=>{
+ const run=(vi:string,sel:string,links:[string,string][])=>{
+  const en='He trained men in arts of war.',a=plain(vi,en,{vi:[vi],en:[en]},links);
+  return query(a,'vi',span(vi,sel)).passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)));
+ };
+ expect(run('Chàng giảng dạy binh pháp cho quân.','giảng dạy binh pháp',[['giảng','trained'],['pháp','war']])).toEqual(['trained men in arts of war']);
+ expect(run('Chàng giảng dạy binh pháp cho quân.','giảng dạy binh pháp',[['giảng','trained']])).toEqual([]);
+});

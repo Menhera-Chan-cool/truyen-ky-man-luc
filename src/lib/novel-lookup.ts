@@ -541,31 +541,13 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         const wordsOf=(w:TextSpan)=>source.text.slice(w.start,w.end),content=selected.filter(w=>/\p{L}/u.test(wordsOf(w))&&!onlyFunctionWords(wordsOf(w),locale));
         const essential=missing.some(w=>/^(?:not|never|no|không|chưa|chẳng|đừng)$/iu.test(wordsOf(w)));
         const oneSentence=alignmentUnits(source,g[locale],locale,g.section==='notes').filter(u=>u.start<request.end&&u.end>request.start).length<=1;
-        if(!sentences.unmatched?.length&&highlights.length&&oneSentence&&!essential&&missing.length*3<=content.length){
-          uncertain=true;
-          // The exact phrase pair of the selection completes a link answer that lies inside it when selected words have no link ("Minh Tong of the Tran" = "Minh Tông nhà Trần").
-          // Another word's link may hold part of the pair only when that word sits right beside the selection ("dynasty" after "Tran").
-          const beside=(f:TextSpan)=>f.start===request.end+(/^\s*/.exec(source.text.slice(request.end))![0].length)||f.end===request.start-(/\s*$/.exec(source.text.slice(0,request.start))![0].length);
-          const completed=!!found&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&highlights.every(h=>h.start>=found.target.start&&h.end<=found.target.end)
-            &&!claimedByOthers.some(c=>c.start<found.target.end&&c.end>found.target.start&&!highlights.some(h=>c.start<h.end&&c.end>h.start)&&!beside(c.from));
-          if(completed)highlights=[{...found!.target}];
-          // Selected words at an edge of the selection that no link reached extend the answer by as many target words at that edge, up to three, unless another word's link holds them;
-          // the word right beside the selection may hold them (a compound cut in the middle: "mỉm | cười").
-          else if(!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length){
-            const isCovered=(w:TextSpan)=>[...coveredWords,...sentences.covered].some(s=>s.start<=w.start&&s.end>=w.end),missed=new Set(missing.map(w=>w.start));
-            let lead=0,trail=0;
-            for(const w of selected){if(isCovered(w))break;if(missed.has(w.start))lead++;}
-            for(const w of [...selected].reverse()){if(isCovered(w))break;if(missed.has(w.start))trail++;}
-            const nextAt=request.end+(/^\s*/.exec(source.text.slice(request.end))![0].length),prevEnd=request.start-(/\s*$/.exec(source.text.slice(0,request.start))![0].length);
-            const free=(a:number,b:number,beside:(f:TextSpan)=>boolean)=>!claimedByOthers.some(c=>c.start<b&&c.end>a&&!beside(c.from)),after=/^\s+([\p{L}\p{M}\p{N}]+(?:['’-][\p{L}\p{M}\p{N}]+)*)/u,before=/([\p{L}\p{M}\p{N}]+(?:['’-][\p{L}\p{M}\p{N}]+)*)\s+$/u;
-            for(let n=0;n<Math.min(3,trail);n++){const last=highlights.at(-1)!,m=after.exec(target.text.slice(last.end,last.end+60));if(!m)break;const end=last.end+m[0].length;if(!free(last.end,end,f=>f.start===nextAt)||end>g[targetLocale].end)break;last.end=end;}
-            for(let n=0;n<Math.min(3,lead);n++){const first=highlights[0],text=target.text.slice(Math.max(g[targetLocale].start,first.start-60),first.start),m=before.exec(text);if(!m)break;const start=first.start-(text.length-m.index);if(!free(start,first.start,f=>f.end===prevEnd)||start<g[targetLocale].start)break;first.start=start;}
-          }
-        }
-        else{
+        // Unlinked words between two linked ones lie inside the span the pieces already cover (the join ran over them): only those at the two ends of the selection count against its content.
+        const covers=(w:TextSpan)=>[...coveredWords,...sentences.covered].some(s=>s.start<=w.start&&s.end>=w.end);
+        let firstCovered=selected.findIndex(covers),lastCovered=selected.length-1-[...selected].reverse().findIndex(covers);
+        const edgeMissing=firstCovered<0?missing.length:missing.filter(w=>{const at=selected.findIndex(s=>s.start===w.start);return at<firstCovered||at>lastCovered;}).length;
           // A phrase of one sentence whose own words hold too few links is projected from the words beside it: its counterpart lies between the targets of the nearest linked word on each side,
           // where no other word's link stands, without the function words at the ends. A missing negation needs a negation in the projected words.
-          const projected=!found&&!sentences.unmatched?.length&&oneSentence&&!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&content.length>=1?(()=>{
+          const project=():TextSpan|null=>(!found&&!sentences.unmatched?.length&&oneSentence&&!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&content.length>=1?(()=>{
             const nearest=(side:'left'|'right')=>{
               let best:{tw:TextSpan;at:number;clear:boolean}|null=null;
               for(const l of g.links){
@@ -598,7 +580,31 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
             if(essential&&!/\b(?:not|no|never|without|none|nor|nothing|cannot|n't|không|chưa|chẳng|đừng|chả)\b|n’t/iu.test(target.text.slice(span.start,span.end)))return null;
             if(highlights.some(h=>h.start<span.start||h.end>span.end))return null;
             return span;
-          })():null;
+          })():null);
+        if(!sentences.unmatched?.length&&highlights.length&&oneSentence&&!essential&&(highlights.length===1?edgeMissing:missing.length)*3<=content.length){
+          uncertain=true;
+          if(edgeMissing<missing.length){const extended=project();if(extended)highlights=[extended];}
+          // The exact phrase pair of the selection completes a link answer that lies inside it when selected words have no link ("Minh Tong of the Tran" = "Minh Tông nhà Trần").
+          // Another word's link may hold part of the pair only when that word sits right beside the selection ("dynasty" after "Tran").
+          const beside=(f:TextSpan)=>f.start===request.end+(/^\s*/.exec(source.text.slice(request.end))![0].length)||f.end===request.start-(/\s*$/.exec(source.text.slice(0,request.start))![0].length);
+          const completed=!!found&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&highlights.every(h=>h.start>=found.target.start&&h.end<=found.target.end)
+            &&!claimedByOthers.some(c=>c.start<found.target.end&&c.end>found.target.start&&!highlights.some(h=>c.start<h.end&&c.end>h.start)&&!beside(c.from));
+          if(completed)highlights=[{...found!.target}];
+          // Selected words at an edge of the selection that no link reached extend the answer by as many target words at that edge, up to three, unless another word's link holds them;
+          // the word right beside the selection may hold them (a compound cut in the middle: "mỉm | cười").
+          else if(!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length){
+            const isCovered=(w:TextSpan)=>[...coveredWords,...sentences.covered].some(s=>s.start<=w.start&&s.end>=w.end),missed=new Set(missing.map(w=>w.start));
+            let lead=0,trail=0;
+            for(const w of selected){if(isCovered(w))break;if(missed.has(w.start))lead++;}
+            for(const w of [...selected].reverse()){if(isCovered(w))break;if(missed.has(w.start))trail++;}
+            const nextAt=request.end+(/^\s*/.exec(source.text.slice(request.end))![0].length),prevEnd=request.start-(/\s*$/.exec(source.text.slice(0,request.start))![0].length);
+            const free=(a:number,b:number,beside:(f:TextSpan)=>boolean)=>!claimedByOthers.some(c=>c.start<b&&c.end>a&&!beside(c.from)),after=/^\s+([\p{L}\p{M}\p{N}]+(?:['’-][\p{L}\p{M}\p{N}]+)*)/u,before=/([\p{L}\p{M}\p{N}]+(?:['’-][\p{L}\p{M}\p{N}]+)*)\s+$/u;
+            for(let n=0;n<Math.min(3,trail);n++){const last=highlights.at(-1)!,m=after.exec(target.text.slice(last.end,last.end+60));if(!m)break;const end=last.end+m[0].length;if(!free(last.end,end,f=>f.start===nextAt)||end>g[targetLocale].end)break;last.end=end;}
+            for(let n=0;n<Math.min(3,lead);n++){const first=highlights[0],text=target.text.slice(Math.max(g[targetLocale].start,first.start-60),first.start),m=before.exec(text);if(!m)break;const start=first.start-(text.length-m.index);if(!free(start,first.start,f=>f.end===prevEnd)||start<g[targetLocale].start)break;first.start=start;}
+          }
+        }
+        else{
+          const projected=project();
           if(projected){highlights=[projected];uncertain=true;}
           else{incompleteWords=true;unmatchedSource.push(...missing);looseWords=missing.some(w=>!sentences.unmatched?.some(u=>u.start<=w.start&&u.end>=w.end));}
         }
