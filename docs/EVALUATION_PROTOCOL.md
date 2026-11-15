@@ -364,6 +364,22 @@ Unit tests 372, typecheck clean, alignment e2e 60 of 60.
 
 Same design as the third (`docs/verification/audit-120d-2026-11-15.json`): seeded audit 20261125, no sentence of the first three audits, run on the deployed code (source `dc9f6e1`); 89 of the 120 lookups were answered (28 words, 27 phrases, 34 sentences); the sheet holds 20 answered lookups per kind in shuffled order. Page: https://claude.ai/artifact/6RPmM18WETrmpMjgqvw3r9, template `docs/verification/human-check-artifact-template-4.html`, key `docs/verification/human-check-key-4.json`; evaluate with `python scripts/align-novel/human_check_compare3.py ANSWERS.csv docs/verification/human-check-key-4.json`. The third check gave 92.0% (85–98) on its sample; the two intervals are the comparison, a difference of a few points between them is noise.
 
+### Result of the fourth human check
+
+All 60 cards were judged (`docs/verification/human-check-result-4-2026-11-15.csv`; the page's database holds the same 60 answers).
+
+| Kind | Right | Partly | Wrong |
+| --- | ---: | ---: | ---: |
+| Sentences (34 answered in the audit) | 20 of 20 | 0 | 0 |
+| Phrases (27) | 16 of 20 | 4 | 0 |
+| Words (28) | 17 of 20 | 1 | 2 |
+
+Weighted by the audit's answered counts: **right 89.2% (95% interval 82–95), partly 7.6%, wrong 3.1%, not wrong 96.9%**. The third check gave 92.0% (85–98); the two intervals overlap almost entirely, so the edge rules neither helped nor hurt measurably, as the blind lexical set (no gain) also said. Pooling the two fresh samples (120 judged cards, answered counts 71 sentences, 59 phrases, 57 words): **right 90.6% (85–95), partly 6.3%, wrong 3.1%**; the 80% asked for is reached with the whole interval above it.
+
+The seven non-right answers: `a4-77` "still" → "chưa" (the reviewer: "still had no"), `a4-46` "character" → "phương" (wrong; "cương phương" is the compound, the link reached its second syllable only), `a4-14` "lỏm lấy làm mừng" → "Overhearing this" (the selection starts inside "nghe lỏm", the answer misses "delighted"), `a4-88` "muốn" → "for" (wrong), `a4-9` "been given to dissipation" → "thân phóng lãng … chơi bời" (two pieces), `a4-116` "oak live long only because" → "cây … sống lâu chỉ" (two pieces; the reviewer: "cây thông"), `a4-87` "Whoever you see" → "thấy người" (the reviewer: "thấy người nào"). Four are phrases cut into pieces or missing an edge word, the same family as before; the two wrong ones are single words.
+
+A limit on this figure: the whole sheet was answered in 4 minutes 16 seconds (the first ten cards in 11 seconds; the third sheet took about 7 minutes), about 4 seconds a card. The seven notes show close reading where it mattered, and many cards are short; but if some cards were judged at a glance, the right rate would be a little high.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
