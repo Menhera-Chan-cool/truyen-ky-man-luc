@@ -1,15 +1,15 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_6YDLoEaZZVuMMa3NnsH9wd7c4ivm",
-  "immutableUrl": "https://truyen-ky-man-3lljcxp71-anh-tun.vercel.app",
+  "deploymentId": "dpl_Df58B4tHGc5nE66tvhkyVAAYMKZX",
+  "immutableUrl": "https://truyen-ky-man-fl4krdtju-anh-tun.vercel.app",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "runtimeSourceCommit": "049d1636eb11a394497ad5f29310c52db65700eb",
+  "runtimeSourceCommit": "1341e0d",
   "algorithm": "labse-poetry-mbert-3",
   "readyState": "READY",
-  "checkedAt": "2026-11-15T07:34:32.234Z",
+  "checkedAt": "2026-11-15T08:26:19.000Z",
   "region": "sin1",
   "publicArtifacts": 20,
-  "publicArtifactBytes": 19510780,
+  "publicArtifactBytes": 19574740,
   "workflowState": "active",
   "migrationVersion": "20261114071828",
   "state": "READY",
@@ -24,13 +24,14 @@
   },
   "verification": {
     "local": "docs/verification/phrase-alignment-2026-11-15.md",
-    "vitest": 361,
-    "python": 115,
+    "vitest": 362,
+    "python": 119,
     "localBrowser": 60,
     "build": "passed",
     "postDeploy": "skipped by user instruction; no production API, browser or download checks were run for this release",
-    "publishedByWorker": "20 chapters re-published as ready by the alignment worker four times on 2026-11-15 (d4d3338, c548718, 2b75f11 and af006e0 data); not a lookup verification",
-    "supabaseLogs": "egress sources read from Supabase edge logs on 2026-11-15; the post-fix effect on the monthly Egress chart is not yet observed"
+    "publishedByWorker": "20 chapters re-published as ready by the alignment worker five times on 2026-11-15 (d4d3338, c548718, 2b75f11, af006e0 and 1341e0d data); not a lookup verification",
+    "supabaseLogs": "egress sources read from Supabase edge logs on 2026-11-15; the post-fix effect on the monthly Egress chart is not yet observed",
+    "blindSet": "docs/EVALUATION_PROTOCOL.md: blind context-has-gold 79.4% to 83.3%, hit 74 to 76 of 102, wrong 0; the 95% target is not met"
   },
   "limitations": [
     "No physical phone testing",
@@ -40,8 +41,8 @@
     "The 120 development probes are not an independent held-out set"
   ],
   "previousDeployment": {
-    "deploymentId": "dpl_EnyHCr5LdcB1AXXmv5HywkHSQycv",
-    "sourceCommit": "2b75f11608d305c97a342332d33372f02a38df1b"
+    "deploymentId": "dpl_6YDLoEaZZVuMMa3NnsH9wd7c4ivm",
+    "sourceCommit": "049d1636eb11a394497ad5f29310c52db65700eb"
   },
-  "alignmentWorkerSourceCommit": "af006e0ff5d295be1ec34e37085bad4436cc4ce3"
+  "alignmentWorkerSourceCommit": "1341e0d"
 }

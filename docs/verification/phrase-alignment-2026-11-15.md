@@ -100,3 +100,17 @@ The held-out set is 60 sentence pairs from 14 chapters not used for tuning, two 
 
 Fixes: published fonts and images stream through Vercel with `public, max-age=604800, s-maxage=604800, immutable` (unpublished files and PDFs keep the private redirect); `getBook` shares one sanitized copy per instance for two minutes; the main Playwright config blanks the Supabase variables for its own dev server; the alignment specs stub font and image requests. Measured afterwards with the Supabase logs: a 60-test alignment run made 3 database calls and 0 storage calls (earlier runs: hundreds of each). The monthly chart and the quota state cannot be changed from code and have not been re-read; the 200% already used stays for this billing period.
 
+
+## Fifth pass: group coverage (source `1341e0d`)
+
+Evaluation protocol and the blind set are in `docs/EVALUATION_PROTOCOL.md`. This pass changes three things: skipped units are placed by unit-level evidence across paragraph breaks (up to six units, a gap skipped in both editions becomes a small group), the same repair runs in the commentary ("Lời bình") section, and the lookup returns the target text between the two neighbouring groups as context when part of a selection lies in no group.
+
+| Measure (context has gold) | Before | After |
+| --- | ---: | ---: |
+| Blind set, 102 cases | 79.4% | 83.3% |
+| Dev pairs, 120 cases | 89.2% | 90.8% |
+| Tuned-chapter stratum, 110 cases | 80.0% | 83.6% |
+
+Blind hits 74 → 76 of 102, wrong answers 0 → 0. 120 probes unchanged (word 33, phrase 27, sentence 39 of 40), chapter-2 regressions 8/8. The 95% target is not met and the movement is inside the ±8-point interval; the blind EN→VI direction still has 11 of 51 cases with neither an answer nor the right context (not read, per the protocol).
+
+Local checks: vitest 362, Python 119, typecheck clean (the e2e helper now exports `Page`; the earlier commit left a type error that a build would have hit), build passed, alignment e2e 60/60 on the new data. Release: data re-published through the worker (20 chapters `ready`, 19,574,740 bytes); web `dpl_Df58B4tHGc5nE66tvhkyVAAYMKZX` aliased to https://truyen-ky-man-luc.vercel.app. Deployed; post-deploy verification skipped by user.
