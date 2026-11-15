@@ -262,6 +262,12 @@ Strict hit means F1 ≥ 0.8 against the label, a proxy for the reviewer's "right
 
 Words are unchanged on B (29 hits, 25 strict, 2 wrong) and A (30, 28, 5 wrong); wrong answers do not rise anywhere. Sentence sets are unchanged (dev 96 of 120, tuned 81 of 110, blind 84 of 102), chapter 2 is 8 of 8, vitest 367, alignment e2e 60 of 60. Of the 20 cases the reviewer called "partly", 6 are strict hits before and 10 after: the fix joins pieces but does not extend an end ("smiled", "cast") and does not fix scattered pieces farther apart than the limit. One 2-word selection ("dị đoan") is now highlighted a little wider ("devote oneself to heterodox"), another ("ai ngờ") becomes the full phrase ("who could have guessed"). The reviewer has not seen the new highlights; the strict-hit figures are against my own labels.
 
+## Edge extension, and how far the strict figure can go
+
+A second step extends a phrase answer at an edge where selected words had no link, by as many unclaimed target words (up to three; the word right beside the selection may hold them). Effect on strict phrase hits: lexical A 27 → 28, probes 21 → 22, both audits 30 → 31, blind lexical B 30 → 30; no new wrong answers; sentence sets and chapter 2 unchanged.
+
+On my labels the strict rate over the 172 answered audit lookups went from 123 (71.5%) before the join to 134 (77.9%) now (words 41 of 51, phrases 31 of 55, sentences 62 of 66). Most of what is still not strict is not mechanical: 17 of 24 non-strict phrases have no confident phrase pair for the exact window, a few labels of mine are wider than the selection, and 5 answers are wrong words in lists. Only 11 of the 100 cases the reviewer judged changed their output; if all 11 were judged right the reviewer-standard estimate would be about 83%, so a second, short check of those 11 plus controls decides whether the figure reached 80%.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

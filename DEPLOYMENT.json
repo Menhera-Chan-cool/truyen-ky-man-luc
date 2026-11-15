@@ -1,12 +1,12 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_H5QWRedr4DThdu3UbzKXt7Uf9zq1",
+  "deploymentId": "dpl_9xzHBoisJCJToBTXGq8w316HHctE",
   "immutableUrl": "https://truyen-ky-man-j5dlmbmj4-anh-tun.vercel.app",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "runtimeSourceCommit": "7ef9d67",
+  "runtimeSourceCommit": "356ec19",
   "algorithm": "labse-poetry-mbert-3",
   "readyState": "READY",
-  "checkedAt": "2026-11-15T13:08:19.000Z",
+  "checkedAt": "2026-11-15T13:18:03.000Z",
   "region": "sin1",
   "publicArtifacts": 20,
   "publicArtifactBytes": 19392850,
@@ -24,7 +24,7 @@
   },
   "verification": {
     "local": "docs/verification/phrase-alignment-2026-11-15.md",
-    "vitest": 367,
+    "vitest": 368,
     "python": 120,
     "localBrowser": 60,
     "build": "passed",
@@ -42,8 +42,8 @@
     "The 120 development probes are not an independent held-out set"
   ],
   "previousDeployment": {
-    "deploymentId": "dpl_6hzrasJ7bv5uunNydShwE8kHg19N",
-    "sourceCommit": "bc00536"
+    "deploymentId": "dpl_H5QWRedr4DThdu3UbzKXt7Uf9zq1",
+    "sourceCommit": "7ef9d67"
   },
   "alignmentWorkerSourceCommit": "506c49f"
 }
