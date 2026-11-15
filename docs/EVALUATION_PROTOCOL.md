@@ -555,6 +555,27 @@ On the encoder row of the table the >98% is met by the region-consistent figure 
 
 The two rules fire in about 1% of the sentence lookups of these sets, and every change I read is an improvement. Tests 382, e2e 60 of 60 on three runs. The unit test of the sentence completion fails on the old code; the one of the gap closure passes on the old code in its fixture (the fixture's sentence mapping already joins the passages), so it documents the behaviour and does not guard it; the measured sets are the evidence. Neither rule has been checked by a human: a fresh sheet would show whether the sentence figure of the reviewer moves.
 
+## Goal list, part 3: the items implemented as options and measured at phrase level (2026-11-16)
+
+The goal list asked for each of the seven items to be done. Items 1, 3, 6 and 7 are in the product (above). Items 2, 4 and 5 are implemented and measured and stay off because they do not improve the product; what is in the repository:
+
+- **Item 2 and 5 in the phrase table builder** (`prose_alignment.py`, `add_phrase_pairs`): the floor, margin, per-pair and per-group caps are now parameters (`PHRASE_FLOOR`, `PHRASE_MARGIN`, `PHRASE_PER_PAIR`, `PHRASE_PER_GROUP`, defaults unchanged at .65 / .15 / 60 / 512), and a **positional prior** `PHRASE_POS` (default 0 = off): the best counterpart window is chosen on the cosine minus `PHRASE_POS` times the distance of the two windows' relative places in their clause pair (the stored score stays the cosine). Python tests 120 pass at the defaults.
+- **Item 4 and 5 for sentences**: `scripts/align-novel/retrieval_rerank_eval.py` (LaBSE top five reranked by `bge-reranker-v2-m3`, with and without the position prior) and `retrieval_prior_eval.py` (raw and region-consistent top-1); results in part 2.
+
+Phrase-level measurement of 2 and 5 together (tables rebuilt from the cached vectors at floor 0.55, margin 0.10, caps 300 / 1500; consumer thresholds .65/.15 or .55/.10; baseline = the current product on the current data, lexical A and B counted as hits / strict / answered-but-not-hit):
+
+| Configuration | Lexical A word | Lexical A phrase | Lexical B word | Lexical B phrase | Probes word / phrase / sentence |
+| --- | --- | --- | --- | --- | --- |
+| Baseline (floor .65, no prior) | 33 / 31 / 3 | 29 / 29 / 3 | 29 / 25 / 6 | 32 / 29 / 1 | 35 / 27 / 39 |
+| Prior 0.2, thresholds .65 or .55 | 33 / 30 / 3 | 29 / 29 / 3 | 29 / 25 / 6 | 32 / 30 / 1 | 35 / 27 / 39 |
+| Prior 0.5, thresholds .65 or .55 | **32** / 29 / **4** | 29 / 29 / 3 | 29 / 26 / 6 | **31** / 28 / **2** | 35 / **28** / 39 |
+
+Prior 0.2 moves one strict hit up and one down; prior 0.5 gains one probe phrase and loses a lexical A word hit and a lexical B phrase hit, with one more answered-but-wrong in each: no net gain, so the default stays off. Together with the floor sweep of part 1 (one probe phrase, nothing else) the phrase table is not the lever for the abstained phrases.
+
+**A learned lexicon for the abstained words: not built.** `scripts/align-novel/lexicon_probe.py` collects the word pairs of the confident links (score ≥ .9) of the other 19 chapters. The probe words the system still misses ("nhà trọ", "quan hầu", "Thiên hạ", "entire realm") are two-syllable terms with no entry at all, and the words that do have entries are ambiguous ("thơ" → poem 9, poetry 8, poems 7, verse 4; "chết" → death 20, died 14, dead 6, die 3), so a lexicon would not choose between them either. Consistent with the name-dictionary finding that terms do not carry over between chapters.
+
+**Where the remaining targets stand.** The anchor figure (>95%) is met for names with the same letters (99.1% of answered) and not for other names (63.1% of all) or common words (noisy gold); the probes (>38) stand at 35 / 27 / 39; the blind-sentence hit rate (>98%) at 83.3% of all cases and 94.3% of answered, with context 93.1%; the encoder row (>98%) at 100% / 100% region-consistent with the prior. The abstentions that remain are words and phrases whose links the model never made, and sentences the gold splits differently from the pairing; the rules that fill them from the evidence around them are in the product, and nothing further tried (lower floors, prior, reranker, lexicon) moved them.
+
 ## Fifth human check: a fresh sample after the goal-list changes (2026-11-16)
 
 Same design as the third and fourth (`docs/verification/audit-120e-2026-11-16.json`): seeded audit 20261127, no sentence of the first four audits, run on source `0c8df52` (Unihan names, projection from outside anchors, sentence completion and gap closure); 100 of the 120 lookups were answered (33 words, 31 phrases, 36 sentences; the fourth audit answered 89 and the third 98: the projection and the name rules answer more); the sheet holds 20 answered lookups per kind in shuffled order. Page: https://claude.ai/artifact/CJRkDCcndGhiCnd9mtJUN1, template `docs/verification/human-check-artifact-template-5.html`, key `docs/verification/human-check-key-5.json`; evaluate with `python scripts/align-novel/human_check_compare3.py ANSWERS.csv docs/verification/human-check-key-5.json`. Reference figures: third check 92.0% (85–98), fourth 89.2% (82–95), pooled 90.6% (85–95) of answered lookups. The new rules answer lookups the system used to leave empty, so a similar right rate with a larger answered share is an improvement; a lower rate would be the price of the extra answers and would be reported as such.

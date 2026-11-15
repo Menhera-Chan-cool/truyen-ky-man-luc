@@ -263,7 +263,8 @@ def add_clause_pairs(contexts,encode,editions=None):
 
 
 # Measured on held-out phrase cases: every exact-window pair at score >= .65 was right; below that half were wrong, so the floor is .65.
-PHRASE_SIZES={'en':(1,8),'vi':(1,8)};PHRASE_FLOOR=.65;PHRASE_MARGIN=.15;PHRASE_PER_PAIR=60;PHRASE_PER_GROUP=512;PHRASE_WORDS={'en':40,'vi':50}
+import os as _os
+PHRASE_SIZES={'en':(1,8),'vi':(1,8)};PHRASE_FLOOR=float(_os.environ.get('PHRASE_FLOOR','.65'));PHRASE_MARGIN=float(_os.environ.get('PHRASE_MARGIN','.15'));PHRASE_PER_PAIR=int(_os.environ.get('PHRASE_PER_PAIR','60'));PHRASE_PER_GROUP=int(_os.environ.get('PHRASE_PER_GROUP','512'));PHRASE_WORDS={'en':40,'vi':50};PHRASE_POS=float(_os.environ.get('PHRASE_POS','0'))
 
 
 def _phrase_windows(edition,span,locale):
@@ -328,13 +329,18 @@ def add_phrase_pairs(groups,encode,editions):
             first=np.array([w['first'] for w in items]);last=np.array([w['last'] for w in items])
             return (first[:,None]<=last[None,:])&(first[None,:]<=last[:,None])
         ove,ovv=overlap(en),overlap(vi);found=[]
-        for source,target,matrix,ovs,ovt,side in [(en,vi,S,ove,ovv,'en'),(vi,en,S.T,ovv,ove,'vi')]:
+        # A window and its counterpart lie at about the same relative place in their clause pair: the choice of the best window (and the margin) uses the cosine minus PHRASE_POS times the distance of the two places, the stored score stays the cosine.
+        def centre(items):
+            total=max(w['last'] for w in items)+1
+            return np.array([(w['first']+w['last']+1)/2/total for w in items])
+        A=S-PHRASE_POS*np.abs(centre(en)[:,None]-centre(vi)[None,:])
+        for source,target,matrix,raw,ovs,ovt,side in [(en,vi,A,S,ove,ovv,'en'),(vi,en,A.T,S.T,ovv,ove,'vi')]:
             for i,w in enumerate(source):
-                j=int(matrix[i].argmax());score=float(matrix[i,j])
+                j=int(matrix[i].argmax());score=float(raw[i,j]);adjusted=float(matrix[i,j])
                 if score<PHRASE_FLOOR:continue
-                rest=matrix[i][~ovt[j]];margin=score-(float(rest.max()) if rest.size else 0.)
+                rest=matrix[i][~ovt[j]];margin=adjusted-(float(rest.max()) if rest.size else 0.)
                 back=int(matrix[:,j].argmax())
-                if margin<PHRASE_MARGIN or not ovs[i,back] or score<float(matrix[back,j])-.03:continue
+                if margin<PHRASE_MARGIN or not ovs[i,back] or adjusted<float(matrix[back,j])-.03:continue
                 found.append({'vi':{'start':(w if side=='vi' else target[j])['start'],'end':(w if side=='vi' else target[j])['end']},
                               'en':{'start':(w if side=='en' else target[j])['start'],'end':(w if side=='en' else target[j])['end']},
                               'score':score,'margin':margin,'from':side})
