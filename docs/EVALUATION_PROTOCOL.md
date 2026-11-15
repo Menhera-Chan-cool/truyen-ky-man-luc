@@ -219,7 +219,7 @@ Reading. Answered share and hit rate are the same as in audit 1 (71%, 92–93%);
 
 ## Human check of 100 audited lookups (one reviewer, no name given)
 
-The review sheet (`docs/verification/human-check-sheet.html`) was filled in and returned (`docs/verification/human-check-result-2026-11-15.csv`, 99 of 100 answered; one left blank with the note "exists but the passage was not returned"). The 100 cases are every non-hit answered lookup (13), every abstention without context (6) and every case without a counterpart (3), plus 51 of my 159 hits and 27 of my right-context abstentions drawn at random. The reviewer saw each case without my verdict. Comparison: `python scripts/align-novel/human_check_compare.py`.
+The review sheet (`docs/verification/human-check-sheet.html`) was filled in and returned (`docs/verification/human-check-result-2026-11-15.csv`, all 100 answered; the first version returned had one blank, case a1-107, later filled in as "the passage does not hold it" with the note "exists but the passage was not returned"). The 100 cases are every non-hit answered lookup (13), every abstention without context (6) and every case without a counterpart (3), plus 51 of my 159 hits and 27 of my right-context abstentions drawn at random. The reviewer saw each case without my verdict. Comparison: `python scripts/align-novel/human_check_compare.py`.
 
 | My verdict (n) | Reviewer: right | partly | wrong | Agreement |
 | --- | ---: | ---: | ---: | ---: |
@@ -231,7 +231,7 @@ The review sheet (`docs/verification/human-check-sheet.html`) was filled in and 
 | Abstentions | Reviewer agrees |
 | --- | ---: |
 | My right-context abstentions (27) | 25 (93%): the other two were passages holding only the second half of the selection |
-| My no-context abstentions (5 answered) | 5 of 5 agree the passage lacks the counterpart (3 "not in the passage", 2 "no counterpart") |
+| My no-context abstentions (6) | 6 of 6 agree the passage lacks the counterpart (4 "not in the passage", 2 "no counterpart") |
 | No counterpart exists (3) | 3 of 3 |
 
 **What changed in the picture.** My "hit" was F1 ≥ 0.5 against my own label. The reviewer applies a stricter standard of completeness: 15 of my 51 hits are "right but missing or adding too much", 12 of them phrases highlighted in separated pieces ("cast myself into" … "river", not "cast myself into the river"). Re-estimated over the 172 answered lookups of both audits after the fix, with a bootstrap interval:
