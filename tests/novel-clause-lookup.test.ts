@@ -304,3 +304,16 @@ it('highlights a lone capitalised name left without an answer when the same name
  expect(run('He came to lang and went back.').hl).toEqual([]);
  expect(run('He came to Langdon and went back.').hl).toEqual([]);
 });
+it('answers a footnoted term with the headword of its note in the other edition, when each headword stands before its own marker and the other term stands once in the context',()=>{
+ const run=(vi:string,en:string)=>{
+  const a=plain(vi,en,{vi:[vi],en:[en]},[['Chàng','He']]);
+  const g=a.groups[0],cut=(t:string)=>t.indexOf(String.fromCharCode(10));g.vi={start:0,end:cut(vi)};g.en={start:0,end:cut(en)};g.parts={vi:[g.vi],en:[g.en]}; // the group holds the prose, not the note
+  a.notePairs=[{vi:span(vi,'(1) Tầm Dương: một địa danh.'),en:span(en,'(1) Xunyang: a place.'),score:.9,margin:.1}];
+  const r=query(a,'vi',span(vi,'Tầm Dương'));
+  return r.passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)));
+ };
+ const vi='Chàng tới Tầm Dương (1) rồi về.\n(1) Tầm Dương: một địa danh.';
+ expect(run(vi,'He came to Xunyang (1) and went back.\n(1) Xunyang: a place.')).toEqual(['Xunyang']);
+ expect(run(vi,'He came to Xunyang (1) and left Xunyang again.\n(1) Xunyang: a place.')).toEqual([]);
+ expect(run(vi,'He came to a city (1) and went back.\n(1) Xunyang: a place.')).toEqual([]);
+});

@@ -277,12 +277,46 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
   if(artifact.chapterId!==request.chapterId||source.revision!==request.revision||request.start<0||request.end<=request.start||request.end>source.text.length||source.text.slice(request.start,request.end)!==request.text)return empty("stale");
   if(request.end-request.start>2000)throw RangeError("Selection too long");
   const result=selectionLookup(artifact,request,lookupSingle);
+  const noted=noteTermAnswer(artifact,result,request);if(noted)return noted;
   const same=sameNameAnswer(result,request,target.text);if(same)return same;
   if(result.status==='context-only'||result.status==='unavailable'||!result.passages.length){
     const note=annotatedNote(artifact,request);
     if(note)return {...result,status:'context-only',targetRevision:target.revision,passages:[...result.passages,note]};
   }
   return result;
+}
+// The footnote of a term names it in both editions: "(n) Hồ Tông Thốc: …" against "(n) Ho Tong Thoc: …". A pair of headwords counts when each stands right before the marker "(n)" of its own prose (the only one in the text);
+// a lookup of one of its terms highlights the other in the context the lookup returned, where it stands exactly once and the lookup did not already highlight it.
+type NoteTerm={vi:string;en:string};
+const noteTerms=new WeakMap<AlignmentArtifact,NoteTerm[]>();
+const foldAccents=(s:string)=>s.normalize('NFD').replace(/\p{M}/gu,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase().replace(/[^a-z0-9 ]/g,'').trim();
+function noteTermsOf(a:AlignmentArtifact):NoteTerm[]{
+  const known=noteTerms.get(a);if(known)return known;
+  const text={vi:a.editions.vi.text,en:a.editions.en.text},out:NoteTerm[]=[];
+  const head=(note:string)=>{const m=/^\s*\((\d{1,3})\)\s*([^:：]{1,90})[:：]/u.exec(note);return m?{n:+m[1],word:m[2].replace(/\s*\((?:\?|\d)[^)]*\)\s*/g,' ').trim().replace(/[ .,;]+$/,'')}:null;};
+  const before=(l:'vi'|'en',n:number,term:string)=>{const marks=[...text[l].matchAll(new RegExp('(?<=[\\p{L}\\p{N})])\\s?\\('+n+'\\)','gu'))];if(marks.length!==1||!foldAccents(term))return false;return foldAccents(text[l].slice(Math.max(0,marks[0].index!-term.length-60),marks[0].index!)).includes(foldAccents(term));};
+  for(const p of a.notePairs??[]){
+    const v=head(text.vi.slice(p.vi.start,p.vi.end)),e=head(text.en.slice(p.en.start,p.en.end));if(!v||!e)continue;
+    const count=(s:string)=>s.match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0;if(count(v.word)>6||count(e.word)>6||/[.!?]/.test(v.word+e.word))continue;
+    const alias=/^(.*?)\s*\(([^)]{2,40})\)$/.exec(e.word),english=alias&&!/\d/.test(alias[2])?[alias[1].trim(),alias[2].trim()]:[e.word];
+    // A list headword ("Dương Thành, Hạ Sái" against "Xiacai and Yangcheng") is kept whole: the two editions need not list its items in the same order.
+    for(const q of english.map(en=>({vi:v.word,en})))if(q.vi&&q.en&&foldAccents(q.vi)!==foldAccents(q.en)&&before('vi',v.n,q.vi)&&before('en',e.n,q.en))out.push(q);
+  }
+  noteTerms.set(a,out);return out;
+}
+function noteTermAnswer(a:AlignmentArtifact,result:LookupResult,request:LookupRequest):LookupResult|null{
+  if(!result.passages.length||result.status==='stale')return null;
+  const l=request.locale,o=l==='vi'?'en':'vi',key=request.text.trim().toLowerCase(),targetText=a.editions[o].text;
+  // A one-word capitalised headword is matched only by a capitalised selection: "Chu" the state is not "chu" the word (a capitalised label of several words, "Con hươu", is just the note's convention).
+  const wanted=[...new Set(noteTermsOf(a).filter(t=>t[l].toLowerCase()===key&&(!/^\p{Lu}/u.test(t.vi)||/\s/.test(t.vi.trim())||/^\p{Lu}/u.test(request.text.trim()))).map(t=>t[o]))];
+  if(wanted.length!==1)return null;
+  const low=wanted[0].toLowerCase(),found:{passage:number;span:TextSpan}[]=[];
+  result.passages.forEach((p,passage)=>{const t=targetText.slice(p.target.start,p.target.end).toLowerCase();
+    for(let i=t.indexOf(low);i>=0;i=t.indexOf(low,i+1)){if(/[\p{L}\p{N}]/u.test(t[i-1]??'')||/[\p{L}\p{N}]/u.test(t[i+low.length]??''))continue;found.push({passage,span:{start:p.target.start+i,end:p.target.start+i+low.length}});}});
+  if(found.length!==1)return null;
+  const at=found[0],hit=result.passages[at.passage].highlights.some(h=>h.start<at.span.end&&h.end>at.span.start);
+  if(hit)return null;
+  return {...result,status:'uncertain',passages:result.passages.map((p,i)=>i===at.passage?{...p,highlights:[at.span]}:p)};
 }
 // A capitalised name the system left without a highlight is highlighted when the same name, ignoring accents ("Hàm Tử" = "Ham Tu"), stands once, capitalised, in the context it returned.
 function sameNameAnswer(result:LookupResult,request:LookupRequest,targetText:string):LookupResult|null{

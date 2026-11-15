@@ -436,6 +436,24 @@ By status (answered only): "match" 42 answers, 97.6% hits; "uncertain" 390 answe
 
 **Reading.** The >95% asked for is met where identity can decide it: names with the same letters are answered right 99.1% of the time they are answered, and the 7.5% left are abstentions inside poem chapters or with two candidate spellings in the context. It is not met, and cannot be by rules of this kind, for names spelled differently (a Sino-Vietnamese reading against a pinyin spelling needs a dictionary; the book glossary only keeps edition-bound names and holds the model-only pairs back as provisional) and it cannot be judged for common words, where the marker position is a poor gold. Pairs learnt from the notes themselves (the headword of note n in each edition) are the next source of a name dictionary; that is a data change, tested by learning names on some chapters and judging them on others, and was not done.
 
+### Name dictionary from the footnotes (2026-11-15)
+
+**Source.** Note n of each edition reads "(n) Headword: explanation" (`notePairs` of the artifact pairs note n with note n). Of 372 notes in the 20 chapters, the English one always has a headword, the Vietnamese one in 214 (the others open with the explanation). A pair of headwords is kept when each stands right before the marker "(n)" of its own prose, which occurs once in the text: 73 pairs have the same letters ignoring accents (handled by the rule above), 76 more pass the gate, 70 after dropping list headwords. A list headword split by position was wrong ("Dương Thành, Hạ Sái" against "Xiacai and Yangcheng" paired the items crosswise), so lists are kept whole. Entries are read from the artifact at lookup time (memoised per artifact), not stored: no new data, no build step, edits of a chapter keep them current.
+
+**Why per chapter and not book-wide.** Learned from other chapters the pairs do not carry over: of 98 occurrences in other chapters of a Vietnamese headword, the English form stood in the returned context in 6 (4 of them already highlighted), because the same word is rendered differently or is a common word. The use is in the chapter that holds the footnote.
+
+**Rule.** When the selection is a headword term (a one-word capitalised headword needs a capitalised selection), the other edition's headword is highlighted in the returned context if it stands there exactly once and the lookup did not already highlight it; it replaces a highlight elsewhere in the passage.
+
+| Measure | Before | After |
+| --- | --- | --- |
+| Occurrences of a headword term in its own chapter, Vietnamese → English: highlight on the English form, of those whose context holds it | 50 of 64 (78.1%) | 63 of 64 (98.4%) |
+| Same, English → Vietnamese | 50 of 62 (80.6%) | 60 of 62 (96.8%) |
+| Other chapters, both directions | 7 of 11 | 7 of 11 |
+| Footnote anchors (606), name spelled differently: answered / hit of all | 72.0% / 52.4% | 74.2% / 55.1% (6 more hits, among them "Đâu Suất" = "Tushita", "Quân thiều" = "Junshao", and "Đường" was "Sweetly" and is "crabapple blossom") |
+| Lexical A, probes, dev and tuned sentences, chapter 2, both audits, blind lexical B, blind sentences | | identical outputs |
+
+The same-chapter figures are in-sample by construction (the pair comes from that chapter's own note); what they show is that the highlight now lands on the term the book itself names. Caveats: a headword can name a term that the prose uses elsewhere in another sense ("Đường" as the Tang dynasty): the exactly-once rule in the returned context is the only guard, and a one-word capitalised headword is not matched by a lowercase selection. Tests 377, typecheck clean. The alignment e2e passed 60 of 60 on six of eight runs of this code; the other two runs had 2 and 1 desktop tests fail at the first lookup panel (not found within 5 s), and the same tests passed on the rerun; the previous code passed 3 of 3 the same day. The lookup output is deterministic and identical on every measured set, and a lookup costs 15–33 ms with and without the rule, so I treat them as cold-start flakes of the dev server.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
