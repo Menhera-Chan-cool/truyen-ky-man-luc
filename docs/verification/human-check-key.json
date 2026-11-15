@@ -1,0 +1,991 @@
+{
+ "a2-88": {
+  "n": 1,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "incomplete",
+  "myCounterpart": [
+   "gượng nghe lời"
+  ]
+ },
+ "a2-89": {
+  "n": 2,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "wrong",
+  "myCounterpart": [
+   "west end"
+  ]
+ },
+ "a2-38": {
+  "n": 3,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "gõ vào chậu"
+  ]
+ },
+ "a1-11": {
+  "n": 4,
+  "kind": "word",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "luxury"
+  ]
+ },
+ "a1-47": {
+  "n": 5,
+  "kind": "word",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "in the least"
+  ]
+ },
+ "a1-48": {
+  "n": 6,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "incomplete",
+  "myCounterpart": [
+   "Tháng 2 Bính tý (4), người ta thấy có cô con gái, tuổi độ 15, 16 phấn son điểm phớt, nhan sắc xinh đẹp tuyệt vời, đến hội ấy xem hoa"
+  ]
+ },
+ "a1-51": {
+  "n": 7,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "the summit, the sky was bright and clear"
+  ]
+ },
+ "a1-74": {
+  "n": 8,
+  "kind": "phrase",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "Nghi để truyền nghi"
+  ]
+ },
+ "a2-19": {
+  "n": 9,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "He often sought out families with daughters, asking to marry into their homes, yet none would accept him"
+  ]
+ },
+ "a2-117": {
+  "n": 10,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "incomplete",
+  "myCounterpart": [
+   "escape being put to the sword"
+  ]
+ },
+ "a1-107": {
+  "n": 11,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-no-context",
+  "myCounterpart": "ABSENT"
+ },
+ "a1-100": {
+  "n": 12,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "wrong",
+  "myCounterpart": [
+   "rắn"
+  ]
+ },
+ "a1-19": {
+  "n": 13,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Nhưng thường trong những lúc vắng vẻ, Sinh hay ngồi ngẩn ra nghĩ ngẫm, gấp sách lại thở dài"
+  ]
+ },
+ "a2-2": {
+  "n": 14,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Thừa chỉ Hồ Tông"
+  ]
+ },
+ "a1-98": {
+  "n": 15,
+  "kind": "phrase",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "huyện khác"
+  ]
+ },
+ "a1-27": {
+  "n": 16,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "and each"
+  ]
+ },
+ "a2-107": {
+  "n": 17,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "ứng viện"
+  ]
+ },
+ "a1-99": {
+  "n": 18,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "huyện Đông Thành"
+  ]
+ },
+ "a1-77": {
+  "n": 19,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "villager's"
+  ]
+ },
+ "a1-106": {
+  "n": 20,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "crushed"
+  ]
+ },
+ "a1-61": {
+  "n": 21,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "The phoenix may be a sacred bird and the qilin a benevolent beast, but they are still only animals"
+  ]
+ },
+ "a2-0": {
+  "n": 22,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Hạng vương nói:",
+   "Không phải như thế"
+  ]
+ },
+ "a2-69": {
+  "n": 23,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "cast myself into the river"
+  ]
+ },
+ "a2-22": {
+  "n": 24,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "black"
+  ]
+ },
+ "a1-40": {
+  "n": 25,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "wasted away"
+  ]
+ },
+ "a1-3": {
+  "n": 26,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "partial",
+  "myCounterpart": [
+   "trận đánh mà quân Chương Hàm"
+  ]
+ },
+ "a1-64": {
+  "n": 27,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-correct(no counterpart)",
+  "myCounterpart": "NONE"
+ },
+ "a1-16": {
+  "n": 28,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "mái"
+  ]
+ },
+ "a2-28": {
+  "n": 29,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "few desires"
+  ]
+ },
+ "a2-30": {
+  "n": 30,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "and Yu Shanwen was feasted in the Dragon Palace (4)",
+   "Might a lowly mortal such as I be permitted to follow in the footsteps of those men of old"
+  ]
+ },
+ "a2-119": {
+  "n": 31,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "assembled"
+  ]
+ },
+ "a1-0": {
+  "n": 32,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "But because We pitied the common people,",
+   "We cast this magnificent eight-foot body of ours into the hands of a petty fellow like Wang Yi (20)"
+  ]
+ },
+ "a2-76": {
+  "n": 33,
+  "kind": "word",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "take passage"
+  ]
+ },
+ "a1-37": {
+  "n": 34,
+  "kind": "sentence",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "Pháp Vân không nhận và bảo Vô Kỷ rằng:",
+   "Người con gái này, nết không cẩn nguyện, tính bén lẳng lơ"
+  ]
+ },
+ "a1-89": {
+  "n": 35,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "who could have guessed"
+  ]
+ },
+ "a2-106": {
+  "n": 36,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-no-context",
+  "myCounterpart": "ABSENT"
+ },
+ "a2-72": {
+  "n": 37,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Nên uống thang thuốc tiến thực để ăn được nhiều và làm nhiều cỗ bàn lễ thần cúng quỷ sẽ được vô sự"
+  ]
+ },
+ "a1-108": {
+  "n": 38,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "The guest replied:",
+   "Having given my word, I could not bear to break it"
+  ]
+ },
+ "a1-23": {
+  "n": 39,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "wrong",
+  "myCounterpart": [
+   "Scarcely"
+  ]
+ },
+ "a2-77": {
+  "n": 40,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "tả"
+  ]
+ },
+ "a1-6": {
+  "n": 41,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "nhân chọn ngày mối lái, định kỳ cưới hỏi"
+  ]
+ },
+ "a2-62": {
+  "n": 42,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "glanced at Ho and smiled"
+  ]
+ },
+ "a2-43": {
+  "n": 43,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Mọi người đều lắc đầu lè lưỡi, họ lo sợ thay cho Tử Văn, nhưng Tử Văn vung tay không cần gì cả"
+  ]
+ },
+ "a1-43": {
+  "n": 44,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Bất tất đòi hỏi dây dưa và thẳng tay trị tội, sợ có hại cho cái đức hiếu sinh"
+  ]
+ },
+ "a2-63": {
+  "n": 45,
+  "kind": "phrase",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "nước suối làm rượu ngọt"
+  ]
+ },
+ "a1-15": {
+  "n": 46,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "partial",
+  "myCounterpart": [
+   "quát to lên rằng"
+  ]
+ },
+ "a2-36": {
+  "n": 47,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "He raised a ritual altar right there upon the mountain, hung lamps on all four sides, and drew talismans and seals with a vermilion brush"
+  ]
+ },
+ "a2-24": {
+  "n": 48,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "The lady surnamed Kim: here stands the kim tien, the golden-coin flower"
+  ]
+ },
+ "a1-72": {
+  "n": 49,
+  "kind": "sentence",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-no-context",
+  "myCounterpart": [
+   "Hoàng hiểu ra ngay, liền cầm bút cung rằng:\"Kính nghe:Kính Xuân thu góp sự lạ, tuy đá nói, thần giáng đều biên (5)"
+  ]
+ },
+ "a1-44": {
+  "n": 50,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "mũ trụ đương kêu cầu ở trước sân"
+  ]
+ },
+ "a2-103": {
+  "n": 51,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Just as he had foreseen, Lu Yi was forced to break camp and flee, falling back northward to make his stand at Xuong Giang"
+  ]
+ },
+ "a1-85": {
+  "n": 52,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Nhưng thực thì ta chẳng có tài gì về việc đó"
+  ]
+ },
+ "a2-74": {
+  "n": 53,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "incomplete",
+  "myCounterpart": [
+   "struck by a sudden madness. He grew wild and confused"
+  ]
+ },
+ "a1-119": {
+  "n": 54,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "cừu"
+  ]
+ },
+ "a2-65": {
+  "n": 55,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "dog"
+  ]
+ },
+ "a2-78": {
+  "n": 56,
+  "kind": "sentence",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "Hiện có loan giá ở ngoài kia"
+  ]
+ },
+ "a1-111": {
+  "n": 57,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "ngồi chơi"
+  ]
+ },
+ "a2-73": {
+  "n": 58,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "At first I had to speak nonsense so that she would think nothing of my words; only then could I put my art to use"
+  ]
+ },
+ "a1-35": {
+  "n": 59,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "còn thoi thóp"
+  ]
+ },
+ "a1-21": {
+  "n": 60,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "đừng vì cớ nghèo mà để tiêu mòn"
+  ]
+ },
+ "a1-54": {
+  "n": 61,
+  "kind": "sentence",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "như ta đây cũng là một cái duyên may mắn khác thường"
+  ]
+ },
+ "a1-65": {
+  "n": 62,
+  "kind": "word",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "Then"
+  ]
+ },
+ "a2-99": {
+  "n": 63,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "làm ác cũng không dám làm"
+  ]
+ },
+ "a1-63": {
+  "n": 64,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "giải vây"
+  ]
+ },
+ "a2-101": {
+  "n": 65,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "wrong",
+  "myCounterpart": [
+   "da"
+  ]
+ },
+ "a1-118": {
+  "n": 66,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "wrong",
+  "myCounterpart": [
+   "ấy"
+  ]
+ },
+ "a1-104": {
+  "n": 67,
+  "kind": "phrase",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-no-context",
+  "myCounterpart": "ABSENT"
+ },
+ "a1-94": {
+  "n": 68,
+  "kind": "word",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "haste"
+  ]
+ },
+ "a2-29": {
+  "n": 69,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "rào"
+  ]
+ },
+ "a2-116": {
+  "n": 70,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "lĩnh chức quan to"
+  ]
+ },
+ "a2-11": {
+  "n": 71,
+  "kind": "word",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "great"
+  ]
+ },
+ "a1-5": {
+  "n": 72,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-correct(no counterpart)",
+  "myCounterpart": "NONE"
+ },
+ "a2-70": {
+  "n": 73,
+  "kind": "word",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-no-context",
+  "myCounterpart": "ABSENT"
+ },
+ "a1-9": {
+  "n": 74,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "They may let you win at first"
+  ]
+ },
+ "a2-64": {
+  "n": 75,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-no-context",
+  "myCounterpart": "ABSENT"
+ },
+ "a2-85": {
+  "n": 76,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "By the time he reached the west end of the plank bridge, it was still dark and the late moon had not yet risen. Then he saw several figures of enormous size come striding merrily up from the fields. He slipped into a hidden spot and crouched there to see what they were about"
+  ]
+ },
+ "a1-41": {
+  "n": 77,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "có thai"
+  ]
+ },
+ "a1-12": {
+  "n": 78,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Đạo nhân cho là đôi trai gái lẳng lơ đêm trăng dắt nhau đi chơi"
+  ]
+ },
+ "a2-14": {
+  "n": 79,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "caught a faint, foul stench of rot"
+  ]
+ },
+ "a1-38": {
+  "n": 80,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Nhược Chân"
+  ]
+ },
+ "a1-14": {
+  "n": 81,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "the sorrow in my heart"
+  ]
+ },
+ "a2-80": {
+  "n": 82,
+  "kind": "phrase",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "Quang, Quyên Tử"
+  ]
+ },
+ "a2-23": {
+  "n": 83,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "vào bẩm"
+  ]
+ },
+ "a2-16": {
+  "n": 84,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "bụng"
+  ]
+ },
+ "a2-32": {
+  "n": 85,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "No one could have foreseen the thunder and lightning that suddenly broke out"
+  ]
+ },
+ "a2-108": {
+  "n": 86,
+  "kind": "sentence",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Sau vài tháng, bài ấy truyền khắp trong cung"
+  ]
+ },
+ "a2-71": {
+  "n": 87,
+  "kind": "word",
+  "from": "vi",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "lofty"
+  ]
+ },
+ "a1-105": {
+  "n": 88,
+  "kind": "phrase",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "lập công"
+  ]
+ },
+ "a2-87": {
+  "n": 89,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "have a hexagram cast"
+  ]
+ },
+ "a1-20": {
+  "n": 90,
+  "kind": "phrase",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "Sau khi"
+  ]
+ },
+ "a1-95": {
+  "n": 91,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "đi"
+  ]
+ },
+ "a2-26": {
+  "n": 92,
+  "kind": "phrase",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "partial",
+  "myCounterpart": [
+   "đắp điếm cho hai em"
+  ]
+ },
+ "a2-86": {
+  "n": 93,
+  "kind": "phrase",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "thình lình bắn ra"
+  ]
+ },
+ "a2-20": {
+  "n": 94,
+  "kind": "phrase",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-context-ok",
+  "myCounterpart": [
+   "dương báo của trời"
+  ]
+ },
+ "a2-46": {
+  "n": 95,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "ngăn trở"
+  ]
+ },
+ "a1-56": {
+  "n": 96,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "partial",
+  "myCounterpart": [
+   "It is only that the appointed hour has not yet come"
+  ]
+ },
+ "a2-47": {
+  "n": 97,
+  "kind": "word",
+  "from": "en",
+  "answered": false,
+  "myVerdict": "abstain-correct(no counterpart)",
+  "myCounterpart": "NONE"
+ },
+ "a1-76": {
+  "n": 98,
+  "kind": "word",
+  "from": "en",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Ban đầu"
+  ]
+ },
+ "a1-80": {
+  "n": 99,
+  "kind": "phrase",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "The dust of the world has never reached it"
+  ]
+ },
+ "a1-102": {
+  "n": 100,
+  "kind": "sentence",
+  "from": "vi",
+  "answered": true,
+  "myVerdict": "hit",
+  "myCounterpart": [
+   "Later, when Le Thai To raised his righteous rebellion at Lam Son, Sinh, driven by his old bitterness and hatred, answered the call to arms. Whenever he met Ming officers or soldiers, he cut them down without mercy to vent his rage"
+  ]
+ }
+}
