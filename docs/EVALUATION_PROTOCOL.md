@@ -135,6 +135,30 @@ With the user's permission for one download: `BAAI/bge-m3` (MIT, not gated), rev
 
 A stronger general-purpose encoder is not better here: it loses on short windows, and the best fusion gains one case of 60 on dev sentences (inside the noise) for a second 2.3 GB model in the worker, the CI download and twice the encoding. LaBSE stays. The remaining paths are fine-tuning on in-book pairs split by chapter, or human-labelled pairs; both need explicit permission.
 
+## Step 4c: fine-tuning LaBSE on in-book pairs (CPU), not adopted
+
+Permission for fine-tuning was given by the user. Chapters **1, 4, 9, 11, 15, 16 were held out of all training** and every comparison below uses only the evaluation items of those chapters. Training data from the other 14 chapters: 3,386 phrase pairs (consistent under the mBERT word links, both windows start and end on a content word, LaBSE agreement ≥ 0.5; extracted from 28,983 candidates), 1,031 confident sentence pairs of the hierarchy, and 70 note-anchored sentence pairs weighted three times. Embeddings frozen, 86 M trainable parameters, symmetric InfoNCE with shifted-window hard negatives, CPU at about 4.2 s per step. Training and evaluation scripts live outside the repository (`work/labse-ft`).
+
+| Held-out chapters, best-window hits (LaBSE → fine-tuned) | Run 1 (lr 1e-5, 300 steps) | Run 2 (lr 3e-5, 400 steps, loss 0.05) |
+| --- | ---: | ---: |
+| Lexical set A words (dev, of 20) | 15 → 15 | 15 → 16 |
+| Lexical set A phrases (dev, of 22) | 20 → 20 | 20 → 19 |
+| Dev probes, chapter 1 words (of 17) | 16 → 17 | 16 → 17 |
+| Dev probes, chapter 1 phrases (of 12) | 9 → 10 | 9 → 12 |
+| Dev sentence retrieval VI→EN (of 33) | 29 → 30 | 29 → 29 |
+| Dev sentence retrieval EN→VI (of 33) | 33 → 33 | 33 → 32 |
+
+Run 1 was chosen on dev (no regression anywhere) and taken to the blind sets once:
+
+| Blind, held-out chapters (LaBSE → fine-tuned) | |
+| --- | ---: |
+| Lexical set B words (of 17) | 13 → 13 |
+| Lexical set B phrases (of 17) | 15 → 15 |
+| Blind sentence retrieval VI→EN (of 24) | 21 → 21 |
+| Blind sentence retrieval EN→VI (of 24) | 23 → 23 |
+
+**No measurable gain**: the dev differences are a case or two and run 2 trades one regression for another; the blind numbers are identical. Training loss fell from 0.5 to 0.16 (run 1), so the model learned the pairs, but the pairs are LaBSE-confident pairs and noisy link-derived phrases, which add little LaBSE did not already know. Not adopted, nothing published. What could still help is clean, independent data: human-labelled pairs, which would also give the accuracy figure that every number above lacks.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
