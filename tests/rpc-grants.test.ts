@@ -1,6 +1,8 @@
-import {it,expect} from "vitest";
+import {it,expect,vi} from "vitest";
 import {PGlite} from "@electric-sql/pglite";
 import {readFile} from "node:fs/promises";
+// PGlite boots Postgres in WASM and runs six migrations; the 5 s default timeout fails when the whole suite competes for the CPU.
+vi.setConfig({testTimeout:30000});
 const migration="supabase/migrations/20261031103949_restrict_management_rpc.sql";
 const privateNames=["is_editor","is_owner","protect_last_owner","save_chapter","save_chapters","publish_chapter","publish_chapters","save_book","reorder_chapters","archive_chapter","seed_book"];
 async function setup(){

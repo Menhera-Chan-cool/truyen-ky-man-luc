@@ -262,7 +262,8 @@ def add_clause_pairs(contexts,encode,editions=None):
                 if _admit(g,units,f['ranges'],f['score'],f['margin'],f.get('residual',False)):tasks.append({'g':g,'units':units,**f['ranges'],'root':False})
 
 
-PHRASE_SIZES={'en':(2,6),'vi':(1,6)};PHRASE_FLOOR=.5;PHRASE_MARGIN=.08;PHRASE_PER_PAIR=60;PHRASE_PER_GROUP=512;PHRASE_WORDS={'en':40,'vi':50}
+# Measured on held-out phrase cases: every exact-window pair at score >= .65 was right; below that half were wrong, so the floor is .65.
+PHRASE_SIZES={'en':(1,8),'vi':(1,8)};PHRASE_FLOOR=.65;PHRASE_MARGIN=.15;PHRASE_PER_PAIR=60;PHRASE_PER_GROUP=512;PHRASE_WORDS={'en':40,'vi':50}
 
 
 def _phrase_windows(edition,span,locale):

@@ -162,7 +162,7 @@ function phraseTarget(g:AlignmentArtifact['groups'][number],request:LookupReques
   while(start<end&&edge.test(text[start]))start++;
   for(let before=-1;before!==end;){before=end;const marker=/\(\d{1,3}\)$/u.exec(text.slice(start,end));if(marker)end-=marker[0].length;while(end>start&&edge.test(text[end-1]))end--;}
   if(end<=start)return null;
-  const found=g.phrasePairs.filter(p=>p.from===locale&&p[locale].start===start&&p[locale].end===end&&p.score>=.5&&p.margin>=.08).sort((a,b)=>b.score-a.score);
+  const found=g.phrasePairs.filter(p=>p.from===locale&&p[locale].start===start&&p[locale].end===end&&p.score>=.65&&p.margin>=.15).sort((a,b)=>b.score-a.score);
   const best=found[0];
   if(!best||found.some(p=>(p[targetLocale].start!==best[targetLocale].start||p[targetLocale].end!==best[targetLocale].end)&&p.score>best.score-.03))return null;
   return {source:{start,end},target:{...best[targetLocale]}};
@@ -392,7 +392,11 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
       }
     }
     // A phrase pair answers only when word evidence could not: empty, or incomplete for this selection. It never narrows or widens good word links.
-    if(found&&!sentences.unmatched?.some(u=>u.start<found.source.start||u.end>found.source.end)&&(!highlights.length||(incompleteWords&&!already.incomplete))){
+    // Punctuation or a space beside the pair (the clause unit ends after its comma) is not unmatched content; a letter is.
+    const lettersIn=(a:number,b:number)=>b>a&&/\p{L}/u.test(source.text.slice(a,b));
+    // A strong exact phrase pair beats word links that miss it entirely (a swapped pair in a list); links that overlap it are kept, never widened.
+    const contradicted=(target:TextSpan)=>highlights.length>0&&!highlights.some(h=>h.start<target.end&&h.end>target.start);
+    if(found&&!sentences.unmatched?.some(u=>lettersIn(Math.max(u.start,request.start),found.source.start)||lettersIn(found.source.end,Math.min(u.end,request.end)))&&(!highlights.length||(incompleteWords&&!already.incomplete)||contradicted(found.target))){
       incompleteWords=already.incomplete;unmatchedSource.length=already.unmatched;sentences.unmatched=undefined;looseWords=false;highlights=[found.target];uncertain=true;
     }
     const sourceBlock=shortBlock(source,request);
