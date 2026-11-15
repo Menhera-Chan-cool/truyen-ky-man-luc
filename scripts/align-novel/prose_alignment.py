@@ -296,3 +296,120 @@ def add_phrase_pairs(groups,encode,editions):
         if found:g.setdefault('phrasePairs',[]).extend(found[:PHRASE_PER_PAIR])
     for g,_ in work:
         if 'phrasePairs' in g:g['phrasePairs']=sorted(g['phrasePairs'],key=lambda f:-f['score'])[:PHRASE_PER_GROUP]
+
+
+BOUNDARY_GAIN=.10;BOUNDARY_UNITS=40
+
+
+def _group_units(inp):
+    """The units of one side as join_units wants them, split back out of a joined input."""
+    from context_alignment import slice16
+    units=[]
+    for p in inp['parts']:
+        found=[i for i,(a,b) in enumerate(zip(inp['starts'],inp['ends'])) if p['start']<=a<b<=p['end']]
+        if not found:return None
+        first,last=found[0],found[-1]+1
+        units.append({'text':slice16(inp['text'],first,last),'starts':inp['starts'][first:last],'ends':inp['ends'][first:last],'start':p['start'],'end':p['end']})
+    return units
+
+
+def repair_boundaries(item,contexts,encode):
+    """Re-split two neighbouring prose groups when a different cut of their combined units pairs both halves much better.
+    The groups must touch in both editions inside one paragraph; poetry, notes and anything unproven stay untouched."""
+    from context_alignment import join_units,mask_references,slice16,_normalized
+    editions=item['editions']
+    def clean(unit):return ' '.join(mask_references(unit['text']).split())
+    def reach(g1,g2,l):
+        a,b=g1[l+'Input']['parts'][-1]['end'],g2[l+'Input']['parts'][0]['start']
+        gap=slice16(editions[l]['text'],a,b) if a<=b else None
+        low,high=g1[l+'Input']['parts'][0]['start'],g2[l+'Input']['parts'][-1]['end']
+        return gap is not None and not any(c.isalnum() for c in mask_references(gap)) and not any(low<br<high for br in editions[l].get('breaks',[]))
+    for _ in range(2):
+        prose=sorted([g for g in contexts if g['section']=='story' and 'tracks' not in g],key=lambda g:g['viInput']['parts'][0]['start'])
+        jobs=[];texts=set()
+        for g1,g2 in zip(prose,prose[1:]):
+            if not (reach(g1,g2,'vi') and reach(g1,g2,'en')):continue
+            parts={l:[_group_units(g1[l+'Input']),_group_units(g2[l+'Input'])] for l in ['vi','en']}
+            if any(p is None for l in parts for p in parts[l]):continue
+            units={l:parts[l][0]+parts[l][1] for l in parts}
+            if any(len(units[l])>BOUNDARY_UNITS or len(units[l])<2 for l in units):continue
+            clipped={l:[clean(u) for u in units[l]] for l in units}
+            sides={l:([' '.join(clipped[l][:k]) for k in range(1,len(units[l]))],[' '.join(clipped[l][k:]) for k in range(1,len(units[l]))]) for l in units}
+            texts.update(t for l in sides for part in sides[l] for t in part)
+            jobs.append((g1,g2,units,sides,(len(parts['vi'][0]),len(parts['en'][0]))))
+        if not jobs:break
+        ordered=sorted(texts);vectors=_normalized(encode(ordered))
+        if len(vectors)!=len(ordered):raise ValueError('Boundary vector count mismatch')
+        memo=dict(zip(ordered,vectors));replace={};used=set()
+        for g1,g2,units,sides,(p0,q0) in jobs:
+            if id(g1) in used or id(g2) in used:continue
+            left=np.stack([memo[t] for t in sides['vi'][0]])@np.stack([memo[t] for t in sides['en'][0]]).T
+            right=np.stack([memo[t] for t in sides['vi'][1]])@np.stack([memo[t] for t in sides['en'][1]]).T
+            total=left+right;p,q=(int(k)+1 for k in np.unravel_index(total.argmax(),total.shape))
+            if (p,q)==(p0,q0) or total[p-1,q-1]-total[p0-1,q0-1]<BOUNDARY_GAIN or min(left[p-1,q-1],right[p-1,q-1])<.5:continue
+            margin=min(g1['margin'],g2['margin'])
+            replace[id(g1)]={**g1,'viInput':join_units(units['vi'][:p]),'enInput':join_units(units['en'][:q]),'score':float(left[p-1,q-1]),'margin':margin}
+            replace[id(g2)]={**g2,'viInput':join_units(units['vi'][p:]),'enInput':join_units(units['en'][q:]),'score':float(right[p-1,q-1]),'margin':margin}
+            used.update([id(g1),id(g2)])
+        if not replace:break
+        contexts=[replace.get(id(g),g) for g in contexts]
+    return contexts
+
+
+ORPHAN_GAIN=.04;ORPHAN_UNITS=2
+
+
+def adopt_orphans(item,contexts,encode,units=None):
+    """A unit that fell between two groups (the pairing skipped it) joins a neighbouring group on one side when that
+    clearly improves the group's own pairing. One or two units, same paragraph, never poetry or notes."""
+    from context_alignment import join_units,mask_references,slice16,u16,_normalized
+    editions=item['editions']
+    def clean(text):return ' '.join(mask_references(text).split())
+    prose=[g for g in contexts if g['section']=='story' and 'tracks' not in g]
+    if not prose:return contexts
+    def region_units(l,a,b,first):
+        if b<=a:return None
+        if units is not None:
+            found=[u for u in units[l] if u.get('section','story')=='story' and u['start']>=a and u['end']<=b]
+        else:
+            gap=slice16(editions[l]['text'],a,b);found=[];at=0
+            for m in re.finditer(r'[^,;:.!?…]+[,;:.!?…]*',gap):
+                lead=len(m.group())-len(m.group().lstrip());seg=m.group().strip();start=a+u16(gap[:m.start()])+u16(m.group()[:lead])
+                if seg:found.append({'text':seg,'start':start,'end':start+u16(seg),'starts':list(range(start,start+u16(seg))),'ends':list(range(start+1,start+u16(seg)+1))})
+        found=[u for u in found if any(c.isalnum() for c in clean(u['text']))]
+        if not found or len(found)>ORPHAN_UNITS or any(a<br<first for br in editions[l].get('breaks',[])):return None
+        return found
+    claimed=set();changed={};jobs=[]
+    for l in ['vi','en']:
+        ordered=sorted(prose,key=lambda g:g[l+'Input']['parts'][0]['start'])
+        for k,g in enumerate(ordered):
+            first,last=g[l+'Input']['parts'][0]['start'],g[l+'Input']['parts'][-1]['end']
+            before=ordered[k-1][l+'Input']['parts'][-1]['end'] if k else 0
+            after=ordered[k+1][l+'Input']['parts'][0]['start'] if k+1<len(ordered) else u16(editions[l]['text'])
+            current=_group_units(g[l+'Input'])
+            if current is None:continue
+            for side,(a,b) in (('left',(before,first)),('right',(last,after))):
+                found=region_units(l,a,b,first if side=='left' else b)
+                if found:jobs.append((g,l,side,found,current))
+    if not jobs:return contexts
+    texts=set()
+    for g,l,side,found,current in jobs:
+        other='en' if l=='vi' else 'vi'
+        base=' '.join(clean(u['text']) for u in current);ext=' '.join(clean(u['text']) for u in (found+current if side=='left' else current+found))
+        texts.update([base,ext,' '.join(clean(u['text']) for u in _group_units(g[other+'Input']))])
+    ordered_texts=sorted(texts);vectors=_normalized(encode(ordered_texts))
+    if len(vectors)!=len(ordered_texts):raise ValueError('Orphan vector count mismatch')
+    memo=dict(zip(ordered_texts,vectors));scored=[]
+    for g,l,side,found,current in jobs:
+        other='en' if l=='vi' else 'vi';target=memo[' '.join(clean(u['text']) for u in _group_units(g[other+'Input']))]
+        base=float(memo[' '.join(clean(u['text']) for u in current)]@target)
+        merged=found+current if side=='left' else current+found
+        grown=float(memo[' '.join(clean(u['text']) for u in merged)]@target)
+        if grown>=.5 and grown-base>=ORPHAN_GAIN:scored.append((grown-base,id(g),l,side,found,merged,grown))
+    result={id(g):g for g in contexts}
+    for gain,gid,l,side,found,merged,grown in sorted(scored,key=lambda s:-s[0]):
+        marks={(l,u['start']) for u in found}
+        if marks&claimed:continue
+        g=changed.get(gid,result[gid]);current=_group_units(g[l+'Input']);claimed|=marks
+        changed[gid]={**g,l+'Input':join_units(found+current if side=='left' else current+found),'score':grown}
+    return [changed.get(id(g),g) for g in contexts]
