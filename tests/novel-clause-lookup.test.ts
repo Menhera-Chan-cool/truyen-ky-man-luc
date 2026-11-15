@@ -249,3 +249,22 @@ it('completes a coordinated pair with a weak link to the content word beside the
  expect(run('The sky was bright and clear.','clear')).toEqual(['bright and clear']);
  expect(run('The sky was bright clear.','clear')).toEqual(['bright']);
 });
+it('completes a link answer with the exact phrase pair when a selected word has no link, only if the pair holds the whole answer',()=>{
+ const en='In the reign of Emperor Minh Tong of the Tran dynasty,',vi='Về đời vua Minh Tông nhà Trần,';
+ const make=(pairVi:string)=>{
+  const a=plain(vi,en,{vi:[vi],en:[en]},[['Minh','Minh'],['Tông','Tong'],['nhà','of']]),q=span(en,'Minh Tong of the Tran');
+  a.groups[0].phrasePairs=[{en:q,vi:span(vi,pairVi),score:.87,margin:.6,from:'en'}];
+  return query(a,'en',q).passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end)));
+ };
+ expect(make('Minh Tông nhà Trần')).toEqual(['Minh Tông nhà Trần']);
+ expect(make('Tông nhà Trần')).not.toEqual(['Tông nhà Trần']);
+});
+it('widens a link target with the phrase pair of its one source word by content words no other link claims, never by function words alone',()=>{
+ const run=(vi:string,pairVi:string)=>{
+  const en='He told everyone the news.',a=plain(vi,en,{vi:[vi],en:[en]},[['kể','told'],['mọi','everyone']]),q=span(en,'told everyone');
+  a.groups[0].phrasePairs=[{en:span(en,'everyone'),vi:span(vi,pairVi),score:.94,margin:.33,from:'en'}];
+  return query(a,'en',q).passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end)));
+ };
+ expect(run('Chàng kể cho mọi người nghe.','mọi người')).toEqual(['kể cho mọi người']);
+ expect(run('Chàng kể cho mọi và nghe.','mọi và')).toEqual(['kể cho mọi']);
+});

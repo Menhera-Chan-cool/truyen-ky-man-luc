@@ -379,6 +379,7 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
       const competing=new Map<string,number>(),outsideLinks:(TextSpan&{from:TextSpan})[]=[];
       if(!poem&&g.kind!=='lexical')for(const link of g.links){
         const from=link[locale];if(from[0]<request.end&&from[1]>request.start)continue;
+        if(!/[\p{L}\p{N}]/u.test(source.text.slice(...from))||!/[\p{L}\p{N}]/u.test(target.text.slice(...link[targetLocale])))continue;
         const sw=sourceSpans.get(link)!;if(onlyFunctionWords(source.text.slice(sw.start,sw.end),locale))continue;
         const tw=targetSpans.get(link)!,key=tw.start+':'+tw.end;
         competing.set(key,Math.max(competing.get(key)??0,link.score));outsideLinks.push({start:tw.start,end:tw.end,from:sw});
@@ -392,7 +393,15 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         if(keep.length){const [start,end]=sourceKey.split(':').map(Number);coveredWords.push({start,end});}
         if(keep.length>1)uncertain=true;
         if(keep.some(c=>c.score<.15))uncertain=true;
-        spans.push(...keep.map(c=>c.span));
+        // The phrase pair of this one source word widens its link target when it contains it ("everyone" = "mọi người", the link gave "mọi"), by at most two target words that no other word's link claims.
+        const [wordStart,wordEnd]=sourceKey.split(':').map(Number),pair=!poem&&g.kind!=='lexical'?g.phrasePairs?.filter(p=>p.from===locale&&p[locale].start===wordStart&&p[locale].end===wordEnd&&p.score>=.65&&p.margin>=.15).sort((a,b)=>b.score-a.score)[0]:undefined;
+        const widen=(s:TextSpan)=>{
+          if(!pair||pair[targetLocale].start>s.start||pair[targetLocale].end<s.end||(pair[targetLocale].start===s.start&&pair[targetLocale].end===s.end))return s;
+          const t=pair[targetLocale],extra=[target.text.slice(t.start,s.start),target.text.slice(s.end,t.end)];
+          if(extra.some(e=>(e.match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)>2||/[.!?;:…\n]/u.test(e)||(/\p{L}/u.test(e)&&onlyFunctionWords(e,targetLocale))))return s;
+          return claimedByOthers.some(o=>o.start<t.end&&o.end>t.start&&!(o.start<s.end&&o.end>s.start))?s:{start:t.start,end:t.end};
+        };
+        spans.push(...keep.map(c=>widen(c.span)));
       }
     }
     let highlights=mergeSpans(nameTargets(spans,request,target.text,g[targetLocale],targetLocale),target.text);
@@ -421,9 +430,15 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         const oneSentence=alignmentUnits(source,g[locale],locale,g.section==='notes').filter(u=>u.start<request.end&&u.end>request.start).length<=1;
         if(!sentences.unmatched?.length&&highlights.length&&oneSentence&&!essential&&missing.length*3<=content.length){
           uncertain=true;
+          // The exact phrase pair of the selection completes a link answer that lies inside it when selected words have no link ("Minh Tong of the Tran" = "Minh Tông nhà Trần").
+          // Another word's link may hold part of the pair only when that word sits right beside the selection ("dynasty" after "Tran").
+          const beside=(f:TextSpan)=>f.start===request.end+(/^\s*/.exec(source.text.slice(request.end))![0].length)||f.end===request.start-(/\s*$/.exec(source.text.slice(0,request.start))![0].length);
+          const completed=!!found&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&highlights.every(h=>h.start>=found.target.start&&h.end<=found.target.end)
+            &&!claimedByOthers.some(c=>c.start<found.target.end&&c.end>found.target.start&&!highlights.some(h=>c.start<h.end&&c.end>h.start)&&!beside(c.from));
+          if(completed)highlights=[{...found!.target}];
           // Selected words at an edge of the selection that no link reached extend the answer by as many target words at that edge, up to three, unless another word's link holds them;
           // the word right beside the selection may hold them (a compound cut in the middle: "mỉm | cười").
-          if(!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length){
+          else if(!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length){
             const isCovered=(w:TextSpan)=>[...coveredWords,...sentences.covered].some(s=>s.start<=w.start&&s.end>=w.end),missed=new Set(missing.map(w=>w.start));
             let lead=0,trail=0;
             for(const w of selected){if(isCovered(w))break;if(missed.has(w.start))lead++;}
