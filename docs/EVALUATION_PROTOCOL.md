@@ -247,6 +247,21 @@ So "93% accuracy" overstated what a person would call right; "not wrong" is the 
 
 **Offline estimate of a fix.** On my labels, joining separated pieces of a phrase highlight when the gap holds at most four words and no sentence punctuation raises strict phrase hits (F1 ≥ 0.8) from 21 to 35 of 55 answered phrases and F1 ≥ 0.5 from 49 to 52; one case gets worse by adding an extra word, and 9 of the 17 phrases the reviewer called "partly" become strict hits. Cases that need an end extended ("smiled", "cast") are not helped. This has not been built or deployed.
 
+## Joining the pieces of a phrase highlight (after the human check; lookup only, no new data)
+
+Change: when a multi-word selection is answered from word links in several separated pieces, the pieces are joined into one run if what lies between them is at most four words (and no more than the selection has), none of it claimed by the links of other source words, with no sentence punctuation, note marker or paragraph break. Sentence answers, exact phrase pairs, names and poetry are untouched. Two existing tests encoded the old behaviour and were adapted (a phrase pair wider than the joined links; a "red blue" case whose gap is longer than the selection stays apart); one new test fails without the join.
+
+Strict hit means F1 ≥ 0.8 against the label, a proxy for the reviewer's "right"; hit is the old F1 ≥ 0.5.
+
+| Phrases, hit / strict (before → after) | Hit | Strict (F1 ≥ 0.8) |
+| --- | ---: | ---: |
+| **Lexical set B (blind), 40** | 30 → 32 | 21 → **30** |
+| Lexical set A (dev), 40 | 27 → 29 | 19 → 27 |
+| Dev probes, 40 | 26 → 26 | 17 → 21 |
+| Both audits (dev now), 55 answered | 49 → 51 | 21 → 30 |
+
+Words are unchanged on B (29 hits, 25 strict, 2 wrong) and A (30, 28, 5 wrong); wrong answers do not rise anywhere. Sentence sets are unchanged (dev 96 of 120, tuned 81 of 110, blind 84 of 102), chapter 2 is 8 of 8, vitest 367, alignment e2e 60 of 60. Of the 20 cases the reviewer called "partly", 6 are strict hits before and 10 after: the fix joins pieces but does not extend an end ("smiled", "cast") and does not fix scattered pieces farther apart than the limit. One 2-word selection ("dị đoan") is now highlighted a little wider ("devote oneself to heterodox"), another ("ai ngờ") becomes the full phrase ("who could have guessed"). The reviewer has not seen the new highlights; the strict-hit figures are against my own labels.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

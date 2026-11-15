@@ -178,7 +178,8 @@ it('replaces word links that miss a strong exact phrase pair entirely, but not l
  a.groups[0].links=[{vi:[wrong.start,wrong.end],en:[e.start,e.start+'flute-players'.length],score:.9},{vi:[wrong.start,wrong.end],en:[en.indexOf('mat-weavers'),en.indexOf('mat-weavers')+'mat-weavers'.length],score:.9}];
  const r=query(a,'en',e);expect(r.passages.flatMap(p=>p.highlights)).toEqual([v]);expect(r.status).toBe('uncertain');
  a.groups[0].links=[{vi:[v.start,v.start+'thổi'.length],en:[e.start,e.start+'flute-players'.length],score:.9},{vi:[v.start+'thổi kèn, '.length,v.end],en:[en.indexOf('mat-weavers'),en.indexOf('mat-weavers')+'mat-weavers'.length],score:.9}];
- expect(query(a,'en',e).passages.flatMap(p=>p.highlights)).not.toEqual([v]);
+ const wide=span(vi,'thổi kèn, dệt chiếu (14) cũng đủ');a.groups[0].phrasePairs=a.groups[0].phrasePairs!.map(p=>({...p,vi:wide}));
+ expect(query(a,'en',e).passages.flatMap(p=>p.highlights)).not.toEqual([wide]);
 });
 it('keeps good word links instead of a longer phrase pair that would widen them',()=>{
  const en='With words like flowers and thoughts like brocade.',vi='Lời hoa ý gấm.',a=plain(vi,en,{vi:[vi],en:[en]},[['Lời','words'],['hoa','flowers'],['gấm','brocade']]);
@@ -214,4 +215,12 @@ it('answers a selection that runs over a group, an orphan clause and a group by 
  expect(r.status).toBe('uncertain');expect(r.unmatchedSource).toBeUndefined();
  const en=a.editions.en.text,hl=r.passages.flatMap(p=>p.highlights);
  expect(hl).toEqual([{start:0,end:en.length}]);
+});
+it('joins the pieces of a phrase answer across a short unclaimed gap but not across a sentence break',()=>{
+ const run=(en:string)=>{
+  const vi='Nàng gieo mình xuống sông.',a=plain(vi,en,{vi:[vi],en:[en]},[['gieo','cast'],['mình','herself'],['xuống','into'],['sông','river']]);
+  return query(a,'vi',span(vi,'gieo mình xuống sông')).passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)));
+ };
+ expect(run('She cast herself into the river.')).toEqual(['cast herself into the river']);
+ expect(run('She cast herself into. The river.')).toHaveLength(2);
 });

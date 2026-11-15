@@ -361,6 +361,7 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     if(sentences.unmatched?.length){incompleteWords=true;unmatchedSource.push(...sentences.unmatched.map(s=>({start:Math.max(s.start,request.start),end:Math.min(s.end,request.end)})));}
     const targetSpans=targetWords(g,locale,source,target,!poem&&g.kind!=='lexical');
     const sourceSpans=targetWords(g,targetLocale,target,source,!poem&&g.kind!=='lexical');
+    let claimedByOthers:TextSpan[]=[];
     if(named)spans=[named];
     else {
       spans.push(...sentences.spans);
@@ -382,6 +383,7 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         const tw=targetSpans.get(link)!,key=tw.start+':'+tw.end;
         competing.set(key,Math.max(competing.get(key)??0,link.score));
       }
+      claimedByOthers=[...competing.keys()].map(k=>{const [start,end]=k.split(':').map(Number);return {start,end};});
       for(const [sourceKey,map] of words){
         const ranked=[...map.values()].sort((a,b)=>b.score-a.score);
         const keep=ranked.filter(c=>c.score>=ranked[0].score*.8&&c.score>=.03&&c.score*1.35>=(competing.get(c.span.start+':'+c.span.end)??0));
@@ -392,6 +394,16 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
       }
     }
     let highlights=mergeSpans(nameTargets(spans,request,target.text,g[targetLocale],targetLocale),target.text);
+    // The pieces of one phrase answer are joined when what lies between them is at most four words (and no more than the selection has) nobody else's link claims, with no sentence break: a person reads a phrase as one run.
+    if(!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&highlights.length>1&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1){
+      const joined:TextSpan[]=[],most=Math.min(4,request.text.match(/[\p{L}\p{M}]+/gu)!.length);
+      for(const s of highlights){
+        const last=joined.at(-1),gap=last?target.text.slice(last.end,s.start):'';
+        if(last&&(gap.match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=most&&!/[.!?;:…\n]|\(\d{1,3}\)/u.test(gap)&&!target.breaks?.some(b=>b>last.end&&b<s.start)&&!claimedByOthers.some(c=>c.start<s.start&&c.end>last.end))last.end=s.end;
+        else joined.push({...s});
+      }
+      highlights=joined;
+    }
     const inferredTitle=titledNames.some(t=>locale==='en'?t.en.test(request.text)&&highlights.some(s=>t.vi.test(target.text.slice(s.start,s.end))):t.vi.test(request.text)&&highlights.some(s=>t.en.test(target.text.slice(s.start,s.end))));
     let looseWords=false;
     if(!named&&!inferredTitle&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1){
