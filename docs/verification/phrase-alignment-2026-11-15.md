@@ -54,3 +54,17 @@ Glossary (all 20 chapters, same artifacts): accepted 117 → 167 (+50, all same-
 - Web: Vercel production deployment `dpl_AWeuSL8MMQAarWRFs2VXkaVyJvD5` (READY) aliased to https://truyen-ky-man-luc.vercel.app.
 - **Post-deploy verification was skipped by instruction.** No production API, browser or download check was run, and the local numbers above are not production verification.
 - Previous release: `dpl_CiM32z9puvhqnDPk891st6tsaWS9` on `496602b`.
+
+## Second pass: the limits listed above (source `c548718`, data only; web unchanged)
+
+| Limit | What changed | Result |
+| --- | --- | --- |
+| Score floor drops correct pairs | A gap between two confident top-level pairs may pair by elimination at the flagged 0.4 floor (it already did inside an accepted parent). | +27 pairs; all 27 read as correct counterparts (model reading, not human). The 120 probes did not move because none falls on those pairs. |
+| Cross-chapter name evidence | `merge_book_names` adds contexts across chapters for same-fold names; each promoted entry carries the source versions of every chapter it relies on, and `apply_glossary` drops it when any of them is no longer the published source. A name with another partner anywhere in the book abstains. | accepted 167 → 266 (99 book-scope entries, 51 distinct names); applied links 107 → 209; ambiguous candidates unchanged in kind. |
+| Titles, honorifics | A lowercase Vietnamese word and a capitalized English word right before the same name in both editions are recorded as **title candidates** with their anchor names. They are never accepted or applied. | 30 candidates (núi/Mount, vua/Emperor, ông/Lord, đức/Majesty… plus some noise) for review. |
+| Allusions | Not mined: no direct counterpart can be shown from the book, so they stay context only. | unchanged |
+| Phrase recall (21/40) | Not fixed. Of 19 misses, about 9 already return the exact counterpart as the narrowed context but no highlight, and about 7 are cut by a group boundary (the other half of the phrase sits in the neighbouring group). Both need new machinery: phrase-level embedding inside trusted pairs (hundreds of thousands of encodes) or boundary repair across groups with a new word-link stage. | unchanged |
+| LaBSE scores faithful archaic text near 0.5 | Cannot be changed without changing the pinned model. The residual rules recover only pairs that are anchored by confident neighbours. | partly mitigated |
+| Audit is small and not independent | Cannot be fixed by code. 27 more pairs were read, still by the model. | open |
+
+Local checks for this pass: vitest 349, Python 106, typecheck clean, probes unchanged (word 32/40, phrase 21/40, sentence 39/40), chapter-2 regression 8/8, poetry QA metrics identical to the released run, browser 60/60. The data was published again through the worker (all 20 chapters `ready`); the web deployment `dpl_AWeuSL8MMQAarWRFs2VXkaVyJvD5` is unchanged because no web code changed. Post-deploy verification was again skipped by instruction.

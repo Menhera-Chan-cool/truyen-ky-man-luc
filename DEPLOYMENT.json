@@ -6,10 +6,10 @@
   "runtimeSourceCommit": "d4d33381ab51c8d6a048d56f40b4ff91a0183a09",
   "algorithm": "labse-poetry-mbert-3",
   "readyState": "READY",
-  "checkedAt": "2026-11-15T03:11:34.654Z",
+  "checkedAt": "2026-11-15T03:26:12.035Z",
   "region": "sin1",
   "publicArtifacts": 20,
-  "publicArtifactBytes": 9424596,
+  "publicArtifactBytes": 9436181,
   "workflowState": "active",
   "migrationVersion": "20261114071828",
   "state": "READY",
@@ -24,12 +24,12 @@
   },
   "verification": {
     "local": "docs/verification/phrase-alignment-2026-11-15.md",
-    "vitest": 346,
-    "python": 101,
+    "vitest": 349,
+    "python": 106,
     "localBrowser": 60,
     "build": "passed",
     "postDeploy": "skipped by user instruction; no production API, browser or download checks were run for this release",
-    "publishedByWorker": "20 chapters reported ready by the alignment worker (not a lookup verification)"
+    "publishedByWorker": "20 chapters re-published as ready by the alignment worker twice on 2026-11-15 (d4d3338 data, then c548718 data); not a lookup verification"
   },
   "limitations": [
     "No physical phone testing",
@@ -42,5 +42,5 @@
     "deploymentId": "dpl_CiM32z9puvhqnDPk891st6tsaWS9",
     "sourceCommit": "496602b902d457c474b48d1a578c55a96ff41ae8"
   },
-  "alignmentWorkerSourceCommit": "d4d33381ab51c8d6a048d56f40b4ff91a0183a09"
+  "alignmentWorkerSourceCommit": "c54871883743047281ab09a8be4a55aa06eb2429"
 }
