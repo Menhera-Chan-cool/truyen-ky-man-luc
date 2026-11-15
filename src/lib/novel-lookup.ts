@@ -287,10 +287,10 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
 }
 // The footnote of a term names it in both editions: "(n) Hồ Tông Thốc: …" against "(n) Ho Tong Thoc: …". A pair of headwords counts when each stands right before the marker "(n)" of its own prose (the only one in the text);
 // a lookup of one of its terms highlights the other in the context the lookup returned, where it stands exactly once and the lookup did not already highlight it.
-type NoteTerm={vi:string;en:string};
+export type NoteTerm={vi:string;en:string};
 const noteTerms=new WeakMap<AlignmentArtifact,NoteTerm[]>();
 const foldAccents=(s:string)=>s.normalize('NFD').replace(/\p{M}/gu,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase().replace(/[^a-z0-9 ]/g,'').trim();
-function noteTermsOf(a:AlignmentArtifact):NoteTerm[]{
+export function noteTermsOf(a:AlignmentArtifact):NoteTerm[]{
   const known=noteTerms.get(a);if(known)return known;
   const text={vi:a.editions.vi.text,en:a.editions.en.text},out:NoteTerm[]=[];
   const head=(note:string)=>{const m=/^\s*\((\d{1,3})\)\s*([^:：]{1,90})[:：]/u.exec(note);return m?{n:+m[1],word:m[2].replace(/\s*\((?:\?|\d)[^)]*\)\s*/g,' ').trim().replace(/[ .,;]+$/,'')}:null;};

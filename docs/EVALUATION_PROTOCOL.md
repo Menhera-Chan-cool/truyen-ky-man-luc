@@ -454,6 +454,21 @@ By status (answered only): "match" 42 answers, 97.6% hits; "uncertain" 390 answe
 
 The same-chapter figures are in-sample by construction (the pair comes from that chapter's own note); what they show is that the highlight now lands on the term the book itself names. Caveats: a headword can name a term that the prose uses elsewhere in another sense ("Đường" as the Tang dynasty): the exactly-once rule in the returned context is the only guard, and a one-word capitalised headword is not matched by a lowercase selection. Tests 377, typecheck clean. The alignment e2e passed 60 of 60 on six of eight runs of this code; the other two runs had 2 and 1 desktop tests fail at the first lookup panel (not found within 5 s), and the same tests passed on the rerun; the previous code passed 3 of 3 the same day. The lookup output is deterministic and identical on every measured set, and a lookup costs 15–33 ms with and without the rule, so I treat them as cold-start flakes of the dev server.
 
+#### Stress set for the footnote terms: where the term is used elsewhere (2026-11-15)
+
+The risk named above is a headword term used at another place with another sense, where "the other headword stands once in the context" could still be the wrong word. `scripts/align-novel/note-term-eval.ts` lists every story occurrence of every headword term of a chapter's own notes, both directions (137 occurrences: 113 right before the footnote marker, 24 elsewhere), and looks each up before (source `7d10f05`) and after the rule (`59529ec`). The occurrences the rule changed were labelled from the source sentence and the returned context only, before the highlights were read: is the other headword the counterpart of the term at this place? The labels are mine, not a human's (`docs/verification/note-term-stress-2026-11-15.json`).
+
+| | n | Result |
+| --- | ---: | --- |
+| Changed by the rule | 23 | right 20, partly 3, wrong 0 |
+| of which at the footnote marker | 19 | all were abstentions before |
+| of which elsewhere in the story | 4 | before: 3 no answer, 1 partial ("celestial" for "quân thiều"); after: 4 right ("Trần Hy" = "Chen Xi", "Thiên Thai" = "Tiantai", "quân thiều" = "Junshao", "Kiều Sơn" = "Mount Qiao") |
+| Elsewhere, left unchanged | 20 | 10 already highlighted the counterpart, 7 had no counterpart in the context, 3 had it twice |
+
+The three "partly" are about the shape of the pair, not a wrong word: "Lưng thắt ve vàng" (waist-tied golden cicada) against "Golden cicada" in both directions, and "fine steed of Pang Tong" answered with the name "Bàng Thống" alone. The guard worked where the terms really are common words: "đường" (way, road) three times and "kỷ" (era) twice are not matched, because their counterpart ("Crabapple blossom", "Twelve-year cycle") is not in the context, and "Đường" as a capitalised headword is not matched by a lowercase "đường".
+
+Limits. Nothing wrong among 23 changed occurrences bounds the wrong rate at about 13% at 95% confidence (rule of three), which is a weak bound; the set is the whole dictionary of this book, not a sample, and it holds few terms with a second sense. A highlight that already overlaps the counterpart is left as it is, so partial answers stay partial ("Kim tiên" → "Immortal" for "Golden Immortal", "Ban Cơ" → "Ban Ji" for "Ban Ji and Lady Cai"); widening them to the whole counterpart is an open improvement, not made. The only change to the product in this step is that `noteTermsOf` is exported for the script; behaviour is unchanged, so nothing was deployed.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

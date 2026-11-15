@@ -1,0 +1,2308 @@
+{
+ "what": "Stress set for the footnote-term dictionary (source 59529ec): every story occurrence of a headword term of a chapter's own notes, both directions, looked up before (source 7d10f05) and after the rule. The 23 occurrences the rule changed were labelled by Claude (an LLM) from the source sentence and the returned context only, before looking at the highlights: is the counterpart the other edition's term at this place? Not a human check.",
+ "summary": {
+  "occurrences": 137,
+  "atMarker": 113,
+  "elsewhere": 24,
+  "changedByTheRule": 23,
+  "changedAtMarker": 19,
+  "changedElsewhere": 4,
+  "labelsOfChanged": {
+   "right": 20,
+   "partly": 3,
+   "wrong": 0
+  }
+ },
+ "occurrences": [
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Lỗ công",
+   "counterpart": "Duke of Lu",
+   "atMarker": true,
+   "sentence": "đoàn tử đệ đến Quan TrungKhói tan Hàm Cốc cung châu lạnh, (3)Tuyết rã Hồng Môn đấu ngọc không (4)Thua chạy giời xui đường Trạch Tả (5)Quay về đất lấp nẻo Giang Đông (6)Năm năm lăn lộn hoài công cốcCòn được vùi trong mả Lỗ công (7).",
+   "before": [
+    "Duke"
+   ],
+   "after": [
+    "Duke"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Lỗ công",
+   "counterpart": "Duke of Lu",
+   "atMarker": false,
+   "sentence": "Đến ngay Điền Hoành (9) là một gã trẻ con, còn không tham tước của Hán, và hổ thẹn tự sát mà chết; huống ta đường đường một vị bá vương ở nước Sở, lại tự cam nhận lễ Lỗ công hay sao?",
+   "before": [
+    "Duke Lu's"
+   ],
+   "after": [
+    "Duke Lu's"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Duke of Lu",
+   "counterpart": "Lỗ Công",
+   "atMarker": true,
+   "sentence": "Only to end with a paltry burial as the Duke of Lu (7).",
+   "before": [
+    "Lỗ công"
+   ],
+   "after": [
+    "Lỗ công"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "vạn thặng",
+   "counterpart": "Ten thousand chariots",
+   "atMarker": true,
+   "sentence": "Này như Hán làm nên vạn thặng (8) ta cũng làm nên vạn thặng.",
+   "before": [
+    "ten thousand chariots"
+   ],
+   "after": [
+    "ten thousand chariots"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "vạn thặng",
+   "counterpart": "Ten thousand chariots",
+   "atMarker": false,
+   "sentence": "Này như Hán làm nên vạn thặng (8) ta cũng làm nên vạn thặng.",
+   "before": [
+    "ten thousand chariots"
+   ],
+   "after": [
+    "ten thousand chariots"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "ten thousand chariots",
+   "counterpart": "Vạn Thặng",
+   "atMarker": true,
+   "sentence": "Now, as for the Han achieving ten thousand chariots (8), We too achieved ten thousand chariots.",
+   "before": [
+    "vạn thặng"
+   ],
+   "after": [
+    "vạn thặng"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "ten thousand chariots",
+   "counterpart": "Vạn Thặng",
+   "atMarker": false,
+   "sentence": "Now, as for the Han achieving ten thousand chariots (8), We too achieved ten thousand chariots.",
+   "before": [
+    "vạn thặng"
+   ],
+   "after": [
+    "vạn thặng"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Điền Hoành",
+   "counterpart": "Tian Heng",
+   "atMarker": true,
+   "sentence": "Đến ngay Điền Hoành (9) là một gã trẻ con, còn không tham tước của Hán, và hổ thẹn tự sát mà chết; huống ta đường đường một vị bá vương ở nước Sở, lại tự cam nhận lễ Lỗ công hay sao?",
+   "before": [
+    "Tian Heng"
+   ],
+   "after": [
+    "Tian Heng"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Tian Heng",
+   "counterpart": "Điền Hoành",
+   "atMarker": true,
+   "sentence": "Even Tian Heng (9) was but a youngster, yet he disdained titles from the Han and chose to die in shame by his own hand.",
+   "before": [
+    "Điền Hoành"
+   ],
+   "after": [
+    "Điền Hoành"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "con hươu",
+   "counterpart": "The deer of empire",
+   "atMarker": true,
+   "sentence": "Ta lại xin nói để ông rõ: Ngày nhà Tần sổ mất con hươu (11), người ta nổi dậy nhao nhao, tranh nhau bắt lấy.",
+   "before": [
+    "the deer"
+   ],
+   "after": [
+    "the deer"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "the deer of empire",
+   "counterpart": "Con hươu",
+   "atMarker": true,
+   "sentence": "Let Us make it clear to you: when the Qin lost the deer of empire (11) and the masses rose up in uproar, contending to capture it, We raised our armies out of hatred for the Qin.",
+   "before": [],
+   "after": [
+    "con hươu"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Chương Hàm",
+   "counterpart": "Zhang Han",
+   "atMarker": true,
+   "sentence": "giờ vì ghét người Tần mà nổi quân đánh Tần, tháo răng bừa làm giáo, thổi cơm chiêm làm lương, tôi đòi đều là quân, hào kiệt đều là tướng, phá xứ Ngô như hủy tổ kiến, lấy đất Hoài như đốt lông hồng, một trận đánh mà quân Chương Hàm (12) phải tan, hai trận đánh mà miếu Tổ Long (13) phải sụp.",
+   "before": [
+    "Zhang Han's"
+   ],
+   "after": [
+    "Zhang Han's"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Zhang Han",
+   "counterpart": "Chương Hàm",
+   "atMarker": false,
+   "sentence": "With a single battle We shattered Zhang Han's forces (12), and in two battles we brought down the ancestral temple of Zulong (13).",
+   "before": [
+    "Chương Hàm"
+   ],
+   "after": [
+    "Chương Hàm"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Tổ Long",
+   "counterpart": "Zulong",
+   "atMarker": true,
+   "sentence": "răng bừa làm giáo, thổi cơm chiêm làm lương, tôi đòi đều là quân, hào kiệt đều là tướng, phá xứ Ngô như hủy tổ kiến, lấy đất Hoài như đốt lông hồng, một trận đánh mà quân Chương Hàm (12) phải tan, hai trận đánh mà miếu Tổ Long (13) phải sụp.",
+   "before": [
+    "Zulong"
+   ],
+   "after": [
+    "Zulong"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Zulong",
+   "counterpart": "Tổ Long",
+   "atMarker": true,
+   "sentence": "With a single battle We shattered Zhang Han's forces (12), and in two battles we brought down the ancestral temple of Zulong (13).",
+   "before": [
+    "Tổ Long"
+   ],
+   "after": [
+    "Tổ Long"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "flute-players and mat-weavers",
+   "counterpart": "Kẻ thổi kèn dệt chiếu",
+   "atMarker": true,
+   "sentence": "When Heaven decides to aid Han, even flute-players and mat-weavers (14) can achieve success; when Heaven decides to destroy Chu, even those who lift tripods and uproot mountains (15) cannot boast of skill.",
+   "before": [
+    "kẻ thổi kèn, dệt chiếu"
+   ],
+   "after": [
+    "kẻ thổi kèn, dệt chiếu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "á Phụ",
+   "counterpart": "Yafu",
+   "atMarker": true,
+   "sentence": "Phương chi Chung Ly mạnh mẽ, chẳng kém Hoài Âm (16) á Phụ (17) khôn ngoan, thực hơn Nhụ Tử (18).",
+   "before": [],
+   "after": [],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Yafu",
+   "counterpart": "á Phụ",
+   "atMarker": true,
+   "sentence": "Furthermore, Zhongli Mo was mighty, no less than Huaiyin (16), and Yafu (17) was wise, far surpassing Ruzi (18).",
+   "before": [
+    "Hoài Âm (16) á Phụ"
+   ],
+   "after": [
+    "Hoài Âm (16) á Phụ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Vương ế",
+   "counterpart": "Wang Yi",
+   "atMarker": true,
+   "sentence": "Nhưng chỉ vì thương lũ sinh linh, nên mới đem tấm thân tám thước đường đường, ném vào tay lũ Vương ế (20).",
+   "before": [
+    "Wang Yi"
+   ],
+   "after": [
+    "Wang Yi"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Wang Yi",
+   "counterpart": "Vương ế",
+   "atMarker": true,
+   "sentence": "But because We pitied the common people, We cast this magnificent eight-foot body of ours into the hands of a petty fellow like Wang Yi (20).",
+   "before": [
+    "Vương ế"
+   ],
+   "after": [
+    "Vương ế"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Khúc Phụ",
+   "counterpart": "Qufu",
+   "atMarker": false,
+   "sentence": "Sao bằng người Hán: sợ lỗi phận vua tôi thì nghe lời Đổng công làm việc nhân nghĩa, khiến nền nếp đế vương hầu rối mà lại sáng; sợ thất truyền đạo học thì về đất Khúc Phụ, bày lễ thái lao, khiến dòng nguồn thi thư hầu đứt mà lại nối.",
+   "before": [
+    "Qufu"
+   ],
+   "after": [
+    "Qufu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Khúc Phụ",
+   "counterpart": "Qufu",
+   "atMarker": true,
+   "sentence": "Cho nên người ta có câu nói rằng: \"Hán được thiên hạ, không ở cất dùng Tiêu, Trương, mà ở việc để trở (31) của ba quân, gợi lòng trung phẫn các hào kiệt; Hán giữ thiên hạ không ở quy mô rộng lớn mà ở việc thân đến tế ở Khúc Phụ (32), mở nền nương tựa cho đời sau\".",
+   "before": [
+    "Qufu"
+   ],
+   "after": [
+    "Qufu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Qufu",
+   "counterpart": "Khúc Phụ",
+   "atMarker": true,
+   "sentence": "and subject, he heeded the counsel of Master Dong to perform righteous deeds, causing the imperial order to shine bright though nearly eclipsed; fearing the loss and extinction of the scholarly tradition, he traveled to Qufu (32), laid out the grand tailao sacrifice, and restored the nearly severed stream of the Odes and Documents.",
+   "before": [
+    "Khúc Phụ"
+   ],
+   "after": [
+    "Khúc Phụ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Qufu",
+   "counterpart": "Khúc Phụ",
+   "atMarker": false,
+   "sentence": "ing Xiao He and Zhang Liang, but by halting the three armies to arouse the righteous indignation of the heroes; the Han maintained the empire not by vast and grandiose designs, but by personally performing sacrifices at Qufu, laying a foundation of reliance for generations to come.",
+   "before": [
+    "Khúc Phụ"
+   ],
+   "after": [
+    "Khúc Phụ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Cữu",
+   "counterpart": "Cao Qiu",
+   "atMarker": true,
+   "sentence": "Bầy tôi của Đại vương đây có người tên là Cữu (33) tiết cứng như tùng, lòng bền tựa đá, sa cơ không chịu sống nhục, liều mình để được thác mà vinh; nếu không phải nhà vua biết cách chống ngự thì sao có sự tử trung ấy!",
+   "before": [
+    "Qiu"
+   ],
+   "after": [
+    "Qiu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Cao Qiu",
+   "counterpart": "Cữu",
+   "atMarker": true,
+   "sentence": "Among Your Majesty's loyal retainers, there was one named Cao Qiu (33), whose integrity was as unyielding as the pine and whose heart was as steadfast as stone.",
+   "before": [
+    "Cữu (33) tiết"
+   ],
+   "after": [
+    "Cữu (33) tiết"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Truyện",
+   "counterpart": "The classics record",
+   "atMarker": true,
+   "sentence": "Truyện (34) có nói rằng: \"Vua khiến bề tôi lấy lễ, bề tôi thờ vua lấy trung\"; ở Đại vương đây, chính là đã đúng hợp với câu ấy.",
+   "before": [
+    "The"
+   ],
+   "after": [
+    "The"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "The classics record",
+   "counterpart": "Truyện",
+   "atMarker": true,
+   "sentence": "The classics record (34): 'A sovereign commands his ministers with ritual; a minister serves his sovereign with loyalty.",
+   "before": [
+    "Truyện (34) có nói rằng:"
+   ],
+   "after": [
+    "Truyện (34) có nói rằng:"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Trần Hy",
+   "counterpart": "Chen Xi",
+   "atMarker": true,
+   "sentence": "Chứ như kẻ kia, sai Ung Sỉ giữ đất Phong thì Ung Sỉ đầu hàng, (35) sai Trần Hy (36) coi nước Triệu thì Trần Hy làm phản; đạo cương thường hỏi ai là hơn?",
+   "before": [
+    "Chen Xi"
+   ],
+   "after": [
+    "Chen Xi"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "vi",
+   "term": "Trần Hy",
+   "counterpart": "Chen Xi",
+   "atMarker": false,
+   "sentence": "Chứ như kẻ kia, sai Ung Sỉ giữ đất Phong thì Ung Sỉ đầu hàng, (35) sai Trần Hy (36) coi nước Triệu thì Trần Hy làm phản; đạo cương thường hỏi ai là hơn?",
+   "before": [],
+   "after": [
+    "Chen Xi"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 1,
+   "dir": "en",
+   "term": "Chen Xi",
+   "counterpart": "Trần Hy",
+   "atMarker": true,
+   "sentence": "Yet look at that other man: he assigned Yong Chi (35) to guard Feng, and Yong Chi surrendered; he commissioned Chen Xi (36) to watch over Zhao, and Chen Xi rebelled.",
+   "before": [
+    "Trần Hy"
+   ],
+   "after": [
+    "Trần Hy"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 2,
+   "dir": "vi",
+   "term": "đền Trưng Vương",
+   "counterpart": "Trung Queens Shrine",
+   "atMarker": true,
+   "sentence": "Nếu còn nghĩ đến tình xưa thì ngày ấy tháng ấy xin đến chờ thiếp ở cửa đền Trưng Vương (15).",
+   "before": [
+    "Queens Shrine"
+   ],
+   "after": [
+    "Queens Shrine"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 2,
+   "dir": "en",
+   "term": "Trung Queens Shrine",
+   "counterpart": "Đền Trưng Vương",
+   "atMarker": true,
+   "sentence": "If you still remember our old bond, then come on such-and-such a day of such-and-such a month and wait for me at the gate of the Trung Queens Shrine(13).",
+   "before": [
+    "đền Trưng Vương"
+   ],
+   "after": [
+    "đền Trưng Vương"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "chợ Nam Xang",
+   "counterpart": "Nam Xang Market",
+   "atMarker": true,
+   "sentence": "Chàng thường đỗ thuyền ở dưới cầu Liễu Khê rồi đi lại vào chợ Nam Xang (1).",
+   "before": [
+    "Nam Xang market"
+   ],
+   "after": [
+    "Nam Xang market"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "en",
+   "term": "Nam Xang market",
+   "counterpart": "Chợ Nam Xang",
+   "atMarker": true,
+   "sentence": "He would often moor his boat beneath the Lieu Khe bridge and walk from there to the Nam Xang market (1).",
+   "before": [
+    "chợ Nam Xang"
+   ],
+   "after": [
+    "chợ Nam Xang"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "Măng ngọc",
+   "counterpart": "Jade-shoot fingers",
+   "atMarker": true,
+   "sentence": "Măng ngọc (2) vuốt ve nghiêng xuyến trạm,Dải là cởi tháo trút hài thêuMộng tân gối bướm bâng khuâng lạc,Xuân hết cành quyên khắc khoải kêu.",
+   "before": [
+    "My",
+    "fingers"
+   ],
+   "after": [
+    "My",
+    "fingers"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "en",
+   "term": "jade-shoot fingers",
+   "counterpart": "Măng ngọc",
+   "atMarker": true,
+   "sentence": "My jade-shoot fingers (2) set right the pearl bracelet slipping awry;My fragrant silk loosens as I change my embroidered slippers.",
+   "before": [
+    "ngọc",
+    "vuốt ve"
+   ],
+   "after": [
+    "ngọc",
+    "vuốt ve"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "én ngọc",
+   "counterpart": "Jade swallow",
+   "atMarker": true,
+   "sentence": "Đầu cài én ngọc (3) hình nghiêng chếch,Lưng thắt ve vàng (4) dáng ỏe oai.",
+   "before": [],
+   "after": [
+    "jade swallow"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "en",
+   "term": "jade swallow",
+   "counterpart": "én ngọc",
+   "atMarker": true,
+   "sentence": "The jade swallow (3) in my hair is left to slip from my chignon;The golden cicada (4) I dread to tighten around my slender waist.",
+   "before": [],
+   "after": [
+    "én ngọc"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "Lưng thắt ve vàng",
+   "counterpart": "Golden cicada",
+   "atMarker": true,
+   "sentence": "Đầu cài én ngọc (3) hình nghiêng chếch,Lưng thắt ve vàng (4) dáng ỏe oai.",
+   "before": [],
+   "after": [
+    "golden cicada"
+   ],
+   "changed": true,
+   "label": "partly",
+   "note": "the Vietnamese term \"Lưng thắt ve vàng\" (waist-tied golden cicada) is wider than the English headword \"Golden cicada\""
+  },
+  {
+   "chapter": 3,
+   "dir": "en",
+   "term": "golden cicada",
+   "counterpart": "Lưng thắt ve vàng",
+   "atMarker": true,
+   "sentence": "The jade swallow (3) in my hair is left to slip from my chignon;The golden cicada (4) I dread to tighten around my slender waist.",
+   "before": [],
+   "after": [
+    "Lưng thắt ve vàng"
+   ],
+   "changed": true,
+   "label": "partly",
+   "note": "the English term \"golden cicada\" is narrower than the Vietnamese headword \"Lưng thắt ve vàng\""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "đường",
+   "counterpart": "Crabapple blossom",
+   "atMarker": false,
+   "sentence": "Dọc đường, hay gặp một người con gái xinh đẹp, từ Đông thôn đi ra, đằng sau có một ả thị nữ theo hầu.",
+   "before": [
+    "way"
+   ],
+   "after": [
+    "way"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "đường",
+   "counterpart": "Crabapple blossom",
+   "atMarker": false,
+   "sentence": "Chỉ vì ở đường sá vội vàng, không tiện tỏ bày chung khúc.",
+   "before": [
+    "road"
+   ],
+   "after": [
+    "road"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "Đường",
+   "counterpart": "Crabapple blossom",
+   "atMarker": true,
+   "sentence": "Đường (5) lúc nở rồi hồng đượm ướt,Mai khi rã hết trắng chưa phai.",
+   "before": [
+    "Sweetly"
+   ],
+   "after": [
+    "crabapple blossom"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "đường",
+   "counterpart": "Crabapple blossom",
+   "atMarker": false,
+   "sentence": "Song chàng vừa chạy thì người con gái đã cản đường mà bảo:- Chàng đã từ xa lại đây, quyết không có lý nào còn trở về nữa.",
+   "before": [
+    "way"
+   ],
+   "after": [
+    "way"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "en",
+   "term": "crabapple blossom",
+   "counterpart": "Đường",
+   "atMarker": true,
+   "sentence": "Sweetly unfolding, the crabapple blossom (5) flushes crimson and dew-wet;Though sweat melts my plum-blossom makeup, its fairness has not faded.",
+   "before": [],
+   "after": [],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "Dị An",
+   "counterpart": "Yi'an",
+   "atMarker": true,
+   "sentence": "Trung Ngộ rất khen ngợi mà rằng:- Văn tài của nàng, không kém gì Dị An (6) ngày xưa.",
+   "before": [
+    "Yi'an"
+   ],
+   "after": [
+    "Yi'an"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "en",
+   "term": "Yi'an",
+   "counterpart": "Dị An",
+   "atMarker": true,
+   "sentence": "Trung Ngo praised her warmly, saying:\"Your literary talent is no less than that of Yi'an (6) of old.",
+   "before": [
+    "Dị An"
+   ],
+   "after": [
+    "Dị An"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "vi",
+   "term": "Ban Cơ",
+   "counterpart": "Ban Ji and Lady Cai",
+   "atMarker": false,
+   "sentence": "Đời trước những người hay chữ như Ban Cơ, Sái Nữ (7) nay còn gì nữa đâu.",
+   "before": [
+    "Ban Ji"
+   ],
+   "after": [
+    "Ban Ji"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 3,
+   "dir": "en",
+   "term": "Ban Ji and Lady Cai",
+   "counterpart": "Ban Cơ",
+   "atMarker": true,
+   "sentence": "The learned women of former ages, Ban Ji and Lady Cai (7), what remains of them now?",
+   "before": [
+    "Ban Cơ, Sái Nữ"
+   ],
+   "after": [
+    "Ban Cơ, Sái Nữ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 4,
+   "dir": "vi",
+   "term": "kỷ",
+   "counterpart": "Twelve-year cycle",
+   "atMarker": true,
+   "sentence": "Thượng đế khen ngợi, ban cho một người con trai tốt và cho sống lâu thêm hai kỷ (4) nữa.",
+   "before": [
+    "twelve-year"
+   ],
+   "after": [
+    "twelve-year"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 4,
+   "dir": "vi",
+   "term": "kỷ",
+   "counterpart": "Twelve-year cycle",
+   "atMarker": false,
+   "sentence": "- Tính tôi tềnh toàng, lại hay uống rượu, nên Thượng đế ngài quở phạt và đẩy xuống trần đã gần được ba kỷ nay rồi.",
+   "before": [
+    "twelve-year"
+   ],
+   "after": [
+    "twelve-year"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 4,
+   "dir": "vi",
+   "term": "kỷ",
+   "counterpart": "Twelve-year cycle",
+   "atMarker": false,
+   "sentence": "Nay kỷ đầy đã mãn, lại bổ vào chức cũ ở chốn Tinh tào; vì cùng ông có tình cố cựu, nên đến qua thăm một chút.",
+   "before": [
+    "term"
+   ],
+   "after": [
+    "term"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 4,
+   "dir": "en",
+   "term": "Lu Tong and Lu Yu",
+   "counterpart": "Lư Đồng, Lục Vũ",
+   "atMarker": true,
+   "sentence": "Thien Tich was exceedingly fond of tea and often likened himself to Lu Tong and Lu Yu (6) of old.",
+   "before": [
+    "Lư Đồng Lục Vũ (6) đời"
+   ],
+   "after": [
+    "Lư Đồng Lục Vũ (6) đời"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 4,
+   "dir": "vi",
+   "term": "huyện Tiên Du",
+   "counterpart": "Tien Du District",
+   "atMarker": true,
+   "sentence": "Nhân nghe ở huyện Tiên Du (7) có Trần tiên sinh dạy học trò đến mấy trăm người, bèn cắp sách đến theo học, ở ngụ tại một nhà trong xóm Thanh Lân.",
+   "before": [
+    "Tien Du district"
+   ],
+   "after": [
+    "Tien Du district"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 4,
+   "dir": "en",
+   "term": "Tien Du district",
+   "counterpart": "Huyện Tiên Du",
+   "atMarker": true,
+   "sentence": "Hearing that in Tien Du district (7) there was a certain Master Tran who taught several hundred students, he gathered his books and went to study under him, lodging at a house in the hamlet of Thanh Lan.",
+   "before": [
+    "huyện Tiên Du"
+   ],
+   "after": [
+    "huyện Tiên Du"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 4,
+   "dir": "vi",
+   "term": "đông sàng",
+   "counterpart": "Eastern couch",
+   "atMarker": true,
+   "sentence": "Xóm ấy có một nhà giàu có họ Hoàng, thấy Sinh mặt mũi khôi ngô, văn chương thông thái, có cái ý muốn kén vào ngôi đông sàng (8).",
+   "before": [
+    "him for the eastern couch"
+   ],
+   "after": [
+    "him for the eastern couch"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 4,
+   "dir": "en",
+   "term": "eastern couch",
+   "counterpart": "Đông sàng",
+   "atMarker": true,
+   "sentence": "In that hamlet lived a wealthy family named Hoang, who, seeing that the young scholar was handsome of countenance and accomplished in letters, conceived the wish to claim him for the eastern couch (8).",
+   "before": [
+    "đông sàng"
+   ],
+   "after": [
+    "đông sàng"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 5,
+   "dir": "vi",
+   "term": "Nguyên tiêu",
+   "counterpart": "Lantern Festival",
+   "atMarker": true,
+   "sentence": "Gặp đêm Nguyên tiêu(6), người ở kinh thành kéo nhau đi chơi vui rầm rập, hai nàng mời Sinh:- Nhà chúng em chẳng xa xăm gì mà chàng chưa hề bước chân đến, thật là đáng trách.",
+   "before": [
+    "Lantern Festival"
+   ],
+   "after": [
+    "Lantern Festival"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 5,
+   "dir": "en",
+   "term": "Lantern Festival",
+   "counterpart": "Nguyên tiêu",
+   "atMarker": true,
+   "sentence": "When the night of the Lantern Festival (6) arrived and the people of the capital thronged the streets in boisterous revelry, the two maidens invited the young scholar:\"Our home lies no great distance from here, yet you have never once set foot in it, and for that you are much to blame.",
+   "before": [
+    "Nguyên"
+   ],
+   "after": [
+    "Nguyên"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 5,
+   "dir": "vi",
+   "term": "Hàn Hoành",
+   "counterpart": "Han Hong's willow",
+   "atMarker": true,
+   "sentence": "Chỉ mong chàng sau buổi về quê, tình cũ sẽ vấn vương không dứt, sớm dẹp lòng quyến luyến hương thổ để lại tính kế tìm hoa, sẽ xem cây liễu Hàn Hoành(8), vẫn chờ đợi với những cành dài ngày xưa, cây đào Thôi Hộ(9), vẫn chào đón những hoa cười năm ngoái.",
+   "before": [
+    "Han Hong's"
+   ],
+   "after": [
+    "Han Hong's"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 5,
+   "dir": "en",
+   "term": "Han Hong's willow",
+   "counterpart": "Hàn Hoành",
+   "atMarker": true,
+   "sentence": "Then you will find Han Hong's willow (8) still waiting with the long branches of old, and Cui Hu's peach tree (9) still welcoming you with last year's smiling blossoms.",
+   "before": [
+    "liễu Hàn Hoành"
+   ],
+   "after": [
+    "liễu Hàn Hoành"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 5,
+   "dir": "vi",
+   "term": "xem hoa",
+   "counterpart": "View the imperial flowers",
+   "atMarker": true,
+   "sentence": "Chỉ xin chàng từ đây bồi dưỡng thân thể, chăm chỉ bút nghiên, ghép liễu (13) thành công, xem hoa (14) thỏa nguyện, thì chúng em dù vùi thân trong chỗ ngòi lạch cũng chẳng chút phàn nàn.",
+   "before": [
+    "view the imperial flowers"
+   ],
+   "after": [
+    "view the imperial flowers"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 5,
+   "dir": "en",
+   "term": "view the imperial flowers",
+   "counterpart": "Xem hoa",
+   "atMarker": false,
+   "sentence": "May your toil over woven willow leaves be crowned with success (13), and may you view the imperial flowers to your heart's content (14).",
+   "before": [
+    "xem hoa"
+   ],
+   "after": [
+    "xem hoa"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "vi",
+   "term": "chùa Phật Tích",
+   "counterpart": "Phat Tich Pagoda",
+   "atMarker": true,
+   "sentence": "Hàn Than sợ, phải cạo trọc đầu và mặc đồ nâu sồng, trốn đến tu ở chùa Phật Tích (4), giảng kinh thuyết kệ, chỉ mấy tháng đã làu thông lắm.",
+   "before": [
+    "Phat Tich Pagoda"
+   ],
+   "after": [
+    "Phat Tich Pagoda"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "en",
+   "term": "Phat Tich Pagoda",
+   "counterpart": "Chùa Phật Tích",
+   "atMarker": true,
+   "sentence": "Seized with fear, she shaved her head, put on the coarse brown robe of a nun, and fled to Phat Tich Pagoda (4) to take up the religious life.",
+   "before": [
+    "Phật Tích"
+   ],
+   "after": [
+    "Phật Tích"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "vi",
+   "term": "Đâu Suất",
+   "counterpart": "Tushita",
+   "atMarker": true,
+   "sentence": "Nhật sáng mây lành, nghển đầu đã tựa nương dưới trời Đâu Suất (7),",
+   "before": [],
+   "after": [
+    "Tushita"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "en",
+   "term": "Tushita",
+   "counterpart": "Đâu Suất",
+   "atMarker": true,
+   "sentence": "Now, under a bright sun and auspicious clouds, she lifts her head and takes refuge beneath the heaven of Tushita (7).",
+   "before": [],
+   "after": [
+    "Đâu Suất"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "vi",
+   "term": "Lá bối",
+   "counterpart": "Pattra leaves",
+   "atMarker": true,
+   "sentence": "Lá bối (9) tụng kinh, còn thoảng âm vang trước nóc (10).",
+   "before": [
+    "Chanting"
+   ],
+   "after": [
+    "pattra leaves"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "en",
+   "term": "pattra leaves",
+   "counterpart": "Lá bối",
+   "atMarker": true,
+   "sentence": "Chanting sutras from pattra leaves (9), her voice still lingers and echoes among the rafters (10).",
+   "before": [],
+   "after": [
+    "Lá bối"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "vi",
+   "term": "Tầm Dương",
+   "counterpart": "Xunyang",
+   "atMarker": true,
+   "sentence": "Bến Tầm Dương (11) không đến gẩy tỳ bà,",
+   "before": [
+    "Xunyang"
+   ],
+   "after": [
+    "Xunyang"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "en",
+   "term": "Xunyang",
+   "counterpart": "Tầm Dương",
+   "atMarker": false,
+   "sentence": "She no longer goes to the Xunyang ferry (11) to pluck the pipa.",
+   "before": [
+    "Tầm Dương"
+   ],
+   "after": [
+    "Tầm Dương"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "vi",
+   "term": "Hàng Quận",
+   "counterpart": "Hangzhou",
+   "atMarker": true,
+   "sentence": "Chùa Hàng Quận (12) lại vào nghiền kinh kệ.",
+   "before": [
+    "Hangzhou"
+   ],
+   "after": [
+    "Hangzhou"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "en",
+   "term": "Hangzhou",
+   "counterpart": "Hàng Quận",
+   "atMarker": true,
+   "sentence": "Instead she enters a temple in Hangzhou (12) to pore over sutras and gathas.",
+   "before": [
+    "Hàng Quận"
+   ],
+   "after": [
+    "Hàng Quận"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "vi",
+   "term": "chùa Lệ Kỳ",
+   "counterpart": "Le Ky Temple",
+   "atMarker": true,
+   "sentence": "Nghe chùa Lệ Kỳ (15) ở hạt Hải Dương là một nơi nước tú non kỳ, phong cảnh tuyệt đẹp, trụ trì có sư già Pháp Vân và sư bác Vô Kỷ, bèn đến chùa xin bái yết.",
+   "before": [
+    "Le Ky Temple"
+   ],
+   "after": [
+    "Le Ky Temple"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "en",
+   "term": "Le Ky Temple",
+   "counterpart": "Chùa Lệ Kỳ",
+   "atMarker": true,
+   "sentence": "She had heard that Le Ky Temple (15) in the district of Hai Duong was a place of graceful waters and wondrous hills, with scenery of surpassing beauty, and that it was presided over by the aged master Phap Van and the senior monk Vo Ky.",
+   "before": [
+    "Lệ Kỳ"
+   ],
+   "after": [
+    "Lệ Kỳ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "vi",
+   "term": "núi Phượng Hoàng",
+   "counterpart": "Phuong Hoang Mountain",
+   "atMarker": false,
+   "sentence": "Pháp Vân lập tức dời lên ở tận trên đỉnh núi Phượng Hoàng.",
+   "before": [
+    "Mount Phuong Hoang"
+   ],
+   "after": [
+    "Mount Phuong Hoang"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "vi",
+   "term": "núi Phượng Hoàng",
+   "counterpart": "Phuong Hoang Mountain",
+   "atMarker": true,
+   "sentence": "Tiểu đồng nhân trỏ lên ngọn núi Phượng Hoàng (19) mà bảo:",
+   "before": [
+    "Phuong Hoang Mountain"
+   ],
+   "after": [
+    "Phuong Hoang Mountain"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 7,
+   "dir": "en",
+   "term": "Phuong Hoang Mountain",
+   "counterpart": "Núi Phượng Hoàng",
+   "atMarker": true,
+   "sentence": "Then the acolyte pointed up toward the peak of Phuong Hoang Mountain (19) and said:\"The master lives up on that mountain over there.",
+   "before": [
+    "Phượng Hoàng"
+   ],
+   "after": [
+    "Phượng Hoàng"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 9,
+   "dir": "vi",
+   "term": "Kim tiên",
+   "counterpart": "Golden Immortal",
+   "atMarker": true,
+   "sentence": "Ngồi xong, có tiếng truyền hô là Kim tiên (11) đã đến, mọi người đều bước xuống đón cúi lạy chào.",
+   "before": [
+    "Golden Immortal"
+   ],
+   "after": [
+    "Golden Immortal"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 9,
+   "dir": "vi",
+   "term": "Kim tiên",
+   "counterpart": "Golden Immortal",
+   "atMarker": false,
+   "sentence": "Bà Kim tiên nói:- Ta ở trong chốn lâu thành trên trời, chầu hầu cạnh đức Thượng đế, mênh mang trần hải, chưa từng đặt bước xuống bao giờ.",
+   "before": [
+    "Immortal"
+   ],
+   "after": [
+    "Immortal"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 9,
+   "dir": "en",
+   "term": "Golden Immortal",
+   "counterpart": "Kim tiên",
+   "atMarker": true,
+   "sentence": "When everyone was seated, a herald called out that the Golden Immortal (11) had arrived, and all of them came down to greet her with deep bows.",
+   "before": [
+    "Kim"
+   ],
+   "after": [
+    "Kim"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 9,
+   "dir": "en",
+   "term": "Golden Immortal",
+   "counterpart": "Kim tiên",
+   "atMarker": false,
+   "sentence": "\"The Golden Immortal said:\"I dwell in the towered city of heaven, attending at the side of the Lord on High, and never once have I set foot in the boundless sea of dust below.",
+   "before": [
+    "Kim tiên"
+   ],
+   "after": [
+    "Kim tiên"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 9,
+   "dir": "en",
+   "term": "Min and Gui",
+   "counterpart": "Mân, Quế",
+   "atMarker": true,
+   "sentence": "VBeyond the clouds, the fairy isles flicker into view;O'er Min and Gui (25) the heavens stretch, endless through and through.",
+   "before": [
+    "Mận",
+    "Quế (25) phương"
+   ],
+   "after": [
+    "Mận",
+    "Quế (25) phương"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 9,
+   "dir": "vi",
+   "term": "đà",
+   "counterpart": "Alligator watch-drum",
+   "atMarker": true,
+   "sentence": "Khí lành quanh quất phủ buồng xuân,Phương trượng (26) non xa, Nhược thủy (27) gầnDứt tiếng canh đà (28) trời sắp sáng,Lòng quê theo rõi áng mây Tần.",
+   "before": [],
+   "after": [],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 9,
+   "dir": "en",
+   "term": "alligator watch-drum",
+   "counterpart": "Đà",
+   "atMarker": true,
+   "sentence": "The alligator watch-drum (28) ceases now; the dawn is drawing nigh;At the first cockcrow, where now strays my homesick, yearning sigh?",
+   "before": [
+    "tiếng"
+   ],
+   "after": [
+    "tiếng"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 10,
+   "dir": "vi",
+   "term": "Tử đồng",
+   "counterpart": "Zitong",
+   "atMarker": true,
+   "sentence": "Đức Đế quân đây ngài khen là có bụng tốt tâu xin cho làm chức trực lại ở cửa Tử đồng (2).",
+   "before": [
+    "Zitong"
+   ],
+   "after": [
+    "Zitong"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 10,
+   "dir": "en",
+   "term": "Zitong",
+   "counterpart": "Tử đồng",
+   "atMarker": true,
+   "sentence": "The Imperial Lord commended this good heart of mine and petitioned Heaven to appoint me a clerk-in-attendance at the court of Zitong (2).",
+   "before": [
+    "Tử đồng"
+   ],
+   "after": [
+    "Tử đồng"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 10,
+   "dir": "vi",
+   "term": "sư tư",
+   "counterpart": "Tutor",
+   "atMarker": true,
+   "sentence": "- Thưa thầy, ông mỗ ở ngôi trọng thần mà tham lam không chán, ông mỗ làm chức sư tư (5) mà mô phạm không đủ, ông mỗ coi lễ mà lễ nhiều thiếu thốn, ông mỗ chăn dân mà dân bị tai hại, ông mỗ chấm văn mà lấy đỗ thiên vị, ông mỗ trị ngục mà buộc tội oan uổng; lại còn những người lúc thường bàn nói thì môi mép bẻo lẻo, đến lúc trù tính, quyết địn",
+   "before": [],
+   "after": [
+    "tutor"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 10,
+   "dir": "en",
+   "term": "tutor",
+   "counterpart": "Sư tư",
+   "atMarker": true,
+   "sentence": "Another serves as tutor (5), yet falls short as a model for others.",
+   "before": [
+    "chức sư"
+   ],
+   "after": [
+    "chức sư"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 11,
+   "dir": "vi",
+   "term": "Sơn ngu",
+   "counterpart": "Forester of the Mountains",
+   "atMarker": true,
+   "sentence": "Cớ sao lại đi săn gấu bắt thỏ, tranh cả công việc của chức Sơn ngu (9), như vậy!",
+   "before": [],
+   "after": [
+    "Forester of the Mountains"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 11,
+   "dir": "en",
+   "term": "Forester of the Mountains",
+   "counterpart": "Sơn ngu",
+   "atMarker": true,
+   "sentence": "Why, then, does he go about hunting bears and chasing hares, taking over the very work of the Forester of the Mountains (9)?",
+   "before": [],
+   "after": [
+    "Sơn ngu"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 11,
+   "dir": "vi",
+   "term": "Bàng Thống",
+   "counterpart": "Fine steed of Pang Tong",
+   "atMarker": true,
+   "sentence": "Sao các ông không đốt bỏ tơi nón, từ giã cá tôm, rướn mình con rồng ở Nam Dương (18), đuổi vó ngựa ký của Bàng Thống (19), lập công với đương thế, để tiếng về đời sau.",
+   "before": [
+    "Pang"
+   ],
+   "after": [
+    "Pang"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 11,
+   "dir": "en",
+   "term": "fine steed of Pang Tong",
+   "counterpart": "Bàng Thống",
+   "atMarker": true,
+   "sentence": "Why not burn your straw capes and conical hats, bid farewell to fish and shrimp, rise up like the dragon of Nanyang (18), and gallop after the fine steed of Pang Tong (19)?",
+   "before": [],
+   "after": [
+    "Bàng Thống"
+   ],
+   "changed": true,
+   "label": "partly",
+   "note": "the English phrase \"fine steed of Pang Tong\" is a whole phrase; the dictionary pair gives only the name \"Bàng Thống\""
+  },
+  {
+   "chapter": 12,
+   "dir": "vi",
+   "term": "Trường An",
+   "counterpart": "Chang'an",
+   "atMarker": true,
+   "sentence": "Trông mảnh trăng Trường An (2), nhanh tay đập áo rét, ngắm liễu tàn rủ bóng động nỗi niềm biên ải xa xôi.",
+   "before": [
+    "Chang'an"
+   ],
+   "after": [
+    "Chang'an"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 12,
+   "dir": "en",
+   "term": "Chang'an",
+   "counterpart": "Trường An",
+   "atMarker": true,
+   "sentence": "Gazing upon the distant moon of Chang'an (2), my hands swiftly beat the winter garments; beholding the drooping withered willows stirs deep sorrows of the faraway frontiers.",
+   "before": [
+    "Trường An"
+   ],
+   "after": [
+    "Trường An"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 12,
+   "dir": "vi",
+   "term": "núi Vọng Phu",
+   "counterpart": "Mount Vong Phu",
+   "atMarker": false,
+   "sentence": "Nay đã bình rơi trâm gãy, mây tạnh mưa tan, sen rũ trong ao, liễu tàn trước gió; khóc tuyết bông hoa gãy cuống, kêu xuân cái én lìa màn, nước thẳm buồm xa, đâu còn thể lại lên núi Vọng Phu kia nữa (3).",
+   "before": [
+    "Mount Vong Phu"
+   ],
+   "after": [
+    "Mount Vong Phu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 12,
+   "dir": "en",
+   "term": "Mount Vong Phu",
+   "counterpart": "Núi Vọng Phu",
+   "atMarker": true,
+   "sentence": "With deep waters and distant sails, how could I ever climb Mount Vong Phu (3) anew?",
+   "before": [
+    "Vọng Phu"
+   ],
+   "after": [
+    "Vọng Phu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 12,
+   "dir": "vi",
+   "term": "ngọc Mỵ Nương",
+   "counterpart": "Jade of My Nuong",
+   "atMarker": true,
+   "sentence": "Thiếp nếu đoan trang giữ tiết, trinh bạch gìn lòng, vào nước xin làm ngọc Mỵ Nương (5), xuống đất xin làm cỏ Ngu Mỹ (6).",
+   "before": [
+    "jade of My Nuong"
+   ],
+   "after": [
+    "jade of My Nuong"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 12,
+   "dir": "en",
+   "term": "jade of My Nuong",
+   "counterpart": "Ngọc Mỵ Nương",
+   "atMarker": true,
+   "sentence": "If I have maintained my virtue in chastity and guarded my heart in purity, upon entering the water I shall become the jade of My Nuong (5), and upon the earth I shall become the grass of Lady Yu (6).",
+   "before": [
+    "ngọc Mỵ Nương"
+   ],
+   "after": [
+    "ngọc Mỵ Nương"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 12,
+   "dir": "vi",
+   "term": "cỏ Ngu Mỹ",
+   "counterpart": "The grass of Lady Yu",
+   "atMarker": true,
+   "sentence": "Thiếp nếu đoan trang giữ tiết, trinh bạch gìn lòng, vào nước xin làm ngọc Mỵ Nương (5), xuống đất xin làm cỏ Ngu Mỹ (6).",
+   "before": [
+    "grass of Lady Yu"
+   ],
+   "after": [
+    "grass of Lady Yu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 12,
+   "dir": "en",
+   "term": "the grass of Lady Yu",
+   "counterpart": "Cỏ Ngu Mỹ",
+   "atMarker": true,
+   "sentence": "If I have maintained my virtue in chastity and guarded my heart in purity, upon entering the water I shall become the jade of My Nuong (5), and upon the earth I shall become the grass of Lady Yu (6).",
+   "before": [
+    "cỏ Ngu Mỹ"
+   ],
+   "after": [
+    "cỏ Ngu Mỹ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 12,
+   "dir": "vi",
+   "term": "Xích Hỗn",
+   "counterpart": "Chich Hon",
+   "atMarker": true,
+   "sentence": "Hôm sau, Linh Phi lấy một cái túi bằng lụa tía đựng mười hạt minh châu, sai Xích Hỗn (12) sứ giả đưa Phan ra khỏi nước; Vũ nương cũng đưa gửi một chiếc hoa vàng mà dặn:- Nhờ nói hộ với chàng Trương, nếu còn nhớ chút tình xưa, nên lập một đàn giải oan ở bến sông, đốt cây thần đăng chiếu xuống nước, tôi sẽ hiện về.",
+   "before": [
+    "Chich Hon"
+   ],
+   "after": [
+    "Chich Hon"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 12,
+   "dir": "en",
+   "term": "Chich Hon",
+   "counterpart": "Xích Hỗn",
+   "atMarker": true,
+   "sentence": "\" On the following day, Linh Phi presented a purple silk pouch filled with ten bright pearls, instructing the messenger Chich Hon (12) to escort Phan out of the realm.",
+   "before": [
+    "Xích Hỗn (12) sứ"
+   ],
+   "after": [
+    "Xích Hỗn (12) sứ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 15,
+   "dir": "vi",
+   "term": "quân Ngô",
+   "counterpart": "The Ngo army",
+   "atMarker": true,
+   "sentence": "Sau khi quân Ngô(3) lui, dân trở về phục nghiệp, có viên quan là Văn Tư Lập đến trị huyện ấy, thấy những cảnh hoang tàn đổ nát bèn róng rả dân đinh các xã, đánh tranh ken nứa mà sửa chữa lại ít nhiều.",
+   "before": [],
+   "after": [
+    "the Ngo army"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 15,
+   "dir": "en",
+   "term": "the Ngo army",
+   "counterpart": "Quân Ngô",
+   "atMarker": true,
+   "sentence": "After the Ngo army (3) withdrew and the people returned to take up their old livelihoods, an official named Van Tu Lap came to govern the district.",
+   "before": [],
+   "after": [
+    "quân Ngô"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 15,
+   "dir": "vi",
+   "term": "huyện Kim Thành",
+   "counterpart": "Kim Thanh District",
+   "atMarker": true,
+   "sentence": "Tư Lập chẳng biết làm sao được; nghe Vương tiên sinh ở huyện Kim Thành(4) là người giỏi bói dịch, bèn đến bói một quẻ xem sao.",
+   "before": [
+    "Kim Thanh district"
+   ],
+   "after": [
+    "Kim Thanh district"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 15,
+   "dir": "en",
+   "term": "Kim Thanh district",
+   "counterpart": "Huyện Kim Thành",
+   "atMarker": true,
+   "sentence": "Hearing that a certain Master Vuong of Kim Thanh district (4) was well versed in divination by the Book of Changes, he went to have a hexagram cast.",
+   "before": [
+    "huyện Kim Thành"
+   ],
+   "after": [
+    "huyện Kim Thành"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 15,
+   "dir": "vi",
+   "term": "núi An Phụ",
+   "counterpart": "Mount An Phu",
+   "atMarker": true,
+   "sentence": "Hôm qua nghe nói ở núi An Phụ(5) có nhiều giống nai, báo, thỏ tốt nên nay định đến để săn, nào có biết lập đàn thầy pháp, bắt ma vô hình là công việc thế nào.",
+   "before": [
+    "Mount An Phu"
+   ],
+   "after": [
+    "Mount An Phu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 15,
+   "dir": "en",
+   "term": "Mount An Phu",
+   "counterpart": "Núi An Phụ",
+   "atMarker": true,
+   "sentence": "Yesterday I heard that Mount An Phu (5) is full of fine deer, leopards, and hares, so I meant to go there today to hunt.",
+   "before": [
+    "An Phụ"
+   ],
+   "after": [
+    "An Phụ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 15,
+   "dir": "vi",
+   "term": "Hổ đầu tướng quân",
+   "counterpart": "General Tiger-Head",
+   "atMarker": true,
+   "sentence": "Song đêm nay, trời rét, nước lạnh, khó lòng ở lâu chỗ này được, chi bằng lên quách vườn mía mà bắt chước Hổ đầu tướng quân(6) ngày xưa.",
+   "before": [
+    "General Tiger-Head"
+   ],
+   "after": [
+    "General Tiger-Head"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 15,
+   "dir": "en",
+   "term": "General Tiger-Head",
+   "counterpart": "Hổ đầu tướng quân",
+   "atMarker": true,
+   "sentence": "Why not go up to the sugarcane field and do as General Tiger-Head (6) did long ago?",
+   "before": [
+    "Hổ đầu tướng"
+   ],
+   "after": [
+    "Hổ đầu tướng"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 16,
+   "dir": "vi",
+   "term": "chùa tháp Báo Thiên",
+   "counterpart": "Bao Thien Pagoda Tower",
+   "atMarker": true,
+   "sentence": "Gặp ngày mồng một đầu năm, Thúy Tiêu rủ mấy người bạn gái đến chùa tháp Báo Thiên (6) dâng hương lễ Phật.",
+   "before": [
+    "Bao Thien Pagoda Tower"
+   ],
+   "after": [
+    "Bao Thien Pagoda Tower"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 16,
+   "dir": "en",
+   "term": "Bao Thien Pagoda Tower",
+   "counterpart": "Chùa tháp Báo Thiên",
+   "atMarker": true,
+   "sentence": "On the first day of the new year, Thuy Tieu invited several of her women friends to go with her to the Bao Thien Pagoda Tower (6) to burn incense and pay homage to the Buddha.",
+   "before": [
+    "Báo Thiên"
+   ],
+   "after": [
+    "Báo Thiên"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 16,
+   "dir": "vi",
+   "term": "Lâm Xuyên",
+   "counterpart": "Linchuan brush",
+   "atMarker": true,
+   "sentence": "Nàng được thư, bèn giở giấy Tiết Đào (9) dấp bút Lâm Xuyên (10) viết một bức thư để trả lời.",
+   "before": [
+    "Xue",
+    "Linchuan"
+   ],
+   "after": [
+    "Xue",
+    "Linchuan"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 16,
+   "dir": "en",
+   "term": "Linchuan brush",
+   "counterpart": "Lâm Xuyên",
+   "atMarker": true,
+   "sentence": "When she received the letter, she unfolded a sheet of Xue Tao paper (9), wet a Linchuan brush (10), and wrote a reply.",
+   "before": [
+    "bút Lâm Xuyên"
+   ],
+   "after": [
+    "bút Lâm Xuyên"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 16,
+   "dir": "vi",
+   "term": "Thiên Thai",
+   "counterpart": "Tiantai",
+   "atMarker": false,
+   "sentence": "Thiên Thai một cuộc kỳ phùng (15),Thú vui lửa đượm hương nồng chưa bao.",
+   "before": [],
+   "after": [
+    "Tiantai"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 16,
+   "dir": "en",
+   "term": "Tiantai",
+   "counterpart": "Thiên Thai",
+   "atMarker": true,
+   "sentence": "Meeting my guest at Tiantai (15), I had not yet tasted the fullness of our joy.",
+   "before": [],
+   "after": [
+    "Thiên Thai"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 16,
+   "dir": "vi",
+   "term": "tiếng ngọc kha",
+   "counterpart": "Jade bridle pendants",
+   "atMarker": true,
+   "sentence": "Nàng toan họa hai bài thơ ấy, nhưng đã nghe thấy tiếng ngọc kha (20) về đến cổng rồi, thành ra không thể họa và đề được nữa.",
+   "before": [
+    "the jingle of jade bridle"
+   ],
+   "after": [
+    "the jingle of jade bridle"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 16,
+   "dir": "en",
+   "term": "jade bridle pendants",
+   "counterpart": "Tiếng ngọc kha",
+   "atMarker": true,
+   "sentence": "She was about to write answering verses to both poems when the jingle of jade bridle pendants (20) sounded at the gate, and so she could neither compose her replies nor set them upon the wall.",
+   "before": [
+    "ngọc kha"
+   ],
+   "after": [
+    "ngọc kha"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 18,
+   "dir": "vi",
+   "term": "phủ Thiên Trường",
+   "counterpart": "Thien Truong Prefecture",
+   "atMarker": true,
+   "sentence": "Lặn lội hàng tuần mới đến cửa bể Thần Phù, nghe tướng giặc Lã Nghị bắt cướp mấy trăm phụ nữ hiện đóng giữ ở phủ Thiên Trường(14) trơ trọi không có quân ứng viện, Sinh đoán chắc Lệ Nương cũng ở trong ấy.",
+   "before": [
+    "Thien Truong prefecture"
+   ],
+   "after": [
+    "Thien Truong prefecture"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 18,
+   "dir": "vi",
+   "term": "phủ Thiên Trường",
+   "counterpart": "Thien Truong Prefecture",
+   "atMarker": false,
+   "sentence": "Bài sách ấy dâng lên, vua Giản Định xem mà khen là người giỏi, cấp cho năm trăm quân, sai đi đánh phủ Thiên Trường.",
+   "before": [
+    "Thien Truong Prefecture"
+   ],
+   "after": [
+    "Thien Truong Prefecture"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 18,
+   "dir": "en",
+   "term": "Thien Truong prefecture",
+   "counterpart": "Phủ Thiên Trường",
+   "atMarker": true,
+   "sentence": "There he heard that the enemy general Lu Yi had carried off several hundred women and was now holding Thien Truong prefecture (14), cut off and without reinforcements.",
+   "before": [
+    "phủ Thiên Trường"
+   ],
+   "after": [
+    "phủ Thiên Trường"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 18,
+   "dir": "en",
+   "term": "Thien Truong Prefecture",
+   "counterpart": "Phủ Thiên Trường",
+   "atMarker": false,
+   "sentence": "He granted him five hundred soldiers and sent him to attack Thien Truong Prefecture.",
+   "before": [
+    "Thiên Trường"
+   ],
+   "after": [
+    "Thiên Trường"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 18,
+   "dir": "en",
+   "term": "Mu Sheng",
+   "counterpart": "Mộc Thạnh",
+   "atMarker": true,
+   "sentence": "Mu Sheng (17), spreading his wings like a rapacious owl, loosed his evil and sent blades and arrows clashing far and wide.",
+   "before": [
+    "Trương Phụ"
+   ],
+   "after": [
+    "Trương Phụ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 18,
+   "dir": "vi",
+   "term": "Yên Kinh",
+   "counterpart": "Yanjing",
+   "atMarker": true,
+   "sentence": "Chợt ở Yên Kinh (32) có chiếu thư rút quân ban xuống, Trương Phụ đốc xuất các quân sắp sửa kéo về.",
+   "before": [
+    "Yanjing"
+   ],
+   "after": [
+    "Yanjing"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 18,
+   "dir": "en",
+   "term": "Yanjing",
+   "counterpart": "Yên Kinh",
+   "atMarker": true,
+   "sentence": "Suddenly an imperial edict came down from Yanjing (32) recalling the army, and Zhang Fu began marshaling his forces for the march home.",
+   "before": [
+    "Yên Kinh"
+   ],
+   "after": [
+    "Yên Kinh"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "vi",
+   "term": "quân thiều",
+   "counterpart": "Junshao",
+   "atMarker": false,
+   "sentence": "Dạ lai do tác quân thiều mộng,Trướng vọng Kiều Sơn chức lệ cân.",
+   "before": [
+    "celestial"
+   ],
+   "after": [
+    "Junshao"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "vi",
+   "term": "Quân thiều",
+   "counterpart": "Junshao",
+   "atMarker": true,
+   "sentence": "Quân thiều (6) đêm vắng mơ thường thấy,Xa ngóng Kiều Sơn (7) lệ mấy hàng.",
+   "before": [
+    "In",
+    "celestial"
+   ],
+   "after": [
+    "Junshao"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "en",
+   "term": "Junshao",
+   "counterpart": "Quân thiều",
+   "atMarker": true,
+   "sentence": "In the hush of night I still dream of the celestial strains of Junshao (6),And gazing in sorrow toward Mount Qiao (7), my tears weave a soaked kerchief.",
+   "before": [],
+   "after": [
+    "Quân thiều"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "vi",
+   "term": "Kiều Sơn",
+   "counterpart": "Mount Qiao",
+   "atMarker": false,
+   "sentence": "Dạ lai do tác quân thiều mộng,Trướng vọng Kiều Sơn chức lệ cân.",
+   "before": [],
+   "after": [
+    "Mount Qiao"
+   ],
+   "changed": true,
+   "label": "right",
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "vi",
+   "term": "Kiều Sơn",
+   "counterpart": "Mount Qiao",
+   "atMarker": true,
+   "sentence": "Quân thiều (6) đêm vắng mơ thường thấy,Xa ngóng Kiều Sơn (7) lệ mấy hàng.",
+   "before": [
+    "Mount Qiao"
+   ],
+   "after": [
+    "Mount Qiao"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "en",
+   "term": "Mount Qiao",
+   "counterpart": "Kiều Sơn",
+   "atMarker": true,
+   "sentence": "In the hush of night I still dream of the celestial strains of Junshao (6),And gazing in sorrow toward Mount Qiao (7), my tears weave a soaked kerchief.",
+   "before": [
+    "ngóng Kiều Sơn (7) lệ"
+   ],
+   "after": [
+    "ngóng Kiều Sơn (7) lệ"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "vi",
+   "term": "Lục Châu",
+   "counterpart": "Luzhu",
+   "atMarker": true,
+   "sentence": "Vào cửa hầu thì nói mượn Lục Châu (13), mỉa họ Vũ thì đặt chuyện Vũ Hậu thổ (14).",
+   "before": [
+    "Luzhu"
+   ],
+   "after": [
+    "Luzhu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "en",
+   "term": "Luzhu",
+   "counterpart": "Lục Châu",
+   "atMarker": true,
+   "sentence": "When a woman entered a noble household, they likened her to Luzhu (13).",
+   "before": [
+    "Lục Châu"
+   ],
+   "after": [
+    "Lục Châu"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "vi",
+   "term": "ông Trần ở Ngọc Tái",
+   "counterpart": "Master Tran of Ngoc Tai",
+   "atMarker": true,
+   "sentence": "Đến như ông Đỗ ở Kim Hoa, (19) ông Trần ở Ngọc Tái (20), ông Đàm ở Ông Mặc (21), ông Vũ ở Đường An (22), không phải là không ngang dọc tung hoành, nhưng cầu lấy lời chín lẽ tới, có thể khiến cho làng phong nhã phải phục thì chỉ duy những bài đầy lời trung ái của ông Nguyễn ức Trai (23), lòng lúc nào cũng chẳn",
+   "before": [
+    "Master Tran of Ngoc Tai (20),"
+   ],
+   "after": [
+    "Master Tran of Ngoc Tai (20),"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  },
+  {
+   "chapter": 19,
+   "dir": "en",
+   "term": "Master Tran of Ngoc Tai",
+   "counterpart": "Ông Trần ở Ngọc Tái",
+   "atMarker": true,
+   "sentence": "As for Master Do of Kim Hoa (19), Master Tran of Ngoc Tai (20), Master Dam of Ong Mac (21), and Master Vu of Duong An (22), none of them lacks breadth or boldness.",
+   "before": [
+    "Ngọc Tái",
+    "Đàm"
+   ],
+   "after": [
+    "Ngọc Tái",
+    "Đàm"
+   ],
+   "changed": false,
+   "label": null,
+   "note": ""
+  }
+ ]
+}
