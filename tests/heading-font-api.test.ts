@@ -19,8 +19,19 @@ it("rejects arbitrary heading font CSS or URLs before saving metadata",async()=>
 it("keeps fonts private unless published, and signs only a registered immutable path",async()=>{
  const get=()=>fontFile(new Request("https://book.test/api/heading-fonts/"+id),{params:Promise.resolve({fontId:id})});
  m.rpc.mockResolvedValue({data:false,error:null});expect((await get()).status).toBe(404);expect(m.sign).not.toHaveBeenCalled();
+ // an editor still sees an unpublished font through a private signed redirect
+ m.guard.mockResolvedValue({client:{}});m.record.mockResolvedValue({data:{path:id+"/"+id+".ttf"},error:null});m.sign.mockResolvedValue({data:{signedUrl:"https://storage.test/signed"},error:null});
+ const draft=await get();expect(draft.status).toBe(307);expect(draft.headers.get("cache-control")).toContain("no-store");expect(m.sign).toHaveBeenCalledWith(id+"/"+id+".ttf",60);
+});
+it("serves a published font through the CDN with immutable caching instead of a signed URL per view",async()=>{
+ const get=()=>fontFile(new Request("https://book.test/api/heading-fonts/"+id),{params:Promise.resolve({fontId:id})});
  m.rpc.mockResolvedValue({data:true,error:null});m.record.mockResolvedValue({data:{path:id+"/"+id+".ttf"},error:null});m.sign.mockResolvedValue({data:{signedUrl:"https://storage.test/signed"},error:null});
- const response=await get();expect(response.status).toBe(307);expect(response.headers.get("cache-control")).toContain("no-store");expect(m.sign).toHaveBeenCalledWith(id+"/"+id+".ttf",60);
+ const fetcher=vi.fn().mockResolvedValue(new Response("font-bytes",{headers:{"Content-Type":"font/ttf"}}));vi.stubGlobal("fetch",fetcher);
+ try{
+  const response=await get();expect(response.status).toBe(200);expect(await response.text()).toBe("font-bytes");
+  expect(response.headers.get("cache-control")).toBe("public, max-age=604800, s-maxage=604800, immutable");expect(fetcher).toHaveBeenCalledWith("https://storage.test/signed");
+  fetcher.mockResolvedValue(new Response("gone",{status:404}));expect((await get()).status).toBe(503);
+ }finally{vi.unstubAllGlobals();}
 });
 it("uses revision-safe archive RPC and reports fonts still in use",async()=>{
  const rpc=vi.fn().mockResolvedValue({error:{message:"Font is in use"}});m.guard.mockResolvedValue({client:{rpc}});

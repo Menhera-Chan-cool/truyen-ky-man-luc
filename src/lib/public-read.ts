@@ -18,6 +18,17 @@ export async function publicRead<T extends {error:unknown;status?:number}>(read:
   }
   throw Error("Read service unavailable");
 }
+// One load shared by every caller for `ms`; a failed load is dropped at once so the next caller retries.
+export function memoizeFor<T>(ms:number,load:()=>Promise<T>){
+  let saved:{at:number;value:Promise<T>}|undefined;
+  const get=()=>{
+    if(saved&&Date.now()-saved.at<ms)return saved.value;
+    const entry={at:Date.now(),value:load()};saved=entry;
+    entry.value.catch(()=>{if(saved===entry)saved=undefined;});
+    return entry.value;
+  };
+  return Object.assign(get,{reset(){saved=undefined;}});
+}
 export function missingStorageObject(error:unknown){
   if(readStatus(error)===404)return true;
   if(!error||typeof error!=="object")return false;

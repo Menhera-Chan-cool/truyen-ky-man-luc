@@ -6,7 +6,7 @@ import seed from "../data/book.json";
 import { cleanHtml } from "./sanitize";
 import type { Book, Locale } from "./types";
 import { settingsFromCookie } from "./reader";
-import {publicRead,readFetch} from "./public-read";
+import {memoizeFor,publicRead,readFetch} from "./public-read";
 export async function savedReaderSettings() {
   return settingsFromCookie((await cookies()).get("book-reader")?.value);
 }
@@ -58,21 +58,35 @@ export async function getBook(
           })),
         } as Book);
   if (!url || !key) throw new Error("Incomplete database configuration");
-  const rpc = includeHtml ? "get_public_book" : "get_public_book_index";
-  const result = await publicRead(signal=>publicClient(readFetch(signal)).rpc(rpc));
-  const { data, error } = result;
+  const book = await (includeHtml ? publishedBook : publishedBookIndex)();
+  if (!includeHtml) return book;
+  // The shared copy keeps every language; each caller gets its own view without the other language's HTML.
+  return {
+    ...book,
+    chapters: book.chapters.map((c) => {
+      const copy = { ...c };
+      for (const language of ["vi", "en"] as const)
+        if (c[language])
+          copy[language] = { ...c[language]!, html: locale && locale !== language ? "" : c[language]!.html };
+      return copy;
+    }),
+  };
+}
+// Every reader page used to fetch the whole 773 kB book from the database; one shared copy per instance is fresh enough for readers.
+const loadBook = (rpc: string, sanitize: boolean) => memoizeFor(120_000, async () => {
+  const { data, error } = await publicRead(signal=>publicClient(readFetch(signal)).rpc(rpc));
   if (error || !data)
     throw new Error("Cannot load the published book. Please try again.");
   const book = data as Book;
-  if (includeHtml)
+  if (sanitize)
     for (const c of book.chapters)
-      for (const language of ["vi", "en"] as const) {
-        if (c[language])
-          c[language]!.html =
-            locale && locale !== language ? "" : cleanHtml(c[language]!.html);
-      }
+      for (const language of ["vi", "en"] as const)
+        if (c[language]) c[language]!.html = cleanHtml(c[language]!.html);
   return book;
-}
+});
+const publishedBook = loadBook("get_public_book", true);
+const publishedBookIndex = loadBook("get_public_book_index", false);
+export const resetBookCache = () => { publishedBook.reset(); publishedBookIndex.reset(); };
 export class HttpError extends Error {
   constructor(
     message: string,

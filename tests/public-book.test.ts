@@ -1,5 +1,5 @@
 import { beforeEach, it, expect, vi } from "vitest";
-import { getBook } from "../src/lib/server";
+import { getBook, resetBookCache } from "../src/lib/server";
 vi.mock("server-only", () => ({}));
 let databaseError = false;
 let calledRpc = "";
@@ -26,6 +26,7 @@ vi.mock("@supabase/supabase-js", () => ({
   }),
 }));
 beforeEach(() => {
+  resetBookCache();
   databaseError = false;
   calledRpc = "";
   vi.stubEnv("NEXT_PUBLIC_SUPABASE_URL", "");

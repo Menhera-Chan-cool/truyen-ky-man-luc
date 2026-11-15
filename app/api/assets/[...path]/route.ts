@@ -32,8 +32,16 @@ export async function GET(
     .storage.from("book-assets")
     .createSignedUrl(path, 60);
   if (error || !data) return new Response("Not found", { status: 404 });
-  return new Response(null, {
-    status: 307,
-    headers: { Location: data.signedUrl, "Cache-Control": "private, no-store" },
+  // Large PDFs and files an editor sees before publishing keep a private signed redirect.
+  if (!published || registered.content_type === "application/pdf")
+    return new Response(null, {
+      status: 307,
+      headers: { Location: data.signedUrl, "Cache-Control": "private, no-store" },
+    });
+  // Published images are immutable (UUID paths): serve them through Vercel's CDN, not an uncacheable signed URL per view.
+  const upstream = await fetch(data.signedUrl);
+  if (!upstream.ok || !upstream.body) return new Response("Unavailable", { status: 503, headers: { "Cache-Control": "no-store" } });
+  return new Response(upstream.body, {
+    headers: { "Content-Type": registered.content_type, "Cache-Control": "public, max-age=604800, s-maxage=604800, immutable" },
   });
 }

@@ -10,6 +10,10 @@ export async function GET(request:Request,{params}:{params:Promise<{fontId:strin
   const {data:font,error:lookup}=await publicRead(signal=>serviceClient(readFetch(signal)).from("heading_fonts").select("path").eq("id",fontId).maybeSingle());if(lookup)return unavailable();if(!font)return missing();
   const {data,error:sign}=await publicRead(signal=>serviceClient(readFetch(signal)).storage.from("heading-fonts").createSignedUrl(font.path,60));
   if(sign||!data)return missingStorageObject(sign)?missing():unavailable();
-  return new Response(null,{status:307,headers:{Location:data.signedUrl,"Cache-Control":"private, no-store"}});
+  if(!published)return new Response(null,{status:307,headers:{Location:data.signedUrl,"Cache-Control":"private, no-store"}});
+  // Published fonts are immutable (UUID paths): serve the bytes through Vercel's CDN, not a fresh uncacheable signed URL per view.
+  const upstream=await fetch(data.signedUrl);
+  if(!upstream.ok||!upstream.body)return unavailable();
+  return new Response(upstream.body,{headers:{"Content-Type":upstream.headers.get("Content-Type")??"font/ttf","Cache-Control":"public, max-age=604800, s-maxage=604800, immutable"}});
  }catch{return unavailable();}
 }
