@@ -145,7 +145,41 @@ def _supported(scores,limits,size,window,held,floor=.35):
     return True
 
 
-def _decide(task,atoms,scores,limits,pairs):
+CLOSE_FLOOR=.4;CLOSE_LEAD=.03
+
+
+def _close(found,atoms,evidence,scores,limits,size):
+    """Sentence closure. A free atom next to an accepted pair joins it when a clause of the pair's other side has this atom
+    as its best partner in the whole group and prefers it to everything inside the pair: the other edition split one
+    sentence in two and its second half was left behind. A longer window scores lower in LaBSE than its best half and a
+    long sentence scores low against one short atom, so neither the pair score nor atom-to-atom scores can decide this;
+    the evidence is clause to atom."""
+    held={l:set() for l in SIDES}
+    for f in found:
+        i,a,j,b=f['window'];held['vi'].update(range(i,i+a));held['en'].update(range(j,j+b))
+    unit,atom=evidence['unit'],evidence['atom']
+    def claimed(side,k,window):
+        other='en' if side=='vi' else 'vi'
+        mine,theirs=((window[2],window[3]),(window[0],window[1])) if side=='en' else ((window[0],window[1]),(window[2],window[3]))
+        lo,hi=atoms[other][theirs[0]][0],atoms[other][theirs[0]+theirs[1]-1][1];m0,m1=atoms[side][mine[0]][0],atoms[side][mine[0]+mine[1]-1][1]
+        toward=unit[other]@atom[side][k];top=int(np.argmax(toward))
+        if not lo<=top<hi or toward[top]<CLOSE_FLOOR:return False
+        outside=max([float(x) for n,x in enumerate(toward) if not lo<=n<hi],default=0.)
+        return toward[top]-outside>=CLOSE_LEAD and toward[top]-float((unit[side][m0:m1]@unit[other][top]).max())>=CLOSE_LEAD
+    for f in sorted(found,key=lambda f:f['window'][0]):
+        if f.get('residual'):continue
+        grew=True
+        while grew:
+            grew=False;i,a,j,b=f['window']
+            for side,k,grown in (('en',j-1,(i,a,j-1,b+1)),('en',j+b,(i,a,j,b+1)),('vi',i-1,(i-1,a+1,j,b)),('vi',i+a,(i,a+1,j,b))):
+                if not 0<=k<size[side] or k in held[side] or grown[1]>limits[0] or grown[3]>limits[1] or not claimed(side,k,f['window']):continue
+                score=float(scores[grown[1],grown[3]][grown[0],grown[2]])
+                if score<.5:continue
+                f.update(window=grown,score=score);held[side].add(k);grew=True;break
+    return found
+
+
+def _decide(task,atoms,scores,limits,pairs,evidence=None):
     """Confident pairs of one task. A pair tied with an overlapping window it could be swapped for keeps the one window
     whose atoms all find their own partner inside it (the largest when valid windows nest); otherwise it abstains.
     Inside an accepted parent, atoms left between confident pairs may pair by elimination at a lower floor (flagged)."""
@@ -168,6 +202,14 @@ def _decide(task,atoms,scores,limits,pairs):
         if not task['root'] and any(mine[l]==task[l] for l in SIDES):continue
         found.append({'ranges':mine,'score':score,'margin':pair['score']-apart,'window':window})
     if not found:return found
+    if task['root'] and evidence:
+        before={id(f):dict(f) for f in found};found=_close(found,atoms,evidence,scores,limits,size)
+        for f in found:
+            if f['window']==before[id(f)]['window']:continue
+            i,a,j,b=f['window'];others=[{'vi':list(range(x['window'][0],x['window'][0]+x['window'][1])),'en':list(range(x['window'][2],x['window'][2]+x['window'][3])),'score':x['score']} for x in found if x is not f]
+            apart,_=_rivals(scores,limits,{'vi':list(range(i,i+a)),'en':list(range(j,j+b)),'score':f['score']},others)
+            if f['score']-apart<.03:f.update(before[id(f)]);continue   # a longer window that is no longer clearly ahead keeps the confident pair
+            f.update(ranges=ranges(i,a,j,b),margin=f['score']-apart)
     anchors=sorted(found,key=lambda f:f['window'][0]);cuts=[(0,0)]+[(f['window'][0]+f['window'][1],f['window'][2]+f['window'][3]) for f in anchors]
     starts=[(f['window'][0],f['window'][2]) for f in anchors]+[(size['vi'],size['en'])]
     for (i0,j0),(i1,j1) in zip(cuts,starts):
@@ -202,7 +244,9 @@ def add_clause_pairs(contexts,encode,editions=None):
             if len(atoms['vi'])==len(atoms['en'])==1 or (not task['root'] and 1 in map(len,atoms.values())):continue
             # A non-root task is already a pair: its own full window is no candidate, so finer pairs can surface.
             text={l:{n:[' '.join(u['text'] for u in units[l][atoms[l][i][0]:atoms[l][i+n-1][1]]) for i in range(len(atoms[l])-n+1)] if task['root'] or n<len(atoms[l]) else None for n in range(1,min(CLAUSE_WINDOW,len(atoms[l]))+1)} for l in SIDES}
-            texts.update(t for side in text.values() for values in side.values() for t in values or []);prepared.append((task,atoms,text))
+            texts.update(t for side in text.values() for values in side.values() for t in values or [])
+            if task['root']:texts.update(u['text'] for l in SIDES for u in units[l])
+            prepared.append((task,atoms,text))
         if not prepared or not texts:break
         ordered=sorted(texts);vectors=_normalized(encode(ordered))
         if len(vectors)!=len(ordered):raise ValueError('Clause vector count mismatch')
@@ -213,7 +257,8 @@ def add_clause_pairs(contexts,encode,editions=None):
             limits=[max(windows[0]),max(windows[1])]
             scores={(a,b):windows[0][a]@windows[1][b].T for a in windows[0] for b in windows[1]}
             pairs=align_sequences(windows[0][1],windows[1][1],minimum=.5,windows=windows,limit=CLAUSE_WINDOW)
-            for f in _decide(task,atoms,scores,limits,pairs):
+            evidence={'atom':{'vi':windows[0][1],'en':windows[1][1]},'unit':{l:np.stack([memo[u['text']] for u in units[l]]) for l in SIDES}} if task['root'] else None
+            for f in _decide(task,atoms,scores,limits,pairs,evidence):
                 if _admit(g,units,f['ranges'],f['score'],f['margin'],f.get('residual',False)):tasks.append({'g':g,'units':units,**f['ranges'],'root':False})
 
 

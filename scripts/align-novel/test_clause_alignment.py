@@ -19,6 +19,16 @@ class ClauseAlignmentTests(unittest.TestCase):
         self.assertEqual(len(first['vi']),3);self.assertEqual(len(first['en']),2)
         self.assertEqual(len(g['clausePairs'][1]['vi']),2)
 
+    def test_closes_a_sentence_over_the_free_sentence_the_other_edition_split_off(self):
+        from prose_alignment import add_clause_pairs
+        def run(tail):
+            g={'section':'story','viInput':join_units([unit('A,',0),unit('B,',3),unit('C.',6),unit('D.',9)]),'enInput':join_units([unit('X.',0),unit('Y.',3),unit('Z.',6)])}
+            vectors={'A, B, C.':[1,0,0,0],'A,':[1,0,0,0],'B,':[1,0,0,0],'C.':[.3,0,.954,0],'X.':[.8,.6,0,0],'Y.':tail,'X. Y.':[.7,.1,.7,0],'D.':[0,0,0,1],'Z.':[0,0,0,1]}
+            add_clause_pairs([g],lambda texts:np.array([vectors.get(t,[0,0,0,0]) for t in texts],dtype=float))
+            return [p for p in g['clausePairs'] if len(p['vi'])==3][0]
+        self.assertEqual(len(run([.5,0,.866,0])['en']),2)   # the last clause of the sentence has it as best partner: it joins
+        self.assertEqual(len(run([0,0,0,1])['en']),1)       # its best partner lies in the next sentence: it stays free
+
     def test_keeps_poetry_and_notes_unchanged(self):
         from prose_alignment import add_clause_pairs
         for extra in [{'tracks':{}},{'section':'notes'}]:
