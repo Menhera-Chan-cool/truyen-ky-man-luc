@@ -410,6 +410,23 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     contexts.push(sentences.unmatched?.length&&!looseWords?groundedContext(g,locale,targetLocale,sentences.unmatched,sentences.grounded??[]):g[targetLocale]);
     passages.push({source:{...g[locale],text:source.text.slice(g[locale].start,g[locale].end)},target:{...bounds,text:target.text.slice(bounds.start,bounds.end),breaks:target.breaks?.filter(p=>p>bounds.start&&p<bounds.end)},highlights});
   }
+  if(!poem&&!note&&groups.length&&groups.every(g=>g.section===groups[0].section&&g.section!=='notes')){
+    // Source text the pairing left in no group lies between two groups; the target text between the same two groups, if no other group claims it, is its context.
+    const around=allGroups.filter(g=>g.section===groups[0].section&&!g.tracks),gaps:(readonly [LookupPassage,TextSpan])[]=[];
+    for(const s of remaining){
+      if((source.text.slice(s.start,s.end).match(/\p{L}+/gu)?.length??0)<2||around.some(g=>g[locale].start<s.end&&g[locale].end>s.start))continue;
+      const before=around.filter(g=>g[locale].end<=s.start).sort((a,b)=>b[locale].end-a[locale].end)[0],after=around.filter(g=>g[locale].start>=s.end).sort((a,b)=>a[locale].start-b[locale].start)[0];
+      if(!before||!after)continue;
+      const gap={start:before[targetLocale].end,end:after[targetLocale].start};
+      if(gap.end<=gap.start||gap.end-gap.start>Math.max(400,4*(s.end-s.start))||!/\p{L}/u.test(target.text.slice(gap.start,gap.end))||around.some(g=>g[targetLocale].start<gap.end&&g[targetLocale].end>gap.start))continue;
+      gaps.push([{source:{...s,text:source.text.slice(s.start,s.end)},target:{...gap,text:target.text.slice(gap.start,gap.end),breaks:target.breaks?.filter(b=>b>gap.start&&b<gap.end)},highlights:[]},gap]);
+      incompleteWords=true;unmatchedSource.push(s);
+    }
+    if(gaps.length){
+      const merged=[...passages.map((p,i)=>[p,contexts[i]] as const),...gaps].sort((a,b)=>a[0].source.start-b[0].source.start);
+      passages.splice(0,passages.length,...merged.map(m=>m[0]));contexts.splice(0,contexts.length,...merged.map(m=>m[1]));
+    }
+  }
   if(incompleteWords){hasWords=false;for(const [i,p] of passages.entries()){const b=contexts[i];p.highlights=[];p.target={...b,text:target.text.slice(b.start,b.end),breaks:target.breaks?.filter(x=>x>b.start&&x<b.end)};}}
   const joined:LookupPassage[]=[];
   for(const p of passages){

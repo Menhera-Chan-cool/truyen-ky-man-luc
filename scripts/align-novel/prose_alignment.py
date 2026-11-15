@@ -356,29 +356,33 @@ def repair_boundaries(item,contexts,encode):
     return contexts
 
 
+def _gap_units(editions,units,l,a,b,limit,section='story'):
+    """The skipped units lying in one gap between two groups: real units when known, else cut from the gap text."""
+    from context_alignment import mask_references,slice16,u16
+    if b<=a:return None
+    if units is not None:
+        found=[u for u in units[l] if u.get('section','story')==section and u['start']>=a and u['end']<=b]
+    else:
+        gap=slice16(editions[l]['text'],a,b);found=[]
+        for m in re.finditer(r'[^,;:.!?…]+[,;:.!?…]*',gap):
+            lead=len(m.group())-len(m.group().lstrip());seg=m.group().strip();start=a+u16(gap[:m.start()])+u16(m.group()[:lead])
+            if seg:found.append({'text':seg,'start':start,'end':start+u16(seg),'starts':list(range(start,start+u16(seg))),'ends':list(range(start+1,start+u16(seg)+1))})
+    found=[u for u in found if any(c.isalnum() for c in mask_references(u['text']))]
+    if not found or len(found)>limit or any(a<br<b for br in editions[l].get('breaks',[])):return None
+    return found
+
+
 ORPHAN_GAIN=.04;ORPHAN_UNITS=2
 
 
-def adopt_orphans(item,contexts,encode,units=None):
+def adopt_orphans(item,contexts,encode,units=None,section='story'):
     """A unit that fell between two groups (the pairing skipped it) joins a neighbouring group on one side when that
     clearly improves the group's own pairing. One or two units, same paragraph, never poetry or notes."""
     from context_alignment import join_units,mask_references,slice16,u16,_normalized
     editions=item['editions']
     def clean(text):return ' '.join(mask_references(text).split())
-    prose=[g for g in contexts if g['section']=='story' and 'tracks' not in g]
+    prose=[g for g in contexts if g['section']==section and 'tracks' not in g]
     if not prose:return contexts
-    def region_units(l,a,b,first):
-        if b<=a:return None
-        if units is not None:
-            found=[u for u in units[l] if u.get('section','story')=='story' and u['start']>=a and u['end']<=b]
-        else:
-            gap=slice16(editions[l]['text'],a,b);found=[];at=0
-            for m in re.finditer(r'[^,;:.!?…]+[,;:.!?…]*',gap):
-                lead=len(m.group())-len(m.group().lstrip());seg=m.group().strip();start=a+u16(gap[:m.start()])+u16(m.group()[:lead])
-                if seg:found.append({'text':seg,'start':start,'end':start+u16(seg),'starts':list(range(start,start+u16(seg))),'ends':list(range(start+1,start+u16(seg)+1))})
-        found=[u for u in found if any(c.isalnum() for c in clean(u['text']))]
-        if not found or len(found)>ORPHAN_UNITS or any(a<br<first for br in editions[l].get('breaks',[])):return None
-        return found
     claimed=set();changed={};jobs=[]
     for l in ['vi','en']:
         ordered=sorted(prose,key=lambda g:g[l+'Input']['parts'][0]['start'])
@@ -389,7 +393,7 @@ def adopt_orphans(item,contexts,encode,units=None):
             current=_group_units(g[l+'Input'])
             if current is None:continue
             for side,(a,b) in (('left',(before,first)),('right',(last,after))):
-                found=region_units(l,a,b,first if side=='left' else b)
+                found=_gap_units(editions,units,l,a,b,ORPHAN_UNITS,section)
                 if found:jobs.append((g,l,side,found,current))
     if not jobs:return contexts
     texts=set()
@@ -413,3 +417,71 @@ def adopt_orphans(item,contexts,encode,units=None):
         g=changed.get(gid,result[gid]);current=_group_units(g[l+'Input']);claimed|=marks
         changed[gid]={**g,l+'Input':join_units(found+current if side=='left' else current+found),'score':grown}
     return [changed.get(id(g),g) for g in contexts]
+
+
+PLACE_FLOOR=.5;PLACE_LEAD=.05;PLACE_EDGE=5;PLACE_UNITS=6;PLACE_JOINT_UNITS=3
+
+
+def _gap_runs(editions,units,l,a,b,section='story'):
+    """Skipped units in one gap, cut into runs at paragraph breaks; each run says whether it touches the left or right group."""
+    cuts=[a]+sorted(br for br in editions[l].get('breaks',[]) if a<br<b)+[b];runs=[]
+    for lo,hi in zip(cuts,cuts[1:]):
+        part=_gap_units(editions,units,l,lo,hi,10**6,section)
+        if part:runs.append((part,lo==a,hi==b))
+    return runs if sum(len(r[0]) for r in runs)<=PLACE_UNITS else []
+
+
+def place_orphans(item,contexts,encode,units=None,section='story'):
+    """Units skipped between two neighbouring groups find a home by unit-level evidence, not by the whole group (a long
+    group dilutes one unit). Starting at the shared edge, a skipped unit joins the neighbour whose counterpart units near
+    that edge match it (floor and lead required) and the run grows while the evidence holds; a gap skipped in both
+    editions between the same two groups becomes a small group of its own."""
+    from context_alignment import join_units,mask_references,_normalized
+    editions=item['editions']
+    def clean(text):return ' '.join(mask_references(text).split())
+    prose=[g for g in contexts if g['section']==section and 'tracks' not in g]
+    if len(prose)<2:return contexts
+    order={l:sorted(prose,key=lambda g:g[l+'Input']['parts'][0]['start']) for l in ['vi','en']}
+    rank={l:{id(g):i for i,g in enumerate(order[l])} for l in order}
+    runs=[];strict={}
+    for l in order:
+        for g1,g2 in zip(order[l],order[l][1:]):
+            a,b=g1[l+'Input']['parts'][-1]['end'],g2[l+'Input']['parts'][0]['start']
+            for run,left,right in _gap_runs(editions,units,l,a,b,section):runs.append((l,run,g1,g2,left,right))
+            found=_gap_units(editions,units,l,a,b,PLACE_JOINT_UNITS,section)
+            if found:strict[l,id(g1),id(g2)]=(found,g1,g2)
+    if not runs and not strict:return contexts
+    def windows(group,l,edge):
+        current=_group_units(group[l+'Input']);near=current[-PLACE_EDGE:] if edge=='end' else current[:PLACE_EDGE]
+        return [' '.join(clean(u['text']) for u in near[i:j]) for i in range(len(near)) for j in range(i+1,len(near)+1)]
+    texts=set();plans=[]
+    for l,run,g1,g2,left,right in runs:
+        other='en' if l=='vi' else 'vi';w1,w2=windows(g1,other,'end'),windows(g2,other,'start');ut=[clean(u['text']) for u in run]
+        texts.update([*ut,*w1,*w2]);plans.append((l,run,g1,g2,left,right,ut,w1,w2))
+    joint=[]
+    for (l,i1,i2),(found,g1,g2) in strict.items():
+        if l=='vi' and ('en',i1,i2) in strict and rank['en'][i2]==rank['en'][i1]+1:
+            ef=strict['en',i1,i2][0];joint.append((g1,g2,found,ef,' '.join(clean(u['text']) for u in found),' '.join(clean(u['text']) for u in ef)));texts.update(joint[-1][4:])
+    ordered=sorted(texts);vectors=_normalized(encode(ordered))
+    if len(vectors)!=len(ordered):raise ValueError('Placement vector count mismatch')
+    memo=dict(zip(ordered,vectors))
+    def best(text,ws):return max((float(memo[text]@memo[w]) for w in ws),default=0.)
+    changed={};placed=set()
+    for l,run,g1,g2,left,right,ut,w1,w2 in plans:
+        s1=[best(t,w1) for t in ut];s2=[best(t,w2) for t in ut]
+        def home(k,mine,rival,present):
+            return present and mine[k]>=PLACE_FLOOR and (not (left and right) or mine[k]-rival[k]>=PLACE_LEAD)
+        front=[];k=0
+        while k<len(run) and home(k,s1,s2,left):front.append(run[k]);k+=1
+        back=[];k=len(run)-1
+        while k>=len(front) and home(k,s2,s1,right):back.insert(0,run[k]);k-=1
+        for group,l_units,after in ((g1,front,True),(g2,back,False)):
+            if not l_units:continue
+            current=changed.get(id(group),group);have=_group_units(current[l+'Input'])
+            changed[id(group)]={**current,l+'Input':join_units(have+l_units if after else l_units+have)};placed.add((l,id(g1),id(g2)))
+    result=[changed.get(id(g),g) for g in contexts]
+    for g1,g2,vf,ef,vt,et in joint:
+        if ('vi',id(g1),id(g2)) in placed or ('en',id(g1),id(g2)) in placed:continue
+        score=float(memo[vt]@memo[et])
+        if score>=PLACE_FLOOR:result.append({'section':section,'score':score,'margin':min(g1['margin'],g2['margin']),'primary':{'vi':True,'en':True},'viInput':join_units(vf),'enInput':join_units(ef)})
+    return result

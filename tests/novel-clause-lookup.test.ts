@@ -179,3 +179,15 @@ it('keeps good word links instead of a longer phrase pair that would widen them'
  a.groups[0].phrasePairs=[{en:q,vi:span(vi,'Lời hoa ý gấm'),score:.7,margin:.2,from:'en'}];
  const r=query(a,'en',q);expect(r.passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end)))).not.toContain('Lời hoa ý gấm');
 });
+function gapFixture(){
+ const vi='Lan còn nhỏ. Chồng nàng đi xa lắm. Nàng ở nhà.',en='Lan was young. Her husband went far away. She stayed home.';
+ const group=(id:string,v:string,e:string):AlignmentArtifact['groups'][number]=>({id,section:'story',score:.8,margin:.1,vi:span(vi,v),en:span(en,e),parts:{vi:[span(vi,v)],en:[span(en,e)]},links:[]});
+ const a=fixture();a.editions.vi.text=vi;a.editions.en.text=en;a.groups=[group('a','Lan còn nhỏ.','Lan was young.'),group('b','Nàng ở nhà.','She stayed home.')];
+ return a;
+}
+it('returns the target text between the neighbouring groups as context when part of the selection lies in no group',()=>{
+ const a=gapFixture(),r=query(a,'vi',{start:a.editions.vi.text.indexOf('Chồng'),end:a.editions.vi.text.length});
+ expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);
+ expect(r.unmatchedSource?.map(s=>a.editions.vi.text.slice(s.start,s.end).trim())).toContain('Chồng nàng đi xa lắm.');
+ expect(r.passages.some(p=>p.target.text.includes('Her husband went far away.'))).toBe(true);
+});
