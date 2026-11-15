@@ -115,6 +115,26 @@ E5-small is much weaker on these short windows and fusing it adds nothing, so th
 
 What would move the numbers is outside what is cached: a stronger multilingual sentence encoder (a new download), fine-tuning on in-book pairs split by chapter, or human-labelled pairs. Each needs explicit permission.
 
+## Step 4b: one downloaded encoder (BAAI/bge-m3), not adopted
+
+With the user's permission for one download: `BAAI/bge-m3` (MIT, not gated), revision `5617a9f61b028005a4858fdac845db406aefb181`, `pytorch_model.bin` 2,271,145,830 bytes plus tokenizer files, in `work/bge-m3-download` (outside the repository), loaded locally with the safe weights loader, dense CLS vectors, no instruction prefix. Same dev measurements as above; set B and the blind sentence set were not used because nothing was adopted.
+
+| Window scorer, set A | Words | Phrases | All (66 lookups) |
+| --- | ---: | ---: | ---: |
+| LaBSE | 26 / 33 | 31 / 33 | 57 |
+| bge-m3 | 22 / 33 | 28 / 33 | 50 |
+| LaBSE 0.75 + bge-m3 0.25 | 26 / 33 | 31 / 33 | 57 |
+| LaBSE 0.5 + bge-m3 0.5 | 26 / 33 | 30 / 33 | 56 |
+| LaBSE 0.25 + bge-m3 0.75 | 24 / 33 | 30 / 33 | 54 |
+
+| Dev sentence retrieval (60 pairs, whole chapter) | VI→EN top-1 / MRR | EN→VI top-1 / MRR |
+| --- | ---: | ---: |
+| LaBSE | 90.0% / 0.925 | 98.3% / 0.992 |
+| bge-m3 | 86.7% / 0.920 | 96.7% / 0.978 |
+| LaBSE 0.25 + bge-m3 0.75 | 91.7% / 0.951 | 98.3% / 0.992 |
+
+A stronger general-purpose encoder is not better here: it loses on short windows, and the best fusion gains one case of 60 on dev sentences (inside the noise) for a second 2.3 GB model in the worker, the CI download and twice the encoding. LaBSE stays. The remaining paths are fine-tuning on in-book pairs split by chapter, or human-labelled pairs; both need explicit permission.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
