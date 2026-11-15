@@ -159,6 +159,23 @@ Run 1 was chosen on dev (no regression anywhere) and taken to the blind sets onc
 
 **No measurable gain**: the dev differences are a case or two and run 2 trades one regression for another; the blind numbers are identical. Training loss fell from 0.5 to 0.16 (run 1), so the model learned the pairs, but the pairs are LaBSE-confident pairs and noisy link-derived phrases, which add little LaBSE did not already know. Not adopted, nothing published. What could still help is clean, independent data: human-labelled pairs, which would also give the accuracy figure that every number above lacks.
 
+## Random audit of the published lookup (labelled by Claude, not by a human)
+
+Because every number above is checked against gold that was built from note numbers or by hand for tuning, a seeded random audit was drawn that touches none of it: 20 chapters × (2 sentences, 2 phrases, 2 words), the language of the selection random, prose only (poetry and notes excluded), run on the published data (source `506c49f`). For each case the true counterpart was written **before the system's highlights were read**, then the highlights were scored (span F1 ≥ 0.5 is a hit) and every non-hit was read. Two cases were adjudicated by reading (48: the middle of the sentence is missing, 56: the negation is dropped). Cases, labels, outputs and verdicts: `docs/verification/audit-120-2026-11-15.json`.
+
+**The labeller is a language model, not a person.** It is independent of LaBSE and mBERT but shares whatever blind spots a model has with archaic Vietnamese; the file is there so a human can overrule any line.
+
+| 120 random lookups | n | answered | hit | incomplete | partial | wrong | abstain: right context | abstain: no context | hit of answered (95% CI) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| All | 120 | 85 (71%) | 78 | 1 | 3 | 3 | 29 | 6 | 92% (84–96) |
+| Words | 40 | 26 | 23 | 0 | 0 | 3 | 10 | 4 | 88% (71–96) |
+| Phrases | 40 | 27 | 24 | 0 | 3 | 0 | 12 | 1 | 89% (72–96) |
+| Sentences | 40 | 32 | 31 | 1 | 0 | 0 | 7 | 1 | 97% (84–99) |
+| From Vietnamese | 60 | 45 | 43 | 0 | 1 | 1 | 13 | 2 | 96% (85–99) |
+| From English | 60 | 40 | 35 | 1 | 2 | 2 | 16 | 4 | 88% (74–95) |
+
+Reading: when the system answers it is right about 92% of the time and not wrong in 82 of 85 (96%); it answers 71% of the time and, when it abstains, 29 of 35 give the right context. The three wrong answers are word cases: "serpents" → "chim" (a swap inside the list "chim cắt … rắn độc"), "very" → "rất" (the wrong "very"), "chưa" → "had". Five of the six abstentions without context are words or phrases for which the lookup returned no passage at all, and one is a sentence whose passage holds only its first clause. **The targets of 95% for answers and 98% in both directions are not met**: words 88%, English→Vietnamese 88%, and a 95% claim needs about 400 independent cases.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
