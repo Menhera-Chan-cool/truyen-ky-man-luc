@@ -342,3 +342,21 @@ it('projects a phrase with no link of its own onto the words between the targets
  expect(run('Sinh muốn nhờ thế quân, đánh úp mà cướp lại.')).toEqual(['surprise attack']);
  expect(run('Sinh muốn nhờ thế quân, đánh úp rất mà cướp lại.')).toEqual([]);
 });
+it('completes the counterpart of a whole sentence to the end of its own sentence when its one passage stops in the middle and no group claims the rest',()=>{
+ const sentence='Cho nên Nhi giữ chức tuần phủ (9) tâu xin phá đền, thật là phải lắm.',whole='Thus, when Nhi served as inspector (9), he was right to petition to destroy shrines.';
+ const run=(claimed:boolean)=>{
+  const vi=claimed?sentence+' Khác.':sentence,en=whole,a=plain(vi,en,{vi:[vi],en:[en]},[['Nhi','Nhi']]);
+  const g=a.groups[0];g.section='critique';g.vi={start:0,end:vi.indexOf('thật')};g.en={start:en.indexOf('when'),end:en.indexOf('inspector (9),')+'inspector (9),'.length};g.parts={vi:[g.vi],en:[g.en]};
+  if(claimed){const other=plain(vi,en,{vi:[vi],en:[en]},[]).groups[0];other.id='x';other.section='critique';other.vi={start:vi.indexOf('Khác'),end:vi.length};other.en={start:en.indexOf('he was'),end:en.length};other.parts={vi:[other.vi],en:[other.en]};a.groups.push(other);}
+  return query(a,'vi',{start:0,end:sentence.length}).passages.map(p=>en.slice(p.target.start,p.target.end));
+ };
+ expect(run(false)).toEqual([whole]);
+ expect(run(true)).not.toEqual([whole]);
+});
+it('joins two passages across the short stretch of the other edition that lies between them when no other group claims it',()=>{
+ const vi='Nàng tắm gội, ra bến than rằng.',en='She bathed, then lifted her eyes and sighed, went to the shore.',a=plain(vi,en,{vi:[vi],en:[en]},[['tắm','bathed'],['bến','shore']]);
+ const g1=a.groups[0];g1.vi={start:0,end:vi.indexOf('ra bến')-1};g1.en={start:0,end:en.indexOf(',')+1};g1.parts={vi:[g1.vi],en:[g1.en]};
+ const g2=plain(vi,en,{vi:[vi],en:[en]},[['bến','shore']]).groups[0];g2.id='b';g2.vi={start:vi.indexOf('ra bến'),end:vi.length};g2.en={start:en.indexOf('went'),end:en.length};g2.parts={vi:[g2.vi],en:[g2.en]};a.groups=[g1,g2];
+ // the highlight runs across the stretch the pairing left out, not just over the two groups
+ expect(query(a,'vi',{start:0,end:vi.length}).passages.map(p=>p.highlights.map(h=>en.slice(h.start,h.end)))).toEqual([[en]]);
+});

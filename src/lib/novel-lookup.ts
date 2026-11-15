@@ -674,5 +674,36 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     }else joined.push(p);
   }
   if(!hasWords&&poem)return poetryContext(artifact,request,poem);
+  // Two passages whose sources touch (nothing but punctuation between them) and whose targets leave a short stretch of the other edition between them that no other group claims: the stretch is the part of the counterpart
+  // the pairing missed, and the passages join across it ("looked up to the heavens, and lamented:" between "she bathed … (4)," and "Forsaken by husband…").
+  if(!poem&&!note&&joined.length===2&&groups.every(g=>(g.section==='story'||g.section==='critique')&&!g.tracks)){
+    const [a,b]=joined,own=new Set(groups.map(g=>g.id));
+    const gap={start:a.target.end,end:b.highlights.length?Math.min(b.target.end,b.highlights[0].start):b.target.start};
+    const gapText=target.text.slice(gap.start,gap.end);
+    if(b.target.start>=a.target.end-1&&gap.end>gap.start&&/\p{L}/u.test(gapText)&&!/\n/.test(gapText)&&!/[.!?…]\s*\p{Lu}/u.test(gapText.trim().slice(0,-1))&&gap.end-gap.start<=Math.max(160,2*(b.source.end-b.source.start))
+      &&!/\p{L}/u.test(source.text.slice(a.source.end,b.source.start))&&!allGroups.some(g=>!own.has(g.id)&&g[targetLocale].start<gap.end&&g[targetLocale].end>gap.start)&&a.highlights.length&&b.highlights.length){
+      a.highlights=mergeSpans([...a.highlights,{start:gap.start,end:gap.end},...b.highlights],target.text);
+      a.target={start:a.target.start,end:Math.max(a.target.end,b.target.end),text:target.text.slice(a.target.start,Math.max(a.target.end,b.target.end)),breaks:target.breaks?.filter(x=>x>a.target.start&&x<Math.max(a.target.end,b.target.end))};
+      a.source={start:a.source.start,end:b.source.end,text:source.text.slice(a.source.start,b.source.end)};
+      joined.splice(1,1);
+    }
+  }
+  // A whole sentence whose one counterpart passage ends in the middle of its sentence: the rest of that sentence, when no group claims it, is the part of the counterpart the pairing left out ("Thus," and "he was entirely right to petition…").
+  if(!poem&&!note&&joined.length===1&&groups.every(g=>(g.section==='story'||g.section==='critique')&&!g.tracks)&&/[.!?…]["”’)]*$/u.test(request.text.trim())&&/(^|[.!?…\n]["”’)]*\s*)$/u.test(source.text.slice(Math.max(0,request.start-8),request.start))&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>=4){
+    const p=joined[0],text=target.text,taken=(a:number,b:number)=>allGroups.some(g=>g[targetLocale].start<b&&g[targetLocale].end>a);
+    let start=p.target.start,end=p.target.end;
+    {const floor=Math.max(0,start-240);let boundary=floor===0?0:-1;
+      for(let k=start-1;k>=floor;k--){const c=text[k];if(c==='\n'||(/[.!?…]/.test(c)&&/^["”’)]*(?:\s|$|\p{Lu})/u.test(text.slice(k+1,k+4)))){boundary=k+1;break;}}
+      if(boundary>=0){while(boundary<start&&/[\s"”’)]/.test(text[boundary]))boundary++;start=boundary;}}
+    {const m=/[.!?…]+["”’)]*(?=\s|$|\p{Lu})/u.exec(text.slice(end,end+300)),nl=text.slice(end,end+300).indexOf('\n');const stop=m&&(nl<0||m.index<nl)?end+m.index+m[0].length:null;if(stop&&stop>end&&!/[.!?…]["”’)]*\s*$/u.test(text.slice(Math.max(0,end-4),end)))end=stop;}
+    const lead=text.slice(start,p.target.start),trail=text.slice(p.target.end,end);
+    const okLead=start===p.target.start||(/\p{L}/u.test(lead)&&!taken(start,p.target.start)&&!/\n/.test(lead)),okTrail=end===p.target.end||(/\p{L}/u.test(trail)&&!taken(p.target.end,end)&&!/\n/.test(trail));
+    const size=end-start,ratio=size/Math.max(1,request.end-request.start);
+    if((start!==p.target.start||end!==p.target.end)&&okLead&&okTrail&&ratio>=.4&&ratio<=2.5){
+      const wholeBefore=p.highlights.length===1&&p.highlights[0].start<=p.target.start&&p.highlights[0].end>=p.target.end;
+      p.target={start,end,text:text.slice(start,end),breaks:target.breaks?.filter(b=>b>start&&b<end)};
+      if(wholeBefore)p.highlights=[{start,end}];
+    }
+  }
   return {status:hasWords?(uncertain?"uncertain":"match"):"context-only",targetLocale,targetRevision:target.revision,sourceBreaks:source.breaks?.filter(b=>b>request.start&&b<request.end),passages:joined,...(unmatchedSource.length?{unmatchedSource}:{})};
 }
