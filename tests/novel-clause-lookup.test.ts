@@ -198,3 +198,20 @@ it('returns the target text between the neighbouring groups as context when part
  expect(r.unmatchedSource?.map(s=>a.editions.vi.text.slice(s.start,s.end).trim())).toContain('Chồng nàng đi xa lắm.');
  expect(r.passages.some(p=>p.target.text.includes('Her husband went far away.'))).toBe(true);
 });
+it('gives the target text between two groups as context for a selection that lies in no group',()=>{
+ const a=gapFixture(),vi=a.editions.vi.text,r=query(a,'vi',span(vi,'Chồng nàng đi xa lắm'));
+ expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);
+ expect(r.passages.map(p=>p.target.text).join(' ')).toContain('Her husband went far away.');
+});
+it('falls back to both neighbouring groups when their target texts touch and nothing lies between them',()=>{
+ const a=gapFixture(),en=a.editions.en.text,from=en.indexOf('Her husband');
+ a.groups[1]={...a.groups[1],en:{start:from,end:en.length},parts:{vi:a.groups[1].parts!.vi,en:[{start:from,end:en.length}]}};
+ const r=query(a,'vi',span(a.editions.vi.text,'Chồng nàng đi xa lắm')),text=r.passages.map(p=>p.target.text).join(' ');
+ expect(r.status).toBe('context-only');expect(text).toContain('Lan was young.');expect(text).toContain('She stayed home.');
+});
+it('answers a selection that runs over a group, an orphan clause and a group by highlighting across the orphan',()=>{
+ const a=gapFixture(),r=query(a,'vi',{start:0,end:a.editions.vi.text.length});
+ expect(r.status).toBe('uncertain');expect(r.unmatchedSource).toBeUndefined();
+ const en=a.editions.en.text,hl=r.passages.flatMap(p=>p.highlights);
+ expect(hl).toEqual([{start:0,end:en.length}]);
+});

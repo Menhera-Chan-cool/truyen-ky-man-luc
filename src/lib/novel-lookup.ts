@@ -283,6 +283,20 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
   }
   return result;
 }
+// A selection in text no group holds lies between two groups of one section; their target text around that point is its context:
+// the text between them nobody claims, or, when they touch, both of them.
+function gapContext(all:AlignmentArtifact['groups'],request:LookupRequest,locale:Locale,targetLocale:Locale,targetText:string):TextSpan|null{
+  if(!/\p{L}/u.test(request.text))return null;
+  const around=all.filter(g=>!g.tracks&&g.kind!=='lexical'&&(g.section==='story'||g.section==='critique'));
+  if(around.some(g=>g[locale].start<request.end&&g[locale].end>request.start))return null;
+  const before=around.filter(g=>g[locale].end<=request.start).sort((a,b)=>b[locale].end-a[locale].end)[0],after=around.filter(g=>g[locale].start>=request.end).sort((a,b)=>a[locale].start-b[locale].start)[0];
+  if(!before||!after||before.section!==after.section||before[targetLocale].end>after[targetLocale].start)return null;
+  const gap={start:before[targetLocale].end,end:after[targetLocale].start};
+  if(around.some(g=>g!==before&&g!==after&&g[targetLocale].start<gap.end&&g[targetLocale].end>gap.start))return null;
+  if(/\p{L}/u.test(targetText.slice(gap.start,gap.end)))return gap.end-gap.start<=Math.max(400,4*(after[locale].start-before[locale].end))?gap:null;
+  const bridge={start:before[targetLocale].start,end:after[targetLocale].end};
+  return bridge.end-bridge.start<=1500?bridge:null;
+}
 function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
   const locale=request.locale,targetLocale=locale==='vi'?'en':'vi',source=artifact.editions[locale],target=artifact.editions[targetLocale];
   const empty=(status:LookupResult['status']):LookupResult=>({status,targetLocale,passages:[]});
@@ -328,12 +342,14 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
   if(!groups.length){
     if(poem)return poetryContext(artifact,request,poem);
     if(note?.target)return {status:'context-only',targetLocale,targetRevision:target.revision,passages:[{source:{...note.source,text:source.text.slice(note.source.start,note.source.end)},target:{...note.target,text:target.text.slice(note.target.start,note.target.end),breaks:target.breaks?.filter(b=>b>note.target!.start&&b<note.target!.end)},highlights:[]}]};
+    const around=gapContext(allGroups,request,locale,targetLocale,target.text);
+    if(around)return {status:'context-only',targetLocale,targetRevision:target.revision,passages:[{source:{start:request.start,end:request.end,text:request.text},target:{...around,text:target.text.slice(around.start,around.end),breaks:target.breaks?.filter(b=>b>around.start&&b<around.end)},highlights:[]}],unmatchedSource:[{start:request.start,end:request.end}]};
     return empty("unavailable");
   }
   let uncertain=remaining.some(s=>source.text.slice(s.start,s.end).trim()),hasWords=false,incompleteWords=false;
   const passages:LookupPassage[]=[];
   const contexts:TextSpan[]=[];
-  const unmatchedSource:TextSpan[]=[];
+  const unmatchedSource:TextSpan[]=[],full:boolean[]=[];
   for(const g of groups){
     const supported=!!poem||g.kind==='lexical'||(g.score>=.5&&g.margin>=.015);
     const content=[...analysisText(source.text.slice(g[locale].start,g[locale].end),g.section==='notes').matchAll(/[\p{L}\p{M}\p{N}]/gu)],last=content.at(-1);
@@ -412,23 +428,41 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     uncertain ||= g.score<.82||g.margin<.015;
     const bounds=sentences.spans.length&&highlights.length?{start:Math.min(...highlights.map(s=>s.start)),end:Math.max(...highlights.map(s=>s.end))}:g[targetLocale];
     contexts.push(sentences.unmatched?.length&&!looseWords?groundedContext(g,locale,targetLocale,sentences.unmatched,sentences.grounded??[]):g[targetLocale]);
+    full.push(sentences.spans.length>0&&!sentences.unmatched?.length&&!looseWords);
     passages.push({source:{...g[locale],text:source.text.slice(g[locale].start,g[locale].end)},target:{...bounds,text:target.text.slice(bounds.start,bounds.end),breaks:target.breaks?.filter(p=>p>bounds.start&&p<bounds.end)},highlights});
   }
   if(!poem&&!note&&groups.length&&groups.every(g=>g.section===groups[0].section&&g.section!=='notes')){
-    // Source text the pairing left in no group lies between two groups; the target text between the same two groups, if no other group claims it, is its context.
-    const around=allGroups.filter(g=>g.section===groups[0].section&&!g.tracks),gaps:(readonly [LookupPassage,TextSpan])[]=[];
+    // Source text the pairing left in no group lies between two groups. The target text between the same two groups, if no other group claims it, belongs to it.
+    // Only interior gaps (between two selected groups) of a selection every group of which matched whole are closed: the highlight then runs across them. Any other gap gives context only.
+    const around=allGroups.filter(g=>g.section===groups[0].section&&!g.tracks),chosen=new Set(groups.map(g=>g.id)),found:{s:TextSpan;gap:TextSpan;letters:boolean;interior:boolean}[]=[];
+    let closable=groups.length>1&&!incompleteWords&&!unmatchedSource.length&&full.every(Boolean);
     for(const s of remaining){
       if((source.text.slice(s.start,s.end).match(/\p{L}+/gu)?.length??0)<2||around.some(g=>g[locale].start<s.end&&g[locale].end>s.start))continue;
       const before=around.filter(g=>g[locale].end<=s.start).sort((a,b)=>b[locale].end-a[locale].end)[0],after=around.filter(g=>g[locale].start>=s.end).sort((a,b)=>a[locale].start-b[locale].start)[0];
-      if(!before||!after)continue;
-      const gap={start:before[targetLocale].end,end:after[targetLocale].start};
-      if(gap.end<=gap.start||gap.end-gap.start>Math.max(400,4*(s.end-s.start))||!/\p{L}/u.test(target.text.slice(gap.start,gap.end))||around.some(g=>g[targetLocale].start<gap.end&&g[targetLocale].end>gap.start))continue;
-      gaps.push([{source:{...s,text:source.text.slice(s.start,s.end)},target:{...gap,text:target.text.slice(gap.start,gap.end),breaks:target.breaks?.filter(b=>b>gap.start&&b<gap.end)},highlights:[]},gap]);
-      incompleteWords=true;unmatchedSource.push(s);
+      const gap=before&&after?{start:before[targetLocale].end,end:after[targetLocale].start}:null;
+      if(!before||!after||!gap||gap.end<gap.start||gap.end-gap.start>Math.max(400,4*(s.end-s.start))||around.some(g=>g[targetLocale].start<gap.end&&g[targetLocale].end>gap.start)){closable=false;continue;}
+      found.push({s,gap,letters:/\p{L}/u.test(target.text.slice(gap.start,gap.end)),interior:chosen.has(before.id)&&chosen.has(after.id)});
     }
-    if(gaps.length){
-      const merged=[...passages.map((p,i)=>[p,contexts[i]] as const),...gaps].sort((a,b)=>a[0].source.start-b[0].source.start);
-      passages.splice(0,passages.length,...merged.map(m=>m[0]));contexts.splice(0,contexts.length,...merged.map(m=>m[1]));
+    // A closed gap may hold at most three times its own length of target text (and 120 characters at least): more is a different passage, not the translation of the orphan.
+    if(closable&&found.length&&found.every(f=>f.interior&&f.gap.end-f.gap.start<=Math.max(120,3*(f.s.end-f.s.start)))){
+      for(const f of found){
+        const at=passages.findLastIndex(p=>p.source.end<=f.s.start);
+        if(at<0)continue;
+        // The passage now runs over the gap on both sides, so the coverage check sees its source and its target as covered.
+        const p=passages[at];p.source={start:p.source.start,end:f.s.end,text:source.text.slice(p.source.start,f.s.end)};
+        if(f.letters){p.highlights=mergeSpans([...p.highlights,f.gap],target.text);p.target={...p.target,end:f.gap.end,text:target.text.slice(p.target.start,f.gap.end)};}
+      }
+    }else{
+      const gaps:(readonly [LookupPassage,TextSpan])[]=[];
+      for(const f of found){
+        if(!f.letters)continue;
+        gaps.push([{source:{...f.s,text:source.text.slice(f.s.start,f.s.end)},target:{...f.gap,text:target.text.slice(f.gap.start,f.gap.end),breaks:target.breaks?.filter(b=>b>f.gap.start&&b<f.gap.end)},highlights:[]},f.gap]);
+        incompleteWords=true;unmatchedSource.push(f.s);
+      }
+      if(gaps.length){
+        const merged=[...passages.map((p,i)=>[p,contexts[i]] as const),...gaps].sort((a,b)=>a[0].source.start-b[0].source.start);
+        passages.splice(0,passages.length,...merged.map(m=>m[0]));contexts.splice(0,contexts.length,...merged.map(m=>m[1]));
+      }
     }
   }
   if(incompleteWords){hasWords=false;for(const [i,p] of passages.entries()){const b=contexts[i];p.highlights=[];p.target={...b,text:target.text.slice(b.start,b.end),breaks:target.breaks?.filter(x=>x>b.start&&x<b.end)};}}

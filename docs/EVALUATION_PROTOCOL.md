@@ -176,6 +176,30 @@ Because every number above is checked against gold that was built from note numb
 
 Reading: when the system answers it is right about 92% of the time and not wrong in 82 of 85 (96%); it answers 71% of the time and, when it abstains, 29 of 35 give the right context. The three wrong answers are word cases: "serpents" → "chim" (a swap inside the list "chim cắt … rắn độc"), "very" → "rất" (the wrong "very"), "chưa" → "had". Five of the six abstentions without context are words or phrases for which the lookup returned no passage at all, and one is a sentence whose passage holds only its first clause. **The targets of 95% for answers and 98% in both directions are not met**: words 88%, English→Vietnamese 88%, and a 95% claim needs about 400 independent cases.
 
+## Fixing what the audit found: gap context and interior closure (lookup only, no new data)
+
+Findings of the audit that this addresses: 35 of 120 lookups abstained, 5 of them with no passage at all, and the abstentions that sat in trusted groups were mostly sentences broken by an orphan clause that belonged to no group.
+
+1. A selection that lies wholly in text no group holds now gets context: the unclaimed target text between the two neighbouring groups of the section, or, when their target texts touch, both of them (up to 1,500 characters). Out-of-order or huge gaps stay "unavailable".
+2. A selection that runs over several groups whose only gaps are orphan clauses between two of those groups (every selected group matched whole, no unmatched content inside any group, a target gap of at most 120 characters or three times the orphan) is answered: the highlight runs across the orphan and the passage covers its source, so the coverage check accepts it. Status is "uncertain".
+
+| | Before | After |
+| --- | ---: | ---: |
+| **Blind sentences (102), hit** | 76 | **84** |
+| Blind sentences, coverage / hit of all | 78.4% / 74.5% | 86.3% / 82.4% |
+| Blind sentences, hit of answered / wrong | 95.0% / 0 | 95.5% / 0 |
+| Blind sentences, no answer and no context | 14 | 7 |
+| Blind sentences, context has gold | 83.3% | **90.2%** |
+| Tuned-chapter stratum, hit / context has gold | 77 / 83.6% | 81 / 85.5% |
+| Dev sentence pairs, hit | 96 | 96 |
+| Lexical sets A and B, dev probes, chapter 2 | unchanged | unchanged (words 29/40, phrases 30/40 on B; probes 34/26/39; 8/8) |
+| Audit (dev now: its cases were read), hits of 120 | 78 | 80 |
+| Audit, abstain with no context | 6 | 3 |
+
+The blind sentence set was evaluated once for this change (its earlier runs belonged to earlier changes). Dev did not move because step 1 had already placed the orphans it contains; the blind and tuned sets gained because the lookup now closes what the data still leaves open.
+
+**Not fixed, and why.** The three wrong words in the audit ("serpents" → "chim", "very" → "rất", "chưa" → "had") stay. A LaBSE check on single words cannot veto them: right answers scored 0.36–0.80 and wrong ones 0.55–0.99 against their selection; when mBERT and the LaBSE best window disagree, the mBERT answer is the right one in 10 of 12 cases. A looser phrase gate does not buy coverage either: over 201 labelled lookups the current gate emits 122 at 95% precision, the loosest gate 171 at 91%, and on the random audit alone the loosened gate is about 85%. A rule against scattered highlights rests on one case and was not added.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
