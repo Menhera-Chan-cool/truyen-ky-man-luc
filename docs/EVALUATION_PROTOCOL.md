@@ -406,6 +406,17 @@ The rule above left "bears" → "bắt thỏ" because the segmenter reads "săn 
 
 Left in lexical A: "thỏ" (no small pair holds it; the possible fix, dropping a link whose target another word holds by a strong pair, would make it an abstention rather than "hares"), and "bỏ dở" / "unfinished" (no phrase pair and no link for "dở"; it needs the chapter re-aligned). Tests 374, typecheck clean, e2e 60 of 60.
 
+### Follow-up: "thỏ" becomes an abstention with the right context (2026-11-15)
+
+"thỏ" was linked to "bears" at 1.0, which belongs to the pair "săn gấu" ↔ "hunting bears" (0.88). A lone word whose link target lies inside a small strong pair (score ≥ .8, margin ≥ .15, at most three words) that does not hold it, while a written word of that pair has its best link (≥ .1) outside the pair, now gets no highlight. The test for "outside" is made per written word of the pair's window, because the segmenter's word "săn gấu" would otherwise hide the escape of "gấu" behind the inside link of "săn". "thỏ" is now a context-only answer whose context contains "hares"; the link would have been a wrong answer, so this trades one wrong answer for one abstention with the right context.
+
+| Set | Before | After |
+| --- | --- | --- |
+| Lexical A (dev), word answered / wrong / hits | 36 / 3 / 32 | 35 / 2 / 32 |
+| Both audits, probes, dev and tuned sentences, chapter 2, blind lexical B, blind sentences | | identical outputs |
+
+Left in lexical A: "bỏ dở" / "unfinished" (no phrase pair and no link for "dở"; it needs the chapter re-aligned). Tests 375, typecheck clean, e2e 60 of 60.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

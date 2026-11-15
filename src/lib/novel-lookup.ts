@@ -391,8 +391,8 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         const [wordStart,wordEnd]=sourceKey.split(':').map(Number);
         // A link whose target lies wholly outside the target of a small strong phrase pair that holds its source word is crossed ("gấu thỏ" against "bears … hares", linked the other way round):
         // the words of the pair that no other word of its window takes are this word's; what another word takes is its raw link piece ("săn"), not the whole word the segmenter made of it ("săn gấu").
-        const pickStart=Math.max(wordStart,request.start),pickEnd=Math.min(wordEnd,request.end);
-        const holder=keep.length&&!poem&&g.kind!=='lexical'&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)===1?g.phrasePairs?.filter(p=>p[locale].start<=wordStart&&p[locale].end>=wordEnd&&(p[locale].start<request.start||p[locale].end>request.end)&&(source.text.slice(p[locale].start,p[locale].end).match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=3&&p.score>=.65&&p.margin>=.15&&keep.every(c=>c.span.end<=p[targetLocale].start||c.span.start>=p[targetLocale].end)).sort((a,b)=>(a[locale].end-a[locale].start)-(b[locale].end-b[locale].start)||b.score-a.score)[0]:undefined;
+        const pickStart=Math.max(wordStart,request.start),pickEnd=Math.min(wordEnd,request.end),lone=(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)===1;
+        const holder=keep.length&&!poem&&g.kind!=='lexical'&&lone?g.phrasePairs?.filter(p=>p[locale].start<=wordStart&&p[locale].end>=wordEnd&&(p[locale].start<request.start||p[locale].end>request.end)&&(source.text.slice(p[locale].start,p[locale].end).match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=3&&p.score>=.65&&p.margin>=.15&&keep.every(c=>c.span.end<=p[targetLocale].start||c.span.start>=p[targetLocale].end)).sort((a,b)=>(a[locale].end-a[locale].start)-(b[locale].end-b[locale].start)||b.score-a.score)[0]:undefined;
         if(holder){
           const t=holder[targetLocale],others=g.links.filter(l=>l[locale][0]>=holder[locale].start&&l[locale][1]<=holder[locale].end&&!(l[locale][0]<pickEnd&&l[locale][1]>pickStart)&&l.score>=.3);
           const words=[...target.text.slice(t.start,t.end).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:t.start+m.index,end:t.start+m.index+m[0].length})).filter(w=>!onlyFunctionWords(target.text.slice(w.start,w.end),targetLocale));
@@ -402,6 +402,19 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
           const rest=left(whole).length?left(whole):left(others.map(l=>({start:l[targetLocale][0],end:l[targetLocale][1]})).filter(s=>s.start>=t.start&&s.end<=t.end));
           if(rest.length&&rest.length<=2&&/^\s*$/.test(target.text.slice(rest[0].end,rest.at(-1)!.start))){keep=[{span:{start:rest[0].start,end:rest.at(-1)!.end},score:holder.score}];uncertain=true;}
         }
+        // The other side of a swapped list: a lone word whose link target lies inside a small strong phrase pair that does not hold it, while a word of that pair has its best link outside the pair, gets no highlight rather than a wrong one.
+        // ("thỏ" is linked to "bears", which belongs to "săn gấu" ↔ "hunting bears", whose "gấu" is linked to "hares".)
+        const leaves=(p:NonNullable<typeof g.phrasePairs>[number])=>{
+          // Per written word of the pair's source window (not per segmented word: "săn gấu" must not hide the escape of "gấu").
+          const best=new Map<number,{score:number;out:boolean}>(),syllables=[...source.text.slice(p[locale].start,p[locale].end).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:p[locale].start+m.index,end:p[locale].start+m.index+m[0].length}));
+          for(const l of g.links){
+            const at=syllables.findIndex(s=>l[locale][0]>=s.start&&l[locale][0]<s.end),to=l[targetLocale];
+            if(at<0||l[locale][1]>p[locale].end||onlyFunctionWords(source.text.slice(syllables[at].start,syllables[at].end),locale)||(best.get(at)?.score??-1)>=l.score)continue;
+            best.set(at,{score:l.score,out:to[1]<=p[targetLocale].start||to[0]>=p[targetLocale].end});
+          }
+          return [...best.values()].some(b=>b.out&&b.score>=.1);
+        };
+        if(keep.length&&!holder&&lone&&!poem&&g.kind!=='lexical'&&g.phrasePairs?.some(p=>!(p[locale].start<pickEnd&&p[locale].end>pickStart)&&(source.text.slice(p[locale].start,p[locale].end).match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=3&&p.score>=.8&&p.margin>=.15&&keep.every(c=>c.span.start>=p[targetLocale].start&&c.span.end<=p[targetLocale].end)&&leaves(p)))keep=[];
         // A weak link to a content word that sits beside the kept target across "and"/"or"/a comma, and that no other word claims, completes a coordinated pair ("sáng sủa" = "bright and clear").
         if(keep.length&&!poem&&g.kind!=='lexical')for(const c of ranked)if(!keep.includes(c)&&c.score>=.03&&!competing.has(c.span.start+':'+c.span.end)&&!onlyFunctionWords(target.text.slice(c.span.start,c.span.end),targetLocale)&&keep.some(k=>/^\s*(?:,|and|or|và|hoặc)\s*$/iu.test(c.span.start>=k.span.end?target.text.slice(k.span.end,c.span.start):c.span.end<=k.span.start?target.text.slice(c.span.end,k.span.start):'x')))keep.push(c);
         if(keep.length){const [start,end]=sourceKey.split(':').map(Number);coveredWords.push({start,end});}

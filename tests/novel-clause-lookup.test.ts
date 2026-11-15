@@ -284,3 +284,12 @@ it('lets the raw link pieces decide only when the whole words leave nothing of t
  a.groups[0].phrasePairs=[{vi:span(vi,'săn gấu'),en:span(en,'hunting bears'),score:.88,margin:.19,from:'en'}];
  expect(query(a,'en',span(en,'bears')).passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end)))).toEqual(['gấu']);
 });
+it('withdraws the highlight of a lone word whose target belongs to a strong pair with a swapped word, and keeps it when no word of the pair escapes',()=>{
+ const run=(gauLinksTo:string)=>{
+  const en='He goes hunting bears and chasing hares.',vi='Chàng săn gấu bắt thỏ.',a=plain(vi,en,{vi:[vi],en:[en]},[['săn','hunting'],['gấu',gauLinksTo],['bắt','chasing'],['thỏ','bears']]);
+  a.groups[0].phrasePairs=[{vi:span(vi,'săn gấu'),en:span(en,'hunting bears'),score:.88,margin:.19,from:'en'}];
+  return query(a,'vi',span(vi,'thỏ')).passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)));
+ };
+ expect(run('hares')).toEqual([]);
+ expect(run('bears')).toEqual(['bears']);
+});
