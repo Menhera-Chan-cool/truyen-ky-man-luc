@@ -360,6 +360,10 @@ The blind lexical set was run twice for this step, so the second figure is not a
 
 Unit tests 372, typecheck clean, alignment e2e 60 of 60.
 
+## Fourth human check: a fresh sample after the edge rules (2026-11-15)
+
+Same design as the third (`docs/verification/audit-120d-2026-11-15.json`): seeded audit 20261125, no sentence of the first three audits, run on the deployed code (source `dc9f6e1`); 89 of the 120 lookups were answered (28 words, 27 phrases, 34 sentences); the sheet holds 20 answered lookups per kind in shuffled order. Page: https://claude.ai/artifact/6RPmM18WETrmpMjgqvw3r9, template `docs/verification/human-check-artifact-template-4.html`, key `docs/verification/human-check-key-4.json`; evaluate with `python scripts/align-novel/human_check_compare3.py ANSWERS.csv docs/verification/human-check-key-4.json`. The third check gave 92.0% (85–98) on its sample; the two intervals are the comparison, a difference of a few points between them is noise.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
