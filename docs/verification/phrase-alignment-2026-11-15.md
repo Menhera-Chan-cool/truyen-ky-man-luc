@@ -83,3 +83,20 @@ The worker now builds phrase pairs in its LaBSE stage, so a republished chapter 
 
 Release: data re-published through the worker (20 chapters `ready`, 19,411,300 bytes); web `dpl_EnyHCr5LdcB1AXXmv5HywkHSQycv` aliased to https://truyen-ky-man-luc.vercel.app (previous `dpl_AWeuSL8MMQAarWRFs2VXkaVyJvD5`). **Post-deploy verification was skipped by instruction.**
 
+## Fourth pass: group boundaries (source `af006e0`) and the Supabase egress incident (source `049d163`)
+
+**Group boundaries.** Two steps run after the parent repair, on prose only. `repair_boundaries` re-splits two groups that touch inside one paragraph when another cut of their units pairs both halves much better (total gain ≥ 0.10 and each half ≥ 0.5). `adopt_orphans` adds a unit the pairing had skipped between groups (one or two units, same paragraph) to the neighbour it completes when that lifts the group's own pairing by ≥ 0.04 to at least 0.5. Neighbour re-splitting alone fixed only 6 groups; the "thổi kèn" case was a skipped unit, which is why the second step exists. 51 groups in 16 chapters changed; 22 sampled were all improvements (model reading). Word links for changed groups come from the normal mBERT stage, so the worker path was run end to end on chapter 5 and its artifact validated.
+
+| Measure | Before | After |
+| --- | ---: | ---: |
+| 120 old probes: word / phrase / sentence | 33 / 23 / 39 | 33 / 27 / 39 |
+| Fresh held-out set, hits of 120 (see below) | 87 | 91 |
+
+The held-out set is 60 sentence pairs from 14 chapters not used for tuning, two directions, gold taken from the same body note number `(n)` in both editions (independent of any model). Against 496602b it goes 74 → 87 → 91 hits, context-only 37 → 19 → 15; answered-but-not-hit rose 8 → 13 (2 disjoint, 11 partial overlaps). It is skewed toward sentences with notes.
+
+**Model comparison, nothing swapped.** Models already cached locally only. Sentence layer, held-out retrieval in the whole chapter: LaBSE vs multilingual-e5-small, top-1 90.0% vs 90.0% (VI→EN) and 98.3% vs 95.0% (EN→VI). Word layer, 60 marker-adjacent anchors: pinned mBERT layer 8 and awesome-align-with-co both recall 41.7%, link precision 56.4% vs 47.1%. No evidence for a swap; the weaker direction is VI→EN span choice, not the encoder.
+
+**Egress incident.** The Supabase project showed 9.99 GB of 5 GB (200%). Edge logs for 24 h: heading fonts 938 requests / 306 MB, book images 844 / 213 MB, the full book RPC 1,073 calls of 773 kB, artifacts about 30 MB. 97% of the signed-URL requests came from one residential IP: `.env.local` holds production credentials, so local dev and browser test runs fetched fonts, covers and the whole book from production (about 250 MB a run). Production inefficiency also mattered: fonts and images redirected to a fresh signed URL per view, so nothing was cacheable (cached egress 3%).
+
+Fixes: published fonts and images stream through Vercel with `public, max-age=604800, s-maxage=604800, immutable` (unpublished files and PDFs keep the private redirect); `getBook` shares one sanitized copy per instance for two minutes; the main Playwright config blanks the Supabase variables for its own dev server; the alignment specs stub font and image requests. Measured afterwards with the Supabase logs: a 60-test alignment run made 3 database calls and 0 storage calls (earlier runs: hundreds of each). The monthly chart and the quota state cannot be changed from code and have not been re-read; the 200% already used stays for this billing period.
+
