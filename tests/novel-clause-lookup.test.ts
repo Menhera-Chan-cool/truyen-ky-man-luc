@@ -224,3 +224,11 @@ it('joins the pieces of a phrase answer across a short unclaimed gap but not acr
  expect(run('She cast herself into the river.')).toEqual(['cast herself into the river']);
  expect(run('She cast herself into. The river.')).toHaveLength(2);
 });
+it('extends a phrase answer over the target word of an unlinked edge word unless a non-adjacent word holds it',()=>{
+ const run=(vi:string,en:string,held:string)=>{
+  const a=plain(vi,en,{vi:[vi],en:[en]},[['liếc','glanced'],['rồi','then'],[held,'smiled']]);
+  return query(a,'vi',span(vi,'liếc rồi mỉm')).passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)));
+ };
+ expect(run('Viên liếc rồi mỉm cười.','Vien glanced then smiled.','cười')).toEqual(['glanced then smiled']);
+ expect(run('Viên liếc rồi mỉm cười lớn.','Vien glanced then smiled.','lớn')).toEqual(['glanced then']);
+});

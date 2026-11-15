@@ -361,7 +361,7 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     if(sentences.unmatched?.length){incompleteWords=true;unmatchedSource.push(...sentences.unmatched.map(s=>({start:Math.max(s.start,request.start),end:Math.min(s.end,request.end)})));}
     const targetSpans=targetWords(g,locale,source,target,!poem&&g.kind!=='lexical');
     const sourceSpans=targetWords(g,targetLocale,target,source,!poem&&g.kind!=='lexical');
-    let claimedByOthers:TextSpan[]=[];
+    let claimedByOthers:(TextSpan&{from:TextSpan})[]=[];
     if(named)spans=[named];
     else {
       spans.push(...sentences.spans);
@@ -376,14 +376,14 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         if(!map.has(tk)||map.get(tk)!.score<link.score)map.set(tk,{span:tw,score:link.score});
         words.set(key,map);
       }
-      const competing=new Map<string,number>();
+      const competing=new Map<string,number>(),outsideLinks:(TextSpan&{from:TextSpan})[]=[];
       if(!poem&&g.kind!=='lexical')for(const link of g.links){
         const from=link[locale];if(from[0]<request.end&&from[1]>request.start)continue;
         const sw=sourceSpans.get(link)!;if(onlyFunctionWords(source.text.slice(sw.start,sw.end),locale))continue;
         const tw=targetSpans.get(link)!,key=tw.start+':'+tw.end;
-        competing.set(key,Math.max(competing.get(key)??0,link.score));
+        competing.set(key,Math.max(competing.get(key)??0,link.score));outsideLinks.push({start:tw.start,end:tw.end,from:sw});
       }
-      claimedByOthers=[...competing.keys()].map(k=>{const [start,end]=k.split(':').map(Number);return {start,end};});
+      claimedByOthers=outsideLinks;
       for(const [sourceKey,map] of words){
         const ranked=[...map.values()].sort((a,b)=>b.score-a.score);
         const keep=ranked.filter(c=>c.score>=ranked[0].score*.8&&c.score>=.03&&c.score*1.35>=(competing.get(c.span.start+':'+c.span.end)??0));
@@ -415,7 +415,21 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         const wordsOf=(w:TextSpan)=>source.text.slice(w.start,w.end),content=selected.filter(w=>/\p{L}/u.test(wordsOf(w))&&!onlyFunctionWords(wordsOf(w),locale));
         const essential=missing.some(w=>/^(?:not|never|no|không|chưa|chẳng|đừng)$/iu.test(wordsOf(w)));
         const oneSentence=alignmentUnits(source,g[locale],locale,g.section==='notes').filter(u=>u.start<request.end&&u.end>request.start).length<=1;
-        if(!sentences.unmatched?.length&&highlights.length&&oneSentence&&!essential&&missing.length*3<=content.length)uncertain=true;
+        if(!sentences.unmatched?.length&&highlights.length&&oneSentence&&!essential&&missing.length*3<=content.length){
+          uncertain=true;
+          // Selected words at an edge of the selection that no link reached extend the answer by as many target words at that edge, up to three, unless another word's link holds them;
+          // the word right beside the selection may hold them (a compound cut in the middle: "mỉm | cười").
+          if(!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length){
+            const isCovered=(w:TextSpan)=>[...coveredWords,...sentences.covered].some(s=>s.start<=w.start&&s.end>=w.end),missed=new Set(missing.map(w=>w.start));
+            let lead=0,trail=0;
+            for(const w of selected){if(isCovered(w))break;if(missed.has(w.start))lead++;}
+            for(const w of [...selected].reverse()){if(isCovered(w))break;if(missed.has(w.start))trail++;}
+            const nextAt=request.end+(/^\s*/.exec(source.text.slice(request.end))![0].length),prevEnd=request.start-(/\s*$/.exec(source.text.slice(0,request.start))![0].length);
+            const free=(a:number,b:number,beside:(f:TextSpan)=>boolean)=>!claimedByOthers.some(c=>c.start<b&&c.end>a&&!beside(c.from)),after=/^\s+([\p{L}\p{M}\p{N}]+(?:['’-][\p{L}\p{M}\p{N}]+)*)/u,before=/([\p{L}\p{M}\p{N}]+(?:['’-][\p{L}\p{M}\p{N}]+)*)\s+$/u;
+            for(let n=0;n<Math.min(3,trail);n++){const last=highlights.at(-1)!,m=after.exec(target.text.slice(last.end,last.end+60));if(!m)break;const end=last.end+m[0].length;if(!free(last.end,end,f=>f.start===nextAt)||end>g[targetLocale].end)break;last.end=end;}
+            for(let n=0;n<Math.min(3,lead);n++){const first=highlights[0],text=target.text.slice(Math.max(g[targetLocale].start,first.start-60),first.start),m=before.exec(text);if(!m)break;const start=first.start-(text.length-m.index);if(!free(start,first.start,f=>f.end===prevEnd)||start<g[targetLocale].start)break;first.start=start;}
+          }
+        }
         else{incompleteWords=true;unmatchedSource.push(...missing);looseWords=missing.some(w=>!sentences.unmatched?.some(u=>u.start<=w.start&&u.end>=w.end));}
       }
     }
