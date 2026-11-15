@@ -167,11 +167,12 @@ def _decide(task,atoms,scores,limits,pairs):
         mine=ranges(*window)
         if not task['root'] and any(mine[l]==task[l] for l in SIDES):continue
         found.append({'ranges':mine,'score':score,'margin':pair['score']-apart,'window':window})
-    if task['root'] or not found:return found
+    if not found:return found
     anchors=sorted(found,key=lambda f:f['window'][0]);cuts=[(0,0)]+[(f['window'][0]+f['window'][1],f['window'][2]+f['window'][3]) for f in anchors]
     starts=[(f['window'][0],f['window'][2]) for f in anchors]+[(size['vi'],size['en'])]
-    held={l:{k for f in anchors for k in range(f['window'][0 if l=='vi' else 2],f['window'][0 if l=='vi' else 2]+f['window'][1 if l=='vi' else 3])} for l in SIDES}
-    for (i0,j0),(i1,j1) in zip(cuts,starts):
+    # Under an accepted parent the paragraph edge is a boundary too; at the top level only a gap between two confident pairs counts.
+    gaps=list(zip(cuts,starts))[1:-1] if task['root'] else list(zip(cuts,starts))
+    for (i0,j0),(i1,j1) in gaps:
         a,b=i1-i0,j1-j0
         if not (1<=a<=limits[0] and 1<=b<=limits[1]) or (a,b)==(size['vi'],size['en']):continue
         score=float(scores[a,b][i0,j0])

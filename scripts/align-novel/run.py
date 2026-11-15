@@ -2,7 +2,7 @@ import argparse,datetime,gc,json,os,pathlib,sys,time
 import numpy as np
 from alignment import softmax_links,reader_span,vietnamese_word_spans
 from context_alignment import align_contexts,add_caption_aliases,split_reader_units,mask_references,slice16,u16
-from book_glossary import build_glossary,apply_glossary
+from book_glossary import build_glossary,apply_glossary,merge_book_names
 import regex
 
 ALGORITHM='labse-poetry-mbert-3'
@@ -110,6 +110,7 @@ def main():
                         if a==b:continue
                         vectors.setdefault((a,b),[]).append(vector.cpu().numpy())
         return [(a,b,np.mean(value,axis=0)) for (a,b),value in sorted(vectors.items())]
+    built=[]
     for item in inputs:
         groups=align_words(item['contexts'],token_vectors)
         artifact={'schema':1,'codec':item['editions']['vi']['codec'],'algorithm':ALGORITHM,'models':models,
@@ -121,7 +122,14 @@ def main():
         artifact['editions']['en']['words']=english_words(item['editions']['en'])
         glossary=build_glossary(artifact,item['structures'])
         aliases=add_caption_aliases(artifact,item['structures'])
-        applied=apply_glossary(artifact,glossary)
+        built.append((item,artifact,glossary,aliases))
+    # Names seen once per chapter may add up across the chapters of this run; a single-chapter run promotes nothing.
+    promoted=merge_book_names([glossary for _,_,glossary,_ in built])
+    versions={glossary['chapterId']:glossary['sourceVersions'] for _,_,glossary,_ in built}
+    for item,artifact,glossary,aliases in built:
+        glossary['accepted']+=promoted.get(glossary['chapterId'],[])
+        glossary['stats']['accepted']=len(glossary['accepted'])
+        applied=apply_glossary(artifact,glossary,versions)
         artifact['glossary']={'schema':1,'sourceVersions':glossary['sourceVersions'],**glossary['stats'],**applied}
         (output/(item['chapterId']+'.glossary.json')).write_text(json.dumps(glossary,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
         destination=output/(item['chapterId']+'.json');temporary=destination.with_suffix('.tmp')

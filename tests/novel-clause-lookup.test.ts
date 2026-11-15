@@ -111,3 +111,33 @@ it('keeps an uncertain highlight when most content of a phrase inside one senten
  const mostlyMissing=query(a,'en',span(en,'depends on wisdom not brute'));
  expect(mostlyMissing.passages.flatMap(p=>p.highlights).length===0||mostlyMissing.status!=='match').toBe(true);
 });
+function plain(vi:string,en:string,parts:{vi:string[];en:string[]},links:[string,string][],pairs?:[string[],string[]][]):AlignmentArtifact{
+ const a=fixture();a.editions.vi.text=vi;a.editions.en.text=en;
+ const group:AlignmentArtifact['groups'][number]={id:'0',section:'story',score:.9,margin:.1,vi:{start:0,end:vi.length},en:{start:0,end:en.length},parts:{vi:parts.vi.map(q=>span(vi,q)),en:parts.en.map(q=>span(en,q))},
+  links:links.map(([v,e])=>({vi:[span(vi,v).start,span(vi,v).end] as [number,number],en:[span(en,e).start,span(en,e).end] as [number,number],score:.9}))};
+ if(pairs)group.clausePairs=pairs.map(([v,e])=>({vi:v.map(q=>span(vi,q)),en:e.map(q=>span(en,q)),score:.8,margin:.2}));
+ a.groups=[group];delete a.refinedGroups;return a;
+}
+it('does not certify a clause when the negation has no counterpart',()=>{
+ const en='He did not heed her, but he respected her.',vi='Chàng nghe lời nàng, nhưng vẫn kính trọng nàng.';
+ const a=plain(vi,en,{vi:['Chàng nghe lời nàng,','nhưng vẫn kính trọng nàng.'],en:['He did not heed her,','but he respected her.']},[['Chàng','He'],['nghe','heed'],['nàng','her'],['nhưng','but'],['kính trọng','respected']]);
+ const r=query(a,'en',span(en,'He did not heed her,'));
+ expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);expect(r.unmatchedSource?.length).toBeGreaterThan(0);
+});
+it('keeps a repeated sentence at the occurrence that was selected',()=>{
+ const vi='Anh đi. Rồi nghỉ. Anh đi. Rồi về.',en='He goes. Then rests. He goes. Then returns.';
+ const spans=(text:string,quotes:string[])=>{let at=0;return quotes.map(q=>{const start=text.indexOf(q,at);at=start+q.length;return {start,end:start+q.length};});};
+ const vp=spans(vi,['Anh đi.','Rồi nghỉ.','Anh đi.','Rồi về.']),ep=spans(en,['He goes.','Then rests.','He goes.','Then returns.']);
+ const a=plain(vi,en,{vi:[vi],en:[en]},[]);
+ a.groups[0].parts={vi:vp,en:ep};a.groups[0].clausePairs=vp.map((v,i)=>({vi:[v],en:[ep[i]],score:.8,margin:.2}));
+ const r=query(a,'en',ep[2]);
+ expect(r.passages.flatMap(p=>p.highlights)).toEqual([vp[2]]);
+});
+it('treats a note marker as no evidence by itself and ignores it inside a selected sentence',()=>{
+ const vi='Họ mong kết duyên Châu Trần (3) từ xưa.',en='They hoped to marry as the Zhu and Chen clans(3) of old.';
+ const a=plain(vi,en,{vi:[vi],en:[en]},[['Họ','They']]);a.groups[0].clausePairs=[{vi:[span(vi,vi)],en:[span(en,en)],score:.8,margin:.2}];
+ const marker=span(en,'(3)'),alone=query(a,'en',marker);
+ expect(alone.passages.flatMap(p=>p.highlights)).toEqual([]);
+ const whole=query(a,'en',span(en,en));
+ expect(whole.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual([vi]);
+});

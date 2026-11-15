@@ -2,7 +2,7 @@ import copy
 import hashlib
 import unittest
 
-from book_glossary import apply_glossary, build_glossary
+from book_glossary import apply_glossary, build_glossary, merge_book_names
 
 
 def size(text):
@@ -224,6 +224,57 @@ class BookGlossaryTests(unittest.TestCase):
                                               ('Lam Sơn về.', 'Lam Son returned.')], [1])
         g = build_glossary(a, structures)
         self.assertEqual([e for e in g['accepted'] if e['en'] == 'Lam Son'], [])
+
+    def chapters(self, rows_a, rows_b):
+        a, b = fixture(rows_a), fixture(rows_b)
+        a['chapterId'], b['chapterId'] = 'chapter-a', 'chapter-b'
+        return a, b, build_glossary(a), build_glossary(b)
+
+    def test_a_name_seen_once_in_two_chapters_is_promoted_with_its_evidence_binding(self):
+        a, b, ga, gb = self.chapters([('Lâm Sơn đi xa.', 'Lam Son went far.')], [('Gặp Lâm Sơn.', 'Meet Lam Son.')])
+        self.assertEqual((ga['accepted'], gb['accepted']), ([], []))
+        promoted = merge_book_names([ga, gb])
+        self.assertEqual(set(promoted), {'chapter-a', 'chapter-b'})
+        entry = promoted['chapter-a'][0]
+        self.assertEqual((entry['scope'], entry['support']), ('book', 2))
+        self.assertEqual(set(entry['evidenceVersions']), {'chapter-a', 'chapter-b'})
+        ga['accepted'] += promoted['chapter-a']
+        versions = {'chapter-a': ga['sourceVersions'], 'chapter-b': gb['sourceVersions']}
+        self.assertEqual(apply_glossary(a, ga, versions)['linksAdded'], 1)
+
+    def test_book_evidence_is_dropped_when_any_supporting_chapter_is_republished(self):
+        a, b, ga, gb = self.chapters([('Lâm Sơn đi xa.', 'Lam Son went far.')], [('Gặp Lâm Sơn.', 'Meet Lam Son.')])
+        ga['accepted'] += merge_book_names([ga, gb])['chapter-a']
+        current = {'chapter-a': ga['sourceVersions'], 'chapter-b': {**gb['sourceVersions'], 'vi': {'versionId': 'new', 'hash': '0' * 64}}}
+        counts = apply_glossary(a, ga, current)
+        self.assertEqual((counts['linksAdded'], counts['staleBookEntries']), (0, 1))
+        self.assertEqual(apply_glossary(a, ga)['staleBookEntries'], 1)
+
+    def test_one_chapter_a_conflicting_partner_or_a_copied_context_never_promotes(self):
+        a, b, ga, gb = self.chapters([('Lâm Sơn đi xa.', 'Lam Son went far.')], [('Gặp Lâm Sơn.', 'Meet Lam Son.')])
+        self.assertEqual(merge_book_names([ga]), {})
+        c, d, gc, gd = self.chapters([('Lâm Sơn đi xa.', 'Lam Son went far.')], [('Gặp Lâm Sơn.', 'Meet Lam Sun.')])
+        self.assertEqual(merge_book_names([gc, gd]), {})
+        e, f, ge, gf = self.chapters([('Lâm Sơn đi xa.', 'Lam Son went far.')], [('Lâm Sơn đi xa.', 'Lam Son went far.')])
+        self.assertEqual(merge_book_names([ge, gf]), {})
+
+    def test_a_title_before_a_name_is_kept_as_a_candidate_with_its_anchor_and_never_applied(self):
+        a = fixture([('vua Lâm Sơn đi.', 'King Lam Son went.'), ('Gặp vua Lâm Sơn.', 'Meet King Lam Son.'),
+                     ('vua Lâm Sơn về.', 'King Lam Son returned.')])
+        g = build_glossary(a)
+        title = next(e for e in g['candidates'] if e['vi'] == 'vua' and e['en'] == 'King')
+        self.assertIn('requires-semantic-validation', title['reasons'])
+        self.assertEqual({e['anchor'] for e in title['evidence']}, {'Lâm Sơn'})
+        self.assertFalse(any(e['vi'] == 'vua' for e in g['accepted']))
+        self.assertEqual(apply_glossary(a, g)['linksAdded'], 3)
+
+    def test_the_same_title_before_two_different_people_does_not_merge_the_people(self):
+        a = fixture([('vua Lâm Sơn đi.', 'King Lam Son went.'), ('vua Hồ Quý đến.', 'King Ho Quy came.'),
+                     ('Gặp Lâm Sơn.', 'Meet Lam Son.'), ('Gặp Hồ Quý.', 'Meet Ho Quy.')])
+        g = build_glossary(a)
+        accepted = {(e['vi'], e['en']) for e in g['accepted']}
+        self.assertEqual(accepted, {('Lâm Sơn', 'Lam Son'), ('Hồ Quý', 'Ho Quy')})
+        self.assertNotIn(('Lâm Sơn', 'Ho Quy'), accepted)
 
 
 if __name__ == '__main__':

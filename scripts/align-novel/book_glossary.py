@@ -109,12 +109,12 @@ def build_glossary(artifact, structures=None):
     def labelled(left, right):
         return any(any(_contains(label, v['span']) for label in labels[l]) for l, v in [('vi', left), ('en', right)])
 
-    def observe(left, right, group, method):
+    def observe(left, right, group, method, anchor=None):
         if any(_normal(v['text']) in _STOP or len(_fold(v['text'])) < 3 for v in [left, right]):
             return
         key = (_normal(left['text']), _normal(right['text']))
         record = observations.setdefault(key, {'vi': left['text'], 'en': right['text'], 'evidence': []})
-        evidence = {'vi': list(left['span']), 'en': list(right['span']), 'groupId': str(group['id']),
+        evidence = {**({'anchor': anchor} if anchor else {}), 'vi': list(left['span']), 'en': list(right['span']), 'groupId': str(group['id']),
                     'observed': {'vi': left['text'], 'en': right['text']},
                     'method': method, 'caption': labelled(left, right)
                     or (group.get('section') == 'notes' and any(l not in structures for l in ['vi', 'en'])),
@@ -124,6 +124,13 @@ def build_glossary(artifact, structures=None):
                     'context': hashlib.sha256(repr(_context_key(artifact, group)).encode()).hexdigest()}
         if not any(e['vi'] == evidence['vi'] and e['en'] == evidence['en'] for e in record['evidence']):
             record['evidence'].append(evidence)
+
+    def title_before(locale, name, group):
+        text = artifact['editions'][locale]['text']
+        prior = [w for w in words[locale] if w['span'][1] <= name['span'][0]]
+        if not prior or _slice(text, prior[-1]['span'][1], name['span'][0]) != ' ' or not _inside(group, locale, prior[-1]):
+            return None
+        return prior[-1]
 
     for group in artifact.get('groups', []):
         if group.get('aliasOrigin') or group.get('glossaryOrigin') or group.get('kind') == 'lexical':
@@ -142,6 +149,11 @@ def build_glossary(artifact, structures=None):
                     for outer, inner in [(a, left), (b, right)]) for a, b in matched_names):
                 continue
             observe(left, right, group, 'same-fold-name')
+            # A word right before the same name in both editions is only a *title candidate*: kept with its anchor
+            # for review, never accepted or applied, because adjacency does not show the words translate each other.
+            before = [title_before(l, name, group) for l, name in [('vi', left), ('en', right)]]
+            if all(before) and before[0]['text'][:1].islower() and before[1]['text'][:1].isupper():
+                observe(before[0], before[1], group, 'title-before-name', anchor=left['text'])
         expanded = {}
         for link in group.get('links', []):
             if link.get('glossary') or link.get('score', 0) < .2:
@@ -180,6 +192,7 @@ def build_glossary(artifact, structures=None):
             seen_contexts.add(evidence['context'])
             seen_vi.add(tuple(evidence['vi'])); seen_en.add(tuple(evidence['en']))
         reasons = []
+        is_title = any(e['method'] == 'title-before-name' for e in record['evidence'])
         is_name = any(e['method'] == 'same-fold-name' for e in record['evidence'])
         # Same-fold names may add confirmed note captions as extra contexts, but never stand on captions alone.
         captions = {e['context'] for e in record['evidence'] if is_name and e['caption'] and e['labelled']
@@ -188,7 +201,7 @@ def build_glossary(artifact, structures=None):
         if support < 2:
             reasons.append('insufficient-independent-support')
         # Repetition of the same model's links cannot independently prove a translation.
-        if not is_name:
+        if not is_name or is_title:
             reasons.append('requires-semantic-validation')
         if any(len(partners[l][key[i]]) > 1 for i, l in enumerate(['vi', 'en'])):
             reasons.append('ambiguous')
@@ -198,6 +211,44 @@ def build_glossary(artifact, structures=None):
             'accepted': accepted, 'candidates': candidates, 'labels': labels,
             'stats': {'accepted': len(accepted), 'candidates': len(candidates),
                       'observations': sum(len(r['evidence']) for r in observations.values())}}
+
+
+def merge_book_names(glossaries):
+    """Promote same-fold names whose independent contexts add up across chapters.
+
+    Returns {chapterId: [entry]} for chapters where the name is still a candidate. Each entry carries the source
+    versions of every chapter it relies on, so apply_glossary can drop it when any of those chapters is republished.
+    A name abstains when, anywhere in the book, either side has another partner."""
+    partners = {'vi': {}, 'en': {}}
+    found = {}
+    for glossary in glossaries:
+        for kind in ('accepted', 'candidates'):
+            for record in glossary[kind]:
+                if not any(e['method'] == 'same-fold-name' for e in record['evidence']):
+                    continue
+                key = (_normal(record['vi']), _normal(record['en']))
+                partners['vi'].setdefault(key[0], set()).add(key[1])
+                partners['en'].setdefault(key[1], set()).add(key[0])
+                contexts = {e['context'] for e in record['evidence'] if not e['caption']} | {
+                    e['context'] for e in record['evidence'] if e['caption'] and e.get('labelled')}
+                found.setdefault(key, []).append((glossary, kind, record, contexts))
+    result = {}
+    for key, rows in found.items():
+        if len(partners['vi'][key[0]]) > 1 or len(partners['en'][key[1]]) > 1:
+            continue
+        contexts = set().union(*(r[3] for r in rows))
+        chapters = {r[0]['chapterId'] for r in rows if r[3]}
+        if len(contexts) < 2 or len(chapters) < 2:
+            continue
+        versions = {r[0]['chapterId']: r[0]['sourceVersions'] for r in rows if r[3]}
+        for glossary, kind, record, _ in rows:
+            body = [e for e in record['evidence'] if not e['caption']]
+            if kind != 'candidates' or not body or record['reasons'] != ['insufficient-independent-support']:
+                continue
+            entry = {**record, 'support': len(contexts), 'reasons': [], 'scope': 'book',
+                     'evidenceVersions': versions}
+            result.setdefault(glossary['chapterId'], []).append(entry)
+    return result
 
 
 def _occurrences(text, phrase, words):
@@ -216,13 +267,18 @@ def _occurrences(text, phrase, words):
     return result
 
 
-def apply_glossary(artifact, glossary):
+def apply_glossary(artifact, glossary, book_versions=None):
     if (glossary.get('schema') != 1 or glossary.get('chapterId') != artifact['chapterId']
             or glossary.get('sourceVersions') != _binding(artifact)):
         raise ValueError('Stale or incompatible glossary source binding')
     counts = {'linksAdded': 0, 'groupsAdded': 0}
     words = {l: _words(artifact['editions'][l]['text']) for l in ['vi', 'en']}
     for entry in glossary['accepted']:
+        # Evidence gathered in other chapters only holds while every one of them is still the published source.
+        if entry.get('scope') == 'book' and (book_versions is None or any(
+                book_versions.get(chapter) != binding for chapter, binding in entry['evidenceVersions'].items())):
+            counts['staleBookEntries'] = counts.get('staleBookEntries', 0) + 1
+            continue
         found = {l: _occurrences(artifact['editions'][l]['text'], entry[l], words[l]) for l in ['vi', 'en']}
         for group in artifact['groups']:
             scoped = {l: [v for v in found[l] if _inside(group, l, v)] for l in ['vi', 'en']}
