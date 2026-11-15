@@ -217,6 +217,36 @@ A fresh seeded sample (seed 20261121, same design: 20 chapters × 2 sentences, 2
 
 Reading. Answered share and hit rate are the same as in audit 1 (71%, 92–93%); what moved is the context: abstentions with no or wrong context fell from 6 to 3 of 120, and the English-to-Vietnamese gap of the first audit (88% against 96%) did not reproduce (93% against 93%), so it was within noise. Not wrong of answered is 83 of 85 (98%, CI 92–99) here and 167 of 172 (97%, CI 93–99) over both audits after the fix; hit of answered is 159 of 172 (92%, CI 87–96) over both. Which of these two is the "98%" target is the user's call; the first is not met and the second is close to the lower end of its interval. The two wrong answers are words in lists or with several candidates ("leather" → "dùi" in the list "dây da … dùi lửa …", "phía" → "the"); the three abstentions without context are a classical-Chinese verse passage with no returned text, a word whose clause is not in the returned passage, and a passage unrelated to the selection. The sample of 120 per audit has intervals of about ±6 points; no claim of 95% or 98% is supportable without a human-checked sample of around 400.
 
+## Human check of 100 audited lookups (one reviewer, no name given)
+
+The review sheet (`docs/verification/human-check-sheet.html`) was filled in and returned (`docs/verification/human-check-result-2026-11-15.csv`, 99 of 100 answered; one left blank with the note "exists but the passage was not returned"). The 100 cases are every non-hit answered lookup (13), every abstention without context (6) and every case without a counterpart (3), plus 51 of my 159 hits and 27 of my right-context abstentions drawn at random. The reviewer saw each case without my verdict. Comparison: `python scripts/align-novel/human_check_compare.py`.
+
+| My verdict (n) | Reviewer: right | partly | wrong | Agreement |
+| --- | ---: | ---: | ---: | ---: |
+| hit (51) | 36 | 15 | 0 | 36 right, none judged wrong |
+| incomplete (4) | 2 | 2 | 0 | 4 of 4 |
+| partial (4) | 0 | 3 | 1 | 4 of 4 |
+| wrong (5) | 1 | 0 | 4 | 4 of 5 |
+
+| Abstentions | Reviewer agrees |
+| --- | ---: |
+| My right-context abstentions (27) | 25 (93%): the other two were passages holding only the second half of the selection |
+| My no-context abstentions (5 answered) | 5 of 5 agree the passage lacks the counterpart (3 "not in the passage", 2 "no counterpart") |
+| No counterpart exists (3) | 3 of 3 |
+
+**What changed in the picture.** My "hit" was F1 ≥ 0.5 against my own label. The reviewer applies a stricter standard of completeness: 15 of my 51 hits are "right but missing or adding too much", 12 of them phrases highlighted in separated pieces ("cast myself into" … "river", not "cast myself into the river"). Re-estimated over the 172 answered lookups of both audits after the fix, with a bootstrap interval:
+
+| Reviewer's standard | Estimate over 172 answered | 95% interval |
+| --- | ---: | ---: |
+| Right | 67% | 55–78 |
+| Right but incomplete or too wide | 30% | 19–42 |
+| Wrong | 3% | 1–5 |
+| Not wrong (right or partly) | 97% | 95–99 |
+
+So "93% accuracy" overstated what a person would call right; "not wrong" is the figure that survives (97%), and the strict figure is 67%. The two numbers answer different questions and the 95% and 98% targets must be tied to one of them. Single reviewer, 64 answered cases sampled; unspecified expertise.
+
+**Offline estimate of a fix.** On my labels, joining separated pieces of a phrase highlight when the gap holds at most four words and no sentence punctuation raises strict phrase hits (F1 ≥ 0.8) from 21 to 35 of 55 answered phrases and F1 ≥ 0.5 from 49 to 52; one case gets worse by adding an extra word, and 9 of the 17 phrases the reviewer called "partly" become strict hits. Cases that need an end extended ("smiled", "cast") are not helped. This has not been built or deployed.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
