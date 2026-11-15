@@ -232,3 +232,20 @@ it('extends a phrase answer over the target word of an unlinked edge word unless
  expect(run('Viên liếc rồi mỉm cười.','Vien glanced then smiled.','cười')).toEqual(['glanced then smiled']);
  expect(run('Viên liếc rồi mỉm cười lớn.','Vien glanced then smiled.','lớn')).toEqual(['glanced then']);
 });
+it('joins phrase pieces across words held by a source word at most one word beside the selection, but not by a farther one',()=>{
+ const run=(en:string,held:string)=>{
+  const vi='Họ làm ác cũng không dám.',a=plain(vi,en,{vi:[vi],en:[en]},[['làm','do'],['ác','evil'],['dám','dare'],['cũng','even'],['không',held]]);
+  return query(a,'en',span(en,'dare to do evil')).passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end)));
+ };
+ expect(run('They would not dare to do evil even so.','not')).toEqual(['làm ác cũng không dám']);
+ expect(run('They said no and would dare to do evil even so.','no')).toHaveLength(2);
+});
+it('completes a coordinated pair with a weak link to the content word beside the kept target, but only across a connector',()=>{
+ const run=(en:string,last:string)=>{
+  const vi='Trời sáng sủa.',a=plain(vi,en,{vi:[vi],en:[en]},[['Trời','sky'],['sáng sủa','bright']]);
+  a.groups[0].links.push({vi:[span(vi,'sáng sủa').start,span(vi,'sáng sủa').end],en:[span(en,last).start,span(en,last).end],score:.04});
+  return query(a,'vi',span(vi,'sáng sủa')).passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)));
+ };
+ expect(run('The sky was bright and clear.','clear')).toEqual(['bright and clear']);
+ expect(run('The sky was bright clear.','clear')).toEqual(['bright']);
+});

@@ -387,6 +387,8 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
       for(const [sourceKey,map] of words){
         const ranked=[...map.values()].sort((a,b)=>b.score-a.score);
         const keep=ranked.filter(c=>c.score>=ranked[0].score*.8&&c.score>=.03&&c.score*1.35>=(competing.get(c.span.start+':'+c.span.end)??0));
+        // A weak link to a content word that sits beside the kept target across "and"/"or"/a comma, and that no other word claims, completes a coordinated pair ("sáng sủa" = "bright and clear").
+        if(keep.length&&!poem&&g.kind!=='lexical')for(const c of ranked)if(!keep.includes(c)&&c.score>=.03&&!competing.has(c.span.start+':'+c.span.end)&&!onlyFunctionWords(target.text.slice(c.span.start,c.span.end),targetLocale)&&keep.some(k=>/^\s*(?:,|and|or|và|hoặc)\s*$/iu.test(c.span.start>=k.span.end?target.text.slice(k.span.end,c.span.start):c.span.end<=k.span.start?target.text.slice(c.span.end,k.span.start):'x')))keep.push(c);
         if(keep.length){const [start,end]=sourceKey.split(':').map(Number);coveredWords.push({start,end});}
         if(keep.length>1)uncertain=true;
         if(keep.some(c=>c.score<.15))uncertain=true;
@@ -395,11 +397,13 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     }
     let highlights=mergeSpans(nameTargets(spans,request,target.text,g[targetLocale],targetLocale),target.text);
     // The pieces of one phrase answer are joined when what lies between them is at most four words (and no more than the selection has) nobody else's link claims, with no sentence break: a person reads a phrase as one run.
+    // A word the link of a source word within two words of the selection holds ("không" for the "not" before "dare") belongs to the phrase when it lies between its pieces.
     if(!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&highlights.length>1&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1){
       const joined:TextSpan[]=[],most=Math.min(4,request.text.match(/[\p{L}\p{M}]+/gu)!.length);
+      const near=(f:TextSpan)=>{const between=f.end<=request.start?source.text.slice(f.end,request.start):f.start>=request.end?source.text.slice(request.end,f.start):null;return between!==null&&(between.match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=1&&!/[.!?;:…\n]/u.test(between);};
       for(const s of highlights){
         const last=joined.at(-1),gap=last?target.text.slice(last.end,s.start):'';
-        if(last&&(gap.match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=most&&!/[.!?;:…\n]|\(\d{1,3}\)/u.test(gap)&&!target.breaks?.some(b=>b>last.end&&b<s.start)&&!claimedByOthers.some(c=>c.start<s.start&&c.end>last.end))last.end=s.end;
+        if(last&&(gap.match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=most&&!/[.!?;:…\n]|\(\d{1,3}\)/u.test(gap)&&!target.breaks?.some(b=>b>last.end&&b<s.start)&&!claimedByOthers.some(c=>c.start<s.start&&c.end>last.end&&!near(c.from)))last.end=s.end;
         else joined.push({...s});
       }
       highlights=joined;

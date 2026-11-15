@@ -294,6 +294,30 @@ All 9 unchanged controls stayed right. Against my own re-judgement the reviewer 
 
 Re-estimated over the 172 answered audit lookups, with the second sheet's answers replacing the first's: **right 77.8% (95% interval 67–87), partly 19.9%, wrong 2.3%, not wrong 97.7%** (first check: 67% right). The point estimate is below the 80% asked for, and the interval includes it. Two cautions: the 11 changed cases were picked because they changed, and the 9 controls and the other 80 first-check answers are re-used from the first check, so this is the first check corrected where the output changed, not a fresh sample. The 10 hits still judged partly are 8 phrases, 1 sentence and 1 word (`a1-51`, `a2-2`, `a2-62`, `a1-85`, `a1-111`, `a2-99`, `a1-63`, `a1-9`, `a2-87`, `a1-76`). A figure to quote for 80% needs a fresh random sample judged by a person, after those phrase cases are looked at.
 
+## Fixes for the ten hits the reviewer still judged partly (2026-11-15)
+
+Two consumer-only rules in `src/lib/novel-lookup.ts`, no data change:
+
+1. **Join through neighbour-held words.** The piece join no longer stops at a gap word that another source word's link holds when that source word sits at most one word beside the selection ("không" for the "not" before "dare", "you" for "mình" two words after "thả"): it lies inside the phrase's translation. Farther holders still block.
+2. **Coordinated pair.** A weak link (≥ .03) from a kept source word to a content word that no outside link claims, sitting beside the kept target across "and"/"or"/a comma, is kept ("sáng sủa" = "bright and clear"). Adjacent words without a connector are not ("black cloud" was the first draft's regression, found on the audits and dropped before measuring the blind sets).
+
+A third line (links between punctuation marks do not claim words) was tried and removed: it changed no output on any set.
+
+Of the ten, three are fixed: `a1-51` ("…bright and clear"), `a1-9` ("They may let you win at first"), `a2-99` ("làm ác cũng không dám", still without the final "làm"). Seven are not: `a1-63` (stray light verb "đem"), `a2-2` (title plus name: "Thừa chỉ" is not part of the name answer), `a1-85` (the clause map gives one English sentence the three clauses of a Vietnamese sentence that covers two), `a2-87` (the "cast" of "have a hexagram cast" is linked to another word), `a1-111` ("ngồi" is not linked), and `a2-62` and `a1-76`, where the highlight looks right to me and the reviewer left no note.
+
+| Set | Before | After |
+| --- | --- | --- |
+| Both audits, phrase strict (F1 ≥ .8) | 31 of 55 | 37 of 55 |
+| Both audits, word strict | 41 of 51 | 42 of 51 |
+| Both audits, sentences, hits, wrong answers | 62 strict, 65 hits, 0 wrong | unchanged |
+| Lexical A (dev), hits word / phrase | 30 / 29 | 30 / 29 (word strict 28 → 27: "hào hiệp" now "bold and chivalrous" against my "chivalrous") |
+| 120 probes, hits word / phrase / sentence | 34 / 26 / 39 | 34 / 26 / 39 |
+| Dev and tuned sentences, chapter 2 | 96 and 81 hits, 8 of 8 | unchanged |
+| Blind lexical B (run once), word / phrase hits, phrase strict | 29 / 32, 30 | 29 / 32, 30 (one more answer reaches F1 1) |
+| Blind sentences (run once), hits, context has gold | 84, 90.2% | 84, 90.2% |
+
+Unit tests 370, typecheck clean, alignment e2e 60 of 60. These are dev numbers for the audits, because those cases were looked at; the figure for the new rules comes from the third human sheet, drawn from a fresh sample (seed 20261123, 20 chapters × 2 sentences, 2 phrases, 2 words, none of the earlier sentences).
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
