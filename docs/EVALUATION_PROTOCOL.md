@@ -380,6 +380,21 @@ The seven non-right answers: `a4-77` "still" → "chưa" (the reviewer: "still h
 
 A limit on this figure: the whole sheet was answered in 4 minutes 16 seconds (the first ten cards in 11 seconds; the third sheet took about 7 minutes), about 4 seconds a card. The seven notes show close reading where it mattered, and many cards are short; but if some cards were judged at a glance, the right rate would be a little high.
 
+## Crossed word links (2026-11-15)
+
+Why lexical set A has five wrong word answers: three come from one list ("săn **gấu** bắt **thỏ**" against "hunting **bears** and chasing **hares**": "thỏ" is linked to "bears" at 1.0, which also takes the word "gấu" needs, so "gấu" got "hares"), two from one split verb phrase ("bỏ dở … thơ" against "leave my poem unfinished": "bỏ" reaches "leave", nothing reaches "unfinished", and "unfinished" lands on the particle "mất"). The data does hold the right evidence in a larger window: the pair "hunting bears" ↔ "săn gấu" (0.88).
+
+One more consumer-only rule in `src/lib/novel-lookup.ts`, for a selection of exactly one word: when its link target lies wholly outside the target of a small strong phrase pair (score ≥ .65, margin ≥ .15, at most three words, either direction) that holds the word and goes beyond the selection, the answer is the content words of the pair's target that no other word of its window takes (one or two adjacent words). Applied to a multi-word selection it widened "city walls toward the" to "out beyond the city walls toward the", so it is limited to one word.
+
+| Set | Before | After |
+| --- | --- | --- |
+| Lexical A (dev), word hits / wrong / strict | 30 / 5 / 28 | 31 / 4 / 29 ("gấu" = "bears") |
+| Both audits, word hits / wrong / strict | 45 / 5 / 42 of 51 | 46 / 4 / 43 ("chim" → "rắn", a wrong answer since the first audit) |
+| Phrases, sentences, 120 probes, dev and tuned sentences, chapter 2 | | unchanged |
+| Blind lexical B and blind sentences (third use of the lexical one in this session) | word 29 hits / 2 wrong / 25 strict; phrase 32 / 0 / 29; sentences 84 hits | unchanged |
+
+Not fixed: "thỏ" (no small pair holds it), "bears" (the Vietnamese word "săn gấu" is one word for the segmenter, so the pair's other word already covers all of it) and the two of "bỏ dở"/"unfinished". Tests: 373, typecheck clean, alignment e2e 60 of 60. The font test `heading-fonts.test.ts` failed once in two full runs at 5.2 s, the same PGlite startup cost as `rpc-grants`; it now has the same 30 s timeout.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

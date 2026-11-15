@@ -387,14 +387,24 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
       claimedByOthers=outsideLinks;
       for(const [sourceKey,map] of words){
         const ranked=[...map.values()].sort((a,b)=>b.score-a.score);
-        const keep=ranked.filter(c=>c.score>=ranked[0].score*.8&&c.score>=.03&&c.score*1.35>=(competing.get(c.span.start+':'+c.span.end)??0));
+        let keep=ranked.filter(c=>c.score>=ranked[0].score*.8&&c.score>=.03&&c.score*1.35>=(competing.get(c.span.start+':'+c.span.end)??0));
+        const [wordStart,wordEnd]=sourceKey.split(':').map(Number);
+        // A link whose target lies wholly outside the target of a small strong phrase pair that holds its source word is crossed ("gấu thỏ" against "bears … hares", linked the other way round):
+        // the words of the pair that no other word of its window takes are this word's.
+        const pickStart=Math.max(wordStart,request.start),pickEnd=Math.min(wordEnd,request.end);
+        const holder=keep.length&&!poem&&g.kind!=='lexical'&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)===1?g.phrasePairs?.filter(p=>p[locale].start<=wordStart&&p[locale].end>=wordEnd&&(p[locale].start<request.start||p[locale].end>request.end)&&(source.text.slice(p[locale].start,p[locale].end).match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=3&&p.score>=.65&&p.margin>=.15&&keep.every(c=>c.span.end<=p[targetLocale].start||c.span.start>=p[targetLocale].end)).sort((a,b)=>(a[locale].end-a[locale].start)-(b[locale].end-b[locale].start)||b.score-a.score)[0]:undefined;
+        if(holder){
+          const t=holder[targetLocale],taken=g.links.filter(l=>l[locale][0]>=holder[locale].start&&l[locale][1]<=holder[locale].end&&!(l[locale][0]<pickEnd&&l[locale][1]>pickStart)&&l.score>=.3).map(l=>targetSpans.get(l)!).filter(s=>s.start>=t.start&&s.end<=t.end);
+          const rest=[...target.text.slice(t.start,t.end).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:t.start+m.index,end:t.start+m.index+m[0].length})).filter(w=>!taken.some(s=>s.start<w.end&&s.end>w.start)&&!onlyFunctionWords(target.text.slice(w.start,w.end),targetLocale));
+          if(rest.length&&rest.length<=2&&/^\s*$/.test(target.text.slice(rest[0].end,rest.at(-1)!.start))){keep=[{span:{start:rest[0].start,end:rest.at(-1)!.end},score:holder.score}];uncertain=true;}
+        }
         // A weak link to a content word that sits beside the kept target across "and"/"or"/a comma, and that no other word claims, completes a coordinated pair ("sáng sủa" = "bright and clear").
         if(keep.length&&!poem&&g.kind!=='lexical')for(const c of ranked)if(!keep.includes(c)&&c.score>=.03&&!competing.has(c.span.start+':'+c.span.end)&&!onlyFunctionWords(target.text.slice(c.span.start,c.span.end),targetLocale)&&keep.some(k=>/^\s*(?:,|and|or|và|hoặc)\s*$/iu.test(c.span.start>=k.span.end?target.text.slice(k.span.end,c.span.start):c.span.end<=k.span.start?target.text.slice(c.span.end,k.span.start):'x')))keep.push(c);
         if(keep.length){const [start,end]=sourceKey.split(':').map(Number);coveredWords.push({start,end});}
         if(keep.length>1)uncertain=true;
         if(keep.some(c=>c.score<.15))uncertain=true;
         // The phrase pair of this one source word widens its link target when it contains it ("everyone" = "mọi người", the link gave "mọi"), by at most two target words that no other word's link claims.
-        const [wordStart,wordEnd]=sourceKey.split(':').map(Number),pair=!poem&&g.kind!=='lexical'?g.phrasePairs?.filter(p=>p.from===locale&&p[locale].start===wordStart&&p[locale].end===wordEnd&&p.score>=.65&&p.margin>=.15).sort((a,b)=>b.score-a.score)[0]:undefined;
+        const pair=!poem&&g.kind!=='lexical'?g.phrasePairs?.filter(p=>p.from===locale&&p[locale].start===wordStart&&p[locale].end===wordEnd&&p.score>=.65&&p.margin>=.15).sort((a,b)=>b.score-a.score)[0]:undefined;
         const widen=(s:TextSpan)=>{
           if(!pair||pair[targetLocale].start>s.start||pair[targetLocale].end<s.end||(pair[targetLocale].start===s.start&&pair[targetLocale].end===s.end))return s;
           const t=pair[targetLocale],extra=[target.text.slice(t.start,s.start),target.text.slice(s.end,t.end)];

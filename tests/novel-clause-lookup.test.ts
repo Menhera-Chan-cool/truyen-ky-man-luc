@@ -268,3 +268,12 @@ it('widens a link target with the phrase pair of its one source word by content 
  expect(run('Chàng kể cho mọi người nghe.','mọi người')).toEqual(['kể cho mọi người']);
  expect(run('Chàng kể cho mọi và nghe.','mọi và')).toEqual(['kể cho mọi']);
 });
+it('answers a lone word from the words of a small strong phrase pair that its crossed link misses, and leaves it alone when the pair is weak',()=>{
+ const run=(score:number)=>{
+  const en='He goes hunting bears and chasing hares.',vi='Chàng săn gấu bắt thỏ.',a=plain(vi,en,{vi:[vi],en:[en]},[['săn','hunting'],['gấu','hares'],['bắt','chasing'],['thỏ','bears']]);
+  a.groups[0].phrasePairs=[{vi:span(vi,'săn gấu'),en:span(en,'hunting bears'),score,margin:.19,from:'en'}];
+  return query(a,'vi',span(vi,'gấu')).passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)));
+ };
+ expect(run(.88)).toEqual(['bears']);
+ expect(run(.5)).toEqual(['hares']);
+});

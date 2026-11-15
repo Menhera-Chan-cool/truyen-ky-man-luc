@@ -1,7 +1,9 @@
-import {it,expect} from "vitest";
+import {it,expect,vi} from "vitest";
 import {PGlite} from "@electric-sql/pglite";
 import {readFile} from "node:fs/promises";
 import {headingFontId,headingFontFamily,fontFileInfo} from "../src/lib/heading-fonts";
+// Like rpc-grants: PGlite boots Postgres in WASM, and the 5 s default timeout fails when the whole suite competes for the CPU.
+vi.setConfig({testTimeout:30000});
 const actor="11111111-1111-4111-8111-111111111111",font="22222222-2222-4222-8222-222222222222";
 it("uses only canonical font IDs in CSS and validates font containers",()=>{
  expect(headingFontId(undefined)).toBe("default");expect(headingFontId('x";url(https://evil)')).toBe("default");
