@@ -1,9 +1,9 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_4GrJ8BEpb9zH1FzhuqmF9Y5BMk5e",
-  "immutableUrl": "https://truyen-ky-man-arft8yrem-anh-tun.vercel.app",
+  "deploymentId": "dpl_FTeCiP8t5dRnYgMYaG4T3YivbBMN",
+  "immutableUrl": "https://truyen-ky-man-2e4judk4d-anh-tun.vercel.app",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "runtimeSourceCommit": "9cdd3b1",
+  "runtimeSourceCommit": "15f74c2",
   "algorithm": "labse-poetry-mbert-3",
   "readyState": "READY",
   "checkedAt": "2026-11-15T13:18:03.000Z",
