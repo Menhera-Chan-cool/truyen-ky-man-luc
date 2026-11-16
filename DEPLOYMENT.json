@@ -1,9 +1,9 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_34R8GCebSPRdJuxMsTu1Lftjn2wP",
-  "immutableUrl": "https://truyen-ky-man-vncwmrw0y-anh-tun.vercel.app",
+  "deploymentId": "dpl_4JnwiZ4JsG5ZHQuuV4LhbXH7mAbn",
+  "immutableUrl": "https://truyen-ky-man-j3fsfz8xt-anh-tun.vercel.app",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "runtimeSourceCommit": "906ab00",
+  "runtimeSourceCommit": "2460eb7",
   "algorithm": "labse-poetry-mbert-3",
   "readyState": "READY",
   "checkedAt": "2026-11-16T00:00:00.000Z",
@@ -24,16 +24,16 @@
   },
   "verification": {
     "local": "docs/verification/phrase-alignment-2026-11-15.md",
-    "vitest": 390,
+    "vitest": 391,
     "python": 120,
     "localBrowser": 60,
-    "localBrowserNote": "906ab00 on phr13: 57 of 60 on the first run (a real regression, \"words like flowers\" answered with the whole labelled pair; fixed in the same commit), then 60 of 60",
+    "localBrowserNote": "2bbd324 code on phr13: 60 of 60 on the first run (the same code as 2460eb7, which only adds the sheet 12 result and notes)",
     "build": "passed",
-    "postDeploy": "production lookup API called for 93 audit lookups after the deploy (the 33 whose highlight changes against the previous release and 60 unchanged ones) and for the \"words like flowers\" selection of the browser suite: all returned the highlights of the local replay; no browser or download checks were run on production",
+    "postDeploy": "production lookup API called for 77 audit lookups after the deploy (the 17 whose answer changes against the previous release and 60 unchanged ones): all returned the highlights of the local replay; no browser or download checks were run on production",
     "publishedByWorker": "20 chapters re-published as ready by the alignment worker seven times on 2026-11-15 (d4d3338, c548718, 2b75f11, af006e0, 1341e0d, f30ab15 and 506c49f data); not a lookup verification; chapter 18 alone re-published as ready on 2026-11-16 (322d9a4 data: verse/prose poem pairs, 853157 bytes, sha256 b80844bb48fc4619c11f49a2816c0a1d234293b8dfe94eeb5d1f3ac7d738d456 read back from get_public_novel_alignment); the web runtime was not redeployed for it; all 20 chapters re-published as ready on 2026-11-16 (phr13 = phr11 plus 7,025 labelled pairs, 19,886,266 bytes, sha256 and bytes of every chapter read back from novel_alignment_runs: 20 of 20 equal to the local files)",
     "supabaseLogs": "egress sources read from Supabase edge logs on 2026-11-15; the post-fix effect on the monthly Egress chart is not yet observed",
     "blindSet": "docs/EVALUATION_PROTOCOL.md: blind sentences hit 76 to 84 of 102 and context-has-gold 83.3% to 90.2% after gap context and closure; blind word/phrase sets unchanged; random audit (labelled by Claude) hit-of-answered 92%; the 95% target is not met",
-    "humanCheck": "docs/verification/human-check-result-2026-11-15.csv: a reviewer judges 36 of 51 sampled hits right and 15 incomplete, none wrong; estimated right 67% (55-78), not wrong 97% of answered lookups; the join of phrase pieces then lifted strict phrase hits on the blind lexical set from 21 to 30 of 40; sheets 7 to 11 (docs/verification): where the links gave no highlight the labelled answer was right 54 of 57 (sheets 7, 9, 10); for English selections the labelled answer beat the link answer 15 to 5 on sheet 11"
+    "humanCheck": "docs/verification/human-check-result-2026-11-15.csv: a reviewer judges 36 of 51 sampled hits right and 15 incomplete, none wrong; estimated right 67% (55-78), not wrong 97% of answered lookups; the join of phrase pieces then lifted strict phrase hits on the blind lexical set from 21 to 30 of 40; sheets 7 to 12 (docs/verification): where the links gave no highlight the labelled answer was right 54 of 57 (sheets 7, 9, 10) and 16 of 17 for whole clauses and selections inside a pair (sheet 12); for English selections the labelled answer beat the link answer 15 to 5 on sheet 11"
   },
   "limitations": [
     "No physical phone testing",
