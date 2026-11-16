@@ -739,6 +739,18 @@ Paired on the 17 lookups that had both answers: 16 right → right, 1 wrong → 
 
 **Not done.** Nothing of the pilot is published or deployed; the labels cover 2 of 20 chapters, so the whole-book figures do not move. A comparison that does not depend on the reviewer's absolute standard needs both answers on one card (A or B, random order, "which is better"): 17 cards for these lookups.
 
+## Follow-up: sheets 8 and 9, labels for the whole book, and the hybrid rule (2026-11-16)
+
+**Sheet 8** (20 cards: the 17 lookups that have both an old and a new answer in chapters 11 and 20, side by side in random order, 8 with the old answer on side A and 9 with the new one, plus 3 control cards whose two sides are the same answer; roles only in the key). Returned: new better 13, old better 3, equal 1 (two-sided exact sign test p=0.021); the three controls were all answered "both right", so no choice was forced between identical sides. The reviewer chose side B 11 of 16 times; with new on B 8 of 8 and on A 5 new against 3 old (Fisher p=0.2), so a lean towards B cannot be ruled out, but the balanced design cancels it to first order.
+
+**Labels for the rest of the book.** The other 18 chapters were labelled in the same session (all prose story groups, verse left out), about 7,000 pairs with the pilot's; `OUT=phr13 python map_labels.py N...` writes `phr13` = `phr11` plus the `labelled` lists. Written faster than the pilot's and not audited: a mapped pair is a pair found in the text, not a correct one. Replay over audits 1 to 6 and the pool (1,240 lookups): outside chapters 11 and 20, 111 of 1,116 lookups changed (49 abstentions that now answer, 62 answers replaced by another answer), none lost its answer, no sentence changed; in chapters 11 and 20, 17 of 124.
+
+**Sheet 9** (29 cards outside chapters 11 and 20, fresh to the reviewer: 14 old answer against new answer, 12 "nothing highlighted" against the new answer, 3 identical controls). Returned: old against new, new 5, old 8, equal 1 (p=0.58): the pilot's win did not repeat. Nothing against the new answer, new 11, old 1 (p=0.006, Wilson 65 to 99%); with the 16 of 17 right on sheet 7 that is 27 of 29. Controls 3 of 3 "both right". Looked at after the fact and flagged already on sheet 8, so a hypothesis and not a finding: for an English selection (answer in Vietnamese) the new answer beat the old one 15 to 2 over sheets 8 and 9; for a Vietnamese selection 3 to 9 (0 to 7 on sheet 9). In the cases lost, the new answer was often too wide ("pleasures" gave "pleasures of the moment"): a selection narrower than the pair that holds it takes the whole target.
+
+**Rule shipped in the code (not deployed).** `lookupSingle` runs the lookup without labels first and falls back to the labelled pairs only when that gives no highlight at all (`lookupBase(…, useLabels)`); it never replaces a highlight the links gave. Replay of this rule over the same 1,240 lookups on `phr13`: 57 lookups change, all abstention to answer, each identical to the answer of the unrestricted labels; no answer the links gave was touched. On `phr11` (no `labelled` lists) nothing changes by construction. Tests: 389 of 389 with `--maxWorkers=4`, `tsc` clean; with the default worker count the run crashed some workers (PGlite, `heading-fonts.test.ts` among them, which passes alone).
+
+**Not done.** `phr13` is not published and the web app is not redeployed; the labels, keys, results and scorers of sheets 8 and 9 are in the work folder, not in the repository. Replacing an existing answer for an English selection needs its own sheet with fresh cards before any rule is written for it.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

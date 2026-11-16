@@ -1,0 +1,406 @@
+#0
+Dương Trạm = Duong Tram
+chết = died
+#1
+học trò = disciples
+tản đi = went their separate ways
+#2
+Tử Hư = Tu Hu
+làm lều ở mả = built a hut beside his master's grave
+chầu chực = kept vigil
+#3
+ba năm = three full years
+trở về = return home
+#4
+Năm 40 tuổi = age of forty
+#5
+đi thi = examinations
+chưa đỗ = not passed
+#6
+đời Trần = Tran dynasty
+#7
+du học = pursue his studies
+kinh = capital
+nhà dân = commoner's house
+hồ Tây = West Lake
+#8
+thuở sống = In life
+điều thiện = good deed
+đáng khen = worthy of praise
+#9
+giữ điều tín thực = kept faith
+thầy bạn = teachers and friends
+#10
+quý trọng = reverence
+giấy có chữ = paper that bore writing
+#11
+rơi vãi = lying scattered
+nhặt = gather
+đốt = burn
+#12
+Đức Đế quân = Imperial Lord
+khen = commended
+bụng tốt = good heart
+tâu xin = petitioned Heaven
+chức trực = clerk-in-attendance
+cửa Tử đồng = court of Zitong
+#13
+hầu lính giá = escorting the Imperial Lord's carriage
+Thiên cung = Heavenly Palace
+#14
+thầy trò = master and disciple
+mối duyên = bond of fate
+#15
+chức vụ = charge
+#16
+giữ = preside
+#17
+văn chương thi cử = letters and the examinations
+#18
+khoa danh cao thấp = high or low standing
+học trò trong thiên hạ = scholar under Heaven
+#19
+mừng = Overjoyed
+#20
+tiền trình = path ahead
+#21
+văn chương tài nghệ = literary talent
+#22
+không ai bì kịp = none in this age can rival you
+#23
+trung hậu thành thực = generous, and sincere of heart
+thiếu thời = youth
+văn tài = gifts
+kiêu ngạo = look down upon others
+#24
+trời = Heaven
+đỗ muộn = delayed your success in the examinations
+nết ngông ngáo = wild arrogance
+chùn nhụt = blunted
+#25
+cướp thẻ = seizing first place
+Mông Chính = Lu Mengzheng
+#26
+Hạ Hầu = Xiahou
+#27
+kẻ sĩ = scholar
+đức hạnh = virtue
+#28
+áo nhà nho = robes
+dải nhà nho = sashes
+khác hẳn = another breed entirely
+#30
+trượt đỗ = fail
+đổ lỗi = lay the blame
+quan chấm trường = examiners
+#31
+thành danh = renown
+hợm mình = vaunt themselves
+tiền bối = all who came before
+#32
+tráo trở = fickle
+#33
+thầy nghèo = teacher fallen on hard times
+lảng tránh = shun
+#34
+bạn nghèo = friend in poverty
+làm ngơ = ignore
+#35
+dắt dẫn rèn cặp = guidance and discipline
+công đức = merit
+#36
+dạy = taught
+mấy nghìn học trò = several thousand pupils
+bè bạn = friends
+#37
+đai vàng = golden sashes
+mũ bạc = silver caps
+quan cả ngôi cao = lofty office and high rank
+#38
+thăm viếng mồ = sought out my grave
+chén rượu = cup
+#39
+để ý = kept so close a watch
+#40
+những người làm quan bấy giờ = officials of the day
+#41
+hỏi = inquiring
+từng người một = each in turn
+#42
+Trồng dưa được dưa = Plant melons and you shall reap melons
+#43
+trồng đậu được đậu = sow beans and you shall reap beans
+#44
+Lưới trời = net of Heaven
+thênh thang = vast
+#45
+thưa nhưng chẳng lọt = nothing slips through
+#46
+thời gian chưa đến = appointed hour has not yet come
+#47
+bảo rõ = explain
+#48
+trời đất = Heaven and Earth
+báo ứng luân hồi = retribution and the cycle of rebirth
+#49
+hai loài thiện ác = two kinds of men, the good and the wicked
+#50
+chăm làm thiện = diligently does good
+ghi ở Đế đình = inscribed at the Celestial Court
+#53
+máu rây mặt đất = blood spattered upon the earth
+#54
+cõi đời = mortal world
+#55
+mượn thế = borrow influence
+làm quan = gain office
+nhờ tiền = money
+khỏi vạ = calamity
+#56
+hình phạt thì quá lạm = punishments are meted out to excess
+tước thưởng = rank and reward
+thiên tư = partiality
+#57
+cúi đầu khom cật = bow their heads and bend their backs
+hèn hạ = base
+cất nhắc = raised up
+#58
+cố gắng = strive
+#59
+gieo = sow
+nghiệp báo = evil karma
+kiếp sau = lives to come
+#60
+Không = No
+#61
+thật đấy = true
+#62
+cuộn giấy = scroll
+phong dán rất kỹ = sealed with the utmost care
+#63
+bảng xuân sang năm = roster for next spring's examination
+#64
+vâng mệnh = am to
+tra xét kỹ lưỡng = scrutinize it thoroughly
+cửa trời = Gate of Heaven
+#65
+đến chơi = come to visit
+#66
+không khó = no difficult matter
+#67
+bẩm với đức Đế quân = petition the Imperial Lord
+tên họ = name
+điền vào = entered
+#68
+Anh có biết = Do you know
+#69
+kinh đô Bạch Ngọc = White Jade Capital
+người đời = people of the world
+#70
+cung Tử Vi = holds court
+đức Thượng đế = Imperial Lord
+#71
+đứng chờ = wait
+cửa thành = city gate
+tâu xin = petition
+#72
+Dương Trạm = Duong Tram
+cầm cuộn giấy = took the scroll
+đi vào = went inside
+#73
+một lúc lâu = long while
+#74
+trên thành = atop the walls
+tiếng hô vang = voice rang out
+#75
+đỗ đầu bảng = head of next year's examination roll
+#76
+trạng nguyên = first laureate
+họ Phạm = Pham
+#77
+Dương Trạm = Duong Tram
+Tử Hư = Tu Hu
+các tòa = halls
+#78
+Cửa tích đức = Gate of Accumulated Virtue
+hơn nghìn người = more than a thousand people
+mũ hoa dải huệ = flowered caps and orchid sashes
+#79
+kẻ ngồi = seated
+#80
+Tử Hư hỏi = Tu Hu inquired
+Dương Trạm = Duong Tram
+#85
+người đứng = standing
+#138
+Phạm Tử Hư = Pham Tu Hu
+quê ở Cẩm Giàng = native of Cam Giang
+tuấn sảng hào mại = gallant bearing and a free, magnanimous spirit
+không ưa kiềm thúc = chafed at restraint
+Theo học = studied under
+xử sĩ = recluse scholar
+Dương Trạm = Duong Tram
+răn = admonished
+kiêu căng = arrogance
+cố sức sửa đổi = strove to mend his ways
+đức tính tốt = true virtue
+#139
+Một buổi sáng = One morning
+nhà trọ = lodgings
+sương mù = mist
+tán vàng kiệu ngọc = golden parasols and jade palanquins
+bay lên trên không = rising into the sky
+cỗ xe nạm hạt châu = carriage inlaid with pearls
+kẻ theo hầu = attendants
+chững chạc = great dignity
+dòm trộm = stole a glance
+thầy học = teacher
+sụp lạy = prostrate himself
+xua tay = waved him back
+#140
+Giữa đường = open road
+nói chuyện = conversation
+đền Trấn Vũ = Tran Vu Temple
+cửa Bắc = North Gate
+tối mai = tomorrow evening
+thầy trò = master and disciple
+hàn huyên = converse at length
+#141
+từ trần = departed this world
+hiển hách = eminence
+duyên do = how this came to pass
+vui mừng = rejoice
+#142
+Dương Trạm = Duong Tram
+nói = replied
+#143
+Tử Hư = Tu Hu
+nói = said
+#144
+chức trọng quyền cao = high office and great authority
+sự sống chết thọ yểu = span of my life, whether long or short, and the hour of my death
+#145
+ngôi trọng thần = rank of great minister
+tham lam = greed
+sư tư = tutor
+mô phạm = model
+coi lễ = presides over the rites
+chăn dân = shepherds the people
+tai hại = suffer
+chấm văn = grades the examinations
+thiên vị = favor
+trị ngục = sits in judgment
+buộc tội oan uổng = condemns the innocent
+môi mép bẻo lẻo = glib-tongued
+mờ mịt như ngồi trong đám mây mù = lost as men sitting in a fog
+không trung với đấng quân thượng = keep no faith with their sovereign
+bán nước = betray their country
+dối vua = deceive their ruler
+Diên Linh = Pei Yanling
+tôn vinh = honor and glory
+#146
+Trạm = Tram
+cười = laughed
+#147
+Tử Hư = Tu Hu
+nói = said
+#148
+cửa họa phúc = gates through which fortune and misfortune pass
+đại khái = broad outline
+cầu mộng = pray for dreams
+báo ứng = reveal
+sự nghiệp về sau = future careers
+#149
+Trạm = Tram
+cười = laughed
+#150
+nguyên khí = primordial breath
+chu du tám phương = roams the eight directions
+xét giấy tờ = examines documents
+Thượng đế = Supreme Emperor
+vụn vặt = trifling
+chay sạch thành kính = pure in their fasting and sincere in their reverence
+bập bùng = flickering haze of half-sleep
+buồn cười = laughable
+#151
+phóng bảng cửa trời = examination lists being posted at the Gate of Heaven
+truyền ngoa = idle fabrication
+#152
+Thiên tào = Celestial Bureau
+cõi trần = mortal world
+sửa mình chuốt nết = cultivating himself and refining his conduct
+may mắn khác thường = extraordinary good fortune
+#153
+mình trần vóc tục = mortal flesh and earthly frame
+xe gió = wind-borne carriage
+#154
+bút son = vermilion brush
+cuốn giấy = scroll
+cất bỏ tiệc rượu = feast cleared away
+bay lên = rose straight into the sky
+tường bạc = walls of silver
+cửa lớn khảm trai = great gate resplendent with inlaid mother-of-pearl
+lầu châu điện ngọc = towers of pearl and halls of jade
+sông Ngân bến Sao = Silver River and the fords of the stars
+gió thơm = fragrant breezes
+hơi lạnh thấu da = chill air pierced to the skin
+ánh sáng chói mắt = brilliant radiance dazzled the eye
+trông xuống cõi trần = Gazing down upon the mortal realm
+#155
+Dương Trạm = Duong Tram
+nói = said
+#156
+yêu thương mọi người = love for their fellow men
+bố thí = almsgiving
+chu cấp = succor
+keo bẩn = miserly
+hợm hĩnh = vainglorious
+có nhân = benevolent
+thanh phẩm = ranks of the pure
+#157
+Cửa Thuận hạnh = Gate of Dutiful Conduct
+áo mây lọng mưa = cloud-woven robes beneath celestial parasols
+hát = singing
+múa = dancing
+#158
+hiếu thuận = filial and obedient
+san sẻ = share
+ở chung = dwelt together
+cung mây = palaces of cloud
+#159
+Cửa Nho thần = Gate of Confucian Ministers
+áo dài đai rộng = long robes and broad sashes
+áo lụa = silk robes
+mũ sa = gauze caps
+#160
+trỏ = pointed
+#161
+Tô Hiến Thành = To Hien Thanh
+triều Lý = Ly dynasty
+Chu Văn An = Chu Van An
+triều Trần = Tran
+danh thần = renowned ministers
+đời Hán = Han
+đời Đường = Tang
+ngày sóc ngày vọng = first and the fifteenth of each month
+tản quan = sinecure officials
+năm trăm năm = five hundred years
+giáng sinh = sent down to be born
+khanh tướng = ministers and chancellors
+sĩ phu = scholar-officials
+#162
+từ biệt = took leave
+đi thi = sat the examinations
+đỗ tiến sĩ = passed as a doctoral laureate
+cát hung họa phúc = fortune and misfortune, every blessing and calamity
+#b0
+đổi họ = change their surnames
+thay tên = given names
+đi thi = sit the examinations
+#b1
+làm ác = does evil
+án đã thành ở Địa phủ = sentence settled in the Underworld
+#b2
+Nhan Hồi = Yan Hui
+ngõ hẻm = humble alley
+Tu văn = Keeper of Letters

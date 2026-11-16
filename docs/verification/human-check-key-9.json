@@ -1,0 +1,445 @@
+{
+ "cards": {
+  "a9-audit5-100": {
+   "n": 1,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 17,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "At once the attendants"
+   ],
+   "B_text": [
+    "attendants"
+   ]
+  },
+  "a9-pool6-149": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 6,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "vạch xuống nước"
+   ],
+   "B_text": [
+    "xuống nước"
+   ]
+  },
+  "a9-c-pool6-412": {
+   "n": 3,
+   "kind": "word",
+   "from": "en",
+   "chapter": 16,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "ân tình"
+   ],
+   "B_text": [
+    "ân tình"
+   ]
+  },
+  "a9-pool6-350": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 14,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "fire"
+   ],
+   "B_text": []
+  },
+  "a9-audit4-41": {
+   "n": 5,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 7,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "pleasures"
+   ],
+   "B_text": [
+    "pleasures of the moment"
+   ]
+  },
+  "a9-c-audit1-9": {
+   "n": 6,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 2,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "They may let you win at first"
+   ],
+   "B_text": [
+    "They may let you win at first"
+   ]
+  },
+  "a9-audit5-87": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 15,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "giữ của"
+   ]
+  },
+  "a9-audit5-94": {
+   "n": 8,
+   "kind": "word",
+   "from": "en",
+   "chapter": 16,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "bạn họ Hà"
+   ],
+   "B_text": []
+  },
+  "a9-audit3-93": {
+   "n": 9,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 16,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "Nguyễn bảo"
+   ],
+   "B_text": [
+    "Ông Nguyễn bảo"
+   ]
+  },
+  "a9-pool6-43": {
+   "n": 10,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 2,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "hồn mộng"
+   ],
+   "B_text": [
+    "hồn",
+    "không ở"
+   ]
+  },
+  "a9-c-audit3-99": {
+   "n": 11,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 17,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "Vì y tội ác"
+   ],
+   "B_text": [
+    "Vì y tội ác"
+   ]
+  },
+  "a9-audit6-35": {
+   "n": 12,
+   "kind": "word",
+   "from": "en",
+   "chapter": 6,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Bấm đốt"
+   ]
+  },
+  "a9-audit3-111": {
+   "n": 13,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 19,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Le dynasty (Thanh Tong"
+   ],
+   "B_text": [
+    "Thanh Tong"
+   ]
+  },
+  "a9-pool6-180": {
+   "n": 14,
+   "kind": "word",
+   "from": "en",
+   "chapter": 7,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "sư cụ"
+   ]
+  },
+  "a9-audit1-10": {
+   "n": 15,
+   "kind": "word",
+   "from": "en",
+   "chapter": 2,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "ôm lấy"
+   ],
+   "B_text": []
+  },
+  "a9-pool6-487": {
+   "n": 16,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 19,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "tablet marred by a flaw"
+   ],
+   "B_text": [
+    "jade tablet marred by a flaw"
+   ]
+  },
+  "a9-pool6-119": {
+   "n": 17,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 5,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Tống Tử, Tề Khương"
+   ]
+  },
+  "a9-pool6-388": {
+   "n": 18,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 15,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "fearless"
+   ],
+   "B_text": [
+    "brazen and fearless"
+   ]
+  },
+  "a9-pool6-15": {
+   "n": 19,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 1,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "The execution of Song Yi"
+   ],
+   "B_text": [
+    "execution of Song Yi"
+   ]
+  },
+  "a9-audit3-75": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "quân cường bạo"
+   ],
+   "B_text": [
+    "quân cường bạo giết người"
+   ]
+  },
+  "a9-pool6-462": {
+   "n": 21,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 18,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "join our children as husband and wife"
+   ]
+  },
+  "a9-audit2-75": {
+   "n": 22,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "người giỏi lặn"
+   ],
+   "B_text": [
+    "người giỏi"
+   ]
+  },
+  "a9-pool6-410": {
+   "n": 23,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 16,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "không dám đường đột"
+   ],
+   "B_text": []
+  },
+  "a9-audit3-29": {
+   "n": 24,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 5,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "suddenly"
+   ],
+   "B_text": [
+    "speak so suddenly of parting"
+   ]
+  },
+  "a9-pool6-38": {
+   "n": 25,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 2,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "squandered"
+   ],
+   "B_text": [
+    "down to the last coin"
+   ]
+  },
+  "a9-pool6-75": {
+   "n": 26,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 3,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "burn the orchid and the sweet basil withers beside it"
+   ],
+   "B_text": []
+  },
+  "a9-audit2-11": {
+   "n": 27,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 2,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "great wealth"
+   ],
+   "B_text": []
+  },
+  "a9-pool6-467": {
+   "n": 28,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 18,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "as they had in life"
+   ],
+   "B_text": []
+  },
+  "a9-pool6-117": {
+   "n": 29,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 5,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "mẹ không nỡ"
+   ],
+   "B_text": [
+    "Cha mẹ không nỡ"
+   ]
+  }
+ }
+}

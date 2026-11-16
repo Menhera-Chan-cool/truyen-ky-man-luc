@@ -76,6 +76,11 @@ export function validateAlignmentArtifact(value:unknown):AlignmentArtifact {
       if(!Array.isArray(g.phrasePairs)||g.phrasePairs.length>512)invalid();
       for(const p of g.phrasePairs)if(!p||!Number.isFinite(p.score)||p.score<0||p.score>1.001||!Number.isFinite(p.margin)||!['vi','en'].includes(p.from)||(['vi','en'] as const).some(l=>!valid(p[l],a.editions[l].text)||p[l].start<g[l].start||p[l].end>g[l].end))invalid();
     }
+    if(g.labelled){
+      // Pairs written by reading: spans inside the group, none overlapping another on either side.
+      if(!Array.isArray(g.labelled)||g.labelled.length>256||g.labelled.some(p=>!p||(['vi','en'] as const).some(l=>!valid(p[l],a.editions[l].text)||p[l].start<g[l].start||p[l].end>g[l].end)))invalid();
+      for(const l of ['vi','en'] as const){const spans=g.labelled.map(p=>p[l]).sort((x,y)=>x.start-y.start);if(spans.some((x,i)=>i>0&&x.start<spans[i-1].end))invalid();}
+    }
     for(const link of g.links){
       if(!link||!Number.isFinite(link.score)||link.score<0||link.score>1.001)invalid();
       for(const l of ["vi","en"] as const){
@@ -420,7 +425,15 @@ function gapContext(all:AlignmentArtifact['groups'],request:LookupRequest,locale
   const bridge={start:before[targetLocale].start,end:after[targetLocale].end};
   return bridge.end-bridge.start<=1500?bridge:null;
 }
+// Pairs written by reading answer only where the word and phrase links gave no highlight at all: such answers were right 27 of 29 times (human sheets 7 and 9),
+// while replacing a highlight the links already gave was no better than keeping it (sheets 8 and 9: 18 better, 11 worse, 2 equal; 3 better, 9 worse for a Vietnamese selection).
 function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
+  const plain=lookupBase(artifact,request,false);
+  if(plain.passages.some(p=>p.highlights.length)||![...artifact.groups,...(artifact.refinedGroups??[])].some(g=>g.labelled?.length))return plain;
+  const labelled=lookupBase(artifact,request,true);
+  return labelled.passages.some(p=>p.highlights.length)?labelled:plain;
+}
+function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:boolean):LookupResult {
   const locale=request.locale,targetLocale=locale==='vi'?'en':'vi',source=artifact.editions[locale],target=artifact.editions[targetLocale];
   const empty=(status:LookupResult['status']):LookupResult=>({status,targetLocale,passages:[]});
   const structural=structureLookup(artifact,request);if(structural)return structural;
@@ -485,7 +498,7 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     const targetSpans=targetWords(g,locale,source,target,!poem&&g.kind!=='lexical');
     const sourceSpans=targetWords(g,targetLocale,target,source,!poem&&g.kind!=='lexical');
     let claimedByOthers:(TextSpan&{from:TextSpan})[]=[];
-    const lab=!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length?labelledAnswer(g,request,source.text,locale,targetLocale):null;
+    const lab=useLabels&&!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length?labelledAnswer(g,request,source.text,locale,targetLocale):null;
     if(named)spans=[named];
     else if(lab&&!lab.inner){spans.push(...lab.spans);coveredWords.push(...lab.covered);uncertain=true;}
     else {

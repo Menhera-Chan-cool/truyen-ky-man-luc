@@ -401,12 +401,21 @@ it('does not count unlinked words between two linked ones against a phrase whose
  expect(run('Chàng giảng dạy binh pháp cho quân.','giảng dạy binh pháp',[['giảng','trained'],['pháp','war']])).toEqual(['trained men in arts of war']);
  expect(run('Chàng giảng dạy binh pháp cho quân.','giảng dạy binh pháp',[['giảng','trained']])).toEqual([]);
 });
-it('takes the target of a labelled pair for a selection it covers, and corrects a word link that leaves the pair around a narrower selection',()=>{
+it('rejects a malformed labelled list: outside its group, empty, or overlapping',()=>{
  const vi='Chàng cưỡi ngựa đi săn.',en='He rode a horse to hunt.';
- const make=(to:string)=>{const a=plain(vi,en,{vi:[vi],en:[en]},[['ngựa',to]]);a.groups[0].labelled=[{vi:span(vi,'cưỡi ngựa'),en:span(en,'rode a horse')},{vi:span(vi,'đi săn'),en:span(en,'hunt')}];return a;};
+ const make=()=>{const a=plain(vi,en,{vi:[vi],en:[en]},[]);a.groups[0].labelled=[{vi:span(vi,'cưỡi ngựa'),en:span(en,'rode a horse')},{vi:span(vi,'đi săn'),en:span(en,'hunt')}];return a;};
+ expect(()=>validateAlignmentArtifact(make())).not.toThrow();
+ const outside=make();outside.groups[0].labelled![1].en={start:0,end:en.length+5};expect(()=>validateAlignmentArtifact(outside)).toThrow();
+ const empty=make();empty.groups[0].labelled![0].vi={start:3,end:3};expect(()=>validateAlignmentArtifact(empty)).toThrow();
+ const overlap=make();overlap.groups[0].labelled![1].vi=span(vi,'ngựa đi săn');expect(()=>validateAlignmentArtifact(overlap)).toThrow();
+});
+it('uses a labelled pair only where the links gave no highlight, and never replaces a highlight the links gave',()=>{
+ const vi='Chàng cưỡi ngựa đi săn.',en='He rode a horse to hunt.';
+ const make=(links:[string,string][])=>{const a=plain(vi,en,{vi:[vi],en:[en]},links);a.groups[0].labelled=[{vi:span(vi,'cưỡi ngựa'),en:span(en,'rode a horse')},{vi:span(vi,'đi săn'),en:span(en,'hunt')}];return a;};
  const ask=(a:AlignmentArtifact,l:'vi'|'en',q:string)=>query(a,l,span(a.editions[l].text,q)).passages.flatMap(p=>p.highlights.map(h=>a.editions[l==='vi'?'en':'vi'].text.slice(h.start,h.end)));
- expect(ask(make('hunt'),'vi','cưỡi ngựa')).toEqual(['rode a horse']);
- expect(ask(make('hunt'),'vi','ngựa')).toEqual(['rode a horse']);
- expect(ask(make('horse'),'vi','ngựa')).toEqual(['horse']);
- expect(ask(make('hunt'),'en','horse')).toEqual(['cưỡi ngựa']);
+ const linked=make([['ngựa','hunt']]);
+ expect(ask(linked,'vi','ngựa')).toEqual(['hunt']);
+ const bare=make([]);
+ expect(ask(bare,'vi','cưỡi ngựa')).toEqual(['rode a horse']);
+ expect(ask(bare,'en','rode a horse')).toEqual(['cưỡi ngựa']);
 });

@@ -1,0 +1,310 @@
+{
+ "cards": {
+  "a8-audit1-63": {
+   "n": 1,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "control": false,
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "giải vây"
+   ],
+   "B_text": [
+    "đem",
+    "giải vây"
+   ]
+  },
+  "a8-c-fresh7-15": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "control": true,
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "cỏ làm đệm êm"
+   ],
+   "B_text": [
+    "cỏ làm đệm êm"
+   ]
+  },
+  "a8-audit5-116": {
+   "n": 3,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "control": false,
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "cấp dưỡng",
+    "chốn nào tựa"
+   ],
+   "B_text": [
+    "chốn nào tựa nương"
+   ]
+  },
+  "a8-fresh7-46": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "control": false,
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "swell your ranks, yet",
+    "harm"
+   ],
+   "B_text": [
+    "wish to swell your ranks, yet what of the harm"
+   ]
+  },
+  "a8-fresh7-66": {
+   "n": 5,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 20,
+   "control": false,
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "the"
+   ],
+   "B_text": [
+    "first watch"
+   ]
+  },
+  "a8-audit5-63": {
+   "n": 6,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "control": false,
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "những giống chim hèn muông yếu và xin nài cho"
+   ],
+   "B_text": [
+    "thương những giống chim hèn"
+   ]
+  },
+  "a8-audit5-119": {
+   "n": 7,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "control": false,
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "chốn nào tựa nương"
+   ],
+   "B_text": [
+    "cấp dưỡng"
+   ]
+  },
+  "a8-fresh7-61": {
+   "n": 8,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "control": false,
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "hại mạng của dân"
+   ],
+   "B_text": [
+    "dân"
+   ]
+  },
+  "a8-fresh7-5": {
+   "n": 9,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "control": false,
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "tale of the fox spirit of the tomb pillar"
+   ],
+   "B_text": [
+    "tale of the fox"
+   ]
+  },
+  "a8-audit6-64": {
+   "n": 10,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "control": false,
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "yên khấu"
+   ],
+   "B_text": [
+    "hào kiệt"
+   ]
+  },
+  "a8-c-fresh7-4": {
+   "n": 11,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "control": true,
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "gallop after the fine"
+   ],
+   "B_text": [
+    "gallop after the fine"
+   ]
+  },
+  "a8-fresh7-34": {
+   "n": 12,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "control": false,
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "há chịu"
+   ],
+   "B_text": [
+    "ấp cây"
+   ]
+  },
+  "a8-audit3-63": {
+   "n": 13,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "control": false,
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "không phải thời"
+   ],
+   "B_text": [
+    "là không phải thời"
+   ]
+  },
+  "a8-fresh7-53": {
+   "n": 14,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "control": false,
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "granted high office in the underworld"
+   ],
+   "B_text": [
+    "high office in the underworld"
+   ]
+  },
+  "a8-fresh7-82": {
+   "n": 15,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "control": false,
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "cơm"
+   ],
+   "B_text": [
+    "đồng nội"
+   ]
+  },
+  "a8-fresh7-40": {
+   "n": 16,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "control": false,
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "purple pondered"
+   ],
+   "B_text": [
+    "The one in purple pondered"
+   ]
+  },
+  "a8-audit3-116": {
+   "n": 17,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "control": false,
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "không làm điều quá đáng"
+   ],
+   "B_text": [
+    "ước sự",
+    "làm"
+   ]
+  },
+  "a8-c-fresh7-19": {
+   "n": 18,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "control": true,
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "Had he been as upright as Wei Yuanzhong"
+   ],
+   "B_text": [
+    "Had he been as upright as Wei Yuanzhong"
+   ]
+  },
+  "a8-fresh7-6": {
+   "n": 19,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "control": false,
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "khỏi cái nạn"
+   ],
+   "B_text": [
+    "trốn",
+    "nạn"
+   ]
+  },
+  "a8-fresh7-13": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "control": false,
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "đương thế, để tiếng về đời sau"
+   ],
+   "B_text": [
+    "lập công",
+    "tiếng"
+   ]
+  }
+ }
+}

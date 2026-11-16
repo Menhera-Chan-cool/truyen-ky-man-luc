@@ -40,7 +40,7 @@ def run(ch):
             if not ns:fails.append((gid,'EN?',e));continue
             vm,em=ms[0],ns[0];usedv.append(vm);usede.append(em);vpos=vm[1];out.append({'vi':{'start':vm[0],'end':vm[1]},'en':{'start':em[0],'end':em[1]}});npairs+=1
         g['labelled']=out;n+=1
-    json.dump(a,open(f'{OUT}chapter-{ch}.json','w',encoding='utf-8'),ensure_ascii=False)
+    json.dump(a,open(f'{OUT}chapter-{ch}.json','w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
     print('chapter',ch,'groups labelled',n,'pairs mapped',npairs,'failures',len(fails))
     for f in fails:print('  ',f)
 if __name__=='__main__':
