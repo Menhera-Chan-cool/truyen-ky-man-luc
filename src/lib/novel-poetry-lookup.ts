@@ -64,3 +64,19 @@ export function poetryLookup(a:AlignmentArtifact,r:LookupRequest):LookupResult|u
  if(context)for(const p of unique)p.highlights=[];
  return {status:context?'context-only':'uncertain',targetLocale:to,targetRevision:a.editions[to].revision,sourceBreaks:a.editions[r.locale].breaks?.filter(b=>b>r.start&&b<r.end),passages:unique};
 }
+// Pairs written by reading inside a verse pair answer a selection that is only part of a line when every word of it (function words apart) lies in a pair:
+// the highlights are the English or Vietnamese halves of the pairs it touches, the passage the lines that hold them. A selection of whole lines keeps the line answer.
+export function poetryLabelled(a:AlignmentArtifact,r:LookupRequest,skip:(word:string)=>boolean):LookupResult|undefined{
+ const to=r.locale==='vi'?'en':'vi',text=a.editions[r.locale].text,edition=a.editions[to];
+ const pair=preferred(a,r).find(p=>p.labelled?.length&&p[r.locale].start<=r.start&&p[r.locale].end>=r.end);if(!pair)return undefined;
+ const lines=pair[r.locale].lines.filter(s=>intersects(s,r));
+ if(!lines.length||lines.every(s=>complete(text,s,r)))return undefined;
+ const touched=pair.labelled!.filter(p=>intersects(p[r.locale],r));if(!touched.length)return undefined;
+ const words=[...mask(text.slice(r.start,r.end)).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:r.start+m.index,end:r.start+m.index+m[0].length,text:m[0]})).filter(w=>/\p{L}/u.test(w.text)&&!skip(w.text));
+ if(!words.length||words.some(w=>!touched.some(p=>p[r.locale].start<=w.start&&p[r.locale].end>=w.end)))return undefined;
+ const targets=touched.map(p=>({...p[to]})).sort((x,y)=>x.start-y.start);
+ const targetLines=pair[to].lines.filter(s=>targets.some(t=>intersects(s,t)));if(!targetLines.length)return undefined;
+ const source=bounds(lines),target=bounds(targetLines);if(target.end-target.start>1200)return undefined;
+ return {status:'uncertain',targetLocale:to,targetRevision:edition.revision,sourceBreaks:a.editions[r.locale].breaks?.filter(b=>b>r.start&&b<r.end),
+  passages:[{source:{start:source.start,end:source.end,text:text.slice(source.start,source.end)},target:{start:target.start,end:target.end,text:edition.text.slice(target.start,target.end),breaks:edition.breaks?.filter(b=>b>target.start&&b<target.end)},highlights:targets}]};
+}

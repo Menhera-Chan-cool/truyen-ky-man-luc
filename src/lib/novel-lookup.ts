@@ -1,13 +1,13 @@
 import type {Locale} from "./types";
 import {annotatedNote,notePair,structureLookup} from './novel-lookup-structure';
-import {poetryLookup,poetryScope,poetryContext} from './novel-poetry-lookup';
+import {poetryLookup,poetryScope,poetryContext,poetryLabelled} from './novel-poetry-lookup';
 import {selectionLookup} from './novel-lookup-selection';
 import {viSyllables,viMatchesPinyin,pinyinSegments,vietnameseReadings} from './sino-names';
 export const alignmentCodec = "reader-dom-1";
 export type TextSpan = {start:number;end:number};
 export type PoetryCorrespondence=Record<Locale,TextSpan[]>&{score:number;evidence:'direct-window'|'surrounding-window'};
 export type PoetryTrack=TextSpan&{id:string;lines:TextSpan[];title?:TextSpan;flattened?:boolean};
-export type PoetryPair=Record<Locale,PoetryTrack>&{score:number;margin:number;primary:Record<Locale,boolean>;correspondences:PoetryCorrespondence[];contextOnly?:boolean};
+export type PoetryPair=Record<Locale,PoetryTrack>&{score:number;margin:number;primary:Record<Locale,boolean>;correspondences:PoetryCorrespondence[];contextOnly?:boolean;labelled?:{vi:TextSpan;en:TextSpan}[]};
 export type PhrasePair=Record<Locale,TextSpan>&{score:number;margin:number;from:Locale};
 export type ClausePair=Record<Locale,TextSpan[]>&{score:number;margin:number;residual?:boolean};
 // A residual pair was inferred by elimination inside a confirmed parent pair, so it carries a lower score floor.
@@ -96,6 +96,11 @@ export function validateAlignmentArtifact(value:unknown):AlignmentArtifact {
     for(const p of a.poems){
       if(!Number.isFinite(p.score)||p.score<.5||p.score>1.001||!Number.isFinite(p.margin)||!p.primary||!Array.isArray(p.correspondences)||p.correspondences.length>2048||(p.contextOnly!==undefined&&typeof p.contextOnly!=='boolean'))invalid();
       for(const l of ['vi','en']as const){const t=p[l];if(!valid(t,a.editions[l].text)||typeof t.id!=='string'||!t.id.length||t.id.length>100||typeof p.primary[l]!=='boolean'||!Array.isArray(t.lines)||!t.lines.length||t.lines.length>1024||t.lines.some((s,i)=>!valid(s,a.editions[l].text)||s.start<t.start||s.end>t.end||(i>0&&s.start<t.lines[i-1].end))||(t.title&&(!valid(t.title,a.editions[l].text)||t.title.end>t.start)))invalid();}
+      if(p.labelled!==undefined){
+        // Pairs written by reading inside the verse: spans inside the poem, none overlapping another on either side.
+        if(!Array.isArray(p.labelled)||p.labelled.length>1024||p.labelled.some(x=>!x||(['vi','en'] as const).some(l=>!valid(x[l],a.editions[l].text)||x[l].start<p[l].start||x[l].end>p[l].end)))invalid();
+        for(const l of ['vi','en'] as const){const spans=p.labelled.map(x=>x[l]).sort((x,y)=>x.start-y.start);if(spans.some((x,i)=>i>0&&x.start<spans[i-1].end))invalid();}
+      }
       for(const c of p.correspondences){
         if(!Number.isFinite(c.score)||c.score<0||c.score>1.001||!['direct-window','surrounding-window'].includes(c.evidence))invalid();
         for(const l of ['vi','en']as const)if(!Array.isArray(c[l])||!c[l].length||c[l].length>32||c[l].some(s=>!p[l].lines.some(line=>line.start===s.start&&line.end===s.end)))invalid();
@@ -435,7 +440,15 @@ function gapContext(all:AlignmentArtifact['groups'],request:LookupRequest,locale
 // while replacing a highlight the links already gave was no better than keeping it (sheets 8 and 9: 18 better, 11 worse, 2 equal; 3 better, 9 worse for a Vietnamese selection).
 // For an English selection (the answer is Vietnamese) the labelled pairs also replace a highlight the links gave: sheets 8 and 9 gave 15 better against 2 worse
 // (for a Vietnamese selection 3 against 9, so there the links keep it). Only merged after human sheet 11 confirms it on cards not seen before.
+// Pairs written by reading inside the verse answer only where nothing else gave a highlight: human sheet 17 had the verse pairs better in 12 of 12 cards for a verse selection that had no highlight,
+// but only 4 better against 6 worse where they replaced a highlight the links gave (the 6 were short single answers inside the pair's wider target), so the links keep those.
 function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
+  const result=lookupLinked(artifact,request);
+  if(result.passages.some(p=>p.highlights.length))return result;
+  const locale=request.locale;
+  return poetryLabelled(artifact,request,w=>onlyFunctionWords(w,locale)||labelStop[locale].has(w.toLocaleLowerCase(locale)))??result;
+}
+function lookupLinked(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
   const labelledAnywhere=[...artifact.groups,...(artifact.refinedGroups??[])].some(g=>g.labelled?.length);
   if(request.locale==='en'&&labelledAnywhere){
     const labelled=lookupBase(artifact,request,true);

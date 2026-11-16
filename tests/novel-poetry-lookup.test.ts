@@ -49,6 +49,28 @@ it('never advertises full-poem precision for an explicitly uncertain rendering',
  const r=lookupArtifact(a,request(a,a.editions.en.text.slice(p.en.start,p.en.end)));
  expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);
 });
+it('answers a word or phrase inside a verse line from pairs written by reading, and leaves whole lines and unpaired words as they were',()=>{
+ const a=fixture(),p=a.poems![0],vi=a.editions.vi.text,en=a.editions.en.text,at=(t:string,q:string)=>({start:t.indexOf(q),end:t.indexOf(q)+q.length});
+ p.labelled=[{vi:at(vi,'Mưa'),en:at(en,'Rain')},{vi:at(vi,'rơi sân'),en:at(en,'falls')}];
+ const ask=(locale:'vi'|'en',q:string)=>{const t=a.editions[locale].text,s=at(t,q),r=lookupArtifact(a,{chapterId:a.chapterId,locale,revision:1,...s,text:q}),o=a.editions[locale==='vi'?'en':'vi'].text;return {status:r.status,highlights:r.passages.flatMap(x=>x.highlights.map(h=>o.slice(h.start,h.end))),passage:targetText(r)};};
+ expect(ask('en','Rain')).toEqual({status:'uncertain',highlights:['Mưa'],passage:'Mưa rơi sân.'});
+ expect(ask('vi','rơi sân')).toEqual({status:'uncertain',highlights:['falls'],passage:'Rain falls.'});
+ expect(ask('en','Rain falls')).toEqual({status:'uncertain',highlights:['Mưa rơi sân.'],passage:'Mưa rơi sân.'});
+ p.labelled=[{vi:at(vi,'Mưa'),en:at(en,'Rain')}];
+ expect(ask('en','falls')).toEqual({status:'context-only',highlights:[],passage:'Mưa rơi sân.'});
+ // a highlight the links already gave is kept: the pairs only fill where nothing was highlighted
+ a.groups[0].links=[{vi:[p.vi.lines[1].start,p.vi.lines[1].start+3],en:[p.en.lines[1].start,p.en.lines[1].start+4],score:.9}];
+ expect(ask('en','Rain').highlights).toEqual(['Mưa']);
+ p.labelled=[{vi:at(vi,'Mưa rơi'),en:at(en,'Rain falls')}];
+ expect(ask('en','Rain').highlights).toEqual(['Mưa']);
+});
+it('rejects verse pairs written by reading that leave the poem or overlap one another',()=>{
+ const vi=fixture().editions.vi.text,en=fixture().editions.en.text,at=(t:string,q:string)=>({start:t.indexOf(q),end:t.indexOf(q)+q.length});
+ const make=()=>{const b=fixture();b.poems![0].labelled=[{vi:at(vi,'Mưa'),en:at(en,'Rain')},{vi:at(vi,'rơi sân'),en:at(en,'falls')}];return b;};
+ expect(()=>validateAlignmentArtifact(make())).not.toThrow();
+ const outside=make();outside.poems![0].labelled![0].vi=at(vi,'Văn');expect(()=>validateAlignmentArtifact(outside)).toThrow();
+ const overlap=make();overlap.poems![0].labelled![1].vi=at(vi,'Mưa rơi');expect(()=>validateAlignmentArtifact(overlap)).toThrow();
+});
 it('rejects a correspondence escaping the actual poem lines',()=>{
  const a=fixture();expect(()=>validateAlignmentArtifact(a)).not.toThrow();a.poems![0].correspondences[0].vi=[{start:0,end:999}];
  expect(()=>validateAlignmentArtifact(a)).toThrow();
