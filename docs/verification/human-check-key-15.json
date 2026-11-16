@@ -1,0 +1,623 @@
+{
+ "cards": {
+  "a15-38": {
+   "n": 1,
+   "kind": "word",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "hoài",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "tryst"
+   ]
+  },
+  "a15-0": {
+   "n": 2,
+   "kind": "sentence",
+   "part": "notes",
+   "from": "en",
+   "chapter": 11,
+   "selection": "The huabiao said: \"Lord Zhang is a man of deep wisdom; you will not easily fool him.",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-5": {
+   "n": 3,
+   "kind": "sentence",
+   "part": "notes",
+   "from": "en",
+   "chapter": 12,
+   "selection": "Once, a person with the same name committed murder.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Một lần có người trùng tên với ông phạm tội giết người."
+   ]
+  },
+  "a15-44": {
+   "n": 4,
+   "kind": "phrase",
+   "part": "critique",
+   "from": "en",
+   "chapter": 1,
+   "selection": "Xiang of Chu",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Hạng nước Sở"
+   ]
+  },
+  "a15-33": {
+   "n": 5,
+   "kind": "phrase",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 17,
+   "selection": "plain to see",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-17": {
+   "n": 6,
+   "kind": "word",
+   "part": "notes",
+   "from": "en",
+   "chapter": 14,
+   "selection": "summoned",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "mời"
+   ]
+  },
+  "a15-6": {
+   "n": 7,
+   "kind": "sentence",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 12,
+   "selection": "Nhưng báo đến lần thứ ba thì bà đâm ngờ quẳng cả thoi chạy đi xem sao.(14) Theo sách Liệt Tử,",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "But when the report came a third time,",
+    "According to the Liezi"
+   ]
+  },
+  "a15-18": {
+   "n": 8,
+   "kind": "word",
+   "part": "notes",
+   "from": "en",
+   "chapter": 11,
+   "selection": "tree",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "cây"
+   ]
+  },
+  "a15-48": {
+   "n": 9,
+   "kind": "word",
+   "part": "critique",
+   "from": "vi",
+   "chapter": 15,
+   "selection": "thường",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "often"
+   ]
+  },
+  "a15-41": {
+   "n": 10,
+   "kind": "sentence",
+   "part": "critique",
+   "from": "vi",
+   "chapter": 17,
+   "selection": "Song, chịu họa ở lúc sống, người đã không hiểu, phải tội ở lúc chết, người lại không hay; vì thế mà đời thường có lắm loạn thần tặc tử.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Yet when disaster strikes in life, people fail to understand it, and when punishment comes after death, they never learn of it at all. That is why the world has always teemed with treacherous ministers and rebellious sons."
+   ]
+  },
+  "a15-26": {
+   "n": 11,
+   "kind": "sentence",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "Thủy thần trách móc (7).",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-20": {
+   "n": 12,
+   "kind": "sentence",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 7,
+   "selection": "Lũy cổ nhạn kêu sương.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Upon the ancient rampart, wild geese cry through the frost."
+   ]
+  },
+  "a15-28": {
+   "n": 13,
+   "kind": "phrase",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 2,
+   "selection": "Đỗ Phủ ngâm câu cảm hoài",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-21": {
+   "n": 14,
+   "kind": "sentence",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 11,
+   "selection": "On the Xiang heights we wail without a sound at the setting sun (20);",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Tiếng bặt bờ Tương gào bóng xế (20),"
+   ]
+  },
+  "a15-34": {
+   "n": 15,
+   "kind": "word",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 1,
+   "selection": "battle",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Nom"
+   ]
+  },
+  "a15-7": {
+   "n": 16,
+   "kind": "phrase",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "văn hào làm quan đời",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "of letters who served as an official under"
+   ]
+  },
+  "a15-13": {
+   "n": 17,
+   "kind": "phrase",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 9,
+   "selection": "chục bước",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "dozen paces"
+   ]
+  },
+  "a15-11": {
+   "n": 18,
+   "kind": "phrase",
+   "part": "notes",
+   "from": "en",
+   "chapter": 9,
+   "selection": "asked to return home",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-43": {
+   "n": 19,
+   "kind": "sentence",
+   "part": "critique",
+   "from": "en",
+   "chapter": 14,
+   "selection": "Best of all is to leave the reclusive scholar (43) no cause to offer his opinions.",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-30": {
+   "n": 20,
+   "kind": "phrase",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "Phấn hãn",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-4": {
+   "n": 21,
+   "kind": "sentence",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 6,
+   "selection": "Thứ Phi là một kẻ dũng sĩ đất Kinh về đời nhà Chu,",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Ci Fei was a warrior of the state of Jing (Chu) during the Zhou dynasty and a master of the sword."
+   ]
+  },
+  "a15-37": {
+   "n": 22,
+   "kind": "word",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 6,
+   "selection": "bridal",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-9": {
+   "n": 23,
+   "kind": "phrase",
+   "part": "notes",
+   "from": "en",
+   "chapter": 13,
+   "selection": "Under Emperor Yuan he served",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "thời Nguyên đế làm"
+   ]
+  },
+  "a15-47": {
+   "n": 24,
+   "kind": "word",
+   "part": "critique",
+   "from": "en",
+   "chapter": 5,
+   "selection": "hope",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "mong"
+   ]
+  },
+  "a15-29": {
+   "n": 25,
+   "kind": "phrase",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 16,
+   "selection": "mourning the spring",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-25": {
+   "n": 26,
+   "kind": "sentence",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 14,
+   "selection": "the pieces fall with a measured sound.",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-49": {
+   "n": 27,
+   "kind": "word",
+   "part": "critique",
+   "from": "vi",
+   "chapter": 14,
+   "selection": "đâu",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "he"
+   ]
+  },
+  "a15-22": {
+   "n": 28,
+   "kind": "sentence",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 19,
+   "selection": "And gazing in sorrow toward Mount Qiao (7),",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-8": {
+   "n": 29,
+   "kind": "phrase",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 8,
+   "selection": "miếu Lư Sơn hiện lên đòi",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Lushan temple appeared before him and demanded"
+   ]
+  },
+  "a15-16": {
+   "n": 30,
+   "kind": "word",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "Lệnh Thăng",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Lingsheng"
+   ]
+  },
+  "a15-12": {
+   "n": 31,
+   "kind": "phrase",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 14,
+   "selection": "đất 59 thôn ở khu Cổ Lâu",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "ceded fifty-nine hamlets in the Co Lau"
+   ]
+  },
+  "a15-19": {
+   "n": 32,
+   "kind": "word",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 6,
+   "selection": "bài văn",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "text"
+   ]
+  },
+  "a15-23": {
+   "n": 33,
+   "kind": "sentence",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "Đồng huyệt chưa tròn nguyền ước ấy,",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-14": {
+   "n": 34,
+   "kind": "word",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 14,
+   "selection": "Hỏa viêm",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Jade"
+   ]
+  },
+  "a15-35": {
+   "n": 35,
+   "kind": "word",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 9,
+   "selection": "gió",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "wind"
+   ]
+  },
+  "a15-31": {
+   "n": 36,
+   "kind": "phrase",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 14,
+   "selection": "maid to sweep",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-27": {
+   "n": 37,
+   "kind": "sentence",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "giả mạo sao nhiều,",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-10": {
+   "n": 38,
+   "kind": "phrase",
+   "part": "notes",
+   "from": "en",
+   "chapter": 7,
+   "selection": "through the Yong",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "qua cửa Ung"
+   ]
+  },
+  "a15-1": {
+   "n": 39,
+   "kind": "sentence",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 1,
+   "selection": "Thuộc hạ đều chết theo.(10) Hạng Vũ từng phong cho Bái công tước vương ở Ba Thục và Hán Trung.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "All his retainers followed him in death.",
+    "Xiang Yu had previously enfeoffed Peigong as a prince ruling over Bashu and Hanzhong."
+   ]
+  },
+  "a15-45": {
+   "n": 40,
+   "kind": "phrase",
+   "part": "critique",
+   "from": "vi",
+   "chapter": 10,
+   "selection": "lời ký ngụ ý khuyên giới",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "words carry a lesson of"
+   ]
+  },
+  "a15-46": {
+   "n": 41,
+   "kind": "phrase",
+   "part": "critique",
+   "from": "vi",
+   "chapter": 7,
+   "selection": "nữa hãm vào bước",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "nearly fell into ruin"
+   ]
+  },
+  "a15-3": {
+   "n": 42,
+   "kind": "sentence",
+   "part": "notes",
+   "from": "vi",
+   "chapter": 12,
+   "selection": "xem chth. 37 truyện Câu chuyện ở đền Hạng Vương.(7) Chi Lăng: nay thuộc huyện Đồng Mỏ, tỉnh Lạng Sơn.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "See note 37 of the story \"The Tale of the Shrine of King Xiang.",
+    "(7) Chi Lang: Presently located in Dong Mo district, Lang Son province."
+   ]
+  },
+  "a15-2": {
+   "n": 43,
+   "kind": "sentence",
+   "part": "notes",
+   "from": "en",
+   "chapter": 6,
+   "selection": "in broad daylight, two stalwart men appeared before him, announcing that they had been sent by King Guangli,",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "giữa ban ngày thấy hai người lực sĩ đến nói là vâng mệnh của Quảng Lợi vương (vua thủy) sai đón,"
+   ]
+  },
+  "a15-39": {
+   "n": 44,
+   "kind": "word",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 2,
+   "selection": "Nói năng",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-42": {
+   "n": 45,
+   "kind": "sentence",
+   "part": "critique",
+   "from": "en",
+   "chapter": 7,
+   "selection": "Had he been put to death as the Wei emperor once put the sramanas (21) to death, he would have suffered no injustice at all.Then is Nhuoc Chan to be held blameless?",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Giả đem xử vào cái tội như vua Ngụy giết bọn Sa Môn (21) ngày xưa thì hắn cũng không oan chút nào.\nThế còn Nhược Chân thì hẳn là không có lỗi chăng?"
+   ]
+  },
+  "a15-24": {
+   "n": 46,
+   "kind": "sentence",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 17,
+   "selection": "Should he not be dealt with under the sternest of statutes?",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a15-40": {
+   "n": 47,
+   "kind": "sentence",
+   "part": "critique",
+   "from": "vi",
+   "chapter": 7,
+   "selection": "không đáng lấy làm lạ chút nào.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "and there is nothing in it to marvel at."
+   ]
+  },
+  "a15-15": {
+   "n": 48,
+   "kind": "word",
+   "part": "notes",
+   "from": "en",
+   "chapter": 4,
+   "selection": "ledger",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "trăng kiểm sổ sách"
+   ]
+  },
+  "a15-32": {
+   "n": 49,
+   "kind": "phrase",
+   "part": "poetry",
+   "from": "vi",
+   "chapter": 1,
+   "selection": "Nom nước trăm",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "battle winds"
+   ]
+  },
+  "a15-36": {
+   "n": 50,
+   "kind": "word",
+   "part": "poetry",
+   "from": "en",
+   "chapter": 3,
+   "selection": "fairness",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  }
+ }
+}

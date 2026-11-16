@@ -1,0 +1,412 @@
+{
+ "cards": {
+  "a17-170": {
+   "n": 1,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 9,
+   "selection": "carefree pleasures",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "Lang thang",
+    "lạ"
+   ],
+   "B_text": [
+    "Lang thang đất lạ"
+   ]
+  },
+  "a17-233": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 16,
+   "selection": "Meng Guang",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "Mạnh ngang"
+   ],
+   "B_text": [
+    "Chưa tường án Mạnh ngang mày (12) như ai"
+   ]
+  },
+  "a17-139": {
+   "n": 3,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 7,
+   "selection": "tumble echoing",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "lưng trời sao sa"
+   ]
+  },
+  "a17-109": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "selection": "myself into forest",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Tôi lên rừng"
+   ],
+   "B_text": [
+    "lên rừng",
+    "vào"
+   ]
+  },
+  "a17-541": {
+   "n": 5,
+   "kind": "word",
+   "from": "en",
+   "chapter": 3,
+   "selection": "slumber",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Giấc xuân mê mệt"
+   ],
+   "B_text": []
+  },
+  "a17-286": {
+   "n": 6,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 19,
+   "selection": "fills the rivers",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Oai thanh còn dậy",
+    "khắp xa gần"
+   ]
+  },
+  "a17-206": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 19,
+   "selection": "piercing chill",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Phong phanh áo mỏng hơi lùa căm căm"
+   ],
+   "B_text": []
+  },
+  "a17-338": {
+   "n": 8,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 5,
+   "selection": "Nhị mởn",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Dew-wet stamens, misty boughs"
+   ],
+   "B_text": [
+    "Dew-wet"
+   ]
+  },
+  "a17-124": {
+   "n": 9,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "selection": "mountain rain",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "mưa núi"
+   ],
+   "B_text": [
+    "Tung tăng lúc giỡn cơn mưa núi"
+   ]
+  },
+  "a17-83": {
+   "n": 10,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 19,
+   "selection": "saw not Master",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Không thấy Tiêu lang"
+   ],
+   "B_text": [
+    "Không thấy"
+   ]
+  },
+  "a17-52": {
+   "n": 11,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 6,
+   "selection": "hairpin of green",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "đầu cài trâm bích ngọc"
+   ],
+   "B_text": []
+  },
+  "a17-c-587": {
+   "n": 12,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "hồng chức tựu",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "gauze of"
+   ],
+   "B_text": [
+    "gauze of"
+   ]
+  },
+  "a17-c-543": {
+   "n": 13,
+   "kind": "word",
+   "from": "en",
+   "chapter": 14,
+   "selection": "About",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "Cổ"
+   ],
+   "B_text": [
+    "Cổ"
+   ]
+  },
+  "a17-4": {
+   "n": 14,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 1,
+   "selection": "sons of Jiangdong",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Giang đông",
+    "tử đệ"
+   ],
+   "B_text": []
+  },
+  "a17-463": {
+   "n": 15,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "trắng",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "fairness has not faded"
+   ]
+  },
+  "a17-c-315": {
+   "n": 16,
+   "kind": "word",
+   "from": "en",
+   "chapter": 13,
+   "selection": "carried",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "Thi hành"
+   ],
+   "B_text": [
+    "Thi hành"
+   ]
+  },
+  "a17-355": {
+   "n": 17,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 9,
+   "selection": "đưa",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "bears forth the fragrance"
+   ],
+   "B_text": [
+    "bears"
+   ]
+  },
+  "a17-173": {
+   "n": 18,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 14,
+   "selection": "san vật lộn tay đôi",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Winning and losing, we wager rivers and mountains upon half a board"
+   ]
+  },
+  "a17-45": {
+   "n": 19,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14,
+   "selection": "Through the curtain",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Tiểu đồng ngấp ngó bên lan"
+   ],
+   "B_text": []
+  },
+  "a17-291": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "nắng mới",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "new",
+    "warmth"
+   ],
+   "B_text": [
+    "The new sun's warmth steeps one, as though in wine"
+   ]
+  },
+  "a17-281": {
+   "n": 21,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 1,
+   "selection": "return again",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Quay về"
+   ],
+   "B_text": []
+  },
+  "a17-195": {
+   "n": 22,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 3,
+   "selection": "around my slender",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "Lưng",
+    "ỏe oai"
+   ],
+   "B_text": [
+    "Lưng thắt",
+    "dáng ỏe oai"
+   ]
+  },
+  "a17-341": {
+   "n": 23,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "selection": "ease",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Mặc dầu tha thẩn"
+   ]
+  },
+  "a17-376": {
+   "n": 24,
+   "kind": "word",
+   "from": "en",
+   "chapter": 3,
+   "selection": "Though",
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Mai khi rã hết"
+   ],
+   "B_text": [
+    "Mai"
+   ]
+  },
+  "a17-231": {
+   "n": 25,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 9,
+   "selection": "Red clouds",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Ráng đỏ đùn lên"
+   ]
+  }
+ }
+}

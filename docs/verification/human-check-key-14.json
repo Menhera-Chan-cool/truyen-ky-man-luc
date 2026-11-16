@@ -1,0 +1,709 @@
+{
+ "cards": {
+  "a14-42": {
+   "n": 1,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 15,
+   "selection": "Tu Lap laughed and said:\"So all this while we have wrongly blamed common thieves!",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Tư Lập cười mà nói:",
+    "Té ra lâu nay vẫn ngờ oan cho lũ kẻ trộm,"
+   ]
+  },
+  "a14-16": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 6,
+   "selection": "set foot in so august",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "được bước đến"
+   ]
+  },
+  "a14-4": {
+   "n": 3,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 2,
+   "selection": "binh qua nghẽn trở",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "war blocking the roads"
+   ]
+  },
+  "a14-59": {
+   "n": 4,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 20,
+   "selection": "đáng",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "a"
+   ]
+  },
+  "a14-2": {
+   "n": 5,
+   "kind": "word",
+   "from": "en",
+   "chapter": 1,
+   "selection": "benevolence",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "nhân"
+   ]
+  },
+  "a14-49": {
+   "n": 6,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 17,
+   "selection": "Bốn viên này",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Each of the four"
+   ]
+  },
+  "a14-34": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 12,
+   "selection": "dầu không nghĩ",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-43": {
+   "n": 8,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 15,
+   "selection": "kêu réo",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "hue and cry"
+   ]
+  },
+  "a14-38": {
+   "n": 9,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "Đêm",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "night"
+   ]
+  },
+  "a14-14": {
+   "n": 10,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 5,
+   "selection": "Cha mẹ",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "His parents"
+   ]
+  },
+  "a14-20": {
+   "n": 11,
+   "kind": "word",
+   "from": "en",
+   "chapter": 7,
+   "selection": "temple",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "chùa"
+   ]
+  },
+  "a14-54": {
+   "n": 12,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "Ông khách liền rút ở trong lòng ra một quyển sách, ước trăm trang giấy, trao cho chàng mà bảo:- Cứ về mà giở quyển này ra, sẽ tha hồ đọc, bất tất phải tìm ở tập nào khác nữa.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "The guest at once drew from the fold of his robe a book of about a hundred leaves and handed it to him, saying:",
+    "Go home and open this, and you may read to your heart's content. You need not seek out any other collection."
+   ]
+  },
+  "a14-9": {
+   "n": 13,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 4,
+   "selection": "Thiếp thuở nhỏ tên là Hán Anh, cha thiếp họ Thạch tên là Mang, làm quan Thú ở Tuyên Quang, bị quan trên vu hãm, cả nhà phải bắt rồi chết trong ngục.",
+   "answered": true,
+   "status": "match",
+   "texts": [
+    "As a child I was called Han Anh. My father, Thach Mang, was garrison commander at Tuyen Quang. His superiors falsely accused him, and our entire household was cast into prison, where they perished."
+   ]
+  },
+  "a14-56": {
+   "n": 14,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "ngờ",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "imagined"
+   ]
+  },
+  "a14-36": {
+   "n": 15,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "Sai tả hữu lấy đưa cho chàng giấy bút, bắt phải cung khai.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "He ordered his attendants to hand Hoang brush and paper and compelled him to make a written deposition."
+   ]
+  },
+  "a14-48": {
+   "n": 16,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 17,
+   "selection": "Rồi lại lấy cành dương sẽ phất, một chốc thì thân thể lại nguyên lành.\n- Đến như phá mồ mả của người đời xưa, hủy đạo thường với người ruột thịt, nên xử thế nào?",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Then they took a willow branch and swept it gently over him, and in a moment his body was whole again.",
+    "And as for one who desecrated the tombs of the ancients and broke the bonds of proper conduct toward his own flesh and blood, what punishment befits him?"
+   ]
+  },
+  "a14-1": {
+   "n": 17,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 1,
+   "selection": "mời ông lên ngồi",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "upon which he invited Ho to sit."
+   ]
+  },
+  "a14-15": {
+   "n": 18,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 6,
+   "selection": "Rồi Trịnh buồn nản bỏ quan về, chôn một cái mả hờ dưới chân núi Đốn, hằng ngày ở một mình trong cái lầu nhỏ.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Disheartened, Trinh resigned his office and returned home. At the foot of Mount Don he raised a cenotaph in her memory, and thereafter dwelt alone in a small tower."
+   ]
+  },
+  "a14-44": {
+   "n": 19,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 15,
+   "selection": "đổ nát",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "ruin and decay"
+   ]
+  },
+  "a14-41": {
+   "n": 20,
+   "kind": "word",
+   "from": "en",
+   "chapter": 14,
+   "selection": "high",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "trên"
+   ]
+  },
+  "a14-31": {
+   "n": 21,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "selection": "plowed under",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "cày sân lấp ổ"
+   ]
+  },
+  "a14-57": {
+   "n": 22,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 20,
+   "selection": "Nghe rõ lời ta, đừng để hậu hối.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Mark my words well, lest you live to regret it."
+   ]
+  },
+  "a14-55": {
+   "n": 23,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "nhờ ở mái hiên phía nam",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "shelter beneath the southern eaves"
+   ]
+  },
+  "a14-17": {
+   "n": 24,
+   "kind": "word",
+   "from": "en",
+   "chapter": 6,
+   "selection": "fell",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-0": {
+   "n": 25,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 1,
+   "selection": "Had the ruler not known how to conduct himself with righteousness, how could there have been such unwavering devotion!",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "nếu không phải nhà vua biết lẽ cư xử thì sao có sự tận tiết ấy!"
+   ]
+  },
+  "a14-50": {
+   "n": 26,
+   "kind": "word",
+   "from": "en",
+   "chapter": 17,
+   "selection": "Celestial",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Đế"
+   ]
+  },
+  "a14-30": {
+   "n": 27,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 11,
+   "selection": "Even were you to heap up birds and beasts as high as a mountain, we could not approve of it.\"",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-32": {
+   "n": 28,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "selection": "wished",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "muốn"
+   ]
+  },
+  "a14-12": {
+   "n": 29,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 5,
+   "selection": "I would never dare to make things difficult for you two with the play of clouds and rain.\"",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "tôi chẳng dám đem chuyện mây mưa làm \"khó dễ\" hai nàng."
+   ]
+  },
+  "a14-40": {
+   "n": 30,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14,
+   "selection": "milfoil and tortoise",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-11": {
+   "n": 31,
+   "kind": "word",
+   "from": "en",
+   "chapter": 4,
+   "selection": "between",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "mối nhân duyên lạ lùng"
+   ]
+  },
+  "a14-25": {
+   "n": 32,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 9,
+   "selection": "turned into a luan bird",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "hóa làm một con chim loan"
+   ]
+  },
+  "a14-22": {
+   "n": 33,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 8,
+   "selection": "Nhân thế nức tiếng mà được giữ",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-7": {
+   "n": 34,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "Song đất",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-3": {
+   "n": 35,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 2,
+   "selection": "Thôi thì bi hoan tán tụ cũng là việc thường của người ta.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Sorrow and joy, parting and reunion, are the common lot of mankind."
+   ]
+  },
+  "a14-39": {
+   "n": 36,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 14,
+   "selection": "Yet just as Truong drew near, the man quickened his pace and vanished into a grotto.",
+   "answered": true,
+   "status": "match",
+   "texts": [
+    "Nhưng Trương theo gần đến nơi thì người ấy đã rảo bước vào động,"
+   ]
+  },
+  "a14-5": {
+   "n": 37,
+   "kind": "word",
+   "from": "en",
+   "chapter": 2,
+   "selection": "parting",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "bi hoan tán tụ"
+   ]
+  },
+  "a14-52": {
+   "n": 38,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 18,
+   "selection": "without mercy to vent",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "chém giết dữ dội cho hả"
+   ]
+  },
+  "a14-35": {
+   "n": 39,
+   "kind": "word",
+   "from": "en",
+   "chapter": 12,
+   "selection": "Among",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-58": {
+   "n": 40,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "selection": "quây lại đánh chén",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "gathered round and fell"
+   ]
+  },
+  "a14-10": {
+   "n": 41,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4,
+   "selection": "Duc Cong",
+   "answered": true,
+   "status": "match",
+   "texts": [
+    "Đức Công"
+   ]
+  },
+  "a14-21": {
+   "n": 42,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 8,
+   "selection": "Bèn sai dẫn Tử Văn vào trong cửa điện.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "So the order was given to lead Tu Van inside the gates of the hall."
+   ]
+  },
+  "a14-23": {
+   "n": 43,
+   "kind": "word",
+   "from": "en",
+   "chapter": 8,
+   "selection": "steps",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "thềm"
+   ]
+  },
+  "a14-29": {
+   "n": 44,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 10,
+   "selection": "quả",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "examinations"
+   ]
+  },
+  "a14-53": {
+   "n": 45,
+   "kind": "word",
+   "from": "en",
+   "chapter": 18,
+   "selection": "love",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-19": {
+   "n": 46,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 7,
+   "selection": "named Long Thuc",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "là Long Thúc"
+   ]
+  },
+  "a14-47": {
+   "n": 47,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 16,
+   "selection": "gầy",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "gaunt"
+   ]
+  },
+  "a14-51": {
+   "n": 48,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 18,
+   "selection": "Sau khi gà gáy ba hồi, hai người vội cùng nhau đứng dậy từ biệt.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "When the cock had crowed three times, the two hastily rose together and said their farewells."
+   ]
+  },
+  "a14-27": {
+   "n": 49,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 10,
+   "selection": "Tram laughed and replied:\"Plant melons and you shall reap melons; sow beans and you shall reap beans.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Trạm cười mà rằng:",
+    "Trồng dưa được dưa, trồng đậu được đậu."
+   ]
+  },
+  "a14-6": {
+   "n": 50,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 3,
+   "selection": "When the boatmen were obliged to bind him with ropes, he cursed them:\"Where my wife dwells there are splendid towers and pavilions, and the air is sweet with incense and flowers.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Người trong thuyền phải lấy dây thừng trói lại thì chàng mắng:",
+    "Chỗ vợ ta ở có lâu đài lộng lẫy, có hương hoa ngạt ngào,"
+   ]
+  },
+  "a14-26": {
+   "n": 51,
+   "kind": "word",
+   "from": "en",
+   "chapter": 9,
+   "selection": "music",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "nhạc"
+   ]
+  },
+  "a14-8": {
+   "n": 52,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "Song",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-45": {
+   "n": 53,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 16,
+   "selection": "He then had a small chamber prepared as a study for Du, and appointed a young maid to attend him daily.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Bèn sai dọn một cái buồng nhỏ làm nơi đọc sách cho Sinh, hằng ngày sai một ả tiểu hoàn hầu hạ."
+   ]
+  },
+  "a14-13": {
+   "n": 54,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 5,
+   "selection": "vùi thân trong chỗ ngòi lạch",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "bodies lie buried in some ditch"
+   ]
+  },
+  "a14-46": {
+   "n": 55,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 16,
+   "selection": "hôm ấy uống rượu rất",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "That day the scholar drank until he was utterly"
+   ]
+  },
+  "a14-18": {
+   "n": 56,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 7,
+   "selection": "Seized with fear, she shaved her head, put on the coarse brown robe of a nun, and fled to Phat Tich Pagoda (4) to take up the religious life.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Hàn Than sợ, phải cạo trọc đầu và mặc đồ nâu sồng, trốn đến tu ở chùa Phật Tích (4), giảng kinh thuyết kệ, chỉ mấy tháng đã làu thông lắm."
+   ]
+  },
+  "a14-24": {
+   "n": 57,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 9,
+   "selection": "Quần tiên vái chào nhau cùng ngồi ở những ghế bên tả; Từ Thức thì ngồi ở cái giường bên hữu.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "The immortals bowed to one another and took the seats on the left, while Tu Thuc sat on a couch to the right."
+   ]
+  },
+  "a14-33": {
+   "n": 58,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 12,
+   "selection": "Tuy là hội công danh từ xưa ít gặp, nhưng trong chỗ binh cách, phải lấy việc giữ mình làm trọng, biết gặp nạn thì lui, lượng sức mà đánh, đừng nên tham miếng mồi thơm, để lỡ mắc vào lưới cá.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Though glory and renown are rare prizes since days of old, amidst the perils of war you must hold self-preservation above all else. Know when to retreat before danger, gauge your strength before striking, and never covet sweet bait lest you stumble into a fisherman's net."
+   ]
+  },
+  "a14-37": {
+   "n": 59,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "selection": "can I cure this illness",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a14-28": {
+   "n": 60,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 10,
+   "selection": "net of Heaven is vast",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Lưới trời thênh thang"
+   ]
+  }
+ }
+}

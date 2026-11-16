@@ -1,0 +1,367 @@
+{
+ "cards": {
+  "a16-102": {
+   "n": 1,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 5,
+   "selection": "stream down",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "châu lan tràn",
+    "từ biệt"
+   ],
+   "B_text": []
+  },
+  "a16-190": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "selection": "guilt is light",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Có nhẹ"
+   ]
+  },
+  "a16-333": {
+   "n": 3,
+   "kind": "word",
+   "from": "en",
+   "chapter": 19,
+   "selection": "needle",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "mày"
+   ]
+  },
+  "a16-156": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 7,
+   "selection": "spreading mist",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Mù tỏa",
+    "chuông"
+   ],
+   "B_text": []
+  },
+  "a16-c-186": {
+   "n": 5,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "nằm trưa",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "sleeps",
+    "into"
+   ],
+   "B_text": [
+    "sleeps",
+    "into"
+   ]
+  },
+  "a16-538": {
+   "n": 6,
+   "kind": "word",
+   "from": "en",
+   "chapter": 14,
+   "selection": "sleep",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "ngủ"
+   ],
+   "B_text": []
+  },
+  "a16-13": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 1,
+   "selection": "struggle—what did",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "công cốc"
+   ],
+   "B_text": []
+  },
+  "a16-389": {
+   "n": 8,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 14,
+   "selection": "Bành Trạch",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Pengze"
+   ]
+  },
+  "a16-484": {
+   "n": 9,
+   "kind": "word",
+   "from": "en",
+   "chapter": 7,
+   "selection": "half",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "nửa"
+   ],
+   "B_text": []
+  },
+  "a16-520": {
+   "n": 10,
+   "kind": "word",
+   "from": "en",
+   "chapter": 16,
+   "selection": "embroidered",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "ngấn lệ"
+   ]
+  },
+  "a16-98": {
+   "n": 11,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 6,
+   "selection": "thủy tinh cung kết",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Crystal"
+   ],
+   "B_text": []
+  },
+  "a16-396": {
+   "n": 12,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "Vốn",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Sprang"
+   ]
+  },
+  "a16-307": {
+   "n": 13,
+   "kind": "word",
+   "from": "en",
+   "chapter": 5,
+   "selection": "blossoms",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "phô"
+   ]
+  },
+  "a16-c-227": {
+   "n": 14,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 9,
+   "selection": "Auspicious vapors drift",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "Khí lành"
+   ],
+   "B_text": [
+    "Khí lành"
+   ]
+  },
+  "a16-152": {
+   "n": 15,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "vạn giống quỷ yêu",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "myriad kinds",
+    "ghosts",
+    "demons"
+   ]
+  },
+  "a16-385": {
+   "n": 16,
+   "kind": "word",
+   "from": "en",
+   "chapter": 19,
+   "selection": "butterflies",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "bướm"
+   ],
+   "B_text": []
+  },
+  "a16-460": {
+   "n": 17,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 11,
+   "selection": "chờ",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "breeze"
+   ]
+  },
+  "a16-c-21": {
+   "n": 18,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "selection": "cheeks she bewitched",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "phấn",
+    "say mê"
+   ],
+   "B_text": [
+    "phấn",
+    "say mê"
+   ]
+  },
+  "a16-276": {
+   "n": 19,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 1,
+   "selection": "can sweep back",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "về chửa"
+   ],
+   "B_text": []
+  },
+  "a16-192": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "selection": "biếc nước ngon lành",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "jade-green",
+    "waters"
+   ]
+  },
+  "a16-420": {
+   "n": 21,
+   "kind": "word",
+   "from": "en",
+   "chapter": 13,
+   "selection": "simple",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "thô sơ"
+   ],
+   "B_text": []
+  },
+  "a16-165": {
+   "n": 22,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "Linh mây trắng tỏa",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Ve Linh",
+    "white",
+    "the"
+   ]
+  },
+  "a16-128": {
+   "n": 23,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "selection": "jade-green rapids",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "suối",
+    "ngon lành"
+   ],
+   "B_text": []
+  }
+ }
+}
