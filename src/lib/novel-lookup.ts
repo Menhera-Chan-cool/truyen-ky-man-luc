@@ -427,9 +427,16 @@ function gapContext(all:AlignmentArtifact['groups'],request:LookupRequest,locale
 }
 // Pairs written by reading answer only where the word and phrase links gave no highlight at all: such answers were right 27 of 29 times (human sheets 7 and 9),
 // while replacing a highlight the links already gave was no better than keeping it (sheets 8 and 9: 18 better, 11 worse, 2 equal; 3 better, 9 worse for a Vietnamese selection).
+// For an English selection (the answer is Vietnamese) the labelled pairs also replace a highlight the links gave: sheets 8 and 9 gave 15 better against 2 worse
+// (for a Vietnamese selection 3 against 9, so there the links keep it). Only merged after human sheet 11 confirms it on cards not seen before.
 function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
+  const labelledAnywhere=[...artifact.groups,...(artifact.refinedGroups??[])].some(g=>g.labelled?.length);
+  if(request.locale==='en'&&labelledAnywhere){
+    const labelled=lookupBase(artifact,request,true);
+    if(labelled.passages.some(p=>p.highlights.length))return labelled;
+  }
   const plain=lookupBase(artifact,request,false);
-  if(plain.passages.some(p=>p.highlights.length)||![...artifact.groups,...(artifact.refinedGroups??[])].some(g=>g.labelled?.length))return plain;
+  if(plain.passages.some(p=>p.highlights.length)||!labelledAnywhere)return plain;
   const labelled=lookupBase(artifact,request,true);
   return labelled.passages.some(p=>p.highlights.length)?labelled:plain;
 }

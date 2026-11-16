@@ -415,6 +415,9 @@ it('uses a labelled pair only where the links gave no highlight, and never repla
  const ask=(a:AlignmentArtifact,l:'vi'|'en',q:string)=>query(a,l,span(a.editions[l].text,q)).passages.flatMap(p=>p.highlights.map(h=>a.editions[l==='vi'?'en':'vi'].text.slice(h.start,h.end)));
  const linked=make([['ngựa','hunt']]);
  expect(ask(linked,'vi','ngựa')).toEqual(['hunt']);
+ const crossed=make([['săn','horse']]);
+ expect(ask(crossed,'en','horse')).toEqual(['cưỡi ngựa']);
+ expect(ask(crossed,'vi','săn')).toEqual(['horse']);
  const bare=make([]);
  expect(ask(bare,'vi','cưỡi ngựa')).toEqual(['rode a horse']);
  expect(ask(bare,'en','rode a horse')).toEqual(['cưỡi ngựa']);

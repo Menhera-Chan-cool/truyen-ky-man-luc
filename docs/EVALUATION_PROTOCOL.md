@@ -759,7 +759,9 @@ Published with the alignment worker, all 20 chapters (`phr13` = `phr11` plus 7,0
 
 **Sheet 11** (23 cards, private Artifact, key `human-check-key-11.json`): 20 English selections outside chapters 11 and 20, none on sheet 9, where the published answer and the unrestricted-labels answer both exist and differ, plus 3 identical controls. It tests the one rule not yet written: replacing an existing answer when the selection is English (15 against 2 on sheets 8 and 9, found after the fact). Score the same way as sheet 10. If the new answer wins at least about 12 of 15 decisive cards, the rule is `locale==='en'` uses the labelled result when it exists.
 
-**Not done.** The rule above is not written until sheet 11 is back, and sheet 11 had no answers yet when this was written; it waits for a person.
+**Prepared on the branch `english-replace`, not merged.** `lookupSingle` takes the labelled result first for an English selection (the answer is Vietnamese) and falls back to the links, then to the published rule. Replay over the 1,240 lookups on `phr13`: 35 lookups change against the published rule, all of them English selections, each equal to the unrestricted-labels answer, none loses its answer; Vietnamese selections do not change. Test added (a wrong link leaving the pair is replaced for an English selection and kept for a Vietnamese one; it fails on `main`). Merge, publish nothing (the data is already published) and deploy only if sheet 11 (23 cards, English selections, none seen before) shows the new answer better in about 12 of 15 decisive cards; otherwise delete the branch.
+
+**Not done.** The merge waits for sheet 11, which had no answers when this was written.
 
 ## Rules
 
