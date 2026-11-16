@@ -25,6 +25,8 @@ Sentence/clause pairs (`groups[].clausePairs`) are built hierarchically in `pros
 
 Production: migration 20261112043121_novel_alignment.sql adds private jobs/runs/storage; 20261113082758_contextual_novel_alignment.sql selects LaBSE; 20261113131339_book_specific_novel_alignment.sql selects the book recipe; 20261114071828_poetry_novel_alignment.sql selects the poetry recipe. Prior ready results stay available until replacements exist. These migrations do not rewrite book content. `worker.ts` binds both immutable source versions and canonical hashes, verifies prepared results, uploads content-addressed JSON, then finishes with the job lease. An obsolete result cannot replace the active pair.
 
+`verse_prose.py` runs on finished artifacts, after the phrase step: where the Vietnamese edition keeps a letter or lament as verse lines that no poem pair covers and the English renders it as prose (no English poem scope), the English prose between the nearest groups becomes the lines of a synthetic English track (sentences and no-break-space lines) and is paired with each Vietnamese scope by `poetry_tracks._line_pairs` (whole-track similarity ≥ .5, coverage ≥ .75 of both sides, only the run of lines that pairs is kept). It appends entries to `poems` and the English track to `poetryScopes.en`, and changes nothing else; the consumer reads them like any other poem pair. Tests: `test_verse_prose.py`.
+
 ## Isolated adaptation
 
 `adaptation_data.py --input ARTIFACT_DIR --output PARALLEL.json` exports conservative contiguous high-confidence story/critique pairs. Whole chapters1/2/3/14/19 are held out, chapter4 is development; normalized duplicate source or target text cannot cross splits. No glossary or evaluation answers enter training.
