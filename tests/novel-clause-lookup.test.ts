@@ -359,6 +359,14 @@ it('projects a phrase with no link of its own onto the words between the targets
  expect(run('Sinh muốn nhờ thế quân, đánh úp mà cướp lại.')).toEqual(['surprise attack']);
  expect(run('Sinh muốn nhờ thế quân, đánh úp rất mà cướp lại.')).toEqual([]);
 });
+it('ignores a link that leaves the clause pair of the selection for another pair: the context stays, the wrong highlight does not',()=>{
+ const vi='Bè bạn nhiều người đi làm quan cả. Kẻ sướng người khổ như thế là cớ làm sao?',en='Many of my friends have risen to office. Why should one man live in comfort while another suffers so?';
+ const make=(to:string)=>plain(vi,en,{vi:['Bè bạn nhiều người đi làm quan cả.','Kẻ sướng người khổ như thế là cớ làm sao?'],en:['Many of my friends have risen to office.','Why should one man live in comfort while another suffers so?']},[['đi','live'],['quan','office']].map(l=>l[0]==='đi'?[to,l[1]]:l) as [string,string][],[[['Bè bạn nhiều người đi làm quan cả.'],['Many of my friends have risen to office.']],[['Kẻ sướng người khổ như thế là cớ làm sao?'],['Why should one man live in comfort while another suffers so?']]]);
+ const marks=(a:AlignmentArtifact)=>query(a,'en',span(en,'live')).passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end)));
+ expect(marks(make('sướng'))).toEqual(['sướng']);
+ const crossed=query(make('đi'),'en',span(en,'live'));
+ expect(crossed.passages.flatMap(p=>p.highlights)).toEqual([]);expect(crossed.passages.map(p=>vi.slice(p.target.start,p.target.end)).join('')).toContain('Kẻ sướng người khổ');
+});
 it('does not project from the links of a group the pairing does not trust: the context stays, the highlight does not',()=>{
  const vi='Sinh muốn nhờ thế quân, đánh úp mà cướp lại.',en='Sinh hoped to borrow the royal army for a surprise attack and win back.',a=plain(vi,en,{vi:[vi],en:[en]},[['Sinh','Sinh'],['quân','army'],['cướp','win']]);
  const ask=()=>query(a,'vi',span(vi,'đánh úp'));

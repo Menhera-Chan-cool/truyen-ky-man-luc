@@ -476,12 +476,17 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     if(named)spans=[named];
     else {
       spans.push(...sentences.spans);
+      // A link that leaves the smallest clause pair holding the selection and lands in another clause pair is crossed ("live in comfort" linked to "đi" of the sentence before): it is ignored.
+      // Only a clause pair with its own score of .5 counts as the home, not a residual one, whose split can cut the counterpart in two.
+      const home=!poem&&g.kind!=='lexical'?(g.clausePairs??[]).filter(p=>trusted(p)&&p.score>=.5&&p[locale].some(x=>x.start<=request.start&&x.end>=request.end)).sort((x,y)=>x[locale].reduce((n,z)=>n+z.end-z.start,0)-y[locale].reduce((n,z)=>n+z.end-z.start,0))[0]:undefined;
+      const crossed=(tw:TextSpan)=>!!home&&!home[targetLocale].some(h=>tw.start<h.end&&tw.end>h.start)&&g.clausePairs!.some(p=>p!==home&&trusted(p)&&!p[locale].some(x=>x.start<request.end&&x.end>request.start)&&p[targetLocale].some(x=>x.start<tw.end&&x.end>tw.start));
       const words=new Map<string,Map<string,{span:TextSpan;score:number}>>();
       for(const link of supported?g.links:[]){
         const from=link[locale],to=link[targetLocale];
         if(from[0]>=request.end||from[1]<=request.start||!/[\p{L}\p{N}]/u.test(target.text.slice(...to)))continue;
         if(sentences.covered.some(s=>from[0]>=s.start&&from[1]<=s.end))continue;
         const sw=sourceSpans.get(link)!,tw=targetSpans.get(link)!;
+        if(crossed(tw))continue;
         if(sw.start<request.start||sw.end>request.end)uncertain=true;
         const key=sw.start+":"+sw.end,tk=tw.start+":"+tw.end,map=words.get(key)??new Map();
         if(!map.has(tk)||map.get(tk)!.score<link.score)map.set(tk,{span:tw,score:link.score});
