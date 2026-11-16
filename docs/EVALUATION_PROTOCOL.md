@@ -670,9 +670,29 @@ Dev, tuned and blind sentence sets, lexical A and B, the probes (35 / 28 / 40) a
 | `changed` | 11 | Every lookup whose highlight differs between the sheet-5 code on `phr10` and the current code on `phr11`, found over the 120-case audit and a 520-case pool (seed 20261130, 12 sentences, 10 phrases, 4 words per chapter): 3 + 8 cases: 9 gained a highlight from empty (5 sentences, 4 phrases) and 2 phrases moved it (one is "chi trời dùng đức chứ" → "Huống chi trời dùng đức chứ"); none lost one. One of them was also drawn at random. Counted, not extrapolated. |
 | `verse` | 12 | 12 distinct line correspondences of the three new chapter-18 pairs (seed 20261131), 6 Vietnamese lines and 6 English sentences selected whole; all 12 were `unavailable` before and are `uncertain` with a highlight now. Counted, not extrapolated. |
 
-Page: https://claude.ai/artifact/7noDPspNRifz5qBnrtescw (private; answers in its `answers` collection, keys `a6-r<id>` random/audit, `a6-p<id>` pool, `a6-v<id>` verse). Template `docs/verification/human-check-artifact-template-6.html`; the cases with the old and new output are in `docs/verification/audit-120f-2026-11-16.json`. Score a returned CSV with `python scripts/align-novel/human_check_compare6.py ANSWERS.csv` (prints the three strata, the cards not judged right, and the weighted estimate of the random one; tested on a made-up CSV only, no real answer exists yet). The reference figures are the third, fourth and fifth sheets (92.0%, 89.2%, 95.2% right; pooled 92.2% over 180 cards).
+Page: https://claude.ai/artifact/7noDPspNRifz5qBnrtescw (private; answers in its `answers` collection, keys `a6-r<id>` random/audit, `a6-p<id>` pool, `a6-v<id>` verse). Template `docs/verification/human-check-artifact-template-6.html`; the cases with the old and new output are in `docs/verification/audit-120f-2026-11-16.json`. Score a returned CSV with `python scripts/align-novel/human_check_compare6.py ANSWERS.csv` (prints the three strata, the cards not judged right, and the weighted estimate of the random one). The reference figures are the third, fourth and fifth sheets (92.0%, 89.2%, 95.2% right; pooled 92.2% over 180 cards).
 
 **What it can and cannot show.** Eleven changed cards cannot give a rate, only whether any of them is wrong, which is what the change rules need to hold: the sentence rule added `uncertain` highlights, and an over-wide one (two such cases existed in audits 4 and 1) would show here as "partly". The random part checks that the whole product, with the new rules and data, still holds the earlier level; 60 cards give an interval of about ±8 points. Nothing here is a human verdict until the sheet is returned.
+
+### Result of the sixth human check (2026-11-16)
+
+Returned complete: 82 of 82 cards answered (`docs/verification/human-check-result-6-2026-11-16.csv`), no note written, scored with `human_check_compare6.py`.
+
+| Stratum | Cards | Right | Partly | Wrong |
+| --- | --- | --- | --- | --- |
+| Changed since sheet 5 | 11 | 11 | 0 | 0 |
+| Chapter-18 verse/prose pairs | 12 | 12 | 0 | 0 |
+| Random: sentences | 20 | 20 | 0 | 0 |
+| Random: phrases | 20 | 18 | 0 | 2 |
+| Random: words | 20 | 19 | 1 | 0 |
+
+Random stratum, weighted by kind over the audit's 97 answered lookups: **right 95.3% (95% interval 90–100), partly 1.3% (0–4), wrong 3.4% (0–9)**. Pooled with the earlier sheets (same method; the three-sheet pool reproduces 92.2% (89–95) exactly): sheets 5 and 6 (120 cards) right 95.3% (91–99), wrong 1.6% (0–4); sheets 3 to 6 (240 cards) right 93.0% (90–96), partly 4.7%, wrong 2.4% (1–4).
+
+**The changes.** Every one of the 11 lookups whose highlight changed since sheet 5 was judged right, including the five sentences the whole-sentence rule now highlights and the two phrases where the interior-gap rule moved the highlight; with 11 of 11 the claim is only that no error showed up (a true right rate below about 76% would give 11 of 11 less than one time in twenty). The 12 chapter-18 lines (6 Vietnamese, 6 English, drawn from 83 correspondences) were all judged right, so the verse/prose pairing held on its first human look; I did not check whether the three loose windows I had noted among the 83 were in the draw.
+
+**What was not right.** Three random cards, and the old code gave the same highlight on all three, so none comes from the new rules or the new data: `a6-r116` (phrase "live in comfort" highlights "đi" and "khổ" in chapter 20: wrong, the second word is the counterpart of "suffers"), `a6-r32` (the five-word phrase "Ngắm cành thoa mà ứa lệ" highlights only "hairpin" while the returned passage holds its whole counterpart "I gaze at the hairpin and my tears spill over,": wrong by the reviewer's call, I would have said partly) and `a6-r64` (word "bridle" highlights "hào kiệt" in chapter 11: partly). These are the kinds of error earlier sheets showed: a lone link standing for a phrase, and a word-level link the model got wrong.
+
+**Reading.** The headline is the highest of the four sheets and the new rules and data caused no wrong card, which is what the sheet was built to check. It is still not a proven gain over sheet 5: the intervals overlap, the draws differ, and the reviewer is one person who again finished quickly. The answered share of this audit was 97 of 120 (sheet 5: 100 of 120), a difference the random draw alone explains. Open: `a6-r32` shows a one-highlight phrase of five words that neither abstained nor widened to the passage; whether the interior-gap rule's `edgeMissing` count should have fired there was not examined.
 
 ## Rules
 
