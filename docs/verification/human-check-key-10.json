@@ -1,0 +1,446 @@
+{
+ "cards": {
+  "a10-audit5-22": {
+   "n": 1,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 4,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "perused"
+   ]
+  },
+  "a10-pool6-47": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 2,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "appointed hour"
+   ],
+   "B_text": []
+  },
+  "a10-audit6-17": {
+   "n": 3,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 3,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Khai Huu reign"
+   ],
+   "B_text": []
+  },
+  "a10-audit3-16": {
+   "n": 4,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 3,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "affair can no longer be hidden"
+   ]
+  },
+  "a10-audit5-50": {
+   "n": 5,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 9,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "buông rèm"
+   ],
+   "B_text": []
+  },
+  "a10-audit3-88": {
+   "n": 6,
+   "kind": "word",
+   "from": "en",
+   "chapter": 15,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "nhai nuốt"
+   ]
+  },
+  "a10-audit2-95": {
+   "n": 7,
+   "kind": "word",
+   "from": "en",
+   "chapter": 16,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "coi rẻ tính mệnh"
+   ],
+   "B_text": []
+  },
+  "a10-pool6-181": {
+   "n": 8,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 7,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "dedicatory proclamation"
+   ]
+  },
+  "a10-c-pool6-437": {
+   "n": 9,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 17,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "ngồi trong một buồng nhỏ"
+   ],
+   "B_text": [
+    "ngồi trong một buồng nhỏ"
+   ]
+  },
+  "a10-audit4-59": {
+   "n": 10,
+   "kind": "word",
+   "from": "en",
+   "chapter": 10,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "ghi ở Đế đình"
+   ]
+  },
+  "a10-c-audit5-21": {
+   "n": 11,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "thuở",
+    "tội nghiệt, oan oan nối tiếp, biết thuở"
+   ],
+   "B_text": [
+    "thuở",
+    "tội nghiệt, oan oan nối tiếp, biết thuở"
+   ]
+  },
+  "a10-pool6-206": {
+   "n": 12,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 8,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "warning"
+   ],
+   "B_text": []
+  },
+  "a10-audit5-95": {
+   "n": 13,
+   "kind": "word",
+   "from": "en",
+   "chapter": 16,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Sở mưa Yên tạnh"
+   ]
+  },
+  "a10-audit2-76": {
+   "n": 14,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 13,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "take passage on my boat"
+   ]
+  },
+  "a10-c-audit2-51": {
+   "n": 15,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 9,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "that case, you fall"
+   ],
+   "B_text": [
+    "that case, you fall"
+   ]
+  },
+  "a10-pool6-103": {
+   "n": 16,
+   "kind": "word",
+   "from": "en",
+   "chapter": 4,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Sinh"
+   ]
+  },
+  "a10-pool6-432": {
+   "n": 17,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 17,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "elder brother rested, the younger went in his place"
+   ]
+  },
+  "a10-pool6-360": {
+   "n": 18,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 14,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Ninefold Palace"
+   ],
+   "B_text": []
+  },
+  "a10-audit2-71": {
+   "n": 19,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 12,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "high rank and lofty titles"
+   ],
+   "B_text": []
+  },
+  "a10-audit2-82": {
+   "n": 20,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 14,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "gentlemen of old"
+   ]
+  },
+  "a10-audit3-56": {
+   "n": 21,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 10,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "hợm mình"
+   ],
+   "B_text": []
+  },
+  "a10-audit2-58": {
+   "n": 22,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 10,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "return home"
+   ],
+   "B_text": []
+  },
+  "a10-audit2-94": {
+   "n": 23,
+   "kind": "word",
+   "from": "en",
+   "chapter": 16,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "thuộc"
+   ]
+  },
+  "a10-audit5-71": {
+   "n": 24,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 12,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "fisherman"
+   ],
+   "B_text": []
+  },
+  "a10-audit2-80": {
+   "n": 25,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Vụ Quang, Quyên Tử"
+   ]
+  },
+  "a10-audit1-105": {
+   "n": 26,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 18,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "lập công"
+   ]
+  },
+  "a10-pool6-174": {
+   "n": 27,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 7,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "cảnh Phật"
+   ]
+  },
+  "a10-audit5-47": {
+   "n": 28,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 8,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Refuse to heed me"
+   ],
+   "B_text": []
+  },
+  "a10-pool6-463": {
+   "n": 29,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 18,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "hương lửa có duyên"
+   ],
+   "B_text": []
+  },
+  "a10-audit1-35": {
+   "n": 30,
+   "kind": "word",
+   "from": "en",
+   "chapter": 6,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "thoi thóp"
+   ],
+   "B_text": []
+  },
+  "a10-audit3-35": {
+   "n": 31,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 6,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "shrine to the water spirits"
+   ],
+   "B_text": []
+  }
+ }
+}
