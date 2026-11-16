@@ -753,7 +753,11 @@ Published with the alignment worker, all 20 chapters (`phr13` = `phr11` plus 7,0
 
 **Sheet 10** (31 cards, private Artifact, key `human-check-key-10.json`): 28 lookups outside chapters 11 and 20 that sheet 9 did not hold, whose old answer was "nothing highlighted" and which now answer, plus 3 identical controls. Score with `python scripts/align-novel/human_check_compare9.py RESULT.csv docs/verification/human-check-key-10.json` (the "blank-ans" rows). It tests the one claim that is now live: how often the new answer where there was none is right. Below about 85% right, roll back by re-publishing `phr11`.
 
-**Not done.** Replacing an existing answer for an English selection needs its own sheet with fresh cards before any rule is written for it. The labels are not audited.
+**Audit of the labels (by me, not independent).** `scripts/align-novel/audit_labels.py` over the 7,025 pairs: no pair with a one-word side against six or more words on the other; 57 pairs where a side is only function words (all deliberate pronoun or particle pairs: "nàng" = "she", "ta" = "we", "cũng" = "too"); 185 pairs whose source or target phrase occurs more than once in its group, where the mapper's first unused occurrence could be the wrong one; 29 pairs the mapper had to place out of reading order (0.4%). I read 45 of the 185 ambiguous ones with context and 70 pairs drawn at random from all chapters: no clear error, one loose pair ("dấu vết" = "record"). That bounds the error of what I can see at about 5% (0 of 70) and says nothing about errors I would repeat on reading it again; the independent figure is the human sheets.
+
+**Sheet 11** (23 cards, private Artifact, key `human-check-key-11.json`): 20 English selections outside chapters 11 and 20, none on sheet 9, where the published answer and the unrestricted-labels answer both exist and differ, plus 3 identical controls. It tests the one rule not yet written: replacing an existing answer when the selection is English (15 against 2 on sheets 8 and 9, found after the fact). Score the same way as sheet 10. If the new answer wins at least about 12 of 15 decisive cards, the rule is `locale==='en'` uses the labelled result when it exists.
+
+**Not done.** The rule above is not written until sheet 11 is back; sheet 10 is the live check of the published rule. Both wait for a person.
 
 ## Rules
 

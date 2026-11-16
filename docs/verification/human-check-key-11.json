@@ -1,0 +1,372 @@
+{
+ "cards": {
+  "a11-audit2-2": {
+   "n": 1,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 1,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "Hồ Tông Thốc"
+   ],
+   "B_text": [
+    "Quan Thừa chỉ Hồ Tông Thốc"
+   ]
+  },
+  "a11-pool6-97": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "viên chức kia dẫn về"
+   ],
+   "B_text": [
+    "chức kia dẫn"
+   ]
+  },
+  "a11-audit3-41": {
+   "n": 3,
+   "kind": "word",
+   "from": "en",
+   "chapter": 7,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "quấn quýt"
+   ],
+   "B_text": [
+    "nhau"
+   ]
+  },
+  "a11-c-audit3-14": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 3,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "hơn"
+   ],
+   "B_text": [
+    "hơn"
+   ]
+  },
+  "a11-pool6-361": {
+   "n": 5,
+   "kind": "word",
+   "from": "en",
+   "chapter": 14,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "trăng hoa"
+   ],
+   "B_text": [
+    "tuyết gió trăng hoa"
+   ]
+  },
+  "a11-pool6-42": {
+   "n": 6,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 2,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "đức của người xưa"
+   ],
+   "B_text": [
+    "ơn đức của người xưa"
+   ]
+  },
+  "a11-audit1-15": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 3,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "quát to lên"
+   ],
+   "B_text": [
+    "quát to"
+   ]
+  },
+  "a11-c-audit4-75": {
+   "n": 8,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "bị đòi"
+   ],
+   "B_text": [
+    "bị đòi"
+   ]
+  },
+  "a11-pool6-196": {
+   "n": 9,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 8,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "hàn sĩ"
+   ],
+   "B_text": [
+    "kẻ hàn sĩ"
+   ]
+  },
+  "a11-audit2-56": {
+   "n": 10,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 10,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "đương đời này"
+   ],
+   "B_text": [
+    "không ai bì kịp"
+   ]
+  },
+  "a11-audit2-27": {
+   "n": 11,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 5,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Nàng Liễu nói"
+   ],
+   "B_text": [
+    "Liễu nói"
+   ]
+  },
+  "a11-audit3-4": {
+   "n": 12,
+   "kind": "word",
+   "from": "en",
+   "chapter": 1,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "kẻ"
+   ],
+   "B_text": [
+    "răn sợ"
+   ]
+  },
+  "a11-pool6-102": {
+   "n": 13,
+   "kind": "word",
+   "from": "en",
+   "chapter": 4,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Đức công"
+   ],
+   "B_text": [
+    "công mừng"
+   ]
+  },
+  "a11-pool6-356": {
+   "n": 14,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "vua quan"
+   ],
+   "B_text": [
+    "vua quan nào"
+   ]
+  },
+  "a11-pool6-434": {
+   "n": 15,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 17,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "biến mất"
+   ],
+   "B_text": [
+    "biến mất không"
+   ]
+  },
+  "a11-audit5-75": {
+   "n": 16,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "trăng tỏ"
+   ],
+   "B_text": [
+    "trăng tỏ sao thưa"
+   ]
+  },
+  "a11-c-pool6-441": {
+   "n": 17,
+   "kind": "word",
+   "from": "en",
+   "chapter": 17,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "đồn lũy"
+   ],
+   "B_text": [
+    "đồn lũy"
+   ]
+  },
+  "a11-audit4-11": {
+   "n": 18,
+   "kind": "word",
+   "from": "en",
+   "chapter": 2,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "khóc"
+   ],
+   "B_text": [
+    "tiếng khóc nức nở"
+   ]
+  },
+  "a11-audit5-81": {
+   "n": 19,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "núi cao"
+   ],
+   "B_text": [
+    "ngọn núi cao chót vót"
+   ]
+  },
+  "a11-pool6-45": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 2,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Quan nhà không may, thất lộc đã bốn năm"
+   ],
+   "B_text": [
+    "thất lộc đã bốn"
+   ]
+  },
+  "a11-audit6-28": {
+   "n": 21,
+   "kind": "word",
+   "from": "en",
+   "chapter": 5,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "đèn"
+   ],
+   "B_text": [
+    "sách đèn"
+   ]
+  },
+  "a11-pool6-225": {
+   "n": 22,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 9,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "nứt toác ra"
+   ],
+   "B_text": [
+    "nứt toác"
+   ]
+  },
+  "a11-audit2-101": {
+   "n": 23,
+   "kind": "word",
+   "from": "en",
+   "chapter": 17,
+   "control": false,
+   "ptype": "ans-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [
+    "dùi"
+   ],
+   "B_text": [
+    "dây da"
+   ]
+  }
+ }
+}
