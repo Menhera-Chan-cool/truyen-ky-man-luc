@@ -660,6 +660,20 @@ Dev, tuned and blind sentence sets, lexical A and B, the probes (35 / 28 / 40) a
 
 **Limits.** One chapter of the book, so the rule has not met other kinds of verse and prose; the Chinese-style originals still have no counterpart (a selection in them is `unavailable` as before); a sentence the pairing leaves out falls back to the whole poem as context. No human has seen these lookups.
 
+## Sixth human check: the changes made after the fifth sheet (2026-11-16)
+
+**Why a different design.** The fifth sheet ran on source `0c8df52`. Since then three things changed answers: the interior-gap rule (`1e46e5c`), the whole-sentence counterpart (`166b27f`) and the chapter-18 verse/prose pairs (data `phr11`, source `322d9a4`). A random sample rarely lands on them, so the sheet has three strata in one shuffled list (82 cards; the strata are only in `docs/verification/human-check-key-6.json`, the reviewer sees none):
+
+| Stratum | Cards | How drawn |
+| --- | --- | --- |
+| `random` | 60 | A new seeded audit (20261129, 120 cases, no sentence shared with audits 1–5, current code on `phr11`): 97 lookups answered (26 words, 33 phrases, 38 sentences); 20 per kind drawn with seed 20261132. Scored exactly like sheets 3–5 (kind rates weighted by the answered counts, bootstrap interval), so it is comparable. |
+| `changed` | 11 | Every lookup whose highlight differs between the sheet-5 code on `phr10` and the current code on `phr11`, found over the 120-case audit and a 520-case pool (seed 20261130, 12 sentences, 10 phrases, 4 words per chapter): 3 + 8 cases: 9 gained a highlight from empty (5 sentences, 4 phrases) and 2 phrases moved it (one is "chi trời dùng đức chứ" → "Huống chi trời dùng đức chứ"); none lost one. One of them was also drawn at random. Counted, not extrapolated. |
+| `verse` | 12 | 12 distinct line correspondences of the three new chapter-18 pairs (seed 20261131), 6 Vietnamese lines and 6 English sentences selected whole; all 12 were `unavailable` before and are `uncertain` with a highlight now. Counted, not extrapolated. |
+
+Page: https://claude.ai/artifact/7noDPspNRifz5qBnrtescw (private; answers in its `answers` collection, keys `a6-r<id>` random/audit, `a6-p<id>` pool, `a6-v<id>` verse). Template `docs/verification/human-check-artifact-template-6.html`; the cases with the old and new output are in `docs/verification/audit-120f-2026-11-16.json`. Score a returned CSV with `python scripts/align-novel/human_check_compare6.py ANSWERS.csv` (prints the three strata, the cards not judged right, and the weighted estimate of the random one; tested on a made-up CSV only, no real answer exists yet). The reference figures are the third, fourth and fifth sheets (92.0%, 89.2%, 95.2% right; pooled 92.2% over 180 cards).
+
+**What it can and cannot show.** Eleven changed cards cannot give a rate, only whether any of them is wrong, which is what the change rules need to hold: the sentence rule added `uncertain` highlights, and an over-wide one (two such cases existed in audits 4 and 1) would show here as "partly". The random part checks that the whole product, with the new rules and data, still holds the earlier level; 60 cards give an interval of about ±8 points. Nothing here is a human verdict until the sheet is returned.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

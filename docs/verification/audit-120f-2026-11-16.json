@@ -1,0 +1,4531 @@
+{
+"what": "Sixth check (2026-11-16), drawn after the interior-gap rule, the whole-sentence counterpart and the chapter-18 verse/prose pairs (source 322d9a4, data phr11). `audit` = the seeded random sample (seed 20261129, 120 cases, no sentence shared with audits 1-5) with output of the sheet-5 code on data phr10 (`old`) and of the current code on phr11 (`new`); `pool` = only the cases of a 520-case pool (seed 20261130) whose highlight changed; `verse` = 12 lookups of the new chapter-18 pairs (seed 20261131). Strata and cards: human-check-key-6.json; the random stratum is 20 answered lookups per kind, drawn with seed 20261132. Not labelled by Claude.",
+"audit": [
+{
+"chapter": 1,
+"locale": "en",
+"kind": "sentence",
+"start": 5993,
+"end": 6081,
+"sentence": [
+5993,
+6081
+],
+"id": 0,
+"text": "The execution of Song Yi (26), a mighty general, showed an utter contempt for superiors!",
+"sentenceText": "The execution of Song Yi (26), a mighty general, showed an utter contempt for superiors!",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4480,
+"end": 4514,
+"text": "Chém Tống Nghĩa là một tướng mạnh,"
+},
+{
+"start": 4520,
+"end": 4536,
+"text": "vô quân đến đâu!"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4480,
+"end": 4514,
+"text": "Chém Tống Nghĩa là một tướng mạnh,"
+},
+{
+"start": 4520,
+"end": 4536,
+"text": "vô quân đến đâu!"
+}
+]
+}
+},
+{
+"chapter": 1,
+"locale": "vi",
+"kind": "sentence",
+"start": 3945,
+"end": 4137,
+"sentence": [
+3945,
+4137
+],
+"id": 1,
+"text": "Bảo mệnh ở trời, (24) Thương Trụ vì thế mà mất nước; bảo trời sinh đức, Tân Mãng vì thế mà bỏ mình. (25) Nay nhà vua bỏ việc người mà đi bàn lẽ giời, vì thế đã đến táng bại vẫn không tỉnh ngộ.",
+"sentenceText": "Bảo mệnh ở trời, (24) Thương Trụ vì thế mà mất nước; bảo trời sinh đức, Tân Mãng vì thế mà bỏ mình. (25) Nay nhà vua bỏ việc người mà đi bàn lẽ giời, vì thế đã đến táng bại vẫn không tỉnh ngộ.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5241,
+"end": 5511,
+"text": "Relying on Heaven for preservation, King Zhou of Shang (24) lost his state; trusting in Heaven's granted virtue, Wang Mang (25) met his doom. Yet Your Majesty casts aside human effort to debate the will of Heaven, and thus, even unto ruin and defeat, remains unawakened."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5241,
+"end": 5511,
+"text": "Relying on Heaven for preservation, King Zhou of Shang (24) lost his state; trusting in Heaven's granted virtue, Wang Mang (25) met his doom. Yet Your Majesty casts aside human effort to debate the will of Heaven, and thus, even unto ruin and defeat, remains unawakened."
+}
+]
+}
+},
+{
+"chapter": 1,
+"locale": "en",
+"kind": "phrase",
+"start": 12454,
+"end": 12468,
+"sentence": [
+12454,
+12555
+],
+"id": 2,
+"text": "Soon afterward",
+"sentenceText": "Soon afterward, as the night watch faded and the tea grew cold, Ho rose to take his leave and depart.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8887,
+"end": 8911,
+"text": "Rồi đó canh tàn trà cạn,"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8887,
+"end": 8911,
+"text": "Rồi đó canh tàn trà cạn,"
+}
+]
+}
+},
+{
+"chapter": 1,
+"locale": "vi",
+"kind": "phrase",
+"start": 4537,
+"end": 4565,
+"sentence": [
+4537,
+4587
+],
+"id": 3,
+"text": "Giết Tử Anh là người đã hàng",
+"sentenceText": "Giết Tử Anh là người đã hàng, (27) bất võ quá lắm!",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 1,
+"locale": "en",
+"kind": "word",
+"start": 12705,
+"end": 12712,
+"sentence": [
+12660,
+12737
+],
+"id": 4,
+"text": "realize",
+"sentenceText": "He shook his garments and sprang up, only to realize it had all been a dream.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 1,
+"locale": "vi",
+"kind": "word",
+"start": 757,
+"end": 764,
+"sentence": [
+731,
+765
+],
+"id": 5,
+"text": "nhà trọ",
+"sentenceText": "Đề xong, ruổi ngựa trở về nhà trọ.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 821,
+"end": 828,
+"text": "the inn"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 821,
+"end": 828,
+"text": "the inn"
+}
+]
+}
+},
+{
+"chapter": 2,
+"locale": "vi",
+"kind": "sentence",
+"start": 0,
+"end": 145,
+"sentence": [
+0,
+145
+],
+"id": 6,
+"text": "Từ Đạt ở Khoái Châu, (1) lên làm quan tại thành Đông Quan (2) thuê nhà ở cạnh cầu Đồng Xuân, láng giềng với nhà quan Thiêm thư là Phùng Lập Ngôn.",
+"sentenceText": "Từ Đạt ở Khoái Châu, (1) lên làm quan tại thành Đông Quan (2) thuê nhà ở cạnh cầu Đồng Xuân, láng giềng với nhà quan Thiêm thư là Phùng Lập Ngôn.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 0,
+"end": 214,
+"text": "Tu Dat, a man of Khoai Chau(1), took up office in the citadel of Dong Quan(2). He rented a house beside the Dong Xuan Bridge, next door to the household of Phung Lap Ngoan, who held the post of assistant secretary."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 0,
+"end": 214,
+"text": "Tu Dat, a man of Khoai Chau(1), took up office in the citadel of Dong Quan(2). He rented a house beside the Dong Xuan Bridge, next door to the household of Phung Lap Ngoan, who held the post of assistant secretary."
+}
+]
+}
+},
+{
+"chapter": 2,
+"locale": "en",
+"kind": "sentence",
+"start": 6212,
+"end": 6317,
+"sentence": [
+6212,
+6317
+],
+"id": 7,
+"text": "The young man led him back to his lodgings, where the servant saw only a sagging bed and four bare walls.",
+"sentenceText": "The young man led him back to his lodgings, where the servant saw only a sagging bed and four bare walls.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3998,
+"end": 4066,
+"text": "Sinh đưa về chỗ ở thì thấy một chiếc giường xiêu, bốn bề vách trống,"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3998,
+"end": 4066,
+"text": "Sinh đưa về chỗ ở thì thấy một chiếc giường xiêu, bốn bề vách trống,"
+}
+]
+}
+},
+{
+"chapter": 2,
+"locale": "en",
+"kind": "phrase",
+"start": 15937,
+"end": 15963,
+"sentence": [
+15926,
+16013
+],
+"id": 8,
+"text": "talk turned to the affairs",
+"sentenceText": "When their talk turned to the affairs of the present age, Nhi Khanh knitted her brows.\"",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11269,
+"end": 11281,
+"text": "nói đến việc"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11269,
+"end": 11281,
+"text": "nói đến việc"
+}
+]
+}
+},
+{
+"chapter": 2,
+"locale": "vi",
+"kind": "phrase",
+"start": 8463,
+"end": 8478,
+"sentence": [
+8450,
+8491
+],
+"id": 9,
+"text": "nghĩ thương các",
+"sentenceText": "Nhưng mẹ chỉ nghĩ thương các con mà thôi.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11424,
+"end": 11429,
+"text": "aches"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11424,
+"end": 11429,
+"text": "aches"
+}
+]
+}
+},
+{
+"chapter": 2,
+"locale": "en",
+"kind": "word",
+"start": 17331,
+"end": 17340,
+"sentence": [
+17282,
+17380
+],
+"id": 10,
+"text": "obedience",
+"sentenceText": "When the ancients spoke of obedience, they meant obedience to righteousness, not to wanton desire.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 2,
+"locale": "vi",
+"kind": "word",
+"start": 10067,
+"end": 10071,
+"sentence": [
+10067,
+10154
+],
+"id": 11,
+"text": "Sinh",
+"sentenceText": "Sinh tuy rất lấy làm ngờ nhưng cũng muốn thử xem ra sao, bèn đúng hẹn đến trước đền ấy.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 3,
+"locale": "en",
+"kind": "sentence",
+"start": 13207,
+"end": 13262,
+"sentence": [
+13207,
+13262
+],
+"id": 12,
+"text": "After a time the wind died down and the clouds cleared.",
+"sentenceText": "After a time the wind died down and the clouds cleared.",
+"old": {
+"status": "match",
+"highlights": [
+{
+"start": 9950,
+"end": 9982,
+"text": "Sau một hồi, gió lặng mây quang,"
+}
+]
+},
+"new": {
+"status": "match",
+"highlights": [
+{
+"start": 9950,
+"end": 9982,
+"text": "Sau một hồi, gió lặng mây quang,"
+}
+]
+}
+},
+{
+"chapter": 3,
+"locale": "en",
+"kind": "sentence",
+"start": 12223,
+"end": 12282,
+"sentence": [
+12223,
+12282
+],
+"id": 13,
+"text": "They have dwelt in the silk-cotton tree for some years now.",
+"sentenceText": "They have dwelt in the silk-cotton tree for some years now.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9209,
+"end": 9253,
+"text": "chúng đến ở nay trên cây gạo đã mấy năm nay;"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9209,
+"end": 9253,
+"text": "chúng đến ở nay trên cây gạo đã mấy năm nay;"
+}
+]
+}
+},
+{
+"chapter": 3,
+"locale": "vi",
+"kind": "phrase",
+"start": 3902,
+"end": 3911,
+"sentence": [
+3902,
+3980
+],
+"id": 14,
+"text": "Trình vốn",
+"sentenceText": "Trình vốn là lái buôn, biết ít chữ nghĩa nên nàng giải nghĩa rõ ràng cho hiểu.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5065,
+"end": 5074,
+"text": "Trinh was"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5065,
+"end": 5074,
+"text": "Trinh was"
+}
+]
+}
+},
+{
+"chapter": 3,
+"locale": "vi",
+"kind": "phrase",
+"start": 7786,
+"end": 7801,
+"sentence": [
+7551,
+7802
+],
+"id": 15,
+"text": "buộc ta thế này",
+"sentenceText": "Người trong thuyền phải lấy dây thừng trói lại thì chàng mắng:- Chỗ vợ ta ở có lâu đài lộng lẫy, có hương hoa ngạt ngào, ta phải đi theo chứ không thể luẩn quẩn trong chốn bụi hồng này được; can dự gì đến các người mà dám đem dây trói buộc ta thế này.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10383,
+"end": 10395,
+"text": "bind me thus"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10383,
+"end": 10395,
+"text": "bind me thus"
+}
+]
+}
+},
+{
+"chapter": 3,
+"locale": "en",
+"kind": "word",
+"start": 12188,
+"end": 12198,
+"sentence": [
+12156,
+12204
+],
+"id": 16,
+"text": "understand",
+"sentenceText": "The old man replied:\"You do not understand, sir.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9182,
+"end": 9186,
+"text": "biết"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9182,
+"end": 9186,
+"text": "biết"
+}
+]
+}
+},
+{
+"chapter": 3,
+"locale": "vi",
+"kind": "word",
+"start": 8631,
+"end": 8640,
+"sentence": [
+8605,
+8713
+],
+"id": 17,
+"text": "niên hiệu",
+"sentenceText": "Trong năm Canh Ngọ (1330) niên hiệu Khai Hựu nhà Trần, có vị đạo nhân một đêm vào nằm ngủ trong cái chùa ấy.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 4,
+"locale": "vi",
+"kind": "sentence",
+"start": 1365,
+"end": 1461,
+"sentence": [
+1365,
+1461
+],
+"id": 18,
+"text": "Nên mau về đi mà cố gắng làm thêm điều âm đức, đừng bảo là trên cõi minh minh không biết gì đến.",
+"sentenceText": "Nên mau về đi mà cố gắng làm thêm điều âm đức, đừng bảo là trên cõi minh minh không biết gì đến.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1843,
+"end": 1966,
+"text": "Return now with all haste, and labor all the harder at hidden virtue. Never suppose that the unseen heavens take no notice."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1843,
+"end": 1966,
+"text": "Return now with all haste, and labor all the harder at hidden virtue. Never suppose that the unseen heavens take no notice."
+}
+]
+}
+},
+{
+"chapter": 4,
+"locale": "vi",
+"kind": "sentence",
+"start": 6415,
+"end": 6639,
+"sentence": [
+6415,
+6639
+],
+"id": 19,
+"text": "Ngồi chơi xong, đạo nhân nói:\n- Tướng công ngày nay quan ngồi miếu điện, đất dựng lâu dài, đi có lính dẹp đường, ở có chuông giữ gác, (11) phú quý ở nhân gian đã đến cùng cực, không còn nhớ gì đến thú vui ở chốn Tử Vi xưa ư?",
+"sentenceText": "Ngồi chơi xong, đạo nhân nói:\n- Tướng công ngày nay quan ngồi miếu điện, đất dựng lâu dài, đi có lính dẹp đường, ở có chuông giữ gác, (11) phú quý ở nhân gian đã đến cùng cực, không còn nhớ gì đến thú vui ở chốn Tử Vi xưa ư?",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8703,
+"end": 8758,
+"text": "After they had sat and talked a while, the Taoist said:"
+},
+{
+"start": 8759,
+"end": 9087,
+"text": "Today Your Excellency sits among the highest in the court. Your mansions stand on vast estates, outriders clear the road before you, and bells keep watch at your gates (11). You have reached the very height of wealth and honor in the mortal world. Do you remember nothing of the joys you once knew in the Purple Subtlety Palace?"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8703,
+"end": 8758,
+"text": "After they had sat and talked a while, the Taoist said:"
+},
+{
+"start": 8759,
+"end": 9087,
+"text": "Today Your Excellency sits among the highest in the court. Your mansions stand on vast estates, outriders clear the road before you, and bells keep watch at your gates (11). You have reached the very height of wealth and honor in the mortal world. Do you remember nothing of the joys you once knew in the Purple Subtlety Palace?"
+}
+]
+}
+},
+{
+"chapter": 4,
+"locale": "en",
+"kind": "phrase",
+"start": 8832,
+"end": 8845,
+"sentence": [
+8818,
+8932
+],
+"id": 20,
+"text": "stand on vast",
+"sentenceText": "Your mansions stand on vast estates, outriders clear the road before you, and bells keep watch at your gates (11).",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6492,
+"end": 6504,
+"text": "dựng lâu dài"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6492,
+"end": 6504,
+"text": "dựng lâu dài"
+}
+]
+}
+},
+{
+"chapter": 4,
+"locale": "vi",
+"kind": "phrase",
+"start": 10245,
+"end": 10269,
+"sentence": [
+10220,
+10270
+],
+"id": 21,
+"text": "Hà tất như thế để làm gì",
+"sentenceText": "Đạo nhân cười mà rằng:\n- Hà tất như thế để làm gì!",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 14441,
+"end": 14464,
+"text": "Why go to such lengths?"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 14441,
+"end": 14464,
+"text": "Why go to such lengths?"
+}
+]
+}
+},
+{
+"chapter": 4,
+"locale": "en",
+"kind": "word",
+"start": 5150,
+"end": 5155,
+"sentence": [
+5100,
+5184
+],
+"id": 22,
+"text": "truly",
+"sentenceText": "The young scholar Duong, who lodges next door, is truly a hero of the Southern Land.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3820,
+"end": 3824,
+"text": "thật"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3820,
+"end": 3824,
+"text": "thật"
+}
+]
+}
+},
+{
+"chapter": 4,
+"locale": "en",
+"kind": "word",
+"start": 5761,
+"end": 5766,
+"sentence": [
+5727,
+5782
+],
+"id": 23,
+"text": "asked",
+"sentenceText": "Once, catching him thus, his wife asked him the reason.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4279,
+"end": 4282,
+"text": "hỏi"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4279,
+"end": 4282,
+"text": "hỏi"
+}
+]
+}
+},
+{
+"chapter": 5,
+"locale": "vi",
+"kind": "sentence",
+"start": 11025,
+"end": 11118,
+"sentence": [
+11025,
+11118
+],
+"id": 24,
+"text": "Rồi đây cánh rã trong bùn, hương rơi mặt đất, ba xuân cảnh sắc, thú vui biết sẽ thuộc về đâu.",
+"sentenceText": "Rồi đây cánh rã trong bùn, hương rơi mặt đất, ba xuân cảnh sắc, thú vui biết sẽ thuộc về đâu.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 13820,
+"end": 14007,
+"text": "Soon our petals will sink into the mire and our fragrance fall to the earth. When the three months of spring have run their course, who can say where all their beauty and delight will go?"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 13820,
+"end": 14007,
+"text": "Soon our petals will sink into the mire and our fragrance fall to the earth. When the three months of spring have run their course, who can say where all their beauty and delight will go?"
+}
+]
+}
+},
+{
+"chapter": 5,
+"locale": "vi",
+"kind": "sentence",
+"start": 5391,
+"end": 5516,
+"sentence": [
+5391,
+5516
+],
+"id": 25,
+"text": "Vả ngôi chủ phụ trong nhà, tất phải là người trong nền nếp trâm anh như Tống Tử, Tề Khương(7), chúng em đâu dám chòi mòi đến.",
+"sentenceText": "Vả ngôi chủ phụ trong nhà, tất phải là người trong nền nếp trâm anh như Tống Tử, Tề Khương(7), chúng em đâu dám chòi mòi đến.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7120,
+"end": 7280,
+"text": "Besides, the place of mistress in your house must go to a lady of noble lineage, a Zi of Song or a Jiang of Qi (7), and we would never presume to reach so high."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7120,
+"end": 7280,
+"text": "Besides, the place of mistress in your house must go to a lady of noble lineage, a Zi of Song or a Jiang of Qi (7), and we would never presume to reach so high."
+}
+]
+}
+},
+{
+"chapter": 5,
+"locale": "en",
+"kind": "phrase",
+"start": 7398,
+"end": 7406,
+"sentence": [
+7381,
+7490
+],
+"id": 26,
+"text": "soon put",
+"sentenceText": "We hope you will soon put aside your longing for your native soil and set out once more in search of flowers.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5581,
+"end": 5593,
+"text": "sớm dẹp lòng"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5581,
+"end": 5593,
+"text": "sớm dẹp lòng"
+}
+]
+}
+},
+{
+"chapter": 5,
+"locale": "vi",
+"kind": "phrase",
+"start": 15593,
+"end": 15606,
+"sentence": [
+15470,
+15611
+],
+"id": 27,
+"text": "càng bội tăng",
+"sentenceText": "Đêm hôm ấy chàng chiêm bao thấy hai nàng đến tạ rằng:- Đội ơn lang quân làm bài văn tế viếng, khiến cho thanh giá chúng em càng bội tăng lên.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 19469,
+"end": 19475,
+"text": "raised"
+},
+{
+"start": 19490,
+"end": 19494,
+"text": "many"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 19469,
+"end": 19475,
+"text": "raised"
+},
+{
+"start": 19490,
+"end": 19494,
+"text": "many"
+}
+]
+}
+},
+{
+"chapter": 5,
+"locale": "en",
+"kind": "word",
+"start": 11792,
+"end": 11799,
+"sentence": [
+11697,
+11808
+],
+"id": 28,
+"text": "lamplit",
+"sentenceText": "If I take a wife now, I fear I will fall into the pleasures of the marriage bed and neglect my lamplit studies.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9731,
+"end": 9734,
+"text": "đèn"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9731,
+"end": 9734,
+"text": "đèn"
+}
+]
+}
+},
+{
+"chapter": 5,
+"locale": "en",
+"kind": "word",
+"start": 908,
+"end": 913,
+"sentence": [
+871,
+914
+],
+"id": 29,
+"text": "Tutor",
+"sentenceText": "We were once concubines of the Grand Tutor.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 657,
+"end": 664,
+"text": "Thái sư"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 657,
+"end": 664,
+"text": "Thái sư"
+}
+]
+}
+},
+{
+"chapter": 6,
+"locale": "en",
+"kind": "sentence",
+"start": 690,
+"end": 756,
+"sentence": [
+690,
+756
+],
+"id": 30,
+"text": "Suddenly two young women appeared, carrying a small gilded casket.",
+"sentenceText": "Suddenly two young women appeared, carrying a small gilded casket.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 424,
+"end": 482,
+"text": "Bỗng có hai người con gái, bưng một cái hộp nhỏ thếp vàng,"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 424,
+"end": 482,
+"text": "Bỗng có hai người con gái, bưng một cái hộp nhỏ thếp vàng,"
+}
+]
+}
+},
+{
+"chapter": 6,
+"locale": "en",
+"kind": "sentence",
+"start": 9124,
+"end": 9310,
+"sentence": [
+9124,
+9310
+],
+"id": 31,
+"text": "For your sake, my lady, he can neither eat nor sleep, and so he has sent this humble handmaid across the distance to carry his love to you and repay the old debt of longing between you.\"",
+"sentenceText": "For your sake, my lady, he can neither eat nor sleep, and so he has sent this humble handmaid across the distance to carry his love to you and repay the old debt of longing between you.\"",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 6,
+"locale": "vi",
+"kind": "phrase",
+"start": 7719,
+"end": 7742,
+"sentence": [
+7719,
+7774
+],
+"id": 32,
+"text": "Ngắm cành thoa mà ứa lệ",
+"sentenceText": "Ngắm cành thoa mà ứa lệ, nhìn khách đến những đau lòng.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10994,
+"end": 11001,
+"text": "hairpin"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10994,
+"end": 11001,
+"text": "hairpin"
+}
+]
+}
+},
+{
+"chapter": 6,
+"locale": "vi",
+"kind": "phrase",
+"start": 3307,
+"end": 3322,
+"sentence": [
+3285,
+3350
+],
+"id": 33,
+"text": "Thế ra ông định",
+"sentenceText": "Ông già cả cười nói:- Thế ra ông định dò tìm tung tích của tôi ư?",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4503,
+"end": 4516,
+"text": "So you sought"
+}
+]
+}
+},
+{
+"chapter": 6,
+"locale": "vi",
+"kind": "word",
+"start": 11161,
+"end": 11169,
+"sentence": [
+11153,
+11189
+],
+"id": 34,
+"text": "phê phán",
+"sentenceText": "Mấy lời phê phán, lập tức thi hành\".",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 6,
+"locale": "en",
+"kind": "word",
+"start": 17514,
+"end": 17521,
+"sentence": [
+17489,
+17584
+],
+"id": 35,
+"text": "fingers",
+"sentenceText": "Counting the days on his fingers, Trinh found that it was the very day he had brought his suit.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 7,
+"locale": "vi",
+"kind": "sentence",
+"start": 12295,
+"end": 12416,
+"sentence": [
+12295,
+12416
+],
+"id": 36,
+"text": "Ngày hôm sau, nói vờ là có chút việc, từ nhà ra đi, dò thăm khắp chốn danh lam, tìm hỏi vị sư cụ có tên hiệu là Pháp Vân.",
+"sentenceText": "Ngày hôm sau, nói vờ là có chút việc, từ nhà ra đi, dò thăm khắp chốn danh lam, tìm hỏi vị sư cụ có tên hiệu là Pháp Vân.",
+"old": {
+"status": "match",
+"highlights": [
+{
+"start": 15721,
+"end": 15907,
+"text": "The next day, claiming he had some small business to attend to, he left home and went searching through every famous temple and monastery, asking after a venerable master named Phap Van."
+}
+]
+},
+"new": {
+"status": "match",
+"highlights": [
+{
+"start": 15721,
+"end": 15907,
+"text": "The next day, claiming he had some small business to attend to, he left home and went searching through every famous temple and monastery, asking after a venerable master named Phap Van."
+}
+]
+}
+},
+{
+"chapter": 7,
+"locale": "en",
+"kind": "sentence",
+"start": 15908,
+"end": 16103,
+"sentence": [
+15908,
+16103
+],
+"id": 37,
+"text": "After more than a month he came upon a temple at Le Ky, where a young acolyte told him that as a child he had heard that name, but the old master had long since withdrawn into the deep mountains.",
+"sentenceText": "After more than a month he came upon a temple at Le Ky, where a young acolyte told him that as a child he had heard that name, but the old master had long since withdrawn into the deep mountains.",
+"old": {
+"status": "match",
+"highlights": [
+{
+"start": 12417,
+"end": 12550,
+"text": "Trải hơn một tháng đến tìm chùa ở Lệ Kỳ, thấy gã tiểu đồng nói hồi nhỏ có nghe tên hiệu ấy nhưng sư cụ đã dời vào núi sâu từ lâu rồi."
+}
+]
+},
+"new": {
+"status": "match",
+"highlights": [
+{
+"start": 12417,
+"end": 12550,
+"text": "Trải hơn một tháng đến tìm chùa ở Lệ Kỳ, thấy gã tiểu đồng nói hồi nhỏ có nghe tên hiệu ấy nhưng sư cụ đã dời vào núi sâu từ lâu rồi."
+}
+]
+}
+},
+{
+"chapter": 7,
+"locale": "vi",
+"kind": "phrase",
+"start": 3836,
+"end": 3852,
+"sentence": [
+3698,
+3853
+],
+"id": 38,
+"text": "chùa xin bái yết",
+"sentenceText": "Nghe chùa Lệ Kỳ (15) ở hạt Hải Dương là một nơi nước tú non kỳ, phong cảnh tuyệt đẹp, trụ trì có sư già Pháp Vân và sư bác Vô Kỷ, bèn đến chùa xin bái yết.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4601,
+"end": 4627,
+"text": "temple to pay her respects"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4601,
+"end": 4627,
+"text": "temple to pay her respects"
+}
+]
+}
+},
+{
+"chapter": 7,
+"locale": "en",
+"kind": "phrase",
+"start": 1913,
+"end": 1944,
+"sentence": [
+1766,
+1952
+],
+"id": 39,
+"text": "write a dedicatory proclamation",
+"sentenceText": "She built a hermitage, which she named the Cu Tinh Hermitage, and invited men of letters of the district to gather there, hoping one of them would write a dedicatory proclamation for it.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 7,
+"locale": "vi",
+"kind": "word",
+"start": 10155,
+"end": 10158,
+"sentence": [
+10057,
+10159
+],
+"id": 40,
+"text": "quý",
+"sentenceText": "Hai đứa trẻ ấy mới đầy một tuổi đã biết nói, lên tám tuổi đã biết làm văn, được cha mẹ rất là yêu quý.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 12799,
+"end": 12805,
+"text": "dearly"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 12799,
+"end": 12805,
+"text": "dearly"
+}
+]
+}
+},
+{
+"chapter": 7,
+"locale": "en",
+"kind": "word",
+"start": 18692,
+"end": 18701,
+"sentence": [
+18649,
+18728
+],
+"id": 41,
+"text": "household",
+"sentenceText": "When Nhuoc Chan reached home, he found his household huddled together, weeping.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 14256,
+"end": 14265,
+"text": "người nhà"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 14256,
+"end": 14265,
+"text": "người nhà"
+}
+]
+}
+},
+{
+"chapter": 8,
+"locale": "vi",
+"kind": "sentence",
+"start": 6782,
+"end": 6830,
+"sentence": [
+6782,
+6830
+],
+"id": 42,
+"text": "Người làng bèn mua gỗ, lại dựng một tòa đền mới.",
+"sentenceText": "Người làng bèn mua gỗ, lại dựng một tòa đền mới.",
+"old": {
+"status": "match",
+"highlights": [
+{
+"start": 9722,
+"end": 9776,
+"text": "So the villagers bought timber and built a new shrine."
+}
+]
+},
+"new": {
+"status": "match",
+"highlights": [
+{
+"start": 9722,
+"end": 9776,
+"text": "So the villagers bought timber and built a new shrine."
+}
+]
+}
+},
+{
+"chapter": 8,
+"locale": "en",
+"kind": "sentence",
+"start": 6992,
+"end": 7092,
+"sentence": [
+6992,
+7092
+],
+"id": 43,
+"text": "Tu Van then laid out the whole affair from beginning to end, just as the old man had told it to him.",
+"sentenceText": "Tu Van then laid out the whole affair from beginning to end, just as the old man had told it to him.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4864,
+"end": 4920,
+"text": "Tử Văn bèn tâu trình đầu đuôi như lời ông cụ già đã nói,"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4864,
+"end": 4920,
+"text": "Tử Văn bèn tâu trình đầu đuôi như lời ông cụ già đã nói,"
+}
+]
+}
+},
+{
+"chapter": 8,
+"locale": "en",
+"kind": "phrase",
+"start": 7532,
+"end": 7557,
+"sentence": [
+7423,
+7558
+],
+"id": 44,
+"text": "stir in King Yama's heart",
+"sentenceText": "The two of them argued on and on, and still neither right nor wrong could be settled, yet doubt had begun to stir in King Yama's heart.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5222,
+"end": 5244,
+"text": "Diêm Vương vì thế bụng"
+},
+{
+"start": 5250,
+"end": 5254,
+"text": "sinh"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5222,
+"end": 5244,
+"text": "Diêm Vương vì thế bụng"
+},
+{
+"start": 5250,
+"end": 5254,
+"text": "sinh"
+}
+]
+}
+},
+{
+"chapter": 8,
+"locale": "vi",
+"kind": "phrase",
+"start": 275,
+"end": 283,
+"sentence": [
+250,
+325
+],
+"id": 45,
+"text": "sang lấn",
+"sentenceText": "Cuối đời họ Hồ, quân Ngô sang lấn cướp, vùng ấy thành một nơi chiến trường.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 401,
+"end": 415,
+"text": "invaders swept"
+},
+{
+"start": 434,
+"end": 438,
+"text": "land"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 401,
+"end": 415,
+"text": "invaders swept"
+},
+{
+"start": 434,
+"end": 438,
+"text": "land"
+}
+]
+}
+},
+{
+"chapter": 8,
+"locale": "en",
+"kind": "word",
+"start": 3253,
+"end": 3258,
+"sentence": [
+3182,
+3306
+],
+"id": 46,
+"text": "reign",
+"sentenceText": "Allow me, sir, to recount the whole tale from beginning to end:\"In the reign of Emperor Ly Nam De, I served as Grand Censor.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 2248,
+"end": 2251,
+"text": "vua"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 2248,
+"end": 2251,
+"text": "vua"
+}
+]
+}
+},
+{
+"chapter": 8,
+"locale": "vi",
+"kind": "word",
+"start": 5404,
+"end": 5407,
+"sentence": [
+5261,
+5416
+],
+"id": 47,
+"text": "tội",
+"sentenceText": "Tử Văn nói:\n- Nếu nhà vua không tin lời tôi, xin đem giấy đến đền Tản Viên để hỏi hư thực; không có sự thực như thế, tôi lại xin chịu thêm cái tội nói càn.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7765,
+"end": 7771,
+"text": "charge"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7765,
+"end": 7771,
+"text": "charge"
+}
+]
+}
+},
+{
+"chapter": 9,
+"locale": "en",
+"kind": "sentence",
+"start": 9111,
+"end": 9237,
+"sentence": [
+9111,
+9237
+],
+"id": 48,
+"text": "Only the one in blue robes looked sad and joyless, and she said:\"Our younger sister's marriage is a fine and happy one, truly.",
+"sentenceText": "Only the one in blue robes looked sad and joyless, and she said:\"Our younger sister's marriage is a fine and happy one, truly.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6531,
+"end": 6584,
+"text": "duy người mặc áo xanh buồn rầu không vui mà nói rằng:"
+},
+{
+"start": 6586,
+"end": 6632,
+"text": "Mối duyên của cô em đây, thật cũng là tốt đẹp."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6531,
+"end": 6584,
+"text": "duy người mặc áo xanh buồn rầu không vui mà nói rằng:"
+},
+{
+"start": 6586,
+"end": 6632,
+"text": "Mối duyên của cô em đây, thật cũng là tốt đẹp."
+}
+]
+}
+},
+{
+"chapter": 9,
+"locale": "vi",
+"kind": "sentence",
+"start": 6633,
+"end": 6802,
+"sentence": [
+6633,
+6802
+],
+"id": 49,
+"text": "Song nghĩ cái giá băng ngọc ở trên mây, mà đi kết mối tóc tơ ở cõi thế, vạn nhất tiếng tăm vỡ lở, thiên hạ chê cười, quần tiên chúng ta e không khỏi mang tiếng lây được.",
+"sentenceText": "Song nghĩ cái giá băng ngọc ở trên mây, mà đi kết mối tóc tơ ở cõi thế, vạn nhất tiếng tăm vỡ lở, thiên hạ chê cười, quần tiên chúng ta e không khỏi mang tiếng lây được.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9238,
+"end": 9481,
+"text": "Yet consider it: one of ice-and-jade purity from the realm above the clouds has tied the silken knot with someone of the mortal world. If word of it ever spreads and the world laughs at us, I fear none of us immortals will escape the disgrace."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9238,
+"end": 9481,
+"text": "Yet consider it: one of ice-and-jade purity from the realm above the clouds has tied the silken knot with someone of the mortal world. If word of it ever spreads and the world laughs at us, I fear none of us immortals will escape the disgrace."
+}
+]
+}
+},
+{
+"chapter": 9,
+"locale": "en",
+"kind": "phrase",
+"start": 11652,
+"end": 11682,
+"sentence": [
+11636,
+11683
+],
+"id": 50,
+"text": "hearts run clear of themselves",
+"sentenceText": "Unsifted, their hearts run clear of themselves.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8403,
+"end": 8410,
+"text": "lòng tự"
+},
+{
+"start": 8605,
+"end": 8613,
+"text": "một mình"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8403,
+"end": 8410,
+"text": "lòng tự"
+},
+{
+"start": 8605,
+"end": 8613,
+"text": "một mình"
+}
+]
+}
+},
+{
+"chapter": 9,
+"locale": "vi",
+"kind": "phrase",
+"start": 12472,
+"end": 12505,
+"sentence": [
+12371,
+12506
+],
+"id": 51,
+"text": "đâu cảnh tượng như ngày trước nữa",
+"sentenceText": "Song cõi trần nhỏ hẹp, kiếp trần ngắn ngủi, dù nay chàng về nhưng chỉ e liễu sân hoa vườn, không còn đâu cảnh tượng như ngày trước nữa.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 9,
+"locale": "vi",
+"kind": "word",
+"start": 82,
+"end": 88,
+"sentence": [
+0,
+123
+],
+"id": 52,
+"text": "phụ ấm",
+"sentenceText": "Trong năm Quang Thái (1) đời nhà Trần, người ở Hóa Châu (2) tên là Từ Thức, vì có phụ ấm được bổ làm Tri huyện Tiên Du (3).",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 150,
+"end": 152,
+"text": "he"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 150,
+"end": 152,
+"text": "he"
+}
+]
+}
+},
+{
+"chapter": 9,
+"locale": "en",
+"kind": "word",
+"start": 4924,
+"end": 4929,
+"sentence": [
+4875,
+4987
+],
+"id": 53,
+"text": "while",
+"sentenceText": "They hurried inside to announce him, and after a while came out again and said:\"Our lady bids you come in, sir.\"",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3543,
+"end": 3546,
+"text": "lúc"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3543,
+"end": 3546,
+"text": "lúc"
+}
+]
+}
+},
+{
+"chapter": 10,
+"locale": "en",
+"kind": "sentence",
+"start": 6886,
+"end": 7000,
+"sentence": [
+6886,
+7000
+],
+"id": 54,
+"text": "Tram laughed and said:\"The Imperial Lord inhales and exhales the primordial breath and roams the eight directions.",
+"sentenceText": "Tram laughed and said:\"The Imperial Lord inhales and exhales the primordial breath and roams the eight directions.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4774,
+"end": 4792,
+"text": "Trạm cười mà rằng:"
+},
+{
+"start": 4795,
+"end": 4852,
+"text": "Đấng Đế quân ngài nuốt nhà nguyên khí, chu du tám phương,"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4774,
+"end": 4792,
+"text": "Trạm cười mà rằng:"
+},
+{
+"start": 4795,
+"end": 4852,
+"text": "Đấng Đế quân ngài nuốt nhà nguyên khí, chu du tám phương,"
+}
+]
+}
+},
+{
+"chapter": 10,
+"locale": "en",
+"kind": "sentence",
+"start": 10534,
+"end": 10605,
+"sentence": [
+10534,
+10605
+],
+"id": 55,
+"text": "Next they passed a hall whose signboard read \"Gate of Dutiful Conduct.\"",
+"sentenceText": "Next they passed a hall whose signboard read \"Gate of Dutiful Conduct.\"",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7323,
+"end": 7388,
+"text": "Lại đi qua một tòa sở có cái biển đề ở ngoài là \"Cửa Thuận hạnh\","
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7323,
+"end": 7388,
+"text": "Lại đi qua một tòa sở có cái biển đề ở ngoài là \"Cửa Thuận hạnh\","
+}
+]
+}
+},
+{
+"chapter": 10,
+"locale": "vi",
+"kind": "phrase",
+"start": 8220,
+"end": 8247,
+"sentence": [
+8179,
+8286
+],
+"id": 56,
+"text": "cao thì làm đến khanh tướng",
+"sentenceText": "Cứ cách năm trăm năm lại cho giáng sinh, cao thì làm đến khanh tướng, thấp cũng làm được sĩ phu, hiệu doãn.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11881,
+"end": 11942,
+"text": "At the highest they rise to become ministers and chancellors,"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11881,
+"end": 11942,
+"text": "At the highest they rise to become ministers and chancellors,"
+}
+]
+}
+},
+{
+"chapter": 10,
+"locale": "en",
+"kind": "phrase",
+"start": 10431,
+"end": 10443,
+"sentence": [
+10418,
+10534
+],
+"id": 57,
+"text": "Lord praised",
+"sentenceText": "The Imperial Lord praised them as benevolent and numbered them among the ranks of the pure, and so they dwell here.\"",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7257,
+"end": 7271,
+"text": "Thượng đế khen"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7257,
+"end": 7271,
+"text": "Thượng đế khen"
+}
+]
+}
+},
+{
+"chapter": 10,
+"locale": "vi",
+"kind": "word",
+"start": 5970,
+"end": 5974,
+"sentence": [
+5906,
+5980
+],
+"id": 58,
+"text": "tiệc",
+"sentenceText": "Bèn lấy bút son viết vào cuốn giấy hơn mười chữ, rồi bảo cất bỏ tiệc rượu.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8659,
+"end": 8664,
+"text": "feast"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8659,
+"end": 8664,
+"text": "feast"
+}
+]
+}
+},
+{
+"chapter": 10,
+"locale": "vi",
+"kind": "word",
+"start": 191,
+"end": 198,
+"sentence": [
+171,
+230
+],
+"id": 59,
+"text": "sửa đổi",
+"sentenceText": "Từ đấy chàng cố sức sửa đổi, trở nên người có đức tính tốt.",
+"old": {
+"status": "match",
+"highlights": [
+{
+"start": 255,
+"end": 259,
+"text": "mend"
+}
+]
+},
+"new": {
+"status": "match",
+"highlights": [
+{
+"start": 255,
+"end": 259,
+"text": "mend"
+}
+]
+}
+},
+{
+"chapter": 11,
+"locale": "vi",
+"kind": "sentence",
+"start": 2048,
+"end": 2108,
+"sentence": [
+2048,
+2108
+],
+"id": 60,
+"text": "Vì sự phô phang cầm thú mới có cuộc bắn ở Trường Dương (13).",
+"sentenceText": "Vì sự phô phang cầm thú mới có cuộc bắn ở Trường Dương (13).",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3278,
+"end": 3349,
+"text": "and the shooting at Changyang was held to parade beasts and birds (13)."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3278,
+"end": 3349,
+"text": "and the shooting at Changyang was held to parade beasts and birds (13)."
+}
+]
+}
+},
+{
+"chapter": 11,
+"locale": "en",
+"kind": "sentence",
+"start": 6830,
+"end": 6912,
+"sentence": [
+6830,
+6912
+],
+"id": 61,
+"text": "Why lie withering away in some mountain cave, where no one will ever know of you?\"",
+"sentenceText": "Why lie withering away in some mountain cave, where no one will ever know of you?\"",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4661,
+"end": 4731,
+"text": "Cớ chi lại đi nằm chết khô ở chốn hang núi, còn ai người biết đến nữa."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4661,
+"end": 4731,
+"text": "Cớ chi lại đi nằm chết khô ở chốn hang núi, còn ai người biết đến nữa."
+}
+]
+}
+},
+{
+"chapter": 11,
+"locale": "vi",
+"kind": "phrase",
+"start": 2516,
+"end": 2553,
+"sentence": [
+2502,
+2655
+],
+"id": 62,
+"text": "giống tinh khôn lanh lẹn thì tự nhiên",
+"sentenceText": "Chứ còn những giống tinh khôn lanh lẹn thì tự nhiên chúng biết xa chạy cao bay đàng nam núi Nam, đàng bắc núi Bắc, há chịu trần trần một phận ấp cây đâu!",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3906,
+"end": 3944,
+"text": "clever and nimble kinds will naturally"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3906,
+"end": 3944,
+"text": "clever and nimble kinds will naturally"
+}
+]
+}
+},
+{
+"chapter": 11,
+"locale": "vi",
+"kind": "phrase",
+"start": 4675,
+"end": 4687,
+"sentence": [
+4661,
+4731
+],
+"id": 63,
+"text": "nằm chết khô",
+"sentenceText": "Cớ chi lại đi nằm chết khô ở chốn hang núi, còn ai người biết đến nữa.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6834,
+"end": 6852,
+"text": "lie withering away"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6834,
+"end": 6852,
+"text": "lie withering away"
+}
+]
+}
+},
+{
+"chapter": 11,
+"locale": "en",
+"kind": "word",
+"start": 5093,
+"end": 5099,
+"sentence": [
+5058,
+5138
+],
+"id": 64,
+"text": "bridle",
+"sentenceText": "Let benevolence be your saddle and bridle and righteousness your oar and rudder.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3414,
+"end": 3422,
+"text": "hào kiệt"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3414,
+"end": 3422,
+"text": "hào kiệt"
+}
+]
+}
+},
+{
+"chapter": 11,
+"locale": "en",
+"kind": "word",
+"start": 7704,
+"end": 7712,
+"sentence": [
+7626,
+7714
+],
+"id": 65,
+"text": "occasion",
+"sentenceText": "Tonight, as guests at this banquet, how could we not offer a poem to mark the occasion?\"",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 12,
+"locale": "vi",
+"kind": "sentence",
+"start": 6377,
+"end": 6456,
+"sentence": [
+6377,
+6456
+],
+"id": 66,
+"text": "Gặp gỡ ngày nay, há chẳng phải lòng trời có ý cho tôi một dịp đền ơn báo nghĩa.",
+"sentenceText": "Gặp gỡ ngày nay, há chẳng phải lòng trời có ý cho tôi một dịp đền ơn báo nghĩa.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9581,
+"end": 9679,
+"text": "Our meeting today is surely Heaven's will, granting me a chance to repay your kindness and virtue."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9581,
+"end": 9679,
+"text": "Our meeting today is surely Heaven's will, granting me a chance to repay your kindness and virtue."
+}
+]
+}
+},
+{
+"chapter": 12,
+"locale": "en",
+"kind": "sentence",
+"start": 3951,
+"end": 4099,
+"sentence": [
+3951,
+4099
+],
+"id": 67,
+"text": "Vu mourned her deeply, sparing no effort for her funeral and memorial rites, tending to everything as though she were burying her own birth parents.",
+"sentenceText": "Vu mourned her deeply, sparing no effort for her funeral and memorial rites, tending to everything as though she were burying her own birth parents.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 2597,
+"end": 2682,
+"text": "Nàng hết lời thương xót, phàm việc ma chay tế lễ; lo liệu như đối với cha mẹ sinh ra."
+}
+]
+}
+},
+{
+"chapter": 12,
+"locale": "vi",
+"kind": "phrase",
+"start": 5034,
+"end": 5041,
+"sentence": [
+4972,
+5047
+],
+"id": 68,
+"text": "sao ngủ",
+"sentenceText": "Một mình phòng không vắng vẻ, đến đêm khêu bấc đèn tàn, không sao ngủ được.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 12,
+"locale": "en",
+"kind": "phrase",
+"start": 7439,
+"end": 7452,
+"sentence": [
+7439,
+7565
+],
+"id": 69,
+"text": "Though Truong",
+"sentenceText": "Though Truong Sinh was infuriated by her perceived infidelity, upon seeing her take her own life, his heart stirred with pity.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4845,
+"end": 4850,
+"text": "Chàng"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4845,
+"end": 4850,
+"text": "Chàng"
+}
+]
+}
+},
+{
+"chapter": 12,
+"locale": "vi",
+"kind": "word",
+"start": 536,
+"end": 539,
+"sentence": [
+536,
+620
+],
+"id": 70,
+"text": "Lúc",
+"sentenceText": "Lúc chàng ra đi, bà mẹ có dặn rằng:- Nay con phải tạm ra tòng quân, xa lìa dưới gối.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 387,
+"end": 390,
+"text": "For"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 387,
+"end": 390,
+"text": "For"
+}
+]
+}
+},
+{
+"chapter": 12,
+"locale": "en",
+"kind": "word",
+"start": 7770,
+"end": 7775,
+"sentence": [
+7756,
+7819
+],
+"id": 71,
+"text": "young",
+"sentenceText": "Suddenly, his young son piped up: \"Dan's father is here again!\"",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5053,
+"end": 5056,
+"text": "đứa"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5053,
+"end": 5056,
+"text": "đứa"
+}
+]
+}
+},
+{
+"chapter": 13,
+"locale": "en",
+"kind": "sentence",
+"start": 5070,
+"end": 5160,
+"sentence": [
+5070,
+5160
+],
+"id": 72,
+"text": "Morning and night his wife wept bitterly at his side and would not leave him for a moment.",
+"sentenceText": "Morning and night his wife wept bitterly at his side and would not leave him for a moment.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3409,
+"end": 3463,
+"text": "Nàng sớm tối khóc lóc thiết tha không rời ra một bước."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3409,
+"end": 3463,
+"text": "Nàng sớm tối khóc lóc thiết tha không rời ra một bước."
+}
+]
+}
+},
+{
+"chapter": 13,
+"locale": "vi",
+"kind": "sentence",
+"start": 2328,
+"end": 2378,
+"sentence": [
+2328,
+2378
+],
+"id": 73,
+"text": "Người con gái mừng rỡ:- Nếu vậy thật là lòng trời.",
+"sentenceText": "Người con gái mừng rỡ:- Nếu vậy thật là lòng trời.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3499,
+"end": 3522,
+"text": "The girl was overjoyed."
+},
+{
+"start": 3523,
+"end": 3555,
+"text": "Then truly Heaven has willed it."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3499,
+"end": 3522,
+"text": "The girl was overjoyed."
+},
+{
+"start": 3523,
+"end": 3555,
+"text": "Then truly Heaven has willed it."
+}
+]
+}
+},
+{
+"chapter": 13,
+"locale": "vi",
+"kind": "phrase",
+"start": 4351,
+"end": 4370,
+"sentence": [
+4313,
+4380
+],
+"id": 74,
+"text": "đấu bọt dãi rồi nằm",
+"sentenceText": "Uống thuốc xong, Hoàng nôn mửa ra vài đấu bọt dãi rồi nằm thiếp đi.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6413,
+"end": 6451,
+"text": "measures of froth and spittle and sank"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6413,
+"end": 6451,
+"text": "measures of froth and spittle and sank"
+}
+]
+}
+},
+{
+"chapter": 13,
+"locale": "en",
+"kind": "phrase",
+"start": 12619,
+"end": 12631,
+"sentence": [
+12574,
+12678
+],
+"id": 75,
+"text": "forsook firm",
+"sentenceText": "He took up his brush once more and wrote:\"He forsook firm virtue and followed the path of wanton desire.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8280,
+"end": 8298,
+"text": "Bỏ nết cương cường"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8280,
+"end": 8298,
+"text": "Bỏ nết cương cường"
+}
+]
+}
+},
+{
+"chapter": 13,
+"locale": "vi",
+"kind": "word",
+"start": 5576,
+"end": 5583,
+"sentence": [
+5455,
+5654
+],
+"id": 76,
+"text": "bao bọc",
+"sentenceText": "Sau đó hơn một tuần, Hoàng đương ban ngày nằm chơi, thấy hai người lính vào bắt đem đi, đến một chỗ chung quanh có tường bao bọc, trong có cung điện trang nghiêm, duy mái hành lang bên tả bị xiêu đổ.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8097,
+"end": 8105,
+"text": "enclosed"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 8097,
+"end": 8105,
+"text": "enclosed"
+}
+]
+}
+},
+{
+"chapter": 13,
+"locale": "en",
+"kind": "word",
+"start": 7731,
+"end": 7735,
+"sentence": [
+7667,
+7771
+],
+"id": 77,
+"text": "away",
+"sentenceText": "The stranger sighed:\"Though the branches and leaves are cleared away, the root has not yet been severed.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5338,
+"end": 5342,
+"text": "được"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5338,
+"end": 5342,
+"text": "được"
+}
+]
+}
+},
+{
+"chapter": 14,
+"locale": "vi",
+"kind": "sentence",
+"start": 7959,
+"end": 8150,
+"sentence": [
+7959,
+8150
+],
+"id": 78,
+"text": "Tài ta tuy kém, so với người xưa chẳng bằng được, nhưng may lại giàu hơn Kiềm Lâu, thọ hơn Vệ Giới, no hơn Viên Tinh, đạt hơn Phụng Thiến (22), kể thì cũng đã được trời đất ban cho khá nhiều.",
+"sentenceText": "Tài ta tuy kém, so với người xưa chẳng bằng được, nhưng may lại giàu hơn Kiềm Lâu, thọ hơn Vệ Giới, no hơn Viên Tinh, đạt hơn Phụng Thiến (22), kể thì cũng đã được trời đất ban cho khá nhiều.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9731,
+"end": 9981,
+"text": "My talents are meager and no match for the men of old. Yet by good fortune I am richer than Qian Lou, longer-lived than Wei Jie, better fed than Yuan Jingmu, and more fortunate than Fengqian (22). Heaven and Earth have granted me a good deal already."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9731,
+"end": 9981,
+"text": "My talents are meager and no match for the men of old. Yet by good fortune I am richer than Qian Lou, longer-lived than Wei Jie, better fed than Yuan Jingmu, and more fortunate than Fengqian (22). Heaven and Earth have granted me a good deal already."
+}
+]
+}
+},
+{
+"chapter": 14,
+"locale": "vi",
+"kind": "sentence",
+"start": 2275,
+"end": 2377,
+"sentence": [
+2275,
+2377
+],
+"id": 79,
+"text": "Ngẩng lên trông, bóng chiều gác đầu núi, cây cỏ đã bắt đầu lờ mờ, bàng hoàng muốn về, nhưng không kịp.",
+"sentenceText": "Ngẩng lên trông, bóng chiều gác đầu núi, cây cỏ đã bắt đầu lờ mờ, bàng hoàng muốn về, nhưng không kịp.",
+"old": {
+"status": "match",
+"highlights": [
+{
+"start": 2825,
+"end": 3011,
+"text": "When Truong looked up, the evening light was resting on the peaks, and the trees and grasses had begun to blur in the dusk. Dismayed, he longed to turn back, but it was already too late."
+}
+]
+},
+"new": {
+"status": "match",
+"highlights": [
+{
+"start": 2825,
+"end": 3011,
+"text": "When Truong looked up, the evening light was resting on the peaks, and the trees and grasses had begun to blur in the dusk. Dismayed, he longed to turn back, but it was already too late."
+}
+]
+}
+},
+{
+"chapter": 14,
+"locale": "en",
+"kind": "phrase",
+"start": 10337,
+"end": 10362,
+"sentence": [
+10298,
+10378
+],
+"id": 80,
+"text": "within the four seas look",
+"sentenceText": "A sagely sovereign now reigns, and all within the four seas look to him in hope.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 14,
+"locale": "en",
+"kind": "phrase",
+"start": 730,
+"end": 738,
+"sentence": [
+721,
+809
+],
+"id": 81,
+"text": "sun sank",
+"sentenceText": "When the sun sank behind the mountains, he would stroll back to his cave at his leisure.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 513,
+"end": 526,
+"text": "Mặt trời ngậm"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 513,
+"end": 526,
+"text": "Mặt trời ngậm"
+}
+]
+}
+},
+{
+"chapter": 14,
+"locale": "en",
+"kind": "word",
+"start": 9746,
+"end": 9752,
+"sentence": [
+9731,
+9785
+],
+"id": 82,
+"text": "meager",
+"sentenceText": "My talents are meager and no match for the men of old.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7970,
+"end": 7973,
+"text": "kém"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 7970,
+"end": 7973,
+"text": "kém"
+}
+]
+}
+},
+{
+"chapter": 14,
+"locale": "vi",
+"kind": "word",
+"start": 97,
+"end": 105,
+"sentence": [
+68,
+125
+],
+"id": 83,
+"text": "chót vót",
+"sentenceText": "Trong đó có một ngọn núi cao chót vót, tên gọi là núi Na.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 15,
+"locale": "en",
+"kind": "sentence",
+"start": 9409,
+"end": 9474,
+"sentence": [
+9409,
+9474
+],
+"id": 84,
+"text": "Within a few dozen zhang, all of them had vanished into the dark.",
+"sentenceText": "Within a few dozen zhang, all of them had vanished into the dark.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6622,
+"end": 6662,
+"text": "chừng độ mấy chục bước đều mờ khuất hết."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6622,
+"end": 6662,
+"text": "chừng độ mấy chục bước đều mờ khuất hết."
+}
+]
+}
+},
+{
+"chapter": 15,
+"locale": "en",
+"kind": "sentence",
+"start": 180,
+"end": 426,
+"sentence": [
+180,
+426
+],
+"id": 85,
+"text": "Pagodas such as Hoang Giang, Dong Co, An Sinh, An Tu, and Pho Minh, along with the Taoist temple of Ngoc Thanh, rose up everywhere in great profusion, and those who shaved their heads to become monks and nuns numbered nearly half the common folk.",
+"sentenceText": "Pagodas such as Hoang Giang, Dong Co, An Sinh, An Tu, and Pho Minh, along with the Taoist temple of Ngoc Thanh, rose up everywhere in great profusion, and those who shaved their heads to become monks and nuns numbered nearly half the common folk.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 72,
+"end": 273,
+"text": "Các chùa như chùa Hoàng Giang, chùa Đồng Cổ, chùa An Sinh, chùa An Tử, chùa Phổ Minh, quán Ngọc Thanh dựng lên nhan nhản khắp nơi; những người cắt tóc làm tăng làm ni, nhiều gần bằng nửa số dân thường."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 72,
+"end": 273,
+"text": "Các chùa như chùa Hoàng Giang, chùa Đồng Cổ, chùa An Sinh, chùa An Tử, chùa Phổ Minh, quán Ngọc Thanh dựng lên nhan nhản khắp nơi; những người cắt tóc làm tăng làm ni, nhiều gần bằng nửa số dân thường."
+}
+]
+}
+},
+{
+"chapter": 15,
+"locale": "vi",
+"kind": "phrase",
+"start": 8221,
+"end": 8250,
+"sentence": [
+8221,
+8463
+],
+"id": 86,
+"text": "Bởi các đấng quân tử cao minh",
+"sentenceText": "Bởi các đấng quân tử cao minh, thường có nhiều người rúp rập, chẳng hạn như Tô học sỹ(8) đời Tống, Lương Trạng nguyên(9) đời Lê, ước sao có hàng trăm ông Hàn Xương Lê(10) ra đời, xúm lại mà đánh, đốt hết sách và chiếm hết nhà mới có thể được.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11627,
+"end": 11694,
+"text": "For many lofty and enlightened gentlemen have lent it their voices,"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11627,
+"end": 11694,
+"text": "For many lofty and enlightened gentlemen have lent it their voices,"
+}
+]
+}
+},
+{
+"chapter": 15,
+"locale": "vi",
+"kind": "phrase",
+"start": 7370,
+"end": 7383,
+"sentence": [
+7339,
+7384
+],
+"id": 87,
+"text": "thủy thần kia",
+"sentenceText": "Nhưng bầy ra mưu mẹo là tự lão thủy thần kia.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10431,
+"end": 10440,
+"text": "water god"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10431,
+"end": 10440,
+"text": "water god"
+}
+]
+}
+},
+{
+"chapter": 15,
+"locale": "en",
+"kind": "word",
+"start": 4389,
+"end": 4395,
+"sentence": [
+4245,
+4428
+],
+"id": 88,
+"text": "people",
+"sentenceText": "We humbly beseech you to open your heart in mercy and bring your power to bear in punishment, so that spirits and men no longer mingle and both people and creatures may live in peace.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 15,
+"locale": "vi",
+"kind": "word",
+"start": 2248,
+"end": 2251,
+"sentence": [
+2199,
+2258
+],
+"id": 89,
+"text": "hơn",
+"sentenceText": "Song càng bùa bèn trừ yểm, sự quấy nhiễu càng tệ hơn trước.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 16,
+"locale": "en",
+"kind": "sentence",
+"start": 12603,
+"end": 12678,
+"sentence": [
+12603,
+12678
+],
+"id": 90,
+"text": "A while later came a rustling before the flowers, then a knock at the door.",
+"sentenceText": "A while later came a rustling before the flowers, then a knock at the door.",
+"old": {
+"status": "match",
+"highlights": [
+{
+"start": 10301,
+"end": 10369,
+"text": "Một lúc lại thấy ở trước hoa có tiếng sột soạt, rồi có tiếng gõ cửa,"
+}
+]
+},
+"new": {
+"status": "match",
+"highlights": [
+{
+"start": 10301,
+"end": 10369,
+"text": "Một lúc lại thấy ở trước hoa có tiếng sột soạt, rồi có tiếng gõ cửa,"
+}
+]
+}
+},
+{
+"chapter": 16,
+"locale": "vi",
+"kind": "sentence",
+"start": 2768,
+"end": 2830,
+"sentence": [
+2768,
+2830
+],
+"id": 91,
+"text": "Con chim yểng nghe nói, kêu lên và nhảy nhót như dáng muốn đi.",
+"sentenceText": "Con chim yểng nghe nói, kêu lên và nhảy nhót như dáng muốn đi.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3893,
+"end": 3975,
+"text": "When the myna heard this, it cried out and hopped about as though eager to be off."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3893,
+"end": 3975,
+"text": "When the myna heard this, it cried out and hopped about as though eager to be off."
+}
+]
+}
+},
+{
+"chapter": 16,
+"locale": "vi",
+"kind": "phrase",
+"start": 7519,
+"end": 7535,
+"sentence": [
+7495,
+7565
+],
+"id": 92,
+"text": "gạo châu củi quế",
+"sentenceText": "Huống đất Trường An này gạo châu củi quế, thầy lấy gì mà tiêu dùng đủ.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9211,
+"end": 9236,
+"text": "rice is as dear as pearls"
+},
+{
+"start": 9261,
+"end": 9269,
+"text": "cinnamon"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9211,
+"end": 9236,
+"text": "rice is as dear as pearls"
+},
+{
+"start": 9261,
+"end": 9269,
+"text": "cinnamon"
+}
+]
+}
+},
+{
+"chapter": 16,
+"locale": "en",
+"kind": "phrase",
+"start": 13075,
+"end": 13098,
+"sentence": [
+13047,
+13174
+],
+"id": 93,
+"text": "single meeting to speak",
+"sentenceText": "When I cannot obtain even a single meeting to speak with you, how could I ever hope they would open the gates and set you free?",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10655,
+"end": 10672,
+"text": "lần để nói chuyện"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10655,
+"end": 10672,
+"text": "lần để nói chuyện"
+}
+]
+}
+},
+{
+"chapter": 16,
+"locale": "vi",
+"kind": "word",
+"start": 10769,
+"end": 10772,
+"sentence": [
+10757,
+10856
+],
+"id": 94,
+"text": "mãi",
+"sentenceText": "Nếu ta cứ ở mãi đây, vạn nhất lòng ghen nổi dậy, kế độc buông ra thì ta là thất cơ mà họ là đắc kế.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 16,
+"locale": "en",
+"kind": "word",
+"start": 1492,
+"end": 1496,
+"sentence": [
+1463,
+1507
+],
+"id": 95,
+"text": "knew",
+"sentenceText": "His gratitude to Lord Nguyen knew no bounds.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1127,
+"end": 1131,
+"text": "biết"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1127,
+"end": 1131,
+"text": "biết"
+}
+]
+}
+},
+{
+"chapter": 17,
+"locale": "vi",
+"kind": "sentence",
+"start": 4028,
+"end": 4104,
+"sentence": [
+4028,
+4104
+],
+"id": 96,
+"text": "Chợt thấy bốn vị phán quan từ bên tả vu đi ra mà một viên tức là Nguyễn Quỳ.",
+"sentenceText": "Chợt thấy bốn vị phán quan từ bên tả vu đi ra mà một viên tức là Nguyễn Quỳ.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5835,
+"end": 5936,
+"text": "Presently four judges came out from the left gallery, and one of them was none other than Nguyen Quy."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5835,
+"end": 5936,
+"text": "Presently four judges came out from the left gallery, and one of them was none other than Nguyen Quy."
+}
+]
+}
+},
+{
+"chapter": 17,
+"locale": "vi",
+"kind": "sentence",
+"start": 4413,
+"end": 4608,
+"sentence": [
+4413,
+4608
+],
+"id": 97,
+"text": "Một viên nói:\n- Ở nhà kia có tên Mỗ, vốn người tham bẩn, hối lộ dập dìu; lại lấy lộc trật mà hợm hĩnh ngông nghênh, khinh miệt những người có đức, chưa từng cất nhắc kẻ hiền sĩ để giúp việc nước.",
+"sentenceText": "Một viên nói:\n- Ở nhà kia có tên Mỗ, vốn người tham bẩn, hối lộ dập dìu; lại lấy lộc trật mà hợm hĩnh ngông nghênh, khinh miệt những người có đức, chưa từng cất nhắc kẻ hiền sĩ để giúp việc nước.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6383,
+"end": 6396,
+"text": "Another said:"
+},
+{
+"start": 6397,
+"end": 6704,
+"text": "In such-and-such a household there is one named So-and-so, greedy and corrupt by nature, with bribes flowing in thick and fast. Moreover, he used his rank and stipend as grounds for arrogance and swagger, held men of virtue in contempt, and never once raised up a worthy scholar to aid the affairs of state."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6383,
+"end": 6396,
+"text": "Another said:"
+},
+{
+"start": 6397,
+"end": 6704,
+"text": "In such-and-such a household there is one named So-and-so, greedy and corrupt by nature, with bribes flowing in thick and fast. Moreover, he used his rank and stipend as grounds for arrogance and swagger, held men of virtue in contempt, and never once raised up a worthy scholar to aid the affairs of state."
+}
+]
+}
+},
+{
+"chapter": 17,
+"locale": "en",
+"kind": "phrase",
+"start": 150,
+"end": 179,
+"sentence": [
+0,
+227
+],
+"id": 98,
+"text": "gathering a band of followers",
+"sentenceText": "When Emperor Gian Dinh of the Later Tran ascended the throne at Mo Do (1), heroes from the four quarters, near and far, rose to answer his call, each gathering a band of followers to form loyalist armies in defense of the king.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 100,
+"end": 117,
+"text": "chiêu tập đồ đảng"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 100,
+"end": 117,
+"text": "chiêu tập đồ đảng"
+}
+]
+}
+},
+{
+"chapter": 17,
+"locale": "en",
+"kind": "phrase",
+"start": 4894,
+"end": 4920,
+"sentence": [
+4880,
+4955
+],
+"id": 99,
+"text": "close friend of Thuc Khoan",
+"sentenceText": "He had been a close friend of Thuc Khoan, but he had been dead three years.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 17,
+"locale": "vi",
+"kind": "word",
+"start": 122,
+"end": 126,
+"sentence": [
+8,
+137
+],
+"id": 100,
+"text": "quân",
+"sentenceText": "Vua Giản Định nhà Hậu Trần lên ngôi ở Mô Độ (1), hào kiệt bốn phương, gần xa hưởng ứng, đều chiêu tập đồ đảng làm quân Cần Vương.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 197,
+"end": 203,
+"text": "armies"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 197,
+"end": 203,
+"text": "armies"
+}
+]
+}
+},
+{
+"chapter": 17,
+"locale": "en",
+"kind": "word",
+"start": 8731,
+"end": 8738,
+"sentence": [
+8681,
+8811
+],
+"id": 101,
+"text": "conduct",
+"sentenceText": "And men can govern their nature through their own conduct, yet they cannot keep that nature from being now clouded, now clear (4).",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 18,
+"locale": "vi",
+"kind": "sentence",
+"start": 1165,
+"end": 1249,
+"sentence": [
+1165,
+1249
+],
+"id": 102,
+"text": "Gặp đêm trừ tịch gần hết canh năm, Sinh còn đương nằm ngủ, chợt nghe có tiếng ấm ới.",
+"sentenceText": "Gặp đêm trừ tịch gần hết canh năm, Sinh còn đương nằm ngủ, chợt nghe có tiếng ấm ới.",
+"old": {
+"status": "match",
+"highlights": [
+{
+"start": 1650,
+"end": 1770,
+"text": "On New Year's Eve, as the fifth watch was drawing to its close, Sinh lay asleep when suddenly he heard voices murmuring."
+}
+]
+},
+"new": {
+"status": "match",
+"highlights": [
+{
+"start": 1650,
+"end": 1770,
+"text": "On New Year's Eve, as the fifth watch was drawing to its close, Sinh lay asleep when suddenly he heard voices murmuring."
+}
+]
+}
+},
+{
+"chapter": 18,
+"locale": "vi",
+"kind": "sentence",
+"start": 8515,
+"end": 8737,
+"sentence": [
+8515,
+8737
+],
+"id": 103,
+"text": "Sinh giật mình hỏi, bà già nói:- Trước đây năm hôm, quân Tầu sắp rút, người đàn bà họ Nguyễn ấy bảo với hai bà phu nhân họ Chu họ Trịnh rằng: \"Bọn chúng ta vóc mềm tựa liễu, mệnh bạc như vôi, nước vỡ nhà tan lưu ly đến đó.",
+"sentenceText": "Sinh giật mình hỏi, bà già nói:- Trước đây năm hôm, quân Tầu sắp rút, người đàn bà họ Nguyễn ấy bảo với hai bà phu nhân họ Chu họ Trịnh rằng: \"Bọn chúng ta vóc mềm tựa liễu, mệnh bạc như vôi, nước vỡ nhà tan lưu ly đến đó.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 18,
+"locale": "en",
+"kind": "phrase",
+"start": 3828,
+"end": 3844,
+"sentence": [
+3754,
+3884
+],
+"id": 104,
+"text": "troops to invade",
+"sentenceText": "In the last days of the Ho dynasty, the Ming general Zhang Fu divided his troops to invade and plunder, and he seized the capital.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3149,
+"end": 3162,
+"text": "binh vào cướp"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 3149,
+"end": 3162,
+"text": "binh vào cướp"
+}
+]
+}
+},
+{
+"chapter": 18,
+"locale": "vi",
+"kind": "phrase",
+"start": 11949,
+"end": 11979,
+"sentence": [
+11905,
+12014
+],
+"id": 105,
+"text": "đương toan lại cùng trò chuyện",
+"sentenceText": "Đêm sau mộng thấy ba người đến tạ ơn, chàng đương toan lại cùng trò chuyện thì thoắt chốc cả ba đều biến mất.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 13905,
+"end": 13929,
+"text": "just about to speak with"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 13910,
+"end": 13940,
+"text": "about to speak with them again"
+}
+]
+}
+},
+{
+"chapter": 18,
+"locale": "en",
+"kind": "word",
+"start": 3731,
+"end": 3738,
+"sentence": [
+3669,
+3754
+],
+"id": 106,
+"text": "himself",
+"sentenceText": "Yet his love for Le Nuong ran so deep that he could not bring himself to wed another.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 18,
+"locale": "en",
+"kind": "word",
+"start": 15147,
+"end": 15151,
+"sentence": [
+15132,
+15219
+],
+"id": 107,
+"text": "such",
+"sentenceText": "Is it not just such a man as Ly Sinh who clings to the lesser and forfeits the greater?",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 19,
+"locale": "en",
+"kind": "sentence",
+"start": 1375,
+"end": 1447,
+"sentence": [
+1375,
+1447
+],
+"id": 108,
+"text": "Peering inside, he saw an old man seated at the center of a raised dais.",
+"sentenceText": "Peering inside, he saw an old man seated at the center of a raised dais.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 948,
+"end": 1017,
+"text": "Chàng trông vào trong nhà, thấy một ông già đương ngồi ở giữa giường,"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 948,
+"end": 1017,
+"text": "Chàng trông vào trong nhà, thấy một ông già đương ngồi ở giữa giường,"
+}
+]
+}
+},
+{
+"chapter": 19,
+"locale": "vi",
+"kind": "sentence",
+"start": 796,
+"end": 865,
+"sentence": [
+796,
+865
+],
+"id": 109,
+"text": "Đến nơi thì thấy có mấy gian nhà tranh ở giữa khoảng cây cối rậm rạp.",
+"sentenceText": "Đến nơi thì thấy có mấy gian nhà tranh ở giữa khoảng cây cối rậm rạp.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1204,
+"end": 1275,
+"text": "When he arrived, he found several thatched dwellings among dense trees."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1204,
+"end": 1275,
+"text": "When he arrived, he found several thatched dwellings among dense trees."
+}
+]
+}
+},
+{
+"chapter": 19,
+"locale": "en",
+"kind": "phrase",
+"start": 2503,
+"end": 2515,
+"sentence": [
+2448,
+2523
+],
+"id": 110,
+"text": "degree below",
+"sentenceText": "The lady joined them as well, though she took a seat a degree below theirs.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1733,
+"end": 1743,
+"text": "thấp xuống"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1733,
+"end": 1743,
+"text": "thấp xuống"
+}
+]
+}
+},
+{
+"chapter": 19,
+"locale": "vi",
+"kind": "phrase",
+"start": 8262,
+"end": 8286,
+"sentence": [
+8262,
+8518
+],
+"id": 111,
+"text": "Nhân bàn đến thơ văn bản",
+"sentenceText": "Nhân bàn đến thơ văn bản triều, ông khách nói:- Thơ ông Chuyết Am (15) kỳ lạ mà tiêu tao, thơ ông Vu Liêu (16) cao vọi mà khích thích, thơ ông Tùng Xuyên (17) như chàng trai xông trận, có vẻ sấn sổ, thơ ông Cúc Pha (18) như cô gái chơi xuân, có vẻ mềm yếu.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10523,
+"end": 10562,
+"text": "When their talk turned to the poetry of"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10523,
+"end": 10562,
+"text": "When their talk turned to the poetry of"
+}
+]
+}
+},
+{
+"chapter": 19,
+"locale": "en",
+"kind": "word",
+"start": 5111,
+"end": 5116,
+"sentence": [
+5097,
+5151
+],
+"id": 112,
+"text": "tales",
+"sentenceText": "Now I see the tales told of you were no exaggeration.\"",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4148,
+"end": 4151,
+"text": "lời"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4148,
+"end": 4151,
+"text": "lời"
+}
+]
+}
+},
+{
+"chapter": 19,
+"locale": "vi",
+"kind": "word",
+"start": 9121,
+"end": 9125,
+"sentence": [
+9095,
+9142
+],
+"id": 113,
+"text": "vách",
+"sentenceText": "Chàng đứng nghe lóng ở kẽ vách đến một hồi lâu.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11650,
+"end": 11654,
+"text": "wall"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11650,
+"end": 11654,
+"text": "wall"
+}
+]
+}
+},
+{
+"chapter": 20,
+"locale": "vi",
+"kind": "sentence",
+"start": 4649,
+"end": 4825,
+"sentence": [
+4649,
+4825
+],
+"id": 114,
+"text": "Dĩ Thành nói:- Như lời các ngươi nói thì đó là cái phúc hay là cái họa cho ta?- Dưới Diêm La tuyển người không khác gì tuyển Phật, không thể đút lót mà được hay cầu may mà nên.",
+"sentenceText": "Dĩ Thành nói:- Như lời các ngươi nói thì đó là cái phúc hay là cái họa cho ta?- Dưới Diêm La tuyển người không khác gì tuyển Phật, không thể đút lót mà được hay cầu may mà nên.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6748,
+"end": 6762,
+"text": "Di Thanh said:"
+},
+{
+"start": 6763,
+"end": 6823,
+"text": "If what you say is so, is this a blessing or a curse for me?"
+},
+{
+"start": 6825,
+"end": 6959,
+"text": "In the court of King Yama, men are chosen no differently than Buddhas are. No bribe can buy a post, and no stroke of luck can win one."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6748,
+"end": 6762,
+"text": "Di Thanh said:"
+},
+{
+"start": 6763,
+"end": 6823,
+"text": "If what you say is so, is this a blessing or a curse for me?"
+},
+{
+"start": 6825,
+"end": 6959,
+"text": "In the court of King Yama, men are chosen no differently than Buddhas are. No bribe can buy a post, and no stroke of luck can win one."
+}
+]
+}
+},
+{
+"chapter": 20,
+"locale": "vi",
+"kind": "sentence",
+"start": 10250,
+"end": 10305,
+"sentence": [
+10250,
+10305
+],
+"id": 115,
+"text": "Người làng đến khấn vái kêu cầu cũng thường ứng nghiệm.",
+"sentenceText": "Người làng đến khấn vái kêu cầu cũng thường ứng nghiệm.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 14932,
+"end": 15025,
+"text": "The villagers, too, came there to offer prayers and petitions, and these were often answered."
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 14932,
+"end": 15025,
+"text": "The villagers, too, came there to offer prayers and petitions, and these were often answered."
+}
+]
+}
+},
+{
+"chapter": 20,
+"locale": "en",
+"kind": "phrase",
+"start": 10214,
+"end": 10229,
+"sentence": [
+10195,
+10256
+],
+"id": 116,
+"text": "live in comfort",
+"sentenceText": "Why should one man live in comfort while another suffers so?\"",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6913,
+"end": 6915,
+"text": "đi"
+},
+{
+"start": 7008,
+"end": 7011,
+"text": "khổ"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6913,
+"end": 6915,
+"text": "đi"
+},
+{
+"start": 7008,
+"end": 7011,
+"text": "khổ"
+}
+]
+}
+},
+{
+"chapter": 20,
+"locale": "en",
+"kind": "phrase",
+"start": 5588,
+"end": 5600,
+"sentence": [
+5576,
+5613
+],
+"id": 117,
+"text": "month passed",
+"sentenceText": "More than a month passed in this way.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "context-only",
+"highlights": []
+}
+},
+{
+"chapter": 20,
+"locale": "en",
+"kind": "word",
+"start": 14061,
+"end": 14067,
+"sentence": [
+14050,
+14104
+],
+"id": 118,
+"text": "purple",
+"sentenceText": "The one in purple said:\"I am in the midst of my feast.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9654,
+"end": 9660,
+"text": "áo tía"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9654,
+"end": 9660,
+"text": "áo tía"
+}
+]
+}
+},
+{
+"chapter": 20,
+"locale": "vi",
+"kind": "word",
+"start": 3280,
+"end": 3284,
+"sentence": [
+3239,
+3304
+],
+"id": 119,
+"text": "chém",
+"sentenceText": "Có một tên quỷ già đến sau, Sinh sai đem chém, ai nấy đều run sợ.",
+"old": {
+"status": "match",
+"highlights": [
+{
+"start": 4907,
+"end": 4915,
+"text": "beheaded"
+}
+]
+},
+"new": {
+"status": "match",
+"highlights": [
+{
+"start": 4907,
+"end": 4915,
+"text": "beheaded"
+}
+]
+}
+}
+],
+"pool": [
+{
+"chapter": 1,
+"locale": "en",
+"kind": "sentence",
+"start": 1743,
+"end": 1838,
+"sentence": [
+1743,
+1838
+],
+"id": 4,
+"text": "Now, as for the Han achieving ten thousand chariots (8), We too achieved ten thousand chariots.",
+"sentenceText": "Now, as for the Han achieving ten thousand chariots (8), We too achieved ten thousand chariots.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1399,
+"end": 1459,
+"text": "Này như Hán làm nên vạn thặng (8) ta cũng làm nên vạn thặng."
+}
+]
+}
+},
+{
+"chapter": 2,
+"locale": "en",
+"kind": "phrase",
+"start": 6498,
+"end": 6528,
+"sentence": [
+6432,
+6539
+],
+"id": 45,
+"text": "father departed this life four",
+"sentenceText": "The young man said to the old servant:\"By ill fortune, my honored father departed this life four years ago.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4197,
+"end": 4212,
+"text": "thất lộc đã bốn"
+}
+]
+}
+},
+{
+"chapter": 4,
+"locale": "en",
+"kind": "sentence",
+"start": 13833,
+"end": 13893,
+"sentence": [
+13833,
+13893
+],
+"id": 86,
+"text": "A virtuous man may be poor because of sins in a former life.",
+"sentenceText": "A virtuous man may be poor because of sins in a former life.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 9842,
+"end": 9934,
+"text": "Có hạnh mà nghèo, hoặc bởi tội khiên kiếp trước, bất nhân mà khá, hẳn là phúc thiện đời xưa."
+}
+]
+}
+},
+{
+"chapter": 6,
+"locale": "en",
+"kind": "sentence",
+"start": 85,
+"end": 160,
+"sentence": [
+85,
+160
+],
+"id": 132,
+"text": "Along the river, people had raised shrines to them in more than ten places.",
+"sentenceText": "Along the river, people had raised shrines to them in more than ten places.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 64,
+"end": 111,
+"text": "Men sông người ta lập đền thờ đến hơn mười chỗ."
+}
+]
+}
+},
+{
+"chapter": 8,
+"locale": "en",
+"kind": "phrase",
+"start": 8481,
+"end": 8513,
+"sentence": [
+8467,
+8544
+],
+"id": 199,
+"text": "returned and reported that every",
+"sentenceText": "The messenger returned and reported that every detail matched Tu Van's words.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5955,
+"end": 5972,
+"text": "về tâu, nhất nhất"
+}
+]
+}
+},
+{
+"chapter": 15,
+"locale": "en",
+"kind": "sentence",
+"start": 512,
+"end": 634,
+"sentence": [
+512,
+634
+],
+"id": 371,
+"text": "There, pagodas were built in such numbers that a large village might hold more than ten, and even a small one five or six.",
+"sentenceText": "There, pagodas were built in such numbers that a large village might hold more than ten, and even a small one five or six.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 341,
+"end": 421,
+"text": "Chùa chiền dựng lên, làng lớn có đến hơn mười nơi, làng nhỏ cũng chừng năm, sáu."
+}
+]
+}
+},
+{
+"chapter": 15,
+"locale": "vi",
+"kind": "phrase",
+"start": 3041,
+"end": 3067,
+"sentence": [
+2982,
+3076
+],
+"id": 383,
+"text": "mảnh ngói khó lòng xoay xở",
+"sentenceText": "Song loạn lạc vừa yên, sinh kế chưa khôi phục được, tấc gỗ mảnh ngói khó lòng xoay xở vào đâu.",
+"old": {
+"status": "context-only",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 4572,
+"end": 4594,
+"text": "scarcely spare a scrap"
+}
+]
+}
+},
+{
+"chapter": 20,
+"locale": "en",
+"kind": "phrase",
+"start": 2429,
+"end": 2451,
+"sentence": [
+2419,
+2518
+],
+"id": 506,
+"text": "Heaven rules by virtue",
+"sentenceText": "Moreover, Heaven rules by virtue and not by terror, and men cherish life and do not love slaughter.",
+"old": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1587,
+"end": 1608,
+"text": "chi trời dùng đức chứ"
+}
+]
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 1581,
+"end": 1608,
+"text": "Huống chi trời dùng đức chứ"
+}
+]
+}
+}
+],
+"verse": [
+{
+"id": 0,
+"chapter": 18,
+"locale": "vi",
+"kind": "sentence",
+"start": 10458,
+"end": 10484,
+"sentence": [
+10458,
+10484
+],
+"text": "Thời với chí ngửa nghiêng,",
+"sentenceText": "Thời với chí ngửa nghiêng,",
+"poem": 2,
+"corr": 4,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11415,
+"end": 11453,
+"text": "Times and hopes alike were overturned,"
+}
+]
+}
+},
+{
+"id": 1,
+"chapter": 18,
+"locale": "en",
+"kind": "sentence",
+"start": 12440,
+"end": 12542,
+"sentence": [
+12440,
+12542
+],
+"text": "At the frontier pass I longed to steal away, yet the fox's home hill (36) so readily stirred my grief.",
+"sentenceText": "At the frontier pass I longed to steal away, yet the fox's home hill (36) so readily stirred my grief.",
+"poem": 2,
+"corr": 22,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11030,
+"end": 11071,
+"text": "Qua ải muốn đưa chân, núi hồ (36) dễ cảm."
+}
+]
+}
+},
+{
+"id": 2,
+"chapter": 18,
+"locale": "vi",
+"kind": "sentence",
+"start": 10679,
+"end": 10722,
+"sentence": [
+10679,
+10722
+],
+"text": "Ngựa Hồ binh Triệu, (35) giày xéo tan tành,",
+"sentenceText": "Ngựa Hồ binh Triệu, (35) giày xéo tan tành,",
+"poem": 2,
+"corr": 11,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 11822,
+"end": 11876,
+"text": "Yan soldiers and Hu cavalry (35) trampled all to ruin,"
+}
+]
+}
+},
+{
+"id": 3,
+"chapter": 18,
+"locale": "en",
+"kind": "sentence",
+"start": 6114,
+"end": 6175,
+"sentence": [
+6114,
+6175
+],
+"text": "Has roused a Xia brigade (18) to bring about its restoration.",
+"sentenceText": "Has roused a Xia brigade (18) to bring about its restoration.",
+"poem": 1,
+"corr": 13,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6191,
+"end": 6227,
+"text": "Nổi quân Hạ(18) mưu cuộc trùng hưng."
+}
+]
+}
+},
+{
+"id": 4,
+"chapter": 18,
+"locale": "en",
+"kind": "sentence",
+"start": 12302,
+"end": 12346,
+"sentence": [
+12302,
+12346
+],
+"text": "Braved every peril and crossed every danger.",
+"sentenceText": "Braved every peril and crossed every danger.",
+"poem": 2,
+"corr": 20,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10968,
+"end": 10987,
+"text": "Qua nguy vượt hiểm."
+}
+]
+}
+},
+{
+"id": 5,
+"chapter": 18,
+"locale": "vi",
+"kind": "sentence",
+"start": 5821,
+"end": 5874,
+"sentence": [
+5821,
+5874
+],
+"text": "Mộc Thạnh(17) nọ diều giương mỏ độc, ong đốt kinh kỳ.",
+"sentenceText": "Mộc Thạnh(17) nọ diều giương mỏ độc, ong đốt kinh kỳ.",
+"poem": 1,
+"corr": 6,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5397,
+"end": 5519,
+"text": "Mu Sheng (17), spreading his wings like a rapacious owl, loosed his evil and sent blades and arrows clashing far and wide."
+}
+]
+}
+},
+{
+"id": 6,
+"chapter": 18,
+"locale": "vi",
+"kind": "sentence",
+"start": 6042,
+"end": 6093,
+"sentence": [
+6042,
+6093
+],
+"text": "Giữ các quận bốn phương hào kiệt, tuốt kiếm hằm hè.",
+"sentenceText": "Giữ các quận bốn phương hào kiệt, tuốt kiếm hằm hè.",
+"poem": 1,
+"corr": 11,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5813,
+"end": 5907,
+"text": "Among the heroes who hold the commanderies of the four quarters, all harbor the will to fight."
+}
+]
+}
+},
+{
+"id": 7,
+"chapter": 18,
+"locale": "vi",
+"kind": "sentence",
+"start": 11196,
+"end": 11222,
+"sentence": [
+11196,
+11222
+],
+"text": "Nay thì linh tính tuy còn,",
+"sentenceText": "Nay thì linh tính tuy còn,",
+"poem": 2,
+"corr": 27,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 12751,
+"end": 12787,
+"text": "Now, though my spirit lingers still,"
+}
+]
+}
+},
+{
+"id": 8,
+"chapter": 18,
+"locale": "en",
+"kind": "sentence",
+"start": 5235,
+"end": 5277,
+"sentence": [
+5235,
+5277
+],
+"text": "And the men of Wu began to harbor designs.",
+"sentenceText": "And the men of Wu began to harbor designs.",
+"poem": 1,
+"corr": 4,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 5750,
+"end": 5768,
+"text": "Giặc Ngô tràn lan."
+}
+]
+}
+},
+{
+"id": 9,
+"chapter": 18,
+"locale": "en",
+"kind": "sentence",
+"start": 11780,
+"end": 11821,
+"sentence": [
+11780,
+11821
+],
+"text": "And calamity break upon the rosy-cheeked?",
+"sentenceText": "And calamity break upon the rosy-cheeked?",
+"poem": 2,
+"corr": 10,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10665,
+"end": 10679,
+"text": "Má hồng vạ nổ."
+}
+]
+}
+},
+{
+"id": 10,
+"chapter": 18,
+"locale": "en",
+"kind": "sentence",
+"start": 11667,
+"end": 11707,
+"sentence": [
+11667,
+11707
+],
+"text": "Grieving alone as my beauty wasted away.",
+"sentenceText": "Grieving alone as my beauty wasted away.",
+"poem": 2,
+"corr": 8,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 10609,
+"end": 10639,
+"text": "Dong quang mòn mỏi riêng buồn."
+}
+]
+}
+},
+{
+"id": 11,
+"chapter": 18,
+"locale": "vi",
+"kind": "sentence",
+"start": 6452,
+"end": 6491,
+"sentence": [
+6452,
+6491
+],
+"text": "Rất nên, vời Đặng Tất ở Diễn Châu (19),",
+"sentenceText": "Rất nên, vời Đặng Tất ở Diễn Châu (19),",
+"poem": 1,
+"corr": 20,
+"old": {
+"status": "unavailable",
+"highlights": []
+},
+"new": {
+"status": "uncertain",
+"highlights": [
+{
+"start": 6600,
+"end": 6659,
+"text": "It would be fitting to summon Dang Tat from Dien Chau (19),"
+}
+]
+}
+}
+]
+}

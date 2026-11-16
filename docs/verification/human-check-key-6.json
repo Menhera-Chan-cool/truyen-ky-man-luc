@@ -1,0 +1,830 @@
+{
+ "population": {
+  "sentence": 38,
+  "phrase": 33,
+  "word": 26
+ },
+ "cards": {
+  "a6-r82": {
+   "n": 1,
+   "kind": "word",
+   "from": "en",
+   "chapter": 14,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r16": {
+   "n": 2,
+   "kind": "word",
+   "from": "en",
+   "chapter": 3,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-p506": {
+   "n": 3,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-r15": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 3,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-v7": {
+   "n": 5,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-v8": {
+   "n": 6,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-r40": {
+   "n": 7,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 7,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r76": {
+   "n": 8,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 13,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-v1": {
+   "n": 9,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-r100": {
+   "n": 10,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 17,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-v2": {
+   "n": 11,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-r86": {
+   "n": 12,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 15,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-v5": {
+   "n": 13,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-r87": {
+   "n": 14,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 15,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r67": {
+   "n": 15,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 12,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-r116": {
+   "n": 16,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r56": {
+   "n": 17,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 10,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r113": {
+   "n": 18,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 19,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r5": {
+   "n": 19,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 1,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-p199": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 8,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-r118": {
+   "n": 21,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r2": {
+   "n": 22,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 1,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r93": {
+   "n": 23,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 16,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r104": {
+   "n": 24,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 18,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r109": {
+   "n": 25,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 19,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r52": {
+   "n": 26,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 9,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r102": {
+   "n": 27,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 18,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r42": {
+   "n": 28,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 8,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r119": {
+   "n": 29,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 20,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r7": {
+   "n": 30,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 2,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r85": {
+   "n": 31,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 15,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r32": {
+   "n": 32,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 6,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r77": {
+   "n": 33,
+   "kind": "word",
+   "from": "en",
+   "chapter": 13,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r33": {
+   "n": 34,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 6,
+   "strata": [
+    "random",
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-r29": {
+   "n": 35,
+   "kind": "word",
+   "from": "en",
+   "chapter": 5,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r57": {
+   "n": 36,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 10,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r58": {
+   "n": 37,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 10,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r114": {
+   "n": 38,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 20,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r38": {
+   "n": 39,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 7,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r19": {
+   "n": 40,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 4,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r70": {
+   "n": 41,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 12,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r69": {
+   "n": 42,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 12,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-v10": {
+   "n": 43,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-r73": {
+   "n": 44,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 13,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-p371": {
+   "n": 45,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 15,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-r79": {
+   "n": 46,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 14,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r53": {
+   "n": 47,
+   "kind": "word",
+   "from": "en",
+   "chapter": 9,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r108": {
+   "n": 48,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 19,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r54": {
+   "n": 49,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 10,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-p86": {
+   "n": 50,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 4,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-r43": {
+   "n": 51,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 8,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r66": {
+   "n": 52,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 12,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-v9": {
+   "n": 53,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-v0": {
+   "n": 54,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-v3": {
+   "n": 55,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-r48": {
+   "n": 56,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 9,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r30": {
+   "n": 57,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 6,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r91": {
+   "n": 58,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 16,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r45": {
+   "n": 59,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 8,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-v4": {
+   "n": 60,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-r44": {
+   "n": 61,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 8,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r28": {
+   "n": 62,
+   "kind": "word",
+   "from": "en",
+   "chapter": 5,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r96": {
+   "n": 63,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 17,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r110": {
+   "n": 64,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 19,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r64": {
+   "n": 65,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r105": {
+   "n": 66,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 18,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-p45": {
+   "n": 67,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 2,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-r6": {
+   "n": 68,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 2,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r115": {
+   "n": 69,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 20,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r63": {
+   "n": 70,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r22": {
+   "n": 71,
+   "kind": "word",
+   "from": "en",
+   "chapter": 4,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r92": {
+   "n": 72,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 16,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-v6": {
+   "n": 73,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-p383": {
+   "n": 74,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 15,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-p132": {
+   "n": 75,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 6,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-r59": {
+   "n": 76,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 10,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r37": {
+   "n": 77,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 7,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-v11": {
+   "n": 78,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 18,
+   "strata": [
+    "verse"
+   ],
+   "answered": true
+  },
+  "a6-r27": {
+   "n": 79,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 5,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-r62": {
+   "n": 80,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  },
+  "a6-p4": {
+   "n": 81,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 1,
+   "strata": [
+    "changed"
+   ],
+   "answered": true
+  },
+  "a6-r71": {
+   "n": 82,
+   "kind": "word",
+   "from": "en",
+   "chapter": 12,
+   "strata": [
+    "random"
+   ],
+   "answered": true
+  }
+ }
+}
