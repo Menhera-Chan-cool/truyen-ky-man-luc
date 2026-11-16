@@ -717,6 +717,28 @@ I tried four forms of the rule on the dev side only (no blind set) and chose by 
 
 With the chosen form, over audits 1 to 6 and the 520-case pool (1,240 lookups) 23 change, 19 of them in what is highlighted and four only in the list of unmatched words. By my reading, 8 wrong highlights become context-only with the right context (`a6-r116`, "muốn"→"for", "Ai lại"→"I", "saw"→"trông có", "công"→"service", "bảng văn"→"gathas", "cửu trùng"→"rod", "tonight and the water"), 6 partly right ones become right or nearer (including "quy"+"trông cậy"→"quy y" and "mỏm bãi"→"sandbar" without "sparse"), 2 partly right ones become abstentions ("hunt at Weiyang was undertaken", "tựa như không thể tránh"), one is mixed and two are neutral. Dev 100/120, tuned 88/110, the chapter-2 list, the probes and the chapter-18 verse lookups are identical row by row. The blind sentence set (run once, 90 of 102) is identical row by row. On lexical set A the one new wrong ("lovely waters and wondrous peaks"→"núi rất đẹp") becomes context-only with the gold in the context (hits 31 and 33 unchanged); on blind lexical set B (run once) hits are unchanged (words 29, phrases 34 of 40): "tuyệt đẹp"→"surpassing beauty" went from "graceful, beauty" to "beauty, and that it was" (still a miss, and wider), and "surpassing beauty" went from "tú, đẹp" to context-only. Vitest 388 of 388 with one new test that fails on the old code; e2e on `phr11` (60 tests): 60 of 60 on the first run. `next dev` rewrites `next-env.d.ts` during that run; the change was reverted before the commit.
 
+## Pilot: word and phrase pairs written by reading both passages, chapters 11 and 20 (2026-11-16)
+
+**What was tried.** The model's links are the limit of the remaining word and phrase errors (protocol line above: the links were never made, or are shifted). As the one source of new information that no tried encoder, reranker or lexicon provided, the pairs were written by Claude reading both passages of every prose story group of chapters 11 (57 groups) and 20 (90 groups): 743 word and phrase pairs, names left out (the name rules already answer them), verse left out. The pairs are in `docs/verification/pilot-pairs/`; `scripts/align-novel/map_labelled_pairs.py` turns them into spans and writes `phr11` plus a `labelled` list on those groups to a separate directory (`work/pilot/phr12`), nothing published. Consumer, uncommitted in `src/lib/novel-lookup.ts` (`labelledAnswer`): a selection inside one such group whose content words all lie in labelled pairs takes the targets of the pairs it touches; a selection narrower than the one pair that holds it keeps a word-link answer that lies inside the pair's target and otherwise takes the pair's target.
+
+**Replay, by my reading.** Of the 124 lookups of the earlier audits and the pool that fall in these two chapters, 17 change; of a fresh seeded sample of 85 phrases and words from them (seed 20261201), 19 change and the lookups that return only context fall from 22 to 13. The two open cards of the sixth sheet change as hoped (`a6-r64` "bridle": "hào kiệt" → "yên khấu"; `a6-r116` "live in comfort": nothing → "sướng"). The only loss I saw is a wide highlight when the selection lies inside a phrase pair ("hair" → "đương gội thì quấn mái tóc").
+
+**Seventh human check** (`docs/verification/human-check-result-7-2026-11-16.csv`, key `human-check-key-7.json`, 63 of 63 cards answered, scorer `scripts/align-novel/human_check_compare7.py RESULT.csv KEY.json`): 34 changed lookups shown with their new answer, 17 of them also with their old answer (the other 17 old answers were abstentions), and 12 unchanged lookups as controls; roles only in the key.
+
+| Role | Cards | Right | Wrong |
+| --- | --- | --- | --- |
+| New answer | 34 | 33 (97%, 85–99) | 1 |
+| Old answer | 17 | 16 (94%, 73–99) | 1 |
+| Control (unchanged) | 12 | 12 | 0 |
+
+Paired on the 17 lookups that had both answers: 16 right → right, 1 wrong → right (`countryside`: "cơm" → "đồng nội"). The 17 new answers where the old one was an abstention: 16 right, 1 wrong (`drinking` → "quây lại đánh chén", wide, the reviewer's note).
+
+**What the sheet cannot show.** The reviewer's standard was more lenient here than on earlier sheets. Four of the old answers had been judged before on identical output: `a5-116` right and right; `a5-119` partly, now right; `a6-r64` partly, now right; `a3-116` ("gone beyond" → "ước sự", "làm") wrong, now right. Three of four moved up, so the old answers I read as wrong were judged right, and the sheet shows no difference in precision between old and new. What stands is the coverage: 17 of the 34 changed lookups were abstentions and 16 of the 17 answers now given were judged right. Absolute figures from this sheet are not comparable with sheets 3 to 6.
+
+**State of the code.** `labelledAnswer` is committed with a test that fails without it (389 of 389 tests, `tsc` clean). It acts only on a group that carries a `labelled` list, which no published artifact has: on `phr11` every set (dev, tuned, lexical A, probes, chapter 2, audits 1 to 6, the pool, verse) is identical row by row to the code before it, and no data is published. The group type has the new field; `validateAlignmentArtifact` does not check it, so a malformed list would have to be checked before any publishing.
+
+**Not done.** Nothing of the pilot is published or deployed; the labels cover 2 of 20 chapters, so the whole-book figures do not move. A comparison that does not depend on the reviewer's absolute standard needs both answers on one card (A or B, random order, "which is better"): 17 cards for these lookups.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

@@ -1,0 +1,832 @@
+{
+ "cards": {
+  "a7-o-audit3-63": {
+   "n": 1,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "old",
+   "set": "audit3",
+   "id": 63,
+   "answered": true,
+   "highlights": [
+    "là không phải thời"
+   ]
+  },
+  "a7-o-fresh7-53": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "role": "old",
+   "set": "fresh7",
+   "id": 53,
+   "answered": true,
+   "highlights": [
+    "high office in the underworld"
+   ]
+  },
+  "a7-n-fresh7-76": {
+   "n": 3,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 76,
+   "answered": true,
+   "highlights": [
+    "mâm bàn"
+   ]
+  },
+  "a7-o-audit1-63": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "old",
+   "set": "audit1",
+   "id": 63,
+   "answered": true,
+   "highlights": [
+    "đem",
+    "giải vây"
+   ]
+  },
+  "a7-n-fresh7-80": {
+   "n": 5,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 80,
+   "answered": true,
+   "highlights": [
+    "quây lại đánh chén"
+   ]
+  },
+  "a7-n-audit1-63": {
+   "n": 6,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "audit1",
+   "id": 63,
+   "answered": true,
+   "highlights": [
+    "giải vây"
+   ]
+  },
+  "a7-n-pool6-281": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "pool6",
+   "id": 281,
+   "answered": true,
+   "highlights": [
+    "chân núi đi về phía nam"
+   ]
+  },
+  "a7-n-fresh7-74": {
+   "n": 8,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 74,
+   "answered": true,
+   "highlights": [
+    "dần dần"
+   ]
+  },
+  "a7-o-fresh7-82": {
+   "n": 9,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "old",
+   "set": "fresh7",
+   "id": 82,
+   "answered": true,
+   "highlights": [
+    "cơm"
+   ]
+  },
+  "a7-o-audit6-64": {
+   "n": 10,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "role": "old",
+   "set": "audit6",
+   "id": 64,
+   "answered": true,
+   "highlights": [
+    "hào kiệt"
+   ]
+  },
+  "a7-n-audit6-64": {
+   "n": 11,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "audit6",
+   "id": 64,
+   "answered": true,
+   "highlights": [
+    "yên khấu"
+   ]
+  },
+  "a7-c-fresh7-59": {
+   "n": 12,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "role": "control",
+   "set": "fresh7",
+   "id": 59,
+   "answered": true,
+   "highlights": [
+    "vượt qua được"
+   ]
+  },
+  "a7-o-fresh7-66": {
+   "n": 13,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 20,
+   "role": "old",
+   "set": "fresh7",
+   "id": 66,
+   "answered": true,
+   "highlights": [
+    "the"
+   ]
+  },
+  "a7-n-fresh7-66": {
+   "n": 14,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 66,
+   "answered": true,
+   "highlights": [
+    "first watch"
+   ]
+  },
+  "a7-c-fresh7-70": {
+   "n": 15,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "control",
+   "set": "fresh7",
+   "id": 70,
+   "answered": true,
+   "highlights": [
+    "kể"
+   ]
+  },
+  "a7-n-audit5-116": {
+   "n": 16,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "audit5",
+   "id": 116,
+   "answered": true,
+   "highlights": [
+    "chốn nào tựa nương"
+   ]
+  },
+  "a7-n-fresh7-31": {
+   "n": 17,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "fresh7",
+   "id": 31,
+   "answered": true,
+   "highlights": [
+    "đương gội thì quấn mái tóc"
+   ]
+  },
+  "a7-o-fresh7-40": {
+   "n": 18,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "role": "old",
+   "set": "fresh7",
+   "id": 40,
+   "answered": true,
+   "highlights": [
+    "purple pondered"
+   ]
+  },
+  "a7-n-fresh7-82": {
+   "n": 19,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 82,
+   "answered": true,
+   "highlights": [
+    "đồng nội"
+   ]
+  },
+  "a7-n-fresh7-14": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "fresh7",
+   "id": 14,
+   "answered": true,
+   "highlights": [
+    "nước bất phục"
+   ]
+  },
+  "a7-n-audit1-119": {
+   "n": 21,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "audit1",
+   "id": 119,
+   "answered": true,
+   "highlights": [
+    "áo cừu"
+   ]
+  },
+  "a7-c-fresh7-69": {
+   "n": 22,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 20,
+   "role": "control",
+   "set": "fresh7",
+   "id": 69,
+   "answered": true,
+   "highlights": [
+    "hateful"
+   ]
+  },
+  "a7-o-fresh7-46": {
+   "n": 23,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "role": "old",
+   "set": "fresh7",
+   "id": 46,
+   "answered": true,
+   "highlights": [
+    "swell your ranks, yet",
+    "harm"
+   ]
+  },
+  "a7-n-audit5-63": {
+   "n": 24,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "audit5",
+   "id": 63,
+   "answered": true,
+   "highlights": [
+    "thương những giống chim hèn"
+   ]
+  },
+  "a7-o-audit5-116": {
+   "n": 25,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "role": "old",
+   "set": "audit5",
+   "id": 116,
+   "answered": true,
+   "highlights": [
+    "cấp dưỡng",
+    "chốn nào tựa"
+   ]
+  },
+  "a7-n-fresh7-34": {
+   "n": 26,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "fresh7",
+   "id": 34,
+   "answered": true,
+   "highlights": [
+    "ấp cây"
+   ]
+  },
+  "a7-n-fresh7-53": {
+   "n": 27,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 53,
+   "answered": true,
+   "highlights": [
+    "granted high office in the underworld"
+   ]
+  },
+  "a7-o-audit5-119": {
+   "n": 28,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "old",
+   "set": "audit5",
+   "id": 119,
+   "answered": true,
+   "highlights": [
+    "cấp dưỡng"
+   ]
+  },
+  "a7-o-fresh7-6": {
+   "n": 29,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "old",
+   "set": "fresh7",
+   "id": 6,
+   "answered": true,
+   "highlights": [
+    "khỏi cái nạn"
+   ]
+  },
+  "a7-c-fresh7-30": {
+   "n": 30,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "role": "control",
+   "set": "fresh7",
+   "id": 30,
+   "answered": true,
+   "highlights": [
+    "ý"
+   ]
+  },
+  "a7-n-audit3-65": {
+   "n": 31,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "audit3",
+   "id": 65,
+   "answered": true,
+   "highlights": [
+    "trung tín"
+   ]
+  },
+  "a7-n-fresh7-5": {
+   "n": 32,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "role": "new",
+   "set": "fresh7",
+   "id": 5,
+   "answered": true,
+   "highlights": [
+    "tale of the fox spirit of the tomb pillar"
+   ]
+  },
+  "a7-o-audit5-63": {
+   "n": 33,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "old",
+   "set": "audit5",
+   "id": 63,
+   "answered": true,
+   "highlights": [
+    "những giống chim hèn muông yếu và xin nài cho"
+   ]
+  },
+  "a7-c-fresh7-81": {
+   "n": 34,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 20,
+   "role": "control",
+   "set": "fresh7",
+   "id": 81,
+   "answered": true,
+   "highlights": [
+    "tears",
+    "eyes"
+   ]
+  },
+  "a7-n-fresh7-46": {
+   "n": 35,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 46,
+   "answered": true,
+   "highlights": [
+    "wish to swell your ranks, yet what of the harm"
+   ]
+  },
+  "a7-o-audit3-116": {
+   "n": 36,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "role": "old",
+   "set": "audit3",
+   "id": 116,
+   "answered": true,
+   "highlights": [
+    "ước sự",
+    "làm"
+   ]
+  },
+  "a7-c-fresh7-50": {
+   "n": 37,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "role": "control",
+   "set": "fresh7",
+   "id": 50,
+   "answered": true,
+   "highlights": [
+    "hèn mọn",
+    "cũng không"
+   ]
+  },
+  "a7-n-fresh7-6": {
+   "n": 38,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "fresh7",
+   "id": 6,
+   "answered": true,
+   "highlights": [
+    "trốn",
+    "nạn"
+   ]
+  },
+  "a7-n-audit3-116": {
+   "n": 39,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "audit3",
+   "id": 116,
+   "answered": true,
+   "highlights": [
+    "không làm điều quá đáng"
+   ]
+  },
+  "a7-n-fresh7-13": {
+   "n": 40,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "fresh7",
+   "id": 13,
+   "answered": true,
+   "highlights": [
+    "đương thế, để tiếng về đời sau"
+   ]
+  },
+  "a7-n-audit6-65": {
+   "n": 41,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "audit6",
+   "id": 65,
+   "answered": true,
+   "highlights": [
+    "kỷ thực"
+   ]
+  },
+  "a7-o-fresh7-34": {
+   "n": 42,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "role": "old",
+   "set": "fresh7",
+   "id": 34,
+   "answered": true,
+   "highlights": [
+    "há chịu"
+   ]
+  },
+  "a7-o-fresh7-13": {
+   "n": 43,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "old",
+   "set": "fresh7",
+   "id": 13,
+   "answered": true,
+   "highlights": [
+    "lập công",
+    "tiếng"
+   ]
+  },
+  "a7-n-audit5-119": {
+   "n": 44,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "audit5",
+   "id": 119,
+   "answered": true,
+   "highlights": [
+    "chốn nào tựa nương"
+   ]
+  },
+  "a7-n-fresh7-8": {
+   "n": 45,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "fresh7",
+   "id": 8,
+   "answered": true,
+   "highlights": [
+    "càn khôn trong sáng"
+   ]
+  },
+  "a7-n-fresh7-24": {
+   "n": 46,
+   "kind": "word",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "fresh7",
+   "id": 24,
+   "answered": true,
+   "highlights": [
+    "khói ráng"
+   ]
+  },
+  "a7-o-fresh7-5": {
+   "n": 47,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "role": "old",
+   "set": "fresh7",
+   "id": 5,
+   "answered": true,
+   "highlights": [
+    "tale of the fox"
+   ]
+  },
+  "a7-c-fresh7-18": {
+   "n": 48,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "role": "control",
+   "set": "fresh7",
+   "id": 18,
+   "answered": true,
+   "highlights": [
+    "brought forth all creatures"
+   ]
+  },
+  "a7-o-fresh7-61": {
+   "n": 49,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "old",
+   "set": "fresh7",
+   "id": 61,
+   "answered": true,
+   "highlights": [
+    "dân"
+   ]
+  },
+  "a7-n-audit6-116": {
+   "n": 50,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "audit6",
+   "id": 116,
+   "answered": true,
+   "highlights": [
+    "sướng"
+   ]
+  },
+  "a7-c-fresh7-23": {
+   "n": 51,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "control",
+   "set": "fresh7",
+   "id": 23,
+   "answered": true,
+   "highlights": [
+    "như nước suối",
+    "một"
+   ]
+  },
+  "a7-n-fresh7-62": {
+   "n": 52,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 62,
+   "answered": true,
+   "highlights": [
+    "trượng phu sinh ở đời"
+   ]
+  },
+  "a7-c-fresh7-54": {
+   "n": 53,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "role": "control",
+   "set": "fresh7",
+   "id": 54,
+   "answered": true,
+   "highlights": [
+    "motley rabble, each"
+   ]
+  },
+  "a7-c-fresh7-79": {
+   "n": 54,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "control",
+   "set": "fresh7",
+   "id": 79,
+   "answered": true,
+   "highlights": [
+    "chức"
+   ]
+  },
+  "a7-n-audit3-63": {
+   "n": 55,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "audit3",
+   "id": 63,
+   "answered": true,
+   "highlights": [
+    "không phải thời"
+   ]
+  },
+  "a7-c-fresh7-15": {
+   "n": 56,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "control",
+   "set": "fresh7",
+   "id": 15,
+   "answered": true,
+   "highlights": [
+    "cỏ làm đệm êm"
+   ]
+  },
+  "a7-n-audit4-62": {
+   "n": 57,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "audit4",
+   "id": 62,
+   "answered": true,
+   "highlights": [
+    "mở lưới"
+   ]
+  },
+  "a7-n-fresh7-61": {
+   "n": 58,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 61,
+   "answered": true,
+   "highlights": [
+    "hại mạng của dân"
+   ]
+  },
+  "a7-n-pool6-514": {
+   "n": 59,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "role": "new",
+   "set": "pool6",
+   "id": 514,
+   "answered": true,
+   "highlights": [
+    "lightning strikes the Jianfu stele"
+   ]
+  },
+  "a7-c-fresh7-2": {
+   "n": 60,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "role": "control",
+   "set": "fresh7",
+   "id": 2,
+   "answered": true,
+   "highlights": [
+    "Surely"
+   ]
+  },
+  "a7-n-audit1-65": {
+   "n": 61,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 11,
+   "role": "new",
+   "set": "audit1",
+   "id": 65,
+   "answered": true,
+   "highlights": [
+    "Then they added"
+   ]
+  },
+  "a7-n-fresh7-40": {
+   "n": 62,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "role": "new",
+   "set": "fresh7",
+   "id": 40,
+   "answered": true,
+   "highlights": [
+    "The one in purple pondered"
+   ]
+  },
+  "a7-n-fresh7-17": {
+   "n": 63,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "role": "new",
+   "set": "fresh7",
+   "id": 17,
+   "answered": true,
+   "highlights": [
+    "mà đi"
+   ]
+  }
+ }
+}

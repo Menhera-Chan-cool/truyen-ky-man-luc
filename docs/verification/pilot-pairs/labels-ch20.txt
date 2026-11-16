@@ -1,0 +1,528 @@
+#0
+Chúng = They
+nói = answered
+#1
+muốn = wish
+thêm quân = swell our ranks
+#2
+muốn cho thêm quân = wish to swell your ranks
+tổn hại = harm
+người sống = the living
+#3
+Quân = soldiers
+ăn uống = food and drink
+thiếu = scarcer
+#4
+người bớt = fewer the living
+cung cấp = offerings
+thưa = thinner
+#5
+lợi = profit
+thích làm như vậy = persist in such deeds
+#6
+Lòng dục = desires
+khe ngòi = gullies and streams
+không đủ lấp = could not fill them
+#7
+Hễ lợi mình được = it profits you
+#8
+tấm áo = scrap of cloth
+mảnh giấy = slip of paper
+không từ = not refuse
+#9
+ống giập chậu vỡ = shattered pots and broken dishes
+không thẹn = not ashamed
+#10
+Hì hục = toil and grub
+chai lọ = jars and bottles
+#11
+hăm hở = scramble eagerly
+cháo cơm = gruel and rice
+#12
+trộm quyền = usurp the authority
+Hóa công = Creator
+#13
+kêu nóc = Shrieking from the rooftops
+dòm buồng = peering into bedchambers
+#14
+rối lòng = trouble the hearts
+dân chúng = common folk
+#15
+thích = pleasure
+thẹn = ashamed
+#16
+trời = Heaven
+đức = virtue
+uy = terror
+#17
+ưa sinh = cherish life
+ưa giết = love slaughter
+#18
+kiêu dâm = arrogance and excess
+#19
+Thượng đế = Lord on High
+không dong = not suffer it
+#20
+hình phạt = punishment
+tất đến = surely come
+#21
+trốn = flee
+tru lục = put to the sword
+#22
+nói = said
+Sinh = scholar
+#23
+văn võ kiêm toàn = versed in both letters and arms
+#24
+hèn = humble
+làm tướng = serve as a general
+#25
+bà mẹ già = aged mother
+#26
+chia = divided
+ra từng bộ = into companies
+#27
+điều gì hay dở = anything good or ill
+#28
+bẩm trình = report
+#29
+phúc = blessing
+họa = curse
+#30
+tắc lưỡi = clicked his tongue
+nói = said
+#31
+quê quán = home village
+họ tên = name
+lĩnh chức quan to = granted high office
+dưới âm phủ = underworld
+#32
+tình cũ = old friendship
+thăm = visit
+#33
+nói = said
+#34
+trông nhờ = count on
+che chở = shelter
+#35
+hỏi = asked
+#36
+làm thế nào = what am I to do
+#37
+đói = hungry
+#38
+cỗ = feast
+ăn = eat
+#39
+chén rượu = cups of wine
+phải tội = bring punishment down
+#40
+đến đây làm gì = want here
+#41
+người chủ = master of the house
+bày = laid out
+mâm cỗ = feast
+#42
+ốm nặng = gravely ill
+#43
+tức giận = flew into a rage
+#44
+cầm quyển sổ ném xuống đất = flung a ledger to the ground
+nói = said
+#45
+mâm cỗ sơ sài = paltry meal
+đánh đổi = buy back
+năm mạng người = five human lives
+#105
+kỳ sĩ = man of rare and singular spirit
+hạt Quốc Oai = district of Quoc Oai
+tính tình hào hiệp = bold and chivalrous by nature
+ma quỷ = ghosts or demons
+mê hoặc = beguiled
+hoa yêu nguyệt quái = Flower demons and moon fiends
+dâm thần lệ quỷ = lewd gods and baleful spirits
+tự điển = register of sanctioned rites
+coi thường = held in contempt
+sợ hãi = fear
+Cuối đời Trùng Quang nhà Trần = close of the Trung Quang reign of the Tran dynasty
+người chết chóc nhiều = the dead were beyond counting
+oan hồn = wronged souls
+tựa nương = place to rest
+họp lại = gathered together
+đàn lũ = packs and droves
+hàng cơm = eating-houses
+kiếm miếng ăn = beg a morsel
+cô gái = young women
+kết duyên tạm = fleeting unions
+bệnh nguy khốn = gravely ill
+cầu cúng = made offerings
+hết phép hay = wondrously potent
+hoành hành = ran rampant
+đồng nội = fields and countryside
+say rượu = flushed with wine
+cưỡi ngựa = on horseback
+tan chạy = scattered in terror
+gọi bảo = called after them
+#106
+tráng sĩ = men of valor
+không may mắc nạn = met with misfortune
+thăm = visit
+điều lợi hại = what serves your interest and what harms it
+lảng tránh = shun
+#107
+dần dần = Little by little
+họp lại = gathered again
+ngồi phía trên = seat of honor
+hiểu bảo = reasoned with them
+#108
+tai nạn = calamity
+chết chóc = deaths
+cốt để làm gì = to what end
+#109
+nói = said
+#110
+Chúng quỷ = The ghosts
+bùi ngùi = stricken with sorrow
+nói = replied
+#111
+bất đắc dĩ = because we must
+Sống chẳng gặp thời = In life we never found our season
+chết không phải số = in death we went before our appointed hour
+Đói = hunger
+cấp dưỡng = feeds us
+lui = retreat
+chốn nào tựa nương = nowhere to shelter
+gò xương trắng = mounds of white bones
+rầu rĩ cỏ rêu = grass and moss grieve
+đống cát vàng = drifts of yellow sand
+lạnh lùng sương gió = frost and wind blow bitter cold
+rủ rê bè bạn = gather our fellows
+xoay xở miếng ăn = scrape together what morsels we may
+vận = fortunes
+đổi thay = turn
+tan tác = ruined and scattered
+minh ty = Underworld Court
+cấm đoán = forbidden
+xin = petition
+sang năm = next year
+tệ hơn = worse
+#112
+nhà bếp = kitchen
+dọn cỗ = brought out a feast
+mâm bàn = platters and dishes
+nguồn gốc = where it had come from
+thịt = meat
+con trâu = ox
+rượu = wine
+thúng bỗng = basket of fermented mash
+ăn uống = ate and drank
+rất lanh = tremendous speed
+như mưa như gió = like wind and rain
+mừng rỡ = rejoiced
+bảo nhau = said to one another
+#113
+chủ soái = commander
+#114
+đám ô hợp = motley rabble
+tự hùng trưởng = playing chieftain for himself
+thống xuất = lead us all
+lâu bền = last for long
+Sứ quân = Your Excellency
+rủ lòng yêu = favored us
+trời = Heaven
+#115
+nói = said
+#116
+Chúng quỷ = The ghosts
+nói = said
+#117
+giữ sự uy nghiêm = keep your dignity
+ban cho hiệu lệnh = issue your commands
+ban ngày = By day
+chia khu ở tản = scatter to our separate quarters
+đêm = by night
+sai viên bẩm trình = send an officer to report to you
+chín suối = Nine Springs
+#118
+nói = said
+#119
+bất đắc dĩ dùng đến ta = I must be pressed into your service
+sáu điều làm việc = six rules of conduct
+thề = swear
+tuân theo = obey
+#120
+vâng dạ = agreed
+đêm thứ ba = third night
+lập đàn = raise an altar
+quỷ già = old ghost
+chém = beheaded
+run sợ = trembled with fear
+ra lệnh = gave his orders
+#121
+coi khinh mệnh lệnh = hold my commands in contempt
+dâm ô = lewd ways
+quấy quắc = make mischief
+hại mạng của dân = costs the people their lives
+cướp bóc = plunder
+cứu nạn = rescue
+giả hình = take on false forms
+kết đảng = band together
+Nghe mệnh ta = Obey my commands
+làm tướng = be your general
+trái lệnh = Defy them
+trị tội = punish you
+hậu hối = regret
+#122
+hơn một tháng = More than a month
+ngồi nhàn = sat at his leisure
+sứ giả của Minh ty = envoy of the Underworld Court
+xin mời = asked him to come away
+lảng tránh = put him off
+#123
+mệnh lệnh = command
+Diêm vương = King Yama
+cương nghị = firm resolve
+phẩm trật = rank and office
+từ chối = refuse
+rộng kỳ hạn = generous span of time
+tự đến = come of your own accord
+đợi = wait
+dọc đường = along the road
+#124
+Nói xong = With these words
+không thấy đâu nữa = vanished
+đòi = summoned
+hỏi = questioned
+#125
+quả có việc ấy = It is true
+thưa = tell
+không yên = troubled times
+bốn bộ Dạ Xoa = four Yaksha divisions
+viên tướng = general
+quyền hành sát phạt = power to punish and to slay
+tính mệnh sinh linh = lives of all living beings
+trách nhiệm lớn lao = burden is a heavy one
+oai vọng lẫy lừng = renown is great
+tiến cử = recommended
+chức lớn = high post
+#126
+nói = said
+#127
+Dưới Diêm La = court of King Yama
+tuyển người = men are chosen
+tuyển Phật = Buddhas are
+đút lót = bribe
+cầu may = stroke of luck
+Giữ mình cương chính = keeps himself upright
+hèn mọn = humble
+cất lên = raised up
+ở nết gian tà = conduct is crooked
+hiển vinh = exalted
+huấn luyện quản đốc = training and commanding
+ham luyến vợ con = linger over your wife and children
+dùng dằng ngày tháng = days and months slip by
+chức ăn = post
+lọt về tay người khác = fall into another man's hands
+buồn rầu = grieve
+#128
+Chết = Death
+đáng ghét = hateful
+danh = good name
+ngọn bút = brush
+chóng cùn = wears dull
+cây thông = pine
+cành = boughs
+chim trĩ = pheasant
+lông đẹp = splendid plumage
+con voi = elephant
+ngà trắng = white tusks
+chim hồng = swan goose
+chim nhạn = wild goose
+giết = slaughtered
+kêu = cry out
+cây hu cây lịch = ailanthus and the gnarled oak
+vô dụng = worthless
+Nhan Hồi = Yan Hui
+ba mươi hai = thirty-two
+Trương Cát = Li He
+hai mươi bảy = twenty-seven
+trượng phu sinh ở đời = A man born into this world
+lưng đeo vàng = wear gold at his girdle
+chân bước ngọc = tread the jade halls of office
+lưu danh muôn thuở = leave a name that endures ten thousand ages
+cúi đầu = head bowed
+cõi đời vẩn đục = muddied world
+#129
+trang xếp việc nhà = put his household affairs in order
+chết = died
+#130
+người làng = man of his village
+chơi thân = close friend
+phiêu bạt = wandering
+nhà trọ = inn
+canh một = first watch
+ngựa = steed
+kẻ hầu đầy tớ = attendants and servants
+yết kiến = see him
+Chủ trọ = innkeeper
+vén mành = lifted the bamboo blind
+rất lấy làm lạ = astonished
+tiếng nói = voice
+toan ra cửa để tránh = about to slip out the door to avoid him
+#131
+Cố nhân = Your old friend
+biết = knows
+không biết = do not know
+cố nhân = old friend
+#132
+cởi = took off
+áo cừu = fur coat
+cố = pawned
+nhà hàng = innkeeper
+uống làm vui = drink and make merry
+mấy tuần = several rounds
+#133
+Tôi xưa nay ở đời = All my life
+để ý tu lấy âm công = striven to build up hidden merit
+không mưu sự ích lợi riêng mình = never schemed for my own gain
+không gieo sự nguy bách cho mọi người = nor brought peril upon others
+dạy học = In teaching
+tùy tài dụ dịch = guided each pupil according to his gifts
+tự học = in my own studies
+cực lực dùi mài = toiled with every ounce of my strength
+không ước sự vẩn vơ = not chased idle dreams
+không làm điều quá đáng = nor gone beyond what is proper
+bốn phương kiếm miếng = scratch out a living in every corner of the land
+chiếc bóng nhờ người = lean on strangers in my solitude
+con khóc lóc đói lòng = children cry with empty bellies
+vợ than rét cật = wife laments the cold that chills her to the bone
+thiếu túp lều chắn gió = lack even a hut to keep out the wind
+không chiếc nón che mưa = not so much as a hat against the rain
+hết đông rồi tây = East and west
+long đong chạy mãi = wander without end
+bè bạn = friends
+nhiều người = many
+đi làm quan = risen to office
+tài nghệ = talent and learning
+như nhau = equals
+thân danh khác xa nhau = stations and our names lie worlds apart
+sướng = live in comfort
+người khổ = another suffers
+#134
+nói = replied
+#135
+Phú quý = Wealth and rank
+nghèo cùng = poverty
+tự số = matter of fate
+núi đồng = mountain of copper
+chết đói = starved to death
+có duyên = fate is kind
+gió thổi núi Mã Đương = wind carries a man's boat past Mount Madang
+không phận = fate is unkind
+sét đánh bia Tiến Phúc = lightning strikes the Jianfu stele
+đức hạnh = virtuous
+lên đến mây xanh = ascended to high office
+từ chương = poets
+chân trắng = humble commoners
+không làm mà nên = comes about without our doing
+không vời mà đến = arrives without our calling
+kẻ sĩ = scholar
+nghèo mà không xiểm nịnh = stay poor without fawning
+cùng mà vẫn vững bền = stay steadfast in hardship
+địa vị = station
+cảnh ngộ = lot
+#136
+Rượu đã uống cạn = wine was gone
+khêu đèn = trimmed the lamp
+trò chuyện = talked on together
+tương biệt = part
+đuổi hết mọi người ra = sent everyone else out of the room
+#137
+Thượng đế = Lord on High
+quân ôn dịch = plague spirits
+quận huyện = prefecture and district
+nạn đói khát = Famine
+binh cách = war
+dân sinh = people
+điêu hao = ravaged
+nguồn phúc sâu xa = deep stores of blessing
+ngọc đá đều nát = jade and common stone shattered alike
+phúc mỏng = blessings are thin
+quê quán = native village
+đất khách quê người = strange land
+#138
+nói = replied
+#139
+địa hạt = domain
+vượt qua = overstep
+Trường Giang = Truong Giang
+phía bắc = North
+phía tây = west
+viên tướng = general
+quân áo đen = troops I lead wear black
+từ tâm = mercy
+ác quỷ = wicked demons
+lo liệu trước = make your preparations
+#140
+nói = replied
+#141
+soái bộ = commander's division
+một nghìn tên quân = thousand soldiers
+ôn dịch = pestilence
+sắm nhiều cỗ bàn = prepare an abundant feast
+sân = courtyard
+đói khát = hungry and thirsty
+núp = Hide yourself
+chỗ tối = shadows
+sụp lạy = prostrate yourself
+kêu nài = plead
+cứu vãn = averted
+#142
+ứa nước mắt = tears welling in their eyes
+từ biệt = bade each other farewell
+#143
+bệnh dịch = pestilence
+vợ con = wife and children
+mắc rất nặng = fallen gravely ill
+nhận được nhau = recognize one another
+theo lời Dĩ Thành = Following Di Thanh's counsel
+cỗ rất hậu = lavish feast
+sân = courtyard
+đám đông quỷ sứ = great throng of demon minions
+bay đến = flying down
+nhìn nhau = looked at one another
+#144
+quây lại đánh chén = gathered round and fell to eating and drinking
+áo tía = purple robes
+chễm chệ = imposingly
+chính giữa = center
+đứng chầu = stood in attendance
+dao búa = knives and axes
+sổ sách = ledgers and registers
+lạy mãi = bowed before them over and over
+#145
+Chúng quỷ = The demons
+nói = replied
+#146
+Chúng quỷ = The demons
+nói = said
+#147
+ăn của nhà nó = eaten from his household
+làm ngơ = turn a blind eye
+cứu = saving
+phải tội = punishment
+dẫu chết = cost us our lives
+bằng lòng = accept it gladly
+#148
+Người áo tía = The one in purple
+ngẫm nghĩ = pondered
+bút son = vermilion brush
+xóa bỏ = struck out
+hơn mười chữ = more than ten characters
+khỏi = recovered
+cảm ân đức = Grateful for
+lập miếu = built a shrine
+thờ = worship
+Người làng = The villagers
+khấn vái kêu cầu = offer prayers and petitions
+ứng nghiệm = answered

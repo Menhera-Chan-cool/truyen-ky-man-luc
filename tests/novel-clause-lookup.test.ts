@@ -401,3 +401,12 @@ it('does not count unlinked words between two linked ones against a phrase whose
  expect(run('Chàng giảng dạy binh pháp cho quân.','giảng dạy binh pháp',[['giảng','trained'],['pháp','war']])).toEqual(['trained men in arts of war']);
  expect(run('Chàng giảng dạy binh pháp cho quân.','giảng dạy binh pháp',[['giảng','trained']])).toEqual([]);
 });
+it('takes the target of a labelled pair for a selection it covers, and corrects a word link that leaves the pair around a narrower selection',()=>{
+ const vi='Chàng cưỡi ngựa đi săn.',en='He rode a horse to hunt.';
+ const make=(to:string)=>{const a=plain(vi,en,{vi:[vi],en:[en]},[['ngựa',to]]);a.groups[0].labelled=[{vi:span(vi,'cưỡi ngựa'),en:span(en,'rode a horse')},{vi:span(vi,'đi săn'),en:span(en,'hunt')}];return a;};
+ const ask=(a:AlignmentArtifact,l:'vi'|'en',q:string)=>query(a,l,span(a.editions[l].text,q)).passages.flatMap(p=>p.highlights.map(h=>a.editions[l==='vi'?'en':'vi'].text.slice(h.start,h.end)));
+ expect(ask(make('hunt'),'vi','cưỡi ngựa')).toEqual(['rode a horse']);
+ expect(ask(make('hunt'),'vi','ngựa')).toEqual(['rode a horse']);
+ expect(ask(make('horse'),'vi','ngựa')).toEqual(['horse']);
+ expect(ask(make('hunt'),'en','horse')).toEqual(['cưỡi ngựa']);
+});

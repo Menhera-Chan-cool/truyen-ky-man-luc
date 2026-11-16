@@ -22,6 +22,7 @@ export type AlignmentArtifact = {
     kind?:'lexical';
     clausePairs?:ClausePair[];
     phrasePairs?:PhrasePair[];
+    labelled?:{vi:TextSpan;en:TextSpan}[];
     links:{vi:[number,number];en:[number,number];score:number}[]}[];
   notePairs?:{vi:TextSpan;en:TextSpan;score:number;margin:number}[];
   poems?:PoetryPair[];
@@ -162,6 +163,17 @@ function wholeSentences(text:string,start:number,end:number,locale:Locale):numbe
   const startsAt=start<=0||/(^|[.!?…\n]["”’)\]]*\s*["“‘«']*)$/u.test(text.slice(Math.max(0,start-8),start));
   const endsAt=/[.!?…]["”’)\]]*$/u.test(body)||/^["”’)\]]*\s*(?:\n|$)/u.test(text.slice(end,end+8));
   return startsAt&&endsAt?[...new Intl.Segmenter(locale,{granularity:'sentence'}).segment(body)].filter(s=>/\p{L}/u.test(s.segment)).length:0;
+}
+// Pilot: word and phrase pairs written by reading both passages. A selection inside one such group whose content words all lie in labelled pairs takes the targets of the pairs it touches.
+function labelledAnswer(g:AlignmentArtifact['groups'][number],request:LookupRequest,text:string,locale:Locale,targetLocale:Locale):{spans:TextSpan[];covered:TextSpan[];inner:boolean}|null{
+  if(!g.labelled?.length||request.start<g[locale].start||request.end>g[locale].end)return null;
+  const pairs=g.labelled.filter(p=>p[locale].start<request.end&&p[locale].end>request.start);
+  if(!pairs.length)return null;
+  const content=[...text.slice(request.start,request.end).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:request.start+m.index,end:request.start+m.index+m[0].length,text:m[0]})).filter(w=>/\p{L}/u.test(w.text)&&!onlyFunctionWords(w.text,locale));
+  if(!content.length||content.some(w=>!pairs.some(p=>p[locale].start<=w.start&&p[locale].end>=w.end)))return null;
+  // A selection narrower than the one pair that holds it keeps a word-link answer that lies inside the pair's target; only an answer that leaves it is replaced.
+  const inner=pairs.length===1&&!(pairs[0][locale].start===content[0].start&&pairs[0][locale].end===content.at(-1)!.end);
+  return {spans:pairs.map(p=>({...p[targetLocale]})),covered:pairs.map(p=>({...p[locale]})),inner};
 }
 // A phrase pair is only used for a selection that is exactly its source window (edge punctuation and note markers aside).
 function phraseTarget(g:AlignmentArtifact['groups'][number],request:LookupRequest,text:string,locale:Locale,targetLocale:Locale):{source:TextSpan;target:TextSpan}|null{
@@ -473,7 +485,9 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
     const targetSpans=targetWords(g,locale,source,target,!poem&&g.kind!=='lexical');
     const sourceSpans=targetWords(g,targetLocale,target,source,!poem&&g.kind!=='lexical');
     let claimedByOthers:(TextSpan&{from:TextSpan})[]=[];
+    const lab=!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length?labelledAnswer(g,request,source.text,locale,targetLocale):null;
     if(named)spans=[named];
+    else if(lab&&!lab.inner){spans.push(...lab.spans);coveredWords.push(...lab.covered);uncertain=true;}
     else {
       spans.push(...sentences.spans);
       // A link that leaves the smallest clause pair holding the selection and lands in another clause pair is crossed ("live in comfort" linked to "đi" of the sentence before): it is ignored.
@@ -548,6 +562,7 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
       }
     }
     let highlights=mergeSpans(nameTargets(spans,request,target.text,g[targetLocale],targetLocale),target.text);
+    if(lab?.inner&&!(highlights.length&&highlights.every(h=>h.start>=lab.spans[0].start&&h.end<=lab.spans[0].end))){highlights=[{...lab.spans[0]}];coveredWords.push(...lab.covered);uncertain=true;}
     // The pieces of one phrase answer are joined when what lies between them is at most four words (and no more than the selection has) nobody else's link claims, with no sentence break: a person reads a phrase as one run.
     // A word the link of a source word within two words of the selection holds ("không" for the "not" before "dare") belongs to the phrase when it lies between its pieces.
     if(!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&highlights.length>1&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1){
