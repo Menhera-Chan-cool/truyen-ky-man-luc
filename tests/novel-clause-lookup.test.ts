@@ -401,6 +401,14 @@ it('does not count unlinked words between two linked ones against a phrase whose
  expect(run('Chàng giảng dạy binh pháp cho quân.','giảng dạy binh pháp',[['giảng','trained'],['pháp','war']])).toEqual(['trained men in arts of war']);
  expect(run('Chàng giảng dạy binh pháp cho quân.','giảng dạy binh pháp',[['giảng','trained']])).toEqual([]);
 });
+it('lets labelled pairs that cover a whole clause answer where the clause logic found no pair',()=>{
+ const a=fixture();a.groups[0].clausePairs=[];
+ const r0=query(a,'en',{start:0,end:a.groups[0].parts!.en[0].end});
+ expect(r0.status).toBe('context-only');expect(r0.passages.flatMap(p=>p.highlights)).toEqual([]);
+ a.groups[0].labelled=[{en:span(a.editions.en.text,'Though Lan was young'),vi:span(a.editions.vi.text,'Lan còn nhỏ')}];
+ const r=query(a,'en',span(a.editions.en.text,'Though Lan was young'));
+ expect(r.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual(['Lan còn nhỏ']);expect(r.unmatchedSource).toBeUndefined();
+});
 it('rejects a malformed labelled list: outside its group, empty, or overlapping',()=>{
  const vi='Chàng cưỡi ngựa đi săn.',en='He rode a horse to hunt.';
  const make=()=>{const a=plain(vi,en,{vi:[vi],en:[en]},[]);a.groups[0].labelled=[{vi:span(vi,'cưỡi ngựa'),en:span(en,'rode a horse')},{vi:span(vi,'đi săn'),en:span(en,'hunt')}];return a;};

@@ -767,6 +767,8 @@ The browser suite caught one regression on the way (57 of 60 passed): "words lik
 
 **Not done.** The labels are still unaudited by a person beyond the sheets; the rule for Vietnamese selections was not changed because the evidence there points the other way.
 
+**Step 1 of the next round: lookups the labels covered but that stayed empty (branch `label-clause`, not merged).** Of the 163 non-sentence audit lookups still without a highlight (21%), 20 had every content word inside labelled pairs. Two causes: (a) a selection equal to a whole clause the clause logic had no pair for was marked "unmatched" before the labels could answer, and the marker survived; (b) a selection inside one pair whose words the links left partly unmatched was dropped to context. In both the pairs now answer and the marker is cleared (as the phrase-pair branch already does). Replay over 1,240 lookups: 17 lookups change, all from no highlight to an answer (5 Vietnamese and 12 English selections), no existing answer changes. Test added (fails without the change), 391 of 391 tests, 60 of 60 browser tests. Not deployed: these answers have not been seen by a person. Sheet 12 (20 cards: the 17 and 3 controls, key `human-check-key-12.json`) decides; merge and deploy if the new answer is right in at least about 85% of the decisive cards, as for the published rule.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.

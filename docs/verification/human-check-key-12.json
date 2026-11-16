@@ -1,0 +1,290 @@
+{
+ "cards": {
+  "a12-c-audit4-16": {
+   "n": 1,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 3,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "here"
+   ],
+   "B_text": [
+    "here"
+   ]
+  },
+  "a12-audit1-117": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "keeps himself upright"
+   ],
+   "B_text": []
+  },
+  "a12-c-audit6-20": {
+   "n": 3,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "dựng lâu dài"
+   ],
+   "B_text": [
+    "dựng lâu dài"
+   ]
+  },
+  "a12-pool6-428": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 17,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "higher his rank rose, the humbler he became"
+   ]
+  },
+  "a12-pool6-177": {
+   "n": 5,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 7,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "từ giã"
+   ],
+   "B_text": []
+  },
+  "a12-audit4-38": {
+   "n": 6,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 7,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "con mắt xem người rất sành"
+   ]
+  },
+  "a12-pool6-406": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 16,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "bằn bặt xa nhau"
+   ]
+  },
+  "a12-c-pool6-376": {
+   "n": 8,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 15,
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "sai người"
+   ],
+   "B_text": [
+    "sai người"
+   ]
+  },
+  "a12-audit3-44": {
+   "n": 9,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 8,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "sốt nóng sốt rét"
+   ],
+   "B_text": []
+  },
+  "a12-audit3-27": {
+   "n": 10,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 5,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "bánh lá hòe"
+   ],
+   "B_text": []
+  },
+  "a12-pool6-255": {
+   "n": 11,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 10,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "tuấn sảng hào mại"
+   ]
+  },
+  "a12-audit6-68": {
+   "n": 12,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 12,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "utterly unable to sleep"
+   ]
+  },
+  "a12-pool6-92": {
+   "n": 13,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 4,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "neither grievance nor resentment"
+   ],
+   "B_text": []
+  },
+  "a12-audit5-98": {
+   "n": 14,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 17,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "physiognomist"
+   ],
+   "B_text": []
+  },
+  "a12-pool6-357": {
+   "n": 15,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Chống gậy"
+   ]
+  },
+  "a12-pool6-91": {
+   "n": 16,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "giàn giụa nước mắt"
+   ]
+  },
+  "a12-pool6-363": {
+   "n": 17,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 14,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "lofty scholar"
+   ],
+   "B_text": []
+  },
+  "a12-pool6-332": {
+   "n": 18,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "nát thân báo đền"
+   ]
+  },
+  "a12-pool6-120": {
+   "n": 19,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 5,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "mặt hoa dễ héo"
+   ],
+   "B_text": []
+  },
+  "a12-pool6-298": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 12,
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "bóng chàng ở trên vách"
+   ],
+   "B_text": []
+  }
+ }
+}

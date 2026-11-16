@@ -507,7 +507,11 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
     let claimedByOthers:(TextSpan&{from:TextSpan})[]=[];
     const lab=useLabels&&!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length?labelledAnswer(g,request,source.text,locale,targetLocale):null;
     if(named)spans=[named];
-    else if(lab&&!lab.inner){spans.push(...lab.spans);coveredWords.push(...lab.covered);uncertain=true;}
+    else if(lab&&!lab.inner){
+      spans.push(...lab.spans);coveredWords.push(...lab.covered);uncertain=true;
+      // The pairs cover every content word of the selection: a clause the clause logic left unmatched is matched (as a phrase pair does below).
+      if(sentences.unmatched?.length){incompleteWords=already.incomplete;unmatchedSource.length=already.unmatched;sentences.unmatched=undefined;}
+    }
     else {
       spans.push(...sentences.spans);
       // A link that leaves the smallest clause pair holding the selection and lands in another clause pair is crossed ("live in comfort" linked to "đi" of the sentence before): it is ignored.
@@ -583,7 +587,10 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
     }
     let highlights=mergeSpans(nameTargets(spans,request,target.text,g[targetLocale],targetLocale),target.text);
     // A highlight that is only function words ("là") lies outside the pair but is dropped further down; it must not make the pair replace a good answer inside it.
-    if(lab?.inner){const real=highlights.filter(h=>!onlyFunctionWords(target.text.slice(h.start,h.end),targetLocale));if(!(real.length&&real.every(h=>h.start>=lab.spans[0].start&&h.end<=lab.spans[0].end))){highlights=[{...lab.spans[0]}];coveredWords.push(...lab.covered);uncertain=true;}}
+    if(lab?.inner){
+      const real=highlights.filter(h=>!onlyFunctionWords(target.text.slice(h.start,h.end),targetLocale)),pair=lab.spans[0];
+      if(!(real.length&&real.every(h=>h.start>=pair.start&&h.end<=pair.end))){highlights=[{...pair}];coveredWords.push(...lab.covered);uncertain=true;if(sentences.unmatched?.length){incompleteWords=already.incomplete;unmatchedSource.length=already.unmatched;sentences.unmatched=undefined;}}
+    }
     // The pieces of one phrase answer are joined when what lies between them is at most four words (and no more than the selection has) nobody else's link claims, with no sentence break: a person reads a phrase as one run.
     // A word the link of a source word within two words of the selection holds ("không" for the "not" before "dare") belongs to the phrase when it lies between its pieces.
     if(!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&highlights.length>1&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1){
@@ -692,6 +699,10 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
     if(highlights.length&&!sentences.spans.length&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1&&!onlyFunctionWords(request.text,locale)&&highlights.every(s=>onlyFunctionWords(target.text.slice(s.start,s.end),targetLocale)))highlights=[];
     if(!poem&&!named&&!sentences.spans.length&&highlights.length>1&&(request.text.match(/[\p{L}\p{M}]+/gu)?.length??0)>1&&!onlyFunctionWords(request.text,locale)){
       highlights=highlights.filter(s=>!onlyFunctionWords(target.text.slice(s.start,s.end),targetLocale));uncertain ||= highlights.length>1;
+    }
+    // A selection inside one pair whose words the links left partly unmatched: the pair answers it (the unmatched words are all inside the pair).
+    if(lab?.inner&&incompleteWords&&!already.incomplete&&unmatchedSource.slice(already.unmatched).every(u=>lab.covered.some(c=>c.start<=u.start&&c.end>=u.end))){
+      highlights=[{...lab.spans[0]}];coveredWords.push(...lab.covered);uncertain=true;incompleteWords=already.incomplete;unmatchedSource.length=already.unmatched;sentences.unmatched=undefined;looseWords=false;
     }
     hasWords ||= highlights.length>0;
     uncertain ||= g.score<.82||g.margin<.015;
