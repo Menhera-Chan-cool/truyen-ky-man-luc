@@ -359,6 +359,14 @@ it('projects a phrase with no link of its own onto the words between the targets
  expect(run('Sinh muốn nhờ thế quân, đánh úp mà cướp lại.')).toEqual(['surprise attack']);
  expect(run('Sinh muốn nhờ thế quân, đánh úp rất mà cướp lại.')).toEqual([]);
 });
+it('does not project from the links of a group the pairing does not trust: the context stays, the highlight does not',()=>{
+ const vi='Sinh muốn nhờ thế quân, đánh úp mà cướp lại.',en='Sinh hoped to borrow the royal army for a surprise attack and win back.',a=plain(vi,en,{vi:[vi],en:[en]},[['Sinh','Sinh'],['quân','army'],['cướp','win']]);
+ const ask=()=>query(a,'vi',span(vi,'đánh úp'));
+ expect(ask().passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)))).toEqual(['surprise attack']);
+ a.groups[0].score=.4;
+ const r=ask();
+ expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);expect(r.passages.map(p=>en.slice(p.target.start,p.target.end))).toEqual([en]);
+});
 it('completes the counterpart of a whole sentence to the end of its own sentence when its one passage stops in the middle and no group claims the rest',()=>{
  const sentence='Cho nên Nhi giữ chức tuần phủ (9) tâu xin phá đền, thật là phải lắm.',whole='Thus, when Nhi served as inspector (9), he was right to petition to destroy shrines.';
  const run=(claimed:boolean)=>{

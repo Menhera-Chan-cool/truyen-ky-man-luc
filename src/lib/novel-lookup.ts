@@ -572,7 +572,7 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
         const edgeMissing=firstCovered<0?missing.length:missing.filter(w=>{const at=selected.findIndex(s=>s.start===w.start);return at<firstCovered||at>lastCovered;}).length;
           // A phrase of one sentence whose own words hold too few links is projected from the words beside it: its counterpart lies between the targets of the nearest linked word on each side,
           // where no other word's link stands, without the function words at the ends. A missing negation needs a negation in the projected words.
-          const project=():TextSpan|null=>(!found&&!sentences.unmatched?.length&&oneSentence&&!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&content.length>=1?(()=>{
+          const project=():TextSpan|null=>(supported&&!found&&!sentences.unmatched?.length&&oneSentence&&!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length&&content.length>=1?(()=>{
             const nearest=(side:'left'|'right')=>{
               let best:{tw:TextSpan;at:number;clear:boolean}|null=null;
               for(const l of g.links){
