@@ -1,0 +1,355 @@
+{
+ "cards": {
+  "a13-8804": {
+   "n": 1,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 10,
+   "selection": "sang du học ở kinh",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "the capital to pursue his studies"
+   ],
+   "B_text": []
+  },
+  "a13-2301": {
+   "n": 2,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "Nằm vò võ một mình như vậy",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "lain here alone for so"
+   ]
+  },
+  "a13-12316": {
+   "n": 3,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14,
+   "selection": "worthy man be so unbending",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "bậc người hiền lại cố chấp"
+   ],
+   "B_text": []
+  },
+  "a13-259": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 1,
+   "selection": "cương thường để dựng",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "moral bonds that uphold a nation"
+   ]
+  },
+  "a13-16706": {
+   "n": 5,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 19,
+   "selection": "other than Master Sai",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Sái tiên sinh"
+   ]
+  },
+  "a13-13253": {
+   "n": 6,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 15,
+   "selection": "evil spirits were gone",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "yêu tà tuyệt tịch"
+   ],
+   "B_text": []
+  },
+  "a13-1526": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 2,
+   "selection": "while Tu kept strictly",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "mà Từ thì giữ lễ"
+   ],
+   "B_text": []
+  },
+  "a13-5039": {
+   "n": 8,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 6,
+   "selection": "wicked may take",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "răn phường gian ác"
+   ]
+  },
+  "a13-8184": {
+   "n": 9,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 9,
+   "selection": "crevice that twisted and turned",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "khe nhỏ, quằn quèo"
+   ]
+  },
+  "a13-3445": {
+   "n": 10,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4,
+   "selection": "Some dragged down the stern",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "kẻ vít cuối thuyền"
+   ]
+  },
+  "a13-17038": {
+   "n": 11,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 19,
+   "selection": "those foul",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "thơ xú ác"
+   ],
+   "B_text": []
+  },
+  "a13-4389": {
+   "n": 12,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 5,
+   "selection": "vẫn là lòng của cha mẹ",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "a parent's wish"
+   ],
+   "B_text": []
+  },
+  "a13-768": {
+   "n": 13,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 1,
+   "selection": "favoring a child while",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "yêu con bé mà"
+   ]
+  },
+  "a13-7195": {
+   "n": 14,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 8,
+   "selection": "brought suit before King",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "kiện ở Diêm vương"
+   ],
+   "B_text": []
+  },
+  "a13-18213": {
+   "n": 15,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "selection": "shall not take",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "được giả hình"
+   ]
+  },
+  "a13-1099": {
+   "n": 16,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 2,
+   "selection": "Phung household she conducted herself",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "nhà họ Phùng, khéo biết cư xử"
+   ]
+  },
+  "a13-17646": {
+   "n": 17,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "selection": "scarcer your food",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "ăn uống phải thiếu"
+   ],
+   "B_text": []
+  },
+  "a13-c-11492": {
+   "n": 18,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "selection": "escaped the tiger's",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "thoát khỏi miệng hùm"
+   ],
+   "B_text": [
+    "thoát khỏi miệng hùm"
+   ]
+  },
+  "a13-3418": {
+   "n": 19,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4,
+   "selection": "vanish only when the shoots",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "tiêu tán mất, phải chờ mầm ác"
+   ],
+   "B_text": []
+  },
+  "a13-c-8351": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 10,
+   "selection": "sống hiếu thuận",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "life, were filial"
+   ],
+   "B_text": [
+    "life, were filial"
+   ]
+  },
+  "a13-8680": {
+   "n": 21,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 10,
+   "selection": "hèn hạ cũng cất nhắc",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "raised up however base"
+   ]
+  },
+  "a13-2705": {
+   "n": 22,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "quân tử quạt hơi dương vào hang",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "noble sir, will fan the breath of yang into this dark cavern"
+   ],
+   "B_text": []
+  },
+  "a13-c-13801": {
+   "n": 23,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 16,
+   "selection": "hát ra hát múa",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "to sing and dance"
+   ],
+   "B_text": [
+    "to sing and dance"
+   ]
+  }
+ }
+}

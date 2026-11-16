@@ -430,3 +430,13 @@ it('uses a labelled pair only where the links gave no highlight, and never repla
  expect(ask(bare,'vi','cưỡi ngựa')).toEqual(['rode a horse']);
  expect(ask(bare,'en','rode a horse')).toEqual(['cưỡi ngựa']);
 });
+it('lets auxiliaries and pronouns lie outside the labelled pairs only where the links gave no highlight, and never drops a pair that holds such a word',()=>{
+ const vi='Mệnh nàng nhẹ hơn chiếc lá.',en='Her fate was lighter than a leaf.';
+ const make=(links:[string,string][])=>{const a=plain(vi,en,{vi:[vi],en:[en]},links);a.groups[0].labelled=[{vi:span(vi,'Mệnh'),en:span(en,'fate')},{vi:span(vi,'nhẹ'),en:span(en,'lighter')}];return a;};
+ const ask=(a:AlignmentArtifact,l:'vi'|'en',q:string)=>query(a,l,span(a.editions[l].text,q)).passages.flatMap(p=>p.highlights.map(h=>a.editions[l==='vi'?'en':'vi'].text.slice(h.start,h.end)));
+ expect(ask(make([]),'en','fate was lighter than')).toEqual(['Mệnh nàng nhẹ hơn']);
+ expect(ask(make([]),'en','fate was lighter than a leaf')).toEqual([]);
+ const very=plain('Nàng rất buồn.','She was very sad.',{vi:['Nàng rất buồn.'],en:['She was very sad.']},[]);
+ very.groups[0].labelled=[{vi:span(very.editions.vi.text,'rất'),en:span(very.editions.en.text,'very')}];
+ expect(ask(very,'vi','rất')).toEqual(['very']);
+});

@@ -170,12 +170,18 @@ function wholeSentences(text:string,start:number,end:number,locale:Locale):numbe
   return startsAt&&endsAt?[...new Intl.Segmenter(locale,{granularity:'sentence'}).segment(body)].filter(s=>/\p{L}/u.test(s.segment)).length:0;
 }
 // Pilot: word and phrase pairs written by reading both passages. A selection inside one such group whose content words all lie in labelled pairs takes the targets of the pairs it touches.
-function labelledAnswer(g:AlignmentArtifact['groups'][number],request:LookupRequest,text:string,locale:Locale,targetLocale:Locale):{spans:TextSpan[];covered:TextSpan[];inner:boolean}|null{
+// Words a selection may hold without a pair of their own (auxiliaries, pronouns, "than", particles), but only where the links gave no highlight at all ("fate was lighter than" with pairs for fate and lighter).
+// A word in a pair always counts as covered; the list never removes a word from the test. Human sheet 13 (whole-book draw): the new answer better 17 of 20 decisive cards, the 3 controls without position bias.
+const labelStop:Record<Locale,Set<string>>={
+  en:new Set('a an the of to for from by with in on at as and or but is was were be been being am are it its his her their our your my i we you he she they them him us me this that these those than then so not no do does did has have had will would can could may might shall should must there here who whom whose which what when where while if how why all also only just very too more most some such any each both other up down out over off upon about after before through between under until once again'.split(' ')),
+  vi:new Set('của và hoặc nhưng các những thì mà là ở với bởi vì cho từ tại đã đang sẽ có không được một này đó ấy cũng rất lại đều chỉ nên bèn thế vậy nào gì như hay rồi đến khi trong để rằng cả vẫn cứ hãy chớ đừng chưa chẳng thôi vừa liền ra vào lên xuống về qua sang theo cùng nhau bằng do nếu dù tuy dẫu hơn nhất mỗi'.split(' ')),
+};
+function labelledAnswer(g:AlignmentArtifact['groups'][number],request:LookupRequest,text:string,locale:Locale,targetLocale:Locale,wide:boolean):{spans:TextSpan[];covered:TextSpan[];inner:boolean}|null{
   if(!g.labelled?.length||request.start<g[locale].start||request.end>g[locale].end)return null;
   const pairs=g.labelled.filter(p=>p[locale].start<request.end&&p[locale].end>request.start);
   if(!pairs.length)return null;
   const content=[...text.slice(request.start,request.end).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:request.start+m.index,end:request.start+m.index+m[0].length,text:m[0]})).filter(w=>/\p{L}/u.test(w.text)&&!onlyFunctionWords(w.text,locale));
-  if(!content.length||content.some(w=>!pairs.some(p=>p[locale].start<=w.start&&p[locale].end>=w.end)))return null;
+  if(!content.length||content.some(w=>!(wide&&labelStop[locale].has(w.text.toLocaleLowerCase(locale)))&&!pairs.some(p=>p[locale].start<=w.start&&p[locale].end>=w.end)))return null;
   // A selection narrower than the one pair that holds it keeps a word-link answer that lies inside the pair's target; only an answer that leaves it is replaced.
   const inner=pairs.length===1&&!(pairs[0][locale].start===content[0].start&&pairs[0][locale].end===content.at(-1)!.end);
   return {spans:pairs.map(p=>({...p[targetLocale]})),covered:pairs.map(p=>({...p[locale]})),inner};
@@ -437,10 +443,10 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
   }
   const plain=lookupBase(artifact,request,false);
   if(plain.passages.some(p=>p.highlights.length)||!labelledAnywhere)return plain;
-  const labelled=lookupBase(artifact,request,true);
+  const labelled=lookupBase(artifact,request,true,true);
   return labelled.passages.some(p=>p.highlights.length)?labelled:plain;
 }
-function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:boolean):LookupResult {
+function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:boolean,wide=false):LookupResult {
   const locale=request.locale,targetLocale=locale==='vi'?'en':'vi',source=artifact.editions[locale],target=artifact.editions[targetLocale];
   const empty=(status:LookupResult['status']):LookupResult=>({status,targetLocale,passages:[]});
   const structural=structureLookup(artifact,request);if(structural)return structural;
@@ -505,7 +511,7 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
     const targetSpans=targetWords(g,locale,source,target,!poem&&g.kind!=='lexical');
     const sourceSpans=targetWords(g,targetLocale,target,source,!poem&&g.kind!=='lexical');
     let claimedByOthers:(TextSpan&{from:TextSpan})[]=[];
-    const lab=useLabels&&!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length?labelledAnswer(g,request,source.text,locale,targetLocale):null;
+    const lab=useLabels&&!named&&!poem&&g.kind!=='lexical'&&!sentences.spans.length?labelledAnswer(g,request,source.text,locale,targetLocale,wide):null;
     if(named)spans=[named];
     else if(lab&&!lab.inner){
       spans.push(...lab.spans);coveredWords.push(...lab.covered);uncertain=true;
