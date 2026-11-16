@@ -1,9 +1,9 @@
 {
   "projectId": "prj_27Chl3Ar8lsZ45JZg2P2gBqpGT3X",
-  "deploymentId": "dpl_4aJuwtHNEVWk21CH7ZCbtLURfDaH",
-  "immutableUrl": "https://truyen-ky-man-7us9pajje-anh-tun.vercel.app",
+  "deploymentId": "dpl_DUaKLWn3JvVAvTYLwd2B6CxS86FF",
+  "immutableUrl": "https://truyen-ky-man-84qxfuc9l-anh-tun.vercel.app",
   "url": "https://truyen-ky-man-luc.vercel.app",
-  "runtimeSourceCommit": "459cd6d",
+  "runtimeSourceCommit": "7915217",
   "algorithm": "labse-poetry-mbert-3",
   "readyState": "READY",
   "checkedAt": "2026-11-16T00:00:00.000Z",
@@ -24,10 +24,10 @@
   },
   "verification": {
     "local": "docs/verification/phrase-alignment-2026-11-15.md",
-    "vitest": 387,
+    "vitest": 388,
     "python": 120,
     "localBrowser": 60,
-    "localBrowserNote": "459cd6d on phr11: first run 58 of 60 (the two desktop tests that start first, lookup panel not shown within 5 s, cold start), then 60 of 60 twice",
+    "localBrowserNote": "7915217 on phr11: 60 of 60 on the first run (the previous release, 459cd6d, needed a rerun: 58 of 60 at first, then 60 of 60 twice)",
     "build": "passed",
     "postDeploy": "skipped by user instruction; no production API, browser or download checks were run for this release",
     "publishedByWorker": "20 chapters re-published as ready by the alignment worker seven times on 2026-11-15 (d4d3338, c548718, 2b75f11, af006e0, 1341e0d, f30ab15 and 506c49f data); not a lookup verification; chapter 18 alone re-published as ready on 2026-11-16 (322d9a4 data: verse/prose poem pairs, 853157 bytes, sha256 b80844bb48fc4619c11f49a2816c0a1d234293b8dfe94eeb5d1f3ac7d738d456 read back from get_public_novel_alignment); the web runtime was not redeployed for it",
@@ -43,8 +43,8 @@
     "The 120 development probes are not an independent held-out set"
   ],
   "previousDeployment": {
-    "deploymentId": "dpl_6P6JHNGrX7EAShcowQDDaFwn3vRP",
-    "sourceCommit": "166b27f"
+    "deploymentId": "dpl_4aJuwtHNEVWk21CH7ZCbtLURfDaH",
+    "sourceCommit": "459cd6d"
   },
   "alignmentWorkerSourceCommit": "322d9a4"
 }
