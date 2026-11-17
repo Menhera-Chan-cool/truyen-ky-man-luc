@@ -33,6 +33,15 @@ export function alignmentStructure(a:AlignmentArtifact,locale:Locale):Structure{
  });
  const result={headings,original,originals,notes};cache.set(a,{...saved,[locale]:result} as Record<Locale,Structure>);return result;
 }
+// A name of the English label ("Xiaoman", "Chenmen, Jieyu, and Taihe") that the capitalised syllables at the start of the Vietnamese note read as in pinyin.
+function sharesName(vi:string,label:string){
+ const runs=vi.match(/\p{Lu}[\p{L}\p{M}]*(?:\s+\p{Lu}[\p{L}\p{M}]*)*/gu)??[];
+ return label.split(/,|\band\b|&/u).map(s=>s.trim()).filter(Boolean).some(name=>runs.some(run=>{
+  const w=run.split(/\s+/u);
+  for(let i=0;i<w.length;i++)for(let j=i+1;j<=Math.min(w.length,i+4);j++)if(viMatchesPinyin(viSyllables(w.slice(i,j).join(' ')),name))return true;
+  return false;
+ }));
+}
 export function notePair(a:AlignmentArtifact,r:LookupRequest){
  if(a.notePairs===undefined)return undefined;
  const locale=r.locale==='vi'?'en':'vi',source=alignmentStructure(a,r.locale).notes.find(n=>r.start>=n.start&&r.end<=n.end);
@@ -41,13 +50,22 @@ export function notePair(a:AlignmentArtifact,r:LookupRequest){
  // A note that carries paragraphs without a number after its own (chapter 14, Vietnamese: "1) Thần Môn: …" and the entries that follow it) is held by a pair that stops inside it.
  const matches=a.notePairs?.filter(p=>(p[r.locale].start<=source.start&&p[r.locale].end>=source.end||p[r.locale].start>=source.start&&p[r.locale].end<=source.end)&&p.score>=minimum).sort((x,y)=>y.score-x.score)??[];
  const right=alignmentStructure(a,locale),baseTargets=right.notes.filter(n=>matches.some(m=>n.start>=m[locale].start&&n.end<=m[locale].end));
- // A note no pair holds whose number the other edition gives to one note, which no pair holds either, is that note (11 such pairs in the book, all right by reading: "(10) Câu: cái móc để vén rèm, màn." and "(10) Jade-hooked curtains: …").
- // Only where the confirmed pairs of the chapter show that the two editions number their notes alike (at least two, and 4 in 5 of them with the same numbers on both sides).
- if(!baseTargets.length&&/^\d{1,3}$/.test(source.id)){
+ // Where the confirmed pairs of the chapter show that the two editions number their notes alike (at least two, and 4 in 5 of them with the same numbers on both sides), the number settles what a pair leaves open:
+ // a pair that holds several notes of the other edition ("(11)" against "(11)" and "(12)") gives this note the one of its number, and a note no pair holds takes the note of its number that no pair gives to that number
+ // ("(10) Câu: cái móc để vén rèm, màn." and "(10) Jade-hooked curtains: …").
+ if(/^\d{1,3}$/.test(source.id)){
   const confirmed=(a.notePairs??[]).filter(p=>p.score>=minimum),left=alignmentStructure(a,r.locale).notes;
   const ids=(notes:Note[],s:TextSpan)=>notes.filter(n=>n.start>=s.start&&n.end<=s.end).map(n=>n.id).sort().join(),alike=confirmed.filter(p=>ids(left,p[r.locale])===ids(right.notes,p[locale])&&ids(left,p[r.locale])!=='').length;
-  const free=(n:TextSpan,l:Locale)=>!confirmed.some(p=>p[l].start<=n.start&&p[l].end>=n.end),same=right.notes.filter(n=>n.id===source.id&&free(n,locale));
-  if(alike>=2&&alike*5>=confirmed.length*4&&same.length===1)baseTargets.push(same[0]);
+  if(alike>=2&&alike*5>=confirmed.length*4){
+   const own=baseTargets.filter(n=>n.id===source.id),text=(l:Locale,s:TextSpan)=>a.editions[l].text.slice(s.start,s.end);
+   // a note whose name the other edition spells in pinyin ("Nàng Tiểu Man", "Xiaoman:") is the paired one, even where the two editions order the notes of the pair differently (chapter 5, notes 10 and 11)
+   const named=(n:Note)=>r.locale==='vi'?sharesName(text('vi',{start:source.start,end:Math.min(source.end,source.start+160)}),n.label?text('en',n.label):''):sharesName(text('vi',{start:n.start,end:Math.min(n.end,n.start+160)}),source.label?text('en',source.label):'');
+   if(baseTargets.length>1){const byName=baseTargets.filter(named),pick=byName.length===1?byName:own;if(pick.length===1)baseTargets.splice(0,baseTargets.length,pick[0]);}
+   const free=(n:Note)=>confirmed.every(p=>p[locale].start>n.start||p[locale].end<n.end||!ids(left,p[r.locale]).split(',').includes(n.id)),same=right.notes.filter(n=>n.id===source.id&&free(n));
+   // the surplus note of a pair that holds more notes on this side than on the other: none of the notes it gives has this number
+   const held=matches.find(m=>m[r.locale].start<=source.start&&m[r.locale].end>=source.end),mine=held?ids(left,held[r.locale]).split(','):[];
+   if(same.length===1&&(!baseTargets.length||!own.length&&mine.length>baseTargets.length&&mine.includes(source.id)))baseTargets.splice(0,baseTargets.length,same[0]);
+  }
  }
  const targets=[...baseTargets];for(const n of baseTargets){const ref=right.notes.find(m=>m.id===n.reference);if(ref&&!targets.includes(ref))targets.push(ref);}
  return {source,targets,baseTargets,target:baseTargets.length===1?baseTargets[0]:undefined,confidence:matches[0]};

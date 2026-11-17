@@ -146,6 +146,26 @@ it('pairs a note that carries unnumbered paragraphs after its own with the pair 
  expect(look(vi[0].start,vi[0].end)).toEqual([a.editions.en.text.slice(en[0].start,en[0].end)]);
  expect(look(vi[1].start,vi[1].end)).toEqual([a.editions.en.text.slice(en[1].start,en[1].end)]);
 });
+it('gives a note held by a pair of several notes the note of its number, and a surplus note of that pair to the note of its number, where the editions number their notes alike',()=>{
+ const count=7,nums=Array.from({length:count},(_,i)=>i+1);
+ const make=(pairs:[number[],number[]][],swapped=false)=>{
+  const viName=(i:number)=>swapped&&i===3?'Tây Thi':swapped&&i===4?'Tiểu Man':`Từ ${i}`,enName=(i:number)=>swapped&&i===3?'Xiaoman':swapped&&i===4?'Xi Shi':`Word ${i}`;
+  const a=fixture(['Chú thích:',...nums.map(i=>`(${i}) ${viName(i)}: nghĩa ${i}.`)],['Notes',...nums.map(i=>`(${i}) ${enName(i)}: meaning ${i}.`)]);
+  const vi=alignmentStructure(a,'vi').notes,en=alignmentStructure(a,'en').notes,span=(n:{start:number,end:number}[],ix:number[])=>({start:n[ix[0]].start,end:n[ix[ix.length-1]].end});
+  a.notePairs=pairs.map(([x,y])=>({vi:span(vi,x),en:span(en,y),score:.9,margin:.2}));
+  const look=(i:number,l:'vi'|'en'='vi')=>{const n=(l==='vi'?vi:en)[i],t=a.editions[l].text;return lookupArtifact(a,{chapterId:a.chapterId,locale:l,revision:a.editions[l].revision,start:n.start,end:n.end,text:t.slice(n.start,n.end)}).passages.map(p=>p.target.text);};
+  return {look,en:(i:number)=>a.editions.en.text.slice(en[i].start,en[i].end),vi:(i:number)=>a.editions.vi.text.slice(vi[i].start,vi[i].end)};
+ };
+ // notes 3 and 4 are one pair in both editions, 4 of Vietnamese is not in any pair but English 4 is held by the pair of 3 against 3 and 4
+ const a=make([[[0],[0]],[[1],[1]],[[2],[2,3]],[[4],[4]],[[5],[5]],[[6],[6]]]);
+ expect(a.look(2)).toEqual([a.en(2)]);expect(a.look(3)).toEqual([a.en(3)]);expect(a.look(3,'en')).toEqual([a.vi(3)]);
+ // both sides of a pair hold notes 3 and 4
+ const b=make([[[0],[0]],[[1],[1]],[[2,3],[2,3]],[[4],[4]],[[5],[5]],[[6],[6]]]);
+ expect(b.look(2)).toEqual([b.en(2)]);expect(b.look(3)).toEqual([b.en(3)]);expect(b.look(3,'en')).toEqual([b.vi(3)]);
+ // the editions order the two notes of the pair differently (Tây Thi and Tiểu Man against Xiaoman and Xi Shi): the name, not the number, decides
+ const c=make([[[0],[0]],[[1],[1]],[[2,3],[2,3]],[[4],[4]],[[5],[5]],[[6],[6]]],true);
+ expect(c.look(2)).toEqual([c.en(3)]);expect(c.look(3)).toEqual([c.en(2)]);expect(c.look(2,'en')).toEqual([c.vi(3)]);expect(c.look(3,'en')).toEqual([c.vi(2)]);
+});
 it('pairs a note no pair holds with the note of the same number that no pair holds either, only where the editions number their notes alike',()=>{
  const make=(pairs:[number,number][])=>{
   const a=fixture(['Chú thích:','(1) Một: nghĩa một.','(2) Hai: nghĩa hai.','(3) Ba: nghĩa ba.'],['Notes','(1) One: meaning one.','(2) Two: meaning two.','(3) Three: meaning three.']);
