@@ -14,7 +14,9 @@ sys.stdout.reconfigure(encoding='utf-8')
 #   #title J vi:S-E en:S-E   attach title spans to pair J.
 #   #trim J lo hi   cut the Vietnamese side of pair J to its lines lo..hi-1 (the lines of a Sino-Vietnamese original that the pipeline put in the same pair as the Vietnamese version, so that a #han pair can take them).
 #   #enline J i S E   give line i of the English track of pair J (and of the pairs that copy its track) the span S..E (a line the pipeline cut in the middle of a word).
-# Structural sections (#fix, #trim, #enline, #title) run first, then the plain '#<pair>' sections, then #new and #han in file order.
+#   #enbreaks J   cut the English track of pair J (and of the pairs that copy its track) into lines at the English edition's own line breaks, or at its sentence ends where it has none (a poem the pipeline took for one long line; a label's
+#                  target passage is the English lines it touches, and a passage over 1,200 characters is not shown).
+# Structural sections (#fix, #trim, #enline, #enbreaks, #title) run first, then the plain '#<pair>' sections, then #new and #han in file order.
 # Labels: 'phrase = phrase'; '... = @<Vietnamese phrase>' takes the English of that label in the section's own pair, '@J:<phrase>' that of pair J's section; '@lines' pairs the lines of the two
 # tracks one to one; '@couplets' pairs each Vietnamese line with two English lines (4 against 8); '@map 0=0 6-7=6 15=16' pairs Vietnamese lines (ranges allowed) with English lines (ranges allowed) by index in the two tracks, in any order.
 P=sys.argv[1].rstrip('/')+'/';SRC=sys.argv[2].rstrip('/')+'/';OUT=sys.argv[3].rstrip('/')+'/'
@@ -132,7 +134,7 @@ def run(ch):
     a=json.load(open(f'{SRC}chapter-{ch}.json',encoding='utf-8'));fails=[];n=0;npairs=0;n0=len(a.get('poems',[]));names={}
     own={s['args'][0]:s['labels'] for s in secs if s['head']=='pair'}
     base=lambda j:{v:e for v,e in own.get(j,[]) if e is not None}
-    plain=[s for s in secs if s['head']=='pair'];STRUCT=('title','fix','trim','enline');structural=[s for s in secs if s['head'] in STRUCT];extra=[s for s in secs if s['head']!='pair' and s['head'] not in STRUCT]
+    plain=[s for s in secs if s['head']=='pair'];STRUCT=('title','fix','trim','enline','enbreaks');structural=[s for s in secs if s['head'] in STRUCT];extra=[s for s in secs if s['head']!='pair' and s['head'] not in STRUCT]
     def target(spec,title=None):
         # the English side for a section: an existing pair index, a name given by #new, or a new track
         if spec.startswith('en:'):return en_track(a,spec,title),True
@@ -160,6 +162,13 @@ def run(ch):
                 same_en(j,fix)
                 for p in a['poems']:
                     for c in p['correspondences']:c['en']=[dict(new) if x==old else x for x in c['en']]
+            elif h=='enbreaks':
+                j=int(ar[0]);t=a['poems'][j]['en'];ET=a['editions']['en']['text'];inner=[b for b in a['editions']['en'].get('breaks',[]) if t['start']<b<t['end']] or [t['start']+m.end() for m in re.finditer(r'[.!?]["”]?(?=\s+[A-Z"“(])',ET[t['start']:t['end']])];cuts=[t['start']]+inner+[t['end']];new=[]
+                for c0,c1 in zip(cuts,cuts[1:]):
+                    while c0<c1 and ET[c0].isspace():c0+=1
+                    while c1>c0 and ET[c1-1].isspace():c1-=1
+                    if c1>c0:new.append({'start':c0,'end':c1})
+                same_en(j,lambda t,new=new:t.__setitem__('lines',[dict(x) for x in new]))
             elif h=='fix':
                 j=int(ar[0]);p=a['poems'][j];p['en']=en_track(a,ar[1],ar[2] if len(ar)>2 else None);p['primary']['en']=True;p['correspondences']=[];p['contextOnly']=True
                 npairs+=map_pair(a,p,expand(p,s['labels'],lambda j2,j=j:base(j if j2 is None else j2),a),key,fails);n+=1

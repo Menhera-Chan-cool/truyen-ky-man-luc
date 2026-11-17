@@ -17,3 +17,6 @@ Hiến hưởng rượu này mới rót = Come and partake of this offering from
 @lines
 #han 3746 4 4 6
 @map 0=0-1 1=2-3
+#trim 8 30 53
+#han 13799 8 0 30
+@lines

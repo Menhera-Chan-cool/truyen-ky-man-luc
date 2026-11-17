@@ -74,3 +74,6 @@ tuy tùy vị dĩ = @3:theo đuổi chưa thôi (13)
 @lines
 #han 1631 tail 22 25
 @lines
+#han 8047 32 2 4
+Chim kêu ríu rít đầu cành = And deep within the mist a bird is calling
+Tà dương bóng ngả chênh chênh ngàn đoài = For countless leagues beneath the westering sun

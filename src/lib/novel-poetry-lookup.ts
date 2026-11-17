@@ -7,15 +7,17 @@ function complete(text:string,p:TextSpan,r:TextSpan){
  const words=[...mask(text.slice(p.start,p.end)).matchAll(/[\p{L}\p{M}\p{N}]/gu)];if(!words.length)return false;
  return r.start<=p.start+words[0].index&&r.end>=p.start+words.at(-1)!.index+words.at(-1)![0].length;
 }
-function preferred(a:AlignmentArtifact,r:LookupRequest){
+// Every pair the selection touches, grouped by the track of the selection's own language (pairs that share a track are alternatives, the primary one first), the groups in reading order.
+function candidates(a:AlignmentArtifact,r:LookupRequest){
  const to=r.locale==='vi'?'en':'vi',groups=new Map<string,PoetryPair[]>();
  for(const p of a.poems??[]){
   const source=p[r.locale],titleHit=source.title&&intersects(source.title,r);
   if(!intersects(source,r)&&!titleHit)continue;
   const values=groups.get(p[r.locale].id)??[];values.push(p);groups.set(p[r.locale].id,values);
  }
- return [...groups.values()].map(values=>values.sort((a,b)=>Number(b.primary[r.locale])-Number(a.primary[r.locale])||b.score-a.score||a[to].start-b[to].start)[0]).sort((a,b)=>a[r.locale].start-b[r.locale].start);
+ return [...groups.values()].map(values=>values.sort((a,b)=>Number(b.primary[r.locale])-Number(a.primary[r.locale])||b.score-a.score||a[to].start-b[to].start)).sort((a,b)=>a[0][r.locale].start-b[0][r.locale].start);
 }
+const preferred=(a:AlignmentArtifact,r:LookupRequest)=>candidates(a,r).map(values=>values[0]);
 function mappings(pair:PoetryPair,locale:Locale,r:TextSpan){
  const other=locale==='vi'?'en':'vi';const result:PoetryCorrespondence[]=[];
  for(const line of pair[locale].lines.filter(s=>intersects(s,r))){
@@ -66,14 +68,23 @@ export function poetryLookup(a:AlignmentArtifact,r:LookupRequest):LookupResult|u
 }
 // Pairs written by reading inside a verse pair answer a selection that is only part of a line when every word of it (function words apart) lies in a pair:
 // the highlights are the English or Vietnamese halves of the pairs it touches, the passage the lines that hold them. A selection of whole lines keeps the line answer, except in a context-only pair, which has none.
+// Every pair that holds the selection is tried in turn (a Sino-Vietnamese original or a second reading of the same lines is a pair of its own, sharing the English track or lying inside another pair),
+// the preferred one first, so a pair without a label for the selection no longer hides the one that has it.
 export function poetryLabelled(a:AlignmentArtifact,r:LookupRequest,skip:(word:string)=>boolean):LookupResult|undefined{
+ for(const pair of candidates(a,r).flat()){
+  if(!pair.labelled?.length||pair[r.locale].start>r.start||pair[r.locale].end<r.end)continue;
+  const found=labelledIn(a,r,skip,pair);if(found)return found;
+ }
+ return undefined;
+}
+function labelledIn(a:AlignmentArtifact,r:LookupRequest,skip:(word:string)=>boolean,pair:PoetryPair):LookupResult|undefined{
  const to=r.locale==='vi'?'en':'vi',text=a.editions[r.locale].text,edition=a.editions[to];
- const pair=preferred(a,r).find(p=>p.labelled?.length&&p[r.locale].start<=r.start&&p[r.locale].end>=r.end);if(!pair)return undefined;
  const lines=pair[r.locale].lines.filter(s=>intersects(s,r));
- // whole lines keep the line answer, unless the pair has no line correspondences (context only): then the pairs written by reading answer them too
- if(!lines.length||(!pair.contextOnly&&lines.every(s=>complete(text,s,r))))return undefined;
+ // whole lines keep the line answer, unless the pair has none for them (a context-only pair, or a line its correspondences do not reach): then the pairs written by reading answer them too
+ const lined=(s:TextSpan)=>pair.correspondences.some(c=>c[r.locale].some(x=>intersects(x,s)));
+ if(!lines.length||(!pair.contextOnly&&lines.every(s=>complete(text,s,r)&&lined(s))))return undefined;
  const touched=pair.labelled!.filter(p=>intersects(p[r.locale],r));if(!touched.length)return undefined;
- const words=[...mask(text.slice(r.start,r.end)).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:r.start+m.index,end:r.start+m.index+m[0].length,text:m[0]})).filter(w=>/\p{L}/u.test(w.text)&&!skip(w.text));
+ const words=[...mask(text.slice(r.start,r.end)).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].flatMap(m=>[...m[0].matchAll(/.+?(?=(?<=\p{Ll}\p{M}*)\p{Lu}|$)/gus)].map(x=>({start:r.start+m.index+x.index,end:r.start+m.index+x.index+x[0].length,text:x[0]}))).filter(w=>/\p{L}/u.test(w.text)&&!skip(w.text));
  if(!words.length||words.some(w=>!touched.some(p=>p[r.locale].start<=w.start&&p[r.locale].end>=w.end)))return undefined;
  const targets=touched.map(p=>({...p[to]})).sort((x,y)=>x.start-y.start);
  const targetLines=pair[to].lines.filter(s=>targets.some(t=>intersects(s,t)));if(!targetLines.length)return undefined;

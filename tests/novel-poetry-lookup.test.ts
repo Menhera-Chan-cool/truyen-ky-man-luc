@@ -1,9 +1,9 @@
 import {expect,it} from 'vitest';
 import {lookupArtifact,validateAlignmentArtifact,type AlignmentArtifact,type LookupRequest} from '../src/lib/novel-lookup';
-function fixture():AlignmentArtifact{
- const vi='Mây núi\nMây về núi.\nMưa rơi sân.\nVăn xuôi khác.',en='Mountain Clouds\nClouds return (5).\nRain falls.\nOther prose.';
+function fixture(runTogether=false):AlignmentArtifact{
+ const vi=runTogether?'Mây núi\nMây về núiMưa rơi sân\nVăn xuôi khác.':'Mây núi\nMây về núi.\nMưa rơi sân.\nVăn xuôi khác.',en='Mountain Clouds\nClouds return (5).\nRain falls.\nOther prose.';
  const line=(text:string,quote:string)=>({start:text.indexOf(quote),end:text.indexOf(quote)+quote.length});
- const v=[line(vi,'Mây về núi.'),line(vi,'Mưa rơi sân.')],e=[line(en,'Clouds return (5).'),line(en,'Rain falls.')];
+ const v=runTogether?[line(vi,'Mây về núi'),line(vi,'Mưa rơi sân')]:[line(vi,'Mây về núi.'),line(vi,'Mưa rơi sân.')],e=[line(en,'Clouds return (5).'),line(en,'Rain falls.')];
  return {schema:1,codec:'reader-dom-1',algorithm:'test',chapterId:'chapter-1',createdAt:'',editions:{vi:{text:vi,revision:1,versionId:'00000000-0000-4000-8000-000000000001',hash:'a'.repeat(64)},en:{text:en,revision:1,versionId:'00000000-0000-4000-8000-000000000002',hash:'b'.repeat(64)}},
   groups:[{id:'bad-word-vote',section:'story',score:.95,margin:.1,vi:{start:0,end:vi.length},en:{start:0,end:en.length},links:[{vi:[vi.indexOf('Văn'),vi.indexOf('Văn')+3],en:[e[1].start,e[1].start+4],score:.9}]}],
   poetryScopes:{vi:v,en:e},poems:[{vi:{id:'v',start:v[0].start,end:v[1].end,lines:v,title:line(vi,'Mây núi')},en:{id:'e',start:e[0].start,end:e[1].end,lines:e,title:line(en,'Mountain Clouds')},score:.75,margin:.1,primary:{vi:true,en:true},correspondences:v.map((s,i)=>({vi:[s],en:[e[i]],score:.7,evidence:'direct-window' as const}))}]};
@@ -89,6 +89,40 @@ it('answers a Vietnamese selection in an original that shares the English track,
  expect(ask('vi','Vũ lạc đình')).toMatchObject({status:'context-only',highlights:[]});
  // an English selection still goes to the translation pair
  expect(ask('en','Rain')).toEqual({status:'uncertain',highlights:['Mưa'],passage:'Mưa rơi sân.'});
+});
+it('tries every pair that holds the selection: an original sharing the English track answers what the translation pair does not label',()=>{
+ const a=fixture();a.editions.vi.text+='\nVũ lạc đình.\nVân quy sơn.';
+ const vi=a.editions.vi.text,en=a.editions.en.text,at=(t:string,q:string)=>({start:t.indexOf(q),end:t.indexOf(q)+q.length}),lines=[at(vi,'Vũ lạc đình.'),at(vi,'Vân quy sơn.')],base=a.poems![0];
+ base.labelled=[{vi:at(vi,'Mưa'),en:at(en,'Rain')}];a.poetryScopes!.vi=[...a.poetryScopes!.vi,{start:lines[0].start,end:lines[1].end}];
+ a.poems!.push({vi:{id:'han',start:lines[0].start,end:lines[1].end,lines},en:base.en,score:base.score,margin:base.margin,primary:{vi:true,en:false},correspondences:[],contextOnly:true,
+  labelled:[{vi:at(vi,'Vũ lạc'),en:at(en,'Rain')},{vi:at(vi,'đình'),en:at(en,'falls')}]});
+ expect(()=>validateAlignmentArtifact(a)).not.toThrow();
+ const ask=(q:string)=>{const s=at(en,q),r=lookupArtifact(a,{chapterId:a.chapterId,locale:'en',revision:1,...s,text:q});return {status:r.status,highlights:r.passages.flatMap(x=>x.highlights.map(h=>vi.slice(h.start,h.end))),passage:targetText(r)};};
+ // the translation pair has no label for "falls": the original that shares its English track has
+ expect(ask('falls')).toEqual({status:'uncertain',highlights:['đình'],passage:'Vũ lạc đình.'});
+ // a word the translation pair labels keeps its answer
+ expect(ask('Rain')).toEqual({status:'uncertain',highlights:['Mưa'],passage:'Mưa rơi sân.'});
+});
+it('tries every pair that holds the selection: a pair inside another pair answers its own lines',()=>{
+ const a=fixture(),p=a.poems![0],vi=a.editions.vi.text,en=a.editions.en.text,at=(t:string,q:string)=>({start:t.indexOf(q),end:t.indexOf(q)+q.length});
+ p.labelled=[{vi:at(vi,'Mưa'),en:at(en,'Rain')}];
+ a.poems!.push({vi:{id:'second',start:p.vi.lines[0].start,end:p.vi.lines[0].end,lines:[p.vi.lines[0]]},en:{id:'second-en',start:p.en.lines[0].start,end:p.en.lines[0].end,lines:[p.en.lines[0]]},score:.7,margin:.1,primary:{vi:true,en:false},correspondences:[],contextOnly:true,
+  labelled:[{vi:at(vi,'Mây về'),en:at(en,'Clouds return')}]});
+ expect(()=>validateAlignmentArtifact(a)).not.toThrow();
+ const s=at(vi,'Mây về'),r=lookupArtifact(a,{chapterId:a.chapterId,locale:'vi',revision:1,...s,text:'Mây về'});
+ expect(r.status).toBe('uncertain');expect(r.passages.flatMap(x=>x.highlights.map(h=>en.slice(h.start,h.end)))).toEqual(['Clouds return']);
+});
+it('answers a selection that runs across two verse lines printed without a space between them, and a whole line its pair has no line correspondence for',()=>{
+ const a=fixture(true),p=a.poems![0],vi=a.editions.vi.text,en=a.editions.en.text,at=(x:string,q:string)=>({start:x.indexOf(q),end:x.indexOf(q)+q.length});
+ p.labelled=[{vi:at(vi,'về núi'),en:at(en,'Clouds return')},{vi:at(vi,'Mưa rơi'),en:at(en,'Rain')}];
+ const ask=(q:string)=>{const s=at(vi,q),r=lookupArtifact(a,{chapterId:a.chapterId,locale:'vi',revision:1,...s,text:q});return {status:r.status,highlights:r.passages.flatMap(x=>x.highlights.map(h=>en.slice(h.start,h.end)))};};
+ // "núiMưa" is one run of letters in the text, two words on two lines
+ expect(ask('núiMưa')).toEqual({status:'uncertain',highlights:['Clouds return','Rain']});
+ // whole line "Mưa rơi sân": the pair has a correspondence for it, so the line answer stays (the whole English line)
+ expect(ask('Mưa rơi sân').highlights).toEqual(['Rain falls.']);
+ // ... and when the pair has none for that line, the label answers it
+ p.correspondences=p.correspondences.slice(0,1);p.labelled=[{vi:at(vi,'Mưa rơi sân'),en:at(en,'Rain falls')}];
+ expect(ask('Mưa rơi sân')).toEqual({status:'uncertain',highlights:['Rain falls']});
 });
 it('rejects verse pairs written by reading that leave the poem or overlap one another',()=>{
  const vi=fixture().editions.vi.text,en=fixture().editions.en.text,at=(t:string,q:string)=>({start:t.indexOf(q),end:t.indexOf(q)+q.length});
