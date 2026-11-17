@@ -64,6 +64,21 @@ it('answers a word or phrase inside a verse line from pairs written by reading, 
  p.labelled=[{vi:at(vi,'Mưa rơi'),en:at(en,'Rain falls')}];
  expect(ask('en','Rain').highlights).toEqual(['Mưa']);
 });
+it('answers a Vietnamese selection in an original that shares the English track, and sends English selections to the translation pair',()=>{
+ const a=fixture();a.editions.vi.text+='\nVũ lạc đình.\nVân quy sơn.';
+ const vi=a.editions.vi.text,en=a.editions.en.text,at=(t:string,q:string)=>({start:t.indexOf(q),end:t.indexOf(q)+q.length}),lines=[at(vi,'Vũ lạc đình.'),at(vi,'Vân quy sơn.')],base=a.poems![0];
+ base.labelled=[{vi:at(vi,'Mưa'),en:at(en,'Rain')}];a.poetryScopes!.vi=[...a.poetryScopes!.vi,{start:lines[0].start,end:lines[1].end}];
+ a.poems!.push({vi:{id:'han',start:lines[0].start,end:lines[1].end,lines},en:base.en,score:base.score,margin:base.margin,primary:{vi:true,en:false},correspondences:[],contextOnly:true,
+  labelled:[{vi:at(vi,'Vũ lạc'),en:at(en,'Rain')},{vi:at(vi,'Vân quy'),en:at(en,'Clouds return')}]});
+ expect(()=>validateAlignmentArtifact(a)).not.toThrow();
+ const ask=(locale:'vi'|'en',q:string)=>{const t=a.editions[locale].text,s=at(t,q),r=lookupArtifact(a,{chapterId:a.chapterId,locale,revision:1,...s,text:q}),o=a.editions[locale==='vi'?'en':'vi'].text;return {status:r.status,highlights:r.passages.flatMap(x=>x.highlights.map(h=>o.slice(h.start,h.end))),passage:targetText(r)};};
+ expect(ask('vi','Vũ lạc')).toEqual({status:'uncertain',highlights:['Rain'],passage:'Rain falls.'});
+ expect(ask('vi','Vân quy')).toEqual({status:'uncertain',highlights:['Clouds return'],passage:'Clouds return (5).'});
+ // a whole line of the original has no line correspondence: the whole English poem, nothing highlighted
+ expect(ask('vi','Vũ lạc đình')).toMatchObject({status:'context-only',highlights:[]});
+ // an English selection still goes to the translation pair
+ expect(ask('en','Rain')).toEqual({status:'uncertain',highlights:['Mưa'],passage:'Mưa rơi sân.'});
+});
 it('rejects verse pairs written by reading that leave the poem or overlap one another',()=>{
  const vi=fixture().editions.vi.text,en=fixture().editions.en.text,at=(t:string,q:string)=>({start:t.indexOf(q),end:t.indexOf(q)+q.length});
  const make=()=>{const b=fixture();b.poems![0].labelled=[{vi:at(vi,'Mưa'),en:at(en,'Rain')},{vi:at(vi,'rơi sân'),en:at(en,'falls')}];return b;};
