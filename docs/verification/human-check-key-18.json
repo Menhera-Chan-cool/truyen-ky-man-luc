@@ -1,0 +1,355 @@
+{
+ "cards": {
+  "a18-217": {
+   "n": 1,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 18,
+   "selection": "far to seek",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Cảm lòng chàng từ xa tìm đến"
+   ],
+   "B_text": []
+  },
+  "a18-525": {
+   "n": 2,
+   "kind": "word",
+   "from": "en",
+   "chapter": 18,
+   "selection": "bring",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Nổi quân Hạ(18) mưu cuộc trùng hưng"
+   ]
+  },
+  "a18-117": {
+   "n": 3,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "Thế vận dần",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "As the fortunes of the age decline"
+   ]
+  },
+  "a18-327": {
+   "n": 4,
+   "kind": "word",
+   "from": "en",
+   "chapter": 18,
+   "selection": "Highness",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Đại vương nay"
+   ],
+   "B_text": []
+  },
+  "a18-74": {
+   "n": 5,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "selection": "fortune alone",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Vận may hiển đạt"
+   ],
+   "B_text": []
+  },
+  "a18-235": {
+   "n": 6,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "selection": "Let this judgment",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Lời ta phán truyền"
+   ]
+  },
+  "a18-205": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "Tiêu điều một chức",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "In a humble and cheerless post, I unworthily drew an official's stipend in lieu of tilling the fields"
+   ],
+   "B_text": []
+  },
+  "a18-413": {
+   "n": 8,
+   "kind": "word",
+   "from": "en",
+   "chapter": 13,
+   "selection": "stillness",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Tịch mịch nửa chăn, riêng nặng nỗi buồn lẻ bạn"
+   ]
+  },
+  "a18-552": {
+   "n": 9,
+   "kind": "word",
+   "from": "en",
+   "chapter": 18,
+   "selection": "deaths",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Gửi chiếc thân ở trong muôn chết"
+   ],
+   "B_text": []
+  },
+  "a18-497": {
+   "n": 10,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 18,
+   "selection": "quân",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "With a host of fewer than two thousand"
+   ]
+  },
+  "a18-377": {
+   "n": 11,
+   "kind": "word",
+   "from": "en",
+   "chapter": 13,
+   "selection": "given",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Lòng nhiều ham mê"
+   ],
+   "B_text": []
+  },
+  "a18-428": {
+   "n": 12,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "láng giềng",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "He did not follow Yan Shuzi, who turned away the woman next door"
+   ]
+  },
+  "a18-c-446": {
+   "n": 13,
+   "kind": "word",
+   "from": "en",
+   "chapter": 13,
+   "selection": "lust",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "tà dâm"
+   ],
+   "B_text": [
+    "tà dâm"
+   ]
+  },
+  "a18-8": {
+   "n": 14,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 18,
+   "selection": "humble house",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Thiếp vốn con nhà tầm thường"
+   ]
+  },
+  "a18-313": {
+   "n": 15,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 18,
+   "selection": "công",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Only then shall the world behold the great deed of raising up what has fallen"
+   ]
+  },
+  "a18-353": {
+   "n": 16,
+   "kind": "word",
+   "from": "en",
+   "chapter": 18,
+   "selection": "dared",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "ép duyên toan nhắm mắt, giống sói khôn gần"
+   ]
+  },
+  "a18-454": {
+   "n": 17,
+   "kind": "word",
+   "from": "en",
+   "chapter": 18,
+   "selection": "turned",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Biến thành khu vực mấy trăm dặm rối loạn"
+   ],
+   "B_text": []
+  },
+  "a18-511": {
+   "n": 18,
+   "kind": "word",
+   "from": "en",
+   "chapter": 18,
+   "selection": "springtime",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Xuân trong viện đành giam"
+   ],
+   "B_text": []
+  },
+  "a18-c-176": {
+   "n": 19,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "chết vẫn",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "death it"
+   ],
+   "B_text": [
+    "death it"
+   ]
+  },
+  "a18-262": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "công việc chia",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "The twenty-four courts stand stern and watchful, each with its appointed charge"
+   ],
+   "B_text": []
+  },
+  "a18-7": {
+   "n": 21,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 18,
+   "selection": "plan for repelling",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "new",
+   "B": "old",
+   "A_text": [
+    "Chống giặc đắc sách, thực bởi mưu cao"
+   ],
+   "B_text": []
+  },
+  "a18-130": {
+   "n": 22,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 18,
+   "selection": "cannot hold",
+   "control": false,
+   "ptype": "blank-ans",
+   "A": "old",
+   "B": "new",
+   "A_text": [],
+   "B_text": [
+    "Giặc ứng tiếp không rồi, thua trong chớp mắt"
+   ]
+  },
+  "a18-c-585": {
+   "n": 23,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "triều Tấn",
+   "control": true,
+   "ptype": "control",
+   "A": "same",
+   "B": "same",
+   "A_text": [
+    "the Jin"
+   ],
+   "B_text": [
+    "the Jin"
+   ]
+  }
+ }
+}
