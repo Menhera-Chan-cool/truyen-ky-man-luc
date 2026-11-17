@@ -1,0 +1,953 @@
+{
+ "note": "60 random lookups on production after the fixes of 2026-11-18 (seed 20261201), marked by Claude from the source sentence and the answer; not independent of the code and not a human check",
+ "rows": [
+  {
+   "n": 1,
+   "ch": 6,
+   "loc": "vi",
+   "kind": "sentence",
+   "sel": "Hầu nói:- Âm dương khác nẻo, chuyện chưa rõ ràng, ông muốn đem cái việc vô bằng, bắt kẻ địch rất mạnh, sợ rằng mối thù ấy chưa thể trả được.",
+   "sent": "Huống chi mỗi người riêng ở một nơi, không thống thuộc gì với nhau, ai dám vượt qua sông nước, dấy động giáp binh, để phạm vào một cái tội lỗi không thể tha thứ.Trịnh nói:- Vậy thì bây giờ tôi phát đơ",
+   "status": "uncertain",
+   "hl": [
+    "The Marquis replied:",
+    "The realms of the living and the dead lie apart, and the matter is not yet clear. If you seek to seize so mighty a foe on a charge without proof, I fear the wrong done to you may never be avenged."
+   ],
+   "passage": [
+    "The Marquis replied:",
+    "The realms of the living and the dead lie apart, and the matter is not yet clear. If you seek to seize so mighty a foe on a charge without proof, I fear the wro"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 2,
+   "ch": 9,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "This is Mount Phu Lai, the sixth of the thirty-six grotto-heavens.",
+   "sent": "This is Mount Phu Lai, the sixth of the thirty-six grotto-heavens. It drifts upon the open sea with nothing below to anchor it, like the twin peaks of Luofu, which part and join again with the surging",
+   "status": "uncertain",
+   "hl": [
+    "Đây là núi Phù Lai, một động tiên thứ 6 trong 36 động,"
+   ],
+   "passage": [
+    "Đây là núi Phù Lai, một động tiên thứ 6 trong 36 động,"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 3,
+   "ch": 6,
+   "loc": "vi",
+   "kind": "sentence",
+   "sel": "Bấy giờ có một người mặc áo bào xanh hiệu là Chính hình lục sự, tâu rằng:\"Thần nghe: vì tình riêng mà ban thưởng, thưởng sẽ không công, đương lúc giận mà xử hình, hình tất quá đáng.",
+   "sent": "Việc ấy nỡ làm thì dù đem xử tử cũng không đáng tiếc.Bấy giờ có một người mặc áo bào xanh hiệu là Chính hình lục sự, tâu rằng:\"Thần nghe: vì tình riêng mà ban thưởng, thưởng sẽ không công, đương lúc g",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    "At this, a man in a green robe, who held the post of Recorder of Punishments, addressed the throne:",
+    "Your servant has heard it said that rewards granted out of personal favor will go to the undeserving, and that punishments decreed in anger will surely be exces"
+   ],
+   "verdict": "has"
+  },
+  {
+   "n": 4,
+   "ch": 9,
+   "loc": "vi",
+   "kind": "sentence",
+   "sel": "Chung quanh toàn là những lâu đài nguy nga, mây xanh ráng đỏ, bám ở lan can, cỏ lạ hoa kỳ, nở đầy trước cửa.",
+   "sent": "Chung quanh toàn là những lâu đài nguy nga, mây xanh ráng đỏ, bám ở lan can, cỏ lạ hoa kỳ, nở đầy trước cửa. Sinh nghĩ nếu không phải là chỗ đền đài thờ phụng, tất là cái xóm của những bậc lánh đời, n",
+   "status": "uncertain",
+   "hl": [
+    "All around him stood magnificent towers and pavilions. Blue clouds and crimson mists clung to their balustrades, and rare grasses and wondrous flowers bloomed before every gate."
+   ],
+   "passage": [
+    "All around him stood magnificent towers and pavilions. Blue clouds and crimson mists clung to their balustrades, and rare grasses and wondrous flowers bloomed b"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 5,
+   "ch": 7,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "In life you were wise and perceptive, quite unlike ordinary people.",
+   "sent": "In life you were wise and perceptive, quite unlike ordinary people. If your spirit has any power, I beg you to let me follow you beneath the earth soon.",
+   "status": "uncertain",
+   "hl": [
+    "Huống chi khi em bình sinh vốn thông tuệ, khác hẳn với mọi người thường,"
+   ],
+   "passage": [
+    "Huống chi khi em bình sinh vốn thông tuệ, khác hẳn với mọi người thường,"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 6,
+   "ch": 6,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "Who could have foreseen that calamity would rise in a single night and cast me down to the bottom of the abyss?",
+   "sent": "Who could have foreseen that calamity would rise in a single night and cast me down to the bottom of the abyss? Lacking the resolve to perish in the deep like sunken pearl and drowned jade, I resigned",
+   "status": "uncertain",
+   "hl": [
+    "Nào ngờ biến dậy một đêm, đến nỗi hình rơi đáy vực."
+   ],
+   "passage": [
+    "Nào ngờ biến dậy một đêm, đến nỗi hình rơi đáy vực."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 7,
+   "ch": 3,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "In a moment, wind and cloud rose up with a roar.",
+   "sent": "Make haste and obey!\"In a moment, wind and cloud rose up with a roar. Men standing only a few feet apart could no longer see one another, and on the river the waves surged and churned with a din that ",
+   "status": "match",
+   "hl": [
+    "Một lúc, mây gió nổi lên đùng đùng,"
+   ],
+   "passage": [
+    "Một lúc, mây gió nổi lên đùng đùng,"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 8,
+   "ch": 4,
+   "loc": "vi",
+   "kind": "sentence",
+   "sel": "Chúng quỷ nghe nói đều sung sướng nhảy nhót rồi trong chốc lát tan giãn đi cả.",
+   "sent": "Chúng quỷ nghe nói đều sung sướng nhảy nhót rồi trong chốc lát tan giãn đi cả.\nÔng Dương khẩn khoản khuyên mời xe tiên giáng xuống để được hỏi han mọi việc sau, nhưng trong thoắt chốc đã không thấy gì",
+   "status": "uncertain",
+   "hl": [
+    "Hearing this, the ghosts leapt and capered with joy, and in a moment they had all scattered and vanished."
+   ],
+   "passage": [
+    "Hearing this, the ghosts leapt and capered with joy, and in a moment they had all scattered and vanished."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 9,
+   "ch": 8,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "His descendants live on to this day, and people still speak of them as \"the house of His Honor the Judge.\"",
+   "sent": "His descendants live on to this day, and people still speak of them as \"the house of His Honor the Judge.\"CritiqueAlas!",
+   "status": "uncertain",
+   "hl": [
+    "Đến nay con cháu hãy còn, người ta còn truyền là \"nhà quan Phán sự!\"."
+   ],
+   "passage": [
+    "Đến nay con cháu hãy còn, người ta còn truyền là \"nhà quan Phán sự!\"."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 10,
+   "ch": 6,
+   "loc": "vi",
+   "kind": "sentence",
+   "sel": "Tôi là Bạch Long hầu, may bây giờ hãy còn năm đại hạn, mới có thì giờ rỗi đi chơi lăng băng, chứ nếu Ngọc Hoàng có sắc chỉ truyền đi làm mưa thì chẳng còn đâu thì giờ nhàn để đi làm nghề bói ở nhân gian nữa.",
+   "sent": "Tôi là Bạch Long hầu, may bây giờ hãy còn năm đại hạn, mới có thì giờ rỗi đi chơi lăng băng, chứ nếu Ngọc Hoàng có sắc chỉ truyền đi làm mưa thì chẳng còn đâu thì giờ nhàn để đi làm nghề bói ở nhân gi",
+   "status": "uncertain",
+   "hl": [
+    "I am the Marquis of the White Dragon. By good fortune, this is still a year of great drought, which leaves me at leisure to roam about as I please. Were the Jade Emperor to issue a decree commanding me to bring rain, I should have no leisure left for plying the fortune-teller's trade among mortals."
+   ],
+   "passage": [
+    "I am the Marquis of the White Dragon. By good fortune, this is still a year of great drought, which leaves me at leisure to roam about as I please. Were the Jad"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 11,
+   "ch": 12,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "But if my heart be fickle as a bird's and sly as a fish's, deceiving my husband and betraying my children, below let me serve as food for fish and shrimp, and above let me become carrion for kites and crows, enduring the scorn and revulsion of all mankind!\"",
+   "sent": "But if my heart be fickle as a bird's and sly as a fish's, deceiving my husband and betraying my children, below let me serve as food for fish and shrimp, and above let me become carrion for kites and",
+   "status": "uncertain",
+   "hl": [
+    "Nhược bằng lòng chim dạ cá, lừa chồng dối con, dưới xin làm mồi cho cá tôm, trên xin làm cơm cho diều quạ, chẳng những là chịu khắp mọi người phỉ nhổ."
+   ],
+   "passage": [
+    "Nhược bằng lòng chim dạ cá, lừa chồng dối con, dưới xin làm mồi cho cá tôm, trên xin làm cơm cho diều quạ, chẳng những là chịu khắp mọi người phỉ nhổ."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 12,
+   "ch": 2,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "The other day, while I was out bringing the rain, I happened to catch sight of you, and so I called out.",
+   "sent": "The other day, while I was out bringing the rain, I happened to catch sight of you, and so I called out. Had I not, a thousand long autumns might have passed, and who knows when we should ever have me",
+   "status": "uncertain",
+   "hl": [
+    "Bữa nọ nhân đi làm mưa, chợt trông thấy chàng nên mới gọi;"
+   ],
+   "passage": [
+    "Bữa nọ nhân đi làm mưa, chợt trông thấy chàng nên mới gọi;"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 13,
+   "ch": 18,
+   "loc": "vi",
+   "kind": "sentence",
+   "sel": "Phương chi chốn này nước non trong sáng, mây khói vật vờ, thần yên phách yên, bất tất phiền chàng dời đổi nữa.",
+   "sent": "Phương chi chốn này nước non trong sáng, mây khói vật vờ, thần yên phách yên, bất tất phiền chàng dời đổi nữa.Sau khi gà gáy ba hồi, hai người vội cùng nhau đứng dậy từ biệt.",
+   "status": "uncertain",
+   "hl": [
+    "Moreover, the waters and hills here are clear and bright, mist and cloud drift idly past, and my spirit and soul are at rest. There is no need to trouble you to move me elsewhere."
+   ],
+   "passage": [
+    "Moreover, the waters and hills here are clear and bright, mist and cloud drift idly past, and my spirit and soul are at rest. There is no need to trouble you to"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 14,
+   "ch": 6,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "Thus, when Di Renjie served as Inspector of Henan (9), he was entirely right to petition the throne for leave to destroy some seventeen hundred shrines unworthy of worship.",
+   "sent": "Thus, when Di Renjie served as Inspector of Henan (9), he was entirely right to petition the throne for leave to destroy some seventeen hundred shrines unworthy of worship.Notes(*) Original title: Lon",
+   "status": "uncertain",
+   "hl": [
+    "Cho nên Địch Nhân Kiệt khi làm Tuần phủ Hà Nam (9) tâu xin phá hủy đến một nghìn bảy trăm tòa đền thờ không xứng đáng, thật là phải lắm."
+   ],
+   "passage": [
+    "Cho nên Địch Nhân Kiệt khi làm Tuần phủ Hà Nam (9) tâu xin phá hủy đến một nghìn bảy trăm tòa đền thờ không xứng đáng, thật là phải lắm."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 15,
+   "ch": 4,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "When the sorrow of O Ton (10) comes to pass, let there be no rancor between us then, and do not reproach your old friend for forsaking you.\"",
+   "sent": "When the sorrow of O Ton (10) comes to pass, let there be no rancor between us then, and do not reproach your old friend for forsaking you.\"When he heard this, the lord sent men running after the Taoi",
+   "status": "uncertain",
+   "hl": [
+    "Cái mạn Ô Tôn (10) sau này, xin đừng phiền hận đến nhau thôi, và đừng trách cố nhân là phụ cố nhân."
+   ],
+   "passage": [
+    "Cái mạn Ô Tôn (10) sau này, xin đừng phiền hận đến nhau thôi, và đừng trách cố nhân là phụ cố nhân."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 16,
+   "ch": 12,
+   "loc": "vi",
+   "kind": "sentence",
+   "sel": "Song bệnh thế mỗi ngày một trầm trọng hơn, bà mẹ trối lại với nàng rằng:- Ngắn dài có số, tươi héo bởi trời.",
+   "sent": "Song bệnh thế mỗi ngày một trầm trọng hơn, bà mẹ trối lại với nàng rằng:- Ngắn dài có số, tươi héo bởi trời. Mẹ không phải không muốn đợi chồng con về, mà gượng cơm cháo.",
+   "status": "uncertain",
+   "hl": [
+    "Yet the illness worsened day by day, until the mother, breathing her last, left these final words to her daughter-in-law:",
+    "Life and death are decreed, bloom and wither are ordained by heaven."
+   ],
+   "passage": [
+    "Yet the illness worsened day by day, until the mother, breathing her last, left these final words to her daughter-in-law:",
+    "Life and death are decreed, bloom and wither are ordained by heaven."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 17,
+   "ch": 6,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "Do not let me grow old in this realm of water palaces and cloud-veiled hamlets.\"",
+   "sent": "Do not let me grow old in this realm of water palaces and cloud-veiled hamlets.\"The letter to Master Trinh read as follows:\"Our vows were sworn by the mountains and pledged by the seas.",
+   "status": "uncertain",
+   "hl": [
+    "đừng khiến tôi phải già đời ở chốn cung nước làng mây này."
+   ],
+   "passage": [
+    "đừng khiến tôi phải già đời ở chốn cung nước làng mây này."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 18,
+   "ch": 13,
+   "loc": "vi",
+   "kind": "sentence",
+   "sel": "Cuối đời họ Hồ, Kỳ Vọng đi buôn bán, ngụ ở thành Xương Giang (2), rồi ốm chết ở thành ấy.",
+   "sent": "Cuối đời họ Hồ, Kỳ Vọng đi buôn bán, ngụ ở thành Xương Giang (2), rồi ốm chết ở thành ấy. Người vợ nghèo kiết, không có tiền để đưa ma chồng về quê được, phải đem bán người con gái nhỏ là Thị Nghi cho",
+   "status": "uncertain",
+   "hl": [
+    "In the waning years of the Ho dynasty, Ky Vong took up the merchant's trade and lodged in the citadel of Xuong Giang (2), where he fell ill and died."
+   ],
+   "passage": [
+    "In the waning years of the Ho dynasty, Ky Vong took up the merchant's trade and lodged in the citadel of Xuong Giang (2), where he fell ill and died."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 19,
+   "ch": 9,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "Such treasures had never been known in the mortal world.",
+   "sent": "Such treasures had never been known in the mortal world. An immortal in white brocade said:\"We have dwelt in this place a mere eighty thousand years, yet already the Southern Sea has three times turne",
+   "status": "uncertain",
+   "hl": [
+    "dưới trần không bao giờ có được cái của quý như vậy."
+   ],
+   "passage": [
+    "dưới trần không bao giờ có được cái của quý như vậy."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 20,
+   "ch": 15,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "Would that a hundred men like Han Changli (10) might be born into the world, to band together and strike at it, burn all its books and seize all its temples.",
+   "sent": "Would that a hundred men like Han Changli (10) might be born into the world, to band together and strike at it, burn all its books and seize all its temples. Only then could it be done.Notes(1) Dong T",
+   "status": "uncertain",
+   "hl": [
+    "ước sao có hàng trăm ông Hàn Xương Lê(10) ra đời, xúm lại mà đánh, đốt hết sách và chiếm hết nhà mới có thể được."
+   ],
+   "passage": [
+    "ước sao có hàng trăm ông Hàn Xương Lê(10) ra đời, xúm lại mà đánh, đốt hết sách và chiếm hết nhà mới có thể được."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 21,
+   "ch": 19,
+   "loc": "vi",
+   "kind": "sentence",
+   "sel": "Chàng trông vào trong nhà, thấy một ông già đương ngồi ở giữa giường, bên cạnh có một vị mỹ nhân, trâm ngọc hài cườm, coi như một vị phi tần vậy.",
+   "sent": "Chàng trông vào trong nhà, thấy một ông già đương ngồi ở giữa giường, bên cạnh có một vị mỹ nhân, trâm ngọc hài cườm, coi như một vị phi tần vậy. Mỹ nhân nói với ra, bảo người coi cổng:- Canh khuya đê",
+   "status": "uncertain",
+   "hl": [
+    "Peering inside, he saw an old man seated at the center of a raised dais. Beside him sat a beautiful lady adorned with jade hairpins and beaded slippers, for all the world like an imperial consort."
+   ],
+   "passage": [
+    "Peering inside, he saw an old man seated at the center of a raised dais. Beside him sat a beautiful lady adorned with jade hairpins and beaded slippers, for all"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 22,
+   "ch": 4,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "Lord Duong hurriedly asked the boatman where they were, and the man answered that this was O Ton.",
+   "sent": "Lord Duong hurriedly asked the boatman where they were, and the man answered that this was O Ton. Only then did the lord remember the Taoist's words, and he called out his name just as he had been ins",
+   "status": "uncertain",
+   "hl": [
+    "Ông Dương vội hỏi người lái thuyền đây là nơi nào thì ý nói là Ô Tôn."
+   ],
+   "passage": [
+    "Ông Dương vội hỏi người lái thuyền đây là nơi nào thì ý nói là Ô Tôn."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 23,
+   "ch": 20,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "He then gave his home village and his name.",
+   "sent": "How is it that you do not know your old friend?\"He then gave his home village and his name. He said that he had been granted high office in the underworld and that, for the sake of their old friendshi",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    "Nhân kể quê quán họ tên và nói mình đã lĩnh chức quan to ở dưới âm phủ,"
+   ],
+   "verdict": "has"
+  },
+  {
+   "n": 24,
+   "ch": 14,
+   "loc": "en",
+   "kind": "sentence",
+   "sel": "Snow and wind, moon and flowers keep me company.",
+   "sent": "Snow and wind, moon and flowers keep me company. All I know is a padded coat in winter and a single layer in summer, lying on clouds and sleeping in mist, drinking from the brook and digging the mount",
+   "status": "uncertain",
+   "hl": [
+    "quẩn bên ta là tuyết gió trăng hoa;"
+   ],
+   "passage": [
+    "quẩn bên ta là tuyết gió trăng hoa;"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 25,
+   "ch": 14,
+   "loc": "en",
+   "kind": "phrase",
+   "sel": "may stand beside those",
+   "sent": "All that is still lacking is for the recluses of the mountains and forests to come forth and lend their aid, so that our sovereign's merit and virtue may stand beside those of Yao and Shun of old.",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    "Ngài cho là thời nay không đủ để cho ngài làm việc hay chăng? Nay có đấng thánh nhân trị vì, bốn bể đều ngóng trông, người Chiêm dâng đất mà xưng thần, quân Min"
+   ],
+   "verdict": "unsure"
+  },
+  {
+   "n": 26,
+   "ch": 11,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "chúng tôi cũng lấy làm không phục",
+   "sent": "Cớ sao bỏ những việc ấy không làm, lại đi lẩn quẩn ở công việc săn bắn dù được chim muông như núi, chúng tôi cũng lấy làm không phục.Quý Ly nghe lời, hai người mừng thầm nói:- Thế là mưu kế có kết quả",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    " Even were you to heap up birds and beasts as high as a mountain, we could not approve of it."
+   ],
+   "verdict": "has"
+  },
+  {
+   "n": 27,
+   "ch": 2,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "thò tay",
+   "sent": "Sinh đánh lần nào cũng được, thấy kiếm tiền dễ như thò tay vào túi mình lấy đồ vật vậy.",
+   "status": "uncertain",
+   "hl": [
+    "reaching into his own purse"
+   ],
+   "passage": [
+    "Yet the young man had long been given to dissipation, and pleasure-seeking was in his very nature. Before long his old habits returned just as they had been, an"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 28,
+   "ch": 17,
+   "loc": "en",
+   "kind": "phrase",
+   "sel": "named So-and-so was upright",
+   "sent": "One read:\"The official named So-and-so was upright and unbending in life and stood in no awe of the powerful and the noble.",
+   "status": "uncertain",
+   "hl": [
+    "tên là Mỗ ở",
+    "cứng"
+   ],
+   "passage": [
+    "Viên quan kia tên là Mỗ ở đời cứng vuông, không kiêng sợ kẻ quyền quý; tước vị càng cao, càng biết khiêm nhường, rồi lại biết quên mình để chết vì việc nước, là"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 29,
+   "ch": 18,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "Phương chi chốn này nước non",
+   "sent": "Phương chi chốn này nước non trong sáng, mây khói vật vờ, thần yên phách yên, bất tất phiền chàng dời đổi nữa.Sau khi gà gáy ba hồi, hai người vội cùng nhau đứng dậy từ biệt.",
+   "status": "uncertain",
+   "hl": [
+    "Moreover, the waters and hills here are clear"
+   ],
+   "passage": [
+    "Your deep devotion moves me greatly. But I have long kept company with two fair ladies here, and so close has our friendship grown that I cannot bear to forsake"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 30,
+   "ch": 7,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "Đêm hôm",
+   "sent": "Đêm hôm ấy gió mưa dữ dội, ở kinh đô có nhiều nhà lật mái đổ tường.",
+   "status": "uncertain",
+   "hl": [
+    "That"
+   ],
+   "passage": [
+    "That night a fierce storm of wind and rain raged,"
+   ],
+   "verdict": "partly"
+  },
+  {
+   "n": 31,
+   "ch": 8,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "khuyết một chân",
+   "sent": "Nay thấy ở đền Tản Viên khuyết một chân Phán sự, không có người lo việc.",
+   "status": "uncertain",
+   "hl": [
+    "lacks a judge"
+   ],
+   "passage": [
+    "Now that I, an old man, have been restored to my shrine, I know not how I might ever repay what you have done for me. At present, the Temple of Tan Vien lacks a"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 32,
+   "ch": 5,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "quá bộ đến trại Tây",
+   "sent": "Chàng nếu nghĩ tình ân ái cũ, quá bộ đến trại Tây thăm viếng chúng em sẽ được ngậm cười mà về chốn suối vàng.Nhân khóc mà rằng:- Sự thể cấp bách như vậy, cũng chẳng biết làm sao được nữa, song anh ở đ",
+   "status": "uncertain",
+   "hl": [
+    "trouble",
+    "Western"
+   ],
+   "passage": [
+    "trouble yourself to visit us at the Western Estate, and we shall go to the Yellow Springs with a smile upon our lips."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 33,
+   "ch": 11,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "thật là treo ở sợi",
+   "sent": "Tính mệnh các loài chim muông, thật là treo ở sợi dây cung.",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    "The sovereign of the Xuong Phu reign (2) and his ministers have entered the forest to hunt, and their eyes are fixed upon our kind. The lives of every bird and "
+   ],
+   "verdict": "unsure"
+  },
+  {
+   "n": 34,
+   "ch": 2,
+   "loc": "en",
+   "kind": "phrase",
+   "sel": "did Nhi Khanh",
+   "sent": "In dying, did Nhi Khanh truly obey her husband?",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    "có quả là đã theo chồng không?"
+   ],
+   "verdict": "has"
+  },
+  {
+   "n": 35,
+   "ch": 10,
+   "loc": "en",
+   "kind": "phrase",
+   "sel": "train of your wind-borne carriage",
+   "sent": "I wish only to ride in the train of your wind-borne carriage and be permitted to journey there for a single visit.",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    "Mình trần vóc tục, còn biết do lối nào mà ngoi lên được! Chỉ mong theo đòi xe gió, được tạm lên chơi xem một chuyến, chẳng hay thầy có thể giúp cho được không?"
+   ],
+   "verdict": "unsure"
+  },
+  {
+   "n": 36,
+   "ch": 15,
+   "loc": "en",
+   "kind": "phrase",
+   "sel": "astride a horse",
+   "sent": "The sun had already begun to sink, and all of them, disheartened, were about to turn for home when a man suddenly emerged from the mountains, clad in homespun, a bow slung across his back, astride a h",
+   "status": "match",
+   "hl": [
+    "đeo cung cưỡi ngựa."
+   ],
+   "passage": [
+    "đeo cung cưỡi ngựa."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 37,
+   "ch": 9,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "Quần tiên đều cười",
+   "sent": "Người ta bảo ngọc nữ không chồng, câu ấy hỏi có tin được không?Quần tiên đều cười, duy người mặc áo xanh buồn rầu không vui mà nói rằng:- Mối duyên của cô em đây, thật cũng là tốt đẹp.",
+   "status": "uncertain",
+   "hl": [
+    "All the immortals laughed."
+   ],
+   "passage": [
+    "All the immortals laughed."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 38,
+   "ch": 5,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "lên đường để tới kinh",
+   "sent": "Chi bằng việc cưới xin hãy tạm hoãn, đợi khi con đường mây nhẹ gót, thỏa nguyện bình sinh, bấy giờ hãy tìm đến tưởng cũng chưa muộn.Cha mẹ không nỡ trái ý con, việc cưới bèn đình hoãn lại.Ở nhà chưa b",
+   "status": "uncertain",
+   "hl": [
+    "set out",
+    "for the capital"
+   ],
+   "passage": [
+    "He had not been home long before thoughts of the two maidens left Ha Nhan listless and melancholy from morning to night, and so he set out once more for the cap"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 39,
+   "ch": 8,
+   "loc": "en",
+   "kind": "phrase",
+   "sel": "think I cannot",
+   "sent": "Lowly as I may be, do you think I cannot drag you there?",
+   "status": "uncertain",
+   "hl": [
+    "không"
+   ],
+   "passage": [
+    "Phong Đô không xa xôi gì, ta tuy hèn, há lại không đem nổi nhà người đến đấy. Không nghe lời ta thì rồi sẽ biết."
+   ],
+   "verdict": "partly"
+  },
+  {
+   "n": 40,
+   "ch": 12,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "cách mặt chưa bao",
+   "sent": "Tiệc xong, người ấy bảo với Phan Lang rằng:- Tôi với ông vốn người cùng làng, cách mặt chưa bao, đã coi nhau như khách qua đường xa lạ rồi ư?Bấy giờ Phan mới nhận đích người ấy là Vũ nương.",
+   "status": "uncertain",
+   "hl": [
+    "separated for but a short while"
+   ],
+   "passage": [
+    "separated for but a short while—have we already grown as distant as strangers passing in the night?"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 41,
+   "ch": 4,
+   "loc": "vi",
+   "kind": "phrase",
+   "sel": "rất mừng rỡ",
+   "sent": "Sinh rất mừng rỡ và sung sướng.",
+   "status": "uncertain",
+   "hl": [
+    "was overjoyed and content"
+   ],
+   "passage": [
+    "His wife readily consented. The Hoang family then welcomed the young scholar Duong into their home as their son-in-law, defraying from their own purse every exp"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 42,
+   "ch": 5,
+   "loc": "en",
+   "kind": "phrase",
+   "sel": "school and resume his studies",
+   "sent": "Why did you not stay home to enjoy your new bride instead of hurrying back onto the road?\"Ha Nhan told them the whole story, and both maidens praised him warmly:\"You are truly a man of constancy, my l",
+   "status": "uncertain",
+   "hl": [
+    "trường cũ theo học"
+   ],
+   "passage": [
+    "để lại đến trường cũ theo học."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 43,
+   "ch": 12,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "bóng",
+   "sent": "Nó trỏ bóng chàng ở trên vách:- Đây này!Thì ra khi chàng đi vắng, nàng thường đùa trỏ bóng mình mà bảo là cha Đản.",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    "Right there!\" Only then did Truong Sinh realize the tragic injustice his wife had suffered,"
+   ],
+   "verdict": "has"
+  },
+  {
+   "n": 44,
+   "ch": 9,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "hẳn",
+   "sent": "Chưa hẳn là không; Cho là thực có ư?",
+   "status": "uncertain",
+   "hl": [
+    "not certain"
+   ],
+   "passage": [
+    "That is not certain."
+   ],
+   "verdict": "partly"
+  },
+  {
+   "n": 45,
+   "ch": 14,
+   "loc": "en",
+   "kind": "word",
+   "sel": "hat",
+   "sent": "To burn the straw hat and tear up the rain cape, now is surely the time.",
+   "status": "uncertain",
+   "hl": [
+    "lá"
+   ],
+   "passage": [
+    "Những bậc quân tử đời xưa, không phải là không muốn giúp đời hành đạo; khi ẩn kín ở một chỗ, chỉ là còn đợi giá mà thôi. Cho nên tất có bức tiếu tượng đi tìm, r"
+   ],
+   "verdict": "partly"
+  },
+  {
+   "n": 46,
+   "ch": 8,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "rộng rãi",
+   "sent": "Xin đại vương khoan tha cho hắn để tỏ cái đức rộng rãi.",
+   "status": "uncertain",
+   "hl": [
+    "pardon"
+   ],
+   "passage": [
+    "I beg the Great King to show mercy and pardon him,"
+   ],
+   "verdict": "wrong"
+  },
+  {
+   "n": 47,
+   "ch": 15,
+   "loc": "en",
+   "kind": "word",
+   "sel": "while",
+   "sent": "But for a long while now, amid the turmoil of war, you have neglected the lamps and incense and the rites of worship.",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    "Các người khi trước vẫn thờ Phật rất kính cẩn, lâu nay vì việc binh hỏa mà đèn hương lễ bái không chăm, cho nên yêu nghiệt hoành hành mà Phật không cứu giúp. Na"
+   ],
+   "verdict": "has"
+  },
+  {
+   "n": 48,
+   "ch": 15,
+   "loc": "en",
+   "kind": "word",
+   "sel": "good",
+   "sent": "It may be only an expedient, but perhaps it will do us some good.\"So they all went to the temples to burn incense and bow in worship, praying thus:\"We humble beings have long revered Heaven and the Bu",
+   "status": "uncertain",
+   "hl": [
+    "giúp ích"
+   ],
+   "passage": [
+    "Các người khi trước vẫn thờ Phật rất kính cẩn, lâu nay vì việc binh hỏa mà đèn hương lễ bái không chăm, cho nên yêu nghiệt hoành hành mà Phật không cứu giúp. Na"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 49,
+   "ch": 9,
+   "loc": "en",
+   "kind": "word",
+   "sel": "drink",
+   "sent": "Whenever he came upon a spot that pleased him, he would happily pour out the wine and drink.",
+   "status": "uncertain",
+   "hl": [
+    "uống"
+   ],
+   "passage": [
+    "Bèn cởi trả ấn tín, bỏ quan mà về. Vốn yêu cảnh hang động ở huyện Tống Sơn (5), nhân làm nhà tại đấy để ở. Thường dùng một thằng nhỏ đem một bầu rượu, một cây đ"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 50,
+   "ch": 19,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "mưa gió",
+   "sent": "Chỉ buồn mưa gió đầy thành, Phần Lão thơ ngâm đến đành bỏ dở (3) mất.Chủ khách bèn chia ngôi cùng ngồi đối diện bàn luận văn chương, cả phu nhân cũng dự nhưng ngồi thấp xuống một bậc.",
+   "status": "uncertain",
+   "hl": [
+    "wind and rain"
+   ],
+   "passage": [
+    "Having given my word, I could not bear to break it. My only regret is that wind and rain fill the city, and so, like old Bin, I must leave my poem unfinished (3"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 51,
+   "ch": 5,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "đánh",
+   "sent": "Không ngờ mấy cây hoa ấy lại biến huyễn như thế được.Hà Nhân bấy giờ mới giật mình tỉnh ngộ, tự nghĩ mình bấy lâu mê mải, chỉ là đánh bạn với hồn hoa.",
+   "status": "uncertain",
+   "hl": [
+    "keeping"
+   ],
+   "passage": [
+    "Only then did Ha Nhan wake to the truth with a start. All this while, he realized, he had been lost in infatuation, keeping company with nothing more than the s"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 52,
+   "ch": 6,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "hẵng cậy",
+   "sent": "Chi bằng trước hẵng cậy người dò xét, lấy được chứng cớ, thì trừ kẻ gian kia chẳng khó khăn gì.",
+   "status": "uncertain",
+   "hl": [
+    "entrust"
+   ],
+   "passage": [
+    "The realms of the living and the dead lie apart, and the matter is not yet clear. If you seek to seize so mighty a foe on a charge without proof, I fear the wro"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 53,
+   "ch": 12,
+   "loc": "en",
+   "kind": "word",
+   "sel": "asked",
+   "sent": "Yet when she asked who had told him such a tale, he hid his son's words and kept silent; instead, he continually berated, scolded, and drove her away.",
+   "status": "uncertain",
+   "hl": [
+    "hỏi"
+   ],
+   "passage": [
+    "Chàng vẫn không tin. Nhưng nàng hỏi chuyện kia từ ai nói ra thì giấu không kể lời con nói; chỉ thường thường mắng mỏ nhiếc móc và đánh đuổi đi. Họ hàng làng xóm"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 54,
+   "ch": 5,
+   "loc": "en",
+   "kind": "word",
+   "sel": "single",
+   "sent": "Its few mildewed halls have not had so much as a single soul to sweep them.",
+   "status": "context-only",
+   "hl": [],
+   "passage": [
+    "Ôi! Cậu nói rõ chuyện chiêm bao chắc? Cái dinh cơ ấy từ khi quan Thái sư mất đi, trải hơn 20 năm nay, đã thành một nơi hoang quạnh. Mấy gian đền mốc một người q"
+   ],
+   "verdict": "has"
+  },
+  {
+   "n": 55,
+   "ch": 19,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "thiển bạc",
+   "sent": "Không ngờ vì thế mà những kẻ thiển bạc, bày chuyện nói xằng, thường làm những câu thơ mỉa giễu.",
+   "status": "uncertain",
+   "hl": [
+    "shallow"
+   ],
+   "passage": [
+    "For many years I served His Majesty Thanh Tong, and afterward His Majesty Hien Tong (10). Our bond was that of sovereign and subject, yet in truth our affection"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 56,
+   "ch": 15,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "lắm",
+   "sent": "Cái thuyết nhà Phật thật vô ích mà có hại quá lắm.",
+   "status": "uncertain",
+   "hl": [
+    "great"
+   ],
+   "passage": [
+    "The Buddhist doctrine is of no use at all and does a great deal of harm."
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 57,
+   "ch": 7,
+   "loc": "en",
+   "kind": "word",
+   "sel": "standing",
+   "sent": "The two acolytes standing beside him then spoke up:\"Our Lord Buddha made compassion his raft and salvation his gate.",
+   "status": "uncertain",
+   "hl": [
+    "đứng"
+   ],
+   "passage": [
+    "Hai tiểu đồng đứng bên bàn rằng:"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 58,
+   "ch": 15,
+   "loc": "en",
+   "kind": "word",
+   "sel": "reason",
+   "sent": "The gods and Buddhas, it seemed, did indeed descend in answer, for every prayer was granted, and their power to respond was wondrous beyond the ordinary.For this reason the people revered and trusted ",
+   "status": "uncertain",
+   "hl": [
+    "Bởi vậy"
+   ],
+   "passage": [
+    "Bởi vậy người dân càng kính tin,"
+   ],
+   "verdict": "wrong"
+  },
+  {
+   "n": 59,
+   "ch": 10,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "thầy",
+   "sent": "Tử Hư từ biệt thầy trở về, sang năm đi thi quả đỗ tiến sĩ.",
+   "status": "uncertain",
+   "hl": [
+    "teacher"
+   ],
+   "passage": [
+    "Tu Hu took leave of his teacher and returned home. The following year he sat the examinations and, just as foretold, passed as a doctoral laureate. From then on"
+   ],
+   "verdict": "right"
+  },
+  {
+   "n": 60,
+   "ch": 19,
+   "loc": "vi",
+   "kind": "word",
+   "sel": "Gần",
+   "sent": "Mỹ nhân nói với ra, bảo người coi cổng:- Canh khuya đêm vắng, trời lại mưa gió, người ta xin ngủ nhờ không cho thì người ta ngủ đâu bây giờ.Thấy chủ nhà nói vậy, Tử Biên vén áo bước vào, nghỉ nhờ ở má",
+   "status": "uncertain",
+   "hl": [
+    "Toward"
+   ],
+   "passage": [
+    "Toward the second watch,"
+   ],
+   "verdict": "right"
+  }
+ ]
+}
