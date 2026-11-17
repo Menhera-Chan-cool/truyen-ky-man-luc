@@ -1,5 +1,5 @@
 {
- "note": "60 random lookups on production after the fixes of 2026-11-18 (seed 20261201), marked by Claude from the source sentence and the answer; not independent of the code and not a human check",
+ "note": "60 random lookups on production after the fixes of 2026-11-18 (seed 20261201), marked by Claude from the source sentence and the answer; not independent of the code and not a human check Rows 25, 33 and 35 were first marked unsure and then read in full: each passage holds the translation.",
  "rows": [
   {
    "n": 1,
@@ -398,7 +398,7 @@
    "passage": [
     "Ngài cho là thời nay không đủ để cho ngài làm việc hay chăng? Nay có đấng thánh nhân trị vì, bốn bể đều ngóng trông, người Chiêm dâng đất mà xưng thần, quân Min"
    ],
-   "verdict": "unsure"
+   "verdict": "has"
   },
   {
    "n": 26,
@@ -524,7 +524,7 @@
    "passage": [
     "The sovereign of the Xuong Phu reign (2) and his ministers have entered the forest to hunt, and their eyes are fixed upon our kind. The lives of every bird and "
    ],
-   "verdict": "unsure"
+   "verdict": "has"
   },
   {
    "n": 34,
@@ -552,7 +552,7 @@
    "passage": [
     "Mình trần vóc tục, còn biết do lối nào mà ngoi lên được! Chỉ mong theo đòi xe gió, được tạm lên chơi xem một chuyến, chẳng hay thầy có thể giúp cho được không?"
    ],
-   "verdict": "unsure"
+   "verdict": "has"
   },
   {
    "n": 36,
