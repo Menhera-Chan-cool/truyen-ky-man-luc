@@ -16,9 +16,6 @@ Thái sư = Grand Tutor
 triều Trần = Tran court
 #32
 Ngày ngày đi qua = day after day
-#34
-hái = pick
-quả ngon = ripest fruit
 #35
 Lâu lâu như thế = After this had gone on for some time
 Hà Nhân = Ha Nhan
@@ -501,3 +498,6 @@ lên đường = onto the road
 #b3
 gió dông = storm wind
 thác hóa = pass away
+#34
+hái = pick
+quả ngon = ripest fruit

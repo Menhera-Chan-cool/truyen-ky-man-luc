@@ -457,14 +457,6 @@ chốn trần hoàn = dusty realm
 chật hẹp = too narrow
 đứng chầu một bên = stood in attendance
 biết rõ = know it all very well
-#154
-đạo nhân = Taoist
-Dương Thiên Tích = Duong Thien Tich
-hạt linh đan = grain of divine elixir
-uống = swallowed
-tâm hồn tỉnh sáng = mind grow clear and bright
-nhớ ra hết = recalled everything
-kiếp trước = former life
 #155
 Lai lịch = origins
 nghe qua = learned
@@ -623,3 +615,13 @@ tẩy = washed clean
 #b0
 Làm thiện = doing good
 ích = use
+#154
+đạo nhân = Taoist
+Dương Thiên Tích = Duong Thien Tich
+hạt linh đan = grain of divine elixir
+#c174
+uống = swallowed
+tâm hồn tỉnh sáng = mind grow clear and bright
+#c175
+nhớ ra hết = recalled everything
+kiếp trước = former life

@@ -50,10 +50,10 @@ def _best_window(query,values):
     alternatives=[value for _,value,at,width in candidates if at+width<=start or at>=start+size]
     return list(range(start,start+size)),score-max(alternatives,default=0)
 
-PAIR_SLACK=3
+PAIR_SLACK=24  # clause units. Measured on the published book: 22 off-sequence retrieval pairs lie 28 to 262 units away (all wrong), the 2 that are right (read by hand) 8 and 19
 def _in_sequence(path,p,slack=PAIR_SLACK):
     """A pair found by retrieval (a unit's best counterpart anywhere) must lie where the order-preserving alignment puts its neighbours:
-    not before the start of the previous pair's counterpart and not after the end of the next one's, give or take a few units.
+    not before the start of the previous pair's counterpart and not after the end of the next one's, give or take PAIR_SLACK units.
     Without it an orphan clause was paired with a similar clause thousands of characters away (a stray group)."""
     before=[q for q in path if q['vi'][-1]<p['vi'][0]];after=[q for q in path if q['vi'][0]>p['vi'][-1]]
     return (not before or p['en'][0]>=before[-1]['en'][0]-slack) and (not after or p['en'][-1]<=after[0]['en'][-1]+slack)

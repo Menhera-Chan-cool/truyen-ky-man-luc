@@ -118,9 +118,6 @@ cố chấp = unbending
 #67
 ghét = despise
 miệng lưỡi bẻo lẻo = glib-tongued men
-#68
-đắm mình = sunk themselves
-triều đình = court
 #69
 kéo người khác = drag others down
 cùng đắm = drown alongside them
@@ -337,3 +334,6 @@ Thích cờ = Song in Praise of Chess
 #b2
 xắn áo = hitch up my robes
 lội = wade
+#68
+đắm mình = sunk themselves
+triều đình = court

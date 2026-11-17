@@ -307,10 +307,6 @@ quỳ phủ phục = kneel prostrate
 máu tươi = fresh blood
 kêu rên giẫy giụa = groaned and writhed
 đau đớn = agony
-#130
-Chia buồng xét việc = apportion the cases among your bureaus and try them
-bổn phận = appointed duty
-chậm đến một năm = drag on for a full year
 #131
 tội ác chồng chất = crimes are piled so high
 đoán định = pass judgment
@@ -387,3 +383,8 @@ binh lính = soldiers
 #b4
 binh lửa = fighting
 tật dịch = pestilence
+#130
+Chia buồng xét việc = apportion the cases among your bureaus and try them
+bổn phận = appointed duty
+#c142
+chậm đến một năm = drag on for a full year

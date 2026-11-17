@@ -145,8 +145,6 @@ cả cười = laughed heartily
 Thiện Văn = Yu Shanwen
 Long cung = Dragon Palace
 ăn yến = feasted
-#51
-theo dấu của người xưa = follow in the footsteps of those men of old
 #52
 kẻ nghèo khó = one so poor and humble
 tôn nghiêm = august
@@ -609,3 +607,5 @@ Liễu Nghị = Liu Yi
 tặng = presented
 văn tê = patterned rhinoceros horn
 đồi mồi = tortoiseshell
+#51
+theo dấu của người xưa = follow in the footsteps of those men of old

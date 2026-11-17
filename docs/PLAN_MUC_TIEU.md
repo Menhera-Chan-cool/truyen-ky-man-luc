@@ -84,3 +84,13 @@ Phần **có khả năng đạt**: tên riêng >95% (cùng chữ đã đạt, kh
 | Khâu ghép nhóm (thay cho LaBSE top-1) | 95–98% |
 | Tập kiểm độc lập, trúng mỗi chiều | 90–95%; >98% khó, và cần tập ~400 ca/chiều mới chứng minh được |
 | Văn xuôi không tô | 8–10% |
+
+## 6. Tiến độ (cập nhật 2026-11-18)
+
+| Giai đoạn | Trạng thái |
+|---|---|
+| 0 – sửa thước đo | Xong. Đặc tả `docs/MEASUREMENT_SPEC.md`; phiếu 22 đã có kết quả: **đúng 83/84 = 98,8%** [93,6–99,8] trong số ca có tô, không sai 84/84, độ phủ 82,4% (mục 5 của đặc tả). ">98%" chưa chứng minh được theo cận dưới. |
+| 1 – chặn hồi quy | Xong. `partialRule.maxWords` = 8: câu nguyên không còn giữ một phần (332 câu: 301 trúng, 2 sai trên 305 có đáp án, 98,7%; trước đó 302 trúng, 4 sai trên 312, 96,8%); lựa chọn ngắn không đổi. |
+| 2 – tên riêng | Bảng Hán–Việt↔pinyin đã dùng trên production; thêm tra theo hai cách viết (ký/kí, hy/hi, thủy/thuỷ). Trong 2.160 tên viết hoa của sách chỉ còn 142 không tô, phần lớn là từ thường viết hoa đầu câu hoặc xưng hô ("Your Majesty"), nên giai đoạn này gần hết dư địa. |
+| 3 – từ và cụm văn xuôi | Chưa làm (cần gán nhãn thêm hoặc tinh chỉnh bộ ghép từ). |
+| 4 – khâu dựng nhóm | Một phần. Nguyên nhân gốc của nhóm lạc (`_pairs` thêm cặp "tốt nhất ở bất cứ đâu" không theo thứ tự) đã sửa trong đường ống, kèm phần dựng lại và phát hành các chương bị ảnh hưởng. Chưa làm: ghép lại những câu nằm ngoài mọi nhóm bằng cửa sổ lân cận. |

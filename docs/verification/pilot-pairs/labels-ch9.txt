@@ -115,10 +115,6 @@ tối tăm mù mịt = pitch dark
 vực đen tối = black abyss
 #59
 không còn thể nào sống được = could not survive
-#60
-khe nhỏ = narrow crevice
-quằn quèo = twisted and turned
-ruột dê = sheep's gut
 #61
 Đi mò = feeling his way
 hơn một dặm = more than half a mile
@@ -515,3 +511,7 @@ cửa Nga = Nga estuary
 đề vịnh = inscribed a poem
 dậy sớm = rose early
 bể Thần Phù = Than Phu sea
+#60
+khe nhỏ = narrow crevice
+quằn quèo = twisted and turned
+ruột dê = sheep's gut

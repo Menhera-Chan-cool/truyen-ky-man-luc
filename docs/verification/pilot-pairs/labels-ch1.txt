@@ -1,7 +1,3 @@
-#8
-Quan Thừa chỉ = Grand Imperial Secretary
-Hồ Tông Thốc = Ho Tong Thoc
-hay thơ = deeply versed in poetry
 #9
 khoảng cuối đời Trần = Toward the end of the Tran dynasty
 #10
@@ -809,3 +805,7 @@ bề tôi = minister
 thờ = serves
 vua = sovereign
 trung = loyalty
+#8
+Quan Thừa chỉ = Grand Imperial Secretary
+Hồ Tông Thốc = Ho Tong Thoc
+hay thơ = deeply versed in poetry

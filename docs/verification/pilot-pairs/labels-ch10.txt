@@ -149,8 +149,6 @@ hai loài thiện ác = two kinds of men, the good and the wicked
 #50
 chăm làm thiện = diligently does good
 ghi ở Đế đình = inscribed at the Celestial Court
-#53
-máu rây mặt đất = blood spattered upon the earth
 #54
 cõi đời = mortal world
 #55
@@ -412,3 +410,5 @@ làm ác = does evil
 Nhan Hồi = Yan Hui
 ngõ hẻm = humble alley
 Tu văn = Keeper of Letters
+#53
+máu rây mặt đất = blood spattered upon the earth
