@@ -6,10 +6,11 @@ const intersects=(a:TextSpan,b:TextSpan)=>a.start<b.end&&b.start<a.end;
 const contains=(a:TextSpan,b:TextSpan)=>a.start<=b.start&&a.end>=b.end;
 const meaningful=(text:string)=>/[\p{L}\p{N}]/u.test(text.replace(/\(\d{1,3}\)/gu,''));
 const groups=(a:AlignmentArtifact)=>a.refinementVersion===1?a.refinedGroups??a.groups:a.groups;
-// Keeping the highlight of the part of a selection that was found, when only a few of its words have no counterpart. `min` is the share of the content words that must have one (0 = never kept: the rule so far),
+// Keeping the highlight of the part of a selection that was found, when only a few of its words have no counterpart. `min` is the share of the content words that must have one (0 = never kept: the rule before 2026-11-17),
 // `words` the least number of content words, `strength` the weakest link that may carry the highlight. Measured on 24,303 selections taken from the pairs written by reading: with min .5 and words 2 the lookup
-// answers 5.2 points more of them, and 80% of those new answers sit inside or on the gold (the gold is stricter than a reader). Off until a human sheet agrees; scripts/align-novel/replay-without-labels.ts sets it from PARTIAL_MIN.
-export const partialRule={min:0,words:2,strength:0};
+// answers 5.2 points more of them, and 80% of those new answers sit inside or on the gold (the gold is stricter than a reader); on the whole-book prose pool 943 selections gain an answer and none loses one.
+// ON since 2026-11-17 on the owner's instruction, before human sheet 21 (23 cards) was answered. scripts/align-novel/replay-without-labels.ts sets it from PARTIAL_MIN to measure other values.
+export const partialRule={min:.5,words:2,strength:0};
 const stop:Record<Locale,Set<string>>={
  en:new Set('a an the of to for from by with in on at as and or but is was were be been being am are it its his her their our your my i we you he she they them him us me this that these those than then so not no do does did has have had will would can could may might shall should must there here who whom whose which what when where while if how why all also only just very too more most some such any each both other up down out over off upon about after before through between under until once again'.split(' ')),
  vi:new Set('của và hoặc nhưng các những thì mà là ở với bởi vì cho từ tại đã đang sẽ có không được một này đó ấy cũng rất lại đều chỉ nên bèn thế vậy nào gì như hay rồi đến khi trong để rằng cả vẫn cứ hãy chớ đừng chưa chẳng thôi vừa liền ra vào lên xuống về qua sang theo cùng nhau bằng do nếu dù tuy dẫu hơn nhất mỗi'.split(' ')),
@@ -19,7 +20,9 @@ export function partialKept(text:string,r:TextSpan,unmatched:TextSpan[],passages
  if(!partialRule.min||!unmatched.length||strength<partialRule.strength||!passages.some(p=>p.highlights.length))return false;
  const words=[...text.slice(r.start,r.end).matchAll(/[\p{L}\p{M}]+/gu)].map(m=>({start:r.start+m.index,end:r.start+m.index+m[0].length,text:m[0].toLocaleLowerCase(locale)})).filter(w=>!stop[locale].has(w.text));
  const lacking=words.filter(w=>unmatched.some(u=>u.start<w.end&&u.end>w.start));
- return words.length>=partialRule.words&&lacking.length>0&&(words.length-lacking.length)/words.length>=partialRule.min&&!lacking.some(w=>/^(?:not|never|no|không|chưa|chẳng|đừng|chả)$/iu.test(w.text));
+ // A negation is a stop word, so it is looked for among all the words of the selection: a highlight that leaves "không" or "not" out would say the opposite.
+ const negated=[...text.slice(r.start,r.end).matchAll(/[\p{L}\p{M}]+/gu)].some(m=>/^(?:not|never|no|nor|neither|cannot|without|none|nothing|nobody|không|chưa|chẳng|chả|đừng)$/iu.test(m[0])&&unmatched.some(u=>u.start<r.start+m.index+m[0].length&&u.end>r.start+m.index));
+ return words.length>=partialRule.words&&lacking.length>0&&!negated&&(words.length-lacking.length)/words.length>=partialRule.min;
 }
 function missing(text:string,r:TextSpan,covered:TextSpan[]){
  let remaining:TextSpan[]=[{start:r.start,end:r.end}];

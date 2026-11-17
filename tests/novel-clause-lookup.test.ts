@@ -37,7 +37,9 @@ it('requires the actual selection to cover the final word of a mapped sentence',
 });
 it('does not crop away unresolved content after a complete mapped sentence',()=>{
  const a=fixture(),end=a.editions.en.text.indexOf('She lived')+'She lived'.length,r=query(a,'en',{start:0,end});
- expect(r.status).toBe('context-only');expect(r.passages[0].target.text).toContain('sống hòa thuận');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);
+ // the sentence found is highlighted (partial answer); the passage still runs over the counterpart of the words that were not found
+ expect(r.status).toBe('uncertain');expect(r.partial).toBe(true);expect(r.passages[0].target.text).toContain('sống hòa thuận');
+ expect(r.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual(['Lan còn nhỏ, sau khi lấy chồng, cư xử khéo với họ hàng,']);expect(r.unmatchedSource?.length).toBe(1);
 });
 it('validates sentence correspondences against their group and exact retained parts',()=>{
  const a=fixture();expect(()=>validateAlignmentArtifact(a)).not.toThrow();a.groups[0].clausePairs![0].vi[0]={start:0,end:a.editions.vi.text.length+1};
@@ -444,10 +446,11 @@ it('lets auxiliaries and pronouns lie outside the labelled pairs only where the 
 it('keeps the highlight of the part found only when the partial rule is on, and flags it',()=>{
  const make=()=>{const a=fixture(),vi=a.editions.vi.text,en=a.editions.en.text,h=span(vi,'họ hàng'),k=span(en,'kin');a.groups[0].links.push({vi:[h.start,h.end],en:[k.start,k.end],score:.9});return a;};
  const run=(a:AlignmentArtifact)=>query(a,'en',span(a.editions.en.text,'kin tactfully'));
- const off=run(make());
- expect(off.status).toBe('context-only');expect(off.passages.flatMap(p=>p.highlights)).toEqual([]);expect(off.partial).toBeUndefined();
  const saved={...partialRule};
  try{
+  Object.assign(partialRule,{min:0,words:2,strength:0});
+  const off=run(make());
+  expect(off.status).toBe('context-only');expect(off.passages.flatMap(p=>p.highlights)).toEqual([]);expect(off.partial).toBeUndefined();
   Object.assign(partialRule,{min:.5,words:2,strength:0});
   const a=make(),on=run(a);
   expect(on.status).toBe('uncertain');expect(on.partial).toBe(true);expect(on.unmatchedSource?.length).toBeGreaterThan(0);
@@ -463,6 +466,12 @@ it('does not keep a partial highlight when the words it lacks include a negation
   expect(partialKept(text,all,[at('home')],hl,'en',1)).toBe(true);
   expect(partialKept(text,all,[at('never')],hl,'en',1)).toBe(false);
   expect(partialKept(text,all,[at('knight'),at('never'),at('returned')],hl,'en',1)).toBe(false);
+  // "not" and "không" are stop words but still count as a missing negation
+  const t2='The brave knight did not return home',all2={start:0,end:t2.length};
+  expect(partialKept(t2,all2,[span(t2,'home')],hl,'en',1)).toBe(true);
+  expect(partialKept(t2,all2,[span(t2,'not')],hl,'en',1)).toBe(false);
+  const t3='Chàng hiệp sĩ dũng cảm không về nhà',all3={start:0,end:t3.length};
+  expect(partialKept(t3,all3,[span(t3,'không')],hl,'vi',1)).toBe(false);expect(partialKept(t3,all3,[span(t3,'nhà')],hl,'vi',1)).toBe(true);
   expect(partialKept(text,all,[at('home')],hl,'en',0)).toBe(true);
   Object.assign(partialRule,{min:.5,words:2,strength:.5});
   expect(partialKept(text,all,[at('home')],hl,'en',.4)).toBe(false);

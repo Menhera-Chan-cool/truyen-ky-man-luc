@@ -767,7 +767,12 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
       }
     }
   }
-  if(incompleteWords&&partialKept(source.text,request,unmatchedSource,passages,locale,weakest)){hasWords=true;uncertain=true;partial=true;}
+  // Prose only: a verse selection keeps the pairs written by reading, which answer when nothing is highlighted.
+  if(incompleteWords&&!poem&&partialKept(source.text,request,unmatchedSource,passages,locale,weakest)){
+    hasWords=true;uncertain=true;partial=true;
+    // The highlight stays, and so does the context of the words that were not found: the passage runs over the counterpart the clause logic grounded for them.
+    for(const [i,p] of passages.entries()){const b=contexts[i];if(!b||!p.highlights.length)continue;const start=Math.min(b.start,...p.highlights.map(h=>h.start)),end=Math.max(b.end,...p.highlights.map(h=>h.end));p.target={start,end,text:target.text.slice(start,end),breaks:target.breaks?.filter(x=>x>start&&x<end)};}
+  }
   else if(incompleteWords){hasWords=false;for(const [i,p] of passages.entries()){const b=contexts[i];p.highlights=[];p.target={...b,text:target.text.slice(b.start,b.end),breaks:target.breaks?.filter(x=>x>b.start&&x<b.end)};}}
   const joined:LookupPassage[]=[];
   for(const p of passages){

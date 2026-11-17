@@ -35,11 +35,13 @@ it('returns sentence context when no trustworthy word link exists',()=>{
  const result=lookupArtifact({...artifact,groups:artifact.groups.map(g=>({...g,links:[]}))},{chapterId:'chapter-1',locale:'vi',revision:1,start:10,end:18,text:'tốt bụng'});
  expect(result.status).toBe('context-only');expect(result.passages[0].target.text).toBe('A kind person.');expect(result.passages[0].highlights).toEqual([]);
 });
-it('does not advertise half of a selected content phrase as its full counterpart',()=>{
+it('shows half of a selected content phrase as a partial answer, not as its full counterpart',()=>{
  const vi='Cờ đỏ xanh bay.',en='The red and blue flags wave.';
  const a={...artifact,editions:{vi:{...artifact.editions.vi,text:vi},en:{...artifact.editions.en,text:en}},groups:[{...artifact.groups[0],vi:{start:0,end:vi.length},en:{start:0,end:en.length},links:[{vi:[3,5] as [number,number],en:[4,7] as [number,number],score:.95}]}]};
  const r=lookupArtifact(a,{chapterId:a.chapterId,locale:'vi',revision:1,start:3,end:10,text:'đỏ xanh'});
- expect(r.status).toBe('context-only');expect(r.passages[0].highlights).toEqual([]);expect(r.passages[0].target.text).toBe(en);
+ // only "đỏ" is linked: it is highlighted and the result is flagged partial, with "xanh" listed as unmatched; the passage stays the whole sentence
+ expect(r.status).toBe('uncertain');expect(r.partial).toBe(true);expect(r.passages[0].target.text).toBe(en);
+ expect(r.passages[0].highlights.map(h=>en.slice(h.start,h.end))).toEqual(['red']);expect(r.unmatchedSource?.map(s=>vi.slice(s.start,s.end))).toEqual(['xanh']);
 });
 it('does not accept corrupt out-of-bounds worker artifacts',()=>{
  expect(()=>validateAlignmentArtifact(artifact)).not.toThrow();
