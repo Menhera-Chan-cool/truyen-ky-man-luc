@@ -133,3 +133,20 @@ it('answers an original title with no counterpart as unavailable, not with a nei
  const a=fixture(['Truyện.','Chú thích:','* Nguyên văn: Tên lạ.','(1) Hồ: Một.'],['Story.','Notes','(*) Original title: Strange Name.','(1) Ho: One.']);
  for(const quote of ['* Nguyên văn: Tên lạ.','Nguyên văn']){const r=query(a,'vi',quote);expect(r.passages).toEqual([]);expect(r.status).toBe('unavailable');}
 });
+it('keeps the number of a note whose opening parenthesis is missing',()=>{
+ const a=fixture(['Chú thích:','(1) Một: nghĩa một.','2) Hai: nghĩa hai.'],['Notes','(1) One: meaning one.','(2) Two: meaning two.']);
+ expect(alignmentStructure(a,'vi').notes.map(n=>n.id)).toEqual(['1','2']);
+});
+it('pairs a note no pair holds with the note of the same number that no pair holds either, only where the editions number their notes alike',()=>{
+ const make=(pairs:[number,number][])=>{
+  const a=fixture(['Chú thích:','(1) Một: nghĩa một.','(2) Hai: nghĩa hai.','(3) Ba: nghĩa ba.'],['Notes','(1) One: meaning one.','(2) Two: meaning two.','(3) Three: meaning three.']);
+  const vi=alignmentStructure(a,'vi').notes,en=alignmentStructure(a,'en').notes;
+  a.notePairs=pairs.map(([x,y])=>({vi:vi[x],en:en[y],score:.9,margin:.2}));
+  const look=(i:number)=>lookupArtifact(a,{chapterId:a.chapterId,locale:'vi',revision:1,start:vi[i].start,end:vi[i].end,text:a.editions.vi.text.slice(vi[i].start,vi[i].end)}).passages.map(p=>p.target.text);
+  return {look,en:(i:number)=>a.editions.en.text.slice(en[i].start,en[i].end)};
+ };
+ // notes 1 and 3 are paired with the same numbers, note 2 of each edition is left over: they are the same note
+ const alike=make([[0,0],[2,2]]);expect(alike.look(1)).toEqual([alike.en(1)]);
+ // the numbers do not agree (English 2 goes with Vietnamese 3): nothing is invented for the left-over note
+ const shifted=make([[0,0],[2,1]]);expect(shifted.look(1).join('')).not.toContain('meaning two');
+});

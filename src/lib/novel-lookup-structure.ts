@@ -20,10 +20,11 @@ export function alignmentStructure(a:AlignmentArtifact,locale:Locale):Structure{
  }
  const explicitFloor=Math.min(...headings.filter(h=>h.kind==='notes').map(h=>h.span.start),...a.groups.filter(g=>g.section==='notes').map(g=>g[locale].start));
  const floor=Number.isFinite(explicitFloor)?explicitFloor:Math.min(original?.start??Infinity,...blocks.filter(b=>/^\(\d{1,3}\)/u.test(e.text.slice(b.start,b.end))).map(b=>b.start));
- const numbered=blocks.filter(b=>b.start>=floor&&/^\(\d{1,3}\)/u.test(e.text.slice(b.start,b.end)));
+ // The opening parenthesis of a note number is missing in the Vietnamese notes of chapter 14 ("11) Uyên Minh …"): the note keeps its number.
+ const numbered=blocks.filter(b=>b.start>=floor&&/^\(?\d{1,3}\)/u.test(e.text.slice(b.start,b.end)));
  const starts=numbered.length?numbered:blocks.filter(b=>b.start>=floor&&!originals.some(o=>o.start===b.start)&&!headings.some(h=>h.span.start===b.start));
  const notes=starts.map((b,i):Note=>{
-  const end=starts[i+1]?.start??e.text.length,value=e.text.slice(b.start,end),marker=/^\((\d{1,3})\)\s*/u.exec(value),offset=marker?.[0].length??0;
+  const end=starts[i+1]?.start??e.text.length,value=e.text.slice(b.start,end),marker=/^\(?(\d{1,3})\)\s*/u.exec(value),offset=marker?.[0].length??0;
   const body=value.slice(offset),labelMatch=/^([^:：.!?\n]{1,80})[:：]/u.exec(body)??(locale==='vi'?/^([\p{Lu}][\p{L}\p{M}]*(?:\s+[\p{Lu}][\p{L}\p{M}]*){1,4})\s+(?:là|tức|người)(?=\s|$)/u.exec(body):null);
   let label:TextSpan|undefined;
   if(labelMatch){const name=labelMatch[1].replace(/\s*\([\d?\s–—-]+\)\s*$/u,'').trim();label={start:b.start+offset,end:b.start+offset+name.length};}
@@ -39,6 +40,14 @@ export function notePair(a:AlignmentArtifact,r:LookupRequest){
  const minimum=['labse-context-mbert-1','labse-book-mbert-2','labse-poetry-mbert-3'].includes(a.algorithm)?.5:.74;
  const matches=a.notePairs?.filter(p=>p[r.locale].start<=source.start&&p[r.locale].end>=source.end&&p.score>=minimum).sort((x,y)=>y.score-x.score)??[];
  const right=alignmentStructure(a,locale),baseTargets=right.notes.filter(n=>matches.some(m=>n.start>=m[locale].start&&n.end<=m[locale].end));
+ // A note no pair holds whose number the other edition gives to one note, which no pair holds either, is that note (11 such pairs in the book, all right by reading: "(10) Câu: cái móc để vén rèm, màn." and "(10) Jade-hooked curtains: …").
+ // Only where the confirmed pairs of the chapter show that the two editions number their notes alike (at least two, and 4 in 5 of them with the same numbers on both sides).
+ if(!baseTargets.length&&/^\d{1,3}$/.test(source.id)){
+  const confirmed=(a.notePairs??[]).filter(p=>p.score>=minimum),left=alignmentStructure(a,r.locale).notes;
+  const ids=(notes:Note[],s:TextSpan)=>notes.filter(n=>n.start>=s.start&&n.end<=s.end).map(n=>n.id).sort().join(),alike=confirmed.filter(p=>ids(left,p[r.locale])===ids(right.notes,p[locale])&&ids(left,p[r.locale])!=='').length;
+  const free=(n:TextSpan,l:Locale)=>!confirmed.some(p=>p[l].start<=n.start&&p[l].end>=n.end),same=right.notes.filter(n=>n.id===source.id&&free(n,locale));
+  if(alike>=2&&alike*5>=confirmed.length*4&&same.length===1)baseTargets.push(same[0]);
+ }
  const targets=[...baseTargets];for(const n of baseTargets){const ref=right.notes.find(m=>m.id===n.reference);if(ref&&!targets.includes(ref))targets.push(ref);}
  return {source,targets,baseTargets,target:baseTargets.length===1?baseTargets[0]:undefined,confidence:matches[0]};
 }
