@@ -137,6 +137,15 @@ it('keeps the number of a note whose opening parenthesis is missing',()=>{
  const a=fixture(['Chú thích:','(1) Một: nghĩa một.','2) Hai: nghĩa hai.'],['Notes','(1) One: meaning one.','(2) Two: meaning two.']);
  expect(alignmentStructure(a,'vi').notes.map(n=>n.id)).toEqual(['1','2']);
 });
+it('pairs a note that carries unnumbered paragraphs after its own with the pair that stops inside it',()=>{
+ const a=fixture(['Chú thích:','(1) Một: nghĩa một.','Hai: nghĩa hai.','(2) Ba: nghĩa ba.'],['Notes','(1) One: meaning one.','(2) Three: meaning three.']);
+ const vi=alignmentStructure(a,'vi').notes,en=alignmentStructure(a,'en').notes,first=a.editions.vi.text.indexOf('nghĩa một.')+'nghĩa một.'.length;
+ expect(vi.map(n=>n.id)).toEqual(['1','2']);expect(first).toBeLessThan(vi[0].end);
+ a.notePairs=[{vi:{start:vi[0].start,end:first},en:en[0],score:.9,margin:.2},{vi:vi[1],en:en[1],score:.9,margin:.2}];
+ const look=(start:number,end:number)=>lookupArtifact(a,{chapterId:a.chapterId,locale:'vi',revision:1,start,end,text:a.editions.vi.text.slice(start,end)}).passages.map(p=>p.target.text);
+ expect(look(vi[0].start,vi[0].end)).toEqual([a.editions.en.text.slice(en[0].start,en[0].end)]);
+ expect(look(vi[1].start,vi[1].end)).toEqual([a.editions.en.text.slice(en[1].start,en[1].end)]);
+});
 it('pairs a note no pair holds with the note of the same number that no pair holds either, only where the editions number their notes alike',()=>{
  const make=(pairs:[number,number][])=>{
   const a=fixture(['Chú thích:','(1) Một: nghĩa một.','(2) Hai: nghĩa hai.','(3) Ba: nghĩa ba.'],['Notes','(1) One: meaning one.','(2) Two: meaning two.','(3) Three: meaning three.']);

@@ -38,7 +38,8 @@ export function notePair(a:AlignmentArtifact,r:LookupRequest){
  const locale=r.locale==='vi'?'en':'vi',source=alignmentStructure(a,r.locale).notes.find(n=>r.start>=n.start&&r.end<=n.end);
  if(!source)return undefined;
  const minimum=['labse-context-mbert-1','labse-book-mbert-2','labse-poetry-mbert-3'].includes(a.algorithm)?.5:.74;
- const matches=a.notePairs?.filter(p=>p[r.locale].start<=source.start&&p[r.locale].end>=source.end&&p.score>=minimum).sort((x,y)=>y.score-x.score)??[];
+ // A note that carries paragraphs without a number after its own (chapter 14, Vietnamese: "1) Thần Môn: …" and the entries that follow it) is held by a pair that stops inside it.
+ const matches=a.notePairs?.filter(p=>(p[r.locale].start<=source.start&&p[r.locale].end>=source.end||p[r.locale].start>=source.start&&p[r.locale].end<=source.end)&&p.score>=minimum).sort((x,y)=>y.score-x.score)??[];
  const right=alignmentStructure(a,locale),baseTargets=right.notes.filter(n=>matches.some(m=>n.start>=m[locale].start&&n.end<=m[locale].end));
  // A note no pair holds whose number the other edition gives to one note, which no pair holds either, is that note (11 such pairs in the book, all right by reading: "(10) Câu: cái móc để vén rèm, màn." and "(10) Jade-hooked curtains: …").
  // Only where the confirmed pairs of the chapter show that the two editions number their notes alike (at least two, and 4 in 5 of them with the same numbers on both sides).
