@@ -236,7 +236,7 @@ function phraseTarget(g:AlignmentArtifact['groups'][number],request:LookupReques
 }
 // A clause no pair names of its own can sit inside a trusted pair whose other clauses are named by trusted pairs nested in it: what is left of the outer pair on the other side is its counterpart
 // ("How much bolder must he be in some lonely shrine?": the pair of 2 Vietnamese against 3 English clauses minus the pair of the last Vietnamese clause against the last two English ones).
-function remainderTarget(g:AlignmentArtifact['groups'][number],unit:TextSpan,locale:Locale,targetLocale:Locale):TextSpan[]|null{
+function remainderTarget(g:AlignmentArtifact['groups'][number],unit:TextSpan,locale:Locale,targetLocale:Locale,selected:(s:TextSpan)=>boolean):TextSpan[]|null{
   const pairs=(g.clausePairs??[]).filter(trusted),has=(spans:TextSpan[],s:TextSpan)=>spans.some(t=>t.start<=s.start&&t.end>=s.end),same=(a:TextSpan,b:TextSpan)=>a.start===b.start&&a.end===b.end;
   for(const parent of pairs.filter(p=>p[locale].length>1&&has(p[locale],unit)).sort((a,b)=>a[locale].length-b[locale].length)){
     const siblings=parent[locale].filter(s=>!has([s],unit));
@@ -246,7 +246,21 @@ function remainderTarget(g:AlignmentArtifact['groups'][number],unit:TextSpan,loc
     const left=parent[targetLocale].filter(t=>!nested.some(q=>q[targetLocale].some(x=>same(x,t))));
     if(left.length&&left.length<parent[targetLocale].length)return left;
   }
-  return null;
+  // No outer pair: when trusted pairs name every other clause of the group, the clauses left on each side (one run each, between the same neighbouring pairs) are each other's counterpart
+  // ("Let me show it to you, and you will see plainly what fortune or misfortune awaits you." against "xin đưa tướng quân xem sẽ biết rõ dữ lành,", sheet 22 card 36).
+  const parts=g.parts;if(!parts||!pairs.length)return null;
+  const named=(s:TextSpan,l:Locale)=>pairs.some(q=>has(q[l],s));
+  const run=(spans:TextSpan[],l:Locale)=>{const idx=spans.map((s,i)=>named(s,l)?-1:i).filter(i=>i>=0);return idx.length&&idx.at(-1)!-idx[0]===idx.length-1?{from:idx[0],to:idx.at(-1)!}:null;};
+  const mine=run(parts[locale],locale),other=run(parts[targetLocale],targetLocale);
+  // The selection has to hold the whole run: one clause of several left over on this side would be given what the whole run translates to.
+  if(!mine||!other||!parts[locale].slice(mine.from,mine.to+1).every(s=>selected(s)))return null;
+  const first=parts[locale][mine.from],last=parts[locale][mine.to],from=parts[targetLocale][other.from],to=parts[targetLocale][other.to];
+  // Both runs have to be about as long as translations are (a group can end with clauses of the next sentence: one English clause against seven Vietnamese ones is not a pair).
+  const size=(spans:TextSpan[],a:number,b:number)=>spans.slice(a,b+1).reduce((n,s)=>n+s.end-s.start,0),ratio=size(parts[targetLocale],other.from,other.to)/Math.max(1,size(parts[locale],mine.from,mine.to));
+  if(ratio<1/3||ratio>3)return null;
+  const before=pairs.filter(q=>q[locale].at(-1)!.end<=first.start),after=pairs.filter(q=>q[locale][0].start>=last.end);
+  if(before.some(q=>q[targetLocale].at(-1)!.end>from.start)||after.some(q=>q[targetLocale][0].start<to.end))return null;
+  return parts[targetLocale].slice(other.from,other.to+1);
 }
 function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['groups'][number],request:LookupRequest,targetLocale:Locale):{covered:TextSpan[];spans:TextSpan[];unmatched?:TextSpan[];grounded?:TextSpan[]}{
   const source=artifact.editions[request.locale],target=artifact.editions[targetLocale];
@@ -271,7 +285,7 @@ function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['gr
   for(const unit of sourceUnits){
     if(!includes(unit)||covered.some(p=>p.start<=unit.start&&p.end>=unit.end))continue;
     // The nested pairs are not exact (a clause can reach into its neighbour), so the remainder also needs a word link from the unit itself.
-    const rest=g.clausePairs?remainderTarget(g,unit,request.locale,targetLocale):null;
+    const rest=g.clausePairs?remainderTarget(g,unit,request.locale,targetLocale,includes):null;
     if(rest&&g.links.some(l=>l.score>=.1&&l[request.locale][0]>=unit.start&&l[request.locale][1]<=unit.end&&rest.some(t=>l[targetLocale][0]>=t.start&&l[targetLocale][1]<=t.end)&&!onlyFunctionWords(source.text.slice(...l[request.locale]),request.locale))){covered.push(unit);spans.push(...rest);continue;}
     const votes=targets.map((span,index)=>{
       const words=new Map<string,number>(),outside=new Map<string,number>();
@@ -386,7 +400,22 @@ export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest)
     const note=annotatedNote(artifact,request);
     if(note)return {...result,status:'context-only',targetRevision:target.revision,passages:[...result.passages,note]};
   }
-  return result;
+  return closeQuotes(result,target);
+}
+// A highlight that opens a quotation without closing it, right before the closing mark, takes the mark ("named me 'Lady Scholar of the House of Phu.'" ended at "Phu.", sheet 22 card 78).
+const quoteCloser:Record<string,string>={"'":"'’","\"":"\"”","‘":"’","“":"”"};
+function closeQuotes(result:LookupResult,target:AlignmentArtifact['editions'][Locale]):LookupResult{
+  let changed=false;
+  const passages=result.passages.map(p=>{
+    let end=p.target.end;
+    const highlights=p.highlights.map(h=>{
+      const next=target.text[h.end],opens=[...target.text.slice(h.start,h.end).matchAll(/(^|[\s(\[—])(['"‘“])(?=\p{L})/gu)],open=opens.at(-1);
+      if(!next||!open||!quoteCloser[open[2]].includes(next)||target.text.slice(h.start+open.index!+open[0].length,h.end).includes(next))return h;
+      changed=true;end=Math.max(end,h.end+1);return {...h,end:h.end+1};
+    });
+    return end===p.target.end?{...p,highlights}:{...p,highlights,target:{...p.target,end,text:target.text.slice(p.target.start,end),breaks:target.breaks?.filter(b=>b>p.target.start&&b<end)}};
+  });
+  return changed?{...result,passages}:result;
 }
 // The footnote of a term names it in both editions: "(n) Hồ Tông Thốc: …" against "(n) Ho Tong Thoc: …". A pair of headwords counts when each stands right before the marker "(n)" of its own prose (the only one in the text);
 // a lookup of one of its terms highlights the other in the context the lookup returned, where it stands exactly once and the lookup did not already highlight it.

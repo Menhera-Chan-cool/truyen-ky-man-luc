@@ -156,3 +156,11 @@ it('does not answer a clause from the far-away English once its group is gone',(
  expect(ask(raw).some(start=>start>=8000)).toBe(true);
  expect(ask(validateAlignmentArtifact(strayFixture(8000))).some(start=>start>=8000)).toBe(false);
 });
+it('takes the closing quotation mark a highlight leaves out when the highlight opened the quotation, and only then',()=>{
+ const vi='Ông gọi tôi là "Phù gia".',en="He named me 'Lady of Phu.' Then he left.";
+ const make=(end:number)=>({...artifact,editions:{vi:{...artifact.editions.vi,text:vi},en:{...artifact.editions.en,text:en}},groups:[{...artifact.groups[0],vi:{start:0,end:vi.length},en:{start:0,end},links:[{vi:[0,3] as [number,number],en:[3,9] as [number,number],score:.9}]}]} as AlignmentArtifact);
+ const marked=(a:AlignmentArtifact)=>lookupArtifact(a,{chapterId:a.chapterId,locale:'vi',revision:1,start:0,end:vi.length,text:vi}).passages.flatMap(p=>p.highlights.map(h=>en.slice(h.start,h.end)));
+ expect(marked(make(25)).at(-1)).toBe("He named me 'Lady of Phu.'");
+ // a highlight that did not open the quotation is left as it is
+ expect(marked(make(11)).every(t=>!t.endsWith("'"))).toBe(true);
+});

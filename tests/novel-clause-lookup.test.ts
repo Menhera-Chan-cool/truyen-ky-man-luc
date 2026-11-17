@@ -493,3 +493,20 @@ it('gives a clause no pair names what is left of the pair around it once the pai
  expect(r.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual(['Lan còn nhỏ,']);
  const none=make(false);expect(query(none,'en',none.groups[0].parts!.en[0]).passages.flatMap(p=>p.highlights)).toEqual([]);
 });
+it('gives the clauses of a group that no pair names their counterpart when one run is left on each side between the same pairs, and not when the runs differ in size',()=>{
+ const build=(vi:string[],en:string[],pairs:[number[],number[]][],link:[number,number])=>{
+  const text=(parts:string[])=>parts.join(' '),spans=(parts:string[])=>{let at=0;return parts.map(q=>{const s={start:at,end:at+q.length};at+=q.length+1;return s;});};
+  const v=spans(vi),e=spans(en),a=fixture();
+  a.editions.vi.text=text(vi);a.editions.en.text=text(en);
+  a.groups=[{id:'0',section:'story',score:.8,margin:.1,vi:{start:0,end:a.editions.vi.text.length},en:{start:0,end:a.editions.en.text.length},parts:{vi:v,en:e},
+   links:[{vi:[v[link[0]].start,v[link[0]].start+3],en:[e[link[1]].start,e[link[1]].start+3],score:.9}],
+   clausePairs:pairs.map(([x,y])=>({vi:x.map(i=>v[i]),en:y.map(i=>e[i]),score:.85,margin:.2}))}];
+  return {a,e,v};
+ };
+ const {a,e}=build(['Lan còn nhỏ,','sau khi lấy chồng,','cư xử khéo với họ hàng.'],['Lan was young,','after her marriage,','she treated her kin well.'],[[[0],[0]],[[2],[2]]],[1,1]);
+ const r=query(a,'en',e[1]);
+ expect(r.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual(['sau khi lấy chồng,']);
+ // one English clause against a Vietnamese run ten times as long is not a pair
+ const odd=build(['Lan còn nhỏ,','sau khi lấy chồng rồi cư xử khéo với họ hàng và sống hòa thuận được mọi người khen.'],['Lan was young,','Ten.'],[[[0],[0]]],[1,1]);
+ expect(query(odd.a,'en',odd.e[1]).passages.flatMap(p=>p.highlights.map(h=>odd.a.editions.vi.text.slice(h.start,h.end)))).not.toContain(odd.a.editions.vi.text.slice(odd.v[1].start,odd.v[1].end));
+});
