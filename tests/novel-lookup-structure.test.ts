@@ -1,6 +1,7 @@
 import {it,expect} from 'vitest';
 import {lookupArtifact,type AlignmentArtifact} from '../src/lib/novel-lookup';
 import {alignmentStructure,notePair} from '../src/lib/novel-lookup-structure';
+import {viMatchesPinyin,vietnameseReadings,spellings} from '../src/lib/sino-names';
 function fixture(vi:string[],en:string[]):AlignmentArtifact{
  const edition=(parts:string[],revision:number)=>({text:parts.join(''),breaks:parts.slice(0,-1).map((_,i)=>parts.slice(0,i+1).join('').length),revision,versionId:'00000000-0000-4000-8000-00000000000'+revision,hash:'a'.repeat(64)});
  return {schema:1,codec:'reader-dom-1',algorithm:'test',chapterId:'chapter-1',createdAt:'2026-11-12',editions:{vi:edition(vi,1),en:edition(en,2)},groups:[]};
@@ -113,4 +114,22 @@ it('gives no note context when the selection is not at a marker or the note pair
  const a=annotated();expect(query(a,'vi','cũng đủ').passages.some(p=>/Allusion/.test(p.target.text))).toBe(false);
  a.notePairs=a.notePairs!.map(p=>({...p,score:.3}));
  expect(query(a,'vi','dệt chiếu').passages.some(p=>/Allusion/.test(p.target.text))).toBe(false);
+});
+it('reads a Sino-Vietnamese syllable under both spellings used by Unihan and by books',()=>{
+ expect(spellings('ký')).toContain('kí');expect(spellings('hy')).toContain('hi');expect(spellings('thủy')).toContain('thuỷ');expect(spellings('máy')).toEqual(['máy']);expect(spellings('quý')).toEqual(['quý']);
+ expect(viMatchesPinyin(['hạng','vương','từ','ký'],'Xiangwang Ci Ji')).toBe(true);expect(viMatchesPinyin(['thủy'],'shui')).toBe(true);
+ expect(viMatchesPinyin(['hạng','vương'],'Xiangwang Ci Ji')).toBe(false);expect(vietnameseReadings('ji').has('ký')).toBe(true);
+});
+it('pairs an original title written in Sino-Vietnamese with the same title in pinyin, and never answers it with the first numbered note',()=>{
+ const a=fixture(['Truyện.','Chú thích:','* Nguyên văn: Hạng vương từ ký.','(1) Hồ Tông Thốc: Người huyện Thổ Thành.'],['Story.','Notes','(*) Original title: Xiangwang Ci Ji.','(1) Ho Tong Thoc: A native of Tho Thanh.']);
+ expect(terms(a,query(a,'vi','Hạng vương từ ký'))).toEqual(['Xiangwang Ci Ji']);
+ expect(terms(a,query(a,'en','Xiangwang Ci Ji'))).toEqual(['Hạng vương từ ký']);
+ // the whole note and a part of it show the paired title note, not the note (1) that follows it
+ expect(terms(a,query(a,'vi','* Nguyên văn: Hạng vương từ ký.'))).toEqual(['(*) Original title: Xiangwang Ci Ji.']);
+ const part=query(a,'vi','Nguyên văn');expect(part.status).toBe('context-only');expect(part.passages.map(p=>p.target.text)).toEqual(['(*) Original title: Xiangwang Ci Ji.']);
+ const back=query(a,'en','Original title');expect(back.passages.map(p=>p.target.text)).toEqual(['* Nguyên văn: Hạng vương từ ký.']);
+});
+it('answers an original title with no counterpart as unavailable, not with a neighbouring note',()=>{
+ const a=fixture(['Truyện.','Chú thích:','* Nguyên văn: Tên lạ.','(1) Hồ: Một.'],['Story.','Notes','(*) Original title: Strange Name.','(1) Ho: One.']);
+ for(const quote of ['* Nguyên văn: Tên lạ.','Nguyên văn']){const r=query(a,'vi',quote);expect(r.passages).toEqual([]);expect(r.status).toBe('unavailable');}
 });

@@ -1,5 +1,6 @@
 import type {AlignmentArtifact,LookupPassage,LookupRequest,LookupResult,TextSpan} from './novel-lookup';
 import type {Locale} from './types';
+import {viMatchesPinyin,viSyllables} from './sino-names';
 type Note=TextSpan&{id:string;label?:TextSpan;reference?:string};
 type Structure={headings:{kind:'critique'|'notes';span:TextSpan}[];original?:TextSpan;originals:TextSpan[];notes:Note[]};
 const cache=new WeakMap<AlignmentArtifact,Record<Locale,Structure>>();
@@ -47,6 +48,10 @@ function covers(r:LookupRequest,span:TextSpan){
 function originalKey(text:string){
  return text.replace(/^(?:(?:\(\*\)|\*)\s*)?(?:Nguyên văn|Original title)\s*[:：]/iu,'').split(/[（(—]/u)[0]!.normalize('NFD').replace(/\p{M}/gu,'').replace(/[đĐ]/gu,'d').toLowerCase().replace(/[^a-z0-9]/g,'');
 }
+// The same title in Sino-Vietnamese on one side and in pinyin on the other ("Hạng vương từ ký", "Xiangwang Ci Ji"): the syllables read as exactly that pinyin.
+const titleLead=/^(?:(?:\(\*\)|\*)\s*)?(?:Nguyên văn|Original title)\s*[:：]/iu;
+const titleWords=(text:string)=>text.replace(titleLead,'').split(/[（(—]/u)[0]!;
+const sameTitleInPinyin=(vi:string,en:string)=>viMatchesPinyin(viSyllables(titleWords(vi)),titleWords(en));
 function titleValue(text:string,span:TextSpan):TextSpan{
  const value=text.slice(span.start,span.end),prefix=/^(?:(?:\(\*\)|\*)\s*)?(?:Nguyên văn|Original title)\s*[:：]\s*/iu.exec(value)?.[0].length??0;
  const rest=value.slice(prefix).split(/[（(—]/u)[0]!,trimmed=rest.replace(/[\s.;:：]+$/u,'');
@@ -59,9 +64,12 @@ export function structureLookup(a:AlignmentArtifact,r:LookupRequest):LookupResul
  for(const source of left.originals){
   const value=titleValue(a.editions[r.locale].text,source),whole=covers(r,source);
   const selectedValue=r.start<=value.start&&r.end>=value.end&&/^[\s.;:：()*]*$/u.test(r.text.slice(0,value.start-r.start)+r.text.slice(value.end-r.start));
-  if(!whole&&!selectedValue)continue;
-  const target=right.originals.find(span=>originalKey(a.editions[r.locale].text.slice(source.start,source.end))===originalKey(a.editions[locale].text.slice(span.start,span.end)));
-  if(target)return whole?answer(source,target):answer(value,titleValue(a.editions[locale].text,target));
+  const inside=r.start>=source.start&&r.end<=source.end;
+  if(!whole&&!selectedValue&&!inside)continue;
+  const own=a.editions[r.locale].text.slice(source.start,source.end);
+  const target=right.originals.find(span=>{const other=a.editions[locale].text.slice(span.start,span.end);return originalKey(own)===originalKey(other)||(r.locale==='vi'?sameTitleInPinyin(own,other):sameTitleInPinyin(other,own));});
+  // Part of the note that is not its whole title shows the paired note as it is, never a neighbouring note.
+  if(target)return whole?answer(source,target):selectedValue?answer(value,titleValue(a.editions[locale].text,target)):answer(source,target,false);
   return {status:'unavailable',targetLocale:locale,passages:[]};
  }
  const pair=notePair(a,r);
@@ -79,6 +87,8 @@ export function structureLookup(a:AlignmentArtifact,r:LookupRequest):LookupResul
 export function annotatedNote(a:AlignmentArtifact,r:LookupRequest):LookupPassage|undefined{
  const left=alignmentStructure(a,r.locale),text=a.editions[r.locale].text;
  if(!left.notes.length||left.notes.some(n=>r.start>=n.start&&r.end<=n.end))return undefined;
+ // The unnumbered title note ("* Nguyên văn: …") stands in the notes, right before the marker (1) of the first note, but it is not a phrase of the story.
+ if(left.originals.some(o=>r.start<o.end&&r.end>o.start)||r.start>=(left.headings.find(h=>h.kind==='notes')?.span.start??Infinity))return undefined;
  const id=/^[\s"”’)\]…,.;:!?]{0,6}\((\d{1,3})\)/u.exec(text.slice(r.end,r.end+16))?.[1]??/\((\d{1,3})\)\s*$/u.exec(r.text)?.[1];
  const note=id?left.notes.find(n=>n.id===id):undefined;
  if(!note)return undefined;
