@@ -5,6 +5,7 @@ import {
   normalizeSettings,
   countPages,
   contrastText,
+  snapToWords,
 } from "../src/lib/reader";
 it("retains the additional reading fonts in saved settings", () => {
   for (const font of [
@@ -66,4 +67,26 @@ it("restores bounded settings and a supported reading mode", () => {
 it("counts column spreads including the last partial spread", () => {
   expect(countPages(3100, 1000, 48)).toBe(4);
   expect(countPages(0, 0, 48)).toBe(1);
+});
+it("widens a selection that cuts a word in half to the whole word, and leaves whole words alone", () => {
+  const snap = (text: string, quote: string, from = 0) => {
+    const start = text.indexOf(quote, from);
+    const [s, e] = snapToWords(text, start, start + quote.length);
+    return text.slice(s, e);
+  };
+  const english = "its kernels combine a high starch; it only survived in South America, says Smith.";
+  expect(snap(english, "mbin")).toBe("combine"); // inside one word
+  expect(snap(english, "outh Ame")).toBe("South America"); // starts and ends in the middle of a word
+  expect(snap(english, "South America")).toBe("South America"); // already whole words
+  expect(snap(english, "America,")).toBe("America,"); // punctuation is a boundary
+  expect(snap(english, "ernels comb")).toBe("kernels combine");
+  expect(snap("They don't go", "do")).toBe("don't"); // an apostrophe between letters belongs to the word
+  expect(snap("a well-known term", "ell-kn")).toBe("well-known");
+  expect(snap("Cờ đỏ xanh bay.", "ỏ xa")).toBe("đỏ xanh"); // Vietnamese syllables with marks
+  expect(snap("Cờ đỏ xanh bay.", "đỏ xanh")).toBe("đỏ xanh");
+  // verse lines run together: a lower-case letter followed by a capital is a boundary
+  expect(snap("Quan TrungKhói tan", "Khói")).toBe("Khói");
+  expect(snap("Quan TrungKhói tan", "ung")).toBe("Trung");
+  expect(snapToWords("abc", 0, 3)).toEqual([0, 3]);
+  expect(snapToWords("", 0, 0)).toEqual([0, 0]);
 });

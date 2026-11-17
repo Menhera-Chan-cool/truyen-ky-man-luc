@@ -258,3 +258,36 @@ export function selectionAnchor(root: HTMLElement) {
     rect: range.getBoundingClientRect(),
   };
 }
+
+// Is there no word boundary between text[i - 1] and text[i]? Letters, marks and digits make a word; an apostrophe or hyphen between two letters belongs to it ("don't");
+// a lower-case letter followed by a capital is a boundary, because verse lines are sometimes run together ("TrungKhói").
+const isLetter=(c:string|undefined)=>!!c&&/[\p{L}\p{M}\p{N}]/u.test(c);
+const isJoiner=(c:string|undefined)=>!!c&&/['’\u2010-]/.test(c);
+function insideWord(text:string,i:number){
+  const a=text[i-1],b=text[i];
+  if(a===undefined||b===undefined)return false;
+  if(isLetter(a)&&isLetter(b))return !(a===a.toLowerCase()&&a!==a.toUpperCase()&&b===b.toUpperCase()&&b!==b.toLowerCase());
+  if(isJoiner(a))return isLetter(text[i-2])&&isLetter(b);
+  if(isJoiner(b))return isLetter(a)&&isLetter(text[i+1]);
+  return false;
+}
+/** Widen [start, end) so that neither end cuts a word in half (a selection that starts or ends in the middle of a word takes the whole word). */
+export function snapToWords(text:string,start:number,end:number):[number,number]{
+  let s=start,e=end;
+  while(s>0&&insideWord(text,s))s--;
+  while(e<text.length&&insideWord(text,e))e++;
+  return [s,e];
+}
+/** Widen the current selection to whole words, inside one text node at each end. Returns true when it changed the selection (a selectionchange follows). */
+export function snapSelectionToWords(root:HTMLElement):boolean{
+  const selection=window.getSelection();
+  if(!selection||selection.isCollapsed||!selection.rangeCount)return false;
+  const range=selection.getRangeAt(0);
+  if(!root.contains(range.startContainer)||!root.contains(range.endContainer))return false;
+  let {startContainer:sc,startOffset:so,endContainer:ec,endOffset:eo}=range,changed=false;
+  if(sc.nodeType===Node.TEXT_NODE){const s=snapToWords(sc.textContent??"",so,so)[0];if(s!==so){so=s;changed=true;}}
+  if(ec.nodeType===Node.TEXT_NODE){const e=snapToWords(ec.textContent??"",eo,eo)[1];if(e!==eo){eo=e;changed=true;}}
+  if(!changed)return false;
+  selection.setBaseAndExtent(sc,so,ec,eo);
+  return true;
+}

@@ -90,6 +90,7 @@ import {
   normalizeSettings,
   rangeFromOffsets,
   selectionAnchor,
+  snapSelectionToWords,
   readerPalette,
   readerFonts,
   visibleTextOffset,
@@ -1067,25 +1068,41 @@ export default function Reader({
   }, [imageOpen]);
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
+    // While a mouse or pen button is held the browser is still extending the selection: it is widened to whole words when the button is released.
+    // Touch and keyboard selections have no such moment, so they are widened once the selection has stayed the same for 180 ms.
+    let held = false;
+    const finish = () => {
+      if (!contentRef.current) return;
+      // A selection that starts or ends in the middle of a word takes the whole word; the change fires selectionchange again and is captured then.
+      if (snapSelectionToWords(contentRef.current)) return;
+      const selected = selectionAnchor(contentRef.current);
+      if (!selected || !selected.text.trim()) return;
+      setNote("");
+      setSelection({
+        ...selected,
+        left: Math.max(
+          12,
+          Math.min(window.innerWidth - 350, selected.rect.left),
+        ),
+        top: Math.max(
+          75,
+          Math.min(window.innerHeight - 220, selected.rect.bottom + 10),
+        ),
+      });
+    };
     const capture = () => {
       clearTimeout(timer);
-      timer = setTimeout(() => {
-        if (!contentRef.current) return;
-        const selected = selectionAnchor(contentRef.current);
-        if (!selected || !selected.text.trim()) return;
-        setNote("");
-        setSelection({
-          ...selected,
-          left: Math.max(
-            12,
-            Math.min(window.innerWidth - 350, selected.rect.left),
-          ),
-          top: Math.max(
-            75,
-            Math.min(window.innerHeight - 220, selected.rect.bottom + 10),
-          ),
-        });
-      }, 180);
+      if (held) return;
+      timer = setTimeout(finish, 180);
+    };
+    const down = (event: PointerEvent) => {
+      held = event.pointerType === "mouse" || event.pointerType === "pen";
+    };
+    const release = () => {
+      if (!held) return;
+      held = false;
+      clearTimeout(timer);
+      timer = setTimeout(finish, 30);
     };
     const outside = (event: PointerEvent) => {
       if (
@@ -1099,11 +1116,17 @@ export default function Reader({
         window.getSelection()?.removeAllRanges();
     };
     document.addEventListener("selectionchange", capture);
+    document.addEventListener("pointerdown", down, true);
     document.addEventListener("pointerdown", outside);
+    document.addEventListener("pointerup", release, true);
+    document.addEventListener("pointercancel", release, true);
     return () => {
       clearTimeout(timer);
       document.removeEventListener("selectionchange", capture);
+      document.removeEventListener("pointerdown", down, true);
       document.removeEventListener("pointerdown", outside);
+      document.removeEventListener("pointerup", release, true);
+      document.removeEventListener("pointercancel", release, true);
     };
   }, []);
   useEffect(() => {
