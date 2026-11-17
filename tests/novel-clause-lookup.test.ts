@@ -477,3 +477,19 @@ it('does not keep a partial highlight when the words it lacks include a negation
   expect(partialKept(text,all,[at('home')],hl,'en',.4)).toBe(false);
  }finally{Object.assign(partialRule,saved);}
 });
+it('shows the whole counterpart of the group, not a blank gap, for a clause that lies between two pairs whose counterparts touch',()=>{
+ const a=fixture(),g=a.groups[0],v=g.parts!.vi,e=g.parts!.en;g.links=[];
+ g.clausePairs=[{vi:v.slice(0,2),en:[e[0]],score:.85,margin:.12},{vi:v.slice(2),en:[e[2]],score:.86,margin:.1}];
+ const r=query(a,'en',e[1]);
+ expect(r.passages.length).toBeGreaterThan(0);
+ for(const p of r.passages)expect(p.target.text).toMatch(/\p{L}/u);
+ expect(r.passages[0].target.text).toBe(a.editions.vi.text);
+});
+it('gives a clause no pair names what is left of the pair around it once the pair nested in it takes the rest, and only with a word link of its own',()=>{
+ const make=(link:boolean)=>{const a=fixture(),g=a.groups[0],v=g.parts!.vi,e=g.parts!.en;
+  g.clausePairs=[{vi:v.slice(0,3),en:e.slice(0,2),score:.85,margin:.12},{vi:v.slice(1,3),en:[e[1]],score:.8,margin:.2}];
+  g.links=link?[{vi:[v[0].start,v[0].start+3],en:[e[0].start+7,e[0].start+10],score:.9}]:[];return a;};
+ const a=make(true),e0=a.groups[0].parts!.en[0],r=query(a,'en',e0);
+ expect(r.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual(['Lan còn nhỏ,']);
+ const none=make(false);expect(query(none,'en',none.groups[0].parts!.en[0]).passages.flatMap(p=>p.highlights)).toEqual([]);
+});

@@ -234,6 +234,20 @@ function phraseTarget(g:AlignmentArtifact['groups'][number],request:LookupReques
   if(!best||found.some(p=>(p[targetLocale].start!==best[targetLocale].start||p[targetLocale].end!==best[targetLocale].end)&&p.score>best.score-.03))return null;
   return {source:{start,end},target:{...best[targetLocale]}};
 }
+// A clause no pair names of its own can sit inside a trusted pair whose other clauses are named by trusted pairs nested in it: what is left of the outer pair on the other side is its counterpart
+// ("How much bolder must he be in some lonely shrine?": the pair of 2 Vietnamese against 3 English clauses minus the pair of the last Vietnamese clause against the last two English ones).
+function remainderTarget(g:AlignmentArtifact['groups'][number],unit:TextSpan,locale:Locale,targetLocale:Locale):TextSpan[]|null{
+  const pairs=(g.clausePairs??[]).filter(trusted),has=(spans:TextSpan[],s:TextSpan)=>spans.some(t=>t.start<=s.start&&t.end>=s.end),same=(a:TextSpan,b:TextSpan)=>a.start===b.start&&a.end===b.end;
+  for(const parent of pairs.filter(p=>p[locale].length>1&&has(p[locale],unit)).sort((a,b)=>a[locale].length-b[locale].length)){
+    const siblings=parent[locale].filter(s=>!has([s],unit));
+    const nested=pairs.filter(q=>q!==parent&&q[locale].length&&q[locale].every(s=>has(parent[locale],s)&&!has([s],unit))&&q[targetLocale].every(s=>has(parent[targetLocale],s)));
+    const named=nested.flatMap(q=>q[locale]);
+    if(!nested.length||named.length!==siblings.length||!siblings.every(s=>named.some(n=>same(n,s))))continue;
+    const left=parent[targetLocale].filter(t=>!nested.some(q=>q[targetLocale].some(x=>same(x,t))));
+    if(left.length&&left.length<parent[targetLocale].length)return left;
+  }
+  return null;
+}
 function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['groups'][number],request:LookupRequest,targetLocale:Locale):{covered:TextSpan[];spans:TextSpan[];unmatched?:TextSpan[];grounded?:TextSpan[]}{
   const source=artifact.editions[request.locale],target=artifact.editions[targetLocale];
   const within=(span:TextSpan,l:Locale)=>!g.parts||g.parts[l].some(p=>span.start>=p.start&&span.end<=p.end);
@@ -256,6 +270,9 @@ function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['gr
   if(!g.clausePairs&&sourceUnits.length&&sourceUnits.every(includes)&&(targets.length===1||(sourceUnits.length===1&&targets.length<=3)))return {covered:sourceUnits,spans:targets};
   for(const unit of sourceUnits){
     if(!includes(unit)||covered.some(p=>p.start<=unit.start&&p.end>=unit.end))continue;
+    // The nested pairs are not exact (a clause can reach into its neighbour), so the remainder also needs a word link from the unit itself.
+    const rest=g.clausePairs?remainderTarget(g,unit,request.locale,targetLocale):null;
+    if(rest&&g.links.some(l=>l.score>=.1&&l[request.locale][0]>=unit.start&&l[request.locale][1]<=unit.end&&rest.some(t=>l[targetLocale][0]>=t.start&&l[targetLocale][1]<=t.end)&&!onlyFunctionWords(source.text.slice(...l[request.locale]),request.locale))){covered.push(unit);spans.push(...rest);continue;}
     const votes=targets.map((span,index)=>{
       const words=new Map<string,number>(),outside=new Map<string,number>();
       for(const link of g.links){
@@ -759,7 +776,9 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
     hasWords ||= highlights.length>0;
     uncertain ||= g.score<.82||g.margin<.015;
     const bounds=sentences.spans.length&&highlights.length?{start:Math.min(...highlights.map(s=>s.start)),end:Math.max(...highlights.map(s=>s.end))}:g[targetLocale];
-    contexts.push(sentences.unmatched?.length&&!looseWords?groundedContext(g,locale,targetLocale,sentences.unmatched,sentences.grounded??[]):g[targetLocale]);
+    // A clause with no counterpart lies between two trusted pairs whose counterparts touch: that gap holds no text, so the whole counterpart of the group is the context.
+    const grounded=sentences.unmatched?.length&&!looseWords?groundedContext(g,locale,targetLocale,sentences.unmatched,sentences.grounded??[]):g[targetLocale];
+    contexts.push(/[\p{L}\p{N}]/u.test(target.text.slice(grounded.start,grounded.end))?grounded:g[targetLocale]);
     full.push(sentences.spans.length>0&&!sentences.unmatched?.length&&!looseWords);
     passages.push({source:{...g[locale],text:source.text.slice(g[locale].start,g[locale].end)},target:{...bounds,text:target.text.slice(bounds.start,bounds.end),breaks:target.breaks?.filter(p=>p>bounds.start&&p<bounds.end)},highlights});
   }
