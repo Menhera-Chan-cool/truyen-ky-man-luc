@@ -50,14 +50,23 @@ def _best_window(query,values):
     alternatives=[value for _,value,at,width in candidates if at+width<=start or at>=start+size]
     return list(range(start,start+size)),score-max(alternatives,default=0)
 
-def _pairs(left,right,minimum,shared):
-    pairs=align_sequences(left,right,minimum=minimum)
+PAIR_SLACK=3
+def _in_sequence(path,p,slack=PAIR_SLACK):
+    """A pair found by retrieval (a unit's best counterpart anywhere) must lie where the order-preserving alignment puts its neighbours:
+    not before the start of the previous pair's counterpart and not after the end of the next one's, give or take a few units.
+    Without it an orphan clause was paired with a similar clause thousands of characters away (a stray group)."""
+    before=[q for q in path if q['vi'][-1]<p['vi'][0]];after=[q for q in path if q['vi'][0]>p['vi'][-1]]
+    return (not before or p['en'][0]>=before[-1]['en'][0]-slack) and (not after or p['en'][-1]<=after[0]['en'][-1]+slack)
+
+def _pairs(left,right,minimum,shared,ordered=False):
+    pairs=align_sequences(left,right,minimum=minimum);path=list(pairs)
     used={'vi':{i for p in pairs for i in p['vi']},'en':{i for p in pairs for i in p['en']}}
     for p in pairs:p['primary']={'vi':True,'en':True}
     for p in align_candidates(left,right,minimum=.5):
         fresh={l:all(i not in used[l] for i in p[l]) for l in ['vi','en']}
         if not any(fresh.values()):continue
         if not shared and not all(fresh.values()):continue
+        if ordered and not _in_sequence(path,p):continue
         vi_best,vi_margin=_best_window(right[p['en']].sum(0),left)
         en_best,en_margin=_best_window(left[p['vi']].sum(0),right)
         needed=[(en_best==p['en'],en_margin)] if fresh['vi'] else []
@@ -119,7 +128,7 @@ def align_contexts(item,encode):
         if not left or not right:return
         vectors=_normalized(encode([u.get('semanticText',u['text']).strip() for u in left+right]))
         if len(vectors)!=len(left)+len(right):raise ValueError('Sentence vector count mismatch')
-        for pair in _pairs(vectors[:len(left)],vectors[len(left):],.5 if section=='notes' else .35,section=='story'):
+        for pair in _pairs(vectors[:len(left)],vectors[len(left):],.5 if section=='notes' else .35,section=='story',ordered=section!='notes'):
             groups.append({'section':section,'score':pair['score'],'margin':pair['margin'],'primary':pair['primary'],
                            'viInput':join_units([left[i] for i in pair['vi']]),'enInput':join_units([right[i] for i in pair['en']])})
     for section in ['story','critique']:

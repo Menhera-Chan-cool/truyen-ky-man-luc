@@ -229,4 +229,15 @@ class ContextAlignmentTests(unittest.TestCase):
         self.assertEqual(output[0]['links'][0]['vi'],[12,13]);self.assertEqual(output[0]['links'][0]['en'],[20,21])
         self.assertEqual(output[0]['parts'],{'vi':[{'start':10,'end':13}],'en':[{'start':20,'end':21}]})
 
+    def test_retrieval_pair_far_from_its_neighbours_in_the_sequence_is_not_added(self):
+        from context_alignment import _pairs
+        e=np.eye(9)
+        left=e;right=e[[0,1,3,4,5,6,7,8,2]]   # the second sentence is the best counterpart of the last one, far from its neighbours
+        found=lambda pairs:[p for p in pairs if p['vi']==[2]]
+        self.assertEqual([p['en'] for p in found(_pairs(left,right,.35,True))],[[8]])
+        self.assertEqual(found(_pairs(left,right,.35,True,ordered=True)),[])
+        # a local reordering (two units away) is still accepted
+        near=e[[0,1,3,2,4,5,6,7,8]]
+        self.assertEqual(len([p for p in _pairs(left,near,.35,True,ordered=True) if 2 in p['vi']]),1)
+
 if __name__=='__main__':unittest.main()
