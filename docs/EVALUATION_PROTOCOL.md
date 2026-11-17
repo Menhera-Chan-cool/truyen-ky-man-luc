@@ -949,6 +949,22 @@ The first report named four errors it had not fixed. All four were taken up; wha
 
 **Checks.** `vitest` 412 of 412, Python 130 of 130, browser suite 60 of 60 on the grafted data (no 409). Production: the lookup API returned the local answer for the changed and unchanged selections of both whole-book pools (see DEPLOYMENT.json).
 
+## The notes at the end of the chapter (2026-11-18)
+
+The goal said "the end" and the notes stand at the end of every chapter, so I audited them as lookups: every numbered note of the book in both languages (788 notes, 2,109 lookups: the whole note, its headword and the words after its colon; the audit scripts are in the work folder, not in the repository). Before the fixes 104 of those lookups returned no counterpart. Four causes, three code changes in `novel-lookup-structure.ts` (c4c3a80, 28e5394, 1da213f).
+
+**Notes numbered without a parenthesis.** The Vietnamese notes of chapter 14 read "11) Uyên Minh …", the parenthesis of the number missing, so the structure took every paragraph for a note without a number. A number may now start without the opening parenthesis (43 notes of 1 to 43 in both editions); the paragraphs that follow a note with no number of their own belong to it.
+
+**A pair that stops inside a note.** A note that carries such paragraphs ("1) Thần Môn: …", then "Tiếp Dư: …" and "Thái Hòa: …") is longer than its confirmed pair, which stops inside it; the pair holds the note now as well as a pair that contains it (notes 1, 22 and 26 of chapter 14). I introduced this one myself: after the first change those three notes went from an answer to unavailable (9 lookups) and the check by number did not show it, because the ids had changed; comparing the answered lookups by text did.
+
+**A note no pair holds, a note that is surplus in a pair.** Where the confirmed pairs of a chapter show that the two editions number their notes alike (at least two pairs, 4 in 5 of them with the same numbers on both sides), a note no pair holds takes the note of its number that no pair gives to that number ("(10) Câu: cái móc để vén rèm, màn." and "(10) Jade-hooked curtains: …", 11 pairs in the book), and so does the surplus note of a pair that holds more notes on one side than on the other ("(11)" against "(11)" and "(12)"). Where the numbers do not agree nothing is invented (a test).
+
+**A pair of several notes.** A pair that holds two or more notes of the other edition gave none of them (lookups unavailable, or the passage of a neighbouring note). Each note takes the note of its number. The second catch of this round: in chapter 5 the editions give the notes of the pair in a different order ("(10) Nàng Tây Thi" and "(11) Nàng Tiểu Man" against "(10) Xiaoman" and "(11) Xi Shi"), and the old answers there were right (the links found the names) while the first version of the number rule made them wrong. A note whose name the other edition's label spells in pinyin (`viMatchesPinyin`: "Tiểu Man", "Xiaoman") takes that note, whatever its number; the number decides only where the names settle nothing (a test with the order swapped).
+
+**Result.** Lookups without a counterpart: 104 before, 8 now; the four notes that are left have no counterpart in the other edition (chapter 2 Vietnamese 10 and 13, translator's notes on a poem, chapter 3 Vietnamese 8 "Sái nữ", chapter 9 English 31 "Hoanh Son mountains"). 324 of the 2,109 lookups differ from the published answer: 244 in chapter 14 (numbered now) and 80 in 38 notes of chapters 5, 9, 11, 16, 17 and 19. I read the answers of every one of the 26 notes that the last two changes touched (each note's whole text against the passage it returns) and 36 random notes of both languages for the first change: every returned note is the paired one by reading. This is my reading, not a reviewer's. The sentence pool of the whole book (4,335) and the word and phrase pool (18,296) do not change at all.
+
+**Checks.** `vitest` 416 of 416 (with `--maxWorkers=4`: the default run lost five workers to memory pressure on this machine at 66 files, no test failed), `tsc` clean. Production (code 1da213f, dpl_55EG6P1RXYFEvk127tfthHAvXrKg): the lookup API returned the local answer for 324 of 324 changed and 200 of 200 unchanged note lookups. Not run: the browser suite on production after these changes (they touch note lookups only; it ran 60 of 60 on the previous code).
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
