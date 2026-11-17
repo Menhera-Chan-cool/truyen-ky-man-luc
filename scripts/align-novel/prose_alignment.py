@@ -424,12 +424,12 @@ def _gap_units(editions,units,l,a,b,limit,section='story'):
     return found
 
 
-ORPHAN_GAIN=.04;ORPHAN_UNITS=2
+ORPHAN_GAIN=.04;ORPHAN_UNITS=5  # sheet 22 card 11: three clauses after "Vậy sự hưng vong của Hán," were left out of every group because only two units could be adopted
 
 
 def adopt_orphans(item,contexts,encode,units=None,section='story'):
     """A unit that fell between two groups (the pairing skipped it) joins a neighbouring group on one side when that
-    clearly improves the group's own pairing. One or two units, same paragraph, never poetry or notes."""
+    clearly improves the group's own pairing. Up to ORPHAN_UNITS units, same paragraph, never poetry or notes."""
     from context_alignment import join_units,mask_references,slice16,u16,_normalized
     editions=item['editions']
     def clean(text):return ' '.join(mask_references(text).split())

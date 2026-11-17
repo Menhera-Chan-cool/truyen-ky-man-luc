@@ -86,6 +86,13 @@ class OrphanAdoptionTests(unittest.TestCase):
         vectors={'v1.':vec(0,0,1),'X1.':vec(0,0,1),'v2.':vec(0,1),'X2.':vec(1),'orphan, v2.':vec(1)}
         self.assertEqual([len(g['viInput']['parts']) for g in self.adopt(item,groups,vectors)],[1,1])
 
+    def test_three_skipped_units_join_the_group_they_complete(self):
+        # three clauses were skipped after "v1."; with them the group matches its counterpart, without them it does not
+        vectors={'v1.':vec(0,0,1),'X1.':vec(0,0,1),'v2.':vec(0,1),'X2.':vec(1),'o1, o2, o3, v2.':vec(1)}
+        item,groups=self.build(['v1.','o1,','o2,','o3,','v2.'],['X1.','X2.'],[([0],[0]),([4],[1])])
+        result=self.adopt(item,groups,vectors)
+        self.assertEqual([len(g['viInput']['parts']) for g in result],[1,4])
+
 
 class OrphanPlacementTests(unittest.TestCase):
     def build(self,vi,en,cuts,breaks=None):
