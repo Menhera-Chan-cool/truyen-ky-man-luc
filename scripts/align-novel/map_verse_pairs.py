@@ -1,74 +1,155 @@
-import json,sys,unicodedata,shutil,os
+import json,sys,unicodedata,shutil,os,re
 sys.stdout.reconfigure(encoding='utf-8')
 # usage: map_verse_pairs.py LABELS_DIR SRC_DIR OUT_DIR CHAPTER...
 # LABELS_DIR holds labels-ch<N>.txt: a '#<poem pair index>' line (the index in the chapter's `poems` list; the first token after '#'), then 'vietnamese phrase = english phrase' lines
-# (exact substrings of that pair's Vietnamese and English verse; the Vietnamese side is searched in reading order and may not overlap an earlier pair, the English side neither).
+# (exact substrings of that pair's Vietnamese and English verse; the Vietnamese side is searched in reading order and may not overlap an earlier pair, the English side neither; if no exact match is found
+# the search is repeated ignoring white space, so run-together verse lines need not be typed exactly).
 # SRC_DIR is a published data directory (chapter-<N>.json); OUT_DIR gets a copy of it with a 'labelled' list on the labelled poem pairs.
-# A 'han-labels-ch<N>.txt' next to it, if present, is read as well: a '#han <poem index in the Vietnamese edition> <poem pair index>' line starts a new pair, appended to `poems`, for a Sino-Vietnamese original that has no pair of its own: its Vietnamese side is that
-# edition poem (cut where another pair's Vietnamese poem starts inside it), its English side the English track of the given pair (primary only for the Vietnamese side, so English selections still use the
-# translation pair), no line correspondences, contextOnly. Its labels are 'sino-vietnamese phrase = english phrase', or '... = @<Vietnamese phrase of pair J>' to take the English of that label.
+# A 'han-labels-ch<N>.txt' next to it, if present, is read as well. It holds sections that add poem pairs for verse the pipeline left unpaired, appended to `poems` in file order:
+#   #han E J [lo hi] [t:S-E]  a Sino-Vietnamese original (E = poem of the Vietnamese edition, by start offset or else by index; lo, hi = its lines from lo to hi, default all, cut where another pair's poem
+#                      starts inside it). Its English side is the English track of pair J (an index, a name given by #new, or 'en:S-E' for a new track made from that English text) and it is primary
+#                      only for the Vietnamese side, so English selections still use pair J; no line correspondences, contextOnly.
+#   #new NAME E en:S-E [t:S-E] [lo hi]   a Vietnamese poem with no pair at all, paired to a new English track (lines cut at punctuation followed at once by a letter), primary on both sides.
+#   #fix J en:S-E [t:S-E]   replace the English side of pair J (a wrong one) by a new English track; drops its line correspondences.
+#   #title J vi:S-E en:S-E   attach title spans to pair J.
+# Labels: 'phrase = phrase'; '... = @<Vietnamese phrase>' takes the English of that label in the section's own pair, '@J:<phrase>' that of pair J's section; '@lines' pairs the lines of the two
+# tracks one to one; '@couplets' pairs each Vietnamese line with two English lines (4 against 8).
 P=sys.argv[1].rstrip('/')+'/';SRC=sys.argv[2].rstrip('/')+'/';OUT=sys.argv[3].rstrip('/')+'/'
+REF='<missing reference>'
 def isw(c):return unicodedata.category(c)[0] in 'LMN'
+def boundary(text,i,j,lo,hi):
+    # verse lines are run together ("Quan TrungKhói tan"): a capital letter after a letter also ends a word
+    return (i==lo or not isw(text[i-1]) or not isw(text[i]) or text[i].isupper()) and (j>=hi or not isw(text[j]) or not isw(text[j-1]) or text[j].isupper())
 def find_all(text,s,lo,hi,ci=False):
     t=text.lower() if ci else text;q=s.lower() if ci else s;res=[];i=lo
     while True:
         i=t.find(q,i,hi)
         if i<0:break
         j=i+len(q)
-        # verse lines are run together ("Quan TrungKhói tan"): a capital letter after a letter also ends a word
-        before=i==lo or not isw(text[i-1]) or not isw(text[i]) or text[i].isupper()
-        after=j>=hi or not isw(text[j]) or not isw(text[j-1]) or text[j].isupper()
-        if before and after:res.append((i,j))
+        if boundary(text,i,j,lo,hi):res.append((i,j))
         i+=1
     return res
+def find_loose(text,s,lo,hi):
+    # the same search with white space removed from both the text and the phrase
+    idx=[i for i in range(lo,hi) if not text[i].isspace()];flat=''.join(text[i] for i in idx).lower();q=re.sub(r'\s+','',s).lower();res=[];k=0
+    while q:
+        k=flat.find(q,k)
+        if k<0:break
+        i,j=idx[k],idx[k+len(q)-1]+1
+        if boundary(text,i,j,lo,hi):res.append((i,j))
+        k+=1
+    return res
+def search(text,s,lo,hi):return find_all(text,s,lo,hi) or find_all(text,s,lo,hi,True) or find_loose(text,s,lo,hi)
 def parse(path):
-    d={};cur=None
+    sections=[];cur=None
     for line in open(path,encoding='utf-8'):
         line=line.rstrip('\n')
-        if line.startswith('#han '):_,e,j=line.split()[:3];cur=('han',int(e),int(j));d[cur]=[];continue
-        if line.startswith('#'):cur=int(line[1:].split()[0]);d[cur]=[];continue
-        if ' = ' in line and cur is not None:v,e=line.split(' = ',1);d[cur].append((v.strip(),e.strip()))
-    return d
-def han_pair(a,e,j,n0):
-    ep=a['editions']['vi']['poems'][e];base=a['poems'][j]
-    cut=min([q['vi']['start'] for q in a['poems'][:n0] if ep['start']<q['vi']['start']<ep['end']],default=ep['end'])
-    lines=[l for l in ep['lines'] if l['end']<=cut]
-    return {'vi':{'id':f"han-{ep['start']}",'start':lines[0]['start'],'end':lines[-1]['end'],'lines':lines},'en':json.loads(json.dumps(base['en'])),'score':base['score'],'margin':base['margin'],
-     'primary':{'vi':True,'en':False},'correspondences':[],'contextOnly':True}
+        if line.startswith('#'):
+            tok=line[1:].split()
+            cur={'head':tok[0],'args':tok[1:],'labels':[]};sections.append(cur)
+            if tok[0].isdigit():cur['head']='pair';cur['args']=[int(tok[0])]
+            continue
+        if cur is None:continue
+        if line.strip() in('@lines','@couplets'):cur['labels'].append((line.strip(),None));continue
+        if ' = ' in line:v,e=line.split(' = ',1);cur['labels'].append((v.strip(),e.strip()))
+    return sections
+SPLIT=re.compile(r'(?<=[,.;:!?—”"\)])(?=[A-Za-z“"(])')
+def split_lines(text,s,e):
+    cuts=[s]+[s+m.end() for m in SPLIT.finditer(text[s:e]) if 0<m.end()<e-s]+[e];out=[]
+    for x,y in zip(cuts,cuts[1:]):
+        raw=text[x:y];x+=len(raw)-len(raw.lstrip());y-=len(raw)-len(raw.rstrip())
+        if y>x:out.append({'start':x,'end':y})
+    return out
+def span(tok):a,b=tok.split(':',1)[1].split('-');return {'start':int(a),'end':int(b)}
+def en_track(a,tok,title=None):
+    s=span(tok);lines=split_lines(a['editions']['en']['text'],s['start'],s['end'])
+    t={'id':f"verse-{lines[0]['start']}",'start':lines[0]['start'],'end':lines[-1]['end'],'lines':lines}
+    if title:t['title']=span(title)
+    return t
+def edition_poem(a,E):
+    ps=a['editions']['vi']['poems'];e=int(E)
+    return next((q for q in ps if q['start']==e),None) or ps[e]
+def vi_track(a,ep,n0,lo=None,hi=None):
+    lines=ep['lines']
+    if lo is None:
+        cut=min([q['vi']['start'] for q in a['poems'][:n0] if ep['start']<q['vi']['start']<ep['end']],default=ep['end']);lines=[l for l in lines if l['end']<=cut]
+    else:lines=lines[int(lo):int(hi)]
+    t={'id':f"han-{lines[0]['start']}",'start':lines[0]['start'],'end':lines[-1]['end'],'lines':lines}
+    if ep.get('title') and (lo is None or int(lo)==0):t['title']=ep['title']
+    return t
+def pair(vi,en,primary_en,score=.75,margin=.1):return {'vi':vi,'en':en,'score':score,'margin':margin,'primary':{'vi':True,'en':primary_en},'correspondences':[],'contextOnly':True}
+def expand(p,labels,ref,a):
+    # turn '@lines' / '@couplets' / '@' references into plain (vietnamese, english) texts
+    V=a['editions']['vi']['text'];E=a['editions']['en']['text'];out=[]
+    trim=lambda s:s.strip().rstrip(',.;:!?—”"')
+    for v,e in labels:
+        if v in('@lines','@couplets'):
+            vl,el=p['vi']['lines'],p['en']['lines'];k=1 if v=='@lines' else 2
+            if len(el)!=k*len(vl):raise SystemExit(f'{v}: {len(vl)} vietnamese lines against {len(el)} english lines')
+            for i,l in enumerate(vl):out.append((trim(V[l['start']:l['end']]),trim(E[el[k*i]['start']:el[k*i+k-1]['end']])))
+        elif e.startswith('@'):
+            j,sep,key=e[1:].partition(':')
+            if not sep or not j.isdigit():j,key=None,e[1:]
+            d=ref(int(j) if j else None)
+            out.append((v,d[key] if key in d else REF+key))
+        else:out.append((v,e))
+    return out
 def map_pair(a,p,pairs,k,fails):
     V=a['editions']['vi']['text'];E=a['editions']['en']['text']
     vlo,vhi,elo,ehi=p['vi']['start'],p['vi']['end'],p['en']['start'],p['en']['end']
     usedv=[];usede=[];out=[];vpos=vlo
     for v,e in pairs:
-        ms=find_all(V,v,vpos,vhi) or find_all(V,v,vpos,vhi,True)
+        if e.startswith(REF):fails.append((k,'REF?',e[len(REF):]));continue
+        ms=search(V,v,vpos,vhi)
         if not ms:
-            ms=[m for m in (find_all(V,v,vlo,vhi) or find_all(V,v,vlo,vhi,True)) if not any(m[0]<u[1] and m[1]>u[0] for u in usedv)]
+            ms=[m for m in search(V,v,vlo,vhi) if not any(m[0]<u[1] and m[1]>u[0] for u in usedv)]
             if ms:fails.append((k,'NONMONO',v))
         if not ms:fails.append((k,'VI?',v));continue
-        ns=[m for m in (find_all(E,e,elo,ehi) or find_all(E,e,elo,ehi,True)) if not any(m[0]<u[1] and m[1]>u[0] for u in usede)]
+        ns=[m for m in search(E,e,elo,ehi) if not any(m[0]<u[1] and m[1]>u[0] for u in usede)]
         if not ns:fails.append((k,'EN?',e));continue
         vm,em=ms[0],ns[0];usedv.append(vm);usede.append(em);vpos=vm[1];out.append({'vi':{'start':vm[0],'end':vm[1]},'en':{'start':em[0],'end':em[1]}})
     p['labelled']=out
     return len(out)
 def run(ch):
-    lab=parse(f'{P}labels-ch{ch}.txt');hp=f'{P}han-labels-ch{ch}.txt'
-    if os.path.exists(hp):lab.update(parse(hp))
-    a=json.load(open(f'{SRC}chapter-{ch}.json',encoding='utf-8'))
-    fails=[];n=0;npairs=0;n0=len(a.get('poems',[]))
-    for k,pairs in lab.items():
-        if isinstance(k,tuple):
-            _,e,j=k
-            if j>=n0 or e>=len(a['editions']['vi'].get('poems',[])):fails.append((k,'NO POEM',''));continue
-            ref={v:en for v,en in lab.get(j,[])}
-            res=[]
-            for v,en in pairs:
-                if en.startswith('@'):
-                    if en[1:] not in ref:fails.append((k,'REF?',en));continue
-                    en=ref[en[1:]]
-                res.append((v,en))
-            a['poems'].append(han_pair(a,e,j,n0));p=a['poems'][-1];npairs+=map_pair(a,p,res,k,fails);n+=1;continue
+    secs=parse(f'{P}labels-ch{ch}.txt');hp=f'{P}han-labels-ch{ch}.txt'
+    if os.path.exists(hp):secs+=parse(hp)
+    a=json.load(open(f'{SRC}chapter-{ch}.json',encoding='utf-8'));fails=[];n=0;npairs=0;n0=len(a.get('poems',[]));names={}
+    own={s['args'][0]:s['labels'] for s in secs if s['head']=='pair'}
+    base=lambda j:{v:e for v,e in own.get(j,[]) if e is not None}
+    plain=[s for s in secs if s['head']=='pair'];extra=[s for s in secs if s['head']!='pair']
+    def target(spec,title=None):
+        # the English side for a section: an existing pair index, a name given by #new, or a new track
+        if spec.startswith('en:'):return en_track(a,spec,title),True
+        j=names[spec] if spec in names else int(spec)
+        return json.loads(json.dumps(a['poems'][j]['en'])),False
+    for s in plain:
+        k=s['args'][0]
         if k>=n0:fails.append((k,'NO POEM',''));continue
-        npairs+=map_pair(a,a['poems'][k],pairs,k,fails);n+=1
+        p=a['poems'][k];npairs+=map_pair(a,p,expand(p,s['labels'],lambda j,k=k:base(k if j is None else j),a),k,fails);n+=1
+    for s in extra:
+        h,ar=s['head'],s['args'];key=(h,)+tuple(ar)
+        try:
+            if h=='title':
+                p=a['poems'][int(ar[0])]
+                for tok in ar[1:]:p['vi' if tok.startswith('vi:') else 'en']['title']=span(tok)
+                continue
+            if h=='fix':
+                j=int(ar[0]);p=a['poems'][j];p['en']=en_track(a,ar[1],ar[2] if len(ar)>2 else None);p['primary']['en']=True;p['correspondences']=[];p['contextOnly']=True
+                npairs+=map_pair(a,p,expand(p,s['labels'],lambda j2,j=j:base(j if j2 is None else j2),a),key,fails);n+=1;continue
+            if h=='han':
+                E,J=ar[0],ar[1];rest=ar[2:];lohi=[x for x in rest if not x.startswith('t:')];title=next((x for x in rest if x.startswith('t:')),None)
+                en,fresh=target(J,title);ep=edition_poem(a,E)
+                bp=a['poems'][int(J)] if J.isdigit() else None
+                p=pair(vi_track(a,ep,n0,*lohi[:2]),en,fresh,*((bp['score'],bp['margin']) if bp else ()))
+            elif h=='new':
+                name,E,spec=ar[0],ar[1],ar[2];rest=ar[3:];lohi=[x for x in rest if not x.startswith('t:')];title=next((x for x in rest if x.startswith('t:')),None)
+                ep=edition_poem(a,E);p=pair(vi_track(a,ep,n0,*lohi[:2]),en_track(a,spec,title),True)
+                p['vi']['id']=f"verse-{p['vi']['start']}";names[name]=len(a['poems'])
+            else:fails.append((key,'DIRECTIVE?',h));continue
+        except (StopIteration,KeyError,IndexError,ValueError) as ex:fails.append((key,'SECTION?',repr(ex)));continue
+        a['poems'].append(p);idx=len(a['poems'])-1
+        rp=int(ar[1]) if h=='han' and ar[1].isdigit() else idx
+        npairs+=map_pair(a,p,expand(p,s['labels'],lambda j,rp=rp:base(rp if j is None else j),a),key,fails);n+=1
     json.dump(a,open(f'{OUT}chapter-{ch}.json','w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
     print('chapter',ch,'poem pairs labelled',n,'pairs mapped',npairs,'failures',len(fails))
     for f in fails:print('  ',f)

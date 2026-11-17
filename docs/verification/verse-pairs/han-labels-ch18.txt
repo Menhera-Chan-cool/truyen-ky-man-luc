@@ -113,3 +113,9 @@ Quý lương nhân chi viễn phỏng = @Cảm lòng chàng từ xa tìm đến
 Phủ vãng sự sĩ trường ta = @Buồn nỗi mình biết nói làm sao
 Cảm thuật u hoài = @Dám tỏ niềm riêng
 Hạnh thùy tri tất = And humbly beg you to look upon it with understanding
+#han 2175 0 25 26
+Trước xin bày tỏ = I make bold to lay bare my own
+#han 5574 1 51 52
+Ngói tan thế giặc, chiếc xe chiếc ngựa không còn = Those barbarians, doomed by Heaven, shall not see a single horse or a single wheel return
+#han 9407 2 67 68
+Kính xin soi xét = And humbly beg you to look upon it with understanding

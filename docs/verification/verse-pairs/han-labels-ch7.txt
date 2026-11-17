@@ -1,0 +1,76 @@
+#2
+Phật bản từ bi, kỳ danh viết giác = @3:Phật vốn từ bi, gọi tên là Giác
+Nhân năng thanh tịnh, tức ngụy thành chân = @3:Người mà thanh tĩnh, hóa giả thành chân
+Năng tu pháp giới tân lương = @3:Hãy gắng tu trì trong cõi phép
+Tiện thị tùng lâm tông chủ = @3:Muốn lên tông chủ trong rừng thiền
+Kính duy Phật Tích am sơn chủ Đào Thị = @3:Kính nghĩ am chủ ở núi Phật Tích là Đào Thị
+Danh đào nhạc tịch = @3:Sổ ca nhạc rút tên ra khỏi
+Đính lễ Phạm vương = @3:Cửa Phạm vương (5) núp bóng tìm vào
+Đào khẩu liễu yêu = @3:Miệng đào lưng liễu
+trạo thiệt tế tài án duyệt Lương Châu kỷ khúc = @3:uốn lưỡi vừa véo von mấy khúc Lương Châu (6)
+Từ vân tuệ nhật = @3:Nhật sáng mây lành
+đài đầu gian dĩ quy y Đâu suất chư thiên = @3:nghển đầu đã tựa nương dưới trời Đâu Suất (7)
+Quần phao tương thủy tằng tằng = @3:Quần ném dòng Tương lớp lớp
+Mấn lạc Sở vãn đoạn đoạn = @3:Tóc rơi mây Sở từng từng
+Mộng lý vô đoan xúc cảnh = @3:Trong mơ xúc cảnh bâng khuâng
+bán chẩm du tiên = @3:du tiên nửa gối
+Phong tiền hà xứ liêu nhân = @3:Trước gió ghẹo người réo rắt
+sổ xoang đoản địch = @3:đoản địch vừa xong
+Ca viện bất như tăng viện tĩnh = @3:Phòng tăng vắng vẻ khác phòng ca
+Nạp y tuyệt thắng vũ y lương = @3:áo đạo nhẹ nhàng hơn áo múa
+Thủy cúc Tào khê = @3:Khe Tào múc nước (8)
+do phân khuy kính ảnh = @3:chợt ngờ mặt phấn trong gương
+Dạ tuyên bối diệp = @3:Lá bối (9) tụng kinh
+thượng tác nhiễu lương thanh = @3:còn thoảng âm vang trước nóc (10)
+Tuy vân thiền định vong cơ = @3:Mùi thiền dẫu bén
+Phả nại cuồng tâm bị tửu = @3:Lòng tục chưa phai
+bất hướng = @3:không đến
+Tầm Dương = @3:Bến Tầm Dương (11)
+tống khách = @3:gẩy tỳ bà
+Thân khước lai = @3:lại vào
+Hàng Quận = @3:Chùa Hàng Quận (12)
+tham thiền = @3:nghiền kinh kệ
+Ngũ Lăng nhi phao cẩm triền đầu = @3:Gấm triền đầu phấp phới
+tuy tùy vị dĩ = @3:theo đuổi chưa thôi (13)
+#fix 11 en:8952-9267 t:8935-8952
+@couplets
+#new lad 6724 en:8184-8545 t:8168-8184
+@couplets
+#new ape 7050 en:8561-8935 t:8545-8561
+@couplets
+#han 342 0
+@lines
+#han 522 1
+@lines
+#han 4836 4 0 4
+@lines
+#han 4836 5 4 8
+@lines
+#han 5158 6
+@lines
+#han 5488 7 0 4
+@lines
+#han 5488 8 4 8
+@lines
+#han 5836 9
+@lines
+#han 6171 10
+@lines
+#han 6519 lad
+@lines
+#han 6866 ape
+@lines
+#han 7186 11
+@lines
+#han 7519 12 0 4
+@lines
+#han 7519 13 4 8
+@lines
+#han 7844 14 0 4
+@lines
+#han 7844 en:9848-10030 4 8
+@lines
+#new tail 2581 en:3905-4117 22 25
+@lines
+#han 1631 tail 22 25
+@lines
