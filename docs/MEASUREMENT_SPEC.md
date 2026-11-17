@@ -74,6 +74,27 @@ Phiếu 22 có 84 ca có tô: nếu không ca nào sai thì chứng minh đượ
 
 ## 4. Việc cần người làm
 
-1. Chấm phiếu 22 (khoảng 25 đến 30 phút) rồi dán CSV vào đây. Kết quả cho M4 lần đầu, kèm khoảng tin cậy.
+1. ~~Chấm phiếu 22~~ Đã có kết quả (2026-11-17), xem mục 5.
 2. Nếu muốn chứng minh ≥ 98%: ba phiếu nữa cùng thiết kế, mẫu mới mỗi lần. Tôi dựng phiếu bằng `work/pilot/gold3/sample_sheet22.py` (hạt giống khác) và `work/human-check/make_sheet22.py`.
 3. Trong lúc chờ, các giai đoạn 1 đến 4 của kế hoạch vẫn làm được và đo bằng M1, M2, M5.
+
+## 5. Kết quả M4 lần đầu: phiếu 22 (2026-11-17)
+
+102 ca ngẫu nhiên trên bản đang chạy thật (code 613d493, dữ liệu phr21), một người kiểm chấm tuyệt đối, file `docs/verification/human-check-result-22-2026-11-17.csv`, chấm bằng `scripts/align-novel/human_check_compare14.py`.
+
+| Chỉ tiêu | Kết quả |
+|---|---|
+| Đúng trong số ca có tô sáng (84 ca) | **83/84 = 98,8%** [93,6–99,8] |
+| Không sai trong số ca có tô sáng | 84/84 = 100% [95,6–100] |
+| Sai hẳn | 0/84 |
+| Một phần | 1/84 (ca 96, chương 19, câu Việt có số "5 đĩnh vàng") |
+| Độ phủ (có tô sáng) | 84/102 = 82,4% [73,8–88,5] |
+| Ca không tô mà đoạn trả về có bản dịch | 15/18 = 83,3% [60,8–94,2]; 2 ca bản kia không có vế tương ứng, 1 ca không chứa (ca 77, chương 17) |
+| Người đọc được đúng chỗ (tô đúng hoặc đoạn chứa bản dịch) | 99/102 = 97,1% [91,7–99,0] |
+| Gộp với phiếu 14 (50/50 đúng, cùng cách chấm) | đúng 133/134 = 99,3% [95,9–99,9] |
+
+Theo loại: cụm 28/28, từ 26/26, câu 29/30; theo chiều: Anh→Việt 36/36, Việt→Anh 47/48.
+
+Đọc theo luật cận dưới Wilson: **"không sai >95%" đã chứng minh được** (cận dưới 95,6%), "đúng >95%" chưa (93,6%), **">98%" chưa** (cận dưới 93,6% riêng phiếu 22, 95,9% gộp hai phiếu; cần ít nhất 189 ca liền đúng). Hạn chế: một người kiểm, chấm tuyệt đối thường dễ hơn so sánh A/B (phiếu 13 cùng người: 3/20 thích im lặng hơn một tô sáng cụt), chỉ lấy văn xuôi của truyện, không có thơ, ghi chú và lời bình (xem phiếu 15). Phần thiếu chủ yếu là độ phủ: 18 trên 102 ca không tô.
+
+Ba ca đáng xem: ca 11 (chương 1, "Han and Chu depended") đoạn trả về chỉ có "Vậy sự hưng vong của Hán," vì ba mệnh đề Việt tiếp theo ("Sở, chỉ là do ở sự may rủi của trời mà thôi, há nên lấy thành bại mà so bì ư?") không nằm trong nhóm nào; ca 77 (chương 17) và ca 96 (chương 19) chưa phân tích.

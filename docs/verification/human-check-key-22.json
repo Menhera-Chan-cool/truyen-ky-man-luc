@@ -1,0 +1,1195 @@
+{
+ "cards": {
+  "a22-40": {
+   "n": 1,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 1,
+   "selection": "putting Our story into",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "đem chuyện ta diễn vào"
+   ]
+  },
+  "a22-15": {
+   "n": 2,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 16,
+   "selection": "When the first watch had been drummed, he suddenly heard the clack of slippers beside the bamboo grove.",
+   "answered": true,
+   "status": "match",
+   "texts": [
+    "Chừng một trống canh, bỗng nghe thấy tiếng giày lẹp kẹp ở bên khóm trúc;"
+   ]
+  },
+  "a22-71": {
+   "n": 3,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 12,
+   "selection": "chàng",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "you"
+   ]
+  },
+  "a22-10": {
+   "n": 4,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 11,
+   "selection": "chim muông như núi, chúng tôi",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "birds and beasts as high as a mountain, we"
+   ]
+  },
+  "a22-82": {
+   "n": 5,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 3,
+   "selection": "good fortune the old",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "may vạt áo cũ bở"
+   ]
+  },
+  "a22-24": {
+   "n": 6,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 5,
+   "selection": "Cảm vì tình ấy nên chúng em về đây bái tạ.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Moved by such devotion, we have come to offer our thanks."
+   ]
+  },
+  "a22-1": {
+   "n": 7,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 2,
+   "selection": "love grown twice",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "tình ái bội phần"
+   ]
+  },
+  "a22-18": {
+   "n": 8,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "Cho nên từ khi Triều Lê dựng nghiệp thi sĩ có đến hơn trăm nhà, mà duy tập thơ của ông Sái thịnh hành, đại khái đều do công sức của Mao Tử Biên cả.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "That is why, of the more than a hundred poets who have flourished since the Le dynasty was founded, Master Sai's collection alone is widely read, and this is owed, for the most part, to the labors of Mao Tu Bien."
+   ]
+  },
+  "a22-53": {
+   "n": 9,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 14,
+   "selection": "đúng",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "just"
+   ]
+  },
+  "a22-90": {
+   "n": 10,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 11,
+   "selection": "The hunt in the land of Hong was held to parade soldiers (12), and the shooting at Changyang was held to parade beasts and birds (13).",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Vì sự phô phang quân lính mới có cuộc săn ở đất Hồng (12). Vì sự phô phang cầm thú mới có cuộc bắn ở Trường Dương (13)."
+   ]
+  },
+  "a22-100": {
+   "n": 11,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 1,
+   "selection": "Han and Chu depended",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-14": {
+   "n": 12,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 15,
+   "selection": "buổi",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-74": {
+   "n": 13,
+   "kind": "word",
+   "from": "en",
+   "chapter": 15,
+   "selection": "deeply",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-57": {
+   "n": 14,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 18,
+   "selection": "Sinh hoped to borrow the might of the royal army for a surprise attack and win Le Nuong back.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Sinh muốn nhờ thế quân của vua, đánh úp mà cướp lại Lệ Nương,"
+   ]
+  },
+  "a22-93": {
+   "n": 15,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 14,
+   "selection": "Biết đó không phải là người thường, bèn rón bước theo sau, rẽ cỏ lấy đường, đi ước chừng vài dặm.",
+   "answered": true,
+   "status": "match",
+   "texts": [
+    "Knowing this was no ordinary man, Truong crept along behind him, parting the grass to find a path, and went on for several leagues."
+   ]
+  },
+  "a22-31": {
+   "n": 16,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 12,
+   "selection": "Phan thường nhìn",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Phan Lang stole frequent glances"
+   ]
+  },
+  "a22-73": {
+   "n": 17,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14,
+   "selection": "bring the man out",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-52": {
+   "n": 18,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 13,
+   "selection": "every word",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "lựa lời"
+   ]
+  },
+  "a22-9": {
+   "n": 19,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 10,
+   "selection": "Nhưng nay những người học trò thường đến đền Đế quân làm lễ cầu mộng, xin ngài báo ứng cho biết những sự nghiệp về sau.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Yet these days scholars often go to the temple of the Imperial Lord to offer rites and pray for dreams, beseeching him to reveal what their future careers hold."
+   ]
+  },
+  "a22-61": {
+   "n": 20,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 2,
+   "selection": "Xuan Bridge, next door",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "cầu Đồng Xuân, láng giềng"
+   ]
+  },
+  "a22-91": {
+   "n": 21,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 12,
+   "selection": "thùy mị nết na",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "gentle, virtuous disposition"
+   ]
+  },
+  "a22-83": {
+   "n": 22,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 4,
+   "selection": "nghi ngờ",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "cannot understand"
+   ]
+  },
+  "a22-94": {
+   "n": 23,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 15,
+   "selection": "trộm cắp vặt",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "petty thefts"
+   ]
+  },
+  "a22-39": {
+   "n": 24,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 20,
+   "selection": "Thấy họ ăn uống gần xong, Lê Ngộ ra lạy mãi, lạy mãi.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "When he saw that they had nearly finished, Le Ngo came forth and bowed before them over and over."
+   ]
+  },
+  "a22-37": {
+   "n": 25,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 18,
+   "selection": "five hundred soldiers",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "năm trăm quân"
+   ]
+  },
+  "a22-99": {
+   "n": 26,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 20,
+   "selection": "Ta nay đến thăm, muốn đem điều lợi hại nói chuyện, xin đừng lảng tránh như vậy.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "I have come to visit you, wishing to set before you what serves your interest and what harms it. I beg you, do not shun me so."
+   ]
+  },
+  "a22-77": {
+   "n": 27,
+   "kind": "word",
+   "from": "en",
+   "chapter": 18,
+   "selection": "certain",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "đoán chắc"
+   ]
+  },
+  "a22-12": {
+   "n": 28,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 13,
+   "selection": "By ill fortune, we fell prey to ruthless brigands who killed and plundered.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Không may bị quân cường bạo giết người cướp của,"
+   ]
+  },
+  "a22-0": {
+   "n": 29,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 1,
+   "selection": "Vì vậy ta đem đốt đi để những vua đời sau biết nên dè sẻn.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Therefore I burned those palaces down, that future monarchs might learn to practice thrift."
+   ]
+  },
+  "a22-101": {
+   "n": 30,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 2,
+   "selection": "trải",
+   "answered": true,
+   "status": "match",
+   "texts": [
+    "attained"
+   ]
+  },
+  "a22-41": {
+   "n": 31,
+   "kind": "word",
+   "from": "en",
+   "chapter": 2,
+   "selection": "beautiful",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "gái sắc"
+   ]
+  },
+  "a22-32": {
+   "n": 32,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "may",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "ill fortune"
+   ]
+  },
+  "a22-23": {
+   "n": 33,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 4,
+   "selection": "mài",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "be"
+   ]
+  },
+  "a22-56": {
+   "n": 34,
+   "kind": "word",
+   "from": "en",
+   "chapter": 17,
+   "selection": "secret",
+   "answered": true,
+   "status": "match",
+   "texts": [
+    "giấu kín"
+   ]
+  },
+  "a22-44": {
+   "n": 35,
+   "kind": "word",
+   "from": "en",
+   "chapter": 5,
+   "selection": "parting",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-26": {
+   "n": 36,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 7,
+   "selection": "nhà",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "the"
+   ]
+  },
+  "a22-20": {
+   "n": 37,
+   "kind": "word",
+   "from": "en",
+   "chapter": 1,
+   "selection": "robes",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "quần áo"
+   ]
+  },
+  "a22-89": {
+   "n": 38,
+   "kind": "word",
+   "from": "en",
+   "chapter": 10,
+   "selection": "people",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "người"
+   ]
+  },
+  "a22-62": {
+   "n": 39,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "Giờ",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Now"
+   ]
+  },
+  "a22-5": {
+   "n": 40,
+   "kind": "word",
+   "from": "en",
+   "chapter": 6,
+   "selection": "since",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-59": {
+   "n": 41,
+   "kind": "word",
+   "from": "en",
+   "chapter": 20,
+   "selection": "else",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "ai"
+   ]
+  },
+  "a22-13": {
+   "n": 42,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 14,
+   "selection": "Earth have granted me",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "đã được trời đất ban cho"
+   ]
+  },
+  "a22-45": {
+   "n": 43,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 6,
+   "selection": "The green-robed maiden went to the temple of the Flood Dragon Spirit at Hong Chau and made inquiries.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Nàng áo xanh đến miếu thờ Thần Thuồng luồng ở Hồng Châu,"
+   ]
+  },
+  "a22-65": {
+   "n": 44,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 6,
+   "selection": "Truyền",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "She"
+   ]
+  },
+  "a22-8": {
+   "n": 45,
+   "kind": "word",
+   "from": "en",
+   "chapter": 9,
+   "selection": "him",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-76": {
+   "n": 46,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 17,
+   "selection": "đem ra thỉnh mệnh",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-34": {
+   "n": 47,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 15,
+   "selection": "vải, đeo",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "a bow slung",
+    "back"
+   ]
+  },
+  "a22-54": {
+   "n": 48,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 15,
+   "selection": "Lighting lamps and torches, they split up and gave chase, each taking a different road.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "cùng đốt đèn thắp đuốc chia nhau mỗi người đi đuổi một ngả."
+   ]
+  },
+  "a22-16": {
+   "n": 49,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 17,
+   "selection": "against the invaders",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "đánh giặc"
+   ]
+  },
+  "a22-25": {
+   "n": 50,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 6,
+   "selection": "virtue of the dragon",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "đức rồng"
+   ]
+  },
+  "a22-75": {
+   "n": 51,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 16,
+   "selection": "Sinh bèn viết một phong thư, buộc vào chân nó.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "So he wrote a letter and tied it to the bird's leg."
+   ]
+  },
+  "a22-58": {
+   "n": 52,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 19,
+   "selection": "root and plainness",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "gốc"
+   ]
+  },
+  "a22-19": {
+   "n": 53,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 20,
+   "selection": "day you shall",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-68": {
+   "n": 54,
+   "kind": "word",
+   "from": "en",
+   "chapter": 9,
+   "selection": "kind",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "hiền đức"
+   ]
+  },
+  "a22-70": {
+   "n": 55,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 11,
+   "selection": "chew pine",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "ăn bách nhai tùng"
+   ]
+  },
+  "a22-11": {
+   "n": 56,
+   "kind": "word",
+   "from": "en",
+   "chapter": 12,
+   "selection": "remote",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-96": {
+   "n": 57,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 17,
+   "selection": "Let falcons tear at his breast and venomous serpents gnaw at his belly.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "chim cắt mổ vào ngực, rắn độc cắn vào bụng,"
+   ]
+  },
+  "a22-22": {
+   "n": 58,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 3,
+   "selection": "need fear",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-48": {
+   "n": 59,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 9,
+   "selection": "And I am Lady Nguy, an earthly immortal of the Southern Peak.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "mà tôi tức là địa tiên ở Nam nhạc là Ngụy phu nhân."
+   ]
+  },
+  "a22-84": {
+   "n": 60,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 5,
+   "selection": "It would be better to put off the wedding for now.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Chi bằng việc cưới xin hãy tạm hoãn, đợi khi con đường mây nhẹ gót, thỏa nguyện bình sinh, bấy giờ hãy tìm đến tưởng cũng chưa muộn."
+   ]
+  },
+  "a22-6": {
+   "n": 61,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 7,
+   "selection": "Suspecting that Han Than was secretly carrying on with her husband, she had her seized and beaten without mercy.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "ngờ Hàn Than tư thông với chồng, bắt nàng đánh một trận rất là tàn nhẫn."
+   ]
+  },
+  "a22-3": {
+   "n": 62,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 4,
+   "selection": "Thiện ác tuy nhỏ cũng rõ rệt, báo ứng dù chậm nhưng lớn lao.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Good and evil, however small, are clearly marked, and retribution, though slow, is great."
+   ]
+  },
+  "a22-42": {
+   "n": 63,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "Phương chi trong bài thơ bữa nọ, thiếp chả đã từng lấy cái chết mà hẹn hò nhau.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Moreover, in the poem I wrote you the other day, did I not already pledge myself to you unto death?"
+   ]
+  },
+  "a22-79": {
+   "n": 64,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 20,
+   "selection": "họp lại, mời",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "gathered again and invited"
+   ]
+  },
+  "a22-81": {
+   "n": 65,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 2,
+   "selection": "When the contract had been written out, they drank and cast the dice.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Giấy giao kèo viết xong rồi vừa uống rượu vừa gieo quân."
+   ]
+  },
+  "a22-27": {
+   "n": 66,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 8,
+   "selection": "How much bolder must he be in some lonely shrine?",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-86": {
+   "n": 67,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 7,
+   "selection": "trước mắt",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "moment"
+   ]
+  },
+  "a22-69": {
+   "n": 68,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 10,
+   "selection": "Vì có anh đến chơi đây nên ta chưa đi được.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Only because you have come to visit have I not yet set out."
+   ]
+  },
+  "a22-35": {
+   "n": 69,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 16,
+   "selection": "tuyệt nhiên",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-28": {
+   "n": 70,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 9,
+   "selection": "vật dục không nẩy sinh",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "worldly desire never stirs"
+   ]
+  },
+  "a22-88": {
+   "n": 71,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 9,
+   "selection": "biết tiền",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "see"
+   ]
+  },
+  "a22-47": {
+   "n": 72,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 8,
+   "selection": "nhà",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "household"
+   ]
+  },
+  "a22-95": {
+   "n": 73,
+   "kind": "word",
+   "from": "en",
+   "chapter": 16,
+   "selection": "than",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "gì"
+   ]
+  },
+  "a22-50": {
+   "n": 74,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 11,
+   "selection": "sợi",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "single"
+   ]
+  },
+  "a22-17": {
+   "n": 75,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 18,
+   "selection": "tiến",
+   "answered": true,
+   "status": "match",
+   "texts": [
+    "advanced"
+   ]
+  },
+  "a22-43": {
+   "n": 76,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 4,
+   "selection": "less than",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-36": {
+   "n": 77,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 17,
+   "selection": "Let me show it to you, and you will see plainly what fortune or misfortune awaits you.",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-60": {
+   "n": 78,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 1,
+   "selection": "Ôm bụng trung lương là tiết lớn của kẻ làm tôi.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Harboring a loyal and upright heart is the supreme duty of a subject"
+   ]
+  },
+  "a22-66": {
+   "n": 79,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 7,
+   "selection": "Whatever sights of the mountain lent themselves to song, they took up the brush to celebrate, so that its famous beauties might be recorded.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "phàm những cảnh vật trong núi, cái gì có thể ngâm vịnh được đều dấp bút đề vịnh để ghi danh thắng."
+   ]
+  },
+  "a22-33": {
+   "n": 80,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 14,
+   "selection": "Chống gậy trèo lên thì thấy một cái am cỏ, hai bên tả hữu trồng mấy cây kim tiền, chen lẫn những cây bích đào hồng hạnh, tất cả đều xanh tốt đáng yêu.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Several golden-coin trees grew on either side, with jade peach and red apricot trees among them, all lush and lovely to behold."
+   ]
+  },
+  "a22-67": {
+   "n": 81,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 8,
+   "selection": "committed some offense",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "có tội lỗi gì"
+   ]
+  },
+  "a22-51": {
+   "n": 82,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 12,
+   "selection": "Bấy giờ Phan mới nhận đích người ấy là Vũ nương.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Only then did Phan recognize that the woman was indeed Vu Nuong."
+   ]
+  },
+  "a22-38": {
+   "n": 83,
+   "kind": "word",
+   "from": "en",
+   "chapter": 19,
+   "selection": "husband",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "vợ chồng"
+   ]
+  },
+  "a22-46": {
+   "n": 84,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 7,
+   "selection": "khách đến, bị",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "assassin, however, was"
+   ]
+  },
+  "a22-92": {
+   "n": 85,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "kinh",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "capital"
+   ]
+  },
+  "a22-29": {
+   "n": 86,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 10,
+   "selection": "cách",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-87": {
+   "n": 87,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 8,
+   "selection": "Tử Văn vui vẻ nhận lợi, bèn thu xếp việc nhà rồi không bệnh tật gì mà mất.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Tu Van gladly accepted. He set his household affairs in order, and then, untouched by any illness, he passed away."
+   ]
+  },
+  "a22-63": {
+   "n": 88,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 4,
+   "selection": "Yet because he had been poor in youth and scorned by many, he requited every kindness, though slight as a silken thread, and avenged every grievance, though fine as a hair.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Song vì lúc bé nghèo nàn, lắm người khinh mạn, rồi ân bằng cái tơ, oán bằng cái tóc, ông đều nhất báo phục cả, đó là chỗ kém mà thôi."
+   ]
+  },
+  "a22-55": {
+   "n": 89,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 16,
+   "selection": "Thúy Tiêu nghe Sinh",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Thuy Tieu, hearing that Du"
+   ]
+  },
+  "a22-21": {
+   "n": 90,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 2,
+   "selection": "No one knows whether he is alive or dead.",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-2": {
+   "n": 91,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 3,
+   "selection": "khô",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "withered shoots"
+   ]
+  },
+  "a22-97": {
+   "n": 92,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 18,
+   "selection": "vắng tanh không có ai",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "lay utterly deserted, with no one there"
+   ]
+  },
+  "a22-98": {
+   "n": 93,
+   "kind": "word",
+   "from": "en",
+   "chapter": 19,
+   "selection": "long",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "lâu"
+   ]
+  },
+  "a22-7": {
+   "n": 94,
+   "kind": "phrase",
+   "from": "en",
+   "chapter": 8,
+   "selection": "wooden gag forced",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "gỗ",
+    "miệng"
+   ]
+  },
+  "a22-4": {
+   "n": 95,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 5,
+   "selection": "Sau đó vài",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Some months later"
+   ]
+  },
+  "a22-78": {
+   "n": 96,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 19,
+   "selection": "Hoàng thượng khen ngợi hồi lâu, ban cho 5 đĩnh vàng, lại gọi là \"Phù gia nữ học sĩ\".",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "His Majesty praised it for a long while. He bestowed upon me five ingots of gold and named me 'Lady Scholar of the House of Phu."
+   ]
+  },
+  "a22-85": {
+   "n": 97,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 6,
+   "selection": "thái dương, thì hồn",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "sun",
+    "ruined"
+   ]
+  },
+  "a22-49": {
+   "n": 98,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 10,
+   "selection": "da, ánh sáng chói mắt",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "a chill air pierced to the skin, and a brilliant radiance dazzled the eye."
+   ]
+  },
+  "a22-80": {
+   "n": 99,
+   "kind": "word",
+   "from": "vi",
+   "chapter": 1,
+   "selection": "thơ",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "verse"
+   ]
+  },
+  "a22-30": {
+   "n": 100,
+   "kind": "sentence",
+   "from": "en",
+   "chapter": 11,
+   "selection": "We know only how to eat cypress and chew pine, to chant to the moon and sing of the wind, so that we may stay clear of the world's dusty net.",
+   "answered": false,
+   "status": "context-only",
+   "texts": []
+  },
+  "a22-64": {
+   "n": 101,
+   "kind": "phrase",
+   "from": "vi",
+   "chapter": 5,
+   "selection": "đi học, đường",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "his walk to lessons"
+   ]
+  },
+  "a22-72": {
+   "n": 102,
+   "kind": "sentence",
+   "from": "vi",
+   "chapter": 13,
+   "selection": "Vả từ kinh về đến quê hương nhà cô, thuận gió no buồm bất quá cũng chẳng là mấy chốc.",
+   "answered": true,
+   "status": "uncertain",
+   "texts": [
+    "Besides, from the capital to your native district, with a fair wind filling the sails, the voyage would take no great while at all."
+   ]
+  }
+ }
+}

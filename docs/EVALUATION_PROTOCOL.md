@@ -901,6 +901,10 @@ No human sheet covers any of this; the user asked for the work without waiting f
 
 **Checks.** The text under each of the 8,662 remapped spans is identical in the new edition. The recomputed words equal the shifted old words plus the five words of the moved note. The standard aligner run on the new text (12 threads, 2.5 minutes) gives the same 199 notes groups, 40 note pairs and the same poem ids as the carried-over data, so a fresh run would not have paired the moved note either. 1,100 chapter-1 selections from all earlier samples (917 of the whole-book pool, the verse pools, the audits) answer identically on the old and the new data. All 40 editions have the revision and version id of the database. The browser suite gave 60 of 60 on the new data, with no 409. Published at 16:31 UTC by the worker (`--prepared phr22 --max 1`, 1,034,736 bytes, sha256 ad858c21 read back equal to the local file); the production lookup API returned the local replay answer for 307 of 307 chapter-1 selections.
 
+## Sheet 22: the first absolute measure of the whole book on the current code (2026-11-17)
+
+102 random lookups (34 sentences, 34 phrases, 34 words, both directions, 84 highlighted and 18 not) on production at 613d493 with `phr21`, marked by one reviewer (`docs/verification/human-check-result-22-2026-11-17.csv`, key `human-check-key-22.json`). Answered lookups: 83 right, 1 partly, 0 wrong, so right 98.8% (Wilson 93.6 to 99.8) and not wrong 100% (95.6 to 100); abstained: 15 of 18 passages hold the translation, 2 had no counterpart in the other edition, 1 did not. The reader gets the right place in 97.1% (91.7 to 99.0); coverage 82.4%. With sheet 14 (50 of 50 right) pooled: 133 of 134 right, 99.3% (95.9 to 99.9). The target above 98% is not proven by the lower bound; "not wrong above 95%" is. Details and limits in `docs/MEASUREMENT_SPEC.md` section 5.
+
 ## Rules
 
 1. Change code against the dev sets; run the blind set once before and once after a step, never to choose between variants.
