@@ -86,6 +86,8 @@ Hạ Hầu = Xiahou
 kẻ sĩ = scholar
 đức hạnh = virtue
 #28
+Ngày nay = today
+người mặc = Those who don
 áo nhà nho = robes
 dải nhà nho = sashes
 khác hẳn = another breed entirely
@@ -208,7 +210,9 @@ Dương Trạm = Duong Tram
 cầm cuộn giấy = took the scroll
 đi vào = went inside
 #73
+sau = only after
 một lúc lâu = long while
+mới ra = emerging
 #74
 trên thành = atop the walls
 tiếng hô vang = voice rang out
@@ -232,6 +236,10 @@ Tử Hư hỏi = Tu Hu inquired
 Dương Trạm = Duong Tram
 #85
 người đứng = standing
+#92
+việc = whether
+lên chơi = truly journeyed
+Thiên tào = Celestial Court
 #138
 Phạm Tử Hư = Pham Tu Hu
 quê ở Cẩm Giàng = native of Cam Giang

@@ -91,7 +91,9 @@ gọi tất cả người nhà = summoned his whole household
 lạy chào = bow in greeting
 #51
 thầy tu = monk
+xem khắp lượt = looked them over one by one
 lắc đầu = shook his head
+nói = said
 #52
 Đều không phải cả = None of these
 #53
@@ -171,6 +173,10 @@ vết đi = footprint
 buồn bã = sorrow
 trở về = returned home
 #80
+#84
+mối hại = harm that results
+phỏng còn = ever
+xiết nói = fully told
 #173
 Ả danh kỹ = renowned courtesan
 Từ Sơn = Tu Son

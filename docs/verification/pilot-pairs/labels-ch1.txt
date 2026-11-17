@@ -339,6 +339,7 @@ sáu nước = six states
 #94
 tệ = base
 Ôm = Harboring
+bụng = heart
 trung lương = loyal and upright
 tiết lớn = supreme duty
 kẻ làm tôi = subject
@@ -547,7 +548,9 @@ mỉa mai cay độc = bitter mockery
 #148
 Vậy = therefore
 mong = earnestly hope
+những điều = these
 nhơ = stains
+tiếng xấu = tarnished name
 gột rửa = wash away
 #149
 việc = affair
@@ -569,6 +572,20 @@ ghi nhớ = Take note
 #155
 á Phụ = Yafu
 khôn ngoan = wise
+#159
+so = compared
+Sở = Chu
+#165
+nhưng = yet
+nhân nông = benevolence was superficial
+ác sâu = ruthlessness ran deep
+#168
+Sở = Chu
+đã đành trái = undeniably transgressed
+nhân nghĩa = benevolence and righteousness
+#173
+hãy gác ra = let us set them aside
+không cần bàn đến = leave them unaddressed
 #350
 Đề xong = Having finished the inscription
 ruổi ngựa = spurred his horse

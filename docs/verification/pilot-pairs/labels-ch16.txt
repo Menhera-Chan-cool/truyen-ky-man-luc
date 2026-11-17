@@ -134,6 +134,7 @@ vâng lời = obey
 tướng công = Your Excellency
 #59
 tính mệnh = life
+ngày hôm nay = day
 hết = ends
 #60
 tin tức = word
@@ -201,6 +202,14 @@ Thúy Tiêu = Thuy Tieu
 nói = said
 #84
 rặng liễu = willows' shade
+#95
+Thì = Yet
+làm mê Hạ Sái = bewitched Xiacai
+làm hoặc Dương Thành = beguiled Yangcheng
+#98
+suýt nữa = very nearly
+không thoát = failed to escape
+miệng cọp = jaws
 #202
 Dư Nhuận Chi = Du Nhuan Chi
 Kiến Hưng = Kien Hung

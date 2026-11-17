@@ -67,9 +67,11 @@ quân sông Đáy = rising on the Day River
 bờ cõi = frontier
 Cổ Lâu = Co Lau
 #52
+Vậy mà = Yet
 đình thần = ministers of his court
 theo hùa = high and low alike
 #53
+trước sau = the last
 nối vết = treading in the footsteps
 #54
 Nguyễn Bằng Cử = Nguyen Bang Cu
@@ -94,11 +96,14 @@ nát rượu = sodden with wine
 kế lạ mưu sâu = rare plan or deep design
 dân chúng = people
 #60
+Nay ta đương = as I am
 náu vết = Hidden
+ở chốn = in these
 núi rừng = mountains and forests
 #62
 Xin ông = I beg you
 #63
+làm ơn = do me the kindness
 từ chối hộ = declining on this hermit's behalf
 #64
 hòn ngọc Côn Sơn = jade of Kunlun
@@ -122,6 +127,8 @@ cùng đắm = drown alongside them
 #70
 tiều phu = woodcutter
 kẻ sĩ đắc đạo = scholar who had attained the Way
+#77
+nói nhiều = man says a great deal
 #191
 Đất Thanh Hóa = land of Thanh Hoa
 phần nhiều là núi = mostly mountains

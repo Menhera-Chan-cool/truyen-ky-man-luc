@@ -95,6 +95,18 @@ ngâm = chanted
 #33
 cũng = as well
 ngâm = chanted
+#35
+Trời đất sinh ra = Heaven and Earth brought forth
+mọi loài = all creatures
+#48
+nước = waters
+sông Thương Lương = Canglang
+#50
+đục = run muddy
+rửa chân = washes one's feet
+#51
+đều do = Each of us brings our fate upon
+tự mình = ourselves
 #112
 vua Trần Phế đế = Deposed Emperor of the Tran
 đi săn = royal hunt
@@ -353,3 +365,7 @@ rón bước theo sau = steal along after them
 lưng chừng núi = Halfway up the mountain
 hóa làm con cáo và con vượn = turn into a fox and a gibbon
 biến mất = vanish
+#b3
+chúng = those creatures
+nghe giảng = sat and listened to his teaching
+giữ lửa = tended his fire

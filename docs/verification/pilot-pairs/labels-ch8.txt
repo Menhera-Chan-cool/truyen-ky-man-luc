@@ -24,12 +24,14 @@ chiến trường = battlefield
 #8
 Bộ tướng = officers
 Mộc Thạnh = Mu Sheng
+có viên = was a
 Bách hộ = centurion
 họ Thôi = Cui
 #9
 tử trận = killed in battle
 gần đền = near the shrine
 #10
+từ đấy = From that time on
 làm yêu làm quái = worked mischief and sorcery
 dân gian = common folk
 #11
@@ -122,6 +124,18 @@ xe ngựa = horses and carriages
 ầm ầm = thundering
 #46
 tiếng quát = voice cry out
+#49
+Cứng quá = too rigid
+gẫy = break
+#50
+Kẻ sĩ = A scholar
+lo = worry
+không cứng cỏi = lack firmness
+#56
+Nhân thế = as a result
+nức tiếng = fame spread far
+giữ chức vị = granted office
+Minh tào = bureaus of the Underworld
 #75
 Đốt xong về nhà = came home after burning the shrine
 khó chịu = unwell

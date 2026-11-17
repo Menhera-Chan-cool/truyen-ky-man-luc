@@ -36,6 +36,7 @@ người con gái nhỏ = young daughter
 Thị Nghi = Thi Nghi
 nhà phú thương họ Phạm = wealthy merchant family surnamed Pham
 #28
+Người con gái = girl
 lớn lên = grew
 #29
 tư sắc = beautiful
@@ -173,6 +174,10 @@ Mảng nghe = We have heard
 ngoảnh bảo = turned to Hoang and said
 #79
 Kính nghe = We have heard
+#88
+xem thấy = When they behold
+linh từ = hallowed shrine
+xử án = sitting in judgment
 #216
 Triều Lê = Le dynasty
 hỗn nhất = unified the realm

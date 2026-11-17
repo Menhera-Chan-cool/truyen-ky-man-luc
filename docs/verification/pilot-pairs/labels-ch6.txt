@@ -235,6 +235,10 @@ Sầu = sorrow
 bể = sea
 #83
 ngày dài như năm = each day drags on like a year
+#84
+Nào hay = Then
+giữa lúc = in the depths of my
+bơ vơ = desolation
 #85
 nhận được thư thăm hỏi = letter came asking after me
 #86
@@ -252,6 +256,7 @@ trời cao đất cả = high Heaven and broad Earth
 chứng tri = stand witness
 #91
 Ngọc bích = jade disc
+chưa lành = flawed and not yet whole
 #92
 cân vàng = weight of gold
 chuộc = redeem
@@ -326,6 +331,23 @@ kể hết đầu đuôi = told their household the whole affair from beginning 
 #120
 mừng thay = rejoiced on their behalf
 chuyện lạ = strangeness
+#124
+chống = wards off
+ách lớn = great calamity
+thờ = worshipped
+#127
+Hưởng sự = Whoever enjoys
+cúng tế = offerings
+phải = must
+cố danh = consider the name
+tư nghĩa = reflect upon its meaning
+#129
+vị thần Thuồng luồng = River Serpent god
+chỉ phải bị đày = to suffer mere exile
+#130
+Quảng Lợi vương = King Guangli's
+dụng hình = sentence
+thật là chưa đáng = fell far short of what was deserved
 #183
 Đức ông tôi = Our lord
 kính biếu = present

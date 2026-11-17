@@ -23,6 +23,7 @@ từ biệt mẹ = bade his mother farewell
 gặp mặt = see her face
 #7
 Lặn lội hàng tuần = After weeks of hard travel
+mới đến = he reached
 cửa bể Thần Phù = Than Phu estuary
 #8
 tướng giặc Lã Nghị = enemy general Lu Yi
@@ -139,6 +140,17 @@ buồn rầu = grief
 quay về = went home
 #48
 không lấy ai nữa = never took another wife
+#61
+đối với lẽ phải = with what is right
+chưa được ổn = does not sit well
+giữ đúng = hold to it
+không cần = there is no need
+#64
+vẫn chẳng = never
+quên lời = forsook his word
+#69
+liều chết = the hazard of his life
+đi tìm = go in search of her
 #209
 Nguyễn Thị Diễm = Nguyen Thi Diem
 họ lớn = great clan

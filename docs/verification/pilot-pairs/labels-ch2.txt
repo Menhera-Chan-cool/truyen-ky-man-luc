@@ -55,6 +55,15 @@ nói = said
 Sao = Why
 đến = come
 chậm thế = so late
+#20
+chết = dying
+#21
+quả = truly
+theo chồng = obey her husband
+#29
+Trọng Quỳ = the man
+thật = Truly
+tuồng chó lợn = no better than a dog or a swine
 #103
 Từ Đạt = Tu Dat
 Khoái Châu = Khoai Chau

@@ -95,6 +95,7 @@ luật thơ = regulated verse
 #52
 Đề xong = finished writing
 #53
+trông ngắm = stood gazing
 thẫn thờ = in a daze
 #54
 chờ đợi = waiting
@@ -174,7 +175,9 @@ mừng = congratulations
 con ly = hornless dragons
 đàng bắc = north
 #82
+người bận = Some wore
 xiêm lụa = silken skirts
+cưỡi = rode
 rồng = dragons
 phía nam = south
 #83
@@ -282,6 +285,11 @@ hơn 80 năm = more than eighty years
 năm thứ 5 niên hiệu Diên Ninh = fifth year of the Dien Ninh era
 vua thứ ba = third sovereign
 triều Lê = Le dynasty
+#131
+Chưa hẳn = not certain
+#134
+Có không = Whether it happened or not
+lờ mờ = remains hazy
 #216
 hay rượu = fond of wine
 thích đàn = devoted to the zither

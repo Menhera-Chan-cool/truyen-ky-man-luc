@@ -91,6 +91,8 @@ tội = guilt
 giảm = lessened
 #38
 ngẫm nghĩ lúc lâu = pondered for a long while
+#39
+thầy ạ = master
 #40
 không thể làm thế = cannot do that
 #41
@@ -159,6 +161,12 @@ phất = swept
 thân thể lại nguyên lành = body was whole again
 #64
 im lặng lúc lâu = silent for a long while
+#66
+đạo trời = Way of Heaven
+chí công = perfectly just
+vô tư = shows no favor
+#74
+Ví thử họ hiểu = If they truly understood
 #108
 thầy tướng số = physiognomist
 xin ăn = begging

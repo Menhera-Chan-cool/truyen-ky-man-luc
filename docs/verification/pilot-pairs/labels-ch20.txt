@@ -48,7 +48,9 @@ dòm buồng = peering into bedchambers
 rối lòng = trouble the hearts
 dân chúng = common folk
 #15
+Lũ người lấy = You take
 thích = pleasure
+ta lấy = I am
 thẹn = ashamed
 #16
 trời = Heaven
@@ -58,6 +60,7 @@ uy = terror
 ưa sinh = cherish life
 ưa giết = love slaughter
 #18
+quá thả = giving free rein
 kiêu dâm = arrogance and excess
 #19
 Thượng đế = Lord on High
@@ -111,12 +114,15 @@ làm thế nào = what am I to do
 #37
 đói = hungry
 #38
+sẵn = laid out and waiting
 cỗ = feast
 ăn = eat
+còn đi đâu = where else would we go
 #39
 chén rượu = cups of wine
 phải tội = bring punishment down
 #40
+gã kia = fellow
 đến đây làm gì = want here
 #41
 người chủ = master of the house
@@ -133,6 +139,9 @@ nói = said
 mâm cỗ sơ sài = paltry meal
 đánh đổi = buy back
 năm mạng người = five human lives
+#48
+có thể = could it ever
+coi khinh = taken lightly
 #105
 kỳ sĩ = man of rare and singular spirit
 hạt Quốc Oai = district of Quoc Oai

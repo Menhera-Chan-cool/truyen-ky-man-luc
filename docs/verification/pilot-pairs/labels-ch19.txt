@@ -57,7 +57,10 @@ nhà khách = guest hall
 #39
 trống hai = second watch
 #40
+chàng thấy = he saw
+người = man
 mày râu = brows and beard
+nửa phần = Half
 trắng bạc = silver
 #41
 Ông già = old man

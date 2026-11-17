@@ -148,6 +148,7 @@ lo sợ = fearful
 chim sợ cung = bird that has once known the bow
 #73
 kỳ tan tác = before we must part
+còn chừng = remains
 bao lâu = how long
 #74
 nội đêm nay = this one night
@@ -210,6 +211,10 @@ lưu lại = make them stay
 hai nàng = two maidens
 bay lên trên không = rose into the air
 đi mất = gone
+#96
+thanh lòng = Nothing purifies the heart
+không bằng = so well as
+ít dục = having few desires
 #196
 một người họ Liễu, tên gọi Nhu Nương = of the Lieu family and is named Nhu Nuong
 họ Đào, tên gọi Hồng Nương = of the Dao family and is named Hong Nuong

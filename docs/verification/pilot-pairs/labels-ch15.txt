@@ -138,6 +138,14 @@ chở nặng = heavy load
 #61
 yêu tà = evil spirits
 tuyệt tịch = gone for good
+#66
+tìm sự = one looks for its
+ứng báo = promised rewards
+bắt gió mơ hồ = like grasping at the wind
+#70
+Song = Yet
+anh quân = wise rulers
+hiền tướng = worthy ministers
 #114
 địa vị một viên ấp tể = office of a district magistrate
 minh = discernment
