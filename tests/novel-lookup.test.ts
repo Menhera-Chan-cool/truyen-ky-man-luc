@@ -1,5 +1,5 @@
 import {it,expect} from "vitest";
-import {lookupArtifact,validateAlignmentArtifact,validateLookupRequest,type AlignmentArtifact} from "../src/lib/novel-lookup";
+import {lookupArtifact,validateAlignmentArtifact,validateLookupRequest,strayGroupIds,type AlignmentArtifact} from "../src/lib/novel-lookup";
 
 const artifact:AlignmentArtifact={schema:1,codec:'reader-dom-1',algorithm:'test',chapterId:'chapter-1',createdAt:'2026-11-12T00:00:00Z',
  editions:{vi:{revision:1,versionId:'00000000-0000-4000-8000-000000000001',hash:'a'.repeat(64),text:'Một người tốt bụng.'},en:{revision:2,versionId:'00000000-0000-4000-8000-000000000002',hash:'b'.repeat(64),text:'A kind person.'}},
@@ -131,4 +131,28 @@ it('joins consecutive counterpart groups without a false gap in the middle',()=>
  const a={...artifact,editions:{vi:{...artifact.editions.vi,text:vi,breaks:[8]},en:{...artifact.editions.en,text:en,breaks:[11]}},groups:[{...artifact.groups[0],vi:{start:0,end:8},en:{start:0,end:11},links:[]},{...artifact.groups[0],id:'1',vi:{start:8,end:vi.length},en:{start:11,end:en.length},links:[]}]};
  const r=lookupArtifact(a,{chapterId:a.chapterId,locale:'en',revision:2,start:0,end:en.length,text:en});
  expect(r.passages).toHaveLength(1);expect(r.passages[0].target.text).toBe(vi);expect(r.sourceBreaks).toEqual([11]);
+});
+
+// Five Vietnamese clauses in order; the third one is paired with English at `at` (its true place is right after the second).
+const strayFixture=(at:number,extra:Partial<AlignmentArtifact['groups'][number]>={})=>{
+ const vi='Một. Hai. Ba. Bốn. Năm.',en='One. Two. Three. Four. Five.'+' x'.repeat(5000);
+ const spans=[[0,4],[5,9],[10,13],[14,18],[19,23]],ens=[[0,4],[5,9],[at,at+6],[17,22],[23,28]];
+ const groups=spans.map(([s,e],i)=>({id:String(i),section:'story' as const,vi:{start:s,end:e},en:{start:ens[i][0],end:ens[i][1]},score:.8,margin:.1,links:[],...(i===2?extra:{})}));
+ return {...artifact,editions:{vi:{...artifact.editions.vi,text:vi},en:{...artifact.editions.en,text:en}},groups} as AlignmentArtifact;
+};
+it('drops a prose group the pairing placed thousands of characters away from its neighbours',()=>{
+ const a=strayFixture(8000);
+ expect([...strayGroupIds(a.groups,a.editions.en.text.length)]).toEqual(['2']);
+ expect(validateAlignmentArtifact(a).groups.map(g=>g.id)).toEqual(['0','1','3','4']);
+});
+it('keeps a local reordering and groups that follow their own tracks',()=>{
+ const near=strayFixture(1200);expect(strayGroupIds(near.groups,near.editions.en.text.length).size).toBe(0);
+ // the same far placement is left alone when the group is a note or lexical entry
+ for(const extra of [{section:'notes' as const},{kind:'lexical' as const}]){const a=strayFixture(8000,extra);expect(strayGroupIds(a.groups,a.editions.en.text.length).size).toBe(0);}
+});
+it('does not answer a clause from the far-away English once its group is gone',()=>{
+ const raw=strayFixture(8000),ask=(a:AlignmentArtifact)=>lookupArtifact(a,{chapterId:a.chapterId,locale:'vi',revision:1,start:10,end:13,text:'Ba.'}).passages.map(p=>p.target.start);
+ // without the guard the passage is the far-away English; with it the clause has no counterpart to show
+ expect(ask(raw).some(start=>start>=8000)).toBe(true);
+ expect(ask(validateAlignmentArtifact(strayFixture(8000))).some(start=>start>=8000)).toBe(false);
 });

@@ -42,6 +42,29 @@ export function validateLookupRequest(value:unknown):LookupRequest {
   return {chapterId:r.chapterId,locale:r.locale,revision:r.revision,start:r.start,end:r.end,text:r.text};
 }
 
+// A prose group whose English side lies far outside the interval its neighbours give it was placed by mistake ("lại giỏi lối mỉa mai giễu cợt," paired with "he was arrogant and boastful,", 8,000
+// characters from the sentence it belongs to). Groups of the story and critique sections are put in Vietnamese order; a longest increasing run of English starts is the spine, and a group off the spine
+// whose English span lies more than 1,500 characters outside [end of the previous spine group, start of the next] is stray. Real reorderings are local, so they stay.
+export const strayGroupDistance=1500;
+export function strayGroupIds(groups:AlignmentArtifact['groups'],englishLength:number):Set<string> {
+  const prose=groups.filter(g=>(g.section==='story'||g.section==='critique')&&!g.tracks&&g.kind!=='lexical').sort((a,b)=>a.vi.start-b.vi.start);
+  const tails:number[]=[],tailAt:number[]=[],from:number[]=new Array(prose.length).fill(-1);
+  prose.forEach((g,i)=>{
+    let lo=0,hi=tails.length;
+    while(lo<hi){const mid=(lo+hi)>>1;if(tails[mid]<g.en.start)lo=mid+1;else hi=mid;}
+    tails[lo]=g.en.start;tailAt[lo]=i;from[i]=lo>0?tailAt[lo-1]:-1;
+  });
+  const spine=new Set<number>();
+  for(let k=tailAt[tailAt.length-1]??-1;k>=0;k=from[k])spine.add(k);
+  const stray=new Set<string>(),onSpine=[...spine].sort((a,b)=>a-b);
+  prose.forEach((g,i)=>{
+    if(spine.has(i))return;
+    const before=onSpine.filter(j=>j<i).at(-1),after=onSpine.find(j=>j>i);
+    const floor=before===undefined?0:prose[before].en.end,ceiling=after===undefined?englishLength:prose[after].en.start;
+    if(Math.max(floor-g.en.end,g.en.start-ceiling,0)>strayGroupDistance)stray.add(g.id);
+  });
+  return stray;
+}
 export function validateAlignmentArtifact(value:unknown):AlignmentArtifact {
   const a=value as AlignmentArtifact;
   const invalid=()=>{throw Error("Invalid alignment artifact");};
@@ -106,6 +129,13 @@ export function validateAlignmentArtifact(value:unknown):AlignmentArtifact {
         for(const l of ['vi','en']as const)if(!Array.isArray(c[l])||!c[l].length||c[l].length>32||c[l].some(s=>!p[l].lines.some(line=>line.start===s.start&&line.end===s.end)))invalid();
       }
     }
+  }
+  // Stray groups would give a wrong passage for a clause the pairing could not place: the clause is left unmatched instead.
+  const englishLength=a.editions.en.text.length;
+  for(const list of ['groups','refinedGroups'] as const){
+    const groups=a[list];if(!groups)continue;
+    const stray=strayGroupIds(groups,englishLength);
+    if(stray.size)a[list]=groups.filter(g=>!stray.has(g.id));
   }
   return a;
 }
