@@ -1,7 +1,7 @@
 import type {Locale} from "./types";
 import {annotatedNote,notePair,structureLookup} from './novel-lookup-structure';
 import {poetryLookup,poetryScope,poetryContext,poetryLabelled} from './novel-poetry-lookup';
-import {selectionLookup} from './novel-lookup-selection';
+import {selectionLookup,partialKept} from './novel-lookup-selection';
 import {viSyllables,viMatchesPinyin,pinyinSegments,vietnameseReadings} from './sino-names';
 export const alignmentCodec = "reader-dom-1";
 export type TextSpan = {start:number;end:number};
@@ -34,7 +34,7 @@ export type LookupRequest = {chapterId:string;locale:Locale;revision:number;star
 export type LookupPassage = {source:TextSpan&{text:string};target:TextSpan&{text:string;breaks?:number[]};highlights:TextSpan[]};
 export type ComparisonFocus = Record<Locale,TextSpan&{text:string;revision:number}>;
 export type LookupResult = {status:"match"|"uncertain"|"context-only"|"unavailable"|"stale"|"pending"|"missing";
-  targetLocale:Locale;targetRevision?:number;sourceBreaks?:number[];unmatchedSource?:TextSpan[];passages:LookupPassage[]};
+  targetLocale:Locale;targetRevision?:number;sourceBreaks?:number[];unmatchedSource?:TextSpan[];partial?:boolean;passages:LookupPassage[]};
 
 export function validateLookupRequest(value:unknown):LookupRequest {
   const r=value as LookupRequest;
@@ -450,14 +450,17 @@ function lookupSingle(artifact:AlignmentArtifact,request:LookupRequest):LookupRe
 }
 function lookupLinked(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
   const labelledAnywhere=[...artifact.groups,...(artifact.refinedGroups??[])].some(g=>g.labelled?.length);
+  // An answer that highlights only the part of the selection that was found (`partial`) comes after every full answer, the written pairs included.
+  let weak:LookupResult|undefined;
+  const full=(r:LookupResult)=>{if(!r.passages.some(p=>p.highlights.length))return false;if(r.partial){weak??=r;return false;}return true;};
   if(request.locale==='en'&&labelledAnywhere){
     const labelled=lookupBase(artifact,request,true);
-    if(labelled.passages.some(p=>p.highlights.length))return labelled;
+    if(full(labelled))return labelled;
   }
   const plain=lookupBase(artifact,request,false);
-  if(plain.passages.some(p=>p.highlights.length)||!labelledAnywhere)return plain;
+  if(full(plain)||!labelledAnywhere)return plain;
   const labelled=lookupBase(artifact,request,true,true);
-  return labelled.passages.some(p=>p.highlights.length)?labelled:plain;
+  return full(labelled)?labelled:weak??plain;
 }
 function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:boolean,wide=false):LookupResult {
   const locale=request.locale,targetLocale=locale==='vi'?'en':'vi',source=artifact.editions[locale],target=artifact.editions[targetLocale];
@@ -508,7 +511,7 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
     if(around)return {status:'context-only',targetLocale,targetRevision:target.revision,passages:[{source:{start:request.start,end:request.end,text:request.text},target:{...around,text:target.text.slice(around.start,around.end),breaks:target.breaks?.filter(b=>b>around.start&&b<around.end)},highlights:[]}],unmatchedSource:[{start:request.start,end:request.end}]};
     return empty("unavailable");
   }
-  let uncertain=remaining.some(s=>source.text.slice(s.start,s.end).trim()),hasWords=false,incompleteWords=false;
+  let uncertain=remaining.some(s=>source.text.slice(s.start,s.end).trim()),hasWords=false,incompleteWords=false,weakest=1,partial=false;
   const passages:LookupPassage[]=[];
   const contexts:TextSpan[]=[];
   const unmatchedSource:TextSpan[]=[],full:boolean[]=[];
@@ -590,7 +593,7 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
         if(keep.length&&!holder&&lone&&!poem&&g.kind!=='lexical'&&g.phrasePairs?.some(p=>!(p[locale].start<pickEnd&&p[locale].end>pickStart)&&(source.text.slice(p[locale].start,p[locale].end).match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0)<=3&&p.score>=.8&&p.margin>=.15&&keep.every(c=>c.span.start>=p[targetLocale].start&&c.span.end<=p[targetLocale].end)&&leaves(p)))keep=[];
         // A weak link to a content word that sits beside the kept target across "and"/"or"/a comma, and that no other word claims, completes a coordinated pair ("sáng sủa" = "bright and clear").
         if(keep.length&&!poem&&g.kind!=='lexical')for(const c of ranked)if(!keep.includes(c)&&c.score>=.03&&!competing.has(c.span.start+':'+c.span.end)&&!onlyFunctionWords(target.text.slice(c.span.start,c.span.end),targetLocale)&&keep.some(k=>/^\s*(?:,|and|or|và|hoặc)\s*$/iu.test(c.span.start>=k.span.end?target.text.slice(k.span.end,c.span.start):c.span.end<=k.span.start?target.text.slice(c.span.end,k.span.start):'x')))keep.push(c);
-        if(keep.length){const [start,end]=sourceKey.split(':').map(Number);coveredWords.push({start,end});}
+        if(keep.length){const [start,end]=sourceKey.split(':').map(Number);coveredWords.push({start,end});for(const c of keep)weakest=Math.min(weakest,c.score);}
         if(keep.length>1)uncertain=true;
         if(keep.some(c=>c.score<.15))uncertain=true;
         // The phrase pair of this one source word widens its link target when it contains it ("everyone" = "mọi người", the link gave "mọi"), by at most two target words that no other word's link claims.
@@ -764,7 +767,8 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
       }
     }
   }
-  if(incompleteWords){hasWords=false;for(const [i,p] of passages.entries()){const b=contexts[i];p.highlights=[];p.target={...b,text:target.text.slice(b.start,b.end),breaks:target.breaks?.filter(x=>x>b.start&&x<b.end)};}}
+  if(incompleteWords&&partialKept(source.text,request,unmatchedSource,passages,locale,weakest)){hasWords=true;uncertain=true;partial=true;}
+  else if(incompleteWords){hasWords=false;for(const [i,p] of passages.entries()){const b=contexts[i];p.highlights=[];p.target={...b,text:target.text.slice(b.start,b.end),breaks:target.breaks?.filter(x=>x>b.start&&x<b.end)};}}
   const joined:LookupPassage[]=[];
   for(const p of passages){
     const previous=joined.at(-1);
@@ -807,5 +811,5 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
       if(wholeBefore)p.highlights=[{start,end}];
     }
   }
-  return {status:hasWords?(uncertain?"uncertain":"match"):"context-only",targetLocale,targetRevision:target.revision,sourceBreaks:source.breaks?.filter(b=>b>request.start&&b<request.end),passages:joined,...(unmatchedSource.length?{unmatchedSource}:{})};
+  return {status:hasWords?(uncertain?"uncertain":"match"):"context-only",targetLocale,targetRevision:target.revision,sourceBreaks:source.breaks?.filter(b=>b>request.start&&b<request.end),passages:joined,...(unmatchedSource.length?{unmatchedSource}:{}),...(partial?{partial:true}:{})};
 }

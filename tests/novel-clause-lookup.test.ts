@@ -1,5 +1,6 @@
 import {expect,it} from 'vitest';
 import {lookupArtifact,validateAlignmentArtifact,type AlignmentArtifact,type TextSpan} from '../src/lib/novel-lookup';
+import {partialKept,partialRule} from '../src/lib/novel-lookup-selection';
 const span=(text:string,q:string):TextSpan=>({start:text.indexOf(q),end:text.indexOf(q)+q.length});
 function fixture():AlignmentArtifact{
  const vi='Lan còn nhỏ, sau khi lấy chồng, cư xử khéo với họ hàng, sống hòa thuận, được mọi người khen.',en='Though Lan was young, she married and treated her kin tactfully. She lived in harmony and was praised.';
@@ -439,4 +440,31 @@ it('lets auxiliaries and pronouns lie outside the labelled pairs only where the 
  const very=plain('Nàng rất buồn.','She was very sad.',{vi:['Nàng rất buồn.'],en:['She was very sad.']},[]);
  very.groups[0].labelled=[{vi:span(very.editions.vi.text,'rất'),en:span(very.editions.en.text,'very')}];
  expect(ask(very,'vi','rất')).toEqual(['very']);
+});
+it('keeps the highlight of the part found only when the partial rule is on, and flags it',()=>{
+ const make=()=>{const a=fixture(),vi=a.editions.vi.text,en=a.editions.en.text,h=span(vi,'họ hàng'),k=span(en,'kin');a.groups[0].links.push({vi:[h.start,h.end],en:[k.start,k.end],score:.9});return a;};
+ const run=(a:AlignmentArtifact)=>query(a,'en',span(a.editions.en.text,'kin tactfully'));
+ const off=run(make());
+ expect(off.status).toBe('context-only');expect(off.passages.flatMap(p=>p.highlights)).toEqual([]);expect(off.partial).toBeUndefined();
+ const saved={...partialRule};
+ try{
+  Object.assign(partialRule,{min:.5,words:2,strength:0});
+  const a=make(),on=run(a);
+  expect(on.status).toBe('uncertain');expect(on.partial).toBe(true);expect(on.unmatchedSource?.length).toBeGreaterThan(0);
+  expect(on.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual(['họ hàng']);
+  Object.assign(partialRule,{min:.5,words:3,strength:0});
+  expect(run(make()).passages.flatMap(p=>p.highlights)).toEqual([]);
+ }finally{Object.assign(partialRule,saved);}
+});
+it('does not keep a partial highlight when the words it lacks include a negation or are too many',()=>{
+ const saved={...partialRule},text='The brave knight never returned home',all={start:0,end:text.length},at=(q:string)=>span(text,q),hl=[{source:{start:0,end:0,text:''},target:{start:0,end:1,text:'x'},highlights:[{start:0,end:1}]}] as any;
+ try{
+  Object.assign(partialRule,{min:.5,words:2,strength:0});
+  expect(partialKept(text,all,[at('home')],hl,'en',1)).toBe(true);
+  expect(partialKept(text,all,[at('never')],hl,'en',1)).toBe(false);
+  expect(partialKept(text,all,[at('knight'),at('never'),at('returned')],hl,'en',1)).toBe(false);
+  expect(partialKept(text,all,[at('home')],hl,'en',0)).toBe(true);
+  Object.assign(partialRule,{min:.5,words:2,strength:.5});
+  expect(partialKept(text,all,[at('home')],hl,'en',.4)).toBe(false);
+ }finally{Object.assign(partialRule,saved);}
 });

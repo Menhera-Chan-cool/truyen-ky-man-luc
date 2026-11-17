@@ -2,7 +2,11 @@
 // Replays selections (label_benchmark.py cases) with every `labelled` list of the groups removed first, so only the word, phrase and clause links answer.
 import fs from 'node:fs';import path from 'node:path';import {pathToFileURL} from 'node:url';
 const [casesFile,dir,outFile,mod]=process.argv.slice(2);
-const {lookupArtifact,validateAlignmentArtifact}=await import(pathToFileURL(path.resolve(mod??'src/lib/novel-lookup.ts')).href);
+const lookupPath=path.resolve(mod??'src/lib/novel-lookup.ts');
+const {lookupArtifact,validateAlignmentArtifact}=await import(pathToFileURL(lookupPath).href);
+// PARTIAL_MIN (and PARTIAL_WORDS, PARTIAL_STRENGTH) switch on the rule that keeps the highlight of the part of a selection that was found
+const {partialRule}=await import(pathToFileURL(path.join(path.dirname(lookupPath),'novel-lookup-selection.ts')).href);
+if(process.env.PARTIAL_MIN)Object.assign(partialRule,{min:Number(process.env.PARTIAL_MIN),words:Number(process.env.PARTIAL_WORDS??2),strength:Number(process.env.PARTIAL_STRENGTH??0)});
 const cases=JSON.parse(fs.readFileSync(casesFile,'utf8')) as any[];
 const memo=new Map<number,any>();
 const art=(n:number)=>{if(!memo.has(n)){const j=JSON.parse(fs.readFileSync(path.join(dir,'chapter-'+n+'.json'),'utf8'));for(const g of [...(j.groups??[]),...(j.refinedGroups??[])])delete g.labelled;memo.set(n,validateAlignmentArtifact(j));}return memo.get(n);};
