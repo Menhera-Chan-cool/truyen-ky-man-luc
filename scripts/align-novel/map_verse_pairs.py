@@ -12,10 +12,13 @@ sys.stdout.reconfigure(encoding='utf-8')
 #   #new NAME E en:S-E [t:S-E] [lo hi]   a Vietnamese poem with no pair at all, paired to a new English track (lines cut at punctuation followed at once by a letter), primary on both sides.
 #   #fix J en:S-E [t:S-E]   replace the English side of pair J (a wrong one) by a new English track; drops its line correspondences.
 #   #title J vi:S-E en:S-E   attach title spans to pair J.
+#   #trim J lo hi   cut the Vietnamese side of pair J to its lines lo..hi-1 (the lines of a Sino-Vietnamese original that the pipeline put in the same pair as the Vietnamese version, so that a #han pair can take them).
+#   #enline J i S E   give line i of the English track of pair J (and of the pairs that copy its track) the span S..E (a line the pipeline cut in the middle of a word).
+# Structural sections (#fix, #trim, #enline, #title) run first, then the plain '#<pair>' sections, then #new and #han in file order.
 # Labels: 'phrase = phrase'; '... = @<Vietnamese phrase>' takes the English of that label in the section's own pair, '@J:<phrase>' that of pair J's section; '@lines' pairs the lines of the two
-# tracks one to one; '@couplets' pairs each Vietnamese line with two English lines (4 against 8).
+# tracks one to one; '@couplets' pairs each Vietnamese line with two English lines (4 against 8); '@map 0=0 6-7=6 15=16' pairs Vietnamese lines (ranges allowed) with English lines (ranges allowed) by index in the two tracks, in any order.
 P=sys.argv[1].rstrip('/')+'/';SRC=sys.argv[2].rstrip('/')+'/';OUT=sys.argv[3].rstrip('/')+'/'
-REF='<missing reference>'
+REF='<missing reference>';SPAN='<span>'
 def isw(c):return unicodedata.category(c)[0] in 'LMN'
 def boundary(text,i,j,lo,hi):
     # verse lines are run together ("Quan TrungKhói tan"): a capital letter after a letter also ends a word
@@ -51,6 +54,7 @@ def parse(path):
             continue
         if cur is None:continue
         if line.strip() in('@lines','@couplets'):cur['labels'].append((line.strip(),None));continue
+        if line.startswith('@map '):cur['labels'].append(('@map',line[5:].strip()));continue
         if ' = ' in line:v,e=line.split(' = ',1);cur['labels'].append((v.strip(),e.strip()))
     return sections
 SPLIT=re.compile(r'(?<=[,.;:!?—”"\)])(?=[A-Za-z“"(])')
@@ -83,6 +87,16 @@ def expand(p,labels,ref,a):
     V=a['editions']['vi']['text'];E=a['editions']['en']['text'];out=[]
     trim=lambda s:s.strip().rstrip(',.;:!?—”"')
     for v,e in labels:
+        if v=='@map':
+            vl,el=p['vi']['lines'],p['en']['lines']
+            def ends(T,a,b):
+                while b>a and (T[b-1].isspace() or T[b-1] in ',.;:!?—”"'):b-=1
+                return a,b
+            for tok in e.split():
+                h,_,r=tok.partition('=');h1,_,h2=h.partition('-');r1,_,r2=r.partition('-');h1,h2,r1,r2=int(h1),int(h2 or h1),int(r1),int(r2 or r1)
+                if h2>=len(vl) or r2>=len(el):raise SystemExit(f'@map {tok}: out of range ({len(vl)} vietnamese lines, {len(el)} english lines)')
+                out.append((SPAN,(ends(V,vl[h1]['start'],vl[h2]['end']),ends(E,el[r1]['start'],el[r2]['end']))))
+            continue
         if v in('@lines','@couplets'):
             vl,el=p['vi']['lines'],p['en']['lines'];k=1 if v=='@lines' else 2
             if len(el)!=k*len(vl):raise SystemExit(f'{v}: {len(vl)} vietnamese lines against {len(el)} english lines')
@@ -99,6 +113,8 @@ def map_pair(a,p,pairs,k,fails):
     vlo,vhi,elo,ehi=p['vi']['start'],p['vi']['end'],p['en']['start'],p['en']['end']
     usedv=[];usede=[];out=[];vpos=vlo
     for v,e in pairs:
+        if v==SPAN:
+            (a0,a1),(b0,b1)=e;out.append({'vi':{'start':a0,'end':a1},'en':{'start':b0,'end':b1}});continue
         if e.startswith(REF):fails.append((k,'REF?',e[len(REF):]));continue
         ms=search(V,v,vpos,vhi)
         if not ms:
@@ -116,12 +132,38 @@ def run(ch):
     a=json.load(open(f'{SRC}chapter-{ch}.json',encoding='utf-8'));fails=[];n=0;npairs=0;n0=len(a.get('poems',[]));names={}
     own={s['args'][0]:s['labels'] for s in secs if s['head']=='pair'}
     base=lambda j:{v:e for v,e in own.get(j,[]) if e is not None}
-    plain=[s for s in secs if s['head']=='pair'];extra=[s for s in secs if s['head']!='pair']
+    plain=[s for s in secs if s['head']=='pair'];STRUCT=('title','fix','trim','enline');structural=[s for s in secs if s['head'] in STRUCT];extra=[s for s in secs if s['head']!='pair' and s['head'] not in STRUCT]
     def target(spec,title=None):
         # the English side for a section: an existing pair index, a name given by #new, or a new track
         if spec.startswith('en:'):return en_track(a,spec,title),True
         j=names[spec] if spec in names else int(spec)
         return json.loads(json.dumps(a['poems'][j]['en'])),False
+    def same_en(j,fn):
+        # apply fn to the English track of pair j and of every pair that copies the same track (same id and span)
+        t=a['poems'][j]['en'];key=(t['id'],t['start'],t['end'])
+        for p in a['poems']:
+            if (p['en']['id'],p['en']['start'],p['en']['end'])==key:fn(p['en'])
+    for s in structural:
+        h,ar=s['head'],s['args'];key=(h,)+tuple(ar)
+        try:
+            if h=='title':
+                p=a['poems'][int(ar[0])]
+                for tok in ar[1:]:p['vi' if tok.startswith('vi:') else 'en']['title']=span(tok)
+            elif h=='trim':
+                p=a['poems'][int(ar[0])];lines=p['vi']['lines'][int(ar[1]):int(ar[2])];p['vi']['lines']=lines;p['vi']['start']=lines[0]['start'];p['vi']['end']=lines[-1]['end']
+                for c in p['correspondences']:c['vi']=[x for x in c['vi'] if lines[0]['start']<=x['start'] and x['end']<=lines[-1]['end']]
+                p['correspondences']=[c for c in p['correspondences'] if c['vi']]
+            elif h=='enline':
+                j,i,s0,s1=map(int,ar[:4]);old=dict(a['poems'][j]['en']['lines'][i]);new={'start':s0,'end':s1}
+                def fix(t,i=i,new=new,old=old):
+                    if t['lines'][i]==old:t['lines'][i]=dict(new)
+                same_en(j,fix)
+                for p in a['poems']:
+                    for c in p['correspondences']:c['en']=[dict(new) if x==old else x for x in c['en']]
+            elif h=='fix':
+                j=int(ar[0]);p=a['poems'][j];p['en']=en_track(a,ar[1],ar[2] if len(ar)>2 else None);p['primary']['en']=True;p['correspondences']=[];p['contextOnly']=True
+                npairs+=map_pair(a,p,expand(p,s['labels'],lambda j2,j=j:base(j if j2 is None else j2),a),key,fails);n+=1
+        except (StopIteration,KeyError,IndexError,ValueError) as ex:fails.append((key,'SECTION?',repr(ex)))
     for s in plain:
         k=s['args'][0]
         if k>=n0:fails.append((k,'NO POEM',''));continue
@@ -129,13 +171,6 @@ def run(ch):
     for s in extra:
         h,ar=s['head'],s['args'];key=(h,)+tuple(ar)
         try:
-            if h=='title':
-                p=a['poems'][int(ar[0])]
-                for tok in ar[1:]:p['vi' if tok.startswith('vi:') else 'en']['title']=span(tok)
-                continue
-            if h=='fix':
-                j=int(ar[0]);p=a['poems'][j];p['en']=en_track(a,ar[1],ar[2] if len(ar)>2 else None);p['primary']['en']=True;p['correspondences']=[];p['contextOnly']=True
-                npairs+=map_pair(a,p,expand(p,s['labels'],lambda j2,j=j:base(j if j2 is None else j2),a),key,fails);n+=1;continue
             if h=='han':
                 E,J=ar[0],ar[1];rest=ar[2:];lohi=[x for x in rest if not x.startswith('t:')];title=next((x for x in rest if x.startswith('t:')),None)
                 en,fresh=target(J,title);ep=edition_poem(a,E)

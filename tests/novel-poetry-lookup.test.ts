@@ -64,6 +64,17 @@ it('answers a word or phrase inside a verse line from pairs written by reading, 
  p.labelled=[{vi:at(vi,'Mưa rơi'),en:at(en,'Rain falls')}];
  expect(ask('en','Rain').highlights).toEqual(['Mưa']);
 });
+it('answers a whole line from the pairs written by reading only where the pair has no line correspondences',()=>{
+ const a=fixture(),p=a.poems![0],vi=a.editions.vi.text,en=a.editions.en.text,at=(t:string,q:string)=>({start:t.indexOf(q),end:t.indexOf(q)+q.length});
+ p.labelled=[{vi:at(vi,'Mưa rơi sân'),en:at(en,'Rain falls')}];
+ const ask=(q:string)=>{const s=at(vi,q),r=lookupArtifact(a,{chapterId:a.chapterId,locale:'vi',revision:1,...s,text:q});return {status:r.status,highlights:r.passages.flatMap(x=>x.highlights.map(h=>en.slice(h.start,h.end))),passage:targetText(r)};};
+ // a pair with line correspondences keeps its own line answer (the whole English line)
+ expect(ask('Mưa rơi sân')).toEqual({status:'uncertain',highlights:['Rain falls.'],passage:'Rain falls.'});
+ p.contextOnly=true;p.correspondences=[];
+ expect(ask('Mưa rơi sân')).toEqual({status:'uncertain',highlights:['Rain falls'],passage:'Rain falls.'});
+ // a line the pairs do not cover stays a context passage
+ expect(ask('Mây về núi')).toMatchObject({status:'context-only',highlights:[]});
+});
 it('answers a Vietnamese selection in an original that shares the English track, and sends English selections to the translation pair',()=>{
  const a=fixture();a.editions.vi.text+='\nVũ lạc đình.\nVân quy sơn.';
  const vi=a.editions.vi.text,en=a.editions.en.text,at=(t:string,q:string)=>({start:t.indexOf(q),end:t.indexOf(q)+q.length}),lines=[at(vi,'Vũ lạc đình.'),at(vi,'Vân quy sơn.')],base=a.poems![0];

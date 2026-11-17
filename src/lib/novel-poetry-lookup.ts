@@ -65,12 +65,13 @@ export function poetryLookup(a:AlignmentArtifact,r:LookupRequest):LookupResult|u
  return {status:context?'context-only':'uncertain',targetLocale:to,targetRevision:a.editions[to].revision,sourceBreaks:a.editions[r.locale].breaks?.filter(b=>b>r.start&&b<r.end),passages:unique};
 }
 // Pairs written by reading inside a verse pair answer a selection that is only part of a line when every word of it (function words apart) lies in a pair:
-// the highlights are the English or Vietnamese halves of the pairs it touches, the passage the lines that hold them. A selection of whole lines keeps the line answer.
+// the highlights are the English or Vietnamese halves of the pairs it touches, the passage the lines that hold them. A selection of whole lines keeps the line answer, except in a context-only pair, which has none.
 export function poetryLabelled(a:AlignmentArtifact,r:LookupRequest,skip:(word:string)=>boolean):LookupResult|undefined{
  const to=r.locale==='vi'?'en':'vi',text=a.editions[r.locale].text,edition=a.editions[to];
  const pair=preferred(a,r).find(p=>p.labelled?.length&&p[r.locale].start<=r.start&&p[r.locale].end>=r.end);if(!pair)return undefined;
  const lines=pair[r.locale].lines.filter(s=>intersects(s,r));
- if(!lines.length||lines.every(s=>complete(text,s,r)))return undefined;
+ // whole lines keep the line answer, unless the pair has no line correspondences (context only): then the pairs written by reading answer them too
+ if(!lines.length||(!pair.contextOnly&&lines.every(s=>complete(text,s,r))))return undefined;
  const touched=pair.labelled!.filter(p=>intersects(p[r.locale],r));if(!touched.length)return undefined;
  const words=[...mask(text.slice(r.start,r.end)).matchAll(/[\p{L}\p{M}\p{N}]+/gu)].map(m=>({start:r.start+m.index,end:r.start+m.index+m[0].length,text:m[0]})).filter(w=>/\p{L}/u.test(w.text)&&!skip(w.text));
  if(!words.length||words.some(w=>!touched.some(p=>p[r.locale].start<=w.start&&p[r.locale].end>=w.end)))return undefined;
