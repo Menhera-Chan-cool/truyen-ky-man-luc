@@ -41,6 +41,29 @@ it('does not crop away unresolved content after a complete mapped sentence',()=>
  expect(r.status).toBe('uncertain');expect(r.partial).toBe(true);expect(r.passages[0].target.text).toContain('sống hòa thuận');
  expect(r.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual(['Lan còn nhỏ, sau khi lấy chồng, cư xử khéo với họ hàng,']);expect(r.unmatchedSource?.length).toBe(1);
 });
+it('keeps the part found of a whole sentence only on the stricter test, and then still shows where it was found',()=>{
+ const saved={...partialRule},a=fixture(),end=a.editions.en.text.indexOf('She lived')+'She lived'.length,run=()=>query(a,'en',{start:0,end}),found=()=>run().passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)));
+ try{
+  // 8 content words: a whole sentence once the limit is 5
+  Object.assign(partialRule,{maxWords:5,longMin:.7,longStrength:.5});
+  expect(run().partial).toBe(true);expect(found()).toEqual(['Lan còn nhỏ, sau khi lấy chồng, cư xử khéo với họ hàng,']);
+  // a weaker link, or too few of its words found, gives context only; the passage still holds the clause that was found
+  for(const rule of [{longStrength:1.1},{longMin:.95}]){
+   Object.assign(partialRule,{maxWords:5,longMin:.7,longStrength:.5,...rule});
+   const r=run();expect(r.status).toBe('context-only');expect(found()).toEqual([]);expect(r.passages.map(p=>p.target.text).join('')).toContain('cư xử khéo với họ hàng');
+  }
+ }finally{Object.assign(partialRule,saved);}
+});
+it('completes the answer of a nested clause pair with the clause the outer one-to-one pair gives to a selected clause',()=>{
+ const a=fixture(),g=a.groups[0],v=g.parts!.vi,e=g.parts!.en,vi=a.editions.vi.text;
+ // the outer pair holds three clauses against three; the nested pair of the last two English clauses stops short and leaves the third Vietnamese clause out
+ g.clausePairs=[{vi:v.slice(0,3),en:e.slice(0,3),score:.8,margin:.1},{vi:[v[1]],en:e.slice(1,3),score:.8,margin:.1}];
+ const r=query(a,'en',{start:e[1].start,end:e[2].end});
+ expect(r.passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end))).join(' ')).toContain('cư xử khéo với họ hàng');
+ // an English clause that another trusted pair holds keeps its own counterpart
+ g.clausePairs=[...g.clausePairs,{vi:[v[2]],en:[e[0]],score:.8,margin:.1}];
+ expect(query(a,'en',{start:e[1].start,end:e[2].end}).passages.flatMap(p=>p.highlights.map(h=>vi.slice(h.start,h.end))).join(' ')).not.toContain('cư xử khéo với họ hàng');
+});
 it('validates sentence correspondences against their group and exact retained parts',()=>{
  const a=fixture();expect(()=>validateAlignmentArtifact(a)).not.toThrow();a.groups[0].clausePairs![0].vi[0]={start:0,end:a.editions.vi.text.length+1};
  expect(()=>validateAlignmentArtifact(a)).toThrow();
@@ -475,6 +498,20 @@ it('does not keep a partial highlight when the words it lacks include a negation
   expect(partialKept(text,all,[at('home')],hl,'en',0)).toBe(true);
   Object.assign(partialRule,{min:.5,words:2,strength:.5});
   expect(partialKept(text,all,[at('home')],hl,'en',.4)).toBe(false);
+ }finally{Object.assign(partialRule,saved);}
+});
+it('keeps the highlight found of a whole sentence only when most of its words have a counterpart through links that are not weak',()=>{
+ const saved={...partialRule},text='The brave old knight finally returned home carrying heavy golden treasure chests',all={start:0,end:text.length},at=(q:string)=>span(text,q),hl=[{source:{start:0,end:0,text:''},target:{start:0,end:1,text:'x'},highlights:[{start:0,end:1}]}] as any;
+ try{
+  Object.assign(partialRule,{min:.5,words:2,maxWords:8,strength:0,longMin:.7,longStrength:.5});
+  // 10 content words: one lacking and a link of .6 keeps it, a weak link (.4) or too many lacking words (4 of 10) does not
+  expect(partialKept(text,all,[at('home')],hl,'en',.6)).toBe(true);
+  expect(partialKept(text,all,[at('home')],hl,'en',.4)).toBe(false);
+  expect(partialKept(text,all,[at('home'),at('carrying'),at('heavy')],hl,'en',.6)).toBe(true);
+  expect(partialKept(text,all,[at('home'),at('carrying'),at('heavy'),at('golden')],hl,'en',.9)).toBe(false);
+  // a short selection keeps its looser rule
+  const short='The brave knight returned home',s2={start:0,end:short.length};
+  expect(partialKept(short,s2,[span(short,'home')],hl,'en',.1)).toBe(true);
  }finally{Object.assign(partialRule,saved);}
 });
 it('shows the whole counterpart of the group, not a blank gap, for a clause that lies between two pairs whose counterparts touch',()=>{

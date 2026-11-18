@@ -10,20 +10,26 @@ const groups=(a:AlignmentArtifact)=>a.refinementVersion===1?a.refinedGroups??a.g
 // `words` the least number of content words, `strength` the weakest link that may carry the highlight. Measured on 24,303 selections taken from the pairs written by reading: with min .5 and words 2 the lookup
 // answers 5.2 points more of them, and 80% of those new answers sit inside or on the gold (the gold is stricter than a reader); on the whole-book prose pool 943 selections gain an answer and none loses one.
 // ON since 2026-11-17 on the owner's instruction, before human sheet 21 (23 cards) was answered. scripts/align-novel/replay-without-labels.ts sets it from PARTIAL_MIN to measure other values.
-// maxWords: a whole sentence is not kept in part. Over the 332 sentence cases of the gold sets the rule added 8 answers for 3 hits, 1 hit lost to a partial answer, 2 wrong and 3 over-wide or short ones (precision of the answered 98.7% to 96.8%); only one of the 8 had fewer than 18 words.
-export const partialRule={min:.5,words:2,maxWords:8,strength:0};
+// maxWords: a selection of more content words (a whole sentence) is kept in part only on a stricter test: at least `longMin` of its content words have a counterpart and the weakest link is at least `longStrength`.
+// With maxWords alone (no such test, 2026-11-18) the 332 gold sentences gave 307 answers, 303 hits, 2 wrong (the rule off for long ones); with the rule on everywhere 314, 304, 4 (10 answers that are not hits). The stricter test gives 310, 305, 2 and
+// keeps 70 of the 89 sentences of the whole-book pool that lost their highlight to the cap (longMin .5, longStrength .5; the grid of longMin .5 to .85 and longStrength 0 to .7 is in the protocol).
+export const partialRule={min:.5,words:2,maxWords:8,strength:0,longMin:.5,longStrength:.5};
 const stop:Record<Locale,Set<string>>={
  en:new Set('a an the of to for from by with in on at as and or but is was were be been being am are it its his her their our your my i we you he she they them him us me this that these those than then so not no do does did has have had will would can could may might shall should must there here who whom whose which what when where while if how why all also only just very too more most some such any each both other up down out over off upon about after before through between under until once again'.split(' ')),
  vi:new Set('của và hoặc nhưng các những thì mà là ở với bởi vì cho từ tại đã đang sẽ có không được một này đó ấy cũng rất lại đều chỉ nên bèn thế vậy nào gì như hay rồi đến khi trong để rằng cả vẫn cứ hãy chớ đừng chưa chẳng thôi vừa liền ra vào lên xuống về qua sang theo cùng nhau bằng do nếu dù tuy dẫu hơn nhất mỗi'.split(' ')),
 };
 // A selection some of whose words have no counterpart keeps the highlight of the part found when the words it lacks are few (never a negation) and the selection holds enough content words.
+const contentWords=(text:string,r:TextSpan,locale:Locale)=>[...text.slice(r.start,r.end).matchAll(/[\p{L}\p{M}]+/gu)].map(m=>({start:r.start+m.index,end:r.start+m.index+m[0].length,text:m[0].toLocaleLowerCase(locale)})).filter(w=>!stop[locale].has(w.text));
+// A selection of more content words than `maxWords` (a whole sentence).
+export const longSelection=(text:string,r:TextSpan,locale:Locale)=>contentWords(text,r,locale).length>partialRule.maxWords;
 export function partialKept(text:string,r:TextSpan,unmatched:TextSpan[],passages:LookupPassage[],locale:Locale,strength:number):boolean{
  if(!partialRule.min||!unmatched.length||strength<partialRule.strength||!passages.some(p=>p.highlights.length))return false;
- const words=[...text.slice(r.start,r.end).matchAll(/[\p{L}\p{M}]+/gu)].map(m=>({start:r.start+m.index,end:r.start+m.index+m[0].length,text:m[0].toLocaleLowerCase(locale)})).filter(w=>!stop[locale].has(w.text));
+ const words=contentWords(text,r,locale);
  const lacking=words.filter(w=>unmatched.some(u=>u.start<w.end&&u.end>w.start));
  // A negation is a stop word, so it is looked for among all the words of the selection: a highlight that leaves "không" or "not" out would say the opposite.
  const negated=[...text.slice(r.start,r.end).matchAll(/[\p{L}\p{M}]+/gu)].some(m=>/^(?:not|never|no|nor|neither|cannot|without|none|nothing|nobody|không|chưa|chẳng|chả|đừng)$/iu.test(m[0])&&unmatched.some(u=>u.start<r.start+m.index+m[0].length&&u.end>r.start+m.index));
- return words.length>=partialRule.words&&words.length<=partialRule.maxWords&&lacking.length>0&&!negated&&(words.length-lacking.length)/words.length>=partialRule.min;
+ const share=(words.length-lacking.length)/words.length,long=words.length>partialRule.maxWords;
+ return words.length>=partialRule.words&&lacking.length>0&&!negated&&share>=partialRule.min&&(!long||share>=partialRule.longMin&&strength>=partialRule.longStrength);
 }
 function missing(text:string,r:TextSpan,covered:TextSpan[]){
  let remaining:TextSpan[]=[{start:r.start,end:r.end}];

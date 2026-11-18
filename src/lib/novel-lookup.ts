@@ -1,7 +1,7 @@
 import type {Locale} from "./types";
 import {annotatedNote,notePair,structureLookup} from './novel-lookup-structure';
 import {poetryLookup,poetryScope,poetryContext,poetryLabelled} from './novel-poetry-lookup';
-import {selectionLookup,partialKept} from './novel-lookup-selection';
+import {selectionLookup,partialKept,longSelection} from './novel-lookup-selection';
 import {viSyllables,viMatchesPinyin,pinyinSegments,vietnameseReadings} from './sino-names';
 export const alignmentCodec = "reader-dom-1";
 export type TextSpan = {start:number;end:number};
@@ -31,7 +31,8 @@ export type AlignmentArtifact = {
   refinedGroups?:AlignmentArtifact['groups'];
 };
 export type LookupRequest = {chapterId:string;locale:Locale;revision:number;start:number;end:number;text:string};
-export type LookupPassage = {source:TextSpan&{text:string};target:TextSpan&{text:string;breaks?:number[]};highlights:TextSpan[]};
+// `found` is internal: clauses the lookup found beside the context of a passage and did not highlight; `settle` removes it before the answer leaves lookupArtifact.
+export type LookupPassage = {source:TextSpan&{text:string};target:TextSpan&{text:string;breaks?:number[]};highlights:TextSpan[];found?:TextSpan[]};
 export type ComparisonFocus = Record<Locale,TextSpan&{text:string;revision:number}>;
 export type LookupResult = {status:"match"|"uncertain"|"context-only"|"unavailable"|"stale"|"pending"|"missing";
   targetLocale:Locale;targetRevision?:number;sourceBreaks?:number[];unmatchedSource?:TextSpan[];partial?:boolean;passages:LookupPassage[]};
@@ -280,6 +281,14 @@ function wholeSentenceTargets(artifact:AlignmentArtifact,g:AlignmentArtifact['gr
     if(!g.clausePairs.length)return {covered,spans,unmatched:selected};
     const pairs=g.clausePairs.filter(p=>trusted(p)&&p[request.locale].every(s=>s.start>=g[request.locale].start&&s.end<=g[request.locale].end&&within(s,request.locale)&&includes(s))&&p[targetLocale].every(s=>s.start>=g[targetLocale].start&&s.end<=g[targetLocale].end&&within(s,targetLocale)));
     covered.push(...pairs.flatMap(p=>p[request.locale]));spans.push(...pairs.flatMap(p=>p[targetLocale]));
+    // An outer pair of as many clauses on both sides (n against n) pairs them one to one. A nested pair is not exact: its counterpart can stop short of the last clause of the sentence (chapter 2 "They say the Ho dynasty will
+    // fall … not to speak of those carried off as captives." was answered without "ấy là chưa kể số bị bắt cướp đi."). The clause the outer pair gives to a selected clause, right beside the answer, that no other trusted pair holds, joins it.
+    const bare=(x:TextSpan,y:TextSpan)=>!/\p{L}/u.test(target.text.slice(Math.min(x.end,y.end),Math.max(x.start,y.start)));
+    for(const o of g.clausePairs.filter(p=>trusted(p)&&p[request.locale].length>1&&p[request.locale].length===p[targetLocale].length&&!pairs.includes(p)))for(const [i,s] of o[request.locale].entries()){
+      const t=o[targetLocale][i];
+      if(!covered.some(c=>c.start<=s.start&&c.end>=s.end)||spans.some(x=>x.start<=t.start&&x.end>=t.end))continue;
+      if(spans.some(x=>t.start>=x.end&&bare(x,t)||t.end<=x.start&&bare(t,x))&&!g.clausePairs.some(p=>p!==o&&trusted(p)&&p[targetLocale].some(x=>x.start<t.end&&x.end>t.start)))spans.push(t);
+    }
   }
   if(!g.clausePairs&&sourceUnits.length&&sourceUnits.every(includes)&&(targets.length===1||(sourceUnits.length===1&&targets.length<=3)))return {covered:sourceUnits,spans:targets};
   for(const unit of sourceUnits){
@@ -373,9 +382,13 @@ function shortBlock(edition:AlignmentArtifact['editions'][Locale],span:TextSpan)
 // was never paired or stands in no group, and the lookup that dropped its highlights for that reason keeps the counterpart highlighted, uncertain.
 function absorbSentences(a:AlignmentArtifact,request:LookupRequest,result:LookupResult):LookupResult{
   const l=request.locale,o=l==='vi'?'en':'vi',overlaps=(s:TextSpan,t:TextSpan)=>s.start<t.end&&s.end>t.start;
-  if(result.status!=='context-only'||!result.unmatchedSource?.length||result.passages.length!==1||notePair(a,request))return result;
+  // A partial answer is absorbed too: the whole counterpart of whole sentences is a better answer than a part of it (chapter 9 "Should gentlemen of later ages …").
+  if((result.status!=='context-only'&&!result.partial)||!result.unmatchedSource?.length||result.passages.length!==1||notePair(a,request))return result;
   if(a.poems?.some(p=>overlaps(p[l],request))||a.poetryScopes?.[l].some(p=>overlaps(p,request)))return result;
   const p=result.passages[0],k=wholeSentences(a.editions[l].text,request.start,request.end,l);
+  // A partial answer already shows the part that was found: the whole passage replaces it only when it is no longer than 1.6 times what the selection should translate to
+  // (the English side often splits one Vietnamese sentence, so a passage far longer holds more than the sentence: "mỉa Thiên Tôn" is not the whole Vietnamese sentence around it).
+  if(result.partial&&p.target.end-p.target.start>1.6*(request.end-request.start)*(l==='vi'?1.17:1/1.17))return result;
   if(!k||k!==wholeSentences(a.editions[o].text,p.target.start,p.target.end,o))return result;
   const all=a.refinementVersion===1?a.refinedGroups??a.groups:a.groups,own=all.filter(g=>(g.parts?.[l]??[g[l]]).some(s=>overlaps(s,request)));
   if(!own.length||own.some(g=>(g.section!=='story'&&g.section!=='critique')||g.tracks||g.kind==='lexical'||g.score<.5||g.margin<.015))return result;
@@ -383,15 +396,23 @@ function absorbSentences(a:AlignmentArtifact,request:LookupRequest,result:Lookup
   const inside=(s:TextSpan)=>s.start>=request.start&&s.end<=request.end;
   const rival=(g:typeof own[number])=>g.clausePairs?.length?g.clausePairs.some(c=>trusted(c)&&!c[l].some(s=>overlaps(s,request))&&c[o].some(s=>overlaps(s,p.target))):!inside(g[l]);
   if(own.some(rival))return result;
-  const text=a.editions[o].text.slice(p.target.start,p.target.end),{unmatchedSource:_,...rest}=result;
+  const text=a.editions[o].text.slice(p.target.start,p.target.end),{unmatchedSource:_,partial:__,...rest}=result;
   return {...rest,status:'uncertain',passages:[{...p,highlights:[{start:p.target.start+text.length-text.trimStart().length,end:p.target.end-(text.length-text.trimEnd().length)}]}]};
+}
+function settle(result:LookupResult,target:AlignmentArtifact['editions'][Locale]):LookupResult{
+  if(!result.passages.some(p=>p.found))return result;
+  return {...result,passages:result.passages.map(({found,...p})=>{
+    if(!found?.length||p.highlights.length)return p;
+    const start=Math.min(p.target.start,...found.map(f=>f.start)),end=Math.max(p.target.end,...found.map(f=>f.end));
+    return {...p,target:{start,end,text:target.text.slice(start,end),breaks:target.breaks?.filter(b=>b>start&&b<end)}};
+  })};
 }
 export function lookupArtifact(artifact:AlignmentArtifact,request:LookupRequest):LookupResult {
   const locale=request.locale,targetLocale=locale==="vi"?"en":"vi",source=artifact.editions[locale],target=artifact.editions[targetLocale];
   const empty=(status:LookupResult["status"]):LookupResult=>({status,targetLocale,passages:[]});
   if(artifact.chapterId!==request.chapterId||source.revision!==request.revision||request.start<0||request.end<=request.start||request.end>source.text.length||source.text.slice(request.start,request.end)!==request.text)return empty("stale");
   if(request.end-request.start>2000)throw RangeError("Selection too long");
-  const result=absorbSentences(artifact,request,selectionLookup(artifact,request,lookupSingle));
+  const result=settle(absorbSentences(artifact,request,selectionLookup(artifact,request,lookupSingle)),target);
   // The name rules answer story text; inside a note or a caption paired with one, the paired note is shown as it is.
   if(!notePair(artifact,request)){
     const named=noteTermAnswer(artifact,result,request)??sameNameAnswer(result,request,target.text)??sinoNameAnswer(result,request,target.text);if(named)return named;
@@ -845,13 +866,26 @@ function lookupBase(artifact:AlignmentArtifact,request:LookupRequest,useLabels:b
       }
     }
   }
+  // In a whole sentence a piece of a single word beside longer ones is a stray link, not a clause of the counterpart, and a partial answer needs a clause of four words or more to stand on: it is left out otherwise.
+  // A whole note shows the paired note as it is, never in part.
+  const pieceWords=(h:TextSpan)=>target.text.slice(h.start,h.end).match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0,whole=longSelection(source.text,request,locale);
   // Prose only: a verse selection keeps the pairs written by reading, which answer when nothing is highlighted.
-  if(incompleteWords&&!poem&&partialKept(source.text,request,unmatchedSource,passages,locale,weakest)){
+  if(incompleteWords&&!poem&&partialKept(source.text,request,unmatchedSource,passages,locale,weakest)&&(!whole||!note&&passages.some(p=>p.highlights.some(h=>pieceWords(h)>=4)))){
     hasWords=true;uncertain=true;partial=true;
+    if(whole)for(const p of passages)p.highlights=p.highlights.filter(h=>pieceWords(h)>1);
     // The highlight stays, and so does the context of the words that were not found: the passage runs over the counterpart the clause logic grounded for them.
     for(const [i,p] of passages.entries()){const b=contexts[i];if(!b||!p.highlights.length)continue;const start=Math.min(b.start,...p.highlights.map(h=>h.start)),end=Math.max(b.end,...p.highlights.map(h=>h.end));p.target={start,end,text:target.text.slice(start,end),breaks:target.breaks?.filter(x=>x>start&&x<end)};}
   }
-  else if(incompleteWords){hasWords=false;for(const [i,p] of passages.entries()){const b=contexts[i];p.highlights=[];p.target={...b,text:target.text.slice(b.start,b.end),breaks:target.breaks?.filter(x=>x>b.start&&x<b.end)};}}
+  else if(incompleteWords){
+    hasWords=false;
+    for(const [i,p] of passages.entries()){
+      // The highlights that are dropped show where the counterpart was found. A clause of three words or more that touches the context (at most one word between) is remembered: `settle` widens the passage over it
+      // unless the whole sentences of the context already answer (absorbSentences), never over a stray link of a word or two.
+      const b=contexts[i],words=(h:TextSpan)=>target.text.slice(h.start,h.end).match(/[\p{L}\p{M}\p{N}]+/gu)?.length??0,near=p.highlights.filter(h=>words(h)>=3&&h.start<=b.end+12&&h.end>=b.start-12);
+      p.highlights=[];p.target={...b,text:target.text.slice(b.start,b.end),breaks:target.breaks?.filter(x=>x>b.start&&x<b.end)};
+      if(near.length)p.found=near.map(h=>({start:h.start,end:h.end}));
+    }
+  }
   const joined:LookupPassage[]=[];
   for(const p of passages){
     const previous=joined.at(-1);

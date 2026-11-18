@@ -11,7 +11,7 @@
 import fs from 'node:fs';import {lookupArtifact,validateAlignmentArtifact} from '../../src/lib/novel-lookup';
 import {partialRule} from '../../src/lib/novel-lookup-selection';
 // PARTIAL_MIN, PARTIAL_WORDS, PARTIAL_MAX switch the rule that keeps the highlight of the part of a selection that was found (0 = off), to measure what it does to whole sentences
-if(process.env.PARTIAL_MIN)Object.assign(partialRule,{min:Number(process.env.PARTIAL_MIN)});if(process.env.PARTIAL_MAX)Object.assign(partialRule,{maxWords:Number(process.env.PARTIAL_MAX)});
+if(process.env.PARTIAL_MIN)Object.assign(partialRule,{min:Number(process.env.PARTIAL_MIN)});if(process.env.PARTIAL_MAX)Object.assign(partialRule,{maxWords:Number(process.env.PARTIAL_MAX)});if(process.env.PARTIAL_LONG_MIN)Object.assign(partialRule,{longMin:Number(process.env.PARTIAL_LONG_MIN)});if(process.env.PARTIAL_LONG_STRENGTH)Object.assign(partialRule,{longStrength:Number(process.env.PARTIAL_LONG_STRENGTH)});
 const [dir,out,...goldFiles]=process.argv.slice(2);
 if(!dir||!out||!goldFiles.length)throw Error('usage: measure-sentences.ts DATA_DIR OUT.json GOLD.json [GOLD2.json ...]');
 type Gold={chapter:number;stratum?:string;source?:string;vi:[number,number];en:[number,number]};
