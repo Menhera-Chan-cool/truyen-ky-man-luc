@@ -123,6 +123,14 @@ it('closes the gap between trusted pairs with an uncertain highlight when the se
  expect(r.status).toBe('uncertain');expect(r.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)))).toEqual([context.trim()]);
  expect(r.unmatchedSource).toBeUndefined();
 });
+it('lets the words of the selection decide whether the sentences of a gap correspond',()=>{
+ const make=(target:string)=>{const a=sentences(),f=span(a.editions.en.text,'En three'),t=span(a.editions.vi.text,target);a.groups[0].links=[{vi:[t.start,t.end],en:[f.start,f.end],score:.8}];return a;};
+ const ask=(a:AlignmentArtifact)=>{const r=query(a,'en',{start:0,end:a.groups[0].parts!.en[3].end});return r.passages.flatMap(p=>p.highlights.map(h=>a.editions.vi.text.slice(h.start,h.end)));};
+ // a word of the selection reaches the gap: the sentences correspond and the gap is highlighted whole
+ expect(ask(make('Vi ba'))).toEqual(['Vi một, vi hai. Vi ba, vi bốn.']);
+ // the only word that is linked lands in another sentence of the group: nothing says the gap translates the selection
+ expect(ask(make('Vi năm'))).not.toContain('Vi một, vi hai. Vi ba, vi bốn.');
+});
 it('keeps the context only when the selection ends inside a sentence of the gap',()=>{
  const a=sentences(),r=query(a,'en',{start:0,end:a.groups[0].parts!.en[2].end});
  expect(r.status).toBe('context-only');expect(r.passages.flatMap(p=>p.highlights)).toEqual([]);expect(r.unmatchedSource?.length).toBeGreaterThan(0);

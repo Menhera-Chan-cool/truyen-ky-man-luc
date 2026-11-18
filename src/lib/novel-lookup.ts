@@ -380,12 +380,18 @@ function shortBlock(edition:AlignmentArtifact['editions'][Locale],span:TextSpan)
 }
 // Whole sentences whose one counterpart passage is exactly as many whole sentences, with no other group or clause of the pairing claiming it: the sentences correspond even though a clause of them
 // was never paired or stands in no group, and the lookup that dropped its highlights for that reason keeps the counterpart highlighted, uncertain.
+// The weakest word link that counts as support, the share of the support that may land beside the passage, and how narrow (against what the selection should translate to) a passage must be for that to matter.
+const ABSORB_LINK=.1,ABSORB_OUT=.5,ABSORB_NARROW=.5;
 function absorbSentences(a:AlignmentArtifact,request:LookupRequest,result:LookupResult):LookupResult{
   const l=request.locale,o=l==='vi'?'en':'vi',overlaps=(s:TextSpan,t:TextSpan)=>s.start<t.end&&s.end>t.start;
   // A partial answer is absorbed too: the whole counterpart of whole sentences is a better answer than a part of it (chapter 9 "Should gentlemen of later ages …").
-  if((result.status!=='context-only'&&!result.partial)||!result.unmatchedSource?.length||result.passages.length!==1||notePair(a,request))return result;
+  if((result.status!=='context-only'&&!result.partial)||!result.unmatchedSource?.length||!result.passages.length||notePair(a,request))return result;
   if(a.poems?.some(p=>overlaps(p[l],request))||a.poetryScopes?.[l].some(p=>overlaps(p,request)))return result;
-  const p=result.passages[0],k=wholeSentences(a.editions[l].text,request.start,request.end,l);
+  // Passages that touch (nothing but punctuation between them: "Nếu không thì cướp thẻ trước của Mông Chính (3)," and "lặt cỏ rác của Hạ Hầu (4) phỏng anh còn khó khăn gì nữa.") are one counterpart.
+  const parts=[...result.passages].sort((x,y)=>x.target.start-y.target.start),theirs=a.editions[o].text;
+  if(!parts.every((q,i)=>i===0||q.target.start>=parts[i-1].target.end-1&&!/\p{L}/u.test(theirs.slice(parts[i-1].target.end,q.target.start))))return result;
+  const first=parts[0],start=first.target.start,end=Math.max(...parts.map(q=>q.target.end)),sourceStart=Math.min(...parts.map(q=>q.source.start)),sourceEnd=Math.max(...parts.map(q=>q.source.end));
+  const p={...first,source:{start:sourceStart,end:sourceEnd,text:a.editions[l].text.slice(sourceStart,sourceEnd)},target:{start,end,text:theirs.slice(start,end),breaks:a.editions[o].breaks?.filter(x=>x>start&&x<end)}},k=wholeSentences(a.editions[l].text,request.start,request.end,l);
   // A partial answer already shows the part that was found: the whole passage replaces it only when it is no longer than 1.6 times what the selection should translate to
   // (the English side often splits one Vietnamese sentence, so a passage far longer holds more than the sentence: "mỉa Thiên Tôn" is not the whole Vietnamese sentence around it).
   if(result.partial&&p.target.end-p.target.start>1.6*(request.end-request.start)*(l==='vi'?1.17:1/1.17))return result;
@@ -396,6 +402,15 @@ function absorbSentences(a:AlignmentArtifact,request:LookupRequest,result:Lookup
   const inside=(s:TextSpan)=>s.start>=request.start&&s.end<=request.end;
   const rival=(g:typeof own[number])=>g.clausePairs?.length?g.clausePairs.some(c=>trusted(c)&&!c[l].some(s=>overlaps(s,request))&&c[o].some(s=>overlaps(s,p.target))):!inside(g[l]);
   if(own.some(rival))return result;
+  // The sentences correspond only if the words of the selection reach the passage: a group that holds many sentences against one can leave the last English clause as the grounded context of all of them
+  // (chapter 4, "In this alone he fell short." answered four Vietnamese sentences that do not translate it).
+  const inRequest=(f:readonly [number,number])=>f[0]>=request.start&&f[1]<=request.end,inPassage=(f:readonly [number,number])=>f[0]>=p.target.start&&f[1]<=p.target.end;
+  const content=(k:{score:number;vi:[number,number];en:[number,number]})=>k.score>=ABSORB_LINK&&inRequest(k[l])&&/\p{L}/u.test(a.editions[l].text.slice(...k[l]))&&!onlyFunctionWords(a.editions[l].text.slice(...k[l]),l);
+  const links=own.flatMap(g=>g.links.filter(content)),held=links.filter(k=>inPassage(k[o])).reduce((n,k)=>n+k.score,0),beside=links.filter(k=>!inPassage(k[o])).reduce((n,k)=>n+k.score,0);
+  // ... and the passage must hold what they reach: words that land beside it (the next Vietnamese sentence of "Hoang had held his office for only a month when he was struck by a sudden madness.") mean it stops short.
+  const expected=(request.end-request.start)*(l==='vi'?1.17:1/1.17);
+  // (A group that carries no word links at all, as in a hand-made artifact, has nothing to test.)
+  if(own.some(g=>g.links.length)&&(!held||(p.target.end-p.target.start<ABSORB_NARROW*expected&&beside>ABSORB_OUT*held)))return result;
   const text=a.editions[o].text.slice(p.target.start,p.target.end),{unmatchedSource:_,partial:__,...rest}=result;
   return {...rest,status:'uncertain',passages:[{...p,highlights:[{start:p.target.start+text.length-text.trimStart().length,end:p.target.end-(text.length-text.trimEnd().length)}]}]};
 }
