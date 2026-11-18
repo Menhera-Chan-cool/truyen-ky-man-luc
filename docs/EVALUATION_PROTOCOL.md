@@ -985,7 +985,7 @@ Two more rules keep stray links out of a partial answer of a whole sentence: a p
 
 **Replay of the final rule.** Sentence pool (4,261): highlighted 3,913 (deployed 3,850, sheet 22 era 3,912); 83 sentences change against the deployed rule, none loses a highlight it had; I read the 36 of the strength test, the 17 of the outer-pair rule and the 33 that the share of .5 adds: each is the clause or the sentence that translates the selection, or a right part of it with the passage showing the rest (my reading, one reader; stray pieces of two words remain in a few, "Ông về", "nhuốc nhơ", "Thiếp buổi"). Of the 89 that had lost their highlight: 67 are highlighted again; of the other 22 the passage holds every clause of three words or more that the old highlight had in 20, and the 2 left (chapters 3 and 13) had stray words ("will", "hand to come to", "Thế") outside the passage, which is right. The word and phrase pool (17,855), the 102 lookups of sheet 22 and the 2,109 note lookups do not change.
 
-**Checks.** `vitest` 419 of 419, `tsc` clean; the browser suite and the production check are to be run after a deployment.
+**Checks.** `vitest` 419 of 419, `tsc` clean. Production (code 0ccf067, dpl_5KAB6h5pnSybhtJP1uCpHCnRMS5y, no data republish): the lookup API returned the local replay answer for 83 of 83 changed and 150 of 150 unchanged selections of the sentence pool, 150 of 150 of the word and phrase pool, 102 of 102 of the sheet 22 lookups and 324 of 324 changed plus 150 of 150 unchanged note lookups; the alignment browser suite (`CONTEXTUAL_PREVIEW=1`, 3 projects) 60 of 60 on the first run.
 
 ## Rules
 
